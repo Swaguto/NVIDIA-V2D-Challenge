@@ -181,7 +181,7 @@ The biggest structural risk is mis-scoring. First week: **reproduce `eval_e2e.py
 
 ---
 
-## 7. Risks, limitations — and what's actually fixable in 6 weeks
+## 7. Risks, limitations 
 
 **Fixable in-scope (primary bets):**
 - Mono-depth bottleneck → **stereo**.
