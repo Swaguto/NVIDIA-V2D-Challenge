@@ -1,0 +1,12 @@
+# V2D Challenge workspaces — never track these
+.venv/
+data/
+video_to_data/
+__pycache__/
+*.pyc
+.DS_Store
+
+# secrets / local box state
+.docker/
+*.key
+*.pem
