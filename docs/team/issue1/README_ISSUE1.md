@@ -37,9 +37,15 @@ Log in over SSH once provisioned.
 
 ## Step 1 — Run the bootstrap
 
+The pipeline now lives **in our repo** (`robotic_grounding/` etc. at the repo
+root). On a fresh box, clone **this** repo and pull LFS objects from the public
+upstream via the committed `.lfsconfig`:
+
 ```bash
-git clone --depth 1 https://github.com/Swaguto/NVIDIA-V2D-Challenge-.git 2>/dev/null || true
-# (the bootstrap also lives in the repo later; for now copy it up or use curl)
+git clone https://github.com/Swaguto/NVIDIA-V2D-Challenge-.git
+mv NVIDIA-V2D-Challenge- video_to_data      # keep the same dir name the runbook expects
+cd video_to_data
+git lfs install && git lfs pull             # ~1GB assets, fetched from public upstream
 ```
 
 Simplest path: copy this repo's helper locally and run it.
@@ -68,7 +74,7 @@ cd ../robotic_grounding
 python scripts/run_pipeline_docker.py --build-only   # builds loader + robotic-grounding
 ```
 
-Reference: [`robotic_grounding/docs/SETUP.md`](https://github.com/nvidia-isaac/video_to_data/blob/release/0.2.0/robotic_grounding/docs/SETUP.md)
+Reference: [`robotic_grounding/docs/SETUP.md`](../../../robotic_grounding/docs/SETUP.md) (in-repo upstream docs)
 
 ## Step 4 — Smoke test (no external dataset needed)
 
@@ -144,10 +150,11 @@ hf download nvidia/video_to_data_challenge --repo-type dataset --include "track_
 
 - **Blackwell GPU** (`sm_120`) — the build checks will fail; use Ampere/Hopper.
 - **Missing NGC login** — the `robotic-grounding` build pulls `nvcr.io/nvidia/isaac-lab:2.3.2`; it will fail with a pull error if not logged in.
-- **Missing LFS pull** — robot URDFs/meshes come via Git LFS; broken pointers → asset errors in the smoke test.
+- **Missing LFS pull** — robot URDFs/meshes come via Git LFS; broken pointers → asset errors in the smoke test. Fix: `git lfs install && git lfs pull` (objects come from the **public upstream** repo, not our private repo's LFS).
 - **Driver too old** — Isaac Lab 2.3.2 needs driver ≥ 580; check with `nvidia-smi`.
 
 ## Related docs
 
-- Upstream setup: [`video_to_data/robotic_grounding/docs/SETUP.md`](https://github.com/nvidia-isaac/video_to_data/blob/release/0.2.0/robotic_grounding/docs/SETUP.md)
-- Repo README quickstart: https://github.com/nvidia-isaac/video_to_data/blob/release/0.2.0/README.md
+- Infra/team workflow: [`TEAM_ACCESS.md`](TEAM_ACCESS.md)
+- Upstream setup (in-repo): [`robotic_grounding/docs/SETUP.md`](../../../robotic_grounding/docs/SETUP.md)
+- Upstream README: [`docs/team/upstream-README.md`](../upstream-README.md)

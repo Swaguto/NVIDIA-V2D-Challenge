@@ -1,6 +1,13 @@
 # V2D Challenge — Track 3 (Egocentric Video → Policy)
 
-**Track 3:  team setup, and the cloud GPU + CHORD smoke test.**
+**Track 3: team setup, cloud GPU + CHORD smoke test, and the video→policy pipeline.**
+
+This is the team's working monorepo: the full
+[`nvidia-isaac/video_to_data`](https://github.com/nvidia-isaac/video_to_data)
+starter toolkit (branch `release/0.2.0`) **flattened into the repo root**, plus
+team docs under [`docs/team/`](docs/team/). Seeing `robotic_grounding/`,
+`reconstruction/`, `video_ingestion_agent/` at the repo root is intentional —
+it keeps the shared VM checkout and container volume mounts unchanged.
 
 We teach a **Unitree G1 + Dex3** humanoid (in Isaac Lab) to reproduce kitchen
 manipulation from a head-worn **stereo camera** video. We use NVIDIA's CHORD
@@ -44,15 +51,28 @@ and [`g1_smoke.mp4`](docs/team/issue1/g1_smoke.mp4) (G1 whole body).
 
 ## Repo contents
 
-| Path | What it is |
-|---|---|
-| [`docs/team/plan.md`](docs/team/plan.md) | Winning architecture (challenge decode, CHORD-vs-DexMachina, pipeline stages A–E, timeline, risks) |
-| [`docs/team/team_brief.md`](docs/team/team_brief.md) | Plain-language 9-role team brief + hand-offs |
-| [`docs/team/tasks/github_issues.md`](docs/team/tasks/github_issues.md) | The 16 issue cards (also live in the GitHub Issues tab, with labels + milestones) |
-| [`docs/team/issue1/README_ISSUE1.md`](docs/team/issue1/README_ISSUE1.md) | Full Issue #1 runbook: provision, build, smoke test, dataset sync |
-| [`docs/team/issue1/bootstrap_cloud.sh`](docs/team/issue1/bootstrap_cloud.sh) | Provider-agnostic bootstrap script (blocks Blackwell, driver build, Docker + toolkit, clone) |
-| [`scripts/cloud_setup_housekeeping.sh`](scripts/cloud_setup_housekeeping.sh) | Box housekeeping: git-lfs, clone, LFS pull, host venv |
-| [`scripts/diag_cloud.sh`](scripts/diag_cloud.sh) | One-shot health check for any team GPU box |
+The repo is split into three layers:
+
+| Layer | Path | What it is |
+|---|---|---|
+| **Pipeline (upstream)** | [`robotic_grounding/`](robotic_grounding/) | CHORD / Isaac Lab RL training + evaluation (our scaffold) |
+| | [`reconstruction/`](reconstruction/) | Video → 3D scene / object reconstruction (MoGe, BundleSDF) |
+| | [`video_ingestion_agent/`](video_ingestion_agent/) | Dataset ingestion / curation agent (webapp) |
+| | [`docs/`](docs/) | Upstream docs (CHORD paper/site, reconstruction) |
+| | `.github/`, `LICENSE`, `SECURITY.md` | Upstream CI, license, security policy |
+| **Team** | [`docs/team/plan.md`](docs/team/plan.md) | Winning architecture (challenge decode, CHORD-vs-DexMachina, pipeline stages A–E, timeline, risks) |
+| | [`docs/team/team_brief.md`](docs/team/team_brief.md) | Plain-language 9-role team brief + hand-offs |
+| | [`docs/team/tasks/github_issues.md`](docs/team/tasks/github_issues.md) | The 16 issue cards (also live in the GitHub Issues tab) |
+| | [`docs/team/issue1/README_ISSUE1.md`](docs/team/issue1/README_ISSUE1.md) | Full Issue #1 runbook: provision, build, smoke test, dataset sync |
+| | [`docs/team/issue1/TEAM_ACCESS.md`](docs/team/issue1/TEAM_ACCESS.md) | How to contribute: branches, PRs, the shared VM, LFS |
+| **Tooling** | [`scripts/cloud_setup_housekeeping.sh`](scripts/cloud_setup_housekeeping.sh) | Box housekeeping: git-lfs, clone, LFS pull, host venv |
+| | [`scripts/diag_cloud.sh`](scripts/diag_cloud.sh) | One-shot health check for any team GPU box |
+
+> **Binary assets & LFS:** this repo stores only LFS **pointers** (~1GB of
+> objects stay out of git). `git lfs pull` fetches them from the **public**
+> upstream repo (see `.lfsconfig`) — clone is small, and our private repo's
+> free 1GB LFS quota is never touched. Full workflow in
+> `docs/team/issue1/TEAM_ACCESS.md`.
 
 ## GitHub project state
 
@@ -65,11 +85,12 @@ and [`g1_smoke.mp4`](docs/team/issue1/g1_smoke.mp4) (G1 whole body).
 
 ## Security / house rules (important)
 
-- This repo is **public**. Never commit: NGC API keys, cloud instance IDs/names,
+- This repo is **private**. Never commit: NGC API keys, cloud instance IDs/names,
   SSH keys, `.docker/config.json`, or personal local paths.
 - Cloud box snapshots / READMEs with credentials stay on the box, not in this repo.
 - If you need a private space: use GitHub Secrets / a private repo for secrets,
   and keep only placeholders here.
+- We may make the repo public after the freeze — write docs accordingly.
 
 ## References
 
