@@ -1,6 +1,6 @@
 # V2D Challenge — Track 3 (Egocentric Video → Policy)
 
-**Track 3: game plan, team setup, and the cloud GPU + CHORD smoke test.**
+**Track 3:  team setup, and the cloud GPU + CHORD smoke test.**
 
 We teach a **Unitree G1 + Dex3** humanoid (in Isaac Lab) to reproduce kitchen
 manipulation from a head-worn **stereo camera** video. We use NVIDIA's CHORD
