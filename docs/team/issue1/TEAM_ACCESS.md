@@ -38,13 +38,28 @@ git lfs pull
 > If `git lfs pull` errors, confirm `git-lfs` is on PATH and run
 > `git lfs install` again — the `.lfsconfig` in the repo root is what routes
 > fetches to the public upstream.
+>
+> **Do NOT run `git lfs install` / do not leave the `pre-push` hook in place.**
+> `git lfs install` drops a `pre-push` hook; our `.lfsconfig` points the LFS
+> endpoint at the *read-only public upstream*, so that hook would try to upload
+> objects there and every `git push` would fail. If a push dies with an LFS
+> error, delete `.git/hooks/pre-push` (and `git config lfs.locksverify false`).
+> Our tooling scripts already do this for the shared VM.
 
-### The shared VM already has everything
+### The shared VM is already wired up
 
-The Brev GPU box (`rising-gold-junglefowl`, Ubuntu, L40S) already has the full
-working tree incl. all LFS objects under `/home/ubuntu/video_to_data`. You
-**do not** need to re-download 1GB there — just make sure your checkout points
-at our repo and `git lfs pull` is a no-op (objects already present).
+The Brev GPU box (`rising-gold-junglefowl`, Ubuntu, L40S) already has:
+- the full repo checked out on `main` at `/home/ubuntu/video_to_data`, **with all
+  ~956MB of LFS objects materialized** (`git lfs pull` is a no-op there);
+- a repo-scoped **read-write deploy key** registered so the box can fetch/push
+  (`git@github.com:Swaguto/NVIDIA-V2D-Challenge-.git`);
+- the git-lfs `pre-push` hook removed + `lfs.locksverify false` (so ordinary
+  `git push` from the box never tries to upload objects to the read-only
+  upstream).
+
+So you do **not** bootstrap anything on the box — just log in and work.
+Teammates connecting fresh should add their SSH pubkey to the box's
+`/home/ubuntu/.ssh/authorized_keys` (ask the owner).
 
 ---
 
