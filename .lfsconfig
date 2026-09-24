@@ -1,0 +1,10 @@
+# git-lfs endpoint override.
+#
+# This repo intentionally contains only LFS *pointers* (no objects): the ~1GB
+# of binary assets live in the public NVIDIA starter repo and on the shared VM.
+# Re-routing LFS fetches here means "git lfs pull" downloads from the public
+# upstream and we never burn our private repo's 1GB free LFS quota.
+#
+# See docs/team/issue1/TEAM_ACCESS.md for the exact teammate workflow.
+[lfs]
+    url = https://github.com/nvidia-isaac/video_to_data.git/info/lfs
