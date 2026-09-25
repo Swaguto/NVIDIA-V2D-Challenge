@@ -105,7 +105,19 @@ def _parse_intrinsics(camera_entry: dict, name: str) -> CameraIntrinsics:
     src = {k: v for k, v in src.items()} | {
         k: v
         for k, v in camera_entry.items()
-        if k in ("fx", "fy", "cx", "cy", "width", "height", "resolution", "dist", "distortion")
+        if k
+        in (
+            "fx",
+            "fy",
+            "cx",
+            "cy",
+            "width",
+            "height",
+            "resolution",
+            "dist",
+            "distortion",
+            "distortion_coefficients",
+        )
         and k not in src
     }
 
@@ -132,7 +144,7 @@ def _parse_intrinsics(camera_entry: dict, name: str) -> CameraIntrinsics:
 
 def _parse_distortion(src: dict) -> np.ndarray:
     vec = None
-    for key in ("dist", "distortion", "dist_coeffs"):
+    for key in ("dist", "distortion", "dist_coeffs", "distortion_coefficients"):
         value = src.get(key)
         if isinstance(value, dict):
             pip = dict(value)
@@ -152,7 +164,7 @@ def _parse_distortion(src: dict) -> np.ndarray:
             if vec.size < 5:
                 vec = np.pad(vec, (0, 5 - vec.size))
             else:
-                vec = vec[:10]
+                vec = vec[:14]
             break
     if vec is None:
         vec = np.zeros(5, dtype=np.float64)
@@ -219,18 +231,40 @@ class RigCalibration:
         r, tt = t[:, :3], t[:, 3]
         return np.column_stack([r.T, -r.T @ tt])
 
+    def _pair_extrinsic_translations(
+        self, pair: dict
+    ) -> list[np.ndarray]:
+        """Stereo-left-frame translations of a pair's cameras.
+
+        In the challenge rig only the camera physically left of the reference
+        declares ``extrinsics_to_stereo_left`` (4x4 pose in the stereo-left
+        frame); the reference camera itself carries none and sits at the
+        origin.  Return the declared translations and, when exactly one is
+        declared, treat the other as the origin reference.
+        """
+        ts: list[np.ndarray] = []
+        for side in ("left", "right"):
+            camera = pair.get(side)
+            if camera not in self.cameras:
+                continue
+            ex = self.extrinsic_matrix(camera)
+            if ex is not None:
+                ts.append(self.pose_inverse_transform(ex)[:3, 3])
+        return ts
+
     def ego_baseline_mm(self) -> tuple[float, float]:
         """(declared, measured) ego stereo baseline in millimetres.
 
         Declared: ``baseline_m`` on the stereo_pairs entry with ``camera=='ego'``
-        (accepted aliases: ``baseline``, ``baseline_mm``).  Measured: the norm of
-        the difference of the pair's left/right optic centres, each centre taken
-        as the inverse-translated ``extrinsics_to_stereo_left``.  Falls back to
-        the declared value for ``measured`` when extrinsics are unavailable.
+        (accepted aliases: ``baseline``, ``baseline_mm``).  Measured: the
+        distance between the pair's optic centres in the stereo-left reference
+        frame (a camera with no ``extrinsics_to_stereo_left`` is that
+        reference, i.e. the origin).  Falls back to the declared value when the
+        pair geometry cannot be resolved.
         """
         declared = float("nan")
         measured = float("nan")
-        left = right = None
+        ts: list[np.ndarray] = []
         for pair in self.stereo_pairs:
             cam = pair.get("camera") or pair.get("cam") or pair.get("name")
             if cam not in (None, "ego"):
@@ -241,14 +275,12 @@ class RigCalibration:
                     break
             if "baseline_mm" in pair:
                 declared = float(pair["baseline_mm"])
-            left = pair.get("left")
-            right = pair.get("right")
+            ts = self._pair_extrinsic_translations(pair)
             break
-        if left in self.cameras and right in self.cameras:
-            tl = self.camera_center(left)
-            tr = self.camera_center(right)
-            if tl is not None and tr is not None:
-                measured = float(np.linalg.norm(tr - tl)) * 1e3
+        if len(ts) == 1:
+            measured = float(np.linalg.norm(ts[0])) * 1e3
+        elif len(ts) >= 2:
+            measured = float(np.linalg.norm(ts[1] - ts[0])) * 1e3
         if not np.isfinite(measured) and np.isfinite(declared):
             measured = declared
         return declared, measured
