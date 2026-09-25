@@ -28,6 +28,7 @@ packages = [
     "v2d.world_calib.calibration",
     "v2d.world_calib.cli",
     "v2d.world_calib.tests",
+    "v2d.world_calib.vm",
 ]
 
 [tool.setuptools.package-dir]
@@ -35,3 +36,4 @@ packages = [
 "v2d.world_calib.calibration" = "calibration"
 "v2d.world_calib.cli" = "cli"
 "v2d.world_calib.tests" = "tests"
+"v2d.world_calib.vm" = "vm"
