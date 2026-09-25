@@ -94,7 +94,10 @@ against a declared 75.00 mm (factory residual, 14x expected).
 
 The one missing input for a real solve is the per-camera **2D keypoint cache**
 (`{camera}_ep_{ep:06d}.npy`, shape `(T,B,K,5)`) produced by the object-tracking
-track (FoundationPose/SAM, Issue #5/#7).
+track.  `vm/track_pipeline.py` drives the repo's own toolchain
+(Grounding-DINO → SAM2 → FoundationStereo → FoundationPose) on the GPU VM and
+outputs per-frame `object→cam` poses under a `manifest.json`; the converter for
+poses → keypoint cache is added once a first pose bundle comes back.
 
 ## Notes
 
