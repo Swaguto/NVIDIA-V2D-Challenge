@@ -68,6 +68,34 @@ With ~1 px observation noise the engine recovers each camera's transform to
 matches the injected noise and held-out transfer estimates generalize (see
 `results/calib_selftest/REPORT.md`).
 
+## Real data (verified)
+
+The Track 3 **public** split is available at
+`nvidia/video_to_data_challenge` (HF), expected at
+`~/v2d_track3/data/hf/track_3/public` (matches `reference_loader.py` and the
+CLI default):
+
+```
+meta/camera_calibration.json   cameras{exo,ego}_cam_{a,b,c}: resolution=[W,H],
+                               fx/fy/cx/cy, distortion_coefficients[14],
+                               extrinsics_to_stereo_left (4x4, only the camera
+                               physically offset from the stereo-left reference)
+meta/info.json + episodes_metadata.jsonl
+data/chunk-000/episode_*.parquet    observation.objects{name,pose[7] w-first,
+                                    visible} + frame_index/capture_time
+mesh/<name>/{name}.glb (or _visual/_collision)
+urdf/
+videos/chunk-000/observation.images.ego_cam_*/episode_*.mp4
+```
+
+Verified on the real file: all six cameras parse (14-pt distortion), GT world
+poses load via `reference_loader`, and the ego stereo baseline measures ~75.5 mm
+against a declared 75.00 mm (factory residual, 14x expected).
+
+The one missing input for a real solve is the per-camera **2D keypoint cache**
+(`{camera}_ep_{ep:06d}.npy`, shape `(T,B,K,5)`) produced by the object-tracking
+track (FoundationPose/SAM, Issue #5/#7).
+
 ## Notes
 
 - Stage 2 (3D geometric refinement) from the design is skipped deliberately:
