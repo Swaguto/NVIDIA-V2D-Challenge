@@ -1,0 +1,23 @@
+{
+  "repository": "https://github.com/Swaguto/NVIDIA-V2D-Challenge",
+  "commit": "b6dd0d9f9ddabf7f1955119d797d9ccfe8107104",
+  "checked_date": "2026-09-25",
+  "evidence": "GitHub tree read; runtime compatibility not established",
+  "adapter_files": {
+    "robotic_grounding/scripts/rsl_rl/train.py": "ba8858642f02ba2fdec296de4df9e118eefd3300",
+    "robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d_whole_body/config/sonic/g1/agents/rsl_rl_ppo_cfg.py": "93176997ffe87601f94cf9070b91e2a572d1913c",
+    "robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d_whole_body/config/sonic/g1/g1_sonic_env_cfg.py": "aebb06035170c074f95caad6a0ed7c119a5ff938",
+    "robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d_whole_body/mdp/commands/README.md": "718a8373d6b73ea7395c840342edf8c700b36913",
+    "robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d_whole_body/mdp/commands/__init__.py": "85fcc0eee8459ef1dba6d218490cdfaebce17d23",
+    "robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d_whole_body/mdp/commands/tracking_command.py": "92bfc7229b420c3d0d507ceef0921d63fe7f805d",
+    "robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d_whole_body/mdp/commands/tracking_command_cfg.py": "e034d9f125b71c701382da4dd219785e4980e35b",
+    "robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d_whole_body/mdp/commands/tracking_utils.py": "ef84a4883b916f72110a6bb757e2fe80608b51d5",
+    "robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d_whole_body/mdp/rewards/README.md": "cde2ecc56eaf6c5a03361e0f051f057775bbcf91",
+    "robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d_whole_body/mdp/rewards/__init__.py": "427a3624b6c29560dd160d37022a4536b1d5d5f9",
+    "robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d_whole_body/mdp/rewards/contact_rewards.py": "b4d0f88336acb3648c79a5c361176887cb322c1b",
+    "robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d_whole_body/mdp/rewards/regularization_rewards.py": "da27de69475e24cbd8b7e26871445cb02b51db0e",
+    "robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d_whole_body/mdp/rewards/tracking_rewards.py": "74512c595f6e5954152a01b3dad8059de1d17eac",
+    "robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d_whole_body/mdp/tests/test_commands.py": "8739b4dc3ba6fa32263e8d4d03f77829c69c3085",
+    "robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d_whole_body/mdp/tests/test_rewards.py": "34c71b6c9ebbed69400445b21798233e92749fb4"
+  }
+}

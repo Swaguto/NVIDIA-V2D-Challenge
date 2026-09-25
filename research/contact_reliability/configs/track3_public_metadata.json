@@ -1,0 +1,54 @@
+{
+  "source": "https://raw.githubusercontent.com/nvidia-isaac/video_to_data/main/docs/v2d_challenge/leaderboard.json",
+  "checked_date": "2026-09-21",
+  "track": {
+    "key": "track_3",
+    "title": "Track 3 - Egocentric",
+    "short_title": "Track 3",
+    "metrics": [
+      {
+        "key": "add_auc",
+        "display": "AUC",
+        "unit": "",
+        "higher_is_better": true,
+        "competition": "v2d-challenge-track3-auc",
+        "available": true
+      },
+      {
+        "key": "spider_sr",
+        "display": "SP-SR",
+        "unit": "",
+        "higher_is_better": true,
+        "competition": "v2d-challenge-track3-sp-sr",
+        "available": true
+      },
+      {
+        "key": "maniptrans_sr",
+        "display": "MP-SR",
+        "unit": "",
+        "higher_is_better": true,
+        "competition": "v2d-challenge-track3-mp-sr",
+        "available": true
+      },
+      {
+        "key": "rpe_cm",
+        "display": "RPE",
+        "unit": "cm",
+        "higher_is_better": false,
+        "competition": "v2d-challenge-track3-rpe",
+        "available": true
+      },
+      {
+        "key": "mppe_cm",
+        "display": "MPPE",
+        "unit": "cm",
+        "higher_is_better": false,
+        "competition": "v2d-challenge-track3-mppe",
+        "available": true
+      }
+    ],
+    "rows": [],
+    "incomplete": []
+  },
+  "status": "Public leaderboard metadata only; evaluator semantics and data access unverified"
+}

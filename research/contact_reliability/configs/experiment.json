@@ -1,0 +1,20 @@
+{
+  "schema_version": "experiment_v2",
+  "reliability_enabled": false,
+  "weight_floor": 0.25,
+  "allowed_weight_floors": [0.0, 0.25, 0.5],
+  "variants": ["baseline", "force_closure", "reliability", "reliability_force_closure"],
+  "diagnostic_controls": ["constant", "shuffled"],
+  "seeds": [17, 29, 43],
+  "maximum_sequences": 20,
+  "holdout_sequences": 5,
+  "proxy_episode_ids": [0, 11, 23, 31, 39],
+  "split_source": "track3-split discovers files; do not use generic randomized split",
+  "pilot_sequences": 4,
+  "environment_steps": null,
+  "compute_budget_hours": null,
+  "final_evaluation_reserve_fraction": 0.2,
+  "paid_compute_authorized": false,
+  "official_metric": null,
+  "official_embodiment": null
+}

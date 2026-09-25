@@ -1,0 +1,10 @@
+{
+  "schema_version": "submission_v1",
+  "rules_verified": false,
+  "evaluator": null,
+  "evaluator_sha256": null,
+  "arguments": [],
+  "output_directory": "runs/submission",
+  "required_artifacts": [],
+  "note": "Populate from the official Track 3 instructions. No artifact names or evaluator flags are assumed. This adapter does not upload."
+}

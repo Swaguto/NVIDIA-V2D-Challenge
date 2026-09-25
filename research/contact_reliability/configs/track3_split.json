@@ -1,0 +1,116 @@
+{
+  "development": [
+    2,
+    12,
+    13,
+    18,
+    21,
+    22,
+    24,
+    26,
+    27,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45
+  ],
+  "files": {
+    "0": {
+      "path": "data/chunk-000/episode_000000.parquet",
+      "sha256": "cec5ecb4f696e3ecde143afaa4d655f71e8311d4c3dfceb7b264d515a8ef94bb"
+    },
+    "11": {
+      "path": "data/chunk-000/episode_000011.parquet",
+      "sha256": "3117f30e5b34c5f7767e05493330fed17568a1c676b6a3c05c6ddccb3a5a741f"
+    },
+    "12": {
+      "path": "data/chunk-000/episode_000012.parquet",
+      "sha256": "fcb6afc6b8d4b23cecc7877c9f800a6b966cb52a86a8b9841c64cc3de0d4988d"
+    },
+    "13": {
+      "path": "data/chunk-000/episode_000013.parquet",
+      "sha256": "0aa539031d8b87545779d848084d19074afa3741e6c685ce8ecd9e4ae4e6937b"
+    },
+    "18": {
+      "path": "data/chunk-000/episode_000018.parquet",
+      "sha256": "f52f60b1fe0d7c16b4a216bfa1456cea30f915ec1ff628b38c9cc2be1c8d45ed"
+    },
+    "2": {
+      "path": "data/chunk-000/episode_000002.parquet",
+      "sha256": "a1cd007e34edbdaa51138c168312ad4f0bb6e60ed65b52e72d253d6f949ae00b"
+    },
+    "21": {
+      "path": "data/chunk-000/episode_000021.parquet",
+      "sha256": "c479de8ba38b3a1b3ab42504bcc530c5d70675f0b0b7864413a0ebac7ac9ce6d"
+    },
+    "22": {
+      "path": "data/chunk-000/episode_000022.parquet",
+      "sha256": "c3081fab85ddf7f99ceaa0457a0acd1ad9a24bca83fdda312b70ae5e85d8e34c"
+    },
+    "23": {
+      "path": "data/chunk-000/episode_000023.parquet",
+      "sha256": "242f8fd98799486d452c366fdef393c4b45f8de8ee43c5f0f15147a0aeaa38e2"
+    },
+    "24": {
+      "path": "data/chunk-000/episode_000024.parquet",
+      "sha256": "416c771fe758cf2ec87a5212ecea8ab18bacb25a791c327bd17bb5d88063b0d1"
+    },
+    "26": {
+      "path": "data/chunk-000/episode_000026.parquet",
+      "sha256": "06dff16367326db7e62b66d0744a32499c607b23da842117e05009241ad75eab"
+    },
+    "27": {
+      "path": "data/chunk-000/episode_000027.parquet",
+      "sha256": "c48f07c96c15c517b14b464e3f6408a8689e5f95f76413dbe3c71e4d49b0b844"
+    },
+    "31": {
+      "path": "data/chunk-000/episode_000031.parquet",
+      "sha256": "3afbb1b3e1c64c18c422770747dac97d78238a5ba1d311458074658134ba38de"
+    },
+    "39": {
+      "path": "data/chunk-000/episode_000039.parquet",
+      "sha256": "2d72abe60690507fcaca5de7f095f3d5a3deae72b50bd1e7da9e99fac62d47db"
+    },
+    "40": {
+      "path": "data/chunk-000/episode_000040.parquet",
+      "sha256": "119414da28e073016b572bb657f6538f90ecf7b601e785c3787b79e406afb12a"
+    },
+    "41": {
+      "path": "data/chunk-000/episode_000041.parquet",
+      "sha256": "3b9256847d8f928589399f73b1635ef065c09fe288508880cc83bf8582dedc83"
+    },
+    "42": {
+      "path": "data/chunk-000/episode_000042.parquet",
+      "sha256": "91a09988da1f1c2b54ac708f8fd604cc43385c015a5da982e0d85a25b272bd85"
+    },
+    "43": {
+      "path": "data/chunk-000/episode_000043.parquet",
+      "sha256": "addff2f68ed16c667ceb684bedf4f4864ca91e6bf7111d6dbd7bcc0d39d2e2bc"
+    },
+    "44": {
+      "path": "data/chunk-000/episode_000044.parquet",
+      "sha256": "2c3a00e605faf4fa1bd98cf7ed97d69dd811f0a1449fa1e7743cca5b4cc438d6"
+    },
+    "45": {
+      "path": "data/chunk-000/episode_000045.parquet",
+      "sha256": "7bb2e222dfcc5d024b220611533485db59c7c4f0b3a387d04735ead256b55325"
+    }
+  },
+  "holdout": [
+    0,
+    11,
+    23,
+    31,
+    39
+  ],
+  "pilot": [
+    2,
+    12,
+    13,
+    18
+  ],
+  "schema_version": "track3_split_v1",
+  "split_hash": "a68d17f0e154d86a188a06aff025c98f494492faef87acd34abb6e16c6c840a7"
+}
