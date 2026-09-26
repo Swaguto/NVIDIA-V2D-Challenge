@@ -49,10 +49,14 @@ source "$VENV_DIR/bin/activate"
 python --version
 
 say "3/10 repo checkout ($REPO_DIR)"
+BRANCH="${VM_BRANCH:-issue3/world-camera-calibration}"
 if [ ! -d "$REPO_DIR/.git" ]; then
-  git clone "$REPO_URL" "$REPO_DIR"
+  git clone "$REPO_URL" "$REPO_DIR" || die "git clone failed"
 fi
 cd "$REPO_DIR"
+git config pull.rebase false
+git fetch --all --quiet || true
+git checkout -B "$BRANCH" "origin/$BRANCH" 2>/dev/null || git checkout -B "$BRANCH"
 git pull --ff-only || true
 if command -v git-lfs >/dev/null 2>&1; then git lfs pull || true; fi
 
