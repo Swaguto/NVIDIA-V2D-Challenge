@@ -364,12 +364,13 @@ def main() -> int:
     ap.add_argument("--tukey-m", type=float, default=0.010)
     ap.add_argument("--start-sigma", type=float, default=0.35,
                     help="coarse-to-fine Tukey start (m); keeps bad inits attracted")
-    ap.add_argument("--pass-inlier", type=float, default=0.60)
-    ap.add_argument("--cover2d-min", type=float, default=0.30,
-                    help="min fraction of mesh verts projecting into the right-cam mask")
-    ap.add_argument("--left-only", action="store_true",
-                    help="solve T from the left camera only; right cams verified via rig "
-                         "geometry + 2D mask coverage (right stereo depth has a scale bug)")
+    ap.add_argument("--pass-inlier", type=float, default=0.85)
+    ap.add_argument("--cover2d-min", type=float, default=0.0,
+                    help="min fraction of mesh verts projecting into the right-cam mask "
+                         "(reported-only; right masks are often partial/hand-occluded)")
+    ap.add_argument("--joint-right", action="store_true",
+                    help="include the right-cam cloud in the solve (default: left-only; the "
+                         "right camera stereo depth has a scale bug ~1.35x and would drag)")
     ap.add_argument("--no-smooth", action="store_true")
     ap.add_argument("--reuse-fp", action="store_true", help="FP poses (work/poses) as extra inits")
     args = ap.parse_args()
@@ -421,7 +422,7 @@ def main() -> int:
                 work / "depth" / cam_left / f"{t:06d}.png",
                 work / "intrinsics" / f"{cam_left}.json", args.max_pts, t,
             )
-            qr = (np.empty((0, 3), dtype=np.float32) if args.left_only else frame_cloud(
+            qr = (np.empty((0, 3), dtype=np.float32) if not args.joint_right else frame_cloud(
                 work / "masks" / cam_right / obj / "0" / f"{t:06d}.png",
                 work / "depth" / cam_right / f"{t:06d}.png",
                 work / "intrinsics" / f"{cam_right}.json", args.max_pts, t,
@@ -569,7 +570,7 @@ def main() -> int:
         "params": {"iters": args.iters, "mesh_pts": args.mesh_pts,
                    "tukey_m": args.tukey_m, "start_sigma_m": args.start_sigma,
                    "pass_inlier": args.pass_inlier, "cover2d_min": args.cover2d_min,
-                   "left_only": args.left_only,
+                   "joint_right": args.joint_right,
                    "smoothing": not args.no_smooth, "reuse_fp": args.reuse_fp},
         "cross_object_agreement_left": cross,
         "objects": per_obj_out,
