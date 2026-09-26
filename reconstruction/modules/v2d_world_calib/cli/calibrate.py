@@ -183,16 +183,26 @@ def run_real(args) -> int:
     solves: dict[str, CameraCalibrationSolve] = {}
     transfer: dict[str, dict[str, float]] = {}
     spatial: dict[str, np.ndarray] = {}
+
+    def _intrinsics(cam: str):
+        intr = rig.intrinsics[cam]
+        if args.undistorted:
+            from dataclasses import replace
+
+            intr = replace(intr, dist_coeffs=np.zeros(5, dtype=np.float64))
+        return intr
+
     for cam in cameras:
         corr = load_keypoint_correspondences(cam, fit_eps, args.data_root, args.keypoints_dir)
         if corr.count < args.min_inliers:
             print(f"{cam}: only {corr.count} correspondences, skipping.", file=sys.stderr)
             continue
-        s = solve_camera(cam, corr, rig.intrinsics[cam], min_inliers=args.min_inliers)
+        intr = _intrinsics(cam)
+        s = solve_camera(cam, corr, intr, min_inliers=args.min_inliers)
         solves[cam] = s
-        errs = correspondence_reprojection_errors(corr, s.rot, s.trans, rig.intrinsics[cam])
+        errs = correspondence_reprojection_errors(corr, s.rot, s.trans, intr)
         transfer[f"{cam} (fit)"] = error_stats_pixels(errs)
-        K = rig.intrinsics[cam]
+        K = intr
         spatial[cam] = pixel_error_grid_map(
             corr, errs, width=K.width or int(corr.points_image[:, 0].max()), height=K.height or int(corr.points_image[:, 1].max())
         )
@@ -201,7 +211,7 @@ def run_real(args) -> int:
             test_corr = load_keypoint_correspondences(cam, test_eps, args.data_root, args.keypoints_dir)
             if test_corr.count >= args.min_inliers:
                 test_errs = correspondence_reprojection_errors(
-                    test_corr, s.rot, s.trans, rig.intrinsics[cam]
+                    test_corr, s.rot, s.trans, intr
                 )
                 transfer[f"{cam} (held-out)"] = error_stats_pixels(test_errs)
 
@@ -402,6 +412,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--min-inliers", type=int, default=6)
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--self-test", action="store_true")
+    parser.add_argument(
+        "--undistorted",
+        action="store_true",
+        help="keypoints come from undistorted frames: solve with a pinhole "
+        "model (ignore channel distortion coefficients).",
+    )
     args = parser.parse_args(argv)
     if args.self_test:
         return run_self_test(args)
