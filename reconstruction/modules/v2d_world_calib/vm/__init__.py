@@ -1,0 +1,1 @@
+"""VM-side pipeline for the V2D world-calibration (Issue #3)."""

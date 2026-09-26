@@ -1,0 +1,39 @@
+# SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "v2d-world-calib"
+version = "0.1.0"
+description = "Mocap-to-camera world calibration: world<->camera extrinsics from GT objects + image correspondences"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy",
+    "opencv-python-headless>=4.8",
+]
+
+[project.optional-dependencies]
+data = [
+    "pyarrow",
+]
+torch = [
+    "torch",
+]
+
+[tool.setuptools]
+packages = [
+    "v2d.world_calib",
+    "v2d.world_calib.calibration",
+    "v2d.world_calib.cli",
+    "v2d.world_calib.tests",
+    "v2d.world_calib.vm",
+]
+
+[tool.setuptools.package-dir]
+"v2d.world_calib" = "."
+"v2d.world_calib.calibration" = "calibration"
+"v2d.world_calib.cli" = "cli"
+"v2d.world_calib.tests" = "tests"
+"v2d.world_calib.vm" = "vm"

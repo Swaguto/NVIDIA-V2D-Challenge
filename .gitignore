@@ -4,6 +4,7 @@ data/
 __pycache__/
 *.pyc
 .DS_Store
+results/
 
 # Very large binary artifacts that live in the shared VM, not in git
 *.mp4-wip
