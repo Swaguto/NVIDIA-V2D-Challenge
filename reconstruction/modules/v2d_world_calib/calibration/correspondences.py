@@ -301,7 +301,7 @@ def load_keypoint_correspondences(
 def _reference_pose_loader(episode: int, data_root: str | os.PathLike):
     import sys
 
-    repo_scripts = Path(__file__).resolve().parents[5] / "scripts" / "eval"
+    repo_scripts = Path(__file__).resolve().parents[4] / "scripts" / "eval"
     if str(repo_scripts) not in sys.path:
         sys.path.insert(0, str(repo_scripts))
     from reference_loader import load_reference
