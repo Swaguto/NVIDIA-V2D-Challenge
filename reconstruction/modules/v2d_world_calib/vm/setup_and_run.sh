@@ -65,6 +65,7 @@ cd "$REPO_DIR/reconstruction"
 python -m pip install --quiet --upgrade pip
 ./scripts/install_packages.sh || die "install_packages.sh failed"
 python -m pip install --quiet opencv-python-headless pyarrow
+python -m pip install --quiet scipy trimesh pillow   # fit_ego_rig (ICP solver)
 python -m pip install --quiet -e "$REPO_DIR/reconstruction/modules/v2d_world_calib"
 
 say "5/10 docker images (skip if present)"
@@ -142,11 +143,17 @@ else
     --sam2-weights "$WEIGHTS/sam2" \
     --fp-weights "$WEIGHTS/fp" \
     --fs-model-dir "$WEIGHTS/fs" 2>&1 | tee "$WORK/pipeline.log"
+
+  say "9b/10 fit ego-rig poses (ICP, replaces FP)"
+  python -m v2d.world_calib.vm.fit_ego_rig \
+    --data-root "$DATASET_ROOT" \
+    --work "$WORK" \
+    --episode "$EPISODE" 2>&1 | tee "$WORK/fit.log"
 fi
 
 say "10/10 pack outputs"
 if [ -f "$WORK/manifest.json" ]; then
-  tar czf "$HOME/v2d_poses_ep${EPISODE}.tar.gz" -C "$WORK" poses intrinsics manifest.json 2>/dev/null \
+  tar czf "$HOME/v2d_poses_ep${EPISODE}.tar.gz" -C "$WORK" poses intrinsics manifest.json ego_cam_poses 2>/dev/null \
     && echo "OUTPUTS: $HOME/v2d_poses_ep${EPISODE}.tar.gz" \
     || echo "OUTPUTS: tarball skipped (manifest present; tar the $WORK/poses tree)"
 else

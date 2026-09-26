@@ -24,3 +24,9 @@ results/
 
 # Local direnv overrides (only meaningful at repo root)
 .envrc.local
+# Local VM-pulled calibration artifacts (untracked)
+v2d_ep2_outputs/
+v2d_ep2_outputs_v2/
+v2d_ep2_outputs_v3/
+v2d_ep11_outputs/
+v2d_diag_ep2/
