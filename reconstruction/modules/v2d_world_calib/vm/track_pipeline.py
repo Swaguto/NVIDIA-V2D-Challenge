@@ -137,16 +137,22 @@ def encode_mp4(frames_dir: Path, mp4: Path, fps: float) -> None:
 
 def make_sam2_prompts(box_pixels: list[float], width: int, height: int,
                       frame_index: int, object_id: int, path: Path) -> None:
-    x0, y0, x1, y1 = box_pixels
+    """Write a SAM2 box prompt in PIXEL coordinates.
+
+    ``add_new_points_or_box`` (sam2_utils) divides box/points by the video
+    dimensions itself, so we must NOT pre-normalize; a normalized box would be
+    re-normalized and collapse to ~one pixel at the origin -> empty masks.
+    """
+    x0, y0, x1, y1 = [int(round(v)) for v in box_pixels]
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps({"prompts": [{
         "frame_index": int(frame_index),
         "object_id": int(object_id),
         "box": {
-            "x0": round(x0 / width, 6),
-            "y0": round(y0 / height, 6),
-            "x1": round(x1 / width, 6),
-            "y1": round(y1 / height, 6),
+            "x0": x0,
+            "y0": y0,
+            "x1": x1,
+            "y1": y1,
         },
     }]}, indent=2))
 
