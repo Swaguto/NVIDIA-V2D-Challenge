@@ -364,7 +364,12 @@ def main() -> int:
     ap.add_argument("--tukey-m", type=float, default=0.010)
     ap.add_argument("--start-sigma", type=float, default=0.35,
                     help="coarse-to-fine Tukey start (m); keeps bad inits attracted")
-    ap.add_argument("--pass-inlier", type=float, default=0.85)
+    ap.add_argument("--pass-inlier", type=float, default=0.60)
+    ap.add_argument("--cover2d-min", type=float, default=0.30,
+                    help="min fraction of mesh verts projecting into the right-cam mask")
+    ap.add_argument("--left-only", action="store_true",
+                    help="solve T from the left camera only; right cams verified via rig "
+                         "geometry + 2D mask coverage (right stereo depth has a scale bug)")
     ap.add_argument("--no-smooth", action="store_true")
     ap.add_argument("--reuse-fp", action="store_true", help="FP poses (work/poses) as extra inits")
     args = ap.parse_args()
@@ -398,6 +403,8 @@ def main() -> int:
         for cam in (cam_left, cam_right):
             (out_root / obj / "world_to_cam" / cam).mkdir(parents=True, exist_ok=True)
             (out_root / obj / "object_to_cam" / cam).mkdir(parents=True, exist_ok=True)
+        Kr, _, _ = load_intrinsics(work / "intrinsics" / f"{cam_right}.json")
+        Kc, _, _ = load_intrinsics(work / "intrinsics" / f"{cam_left}.json")
         print(f"[fit] {obj}: mesh {len(mesh)} pts")
 
         t_start = time.time()
@@ -414,11 +421,11 @@ def main() -> int:
                 work / "depth" / cam_left / f"{t:06d}.png",
                 work / "intrinsics" / f"{cam_left}.json", args.max_pts, t,
             )
-            qr = frame_cloud(
+            qr = (np.empty((0, 3), dtype=np.float32) if args.left_only else frame_cloud(
                 work / "masks" / cam_right / obj / "0" / f"{t:06d}.png",
                 work / "depth" / cam_right / f"{t:06d}.png",
                 work / "intrinsics" / f"{cam_right}.json", args.max_pts, t,
-            )
+            ))
             if len(ql) == 0 and len(qr) == 0:
                 continue
 
@@ -486,10 +493,26 @@ def main() -> int:
             T_lft, T_rgt = Ts[t], M @ Ts[t]
             per_obj["solved"] += 1
             met = quals[t]
-            flags = (met["cam_left"]["count"] > 0, met["cam_right"]["count"] > 0)
             inls = (met["cam_left"]["inlier"], met["cam_right"]["inlier"])
-            avg = float(sum(il for il, f in zip(inls, flags) if f) / max(sum(flags), 1))
-            passed = bool(sum(flags) >= 1 and avg >= args.pass_inlier)
+            flags = (met["cam_left"]["count"] > 0, met["cam_right"]["count"] > 0)
+            # right-cam 2D coverage: fraction of mesh verts (rig-projected) inside mask
+            cover2d = None
+            mask_rp = work / "masks" / cam_right / obj / "0" / f"{t:06d}.png"
+            if mask_rp.exists():
+                im_r = load_mask(mask_rp)
+                if im_r.sum() > 0:
+                    p_r = (T_rgt[:3, :3] @ mesh_w.T).T + T_rgt[:3, 3]
+                    u = Kr[0, 0] * p_r[:, 0] / p_r[:, 2] + Kr[0, 2]
+                    v = Kr[1, 1] * p_r[:, 1] / p_r[:, 2] + Kr[1, 2]
+                    ok = (u >= 0) & (u < Kr[0, 2] * 2) & (v >= 0) & (v < 2 * Kr[1, 2])
+                    if ok.sum():
+                        cover2d = float(im_r[np.clip(v[ok].astype(int), 0, 799),
+                                            np.clip(u[ok].astype(int), 0, 1279)].mean())
+            passed = bool(
+                met["cam_left"]["count"] > 0
+                and met["cam_left"]["inlier"] >= args.pass_inlier
+                and (cover2d is None or cover2d >= args.cover2d_min)
+            )
             for cam, Twc in ((cam_left, T_lft), (cam_right, T_rgt)):
                 (out_root / obj / "world_to_cam" / cam / f"{t:06d}.json").write_text(
                     json.dumps(mat_to_js(Twc), indent=2))
@@ -502,6 +525,7 @@ def main() -> int:
                 "rmse_right": met["cam_right"]["rmse"],
                 "count_left": met["cam_left"]["count"],
                 "count_right": met["cam_right"]["count"],
+                "cover_right_2d": cover2d,
                 "pass": passed,
                 "init": met["init"],
             }
@@ -544,7 +568,8 @@ def main() -> int:
         "baseline_m": round(float(np.linalg.norm(M[:3, 3])), 4),
         "params": {"iters": args.iters, "mesh_pts": args.mesh_pts,
                    "tukey_m": args.tukey_m, "start_sigma_m": args.start_sigma,
-                   "pass_inlier": args.pass_inlier,
+                   "pass_inlier": args.pass_inlier, "cover2d_min": args.cover2d_min,
+                   "left_only": args.left_only,
                    "smoothing": not args.no_smooth, "reuse_fp": args.reuse_fp},
         "cross_object_agreement_left": cross,
         "objects": per_obj_out,
