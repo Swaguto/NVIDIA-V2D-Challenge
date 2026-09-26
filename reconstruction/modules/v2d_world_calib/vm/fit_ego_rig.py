@@ -425,6 +425,8 @@ def main() -> int:
             pq = np.asarray(ref.pose_xyzw[t, b], dtype=np.float64)  # xyzw
             W_obj_world = _w_obj(pq)
             W_inv = _inv4(W_obj_world)
+            mesh_w = (W_obj_world[:3, :3] @ mesh.T).T + W_obj_world[:3, 3]
+            mesh_nw = W_obj_world[:3, :3] @ mesh_n.T
 
             inits: list[tuple[str, np.ndarray]] = []
             if prev is not None:
@@ -444,7 +446,7 @@ def main() -> int:
 
             best_score, best = -1.0, None
             for label_candidate, T0 in inits:
-                Tf, met = solve_frame(T0, mesh, mesh_n, M, ql, qr, args.iters, args.tukey_m,
+                Tf, met = solve_frame(T0, mesh_w, mesh_nw, M, ql, qr, args.iters, args.tukey_m,
                                       args.start_sigma)
                 n_cam = (met["cam_left"]["count"] > 0) + (met["cam_right"]["count"] > 0)
                 combined = (met["cam_left"]["inlier"] if met["cam_left"]["count"] else 0.0) \
