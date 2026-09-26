@@ -426,7 +426,7 @@ def main() -> int:
             W_obj_world = _w_obj(pq)
             W_inv = _inv4(W_obj_world)
             mesh_w = (W_obj_world[:3, :3] @ mesh.T).T + W_obj_world[:3, 3]
-            mesh_nw = W_obj_world[:3, :3] @ mesh_n.T
+            mesh_nw = (W_obj_world[:3, :3] @ mesh_n.T).T
 
             inits: list[tuple[str, np.ndarray]] = []
             if prev is not None:
