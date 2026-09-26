@@ -182,6 +182,16 @@ def main() -> None:
     ap.add_argument("--gdino-prompt", default=None,
                     help="text prompt (grounding dino); defaults to object names")
     ap.add_argument("--dev", action="store_true")
+    ap.add_argument("--reuse-prep", action="store_true",
+                    help="skip frame extraction, depth, detection and SAM2 when "
+                    "their outputs already exist; run only FoundationPose.")
+    ap.add_argument("--fp-register-iteration", type=int, default=10)
+    ap.add_argument("--fp-track-iteration", type=int, default=5)
+    ap.add_argument("--fp-mask-depth", action="store_true")
+    ap.add_argument("--fp-reregister-iou-thresh", type=float, default=None)
+    ap.add_argument("--fp-particles", type=int, default=1)
+    ap.add_argument("--fp-particle-iteration", type=int, default=3)
+    ap.add_argument("--fp-mask-iou-weight", type=float, default=1.0)
     args = ap.parse_args()
 
     data_root = Path(args.data_root).resolve()
@@ -216,6 +226,9 @@ def main() -> None:
         video = data_root / video_tmpl.format(cam=cam)
         raw = frames_root / "raw" / cam
         und = frames_root / cam
+        if args.reuse_prep and (intrinsics_dir / f"{cam}.json").exists() and any(und.glob("*.png")):
+            print(f"[reuse] {cam}: frames+intrinsics present, skipping extraction")
+            continue
         print(f"[extract+undistort] {cam} <- {video}")
         n = extract_frames(video, raw)
         undistort_to(raw, cam_entry, und, intrinsics_dir / f"{cam}.json")
@@ -239,6 +252,9 @@ def main() -> None:
             continue
         cam_entry = rig["cameras"][cam]
         print(f"[fs] depth for {cam} (partner {partner}, baseline {ego_baseline:.4f} m)")
+        if args.reuse_prep and (depth_root / cam / "000000.png").exists():
+            print(f"[reuse] {cam} depth present, skipping FoundationStereo")
+            continue
         run_image_list_to_depth(
             left_dir=str(frames_root / cam),
             right_dir=str(frames_root / partner),
@@ -262,34 +278,44 @@ def main() -> None:
         for obj in objects:
             prompt = args.gdino_prompt or obj
             det_json = detections_dir / f"{cam}_{obj}.json"
-            detections_dir.mkdir(parents=True, exist_ok=True)
-            print(f"[gdino] {cam} prompt={prompt!r}")
-            run_video_to_object_bboxes(
-                video_path=str(video_root / f"{cam}.mp4"),
-                output_path=str(det_json),
-                prompt=prompt,
-                model_dir=args.gdino_model_dir,
-                dev=args.dev,
-            )
-            picked = pick_detection(json.loads(det_json.read_text()))
-            if picked is None:
-                print(f"  !! no detection for {obj} on {cam}; skipping", file=sys.stderr)
-                continue
-            ref_frame, box_px = picked
-            print(f"  {obj}: reference frame {ref_frame}, box {box_px}")
-
-            prompts_path = prompts_dir / f"{cam}_{obj}.json"
-            make_sam2_prompts(box_px, W, H, ref_frame, 0, prompts_path)
-
             masks_dir = masks_root / cam / obj
-            print(f"[sam2] {cam}/{obj} -> masks")
-            run_video_to_masks(
-                video_path=str(video_root / f"{cam}.mp4"),
-                prompts_path=str(prompts_path),
-                masks_dir=str(masks_dir),
-                weights_dir=args.sam2_weights,
-                dev=args.dev,
-            )
+            if args.reuse_prep and det_json.exists() and (masks_dir / "0").exists() and any((masks_dir / "0").glob("*.png")):
+                print(f"[reuse] {cam}/{obj}: detection+masks present, skipping gdino/sam2")
+                det = json.loads(det_json.read_text())
+                picked = pick_detection(det)
+                if picked is None:
+                    print(f"  !! {obj} has detections file but none usable; skipping", file=sys.stderr)
+                    continue
+                ref_frame, box_px = picked
+            else:
+                detections_dir.mkdir(parents=True, exist_ok=True)
+                print(f"[gdino] {cam} prompt={prompt!r}")
+                run_video_to_object_bboxes(
+                    video_path=str(video_root / f"{cam}.mp4"),
+                    output_path=str(det_json),
+                    prompt=prompt,
+                    model_dir=args.gdino_model_dir,
+                    dev=args.dev,
+                )
+                picked = pick_detection(json.loads(det_json.read_text()))
+                if picked is None:
+                    print(f"  !! no detection for {obj} on {cam}; skipping", file=sys.stderr)
+                    continue
+                ref_frame, box_px = picked
+                print(f"  {obj}: reference frame {ref_frame}, box {box_px}")
+
+                prompts_path = prompts_dir / f"{cam}_{obj}.json"
+                make_sam2_prompts(box_px, W, H, ref_frame, 0, prompts_path)
+
+                masks_dir = masks_root / cam / obj
+                print(f"[sam2] {cam}/{obj} -> masks")
+                run_video_to_masks(
+                    video_path=str(video_root / f"{cam}.mp4"),
+                    prompts_path=str(prompts_path),
+                    masks_dir=str(masks_dir),
+                    weights_dir=args.sam2_weights,
+                    dev=args.dev,
+                )
 
             mesh = mesh_path_for(data_root, obj)
             poses_dir = poses_root / cam / obj
@@ -304,6 +330,13 @@ def main() -> None:
                 weights_dir=args.fp_weights,
                 reference_frame=ref_frame,
                 dev=args.dev,
+                register_iteration=args.fp_register_iteration,
+                track_iteration=args.fp_track_iteration,
+                n_particles=args.fp_particles,
+                particle_iteration=args.fp_particle_iteration,
+                particle_mask_iou_weight=args.fp_mask_iou_weight,
+                mask_depth=args.fp_mask_depth,
+                reregister_iou_thresh=args.fp_reregister_iou_thresh,
             )
 
     manifest = {
@@ -313,6 +346,15 @@ def main() -> None:
         "fps": info["fps"],
         "intrinsics": {c: str(intrinsics_dir / f"{c}.json") for c in args.cameras},
         "poses": {c: {o: str(poses_root / c / o) for o in objects} for c in args.cameras},
+        "fp_params": {
+            "register_iteration": args.fp_register_iteration,
+            "track_iteration": args.fp_track_iteration,
+            "n_particles": args.fp_particles,
+            "particle_iteration": args.fp_particle_iteration,
+            "mask_iou_weight": args.fp_mask_iou_weight,
+            "mask_depth": args.fp_mask_depth,
+            "reregister_iou_thresh": args.fp_reregister_iou_thresh,
+        },
     }
     (work / "manifest.json").write_text(json.dumps(manifest, indent=2))
     print(f"\nDONE. Outputs under {work}.")
