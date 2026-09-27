@@ -265,17 +265,80 @@ def _residual_metrics(mesh_cam: np.ndarray, n_cam: np.ndarray, q: np.ndarray,
     }
 
 
-def frame_cloud(mask_p: Path, depth_p: Path, intr_p: Path, max_pts: int, t: int) -> np.ndarray:
+def frame_cloud(mask_p: Path, depth_p: Path, intr_p: Path, max_pts: int, t: int,
+                scale: float = 1.0) -> np.ndarray:
     if not (mask_p.exists() and depth_p.exists() and intr_p.exists()):
         return np.empty((0, 3), dtype=np.float32)
     mask = load_mask(mask_p)
     if mask.sum() < 20:
         return np.empty((0, 3), dtype=np.float32)
     K, _, _ = load_intrinsics(intr_p)
-    q = backproject_cloud(load_depth_meters(depth_p), mask, K)
+    q = backproject_cloud(load_depth_meters(depth_p) * scale, mask, K)
     if len(q) > max_pts:
         q = q[np.random.default_rng(t).choice(len(q), max_pts, replace=False)]
     return q
+
+
+def estimate_right_depth_scale(
+    work: Path,
+    obj: str,
+    Tmax: int,
+    b: int,
+    ref,
+    M: np.ndarray,
+    cam_right: str,
+    mesh_dirs: dict,
+    mesh_pts: int,
+    max_frames: int = 60,
+) -> tuple[float, list[float]]:
+    """Empirical right-cam depth correction scale for this episode.
+
+    FoundationStereo inflates the right ego camera's depth by an almost-constant
+    factor on this data (1.33-1.48x, camera-specific; not fixable by pair
+    orientation).  We reuse the *left-driven* world->cam poses (already saved)
+    as rigid truth for the right camera (T_r = M @ T_l) and pick the uniform
+    multiplier m in [m_min, 1] that makes the scaled right cam cloud sit closest
+    to the metric object mesh, minimising the median point-to-plane NN distance.
+
+    Returns (best_m, median_nn_per_m).
+    """
+    from scipy.spatial import cKDTree
+
+    Kr, _, _ = load_intrinsics(work / "intrinsics" / f"{cam_right}.json")
+    mesh, mesh_n = mesh_points_and_normals(mesh_dirs[obj], min(mesh_pts, 600))
+    mesh_n = np.asarray(mesh_n, dtype=np.float64)
+    m_vals = np.linspace(0.55, 1.0, 19)
+    meds: list[list[float]] = []
+    used = 0
+    for t in range(Tmax):
+        if used >= max_frames or not bool(ref.visible[t, b]):
+            continue
+        wc_r = work / "ego_cam_poses" / obj / "world_to_cam" / cam_right / f"{t:06d}.json"
+        mask_p = work / "masks" / cam_right / obj / "0" / f"{t:06d}.png"
+        depth_p = work / "depth" / cam_right / f"{t:06d}.png"
+        if not (wc_r.exists() and mask_p.exists() and depth_p.exists()):
+            continue
+        pq = np.asarray(ref.pose_xyzw[t, b], dtype=np.float64)
+        W = _w_obj(pq)
+        mesh_w = (W[:3, :3] @ mesh.T).T + W[:3, 3]
+        T_r = js_to_mat(json.loads(wc_r.read_text()))
+        mesh_r_cam = (T_r[:3, :3] @ mesh_w.T).T + T_r[:3, 3]
+        q = frame_cloud(mask_p, depth_p, work / "intrinsics" / f"{cam_right}.json", 3000, t)
+        if len(q) < 200:
+            continue
+        kd = cKDTree(mesh_r_cam.astype(np.float32))
+        row = []
+        for m in m_vals:
+            qs = q * m
+            nn = kd.query(qs.astype(np.float32), k=1)[0]
+            row.append(float(np.median(nn)))
+        meds.append(row)
+        used += 1
+    if not meds:
+        return 1.0, []
+    median_arr = np.median(np.asarray(meds), axis=0)
+    best_i = int(np.argmin(median_arr))
+    return float(m_vals[best_i]), median_arr.tolist()
 
 
 def solve_frame(
@@ -371,6 +434,14 @@ def main() -> int:
     ap.add_argument("--joint-right", action="store_true",
                     help="include the right-cam cloud in the solve (default: left-only; the "
                          "right camera stereo depth has a scale bug ~1.35x and would drag)")
+    ap.add_argument("--right-depth-scale", type=float, default=1.0,
+                    help="uniform multiplier applied to right-cam depth before solving "
+                         "(e.g. 0.72 compensates the FS inflation; use --est-right-scale "
+                         "to derive it)")
+    ap.add_argument("--est-right-scale", action="store_true",
+                    help="estimate the episode-level right-depth scale m from saved poses + "
+                         "raw right depth, print it, and use it for --joint-right (also "
+                         "recorded in report.json)")
     ap.add_argument("--no-smooth", action="store_true")
     ap.add_argument("--reuse-fp", action="store_true", help="FP poses (work/poses) as extra inits")
     args = ap.parse_args()
@@ -388,6 +459,19 @@ def main() -> int:
     objects = list(ref.object_names)
     obj_order = [o.strip() for o in args.objects.split(",") if o.strip()] or objects
     mesh_dirs = loader.object_mesh_dir(obj_order, str(data_root))
+
+    right_depth_scale = args.right_depth_scale
+    est_profile: list[float] = []
+    if args.est_right_scale:
+        print("[est] deriving right-depth scale from saved poses + raw right depth...")
+        est_obj = obj_order[0]
+        est_m, est_profile = estimate_right_depth_scale(
+            work, est_obj, int(ref.steps), 0, ref, M, cam_right, mesh_dirs,
+            args.mesh_pts,
+        )
+        print(f"[est] best right_depth_scale for {est_obj}: {est_m:.4f}")
+        right_depth_scale = est_m
+        print(f"[use] right_depth_scale = {right_depth_scale:.4f}")
 
     print(f"episode {args.episode}: objects={obj_order} ego cams=({cam_left},{cam_right})")
     print(f"ego rig |t|={np.linalg.norm(M[:3, 3]):.4f} m")
@@ -426,6 +510,7 @@ def main() -> int:
                 work / "masks" / cam_right / obj / "0" / f"{t:06d}.png",
                 work / "depth" / cam_right / f"{t:06d}.png",
                 work / "intrinsics" / f"{cam_right}.json", args.max_pts, t,
+                scale=right_depth_scale,
             ))
             if len(ql) == 0 and len(qr) == 0:
                 continue
@@ -571,6 +656,9 @@ def main() -> int:
                    "tukey_m": args.tukey_m, "start_sigma_m": args.start_sigma,
                    "pass_inlier": args.pass_inlier, "cover2d_min": args.cover2d_min,
                    "joint_right": args.joint_right,
+                   "right_depth_scale": right_depth_scale,
+                   "right_depth_scale_profile": est_profile,
+                   "est_right_scale": args.est_right_scale,
                    "smoothing": not args.no_smooth, "reuse_fp": args.reuse_fp},
         "cross_object_agreement_left": cross,
         "objects": per_obj_out,
