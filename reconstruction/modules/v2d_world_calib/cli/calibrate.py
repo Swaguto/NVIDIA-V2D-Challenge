@@ -113,7 +113,7 @@ def write_report(
         lines += ["| camera | mean | median | RMSE | P95 | max |", "|---|---|---|---|---|---|"]
         for cam, st in sorted(transfer_stats.items()):
             lines.append(f"| {cam} | {st['mean']:.2f} | {st['median']:.2f} | {st['rmse']:.2f} | {st['p95']:.2f} | {st['max']:.2f} |")
-        lines += ["", f"- test episodes: {''.join(map(str, test_episodes))}", ""]
+        lines += ["", f"- test episodes: {', '.join(map(str, test_episodes))}", ""]
 
     if spatial_maps:
         lines += ["## spatial error map (mean px per image region, rows x cols)", ""]

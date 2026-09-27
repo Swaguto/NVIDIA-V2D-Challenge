@@ -250,19 +250,19 @@ def main() -> None:
         if ego_baseline is None:
             print(f"WARNING: no ego baseline declared for {cam}; skipping depth", file=sys.stderr)
             continue
-        cam_entry = rig["cameras"][cam]
         print(f"[fs] depth for {cam} (partner {partner}, baseline {ego_baseline:.4f} m)")
         if args.reuse_prep and (depth_root / cam / "000000.png").exists():
             print(f"[reuse] {cam} depth present, skipping FoundationStereo")
             continue
+        intrinsics = json.loads((intrinsics_dir / f"{cam}.json").read_text())
         run_image_list_to_depth(
             left_dir=str(frames_root / cam),
             right_dir=str(frames_root / partner),
             depth_folder=str(depth_root / cam),
             intrinsics_folder=str(depth_root / cam / "_intr"),
             model_dir=args.fs_model_dir,
-            fx=float(cam_entry["fx"]), fy=float(cam_entry["fy"]),
-            cx=float(cam_entry["cx"]), cy=float(cam_entry["cy"]),
+            fx=float(intrinsics["fx"]), fy=float(intrinsics["fy"]),
+            cx=float(intrinsics["cx"]), cy=float(intrinsics["cy"]),
             baseline=ego_baseline,
             dev=args.dev,
         )

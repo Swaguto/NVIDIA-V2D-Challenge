@@ -149,7 +149,7 @@ def main() -> None:
         poses = {
             t: {o: load_pose(poses_dir / cam / o / f"{t:06d}.json") for o in objs}
             for t in range(100000)
-            if (poses_dir / cam / objs[0] / f"{t:06d}.json").exists()
+            if all((poses_dir / cam / o / f"{t:06d}.json").exists() for o in objs)
         }
         ok_a, med_dt, med_ang = gate_a(
             cam, poses, objs, args.gate_a_max_trans_mm / 1000.0, args.gate_a_max_rot_deg

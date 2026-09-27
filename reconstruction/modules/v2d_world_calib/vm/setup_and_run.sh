@@ -134,6 +134,7 @@ if [ "${VM_SKIP_PIPELINE:-0}" = "1" ]; then
 else
   say "9/10 track pipeline (episode $EPISODE, cams: $CAMERAS)"
   mkdir -p "$WORK"
+  rm -f "$WORK/manifest.json"
   python -m v2d.world_calib.vm.track_pipeline \
     --data-root "$DATASET_ROOT" \
     --work "$WORK" \
