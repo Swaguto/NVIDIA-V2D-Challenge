@@ -162,6 +162,7 @@ def main() -> int:
         print(f"[fit] {obj}: mesh {len(mesh_o)} pts, frames {Tmax_o}")
 
         t_start = time.time()
+        n_vis = int(ref.visible[:, b].sum()) if ref is not None else Tmax_o
         Xs: list[np.ndarray | None] = [None] * Tmax_o
         quals: list[dict | None] = [None] * Tmax_o
         prev: np.ndarray | None = None
@@ -282,16 +283,17 @@ def main() -> int:
                 meta["trans_err_m"] = round(disp, 4)
                 meta["chamfer_mm"] = round(chm, 3)
                 meta["gt_pass"] = bool(ang <= 10.0 and disp <= 0.05 and chm <= 15.0)
-                if passed:
-                    gt_ang.append(ang)
-                    gt_disp.append(disp)
-                    gt_chm.append(chm)
+                gt_ang.append(ang)
+                gt_disp.append(disp)
+                gt_chm.append(chm)
             per_obj["framedetails"][str(t)] = meta
             if passed:
                 per_obj["passed"] += 1
         if gt_ang:
             per_obj["gt_score"] = {
-                "n": len(gt_ang),
+                "n_solved_gt": len(gt_ang),
+                "n_visible": int(n_vis),
+                "coverage_visible": round(len(gt_ang) / max(int(n_vis), 1), 3),
                 "median_rot_deg": float(np.median(gt_ang)),
                 "median_trans_m": float(np.median(gt_disp)),
                 "median_chamfer_mm": float(np.median(gt_chm)),
