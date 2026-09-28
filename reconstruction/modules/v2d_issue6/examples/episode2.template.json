@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "episode": 2,
+  "mode": "gt_assisted_development",
+  "units": "metres",
+  "camera_provenance": "ground_truth_assisted",
+  "hand_provenance": "predicted",
+  "color_camera": {
+    "id": "ego_cam_a",
+    "convention": "rectified_pinhole",
+    "width": 2028,
+    "height": 1520,
+    "fx": null,
+    "fy": null,
+    "cx": null,
+    "cy": null
+  },
+  "depth": null,
+  "objects": [
+    {
+      "id": "white_pot",
+      "mesh": "REPLACE/white_pot.glb",
+      "provenance": "ground_truth_assisted"
+    },
+    {
+      "id": "white_pot_lid",
+      "mesh": "REPLACE/white_pot_lid.glb",
+      "provenance": "ground_truth_assisted"
+    }
+  ],
+  "hand_source": {
+    "backend": "hamer",
+    "mano_assets_root": "REPLACE/mano_assets",
+    "weights_dir": "REPLACE/hamer_weights",
+    "sam2_weights": "REPLACE/sam2_weights",
+    "model_files": []
+  },
+  "settings": {
+    "minimum_pixels": 256,
+    "contact_threshold_m": 0.02,
+    "bridge_frames": 15
+  },
+  "frames": []
+}

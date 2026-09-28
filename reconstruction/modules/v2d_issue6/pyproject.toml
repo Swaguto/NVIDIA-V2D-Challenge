@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "v2d-issue6"
+version = "0.1.0"
+description = "Staged hand reconstruction and stereo contact diagnostics for Track 3"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24", "Pillow>=10", "trimesh>=4,<6"]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+lint = ["ruff==0.16.9"]
+
+[project.scripts]
+v2d-issue6 = "issue6.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["issue6*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

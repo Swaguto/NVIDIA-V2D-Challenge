@@ -1,0 +1,41 @@
+name: Issue 6 CPU contracts
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'reconstruction/modules/v2d_issue6/**'
+      - '.github/workflows/issue6_cpu_ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: issue6-cpu-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cpu:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        python: ['3.10', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install CPU dependencies
+        run: python -m pip install -e 'reconstruction/modules/v2d_issue6[test,lint]'
+      - name: Lint and formatting
+        run: |
+          python -m ruff check reconstruction/modules/v2d_issue6
+          python -m ruff format --check reconstruction/modules/v2d_issue6
+      - name: Geometry and integration contracts (synthetic hands)
+        run: python -m pytest reconstruction/modules/v2d_issue6/tests -q
+      - name: CLI and compile checks
+        run: |
+          python -m issue6.cli --help
+          python -m compileall -q reconstruction/modules/v2d_issue6/issue6
