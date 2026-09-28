@@ -19,7 +19,7 @@ applies verbatim (solve_frame already solves "body->cam_left").  Both
 cameras constrain the same P through the fixed rig (M), so rotation is well
 identified even for textureless objects (white_pot / white_pot_lid).
 
-Outputs under ``{work}/ego_object_poses``:
+Outputs under ``{work}/ego_object_poses/e{episode}/``:
   {obj}/object_to_world/{frame:06d}.json   Transform3d object->world (w-first)
   {obj}/object_to_cam/{cam}/{frame:06d}.json
   report.json                              metrics + per-frame pass list
@@ -142,7 +142,7 @@ def main() -> int:
         sys.exit(f"{cam_root / cam_left}: fixed world_to_cam poses missing (run fit_ego_rig)")
 
     out_root = work / "ego_object_poses"
-    out_root.mkdir(parents=True, exist_ok=True)
+    ep_dir = out_root / f"e{args.episode:03d}"
     Tmax = int(ref.steps) if ref is not None else -1
     per_obj_out: dict[str, dict] = {}
 
@@ -151,8 +151,8 @@ def main() -> int:
         mesh_o = np.asarray(mesh_o, dtype=np.float64)
         mesh_on = np.asarray(mesh_on, dtype=np.float64)
         for cam in (cam_left, cam_right):
-            (out_root / obj / "object_to_world").mkdir(parents=True, exist_ok=True)
-            (out_root / obj / "object_to_cam" / cam).mkdir(parents=True, exist_ok=True)
+            (ep_dir / obj / "object_to_world").mkdir(parents=True, exist_ok=True)
+            (ep_dir / obj / "object_to_cam" / cam).mkdir(parents=True, exist_ok=True)
         c_o = mesh_o.mean(axis=0)
         Tmax_o = Tmax
         if Tmax_o < 0:
@@ -266,10 +266,10 @@ def main() -> int:
                 "init": met["init"],
                 "pass": passed,
             }
-            (out_root / obj / "object_to_world" / f"{t:06d}.json").write_text(
+            (ep_dir / obj / "object_to_world" / f"{t:06d}.json").write_text(
                 json.dumps(mat_to_js(X), indent=2))
             for cam, Pc in ((cam_left, Pf), (cam_right, M @ Pf)):
-                (out_root / obj / "object_to_cam" / cam / f"{t:06d}.json").write_text(
+                (ep_dir / obj / "object_to_cam" / cam / f"{t:06d}.json").write_text(
                     json.dumps(mat_to_js(Pc), indent=2))
 
             if args.score_gt and not args.no_gt:
@@ -320,11 +320,11 @@ def main() -> int:
                    "smoothing": not args.no_smooth},
         "objects": per_obj_out,
     }
-    (out_root / "report.json").write_text(json.dumps(report, indent=2))
+    (ep_dir / "report.json").write_text(json.dumps(report, indent=2))
     tot_solved = int(sum(o["solved"] for o in per_obj_out.values()))
     tot_pass = int(sum(o["passed"] for o in per_obj_out.values()))
     print(f"\nSUMMARY solved={tot_solved} passed={tot_pass}")
-    print(f"report: {out_root / 'report.json'}")
+    print(f"report: {ep_dir / 'report.json'}")
     return 0
 
 
