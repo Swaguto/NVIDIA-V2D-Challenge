@@ -488,7 +488,7 @@ def main() -> int:
         for cam in (cam_left, cam_right):
             (out_root / obj / "world_to_cam" / cam).mkdir(parents=True, exist_ok=True)
             (out_root / obj / "object_to_cam" / cam).mkdir(parents=True, exist_ok=True)
-        Kr, _, _ = load_intrinsics(work / "intrinsics" / f"{cam_right}.json")
+        Kr, Wr, Hr = load_intrinsics(work / "intrinsics" / f"{cam_right}.json")
         Kc, _, _ = load_intrinsics(work / "intrinsics" / f"{cam_left}.json")
         print(f"[fit] {obj}: mesh {len(mesh)} pts")
 
@@ -590,10 +590,10 @@ def main() -> int:
                     p_r = (T_rgt[:3, :3] @ mesh_w.T).T + T_rgt[:3, 3]
                     u = Kr[0, 0] * p_r[:, 0] / p_r[:, 2] + Kr[0, 2]
                     v = Kr[1, 1] * p_r[:, 1] / p_r[:, 2] + Kr[1, 2]
-                    ok = (u >= 0) & (u < Kr[0, 2] * 2) & (v >= 0) & (v < 2 * Kr[1, 2])
+                    ok = (u >= 0) & (u < Wr) & (v >= 0) & (v < Hr)
                     if ok.sum():
-                        cover2d = float(im_r[np.clip(v[ok].astype(int), 0, 799),
-                                            np.clip(u[ok].astype(int), 0, 1279)].mean())
+                        cover2d = float(im_r[np.clip(v[ok].astype(int), 0, Hr - 1),
+                                            np.clip(u[ok].astype(int), 0, Wr - 1)].mean())
             passed = bool(
                 met["cam_left"]["count"] > 0
                 and met["cam_left"]["inlier"] >= args.pass_inlier
