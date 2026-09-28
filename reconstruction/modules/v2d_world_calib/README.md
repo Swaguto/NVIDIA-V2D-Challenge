@@ -105,3 +105,59 @@ poses → keypoint cache is added once a first pose bundle comes back.
   the challenge provides no camera-space 3D references.
 - Proxy episodes `(0, 11, 23, 31, 39)` are never tuned on; a guard warns if a
   proxy episode is passed as a fit frame.
+## Object pose fitting and validation (Issue #5)
+
+`vm.fit_object_pose` estimates object-to-world poses using prepared W1 camera
+poses, masks, depth and intrinsics. Its CPU fitter additionally needs `scipy`,
+`trimesh` and `Pillow`; reading public GT needs `pyarrow`.
+
+```bash
+python -m pip install -e 'reconstruction/modules/v2d_world_calib[data]' scipy trimesh Pillow pytest
+python -m pytest reconstruction/modules/v2d_world_calib/tests -q
+python -m v2d.world_calib.vm.fit_object_pose \
+    --data-root /path/to/track_3/public \
+    --work /path/to/prepared/episode_000002 \
+    --episode 2 --score-gt
+```
+
+Use exactly one of `--score-gt` (public GT visibility/scoring) or `--no-gt`
+(mask-driven evaluation; requires `--objects`). Omit `--objects` in public
+validation to cover every object in that episode. `--pose-obj` selects the
+object directory containing the fixed camera poses; it defaults to the first
+requested object. Each episode needs its own prepared work directory: the
+input paths `ego_cam_poses`, `masks`, `depth` and `intrinsics` do not include an
+episode ID. Reusing another episode's inputs invalidates the results.
+
+Outputs are under `WORK/ego_object_poses/eNNN/`, including `report.json` and
+per-object `object_to_world` / `object_to_cam` transforms with wxyz quaternions.
+GT parquets are converted from the reference loader's xyzw representation.
+The report contains visibility coverage, rotation errors in degrees,
+translation errors in metres, and symmetric Chamfer distances in millimetres.
+Both per-frame `gt_pass` and aggregate `pass_5cm_10deg` use only the inclusive
+5 cm / 10 degree thresholds. Aggregate errors and pass rate describe solved
+visible frames; always inspect `n_visible`, `n_solved_gt` and `coverage_visible`
+together. With no solutions, error/rate fields are null and coverage is zero
+(or null if no frames are visible).
+
+### Public benchmark evidence still required
+
+Synthetic tests exercise metrics and the CLI report/output boundary with a
+stubbed solver. They do **not** establish real tracking accuracy. Issue #5
+requires reports for all 20 public episodes and median errors below 5 cm and
+5 degrees while visible; the pass@5cm/10deg statistic is a separate measure.
+For a full validation run:
+
+1. Enumerate the episode IDs from `public/data/chunk-*/episode_*.parquet`;
+   do not assume the IDs are consecutive. Confirm there are 20 episodes.
+2. Prepare W1 inputs for each episode and run the command above with that
+   episode's ID and work directory, covering all its objects.
+3. Retain each `report.json` with the tested Git revision, command/parameters,
+   input provenance, per-object coverage and errors. Include episodes with
+   zero solved frames so missing coverage cannot disappear from the evidence.
+4. Review the per-episode medians and coverage before claiming completion.
+
+The public dataset and prepared W1 inputs are absent from the PR repair
+sandbox. No all-episode benchmark result is claimed here. Evaluation episodes
+without CAD assets cannot use this fitter; retain masks/depth/camera outputs
+for a separate asset-free reconstruction path instead of reporting fitted
+poses or GT scores.

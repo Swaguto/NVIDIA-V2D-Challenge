@@ -50,11 +50,9 @@ from v2d.world_calib.vm.fit_ego_rig import (
     _exp_se3,
     _inv4,
     _log_se3_vee,
-    _w_obj,
     ego_rig_matrix,
     frame_cloud,
     js_to_mat,
-    load_intrinsics,
     load_reference_loader,
     mat_to_js,
     mesh_points_and_normals,
@@ -68,6 +66,7 @@ from v2d.world_calib.vm.fit_ego_rig import (
 
 
 def _pose_error(X: np.ndarray, W_gt: np.ndarray) -> tuple[float, float]:
+    """Return rotation error in degrees and translation error in metres."""
     Del = _inv4(W_gt) @ X
     ang = float(np.degrees(np.arccos(np.clip((np.trace(Del[:3, :3]) - 1) / 2, -1, 1))))
     disp = float(np.linalg.norm(Del[:3, 3]))
@@ -75,6 +74,7 @@ def _pose_error(X: np.ndarray, W_gt: np.ndarray) -> tuple[float, float]:
 
 
 def _chamfer(a: np.ndarray, b: np.ndarray) -> float:
+    """Return symmetric mean nearest-neighbour distance in mm, or NaN if empty."""
     from scipy.spatial import cKDTree
 
     if len(a) == 0 or len(b) == 0:
@@ -84,12 +84,44 @@ def _chamfer(a: np.ndarray, b: np.ndarray) -> float:
     return float(1000.0 * (d_ab.mean() + d_ba.mean()) / 2.0)
 
 
+def _summarize_gt(angles: list[float], displacements: list[float],
+                  chamfers: list[float], n_visible: int) -> dict:
+    """Aggregate solved visible frames; retain coverage even when none solve.
+
+    Errors and pass rate are conditional on solved frames. Coverage uses all
+    GT-visible frames; unavailable errors/rates are JSON null, never zero.
+    """
+    score = {
+        "n_solved_gt": len(angles),
+        "n_visible": n_visible,
+        "coverage_visible": round(len(angles) / n_visible, 3) if n_visible else None,
+        "median_rot_deg": None,
+        "median_trans_m": None,
+        "median_chamfer_mm": None,
+        "p90_rot_deg": None,
+        "p90_trans_m": None,
+        "pass_5cm_10deg": None,
+    }
+    if angles:
+        score.update({
+            "median_rot_deg": float(np.median(angles)),
+            "median_trans_m": float(np.median(displacements)),
+            "median_chamfer_mm": float(np.median(chamfers)),
+            "p90_rot_deg": float(np.percentile(angles, 90)),
+            "p90_trans_m": float(np.percentile(displacements, 90)),
+            "pass_5cm_10deg": float(np.mean(
+                [a <= 10.0 and d <= 0.05 for a, d in zip(angles, displacements)])),
+        })
+    return score
+
+
 # --------------------------------------------------------------------------- #
 # driver
 # --------------------------------------------------------------------------- #
 
 
 def main() -> int:
+    """Fit object poses from fixed camera inputs and write per-episode reports."""
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--data-root", required=True)
     ap.add_argument("--work", required=True)
@@ -110,17 +142,16 @@ def main() -> int:
     ap.add_argument("--right-depth-scale", type=float, default=1.0)
     ap.add_argument("--jump-deg", type=float, default=40.0, help="max ok temporal jump")
     ap.add_argument("--jump-m", type=float, default=0.30, help="max ok temporal jump")
-    ap.add_argument("--score-gt", action="store_true",
+    mode = ap.add_mutually_exclusive_group(required=True)
+    mode.add_argument("--score-gt", action="store_true",
                     help="load parquet GT: drive frames by GT visibility, report errors")
-    ap.add_argument("--no-gt", action="store_true",
+    mode.add_argument("--no-gt", action="store_true",
                     help="eval split: no parquet; process frames where the mask exists")
     ap.add_argument("--no-smooth", action="store_true")
     args = ap.parse_args()
 
     data_root = Path(args.data_root)
     work = Path(args.work)
-    if not args.score_gt and not args.no_gt:
-        sys.exit("need --score-gt (public) or --no-gt (eval)")
 
     rig = json.loads((data_root / "meta" / "camera_calibration.json").read_text())
     cam_left, cam_right, M = ego_rig_matrix(rig)
@@ -131,6 +162,10 @@ def main() -> int:
     obj_order = [o.strip() for o in args.objects.split(",") if o.strip()] or objects
     if not obj_order:
         sys.exit("--no-gt: no parquet; pass an explicit --objects list")
+    if ref is not None:
+        unknown = set(obj_order) - set(objects)
+        if unknown:
+            ap.error(f"objects absent from episode GT: {sorted(unknown)}")
     mesh_dirs = loader.object_mesh_dir(obj_order, str(data_root))
     pose_obj = args.pose_obj or obj_order[0]
 
@@ -146,7 +181,8 @@ def main() -> int:
     Tmax = int(ref.steps) if ref is not None else -1
     per_obj_out: dict[str, dict] = {}
 
-    for b, obj in enumerate(obj_order):
+    for obj in obj_order:
+        b = objects.index(obj) if ref is not None else None
         mesh_o, mesh_on = mesh_points_and_normals(mesh_dirs[obj], args.mesh_pts)
         mesh_o = np.asarray(mesh_o, dtype=np.float64)
         mesh_on = np.asarray(mesh_on, dtype=np.float64)
@@ -192,7 +228,7 @@ def main() -> int:
                 P0s.append(("propagate", C_l @ prev))
             if len(ql) > 0:
                 Pc = np.eye(4)
-                rot0 = (prev[:3, :3] if prev is not None else np.eye(3))
+                rot0 = ((C_l @ prev)[:3, :3] if prev is not None else np.eye(3))
                 Pc[:3, :3] = rot0
                 Pc[:3, 3] = ql.mean(axis=0) - rot0 @ c_o
                 P0s.append(("centroid", Pc))
@@ -212,7 +248,8 @@ def main() -> int:
             if best is None:
                 continue
             Pf, met = best
-            Xs[t], quals[t], prev = _inv4(C_l) @ Pf, met, Pf
+            Xs[t], quals[t] = _inv4(C_l) @ Pf, met
+            prev = Xs[t]
 
         if not args.no_smooth and sum(x is not None for x in Xs) > 3:
             window, sigma = 4, 2.0
@@ -274,7 +311,9 @@ def main() -> int:
 
             if args.score_gt and not args.no_gt:
                 pq = np.asarray(ref.pose_xyzw[t, b], dtype=np.float64)
-                W_gt = _w_obj(pq)
+                # Reference poses are xyzw; Transform3d expects wxyz.
+                W_gt = js_to_mat({"rotation": pq[[6, 3, 4, 5]],
+                                  "translation": pq[:3]})
                 ang, disp = _pose_error(X, W_gt)
                 mesh_w_fit = (X[:3, :3] @ mesh_o.T).T + X[:3, 3]
                 mesh_w_gt = (W_gt[:3, :3] @ mesh_o.T).T + W_gt[:3, 3]
@@ -282,26 +321,15 @@ def main() -> int:
                 meta["rot_err_deg"] = round(ang, 3)
                 meta["trans_err_m"] = round(disp, 4)
                 meta["chamfer_mm"] = round(chm, 3)
-                meta["gt_pass"] = bool(ang <= 10.0 and disp <= 0.05 and chm <= 15.0)
+                meta["gt_pass"] = bool(ang <= 10.0 and disp <= 0.05)
                 gt_ang.append(ang)
                 gt_disp.append(disp)
                 gt_chm.append(chm)
             per_obj["framedetails"][str(t)] = meta
             if passed:
                 per_obj["passed"] += 1
-        if gt_ang:
-            per_obj["gt_score"] = {
-                "n_solved_gt": len(gt_ang),
-                "n_visible": int(n_vis),
-                "coverage_visible": round(len(gt_ang) / max(int(n_vis), 1), 3),
-                "median_rot_deg": float(np.median(gt_ang)),
-                "median_trans_m": float(np.median(gt_disp)),
-                "median_chamfer_mm": float(np.median(gt_chm)),
-                "p90_rot_deg": float(np.percentile(gt_ang, 90)),
-                "p90_trans_m": float(np.percentile(gt_disp, 90)),
-                "pass_5cm_10deg": float(np.mean(
-                    [a <= 10.0 and d <= 0.05 for a, d in zip(gt_ang, gt_disp)])),
-            }
+        if args.score_gt:
+            per_obj["gt_score"] = _summarize_gt(gt_ang, gt_disp, gt_chm, n_vis)
         per_obj["elapsed_s"] = round(time.time() - t_start, 1)
         per_obj_out[obj] = per_obj
         print(f"  {obj}: solved {per_obj['solved']} passed {per_obj['passed']} "
