@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "v2d-reliability"
+version = "0.1.0"
+description = "Reproducible contact reliability experiments for NVIDIA V2D Track 3"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24,<3"]
+
+[project.optional-dependencies]
+training = ["torch>=2.4"]
+test = ["pytest>=8"]
+motion = ["pyarrow>=15"]
+
+[project.scripts]
+v2d-research = "v2d_reliability.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

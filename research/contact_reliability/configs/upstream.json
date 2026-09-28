@@ -1,0 +1,7 @@
+{
+  "repository": "https://github.com/nvidia-isaac/video_to_data.git",
+  "ref": "release/0.2.0",
+  "commit": "43a3f5b4d479581f2e8bdf5e6ed7ca361d39ec5a",
+  "verified_date": "2026-09-21",
+  "eval_e2e_present_in_tree": false
+}
