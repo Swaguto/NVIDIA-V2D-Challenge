@@ -127,9 +127,11 @@ def main() -> int:
     ap.add_argument("--work", required=True)
     ap.add_argument("--episode", type=int, default=2)
     ap.add_argument("--objects", default="", help="comma list; default = all in parquet")
-    ap.add_argument("--pose-obj", default="",
-                    help="object whose fixed world_to_cam poses seed the solve "
-                         "(default: first of --objects)")
+    ap.add_argument("--pose-obj", default="auto",
+                    help="which object's fixed world_to_cam poses seed the solve. "
+                         "'auto' (default) gives each object its own rig, falling "
+                         "back to the first available one when a per-object rig is "
+                         "missing. Otherwise name a single object to share.")
     ap.add_argument("--iters", type=int, default=40)
     ap.add_argument("--mesh-pts", type=int, default=2500)
     ap.add_argument("--max-pts", type=int, default=3000)
@@ -139,7 +141,10 @@ def main() -> int:
     ap.add_argument("--joint-right", action="store_true",
                     help="also constrain P with the right-cam cloud (scaled by "
                          "--right-depth-scale); the FS depth-scale bug ~1.35x applies")
-    ap.add_argument("--right-depth-scale", type=float, default=1.0)
+    ap.add_argument("--right-depth-scale", type=float, default=1.0,
+                    help="mult on right-cam depth. 1.0 is known-wrong: FoundationStereo "
+                         "inflates the right view ~1.35x (issue #23). Use "
+                         "--est-right-scale to derive it, or pass ~0.72 by hand.")
     ap.add_argument("--jump-deg", type=float, default=40.0, help="max ok temporal jump")
     ap.add_argument("--jump-m", type=float, default=0.30, help="max ok temporal jump")
     mode = ap.add_mutually_exclusive_group(required=True)
@@ -167,14 +172,25 @@ def main() -> int:
         if unknown:
             ap.error(f"objects absent from episode GT: {sorted(unknown)}")
     mesh_dirs = loader.object_mesh_dir(obj_order, str(data_root))
-    pose_obj = args.pose_obj or obj_order[0]
+
+    # Shared rig root, used when an object has no rig of its own. Resolved before
+    # any reporting so the printout below never names a literal "auto".
+    if args.pose_obj == "auto":
+        avail = [o for o in obj_order
+                 if (work / "ego_cam_poses" / o / "world_to_cam" / cam_left).exists()]
+        if not avail:
+            sys.exit(f"no world_to_cam under {work / 'ego_cam_poses'}/<obj>/ "
+                     f"for any of {obj_order} (run fit_ego_rig first)")
+        shared = avail[0]
+    else:
+        if args.pose_obj not in obj_order:
+            sys.exit(f"--pose-obj {args.pose_obj} not in {obj_order}")
+        shared = args.pose_obj
+    cam_root = work / "ego_cam_poses" / shared / "world_to_cam"
 
     print(f"episode {args.episode}: objects={obj_order} cams=({cam_left},{cam_right})")
-    print(f"pose source: ego_cam_poses/{pose_obj}  rig |t|={np.linalg.norm(M[:3, 3]):.4f} m")
-
-    cam_root = work / "ego_cam_poses" / pose_obj / "world_to_cam"
-    if not (cam_root / cam_left).exists():
-        sys.exit(f"{cam_root / cam_left}: fixed world_to_cam poses missing (run fit_ego_rig)")
+    print(f"pose source: {'per-object' if args.pose_obj == 'auto' else 'shared ' + shared}"
+          f"  rig |t|={np.linalg.norm(M[:3, 3]):.4f} m")
 
     out_root = work / "ego_object_poses"
     ep_dir = out_root / f"e{args.episode:03d}"
@@ -195,6 +211,17 @@ def main() -> int:
             frames = sorted(int(p.stem) for p in
                             (work / "masks" / cam_left / obj / "0").glob("[0-9]*.png"))
             Tmax_o = (frames[-1] + 1) if frames else 0
+        # Rig poses are solved per object by fit_ego_rig, and they differ in
+        # quality: driving every object from one object's rig couples them and
+        # lets a bad rig contaminate a good one. Prefer this object's own rig.
+        if args.pose_obj == "auto":
+            own = work / "ego_cam_poses" / obj / "world_to_cam"
+            pose_root = own if (own / cam_left).exists() else cam_root
+        else:
+            pose_root = cam_root
+        if pose_root is not cam_root:
+            print(f"[pose] {obj}: own rig {pose_root.parent.parent.name}")
+
         print(f"[fit] {obj}: mesh {len(mesh_o)} pts, frames {Tmax_o}")
 
         t_start = time.time()
@@ -202,13 +229,22 @@ def main() -> int:
         Xs: list[np.ndarray | None] = [None] * Tmax_o
         quals: list[dict | None] = [None] * Tmax_o
         prev: np.ndarray | None = None
+        used_rig: dict[int, Path] = {}
         for t in range(Tmax_o):
             if ref is not None and not args.no_gt and not bool(ref.visible[t, b]):
                 continue
-            wc_l = cam_root / cam_left / f"{t:06d}.json"
+            # An object may have its own rig, but that rig covers only the frames
+            # fit_ego_rig actually solved. Fall back to the shared rig per frame
+            # rather than dropping the frame, so a partial per-object rig
+            # degrades to shared coverage instead of losing frames.
+            wc_l = pose_root / cam_left / f"{t:06d}.json"
             if not wc_l.exists():
-                continue
+                alt = cam_root / cam_left / f"{t:06d}.json"
+                if not alt.exists():
+                    continue
+                wc_l = alt
             C_l = js_to_mat(json.loads(wc_l.read_text()))
+            used_rig[t] = wc_l
             ql = frame_cloud(
                 work / "masks" / cam_left / obj / "0" / f"{t:06d}.png",
                 work / "depth" / cam_left / f"{t:06d}.png",
@@ -276,7 +312,7 @@ def main() -> int:
         for t in range(len(Xs)):
             if Xs[t] is None:
                 continue
-            C_l = js_to_mat(json.loads((cam_root / cam_left / f"{t:06d}.json").read_text()))
+            C_l = js_to_mat(json.loads(used_rig[t].read_text()))
             X, met = Xs[t], quals[t]
             per_obj["solved"] += 1
             Pf = C_l @ X
@@ -339,7 +375,7 @@ def main() -> int:
         "episode": args.episode,
         "cam_left": cam_left,
         "cam_right": cam_right,
-        "pose_source": f"ego_cam_poses/{pose_obj}",
+        "pose_source": "per-object" if args.pose_obj == "auto" else f"ego_cam_poses/{shared}",
         "params": {"iters": args.iters, "mesh_pts": args.mesh_pts,
                    "tukey_m": args.tukey_m, "start_sigma_m": args.start_sigma,
                    "pass_inlier": args.pass_inlier, "joint_right": args.joint_right,
