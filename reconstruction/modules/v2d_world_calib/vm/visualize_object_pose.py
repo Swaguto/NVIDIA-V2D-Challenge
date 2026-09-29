@@ -41,6 +41,7 @@ from v2d.world_calib.vm.fit_ego_rig import (
     ego_rig_matrix,
     js_to_mat,
     load_intrinsics,
+    load_reference_loader,
     mesh_points_and_normals,
 )
 
