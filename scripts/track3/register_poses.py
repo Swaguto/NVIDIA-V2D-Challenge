@@ -293,15 +293,33 @@ def read_frame(path: Path, idx: int):
     return img
 
 
-def _mat_to_wxyz(R: np.ndarray) -> np.ndarray:
-    t = np.clip((np.trace(R) + 1.0) / 2.0, -1, 1)
-    s = np.sqrt(max(1 - t, 0)) * 2
-    if s < 1e-8:
-        return np.array([1.0, 0.0, 0.0, 0.0])
-    return np.array([0.25 * s, (R[2, 1] - R[1, 2]) / s,
-                     (R[0, 2] - R[2, 0]) / s, (R[1, 0] - R[0, 1]) / s])
+def _mat_to_wxyz(R):
+    """Rotation matrix -> quaternion in (w, x, y, z) order, Shepperd's method.
 
-
+    The closed form w = 0.25*s with s = 2*sqrt(1-t) is only valid in the small-angle
+    branch: it silently wrote identity for ~17% of rotations (trace ~= -1) and wrong
+    angles for the rest, corrupting every predicted pose. Branch on the largest diagonal
+    term instead, which is numerically stable over the full range.
+    """
+    R = np.asarray(R, np.float64)
+    tr = R[0, 0] + R[1, 1] + R[2, 2]
+    if tr > 0.0:
+        s = np.sqrt(tr + 1.0) * 2.0
+        q = np.array([0.25 * s, (R[2, 1] - R[1, 2]) / s,
+                      (R[0, 2] - R[2, 0]) / s, (R[1, 0] - R[0, 1]) / s])
+    elif R[0, 0] > R[1, 1] and R[0, 0] > R[2, 2]:
+        s = np.sqrt(1.0 + R[0, 0] - R[1, 1] - R[2, 2]) * 2.0
+        q = np.array([(R[2, 1] - R[1, 2]) / s, 0.25 * s,
+                      (R[0, 1] + R[1, 0]) / s, (R[0, 2] + R[2, 0]) / s])
+    elif R[1, 1] > R[2, 2]:
+        s = np.sqrt(1.0 + R[1, 1] - R[0, 0] - R[2, 2]) * 2.0
+        q = np.array([(R[0, 2] - R[2, 0]) / s, (R[0, 1] + R[1, 0]) / s,
+                      0.25 * s, (R[1, 2] + R[2, 1]) / s])
+    else:
+        s = np.sqrt(1.0 + R[2, 2] - R[0, 0] - R[1, 1]) * 2.0
+        q = np.array([(R[1, 0] - R[0, 1]) / s, (R[0, 2] + R[2, 0]) / s,
+                      (R[1, 2] + R[2, 1]) / s, 0.25 * s])
+    return q / np.linalg.norm(q)
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--episode", type=int, required=True)
