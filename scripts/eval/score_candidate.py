@@ -45,6 +45,31 @@ from reference_loader import (  # noqa: E402
     load_reference,
     load_vertex_clouds,
 )
+from official_metric import (  # noqa: E402
+    quaternion_multiply as quat_multiply_xyzw,
+    rotation_matrix,
+)
+
+
+def quat_xyzw_from_matrix(matrix: np.ndarray) -> np.ndarray:
+    """Rotation matrix -> unit xyzw quaternion (Shepperd's method, largest branch)."""
+    m = np.asarray(matrix, dtype=np.float64)
+    trace = m[0, 0] + m[1, 1] + m[2, 2]
+    if trace > 0.0:
+        s = 0.5 / np.sqrt(trace + 1.0)
+        w = 0.25 / s
+        q = np.array([(m[2, 1] - m[1, 2]) * s, (m[0, 2] - m[2, 0]) * s,
+                      (m[1, 0] - m[0, 1]) * s, w])
+    else:
+        i = int(np.argmax(np.diag(m)))
+        j, k = (i + 1) % 3, (i + 2) % 3
+        s = 2.0 * np.sqrt(max(1.0 + m[i, i] - m[j, j] - m[k, k], 1e-12))
+        q = np.zeros(4)
+        q[i] = 0.25 * s
+        q[j] = (m[j, i] + m[i, j]) / s
+        q[k] = (m[k, i] + m[i, k]) / s
+        q[3] = (m[k, j] - m[j, k]) / s
+    return q / np.linalg.norm(q)
 
 _W2Xyzw = np.array([0, 1, 2, 4, 5, 6, 3], dtype=np.int64)
 
@@ -90,6 +115,15 @@ def rigid_align(
 
     Only translation+rotation (no isotropic scale) over visible frames, sampled to
     keep memory small.  Applies the same transform to every world.
+
+    Rotates the quaternions as well as the translations.  This used to write only
+    ``achieved[..., :3]`` and leave orientations untouched, which is *not* what the
+    official Track 3 scorer does: ``metric_code/track_3/AUC.py`` sets
+    ``_ALIGN_INITIAL_POSE = True`` and ``_warp_to_reference_start`` applies the transform
+    to both position and quaternion.  Leaving the quaternions behind reported rotation
+    error that the real scorer removes, which understated scores for any candidate in a
+    rotated world frame.  Use ``scripts/eval/official_metric.py`` for numbers that must
+    match Kaggle.
     """
     achieved = np.asarray(achieved, dtype=np.float64)
     T, B, _ = reference.shape
@@ -115,6 +149,10 @@ def rigid_align(
     translation = r_mean - rotation @ a_mean
     transformed = achieved.copy()
     transformed[..., :3] = (achieved[..., :3] @ rotation.T) + translation
+    transformed[..., 3:] = quat_multiply_xyzw(
+        np.broadcast_to(quat_xyzw_from_matrix(rotation), achieved[..., 3:].shape),
+        achieved[..., 3:],
+    )
     return transformed
 
 
