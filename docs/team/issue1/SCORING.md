@@ -45,8 +45,31 @@ Two notes that keep your expectations honest:
   ```
   Candidates are either a reconstruction parquet (same `observation.objects` schema) or a
   recorded rollout `.npy` (`[T, W, B, 7]` poses, xyzw, `--mode rollout`). Use
-  `--align-rigid` when the candidate is in a different world frame than GT (Umeyama
-  alignment before scoring; default **off** — match the GT frame in your pipeline).
+  `--align-rigid` when the candidate is in a different world frame than GT.
+
+> **Correction (2026-10-02) — the official scorer aligns rotation, and this proxy now
+> matches it.** The note here used to read *"`--align-rigid` … default **off** — match the
+> GT frame in your pipeline."* That was wrong and cost real time. The official Track 3
+> metric sets `_ALIGN_INITIAL_POSE = True`
+> (`v2d_submission_kit/metric_code/track_3/AUC.py`), and `_warp_to_reference_start`
+> applies a full SE(3) to **both position and quaternion**, so the world-frame gauge is
+> fixed by the scorer. `rigid_align()` used to write only `achieved[..., :3]` and leave
+> orientations untouched, reporting rotation error the real scorer removes; it now
+> rotates the quaternions too.
+>
+> **You do not need to match the GT world frame.** Submit whatever consistent frame you
+> have. Two caveats:
+>
+> 1. The warp is derived from **object slot 0 only** and then applied to every body, so
+>    objects must share one common frame and their **relative** geometry must be right.
+>    `RPE` is the metric that punishes this, and it is unforgiving.
+> 2. The warp is rigid SE(3) — **not** Sim(3). Trajectory *scale* error is still scored.
+>
+> For numbers that must agree with Kaggle, use
+> `scripts/eval/official_metric.py` (a faithful port of the kit's five pose scorers, with a
+> selfcheck) via `scripts/eval/score_track3_official.py`. Note `chord_metrics.py` has the
+> official metric formulas but its `_aligned_poses` does **not** apply the frame-0 warp, so
+> a local leaderboard built on it alone is pessimistic by roughly the gauge offset.
 
 ## What has to be true for a confident score
 
