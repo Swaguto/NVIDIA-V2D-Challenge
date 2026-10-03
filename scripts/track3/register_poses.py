@@ -148,8 +148,66 @@ def _init_rotations(src, dst):
     return out
 
 
+def _contact_height(cad, s, R, t, c_cad, c_dst, plane):
+    """Height (m) of the lowest CAD point above the support plane.
+
+    Negative means the object has sunk through the surface it is resting on.
+    """
+    if plane is None:
+        return None
+    n, p0 = plane
+    t_cam = s * (R @ (-c_cad)) + t + c_dst
+    X = (s * (cad @ R.T) + t_cam).detach().cpu().numpy()
+    return float(((X - p0) @ n).min())
+
+
+def _penetration(h, tol=0.012):
+    if h is None:
+        return 0.0
+    return max(0.0, tol - h)
+
+
+def _contact_of(cad, cand, c_cad, c_dst, plane):
+    """`_contact_height` for an `(s, R, t, res)` solution tuple."""
+    s, R, t, _res = cand
+    return _contact_height(cad, s, R, t, c_cad, c_dst, plane)
+
+
+def _select_score(res, h, tol=0.012, gap_tol=0.10, w_pen=4.0, w_gap=0.5):
+    """ICP residual plus a support constraint.
+
+    A thin plate has almost the same silhouette flipped about its long axis, so ICP
+    happily converges to the mirrored pose with a *lower* point-to-point residual. The
+    residual alone therefore cannot pick the right one; the table plane can. Sitting on
+    the surface is rewarded, sinking through it is penalised hard, and floating well
+    clear is penalised mildly (objects may legitimately be lifted by the gripper).
+    """
+    if h is None:
+        return res
+    return res + w_pen * max(0.0, tol - h) + w_gap * max(0.0, h - gap_tol)
+
+
+def _support_plane(pts, mask, valid, seed=0):
+    """Fit the table plane from the depth ring immediately surrounding a mask."""
+    k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (15, 15))
+    mk = (mask & valid)
+    ring = ((cv2.dilate(mk.astype(np.uint8), k) > 0) & (~mk)).ravel()
+    if ring.sum() < 500:
+        return None
+    P = pts[ring].astype(np.float64)
+    if len(P) > 4000:
+        P = P[np.random.default_rng(seed).choice(len(P), 4000, replace=False)]
+    c = P.mean(0)
+    _, _, Vt = np.linalg.svd(P - c, full_matrices=False)
+    n = Vt[2]
+    if n[2] < 0:
+        n = -n
+    return n, c
+
+
 def register(cad: torch.Tensor, dst: torch.Tensor, R0=None, t0=None,
-             allow_scale=False, trim=0.6, coarse=900, refine=4000, n_seed=3):
+             allow_scale=False, trim=0.6, coarse=900, refine=4000, n_seed=3,
+             plane=None):
     """Similarity registration of CAD onto a cloud, coarse-to-fine, on GPU.
 
     ICP is solved on centroid-centred clouds, so the returned translation is in that
@@ -160,6 +218,10 @@ def register(cad: torch.Tensor, dst: torch.Tensor, R0=None, t0=None,
     Returning `t_centred` directly put every object ~1-8 cm from the camera (i.e. inside the
     lens) instead of the true 0.3-1.5 m; the official metric's frame-0 SE(3) alignment
     masked it by absorbing the constant offset.
+
+    `plane` is the (normal, point) support plane the object rests on. It is required to
+    break the mirror-symmetry local minima that thin, nearly-planar objects fall into;
+    without it every planar object registered face-down.
     """
     c_cad = cad.mean(0)
     c_dst = dst.mean(0)
@@ -168,10 +230,14 @@ def register(cad: torch.Tensor, dst: torch.Tensor, R0=None, t0=None,
     z = torch.zeros(3, dtype=cad.dtype, device=cad.device)
 
     if R0 is not None:
-        best = _icp(cad, dst, R0, t0 if t0 is not None else z, trim=trim,
-                    iters=40, allow_scale=allow_scale)
-        # a warm start that converged badly is not trustworthy
-        if best[3] < 0.05:
+        # `t0` arrives in camera coordinates while ICP runs on centred clouds, so it has
+        # to be mapped back into the centred frame or the warm start starts ~c_dst away.
+        t0c = (t0 + (R0 @ c_cad) - c_dst) if t0 is not None else z
+        best = _icp(cad, dst, R0, t0c, trim=trim, iters=40,
+                    allow_scale=allow_scale)
+        h = _contact_of(cad, best, c_cad, c_dst, plane)
+        # accept the warm start only if it both converged and is physically supported
+        if best[3] < 0.05 and _penetration(h) <= 0.0:
             return _to_camera(best, c_cad, c_dst)
 
     g = torch.Generator(device="cpu").manual_seed(0)
@@ -190,13 +256,16 @@ def register(cad: torch.Tensor, dst: torch.Tensor, R0=None, t0=None,
         scored.append((res, s, Rr, t))
     scored.sort(key=lambda x: x[0])
     cad_f = sub(cad, refine)
-    best = None
+    cands = []
     for _, _, Rr, t in scored[:n_seed]:
-        s, R2, t2, res = _icp(cad_f, dst, Rr, t, trim=trim, iters=50,
-                              allow_scale=allow_scale)
-        if best is None or res < best[3]:
-            best = (s, R2, t2, res)
-    return _to_camera(best, c_cad, c_dst)
+        cands.append(_icp(cad_f, dst, Rr, t, trim=trim, iters=50,
+                          allow_scale=allow_scale))
+    if R0 is not None:
+        # never lose the tracked hypothesis to a restart that cannot see it
+        cands.append(best)
+    out = min(cands, key=lambda c: _select_score(
+        c[3], _contact_of(cad, c, c_cad, c_dst, plane)))
+    return _to_camera(out, c_cad, c_dst)
 
 
 def _to_camera(best, c_cad, c_dst):
@@ -232,6 +301,39 @@ def trim_cloud(pts: np.ndarray, k: float = 2.5, iters: int = 3) -> np.ndarray:
 
 
 # ------------------------------------------------------------------ perception
+def _pick_mask(cand, depth, valid, min_px=400):
+    """Choose SAM2's most depth-compact proposal per detection box.
+
+    SAM2 offers three nested masks per box and any of them may spill onto the table.
+    A table surface spans a wide range of depths while a compact object does not, so
+    when a depth map is available the spread of the depths inside the mask is a direct,
+    label-free test for "is this actually the object". Falls back to the middle
+    proposal when depth is unavailable.
+    """
+    n = cand.shape[0]
+    out = []
+    for k in range(n):
+        opts = cand[k]
+        if opts.shape[0] == 1 or depth is None:
+            out.append(opts[0])
+            continue
+        best, best_score = None, None
+        for j in range(opts.shape[0]):
+            mk = opts[j].astype(bool)
+            if mk.sum() < min_px:
+                continue
+            sel = mk & valid if valid is not None else mk
+            if sel.sum() < min_px:
+                continue
+            z = depth[sel].astype(np.float64)
+            # prefer tight depth spread, and do not reward enormous blobs
+            score = float(z.std()) + 0.02 * float(mk.sum()) / 1000.0
+            if best_score is None or score < best_score:
+                best, best_score = opts[j], score
+        out.append(best if best is not None else opts[opts.shape[0] // 2])
+    return out
+
+
 class Segmenter:
     def __init__(self, names, device=DEV):
         from transformers import (AutoProcessor, GroundingDinoForObjectDetection,
@@ -255,13 +357,12 @@ class Segmenter:
                 if ph in lab:
                     hit = self.phrase2idx[ph]
                     break
-            if hit is None:
-                hit = 0 if len(self.names) == 1 else None
             out.append(hit)
         return out
 
     @torch.inference_mode()
-    def __call__(self, rgb, box_threshold=0.30):
+    def __call__(self, rgb, box_threshold=0.30, depth=None, valid=None,
+                 mask_mode="or", multimask=False):
         inp = self.gp(images=rgb, text=self.prompt, return_tensors="pt").to(self.device)
         det = self.gp.post_process_grounded_object_detection(
             self.gm(**inp), inp.input_ids, threshold=box_threshold, text_threshold=0.25,
@@ -271,21 +372,44 @@ class Segmenter:
             return masks, []
         boxes = [[[float(v) for v in b] for b in det["boxes"].tolist()]]
         sinp = self.sp(images=rgb, input_boxes=boxes, return_tensors="pt").to(self.device)
-        sout = self.sm(**sinp, multimask_output=False)
+        sout = self.sm(**sinp, multimask_output=bool(multimask))
         raw = sout.pred_masks if hasattr(sout, "pred_masks") else sout.output_masks
         kw = {}
         if sinp.get("reshaped_input_sizes") is not None:
             kw["reshaped_input_sizes"] = sinp["reshaped_input_sizes"]
         m = np.asarray(self.sp.post_process_masks(
-            raw, sinp["original_sizes"], binarize=True, **kw)[0].cpu())[:, 0]
+            raw, sinp["original_sizes"], binarize=True, **kw)[0].cpu())
+        if m.ndim == 3:                      # (N, H, W) when multimask is off
+            m = m[:, None]
+        pick = _pick_mask(m, depth, valid) if multimask \
+            else [cand[0] for cand in m]
         info = []
+        labels = self._assign(det["text_labels"])
+        # A lone object may be returned with an empty text label. Only fall back to
+        # "it must be that object" when there is exactly one box to fall back on;
+        # otherwise unrelated boxes would all be attributed to the object.
+        if all(l is None for l in labels) and len(labels) == 1 and len(self.names) == 1:
+            labels = [0]
+        if mask_mode == "or":
+            for k, bi in enumerate(labels):
+                if bi is not None:
+                    masks[bi] |= pick[k]
+                    info.append((self.names[bi], det["text_labels"][k],
+                                 float(det["scores"][k])))
+            return masks, info
+        best_for = {}
         for k, (lab, sc, bi) in enumerate(zip(det["text_labels"],
                                              det["scores"].tolist(),
-                                             self._assign(det["text_labels"]))):
+                                             labels)):
             if bi is None:
                 continue
-            masks[bi] |= m[k]
-            info.append((self.names[bi], lab, float(sc)))
+            # one object can trigger several boxes; keeping only the best-scoring one
+            # avoids merging the object with the clutter around it
+            if bi not in best_for or sc > best_for[bi][0]:
+                best_for[bi] = (sc, k, pick[k])
+        for bi, (sc, k, sub) in best_for.items():
+            masks[bi] = sub
+            info.append((self.names[bi], det["text_labels"][k], float(sc)))
         return masks, info
 
 
@@ -350,6 +474,10 @@ def main():
     ap.add_argument("--allow-scale", action="store_true")
     ap.add_argument("--no-warmstart", action="store_true")
     ap.add_argument("--box-threshold", type=float, default=0.30)
+    ap.add_argument("--mask-mode", choices=("or", "best"), default="or")
+    ap.add_argument("--multimask", action="store_true")
+    ap.add_argument("--support-plane", action="store_true",
+                    help="off by default: measured worse (7.9 vs 4.1 deg) and 3x slower")
     ap.add_argument("--log", type=int, default=25)
     a = ap.parse_args()
 
@@ -376,7 +504,9 @@ def main():
             break
         pl, _ = rig.rectify_pair(il, ir)
         depth, valid = stereo_depth(rig, il, ir)
-        masks, _info = seg(cv2.cvtColor(pl, cv2.COLOR_BGR2RGB), a.box_threshold)
+        masks, _info = seg(cv2.cvtColor(pl, cv2.COLOR_BGR2RGB), a.box_threshold,
+                           depth=depth, valid=valid,
+                           mask_mode=a.mask_mode, multimask=a.multimask)
         pts = backproject_full(depth, valid, rig.P1)
 
         for bi, n in enumerate(names):
@@ -394,8 +524,11 @@ def main():
             if not a.no_warmstart and prev[n] is not None:
                 Rp, tp, _ = prev[n]
                 R0, t0_ = Rp.clone(), tp.clone()
+            plane = _support_plane(pts, masks[bi], valid) \
+                if a.support_plane else None
             try:
-                reg = register(cads[n], dst, R0=R0, t0=t0_, allow_scale=a.allow_scale)
+                reg = register(cads[n], dst, R0=R0, t0=t0_,
+                               allow_scale=a.allow_scale, plane=plane)
             except Exception as error:                       # noqa: BLE001
                 print(f"    t={t} {n}: {type(error).__name__}: {error}", flush=True)
                 continue
@@ -403,11 +536,16 @@ def main():
                 continue
             s, R, tt, res = reg
             prev[n] = (R, tt, res)   # keep on device: warm start feeds CUDA matmuls
+            contact = None
+            if plane is not None:
+                nrm, p0 = plane
+                X = (s * (cads[n] @ R.T) + tt).cpu().numpy()
+                contact = float(((X - p0) @ nrm).min())
             (d / f"{t:06d}.json").write_text(json.dumps({
                 "translation": [float(x) for x in tt.cpu().numpy()],
                 "rotation": [float(x) for x in _mat_to_wxyz(R.cpu().numpy())],
                 "scale": float(s), "residual": float(res),
-                "cloud_px": int(m.sum()),
+                "cloud_px": int(m.sum()), "contact": contact,
             }))
         if a.log and (t // a.stride) % a.log == 0:
             done = [prev[n][2] for n in names if prev[n] is not None]
