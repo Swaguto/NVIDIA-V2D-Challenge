@@ -150,9 +150,21 @@ def _init_rotations(src, dst):
 
 def register(cad: torch.Tensor, dst: torch.Tensor, R0=None, t0=None,
              allow_scale=False, trim=0.6, coarse=900, refine=4000, n_seed=3):
-    """Similarity registration of CAD onto a cloud, coarse-to-fine, on GPU."""
-    cad = cad - cad.mean(0)
-    dst = dst - dst.mean(0)
+    """Similarity registration of CAD onto a cloud, coarse-to-fine, on GPU.
+
+    ICP is solved on centroid-centred clouds, so the returned translation is in that
+    centred frame and MUST be mapped back before use:
+
+        x_cam = R @ (-c_cad) + t_centred + c_dst
+
+    Returning `t_centred` directly put every object ~1-8 cm from the camera (i.e. inside the
+    lens) instead of the true 0.3-1.5 m; the official metric's frame-0 SE(3) alignment
+    masked it by absorbing the constant offset.
+    """
+    c_cad = cad.mean(0)
+    c_dst = dst.mean(0)
+    cad = cad - c_cad
+    dst = dst - c_dst
     z = torch.zeros(3, dtype=cad.dtype, device=cad.device)
 
     if R0 is not None:
@@ -160,7 +172,7 @@ def register(cad: torch.Tensor, dst: torch.Tensor, R0=None, t0=None,
                     iters=40, allow_scale=allow_scale)
         # a warm start that converged badly is not trustworthy
         if best[3] < 0.05:
-            return best
+            return _to_camera(best, c_cad, c_dst)
 
     g = torch.Generator(device="cpu").manual_seed(0)
 
@@ -184,7 +196,16 @@ def register(cad: torch.Tensor, dst: torch.Tensor, R0=None, t0=None,
                               allow_scale=allow_scale)
         if best is None or res < best[3]:
             best = (s, R2, t2, res)
-    return best
+    return _to_camera(best, c_cad, c_dst)
+
+
+def _to_camera(best, c_cad, c_dst):
+    """Map a centred-frame solution back to camera coordinates."""
+    if best is None:
+        return None
+    s, R, t, res = best
+    t_cam = (s * (R @ (-c_cad)) + t + c_dst)
+    return s, R, t_cam, res
 
 
 # -------------------------------------------------------------- cloud filtering
