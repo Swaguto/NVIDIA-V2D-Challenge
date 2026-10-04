@@ -1,0 +1,340 @@
+{
+  "episode": 39,
+  "frame_selection": "same eight fixed indices used to inspect the provided clip; no GT pose read",
+  "camera_frame": "ego_cam_c",
+  "coordinate_frame": "rectified_camera",
+  "prompt": "mini dust pan.",
+  "box_threshold": 0.3,
+  "text_threshold": 0.25,
+  "models": [
+    {
+      "model": "IDEA-Research/grounding-dino-base",
+      "revision": "12bdfa3120f3e7ec7b434d90674b3396eccf88eb",
+      "file": "config.json",
+      "bytes": 1737,
+      "sha256": "eda416dae6f49419ff831b1c190ec430a060b19aae688dbaf2425a075b650608"
+    },
+    {
+      "model": "IDEA-Research/grounding-dino-base",
+      "revision": "12bdfa3120f3e7ec7b434d90674b3396eccf88eb",
+      "file": "model.safetensors",
+      "bytes": 933400872,
+      "sha256": "5548f844c928c4b6f411fa8cbcc2bfa8dbbba437cb1d513975519f93c2a9ed21"
+    },
+    {
+      "model": "IDEA-Research/grounding-dino-base",
+      "revision": "12bdfa3120f3e7ec7b434d90674b3396eccf88eb",
+      "file": "preprocessor_config.json",
+      "bytes": 457,
+      "sha256": "8454179ba95e2ad22947835aad7b45862a601fc0055ab88bf1ee70892d3aea60"
+    },
+    {
+      "model": "IDEA-Research/grounding-dino-base",
+      "revision": "12bdfa3120f3e7ec7b434d90674b3396eccf88eb",
+      "file": "special_tokens_map.json",
+      "bytes": 125,
+      "sha256": "b6d346be366a7d1d48332dbc9fdf3bf8960b5d879522b7799ddba59e76237ee3"
+    },
+    {
+      "model": "IDEA-Research/grounding-dino-base",
+      "revision": "12bdfa3120f3e7ec7b434d90674b3396eccf88eb",
+      "file": "tokenizer.json",
+      "bytes": 711396,
+      "sha256": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66"
+    },
+    {
+      "model": "IDEA-Research/grounding-dino-base",
+      "revision": "12bdfa3120f3e7ec7b434d90674b3396eccf88eb",
+      "file": "tokenizer_config.json",
+      "bytes": 1237,
+      "sha256": "d40ab645b68211910b9170d22433d43186a6ec8ee6fd10ba170524b25bf4fb56"
+    },
+    {
+      "model": "IDEA-Research/grounding-dino-base",
+      "revision": "12bdfa3120f3e7ec7b434d90674b3396eccf88eb",
+      "file": "vocab.txt",
+      "bytes": 231508,
+      "sha256": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+    },
+    {
+      "model": "facebook/sam2.1-hiera-large",
+      "revision": "665f8e2ad61cf5f53d65644ff27c8ee525124610",
+      "file": "config.json",
+      "bytes": 5705,
+      "sha256": "00446988cf4d617118d2d347eabe2c46aebed744628facdd540508be30b69ec3"
+    },
+    {
+      "model": "facebook/sam2.1-hiera-large",
+      "revision": "665f8e2ad61cf5f53d65644ff27c8ee525124610",
+      "file": "model.safetensors",
+      "bytes": 897897416,
+      "sha256": "dc407dce21301fd94abb395c5099b4f2c455fdc8a8f261ac3d0ea6d4cd197230"
+    },
+    {
+      "model": "facebook/sam2.1-hiera-large",
+      "revision": "665f8e2ad61cf5f53d65644ff27c8ee525124610",
+      "file": "preprocessor_config.json",
+      "bytes": 683,
+      "sha256": "6ebf229ee259368ce4a8d4f2fe893a72b053023710853e257253939e601f583d"
+    },
+    {
+      "model": "facebook/sam2.1-hiera-large",
+      "revision": "665f8e2ad61cf5f53d65644ff27c8ee525124610",
+      "file": "processor_config.json",
+      "bytes": 95,
+      "sha256": "f8a68e865cfad115c1c2763f3d93eca7b1c622da06da2a9273eb437fb2389b6d"
+    },
+    {
+      "model": "facebook/sam2.1-hiera-large",
+      "revision": "665f8e2ad61cf5f53d65644ff27c8ee525124610",
+      "file": "video_preprocessor_config.json",
+      "bytes": 705,
+      "sha256": "9fccfe5f464ec38c2f236d0e6a68e95511c80c22132fc2fa4b9f7b65f24fad95"
+    }
+  ],
+  "inputs": {
+    "dataset": "nvidia/video_to_data_challenge",
+    "revision": "5f68335f3acc802033d1e80728c1633197521de8",
+    "files": [
+      {
+        "path": "mesh/mini_dust_pan/mini_dust_pan.glb",
+        "bytes": 8492620,
+        "sha256": "6358b4f913fd8164a797b9375948cd09d47c5e60abcef0843fe43af5109737e3"
+      },
+      {
+        "path": "videos/chunk-000/observation.images.ego_cam_b/episode_000039.mp4",
+        "bytes": 3864358,
+        "sha256": "711598812e993d08b4f9ec9eec06b97388f8d199ed03d67a5aaff7f779d6d95f"
+      },
+      {
+        "path": "videos/chunk-000/observation.images.ego_cam_c/episode_000039.mp4",
+        "bytes": 3183641,
+        "sha256": "5e2b2ca9e0776d1a87cfcbadd106461261b21f5c531bdf9d09a2fded9a2f4e0d"
+      },
+      {
+        "path": "meta/camera_calibration.json",
+        "bytes": 16640,
+        "sha256": "23e2d9c46369292cdda492a777e7a6083815369a25d1af4bb82560669fde5d52"
+      }
+    ],
+    "scope": "One CAD, episode-39 stereo videos, and calibration required by the manual first-frame control; no original team-run masks/depth or world cameras."
+  },
+  "environment": {
+    "python": "3.14.0",
+    "torch": "2.11.0+cu128",
+    "cuda": "12.8",
+    "device": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "transformers": "5.18.0",
+    "opencv": "5.0.0"
+  },
+  "registration_source_sha256_lf": "3a8c63ab3755706ce2c6bfe717fd1462c5bfc694b14558f713611d99602a0f3a",
+  "probe_source_sha256_lf": "b464fb3c1eb5b6415e42140879a9eeb733869ccc19fa511c92c6dfbe7de486f5",
+  "frames": [
+    {
+      "frame_index": 0,
+      "detections": [
+        {
+          "label": "mini dust pan",
+          "score": 0.6664460301399231,
+          "box_xyxy": [
+            476.51739501953125,
+            320.0924377441406,
+            966.872314453125,
+            757.587646484375
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "mini_dust_pan",
+          "mini dust pan",
+          0.6664460301399231
+        ]
+      ],
+      "mask_pixels": 149559,
+      "valid_masked_depth_pixels": 116901,
+      "seconds": 7.09597510000458,
+      "manual_pan_mask_iou": 0.0024419872294035197
+    },
+    {
+      "frame_index": 39,
+      "detections": [
+        {
+          "label": "mini dust pan",
+          "score": 0.6539240479469299,
+          "box_xyxy": [
+            471.21502685546875,
+            306.5250244140625,
+            960.8642578125,
+            743.8705444335938
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "mini_dust_pan",
+          "mini dust pan",
+          0.6539240479469299
+        ]
+      ],
+      "mask_pixels": 136808,
+      "valid_masked_depth_pixels": 110096,
+      "seconds": 6.094261699996423
+    },
+    {
+      "frame_index": 79,
+      "detections": [
+        {
+          "label": "mini dust pan",
+          "score": 0.5055027604103088,
+          "box_xyxy": [
+            424.91943359375,
+            372.2514343261719,
+            896.121826171875,
+            788.9609375
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "mini_dust_pan",
+          "mini dust pan",
+          0.5055027604103088
+        ]
+      ],
+      "mask_pixels": 88251,
+      "valid_masked_depth_pixels": 53077,
+      "seconds": 3.7385322999907658
+    },
+    {
+      "frame_index": 119,
+      "detections": [
+        {
+          "label": "mini dust pan",
+          "score": 0.6771708130836487,
+          "box_xyxy": [
+            436.5167236328125,
+            364.9355163574219,
+            910.1502685546875,
+            794.0021362304688
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "mini_dust_pan",
+          "mini dust pan",
+          0.6771708130836487
+        ]
+      ],
+      "mask_pixels": 150039,
+      "valid_masked_depth_pixels": 123887,
+      "seconds": 4.088186000008136
+    },
+    {
+      "frame_index": 159,
+      "detections": [
+        {
+          "label": "mini dust pan",
+          "score": 0.6936220526695251,
+          "box_xyxy": [
+            451.88873291015625,
+            308.90045166015625,
+            931.8321533203125,
+            741.8511352539062
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "mini_dust_pan",
+          "mini dust pan",
+          0.6936220526695251
+        ]
+      ],
+      "mask_pixels": 130097,
+      "valid_masked_depth_pixels": 116494,
+      "seconds": 6.418528600013815
+    },
+    {
+      "frame_index": 199,
+      "detections": [
+        {
+          "label": "mini dust pan",
+          "score": 0.5730668306350708,
+          "box_xyxy": [
+            471.4833984375,
+            342.2010192871094,
+            932.1874389648438,
+            782.8291625976562
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "mini_dust_pan",
+          "mini dust pan",
+          0.5730668306350708
+        ]
+      ],
+      "mask_pixels": 135971,
+      "valid_masked_depth_pixels": 99416,
+      "seconds": 3.9973445999785326
+    },
+    {
+      "frame_index": 239,
+      "detections": [
+        {
+          "label": "mini dust pan",
+          "score": 0.6833637952804565,
+          "box_xyxy": [
+            486.8873596191406,
+            296.9195251464844,
+            963.3050537109375,
+            735.7310180664062
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "mini_dust_pan",
+          "mini dust pan",
+          0.6833637952804565
+        ]
+      ],
+      "mask_pixels": 155803,
+      "valid_masked_depth_pixels": 125407,
+      "seconds": 3.9927726999740116
+    },
+    {
+      "frame_index": 318,
+      "detections": [
+        {
+          "label": "mini dust pan",
+          "score": 0.6503417491912842,
+          "box_xyxy": [
+            454.63165283203125,
+            309.0781555175781,
+            946.7282104492188,
+            739.1187744140625
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "mini_dust_pan",
+          "mini dust pan",
+          0.6503417491912842
+        ]
+      ],
+      "mask_pixels": 146956,
+      "valid_masked_depth_pixels": 115175,
+      "seconds": 3.759023900027387
+    }
+  ],
+  "limits": [
+    "Masks are actual pretrained model outputs; no GT object poses used.",
+    "One manual frame-0 comparison; no independent depth truth or world trajectory.",
+    "Pose fitting and full episode coverage not measured by this mask probe."
+  ]
+}

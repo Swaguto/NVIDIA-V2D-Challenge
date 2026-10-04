@@ -1,0 +1,2012 @@
+{
+  "baseline_sha256": "331c3af567b104d469485caf05a8c91e8876a4454971bc6b8b7a1b427f0be4ff",
+  "controls": [
+    [
+      "white_pot",
+      "white pot"
+    ],
+    [
+      "white_pot",
+      "cooking pot"
+    ],
+    [
+      "white_pot",
+      "saucepan"
+    ],
+    [
+      "white_pot_lid",
+      "white pot lid"
+    ],
+    [
+      "white_pot_lid",
+      "pot lid"
+    ]
+  ],
+  "frames": [
+    {
+      "episode": 2,
+      "frame_index": 0,
+      "object": "white_pot",
+      "prompt": "white pot.",
+      "detections": [
+        {
+          "label": "white pot",
+          "score": 0.4481409192085266,
+          "box_xyxy": [
+            518.8187255859375,
+            421.09661865234375,
+            725.6084594726562,
+            630.0224609375
+          ]
+        },
+        {
+          "label": "white pot",
+          "score": 0.37125250697135925,
+          "box_xyxy": [
+            462.74884033203125,
+            413.45654296875,
+            966.8829345703125,
+            797.1303100585938
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot",
+          "white pot",
+          0.4481409192085266
+        ],
+        [
+          "white_pot",
+          "white pot",
+          0.37125250697135925
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot",
+          "label": "white pot",
+          "score": 0.4481409192085266,
+          "box_xyxy": [
+            518.8187255859375,
+            421.09661865234375,
+            725.6084594726562,
+            630.0224609375
+          ],
+          "mask_pixels": 30934
+        },
+        {
+          "object": "white_pot",
+          "label": "white pot",
+          "score": 0.37125250697135925,
+          "box_xyxy": [
+            462.74884033203125,
+            413.45654296875,
+            966.8829345703125,
+            797.1303100585938
+          ],
+          "mask_pixels": 118726
+        }
+      ],
+      "mask_pixels": 149132,
+      "mask_sha256": "0e07c1b42c6609ce011bb6653d4d66b4242ee368bea8725a34d5a869a7f3bbf4"
+    },
+    {
+      "episode": 2,
+      "frame_index": 0,
+      "object": "white_pot",
+      "prompt": "cooking pot.",
+      "detections": [
+        {
+          "label": "cooking pot",
+          "score": 0.3448981046676636,
+          "box_xyxy": [
+            469.78125,
+            419.51531982421875,
+            958.5220947265625,
+            797.0186157226562
+          ]
+        },
+        {
+          "label": "cooking pot",
+          "score": 0.35381194949150085,
+          "box_xyxy": [
+            518.4706420898438,
+            422.3212585449219,
+            725.6464233398438,
+            630.0310668945312
+          ]
+        },
+        {
+          "label": "cooking pot",
+          "score": 0.303903192281723,
+          "box_xyxy": [
+            511.21435546875,
+            421.488037109375,
+            727.470458984375,
+            799.0996704101562
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot",
+          "cooking pot",
+          0.3448981046676636
+        ],
+        [
+          "white_pot",
+          "cooking pot",
+          0.35381194949150085
+        ],
+        [
+          "white_pot",
+          "cooking pot",
+          0.303903192281723
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot",
+          "label": "cooking pot",
+          "score": 0.3448981046676636,
+          "box_xyxy": [
+            469.78125,
+            419.51531982421875,
+            958.5220947265625,
+            797.0186157226562
+          ],
+          "mask_pixels": 118426
+        },
+        {
+          "object": "white_pot",
+          "label": "cooking pot",
+          "score": 0.35381194949150085,
+          "box_xyxy": [
+            518.4706420898438,
+            422.3212585449219,
+            725.6464233398438,
+            630.0310668945312
+          ],
+          "mask_pixels": 30932
+        },
+        {
+          "object": "white_pot",
+          "label": "cooking pot",
+          "score": 0.303903192281723,
+          "box_xyxy": [
+            511.21435546875,
+            421.488037109375,
+            727.470458984375,
+            799.0996704101562
+          ],
+          "mask_pixels": 40367
+        }
+      ],
+      "mask_pixels": 158083,
+      "mask_sha256": "96827162b9572dadd0d418b45a65e341b8bec78e45671b830d161c0cd862dcea"
+    },
+    {
+      "episode": 2,
+      "frame_index": 0,
+      "object": "white_pot",
+      "prompt": "saucepan.",
+      "detections": [],
+      "assignments": [],
+      "candidates": [],
+      "mask_pixels": 0,
+      "mask_sha256": "d59a0814f1573acdec13b2b092ca1f95aef1b7525902f94305edfc22a7d27055"
+    },
+    {
+      "episode": 2,
+      "frame_index": 0,
+      "object": "white_pot_lid",
+      "prompt": "white pot lid.",
+      "detections": [
+        {
+          "label": "white pot lid",
+          "score": 0.4960331320762634,
+          "box_xyxy": [
+            517.417236328125,
+            420.1739196777344,
+            726.026611328125,
+            628.5068359375
+          ]
+        },
+        {
+          "label": "white pot lid",
+          "score": 0.34599658846855164,
+          "box_xyxy": [
+            462.43975830078125,
+            411.4733581542969,
+            956.8258666992188,
+            796.7894287109375
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot_lid",
+          "white pot lid",
+          0.4960331320762634
+        ],
+        [
+          "white_pot_lid",
+          "white pot lid",
+          0.34599658846855164
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot_lid",
+          "label": "white pot lid",
+          "score": 0.4960331320762634,
+          "box_xyxy": [
+            517.417236328125,
+            420.1739196777344,
+            726.026611328125,
+            628.5068359375
+          ],
+          "mask_pixels": 30930
+        },
+        {
+          "object": "white_pot_lid",
+          "label": "white pot lid",
+          "score": 0.34599658846855164,
+          "box_xyxy": [
+            462.43975830078125,
+            411.4733581542969,
+            956.8258666992188,
+            796.7894287109375
+          ],
+          "mask_pixels": 118096
+        }
+      ],
+      "mask_pixels": 148427,
+      "mask_sha256": "4fc683ce281a5c9d0e7d2547b000b083ef05ecb5ee27d3357087462d846653df"
+    },
+    {
+      "episode": 2,
+      "frame_index": 0,
+      "object": "white_pot_lid",
+      "prompt": "pot lid.",
+      "detections": [
+        {
+          "label": "pot lid",
+          "score": 0.4595288932323456,
+          "box_xyxy": [
+            466.74310302734375,
+            416.71966552734375,
+            957.0831909179688,
+            796.853759765625
+          ]
+        },
+        {
+          "label": "pot lid",
+          "score": 0.4732953906059265,
+          "box_xyxy": [
+            518.4532470703125,
+            420.99481201171875,
+            725.1890869140625,
+            628.17236328125
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot_lid",
+          "pot lid",
+          0.4595288932323456
+        ],
+        [
+          "white_pot_lid",
+          "pot lid",
+          0.4732953906059265
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot_lid",
+          "label": "pot lid",
+          "score": 0.4595288932323456,
+          "box_xyxy": [
+            466.74310302734375,
+            416.71966552734375,
+            957.0831909179688,
+            796.853759765625
+          ],
+          "mask_pixels": 117908
+        },
+        {
+          "object": "white_pot_lid",
+          "label": "pot lid",
+          "score": 0.4732953906059265,
+          "box_xyxy": [
+            518.4532470703125,
+            420.99481201171875,
+            725.1890869140625,
+            628.17236328125
+          ],
+          "mask_pixels": 30927
+        }
+      ],
+      "mask_pixels": 148239,
+      "mask_sha256": "1bc2bfe2ca18302ff85c9b72d00dc7b2ef30ee0038279b7f1f0e706f00d5fee3"
+    },
+    {
+      "episode": 2,
+      "frame_index": 98,
+      "object": "white_pot",
+      "prompt": "white pot.",
+      "detections": [
+        {
+          "label": "white pot",
+          "score": 0.5906846523284912,
+          "box_xyxy": [
+            492.7659606933594,
+            416.1717834472656,
+            699.5133056640625,
+            624.4987182617188
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot",
+          "white pot",
+          0.5906846523284912
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot",
+          "label": "white pot",
+          "score": 0.5906846523284912,
+          "box_xyxy": [
+            492.7659606933594,
+            416.1717834472656,
+            699.5133056640625,
+            624.4987182617188
+          ],
+          "mask_pixels": 30161
+        }
+      ],
+      "mask_pixels": 30161,
+      "mask_sha256": "b92f4539e79b924a799d81222c6eef12f917054418f568c2d6f3e433299adfdc"
+    },
+    {
+      "episode": 2,
+      "frame_index": 98,
+      "object": "white_pot",
+      "prompt": "cooking pot.",
+      "detections": [
+        {
+          "label": "cooking pot",
+          "score": 0.5169772505760193,
+          "box_xyxy": [
+            493.39190673828125,
+            417.1817321777344,
+            699.415771484375,
+            800.3767700195312
+          ]
+        },
+        {
+          "label": "cooking pot",
+          "score": 0.3752131760120392,
+          "box_xyxy": [
+            745.0291748046875,
+            459.7450256347656,
+            940.1980590820312,
+            629.0447998046875
+          ]
+        },
+        {
+          "label": "cooking pot",
+          "score": 0.3021446466445923,
+          "box_xyxy": [
+            494.374755859375,
+            416.5967102050781,
+            698.3557739257812,
+            621.8724975585938
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot",
+          "cooking pot",
+          0.5169772505760193
+        ],
+        [
+          "white_pot",
+          "cooking pot",
+          0.3752131760120392
+        ],
+        [
+          "white_pot",
+          "cooking pot",
+          0.3021446466445923
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot",
+          "label": "cooking pot",
+          "score": 0.5169772505760193,
+          "box_xyxy": [
+            493.39190673828125,
+            417.1817321777344,
+            699.415771484375,
+            800.3767700195312
+          ],
+          "mask_pixels": 36495
+        },
+        {
+          "object": "white_pot",
+          "label": "cooking pot",
+          "score": 0.3752131760120392,
+          "box_xyxy": [
+            745.0291748046875,
+            459.7450256347656,
+            940.1980590820312,
+            629.0447998046875
+          ],
+          "mask_pixels": 18023
+        },
+        {
+          "object": "white_pot",
+          "label": "cooking pot",
+          "score": 0.3021446466445923,
+          "box_xyxy": [
+            494.374755859375,
+            416.5967102050781,
+            698.3557739257812,
+            621.8724975585938
+          ],
+          "mask_pixels": 30148
+        }
+      ],
+      "mask_pixels": 54582,
+      "mask_sha256": "1b479651fd7b46fb2fc58d08eed7b22a99952ac34cef1c38c60dea7c4919e01b"
+    },
+    {
+      "episode": 2,
+      "frame_index": 98,
+      "object": "white_pot",
+      "prompt": "saucepan.",
+      "detections": [
+        {
+          "label": "saucepan",
+          "score": 0.48572900891304016,
+          "box_xyxy": [
+            493.74957275390625,
+            416.231201171875,
+            699.5418701171875,
+            800.120849609375
+          ]
+        },
+        {
+          "label": "saucepan",
+          "score": 0.3355766832828522,
+          "box_xyxy": [
+            744.8532104492188,
+            459.3548278808594,
+            940.7162475585938,
+            630.2509765625
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot",
+          "saucepan",
+          0.48572900891304016
+        ],
+        [
+          "white_pot",
+          "saucepan",
+          0.3355766832828522
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot",
+          "label": "saucepan",
+          "score": 0.48572900891304016,
+          "box_xyxy": [
+            493.74957275390625,
+            416.231201171875,
+            699.5418701171875,
+            800.120849609375
+          ],
+          "mask_pixels": 36510
+        },
+        {
+          "object": "white_pot",
+          "label": "saucepan",
+          "score": 0.3355766832828522,
+          "box_xyxy": [
+            744.8532104492188,
+            459.3548278808594,
+            940.7162475585938,
+            630.2509765625
+          ],
+          "mask_pixels": 18026
+        }
+      ],
+      "mask_pixels": 54536,
+      "mask_sha256": "69b75cb411746416731049389823e2c8765b221eab99309ef948b223f5043cde"
+    },
+    {
+      "episode": 2,
+      "frame_index": 98,
+      "object": "white_pot_lid",
+      "prompt": "white pot lid.",
+      "detections": [
+        {
+          "label": "white pot lid",
+          "score": 0.42556923627853394,
+          "box_xyxy": [
+            745.6438598632812,
+            459.2027282714844,
+            940.368408203125,
+            626.9566040039062
+          ]
+        },
+        {
+          "label": "white pot lid",
+          "score": 0.43031275272369385,
+          "box_xyxy": [
+            491.81463623046875,
+            415.9923095703125,
+            701.0436401367188,
+            623.2567138671875
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot_lid",
+          "white pot lid",
+          0.42556923627853394
+        ],
+        [
+          "white_pot_lid",
+          "white pot lid",
+          0.43031275272369385
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot_lid",
+          "label": "white pot lid",
+          "score": 0.42556923627853394,
+          "box_xyxy": [
+            745.6438598632812,
+            459.2027282714844,
+            940.368408203125,
+            626.9566040039062
+          ],
+          "mask_pixels": 18022
+        },
+        {
+          "object": "white_pot_lid",
+          "label": "white pot lid",
+          "score": 0.43031275272369385,
+          "box_xyxy": [
+            491.81463623046875,
+            415.9923095703125,
+            701.0436401367188,
+            623.2567138671875
+          ],
+          "mask_pixels": 30163
+        }
+      ],
+      "mask_pixels": 48185,
+      "mask_sha256": "316bf97485e5bcf4b07981bfca169a0eebdce177d971c099f6eb0ff5b1c8a745"
+    },
+    {
+      "episode": 2,
+      "frame_index": 98,
+      "object": "white_pot_lid",
+      "prompt": "pot lid.",
+      "detections": [
+        {
+          "label": "pot",
+          "score": 0.39800772070884705,
+          "box_xyxy": [
+            493.2879638671875,
+            417.5997619628906,
+            700.0426635742188,
+            799.5931396484375
+          ]
+        },
+        {
+          "label": "pot lid",
+          "score": 0.41451790928840637,
+          "box_xyxy": [
+            494.84100341796875,
+            417.1402587890625,
+            697.7346801757812,
+            622.2120971679688
+          ]
+        },
+        {
+          "label": "pot lid",
+          "score": 0.4425484538078308,
+          "box_xyxy": [
+            746.0491943359375,
+            460.0216369628906,
+            940.6985473632812,
+            627.2455444335938
+          ]
+        },
+        {
+          "label": "lid",
+          "score": 0.33895501494407654,
+          "box_xyxy": [
+            746.6784057617188,
+            459.3558654785156,
+            940.3362426757812,
+            627.217041015625
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          null,
+          "pot",
+          0.39800772070884705
+        ],
+        [
+          "white_pot_lid",
+          "pot lid",
+          0.41451790928840637
+        ],
+        [
+          "white_pot_lid",
+          "pot lid",
+          0.4425484538078308
+        ],
+        [
+          null,
+          "lid",
+          0.33895501494407654
+        ]
+      ],
+      "candidates": [
+        {
+          "object": null,
+          "label": "pot",
+          "score": 0.39800772070884705,
+          "box_xyxy": [
+            493.2879638671875,
+            417.5997619628906,
+            700.0426635742188,
+            799.5931396484375
+          ],
+          "mask_pixels": 36489
+        },
+        {
+          "object": "white_pot_lid",
+          "label": "pot lid",
+          "score": 0.41451790928840637,
+          "box_xyxy": [
+            494.84100341796875,
+            417.1402587890625,
+            697.7346801757812,
+            622.2120971679688
+          ],
+          "mask_pixels": 30146
+        },
+        {
+          "object": "white_pot_lid",
+          "label": "pot lid",
+          "score": 0.4425484538078308,
+          "box_xyxy": [
+            746.0491943359375,
+            460.0216369628906,
+            940.6985473632812,
+            627.2455444335938
+          ],
+          "mask_pixels": 18019
+        },
+        {
+          "object": null,
+          "label": "lid",
+          "score": 0.33895501494407654,
+          "box_xyxy": [
+            746.6784057617188,
+            459.3558654785156,
+            940.3362426757812,
+            627.217041015625
+          ],
+          "mask_pixels": 18019
+        }
+      ],
+      "mask_pixels": 48165,
+      "mask_sha256": "9d5ba192dbff809baed53384af1a84820a640d617d5af8c9b102707f2bb49ce1"
+    },
+    {
+      "episode": 2,
+      "frame_index": 342,
+      "object": "white_pot",
+      "prompt": "white pot.",
+      "detections": [
+        {
+          "label": "white pot",
+          "score": 0.33687910437583923,
+          "box_xyxy": [
+            514.936767578125,
+            389.47930908203125,
+            718.2626953125,
+            778.70361328125
+          ]
+        },
+        {
+          "label": "white pot",
+          "score": 0.33965742588043213,
+          "box_xyxy": [
+            517.1244506835938,
+            390.92205810546875,
+            718.1798706054688,
+            588.7786865234375
+          ]
+        },
+        {
+          "label": "white pot",
+          "score": 0.3184242844581604,
+          "box_xyxy": [
+            508.91748046875,
+            379.3510437011719,
+            1006.0379638671875,
+            795.3344116210938
+          ]
+        },
+        {
+          "label": "white pot",
+          "score": 0.32466650009155273,
+          "box_xyxy": [
+            502.6446838378906,
+            374.7511291503906,
+            1036.068115234375,
+            790.9506225585938
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot",
+          "white pot",
+          0.33687910437583923
+        ],
+        [
+          "white_pot",
+          "white pot",
+          0.33965742588043213
+        ],
+        [
+          "white_pot",
+          "white pot",
+          0.3184242844581604
+        ],
+        [
+          "white_pot",
+          "white pot",
+          0.32466650009155273
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot",
+          "label": "white pot",
+          "score": 0.33687910437583923,
+          "box_xyxy": [
+            514.936767578125,
+            389.47930908203125,
+            718.2626953125,
+            778.70361328125
+          ],
+          "mask_pixels": 38379
+        },
+        {
+          "object": "white_pot",
+          "label": "white pot",
+          "score": 0.33965742588043213,
+          "box_xyxy": [
+            517.1244506835938,
+            390.92205810546875,
+            718.1798706054688,
+            588.7786865234375
+          ],
+          "mask_pixels": 28599
+        },
+        {
+          "object": "white_pot",
+          "label": "white pot",
+          "score": 0.3184242844581604,
+          "box_xyxy": [
+            508.91748046875,
+            379.3510437011719,
+            1006.0379638671875,
+            795.3344116210938
+          ],
+          "mask_pixels": 129855
+        },
+        {
+          "object": "white_pot",
+          "label": "white pot",
+          "score": 0.32466650009155273,
+          "box_xyxy": [
+            502.6446838378906,
+            374.7511291503906,
+            1036.068115234375,
+            790.9506225585938
+          ],
+          "mask_pixels": 136304
+        }
+      ],
+      "mask_pixels": 172126,
+      "mask_sha256": "e935203827d7b86c70af3ee828a46802b6319dd0f7650b696ddcdd3e632acb56"
+    },
+    {
+      "episode": 2,
+      "frame_index": 342,
+      "object": "white_pot",
+      "prompt": "cooking pot.",
+      "detections": [
+        {
+          "label": "cooking pot",
+          "score": 0.43504801392555237,
+          "box_xyxy": [
+            512.9954223632812,
+            390.6416320800781,
+            717.781494140625,
+            778.9056396484375
+          ]
+        },
+        {
+          "label": "cooking pot",
+          "score": 0.3626479506492615,
+          "box_xyxy": [
+            509.8865051269531,
+            379.9081115722656,
+            1001.530029296875,
+            793.7723388671875
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot",
+          "cooking pot",
+          0.43504801392555237
+        ],
+        [
+          "white_pot",
+          "cooking pot",
+          0.3626479506492615
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot",
+          "label": "cooking pot",
+          "score": 0.43504801392555237,
+          "box_xyxy": [
+            512.9954223632812,
+            390.6416320800781,
+            717.781494140625,
+            778.9056396484375
+          ],
+          "mask_pixels": 38391
+        },
+        {
+          "object": "white_pot",
+          "label": "cooking pot",
+          "score": 0.3626479506492615,
+          "box_xyxy": [
+            509.8865051269531,
+            379.9081115722656,
+            1001.530029296875,
+            793.7723388671875
+          ],
+          "mask_pixels": 129757
+        }
+      ],
+      "mask_pixels": 166355,
+      "mask_sha256": "a95e14d09b809ce89a293506376fbb26aea15314aac8f159e7063cf188231783"
+    },
+    {
+      "episode": 2,
+      "frame_index": 342,
+      "object": "white_pot",
+      "prompt": "saucepan.",
+      "detections": [],
+      "assignments": [],
+      "candidates": [],
+      "mask_pixels": 0,
+      "mask_sha256": "d59a0814f1573acdec13b2b092ca1f95aef1b7525902f94305edfc22a7d27055"
+    },
+    {
+      "episode": 2,
+      "frame_index": 342,
+      "object": "white_pot_lid",
+      "prompt": "white pot lid.",
+      "detections": [
+        {
+          "label": "white pot lid",
+          "score": 0.452589750289917,
+          "box_xyxy": [
+            507.4572448730469,
+            377.5495910644531,
+            997.4278564453125,
+            795.008056640625
+          ]
+        },
+        {
+          "label": "white pot lid",
+          "score": 0.31236809492111206,
+          "box_xyxy": [
+            516.716796875,
+            390.1217041015625,
+            717.3988037109375,
+            553.6079711914062
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot_lid",
+          "white pot lid",
+          0.452589750289917
+        ],
+        [
+          "white_pot_lid",
+          "white pot lid",
+          0.31236809492111206
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot_lid",
+          "label": "white pot lid",
+          "score": 0.452589750289917,
+          "box_xyxy": [
+            507.4572448730469,
+            377.5495910644531,
+            997.4278564453125,
+            795.008056640625
+          ],
+          "mask_pixels": 129500
+        },
+        {
+          "object": "white_pot_lid",
+          "label": "white pot lid",
+          "score": 0.31236809492111206,
+          "box_xyxy": [
+            516.716796875,
+            390.1217041015625,
+            717.3988037109375,
+            553.6079711914062
+          ],
+          "mask_pixels": 24142
+        }
+      ],
+      "mask_pixels": 152381,
+      "mask_sha256": "190f5d8f39a394d37082c79dfb1f73f253e9a6f98cd5fdb6c97b2a4012bff2cc"
+    },
+    {
+      "episode": 2,
+      "frame_index": 342,
+      "object": "white_pot_lid",
+      "prompt": "pot lid.",
+      "detections": [
+        {
+          "label": "pot lid",
+          "score": 0.5444247722625732,
+          "box_xyxy": [
+            508.6830139160156,
+            378.0185241699219,
+            998.5865478515625,
+            796.0402221679688
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot_lid",
+          "pot lid",
+          0.5444247722625732
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot_lid",
+          "label": "pot lid",
+          "score": 0.5444247722625732,
+          "box_xyxy": [
+            508.6830139160156,
+            378.0185241699219,
+            998.5865478515625,
+            796.0402221679688
+          ],
+          "mask_pixels": 129499
+        }
+      ],
+      "mask_pixels": 129499,
+      "mask_sha256": "c92cb85dd5c4dfd984ede57c6aa7df567bacfbb9aafce3dc911b1915e4dd6dbf"
+    },
+    {
+      "episode": 0,
+      "frame_index": 0,
+      "object": "white_pot",
+      "prompt": "white pot.",
+      "detections": [
+        {
+          "label": "white pot",
+          "score": 0.46538999676704407,
+          "box_xyxy": [
+            529.2084350585938,
+            441.2449951171875,
+            742.1019287109375,
+            658.4370727539062
+          ]
+        },
+        {
+          "label": "white pot",
+          "score": 0.36744704842567444,
+          "box_xyxy": [
+            474.1683654785156,
+            431.63909912109375,
+            978.6591796875,
+            795.9996337890625
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot",
+          "white pot",
+          0.46538999676704407
+        ],
+        [
+          "white_pot",
+          "white pot",
+          0.36744704842567444
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot",
+          "label": "white pot",
+          "score": 0.46538999676704407,
+          "box_xyxy": [
+            529.2084350585938,
+            441.2449951171875,
+            742.1019287109375,
+            658.4370727539062
+          ],
+          "mask_pixels": 33385
+        },
+        {
+          "object": "white_pot",
+          "label": "white pot",
+          "score": 0.36744704842567444,
+          "box_xyxy": [
+            474.1683654785156,
+            431.63909912109375,
+            978.6591796875,
+            795.9996337890625
+          ],
+          "mask_pixels": 115044
+        }
+      ],
+      "mask_pixels": 147175,
+      "mask_sha256": "fa712d45fc81b1808bb1286e53df50ed44024498d37dde80337d80714d74a8a9"
+    },
+    {
+      "episode": 0,
+      "frame_index": 0,
+      "object": "white_pot",
+      "prompt": "cooking pot.",
+      "detections": [
+        {
+          "label": "cooking pot",
+          "score": 0.3854144215583801,
+          "box_xyxy": [
+            477.5244140625,
+            434.4916687011719,
+            972.7099609375,
+            795.5602416992188
+          ]
+        },
+        {
+          "label": "cooking pot",
+          "score": 0.37798821926116943,
+          "box_xyxy": [
+            528.7553100585938,
+            442.5062255859375,
+            742.174072265625,
+            655.8583984375
+          ]
+        },
+        {
+          "label": "pot",
+          "score": 0.30996671319007874,
+          "box_xyxy": [
+            526.44384765625,
+            440.4067077636719,
+            742.6044921875,
+            796.166259765625
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot",
+          "cooking pot",
+          0.3854144215583801
+        ],
+        [
+          "white_pot",
+          "cooking pot",
+          0.37798821926116943
+        ],
+        [
+          null,
+          "pot",
+          0.30996671319007874
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot",
+          "label": "cooking pot",
+          "score": 0.3854144215583801,
+          "box_xyxy": [
+            477.5244140625,
+            434.4916687011719,
+            972.7099609375,
+            795.5602416992188
+          ],
+          "mask_pixels": 115345
+        },
+        {
+          "object": "white_pot",
+          "label": "cooking pot",
+          "score": 0.37798821926116943,
+          "box_xyxy": [
+            528.7553100585938,
+            442.5062255859375,
+            742.174072265625,
+            655.8583984375
+          ],
+          "mask_pixels": 33368
+        },
+        {
+          "object": null,
+          "label": "pot",
+          "score": 0.30996671319007874,
+          "box_xyxy": [
+            526.44384765625,
+            440.4067077636719,
+            742.6044921875,
+            796.166259765625
+          ],
+          "mask_pixels": 41576
+        }
+      ],
+      "mask_pixels": 147013,
+      "mask_sha256": "cdd24c9fea7d4b226acae3c3de0b73c06b3003e5904aadab8e4eb3a73638de15"
+    },
+    {
+      "episode": 0,
+      "frame_index": 0,
+      "object": "white_pot",
+      "prompt": "saucepan.",
+      "detections": [],
+      "assignments": [],
+      "candidates": [],
+      "mask_pixels": 0,
+      "mask_sha256": "d59a0814f1573acdec13b2b092ca1f95aef1b7525902f94305edfc22a7d27055"
+    },
+    {
+      "episode": 0,
+      "frame_index": 0,
+      "object": "white_pot_lid",
+      "prompt": "white pot lid.",
+      "detections": [
+        {
+          "label": "white pot lid",
+          "score": 0.49674874544143677,
+          "box_xyxy": [
+            528.9010009765625,
+            440.2087707519531,
+            742.2964477539062,
+            657.1876831054688
+          ]
+        },
+        {
+          "label": "white pot lid",
+          "score": 0.35146278142929077,
+          "box_xyxy": [
+            469.9386901855469,
+            425.86248779296875,
+            983.12451171875,
+            794.850341796875
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot_lid",
+          "white pot lid",
+          0.49674874544143677
+        ],
+        [
+          "white_pot_lid",
+          "white pot lid",
+          0.35146278142929077
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot_lid",
+          "label": "white pot lid",
+          "score": 0.49674874544143677,
+          "box_xyxy": [
+            528.9010009765625,
+            440.2087707519531,
+            742.2964477539062,
+            657.1876831054688
+          ],
+          "mask_pixels": 33384
+        },
+        {
+          "object": "white_pot_lid",
+          "label": "white pot lid",
+          "score": 0.35146278142929077,
+          "box_xyxy": [
+            469.9386901855469,
+            425.86248779296875,
+            983.12451171875,
+            794.850341796875
+          ],
+          "mask_pixels": 114821
+        }
+      ],
+      "mask_pixels": 147182,
+      "mask_sha256": "d06fd46191f421fb2aeff688834c37b9ba9c294a02fc6b666fe16a3ade9a09dc"
+    },
+    {
+      "episode": 0,
+      "frame_index": 0,
+      "object": "white_pot_lid",
+      "prompt": "pot lid.",
+      "detections": [
+        {
+          "label": "pot lid",
+          "score": 0.47585898637771606,
+          "box_xyxy": [
+            529.271240234375,
+            441.2879943847656,
+            741.69580078125,
+            657.44580078125
+          ]
+        },
+        {
+          "label": "pot lid",
+          "score": 0.4553757607936859,
+          "box_xyxy": [
+            475.12615966796875,
+            431.7940673828125,
+            981.942626953125,
+            795.5259399414062
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot_lid",
+          "pot lid",
+          0.47585898637771606
+        ],
+        [
+          "white_pot_lid",
+          "pot lid",
+          0.4553757607936859
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot_lid",
+          "label": "pot lid",
+          "score": 0.47585898637771606,
+          "box_xyxy": [
+            529.271240234375,
+            441.2879943847656,
+            741.69580078125,
+            657.44580078125
+          ],
+          "mask_pixels": 33381
+        },
+        {
+          "object": "white_pot_lid",
+          "label": "pot lid",
+          "score": 0.4553757607936859,
+          "box_xyxy": [
+            475.12615966796875,
+            431.7940673828125,
+            981.942626953125,
+            795.5259399414062
+          ],
+          "mask_pixels": 115071
+        }
+      ],
+      "mask_pixels": 147214,
+      "mask_sha256": "39c045db7ecdc5a60979e6b127d680cbaa2e49648ebc699c06d9df64c276bc72"
+    },
+    {
+      "episode": 0,
+      "frame_index": 106,
+      "object": "white_pot",
+      "prompt": "white pot.",
+      "detections": [
+        {
+          "label": "white pot",
+          "score": 0.5909069180488586,
+          "box_xyxy": [
+            522.2021484375,
+            441.57818603515625,
+            737.6044311523438,
+            662.8685302734375
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot",
+          "white pot",
+          0.5909069180488586
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot",
+          "label": "white pot",
+          "score": 0.5909069180488586,
+          "box_xyxy": [
+            522.2021484375,
+            441.57818603515625,
+            737.6044311523438,
+            662.8685302734375
+          ],
+          "mask_pixels": 33402
+        }
+      ],
+      "mask_pixels": 33402,
+      "mask_sha256": "222fda211429fb9df469ec89a561411738627db0358ecb9f185b8147481ae316"
+    },
+    {
+      "episode": 0,
+      "frame_index": 106,
+      "object": "white_pot",
+      "prompt": "cooking pot.",
+      "detections": [
+        {
+          "label": "cooking pot",
+          "score": 0.4276983141899109,
+          "box_xyxy": [
+            522.345947265625,
+            443.227783203125,
+            737.20361328125,
+            719.8787841796875
+          ]
+        },
+        {
+          "label": "cooking pot",
+          "score": 0.4094482958316803,
+          "box_xyxy": [
+            749.5155029296875,
+            486.9134521484375,
+            964.068115234375,
+            670.9295043945312
+          ]
+        },
+        {
+          "label": "cooking pot",
+          "score": 0.3240550756454468,
+          "box_xyxy": [
+            521.6282348632812,
+            443.2584228515625,
+            738.1549072265625,
+            797.0823974609375
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot",
+          "cooking pot",
+          0.4276983141899109
+        ],
+        [
+          "white_pot",
+          "cooking pot",
+          0.4094482958316803
+        ],
+        [
+          "white_pot",
+          "cooking pot",
+          0.3240550756454468
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot",
+          "label": "cooking pot",
+          "score": 0.4276983141899109,
+          "box_xyxy": [
+            522.345947265625,
+            443.227783203125,
+            737.20361328125,
+            719.8787841796875
+          ],
+          "mask_pixels": 36539
+        },
+        {
+          "object": "white_pot",
+          "label": "cooking pot",
+          "score": 0.4094482958316803,
+          "box_xyxy": [
+            749.5155029296875,
+            486.9134521484375,
+            964.068115234375,
+            670.9295043945312
+          ],
+          "mask_pixels": 28831
+        },
+        {
+          "object": "white_pot",
+          "label": "cooking pot",
+          "score": 0.3240550756454468,
+          "box_xyxy": [
+            521.6282348632812,
+            443.2584228515625,
+            738.1549072265625,
+            797.0823974609375
+          ],
+          "mask_pixels": 38556
+        }
+      ],
+      "mask_pixels": 67463,
+      "mask_sha256": "89ee6ecef4a811814ba56488b069a3125cd87ac85dda7930a8af6a20f884e63e"
+    },
+    {
+      "episode": 0,
+      "frame_index": 106,
+      "object": "white_pot",
+      "prompt": "saucepan.",
+      "detections": [
+        {
+          "label": "saucepan",
+          "score": 0.36903661489486694,
+          "box_xyxy": [
+            749.146728515625,
+            486.8379211425781,
+            964.5941162109375,
+            671.8065795898438
+          ]
+        },
+        {
+          "label": "saucepan",
+          "score": 0.358026385307312,
+          "box_xyxy": [
+            521.9561767578125,
+            443.8312072753906,
+            738.328857421875,
+            724.3003540039062
+          ]
+        },
+        {
+          "label": "saucepan",
+          "score": 0.36407533288002014,
+          "box_xyxy": [
+            521.8236694335938,
+            443.1368408203125,
+            737.8961181640625,
+            798.4304809570312
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot",
+          "saucepan",
+          0.36903661489486694
+        ],
+        [
+          "white_pot",
+          "saucepan",
+          0.358026385307312
+        ],
+        [
+          "white_pot",
+          "saucepan",
+          0.36407533288002014
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot",
+          "label": "saucepan",
+          "score": 0.36903661489486694,
+          "box_xyxy": [
+            749.146728515625,
+            486.8379211425781,
+            964.5941162109375,
+            671.8065795898438
+          ],
+          "mask_pixels": 28833
+        },
+        {
+          "object": "white_pot",
+          "label": "saucepan",
+          "score": 0.358026385307312,
+          "box_xyxy": [
+            521.9561767578125,
+            443.8312072753906,
+            738.328857421875,
+            724.3003540039062
+          ],
+          "mask_pixels": 36540
+        },
+        {
+          "object": "white_pot",
+          "label": "saucepan",
+          "score": 0.36407533288002014,
+          "box_xyxy": [
+            521.8236694335938,
+            443.1368408203125,
+            737.8961181640625,
+            798.4304809570312
+          ],
+          "mask_pixels": 38584
+        }
+      ],
+      "mask_pixels": 67487,
+      "mask_sha256": "c40bb0a65cc916a29614cad1d3a99b90ab2d2ad9af186fe22d97e367672a04d3"
+    },
+    {
+      "episode": 0,
+      "frame_index": 106,
+      "object": "white_pot_lid",
+      "prompt": "white pot lid.",
+      "detections": [
+        {
+          "label": "white pot lid",
+          "score": 0.5525978207588196,
+          "box_xyxy": [
+            750.3648681640625,
+            487.2703552246094,
+            963.69189453125,
+            672.1119995117188
+          ]
+        },
+        {
+          "label": "white pot lid",
+          "score": 0.35566622018814087,
+          "box_xyxy": [
+            521.0999145507812,
+            440.70758056640625,
+            738.4038696289062,
+            660.2457275390625
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot_lid",
+          "white pot lid",
+          0.5525978207588196
+        ],
+        [
+          "white_pot_lid",
+          "white pot lid",
+          0.35566622018814087
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot_lid",
+          "label": "white pot lid",
+          "score": 0.5525978207588196,
+          "box_xyxy": [
+            750.3648681640625,
+            487.2703552246094,
+            963.69189453125,
+            672.1119995117188
+          ],
+          "mask_pixels": 28831
+        },
+        {
+          "object": "white_pot_lid",
+          "label": "white pot lid",
+          "score": 0.35566622018814087,
+          "box_xyxy": [
+            521.0999145507812,
+            440.70758056640625,
+            738.4038696289062,
+            660.2457275390625
+          ],
+          "mask_pixels": 33402
+        }
+      ],
+      "mask_pixels": 62233,
+      "mask_sha256": "4534becae0c8b14450fa7481d66bfd09392d351e68399ad040121d82c9cea8fe"
+    },
+    {
+      "episode": 0,
+      "frame_index": 106,
+      "object": "white_pot_lid",
+      "prompt": "pot lid.",
+      "detections": [
+        {
+          "label": "pot lid",
+          "score": 0.5770512819290161,
+          "box_xyxy": [
+            750.7520751953125,
+            486.7422180175781,
+            963.9938354492188,
+            672.8010864257812
+          ]
+        },
+        {
+          "label": "pot",
+          "score": 0.3124179542064667,
+          "box_xyxy": [
+            523.8781127929688,
+            441.8349304199219,
+            736.6748657226562,
+            719.8447265625
+          ]
+        },
+        {
+          "label": "pot lid",
+          "score": 0.4266766607761383,
+          "box_xyxy": [
+            522.0532836914062,
+            441.3559875488281,
+            738.6522216796875,
+            658.7556762695312
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot_lid",
+          "pot lid",
+          0.5770512819290161
+        ],
+        [
+          null,
+          "pot",
+          0.3124179542064667
+        ],
+        [
+          "white_pot_lid",
+          "pot lid",
+          0.4266766607761383
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot_lid",
+          "label": "pot lid",
+          "score": 0.5770512819290161,
+          "box_xyxy": [
+            750.7520751953125,
+            486.7422180175781,
+            963.9938354492188,
+            672.8010864257812
+          ],
+          "mask_pixels": 28833
+        },
+        {
+          "object": null,
+          "label": "pot",
+          "score": 0.3124179542064667,
+          "box_xyxy": [
+            523.8781127929688,
+            441.8349304199219,
+            736.6748657226562,
+            719.8447265625
+          ],
+          "mask_pixels": 36546
+        },
+        {
+          "object": "white_pot_lid",
+          "label": "pot lid",
+          "score": 0.4266766607761383,
+          "box_xyxy": [
+            522.0532836914062,
+            441.3559875488281,
+            738.6522216796875,
+            658.7556762695312
+          ],
+          "mask_pixels": 33398
+        }
+      ],
+      "mask_pixels": 62231,
+      "mask_sha256": "f19ecca2b69144eca01392b57f629a4ce7f353f3f4062ad4f9d8ac9088aafe22"
+    },
+    {
+      "episode": 0,
+      "frame_index": 372,
+      "object": "white_pot",
+      "prompt": "white pot.",
+      "detections": [
+        {
+          "label": "white pot",
+          "score": 0.5989134311676025,
+          "box_xyxy": [
+            500.2184753417969,
+            512.1792602539062,
+            710.558837890625,
+            735.6307373046875
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot",
+          "white pot",
+          0.5989134311676025
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot",
+          "label": "white pot",
+          "score": 0.5989134311676025,
+          "box_xyxy": [
+            500.2184753417969,
+            512.1792602539062,
+            710.558837890625,
+            735.6307373046875
+          ],
+          "mask_pixels": 33030
+        }
+      ],
+      "mask_pixels": 33030,
+      "mask_sha256": "4137988843b358025378c4bbbca85b79321eb0efe9dc60945653d8eaa0a8c8fd"
+    },
+    {
+      "episode": 0,
+      "frame_index": 372,
+      "object": "white_pot",
+      "prompt": "cooking pot.",
+      "detections": [
+        {
+          "label": "cooking pot",
+          "score": 0.4176068902015686,
+          "box_xyxy": [
+            501.114013671875,
+            511.7746887207031,
+            711.47412109375,
+            797.241455078125
+          ]
+        },
+        {
+          "label": "cooking pot",
+          "score": 0.3971292972564697,
+          "box_xyxy": [
+            501.1783142089844,
+            512.9822998046875,
+            709.6435546875,
+            733.5975341796875
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot",
+          "cooking pot",
+          0.4176068902015686
+        ],
+        [
+          "white_pot",
+          "cooking pot",
+          0.3971292972564697
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot",
+          "label": "cooking pot",
+          "score": 0.4176068902015686,
+          "box_xyxy": [
+            501.114013671875,
+            511.7746887207031,
+            711.47412109375,
+            797.241455078125
+          ],
+          "mask_pixels": 37839
+        },
+        {
+          "object": "white_pot",
+          "label": "cooking pot",
+          "score": 0.3971292972564697,
+          "box_xyxy": [
+            501.1783142089844,
+            512.9822998046875,
+            709.6435546875,
+            733.5975341796875
+          ],
+          "mask_pixels": 33021
+        }
+      ],
+      "mask_pixels": 37846,
+      "mask_sha256": "e7f99f8aa2415e859d0fcc99484e52b9656c3e97d3a2d388ca88f5e8ca60abb0"
+    },
+    {
+      "episode": 0,
+      "frame_index": 372,
+      "object": "white_pot",
+      "prompt": "saucepan.",
+      "detections": [
+        {
+          "label": "saucepan",
+          "score": 0.30410921573638916,
+          "box_xyxy": [
+            501.7727355957031,
+            512.6066284179688,
+            710.5035400390625,
+            795.3327026367188
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot",
+          "saucepan",
+          0.30410921573638916
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot",
+          "label": "saucepan",
+          "score": 0.30410921573638916,
+          "box_xyxy": [
+            501.7727355957031,
+            512.6066284179688,
+            710.5035400390625,
+            795.3327026367188
+          ],
+          "mask_pixels": 37839
+        }
+      ],
+      "mask_pixels": 37839,
+      "mask_sha256": "6e79fc1d13c1b1e2f90e672851302d6ae0a26268b5d12740eff5589ae1bd2886"
+    },
+    {
+      "episode": 0,
+      "frame_index": 372,
+      "object": "white_pot_lid",
+      "prompt": "white pot lid.",
+      "detections": [
+        {
+          "label": "white pot lid",
+          "score": 0.5431417226791382,
+          "box_xyxy": [
+            499.5503234863281,
+            511.1468200683594,
+            710.355224609375,
+            733.3739013671875
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot_lid",
+          "white pot lid",
+          0.5431417226791382
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot_lid",
+          "label": "white pot lid",
+          "score": 0.5431417226791382,
+          "box_xyxy": [
+            499.5503234863281,
+            511.1468200683594,
+            710.355224609375,
+            733.3739013671875
+          ],
+          "mask_pixels": 33032
+        }
+      ],
+      "mask_pixels": 33032,
+      "mask_sha256": "836c641e308be8abe34f721b41aaf8905c691ddcfb97a7a853e49d320d435aaa"
+    },
+    {
+      "episode": 0,
+      "frame_index": 372,
+      "object": "white_pot_lid",
+      "prompt": "pot lid.",
+      "detections": [
+        {
+          "label": "pot lid",
+          "score": 0.4670480489730835,
+          "box_xyxy": [
+            500.97259521484375,
+            512.3466186523438,
+            709.2676391601562,
+            734.5126342773438
+          ]
+        },
+        {
+          "label": "pot lid",
+          "score": 0.306726336479187,
+          "box_xyxy": [
+            501.7983703613281,
+            512.55615234375,
+            707.127685546875,
+            692.6266479492188
+          ]
+        }
+      ],
+      "assignments": [
+        [
+          "white_pot_lid",
+          "pot lid",
+          0.4670480489730835
+        ],
+        [
+          "white_pot_lid",
+          "pot lid",
+          0.306726336479187
+        ]
+      ],
+      "candidates": [
+        {
+          "object": "white_pot_lid",
+          "label": "pot lid",
+          "score": 0.4670480489730835,
+          "box_xyxy": [
+            500.97259521484375,
+            512.3466186523438,
+            709.2676391601562,
+            734.5126342773438
+          ],
+          "mask_pixels": 33026
+        },
+        {
+          "object": "white_pot_lid",
+          "label": "pot lid",
+          "score": 0.306726336479187,
+          "box_xyxy": [
+            501.7983703613281,
+            512.55615234375,
+            707.127685546875,
+            692.6266479492188
+          ],
+          "mask_pixels": 27905
+        }
+      ],
+      "mask_pixels": 33026,
+      "mask_sha256": "55a51e702c2ca7b5ba8ea1891f0e08f32cf3b14fa92163d54aad0c1c3c88d1d4"
+    }
+  ],
+  "gt_use": "none",
+  "box_threshold": 0.3,
+  "text_threshold": 0.25,
+  "source_sha256_lf": "6e02a2c55d9e2ab1089d04fbf556612166c78b165d1947582d4e6d93f28bcba2",
+  "limits": [
+    "Language controls only, no default changes, no GT pose read.",
+    "Source indices selected before evaluation; not full tracking or pose accuracy."
+  ]
+}

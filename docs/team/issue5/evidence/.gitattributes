@@ -1,0 +1,4 @@
+# Preserve immutable evidence bytes so recorded SHA-256s survive OS line endings.
+*.json -text whitespace=cr-at-eol
+*.xml -text whitespace=cr-at-eol
+COMPLETION_AUDIT.md -text whitespace=cr-at-eol

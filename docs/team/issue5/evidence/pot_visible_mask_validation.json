@@ -1,0 +1,114 @@
+{
+  "date": "2026-10-04",
+  "episode": 2,
+  "coordinate_frame": "rectified_camera",
+  "camera_frame": "ego_cam_c",
+  "native_head_at_execution": "4d7f6aa044d1c9569ddf34ad43976186c3511b0a",
+  "producer_source_sha256_lf": "d06bb40f9e0c133bf51eb047bae39c5dd78addb95556d4113d99389bd798503f",
+  "producer_source_raw_sha256": "85b7355f3e57c0b9313a9c3d7051e0911dbe55bd3160747d9e61a20e6b66ea9c",
+  "prompted_initial_worker_sha256_lf": "de122100f323afa4092222c62bb973ed9493e3e2970685eb73d5f52a5317c232",
+  "native_source_sha256_lf_verified_unchanged": {
+    "scripts\\track3\\register_poses.py": "252866db4deb066e780df1b34d08e29a48a6acb88d5830418de72fad1e9a10fd",
+    "reconstruction\\modules\\v2d_world_calib\\vm\\visualize_object_pose.py": "ea452472a25408db77e2e25fec8116eb017519830cfb333426a89aac6111bb6b"
+  },
+  "baseline_prediction_sha256": "331c3af567b104d469485caf05a8c91e8876a4454971bc6b8b7a1b427f0be4ff",
+  "environment": {
+    "torch": "2.11.0+cu128",
+    "transformers": "5.18.0",
+    "cuda": "12.8",
+    "device": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "opencv": "5.0.0"
+  },
+  "comparison": {
+    "native": {
+      "frames": [
+        0,
+        49,
+        98,
+        147,
+        195,
+        244
+      ],
+      "mean_pot_to_lid_position_error_cm": 41.002831995172336,
+      "median_relative_canonical_rotation_deg": 144.83250954121272
+    },
+    "prompted": {
+      "frames": [
+        0,
+        49,
+        98,
+        147,
+        195,
+        244
+      ],
+      "mean_pot_to_lid_position_error_cm": 29.893939766460424,
+      "median_relative_canonical_rotation_deg": 150.98807704079883
+    },
+    "lid_excluded": {
+      "frames": [
+        0,
+        49,
+        98,
+        147,
+        195,
+        244
+      ],
+      "mean_pot_to_lid_position_error_cm": 32.90021832514376,
+      "median_relative_canonical_rotation_deg": 153.37635183131562
+    }
+  },
+  "all_eight_lid_excluded": {
+    "episode": 2,
+    "sampled_frames": 8,
+    "common_visible_sampled": 8,
+    "common_visible_accepted": 8,
+    "official_rpe_kernel_cm": 29.00048284281798,
+    "median_relative_translation_cm": 18.3352737944169,
+    "median_relative_canonical_rotation_deg": 165.94765985567176
+  },
+  "pot_median_residual_mm": 17.288419418036938,
+  "lid_median_residual_mm": 7.185982074588537,
+  "checks": {
+    "all_16_prompted_masks_match_initial_control": true,
+    "all_8_depth_inputs_match_frozen_native_hashes": true,
+    "all_8_overlays_reviewed": true,
+    "existing_output_rejected_before_model_load": true
+  },
+  "overlap_pixels_before_exclusion": [
+    28106,
+    17759,
+    0,
+    0,
+    0,
+    0,
+    17714,
+    28469
+  ],
+  "foundation_pose_runtime_check": {
+    "source_present": true,
+    "nvdiffrast_available": false,
+    "warp_available": false,
+    "kaolin_available": false,
+    "inference_run": false
+  },
+  "commands": [
+    "python scripts/eval/probe_issue5_pot_mask_control.py --data DATA --models MODELS --baseline NATIVE_PROBE_DIRECTORY --out FRESH_OUTPUT",
+    "python scripts/eval/evaluate_issue5_pot_relative.py --data DATA --predictions FRESH_OUTPUT/probe_results.json --kit KIT --out FRESH_EVALUATION.json"
+  ],
+  "limits": [
+    "Masks are RGB reviewed by Codex; no independent human review or manually measured mask IoU.",
+    "Eight development frames only. No GT read by inference; frozen evaluator reads GT separately.",
+    "Compare the same six accepted baseline source IDs separately from eight-frame coverage.",
+    "The native RPE kernel uses the ordered pot-to-lid positional pair. The inverse-pair mean is not this kernel.",
+    "Full CAD silhouette/mask IoU under external occlusion is not visible-object-mask accuracy.",
+    "No production mask, threshold, rotation prior or tracking method is changed.",
+    "FoundationPose improvement, depth correctness, both-camera absolute/world accuracy and all-20 acceptance remain unmeasured."
+  ],
+  "evidence": {
+    "pot_visible_mask_observations.json": "a7ab5d47f33e269bf57e8a294d6ff894bd730c86ee3275ec6ccc1a15ec134c06",
+    "pot_visible_mask_relative.json": "49fd797eee7c4b6e89450256092e48abe05d242aab37c0d9b3986d8d5ac271c1",
+    "pot_visible_mask_preview.jpg": "8526f037e1140abeaf1be4905e5e6d634c5a819a61ff12bd027643d4586f35eb",
+    "pot_prompted_mask_observations.json": "9155b42cb629e260eb0b96e7b90dff1ad54577447737eb65ad1833650d9b05f8",
+    "pot_prompted_mask_relative.json": "d620ecafb18f0faa3b5f4e374a40098786369d0658c8c5fdb25640b795c8060e"
+  }
+}

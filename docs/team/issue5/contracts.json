@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "kind": "issue5_repaired_pipeline_contract",
+  "measured_tracking_accuracy": false,
+  "transforms": {
+    "convention": "T_A_B maps column-vector coordinates in B to coordinates in A",
+    "W": "T_world_object",
+    "C": "T_camera_world",
+    "P": "T_camera_object = C(t) @ W(t)",
+    "fixed_world_conversion": "X(t) = inv(C(t)) @ P(t)",
+    "rig": "C_right(t) = M @ C_left(t); M is published original-axis left_to_right",
+    "rectified_left": "C_rect_left(t) = H1 @ C_left(t), H1 = diag(R1, 1)",
+    "rectified_rig": "M_rect = H2 @ M @ inv(H1)",
+    "rectified_world_conversion": "X(t) = inv(H1 @ C_left(t)) @ P_rect_left(t)"
+  },
+  "representations": {
+    "json_rotation": "wxyz, finite and normalized, nonzero",
+    "parquet_pose": "x,y,z,qw,qx,qy,qz",
+    "reference_loader_and_metric_pose": "x,y,z,qx,qy,qz,qw",
+    "position_mesh_depth": "metres",
+    "rotation_error": "degrees",
+    "translation_report": "metres and centimetres",
+    "chamfer_report": "millimetres",
+    "official_pose_scale": 1,
+    "free_registration_scale": "diagnostic only; rejected by fixed-world conversion and scoring"
+  },
+  "identity_and_time": {
+    "object_membership": "Match GT by name; use kit slot order for evaluated artifacts",
+    "frame_index": "Original source frame ID, never an output-row ordinal",
+    "timestamp": "Source capture time when supplied; null means unavailable, never measured zero",
+    "matching": "Episode/frame/camera axes must match; supplied timestamps must agree",
+    "independent_benchmark": "Freeze frame-to-capture-time correspondence and input hashes before evaluation"
+  },
+  "camera_provenance": {
+    "shared_camera": "Exactly one immutable camera record/path/SHA-256 per episode/source frame for every object",
+    "gt_assisted": "Camera fitting or observation selection uses object GT; diagnostic lane only",
+    "independent": "Metric background/stereo camera producer with no object-trajectory GT",
+    "require_independent": "Reject unknown/GT-assisted camera provenance and GT-dependent native observations",
+    "constant_alignment": "Official start alignment removes one rigid gauge; it does not remove camera motion or scale errors"
+  },
+  "observations": {
+    "coordinate_frame": ["original_camera", "rectified_camera", "fixed_world"],
+    "observed": "Raw accepted observation; final residual and temporal gates also pass",
+    "rejected": "Retained in diagnostics; excluded from observation exports and propagation",
+    "inferred": "Explicit fill/filter result; does not count as raw observation coverage",
+    "smoothing": "Off by default; immutable input snapshot, no gap filling, final residuals recomputed",
+    "depth": "Invalid pixels require a validity mask; triangulate in rectified coordinates with P1/P2/Q",
+    "mesh": "All active visual-scene geometry, node transforms and original uncentered scan origin retained",
+    "outputs": "Fresh destination; preserve historical inputs, predictions and reports"
+  },
+  "scoring": {
+    "artifact_kind": "reconstruction_diagnostic, not a policy-rollout submission",
+    "pose_metrics": ["AUC", "SP-SR", "MP-SR", "RPE", "MPPE"],
+    "shape_metric": "CD-O is separate Sim(3)-aligned shape scoring",
+    "gaps": "Preserve raw/fill masks; any hold/backfill is explicit in diagnostic reports",
+    "missing_measurements": "null with a reason, never a successful zero error",
+    "original_general_target": "All 20 public reports; visible medians <5 cm and <5 degrees",
+    "original_pot_target": "Both ego_cam_b and ego_cam_c; medians <10 cm and <10 degrees plus residual explanation",
+    "cross_object_target": "Report every kit pair and identify the issue's unavailable seventeenth configuration"
+  },
+  "asset_free_fallback": {
+    "note": "Retain masks/depth/cameras for the existing planned asset-free reconstruction path when CAD is unavailable",
+    "limitations": "Missing CAD cannot be silently replaced by another object's mesh or counted as a successful CAD fit",
+    "implementation_and_real_validation": "Separate dependency; not claimed complete by these repairs"
+  }
+}

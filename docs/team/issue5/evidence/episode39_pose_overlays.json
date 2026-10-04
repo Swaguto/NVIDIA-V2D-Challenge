@@ -1,0 +1,119 @@
+{
+  "episode": 39,
+  "frames": [
+    {
+      "frame_index": 0,
+      "silhouette_vs_sam2_mask_iou": 0.8804836459463649,
+      "icp_residual_m": 0.006526058539748192,
+      "overlap_valid_depth_pixels": 10038,
+      "median_signed_stereo_minus_front_mesh_m": 0.0016475496042745452,
+      "median_absolute_depth_residual_m": 0.009970323485609889,
+      "p90_absolute_depth_residual_m": 0.0339212152051919,
+      "pose_sha256": "c2930c1dfe99bb7253f099d1de78d6cff2d8990a58daf5643fd7b9bf98406726",
+      "mask_sha256": "6c38bf04a8ed265a1cdd2f5d75542184a14f3e669579875bbbebf4e0a62c8f4a",
+      "depth_sha256": "4125c7c9bb16d6a21ae86bcdeeea2b3d1c89ee4801d979c7eb908a6195908b33"
+    },
+    {
+      "frame_index": 39,
+      "silhouette_vs_sam2_mask_iou": 0.7354447333175766,
+      "icp_residual_m": 0.0064428867772221565,
+      "overlap_valid_depth_pixels": 7678,
+      "median_signed_stereo_minus_front_mesh_m": 0.0004424219921949635,
+      "median_absolute_depth_residual_m": 0.008659936146558689,
+      "p90_absolute_depth_residual_m": 0.06282706961478116,
+      "pose_sha256": "8f26cc83e67adb7f71f32f661783186bc67d5153bbd4ab3ec8d4b96aedafa150",
+      "mask_sha256": "c6660f8eb617e72707a11837f6e66c315daed045538445f2ca05d823ecb2c2e8",
+      "depth_sha256": "9d97e575a7f5a351512936973253d3c6a43fd790bb7fd5fed0238d73f6133dad"
+    },
+    {
+      "frame_index": 79,
+      "silhouette_vs_sam2_mask_iou": 0.7883612112085193,
+      "icp_residual_m": 0.006810165476053953,
+      "overlap_valid_depth_pixels": 10551,
+      "median_signed_stereo_minus_front_mesh_m": 0.0018958788744790622,
+      "median_absolute_depth_residual_m": 0.010381906072641,
+      "p90_absolute_depth_residual_m": 0.028763933528426655,
+      "pose_sha256": "04ed2a093c3e63f31d24df8ac3b54dc2fe8fe61d3d73221d52577c22acc7b2e4",
+      "mask_sha256": "b922d84d9217be6a08f757654a3ed377a79498a41732b8c4efc69e0c755125a6",
+      "depth_sha256": "891e6fa7501a8a92ec6b06b875d2101f4c94db75b5e5512654cd008879221a83"
+    },
+    {
+      "frame_index": 119,
+      "silhouette_vs_sam2_mask_iou": 0.7194175249885839,
+      "icp_residual_m": 0.006638705264776945,
+      "overlap_valid_depth_pixels": 11537,
+      "median_signed_stereo_minus_front_mesh_m": 0.004314524254975305,
+      "median_absolute_depth_residual_m": 0.007900549752721364,
+      "p90_absolute_depth_residual_m": 0.022442506870157752,
+      "pose_sha256": "732419a6fbb29c34aca1a9053f05b9359ea2cc5f075821a4d31d22812ec556e0",
+      "mask_sha256": "5a6799a21222434a993d46621125a4c1557c8bcca76c81dfafc28d48bc9242b7",
+      "depth_sha256": "334c2f9d5515149b2423bc950318cbfa461f4b2acc6e2e5695b7951cc2d5d2d9"
+    },
+    {
+      "frame_index": 159,
+      "silhouette_vs_sam2_mask_iou": 0.65712626075936,
+      "icp_residual_m": 0.007697741501033306,
+      "overlap_valid_depth_pixels": 11131,
+      "median_signed_stereo_minus_front_mesh_m": -0.0009494556977540647,
+      "median_absolute_depth_residual_m": 0.008499438012232963,
+      "p90_absolute_depth_residual_m": 0.0337411390721748,
+      "pose_sha256": "3f6fdbcdebb217889e901254d478acb7199efb9dc0a0314bd570b48205264638",
+      "mask_sha256": "577db27b9256094f6c7537d6b42e39c22bd48a7538841603161dde1677b2917f",
+      "depth_sha256": "8f002ae665d4fcb96e96623a514fd47a4a55aa8bcbd54a3b3bb7c43e3e417dab"
+    },
+    {
+      "frame_index": 199,
+      "silhouette_vs_sam2_mask_iou": 0.7245470085470086,
+      "icp_residual_m": 0.006294895429164171,
+      "overlap_valid_depth_pixels": 16717,
+      "median_signed_stereo_minus_front_mesh_m": -0.00018188888978099005,
+      "median_absolute_depth_residual_m": 0.006805488422818973,
+      "p90_absolute_depth_residual_m": 0.01835787696135652,
+      "pose_sha256": "5d00b4c07391c783f50e205f441452492ced71bc667abe8698176e221de55ed5",
+      "mask_sha256": "4b5242cde18554177f1442d10713dd15bf09607f90bbf3781f51c7b8460bd4ee",
+      "depth_sha256": "4bcdbf4569002c0d0292047e9ebbb648f1924943030400725ed41715327a83b3"
+    },
+    {
+      "frame_index": 239,
+      "silhouette_vs_sam2_mask_iou": 0.9036133292742898,
+      "icp_residual_m": 0.007932459004223347,
+      "overlap_valid_depth_pixels": 26240,
+      "median_signed_stereo_minus_front_mesh_m": -0.0035981317083446374,
+      "median_absolute_depth_residual_m": 0.008322434779098942,
+      "p90_absolute_depth_residual_m": 0.02655716234725124,
+      "pose_sha256": "01692ab23e23700259b86d349ffbf5b0a6338d326b681f09ca75849782fd91f9",
+      "mask_sha256": "42936a84227b64d290167b788f36480b40bbb072c7117bb769301ff875b30142",
+      "depth_sha256": "7c4c88d2e2a9dbcac5634925cfdaa20990144aef025c25e4e9d82aaf779b8d2c"
+    },
+    {
+      "frame_index": 318,
+      "silhouette_vs_sam2_mask_iou": 0.8730018416206261,
+      "icp_residual_m": 0.006880708038806915,
+      "overlap_valid_depth_pixels": 10175,
+      "median_signed_stereo_minus_front_mesh_m": 0.0069004399792982896,
+      "median_absolute_depth_residual_m": 0.009347376132133434,
+      "p90_absolute_depth_residual_m": 0.04360469417104212,
+      "pose_sha256": "a0dc0300c702436840f6ff51821c94d83c1e8fa7a75fe57e6de90182d33dd953",
+      "mask_sha256": "7d38fc358b2f6ca10482954ad9fba6f13e614e8d52e5234ca79daceb868d7795",
+      "depth_sha256": "111ec89408b161b8bef1d110329b79a00086520a613237e6f7eaab8236c9e218"
+    }
+  ],
+  "limits": [
+    "Sampled camera-space fit diagnostics, no official pose accuracy.",
+    "Full CAD silhouette versus SAM2 masks; external occlusion is not independently labeled.",
+    "Frontmost CAD versus SGBM on common pixels; no independent depth truth."
+  ],
+  "renderer_source_sha256_lf": "ea452472a25408db77e2e25fec8116eb017519830cfb333426a89aac6111bb6b",
+  "source_script_sha256_lf": "3608a5475980b511e73592bd6aa588b7431f5580c3de590731c41c88e1e9c557",
+  "video": {
+    "frames": 319,
+    "fps": 20.0,
+    "resolution": [
+      1280,
+      400
+    ],
+    "sha256": "478d205faa6a26628afdb6f91748b0bf860debbfddad3e7a871c7ddd29bdb131",
+    "rendering": "full projected triangle silhouette; the eight numeric depth checks use the z-buffer",
+    "limits": "Camera-space fit with one manually reviewed RGB initialization box; no official pose accuracy."
+  }
+}

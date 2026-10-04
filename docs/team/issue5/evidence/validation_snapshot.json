@@ -1,0 +1,98 @@
+{
+  "date": "2026-10-03",
+  "timezone": "America/Toronto",
+  "kind": "local_cpu_software_and_real_input_validation",
+  "source_commit": "c89b45c571e4a396f6d76d5541d21d4075c64713",
+  "base_pr26": "ef8a7ac4615aaf9b499387fa68b76b27246d9d55",
+  "imported_pr28": "a6e0cb2e87299278fd610a9f3afc7fa754732668",
+  "source_hashing": "SHA-256 of canonical git blobs at source_commit",
+  "source_sha256": {
+    "reconstruction/modules/v2d_stereo_depth/LICENSE": "211d98cf9501fe8cfc7125554088e558c0a7fcefbe822be7d91ec08aa91580e7",
+    "reconstruction/modules/v2d_stereo_depth/lib/__init__.py": "39b67a3543de12fbe919327958818a53222b223688ef8ece33a12bc1e46d1f14",
+    "reconstruction/modules/v2d_stereo_depth/lib/stereo_depth.py": "97ab2c7dc1a871fca9555b2de10286f82697889c76c9885034892b283a966c93",
+    "reconstruction/modules/v2d_stereo_depth/pyproject.toml": "02f7418837364c3fe660d8cb4b0d147e467d0ef85aca00ce255b3c8059bc9289",
+    "reconstruction/modules/v2d_world_calib/README.md": "9e739b81f91a487eb2bb60529194d80fc0a99d17242134390dd689f7cc4dd52b",
+    "reconstruction/modules/v2d_world_calib/tests/test_object_pose.py": "44e1a00115ca5687121631c484d29a466f7db740735113f9abbc503609c1c4c6",
+    "reconstruction/modules/v2d_world_calib/vm/fit_ego_rig.py": "71386408bf830e1686f3b42fa0ad84b661d7ef8d4ee2ec19ccbed8437502ffd2",
+    "reconstruction/modules/v2d_world_calib/vm/fit_object_pose.py": "3098e8900367d1f69544a9c31655be57e497c362120236d3dd6c5005bf45b5dd",
+    "reconstruction/modules/v2d_world_calib/vm/visualize_object_pose.py": "4ab7d7f5e3f3b50cbc2079d21b56bffe3d2e63aa54439f395732161fad1ee4c1",
+    "scripts/eval/audit_track3_release.py": "9f4d2b7b360bc326436433157a2a7a250b5a5796000b2d14f5939d3c4edf66d1",
+    "scripts/eval/convert_camera_poses.py": "c4b282f16e935110516a5cfcbb96545720400a7ac21454da197f350bcaa497ea",
+    "scripts/eval/glb_mesh.py": "61a14d3e42c5979c54e48a84e6c69b5f51bc4e513758162019ad18d50dec525d",
+    "scripts/eval/official_metric.py": "54d3b9eef91e449fbb410f432b04e0e27900abc49f71f975d8bf2906ab244481",
+    "scripts/eval/score_track3_official.py": "c84024d8f2f6bbf903d4d95d17572bada2087ca90ba3ed21eeba64dfea0ca16e",
+    "scripts/eval/validate_issue5_inputs.py": "e509ae1b2f286101e5adc2ec6c51e34a4306e4d2b173babeb2aecf1d0238a13b",
+    "scripts/fetch_issue5_test_inputs.py": "3e8d282823ef5405e76b45979972481cef5e753a15374d237649c41e52751970",
+    "scripts/fetch_track3_assets.py": "2370ce02fd7cdc60a66973553267d73a813fa2a98ce909c1bee9e7a160a32565",
+    "scripts/track3/README.md": "bfcd4d0af9aabd9a15b8ec37ec7f268d7dde2c994612420903b1263526e150e3",
+    "scripts/track3/diag_gt_orientation.py": "a7ae8ca6be8cc973cbff659cb0ce68e97028f5fcb20adc98b25118aec587fc4a",
+    "scripts/track3/diag_relative_geometry.py": "a5cbb2f9f18910be09c44dd7932edf8c18d06d7b134b299d27067e641ad6f6c1",
+    "scripts/track3/diag_rotation_offset.py": "ebc15dcf391b26ea4ad40d626ed0a032d5e9d929282d45102bda0985ee758fb2",
+    "scripts/track3/probe_depth.py": "1fb484439169d66f9eb7a0b5a5b8c1538121a0d09f5634c114f5619b5af0d927",
+    "scripts/track3/probe_segmentation.py": "2b3ebe7536aa3ca6a781f9048d08eb8192fddd829d4039b07610cb0e9bc1fb07",
+    "scripts/track3/register_poses.py": "dc638ede73722344cce6adead3a9067b5765391fe45abb3bd93dbb807ad6632f",
+    "scripts/track3/smooth_rotation.py": "848d4cd83ab0077d5dae0cdcef9ce999f5c8827601eaa6aa69d8dd1bb4941df1",
+    "scripts/track3/validate_stereo.py": "469a71e99d9004e5b8923daf28f19fccbcc1a56e9407d8292dfdc3e60fa90a38",
+    "tests/fixtures/README.md": "cb016b7ea477dfb9441d70528ed910b1423626eec3b2085403fe2d16b833eb0e",
+    "tests/fixtures/track3_camera_calibration.json": "23e2d9c46369292cdda492a777e7a6083815369a25d1af4bb82560669fde5d52",
+    "tests/test_issue5_official_wrapper.py": "21576a59b9b351591f20a411f1908a033714dade3204f9868bf26e0b2c13e01c",
+    "tests/test_issue5_repairs.py": "d56c3f8d38389684ac1925ebd24d75464e3c3e94ac0b0eb559e02b4af4a7ccac",
+    "tests/test_issue5_stereo_diagnostic.py": "a701f80eddd5ae36669563af5957ef642081da4d4ac629fa38fe9c45a29bc40d"
+  },
+  "environment": {
+    "python": "3.14.0",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "opencv": "5.0.0",
+    "torch": "2.14.0+cpu",
+    "pandas": "3.0.6",
+    "cuda_available": false
+  },
+  "software_checks": {
+    "tests": 109,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "passed": 109,
+    "command": "V2D_SUBMISSION_KIT=<hash-verified-kit-root> python -m pytest tests/test_issue5_official_wrapper.py tests/test_issue5_repairs.py tests/test_issue5_stereo_diagnostic.py reconstruction/modules/v2d_world_calib/tests -q",
+    "calibration": "tests/fixtures/track3_camera_calibration.json",
+    "official_pose_kernel_parity": "five kernels, seven controls, absolute tolerance 1e-9",
+    "full_score_wrappers": "five wrappers, four parity controls and six rejection cases each",
+    "compileall": "passed",
+    "official_metric_selfcheck": "passed"
+  },
+  "official_kit_sha256": "b1f8f703c2e772684a57d048cf28f40c7b9b54cf7a61aff6917b46d826915e1f",
+  "real_input_checks": {
+    "dataset": "nvidia/video_to_data_challenge",
+    "revision": "5f68335f3acc802033d1e80728c1633197521de8",
+    "visual_meshes": 10,
+    "stereo_episodes": [
+      0,
+      2
+    ],
+    "decoded_frames": [
+      373,
+      343
+    ],
+    "checked_stereo_frames": 8,
+    "rerun_command": "python scripts/eval/validate_issue5_inputs.py --data <public-root> --out <fresh-output>"
+  },
+  "evidence_sha256": {
+    "tests-pr.xml": "a33f429c7fade4dd60a44378e73d7a5bf414efb6b5e697621b43911682b78942",
+    "local_results.json": "3bad93caa7723d368af83fafe7a668fbe7029f30776eb3c524a28e22c069f7c9",
+    "asset_download_manifest.json": "35416d1cc14a88114278c74fe103622c9a2b36566b9b6379779eea35e78993f4",
+    "COMPLETION_AUDIT.md": "292509d1498bc94c5dbb74279143b6c201a4a43627f5cb9a1a558bc71e757ced"
+  },
+  "not_run": [
+    "real object-pose inference and accuracy targets",
+    "FoundationStereo/mask/symmetry ablations",
+    "independent camera inference",
+    "CD-O shape scoring",
+    "native GPU inference",
+    "whole-repo IsaacLab tests",
+    "policy training/rollout submission",
+    "pre-commit (no root configuration)"
+  ],
+  "remaining_dependency": "prepared observations and independent camera trajectories or usable VM access",
+  "issue5_acceptance": "unverified; keep issue open"
+}

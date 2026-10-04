@@ -1,0 +1,108 @@
+{
+  "episode": 39,
+  "frames": [
+    {
+      "frame_index": 0,
+      "silhouette_vs_sam2_mask_iou": 0.8781584250503798,
+      "icp_residual_m": 0.006550776772201061,
+      "overlap_valid_depth_pixels": 10006,
+      "median_signed_stereo_minus_front_mesh_m": 0.0018116342759789128,
+      "median_absolute_depth_residual_m": 0.01000723489430072,
+      "p90_absolute_depth_residual_m": 0.03375796265098918,
+      "pose_sha256": "7ba051a78e51a3e6550e52049a805709edd32f80eaaefde899268bcc2e84b45d",
+      "mask_sha256": "6c38bf04a8ed265a1cdd2f5d75542184a14f3e669579875bbbebf4e0a62c8f4a",
+      "depth_sha256": "4125c7c9bb16d6a21ae86bcdeeea2b3d1c89ee4801d979c7eb908a6195908b33"
+    },
+    {
+      "frame_index": 39,
+      "silhouette_vs_sam2_mask_iou": 0.751894090437834,
+      "icp_residual_m": 0.006518753245472908,
+      "overlap_valid_depth_pixels": 7786,
+      "median_signed_stereo_minus_front_mesh_m": 0.00015836655916384723,
+      "median_absolute_depth_residual_m": 0.00863772863345505,
+      "p90_absolute_depth_residual_m": 0.06431187175996467,
+      "pose_sha256": "0892da1506df1d7fa5da36456a8d668ca120a112fa776faaddf4dda88b00837a",
+      "mask_sha256": "c6660f8eb617e72707a11837f6e66c315daed045538445f2ca05d823ecb2c2e8",
+      "depth_sha256": "9d97e575a7f5a351512936973253d3c6a43fd790bb7fd5fed0238d73f6133dad"
+    },
+    {
+      "frame_index": 79,
+      "silhouette_vs_sam2_mask_iou": 0.7909330748936628,
+      "icp_residual_m": 0.006845683790743351,
+      "overlap_valid_depth_pixels": 10580,
+      "median_signed_stereo_minus_front_mesh_m": 0.0017857979224094878,
+      "median_absolute_depth_residual_m": 0.010290283405529843,
+      "p90_absolute_depth_residual_m": 0.028749093478553374,
+      "pose_sha256": "6a9ee225e90c3f63f20eaf5492bb296b1983272c53ad94b8dfff5e4216a6d3b9",
+      "mask_sha256": "b922d84d9217be6a08f757654a3ed377a79498a41732b8c4efc69e0c755125a6",
+      "depth_sha256": "891e6fa7501a8a92ec6b06b875d2101f4c94db75b5e5512654cd008879221a83"
+    },
+    {
+      "frame_index": 119,
+      "silhouette_vs_sam2_mask_iou": 0.7180875284593979,
+      "icp_residual_m": 0.006598019041121006,
+      "overlap_valid_depth_pixels": 11555,
+      "median_signed_stereo_minus_front_mesh_m": 0.004179532907172212,
+      "median_absolute_depth_residual_m": 0.007834467380888555,
+      "p90_absolute_depth_residual_m": 0.021897781783543742,
+      "pose_sha256": "eed072b660c2c3cde02f50b9aacb535fe9213e3890df4a02ccc8176eea8ba404",
+      "mask_sha256": "5a6799a21222434a993d46621125a4c1557c8bcca76c81dfafc28d48bc9242b7",
+      "depth_sha256": "334c2f9d5515149b2423bc950318cbfa461f4b2acc6e2e5695b7951cc2d5d2d9"
+    },
+    {
+      "frame_index": 159,
+      "silhouette_vs_sam2_mask_iou": 0.6575937301419191,
+      "icp_residual_m": 0.007541202940046787,
+      "overlap_valid_depth_pixels": 11120,
+      "median_signed_stereo_minus_front_mesh_m": -0.0010060067066610667,
+      "median_absolute_depth_residual_m": 0.00857933796763588,
+      "p90_absolute_depth_residual_m": 0.034105210423341525,
+      "pose_sha256": "ae12a047206406b723834d73a5bfaadfedeed39579a8eb430da3754bf91b7c91",
+      "mask_sha256": "577db27b9256094f6c7537d6b42e39c22bd48a7538841603161dde1677b2917f",
+      "depth_sha256": "8f002ae665d4fcb96e96623a514fd47a4a55aa8bcbd54a3b3bb7c43e3e417dab"
+    },
+    {
+      "frame_index": 199,
+      "silhouette_vs_sam2_mask_iou": 0.7250752188183808,
+      "icp_residual_m": 0.006295075640082359,
+      "overlap_valid_depth_pixels": 16724,
+      "median_signed_stereo_minus_front_mesh_m": -0.00012948185659578115,
+      "median_absolute_depth_residual_m": 0.006793673038206716,
+      "p90_absolute_depth_residual_m": 0.018292681634816368,
+      "pose_sha256": "3c19a122eb5f2b74322ddec7202c88009533d2772a3e4746ade32dee850e1e51",
+      "mask_sha256": "4b5242cde18554177f1442d10713dd15bf09607f90bbf3781f51c7b8460bd4ee",
+      "depth_sha256": "4bcdbf4569002c0d0292047e9ebbb648f1924943030400725ed41715327a83b3"
+    },
+    {
+      "frame_index": 239,
+      "silhouette_vs_sam2_mask_iou": 0.9035241774967803,
+      "icp_residual_m": 0.008066564798355103,
+      "overlap_valid_depth_pixels": 26238,
+      "median_signed_stereo_minus_front_mesh_m": -0.003601031354152656,
+      "median_absolute_depth_residual_m": 0.008322734361831952,
+      "p90_absolute_depth_residual_m": 0.02655717765590843,
+      "pose_sha256": "80782c97b87fa3a6ecbc254821c21a4c77726ed02b9707af98be083a6ce64efa",
+      "mask_sha256": "42936a84227b64d290167b788f36480b40bbb072c7117bb769301ff875b30142",
+      "depth_sha256": "7c4c88d2e2a9dbcac5634925cfdaa20990144aef025c25e4e9d82aaf779b8d2c"
+    },
+    {
+      "frame_index": 318,
+      "silhouette_vs_sam2_mask_iou": 0.8740975394135848,
+      "icp_residual_m": 0.0068203117698431015,
+      "overlap_valid_depth_pixels": 10189,
+      "median_signed_stereo_minus_front_mesh_m": 0.00693511857358442,
+      "median_absolute_depth_residual_m": 0.00937941548425425,
+      "p90_absolute_depth_residual_m": 0.04366929720716644,
+      "pose_sha256": "b5feb05d6288dce383b803b72f031579c6417ded40e14246ef993612ce305e46",
+      "mask_sha256": "7d38fc358b2f6ca10482954ad9fba6f13e614e8d52e5234ca79daceb868d7795",
+      "depth_sha256": "111ec89408b161b8bef1d110329b79a00086520a613237e6f7eaab8236c9e218"
+    }
+  ],
+  "limits": [
+    "Sampled camera-space fit diagnostics, no official pose accuracy.",
+    "Full CAD silhouette versus SAM2 masks; external occlusion is not independently labeled.",
+    "Frontmost CAD versus SGBM on common pixels; no independent depth truth."
+  ],
+  "renderer_source_sha256_lf": "ea452472a25408db77e2e25fec8116eb017519830cfb333426a89aac6111bb6b",
+  "source_script_sha256_lf": "3608a5475980b511e73592bd6aa588b7431f5580c3de590731c41c88e1e9c557"
+}

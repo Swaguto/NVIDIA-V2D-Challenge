@@ -29,6 +29,7 @@ Run on the VM inside the pipeline venv (CPU only; needs cv2 + trimesh):
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -42,7 +43,7 @@ from v2d.world_calib.vm.fit_ego_rig import (
     js_to_mat,
     load_intrinsics,
     load_reference_loader,
-    mesh_points_and_normals,
+    load_mesh,
 )
 
 COL_MASK = (255, 0, 255)
@@ -80,20 +81,62 @@ def _project(pts_cam: np.ndarray, K: np.ndarray) -> np.ndarray:
 def _render_mesh(img: np.ndarray, verts_cam: np.ndarray, faces: np.ndarray | None,
                  K: np.ndarray, color: tuple[int, int, int]) -> None:
     uv = _project(verts_cam, K)
-    if faces is not None and len(faces) and (faces < len(verts_cam)).all():
-        cz = verts_cam[faces].mean(axis=1)
-        order = np.argsort(-cz)
-        ov = np.zeros_like(img)
-        for f_ in faces[order]:
-            pts = uv[f_]
-            if not (pts[:, 2].all() and uv[f_, 2].all()):
-                continue
-            cv2.fillPoly(ov, [pts[:, :2].astype(np.int32)], color)
-        cv2.addWeighted(ov, ALPHA, img, 1.0, 0.0, dst=img)
+    if faces is not None and len(faces):
+        depth = render_depth(verts_cam, faces, K, img.shape[:2])
+        visible = np.isfinite(depth)
+        img[visible] = ((1 - ALPHA) * img[visible] + ALPHA * np.asarray(color)).astype(np.uint8)
     else:
         ok = uv[:, 2] > 0
         for x, y in uv[ok, :2].astype(np.int32):
             cv2.circle(img, (int(x), int(y)), 2, color, -1)
+
+
+def render_depth(vertices, faces, K, shape):
+    """Frontmost triangle depth with perspective interpolation, metres (+z forward)."""
+    faces = np.asarray(faces, dtype=int)
+    if faces.ndim != 2 or faces.shape[1] != 3 or (faces < 0).any() or (faces >= len(vertices)).any():
+        raise ValueError("faces must index the full, unreordered vertex array")
+    height, width = shape
+    depth = np.full(shape, np.inf)
+    uv = _project(vertices, K)
+    for face in faces:
+        if not uv[face, 2].all():
+            continue
+        tri = uv[face, :2]
+        x0, y0 = np.maximum(np.floor(tri.min(0)).astype(int), 0)
+        x1, y1 = np.minimum(np.ceil(tri.max(0)).astype(int), [width - 1, height - 1])
+        if x1 < x0 or y1 < y0:
+            continue
+        x, y = np.meshgrid(np.arange(x0, x1 + 1), np.arange(y0, y1 + 1))
+        a, b, c = tri
+        denominator = (b[1] - c[1]) * (a[0] - c[0]) + (c[0] - b[0]) * (a[1] - c[1])
+        if abs(denominator) < 1e-12:
+            continue
+        wa = ((b[1] - c[1]) * (x - c[0]) + (c[0] - b[0]) * (y - c[1])) / denominator
+        wb = ((c[1] - a[1]) * (x - c[0]) + (a[0] - c[0]) * (y - c[1])) / denominator
+        wc = 1 - wa - wb
+        inside = (wa >= -1e-9) & (wb >= -1e-9) & (wc >= -1e-9)
+        invz = wa / vertices[face[0], 2] + wb / vertices[face[1], 2] + wc / vertices[face[2], 2]
+        z = np.where(inside, 1 / np.maximum(invz, 1e-12), np.inf)
+        block = depth[y0:y1 + 1, x0:x1 + 1]
+        np.minimum(block, z, out=block)
+    return depth
+
+
+def camera_from_source(source, cam, left, right, rig):
+    """Use exactly the camera artifact hashed by the tracker; derive the right view."""
+    if not source:
+        return None
+    path = Path(source["path"])
+    raw = path.read_bytes()
+    if hashlib.sha256(raw).hexdigest() != source["sha256"]:
+        raise ValueError(f"camera input changed since fitting: {path}")
+    C = js_to_mat(json.loads(raw))
+    if cam == left:
+        return C
+    if cam == right:
+        return rig @ C
+    raise ValueError(f"camera {cam} is not in the calibrated ego pair")
 
 
 def _draw_mask(img: np.ndarray, mask_path: Path) -> None:
@@ -125,6 +168,8 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--data-root", required=True)
     ap.add_argument("--work", required=True)
+    ap.add_argument("--poses", type=Path,
+                    help="fitted episode directory from fit_object_pose --out; default work/ego_object_poses/eNNN")
     ap.add_argument("--episode", type=int, default=2)
     ap.add_argument("--objects", default="", help="comma list; default = fitted dirs")
     ap.add_argument("--cam", default="",
@@ -140,7 +185,7 @@ def main() -> int:
 
     data_root = Path(args.data_root)
     work = Path(args.work)
-    ep_dir = work / "ego_object_poses" / f"e{args.episode:03d}"
+    ep_dir = args.poses or work / "ego_object_poses" / f"e{args.episode:03d}"
     if not ep_dir.exists():
         sys.exit(f"{ep_dir}: not fitted yet (run fit_object_pose first)")
 
@@ -149,7 +194,7 @@ def main() -> int:
     cam = args.cam or cam_left
     K, W, H = load_intrinsics(work / "intrinsics" / f"{cam}.json")
 
-    obj_dirs = sorted(d for d in ep_dir.iterdir() if d.is_dir())
+    obj_dirs = sorted(d for d in ep_dir.iterdir() if (d / "object_to_world").is_dir())
     obj_order = [o.strip() for o in args.objects.split(",") if o.strip()]
     if obj_order:
         obj_dirs = [d for d in obj_dirs if d.name in obj_order]
@@ -161,20 +206,11 @@ def main() -> int:
 
     for obj_dir in obj_dirs:
         obj = obj_dir.name
-        mesh_src = data_root / "mesh" / obj
-        glb = mesh_src / f"{obj}.glb"
-        faces: np.ndarray | None = None
-        try:
-            import trimesh
-
-            mm = trimesh.load(str(glb))
-            if isinstance(mm, trimesh.Scene):
-                mm = next(iter(mm.geometry.values()))
-            faces = np.asarray(mm.faces, dtype=np.int64)
-        except Exception:
-            faces = None
-        mesh, _ = mesh_points_and_normals(glb, 4000)
-        mesh = np.asarray(mesh, dtype=np.float64)
+        loader = load_reference_loader(Path(__file__).resolve().parents[4])
+        glb = loader.object_mesh_dir([obj], str(data_root))[obj]
+        mm = load_mesh(glb)
+        mesh = np.asarray(mm.vertices, dtype=np.float64)
+        faces = np.asarray(mm.faces, dtype=np.int64)
 
         if ref is not None:
             try:
@@ -208,13 +244,12 @@ def main() -> int:
             img = cv2.resize(img, (W, H)) if img.shape[:2] != (H, W) else img
 
             C = None
-            cpf = work / "ego_cam_poses" / obj / "world_to_cam" / cam / f"{t:06d}.json"
-            if cpf.exists():
-                C = js_to_mat(json.loads(cpf.read_text()))
             X = None
             pf = obj_dir / "object_to_world" / f"{t:06d}.json"
             if pf.exists():
-                X = js_to_mat(json.loads(pf.read_text()))
+                record = json.loads(pf.read_text())
+                X = js_to_mat(record)
+                C = camera_from_source(record.get("camera_source"), cam, cam_left, cam_right, M)
 
             _draw_mask(img, work / "masks" / cam / obj / "0" / f"{t:06d}.png")
 
@@ -223,16 +258,19 @@ def main() -> int:
                 verts_cam = (C[:3, :3] @ verts_w.T).T + C[:3, 3]
                 _render_mesh(img, verts_cam, faces, K, COL_EST)
 
-            if args.show_gt and ref is not None and b is not None:
-                if bool(ref.visible[t, b]):
-                    W_gt = _w_obj(np.asarray(ref.pose_xyzw[t, b], dtype=np.float64))
+            ref_ids = np.asarray(getattr(ref, "frame_index", [])) if ref is not None else np.array([])
+            matches = np.flatnonzero(ref_ids == t)
+            row = int(matches[0]) if len(matches) == 1 else None
+            if args.show_gt and C is not None and ref is not None and b is not None and row is not None:
+                if bool(ref.visible[row, b]):
+                    W_gt = _w_obj(np.asarray(ref.pose_xyzw[row, b], dtype=np.float64))
                     verts_w = (W_gt[:3, :3] @ mesh.T).T + W_gt[:3, 3]
                     verts_cam = (C[:3, :3] @ verts_w.T).T + C[:3, 3]
                     _render_mesh(img, verts_cam, faces, K, COL_GT)
 
             status = "EST+GT" if (args.show_gt and X is not None and C is not None
                                   and ref is not None and b is not None
-                                  and bool(ref.visible[t, b])) else \
+                                  and row is not None and bool(ref.visible[row, b])) else \
                      "EST" if (X is not None and C is not None) else "no pose"
             info = f"ep {args.episode} {obj} cam {cam} f {t:06d} [{status}]"
             cv2.putText(img, info, (10, 24), cv2.FONT_HERSHEY_SIMPLEX, 0.55,

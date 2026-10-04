@@ -29,8 +29,8 @@ _TYPE_COUNT = {"SCALAR": 1, "VEC2": 2, "VEC3": 3, "VEC4": 4, "MAT3": 9, "MAT4": 
 _POSITION_ATTRIBUTE = "POSITION"
 
 
-def load_vertices(buffer: BinaryIO) -> np.ndarray:
-    """Return ``(V, 3)`` float64 mesh vertex positions from a .glb stream."""
+def load_vertices(buffer: BinaryIO) -> tuple[np.ndarray, np.ndarray]:
+    """Read every triangle primitive in the active scene, retaining node transforms."""
     buffer.seek(0)
     header = _GLB_HEADER.unpack(buffer.read(12))
     if header[0] != 0x46546C67:
@@ -53,41 +53,89 @@ def load_vertices(buffer: BinaryIO) -> np.ndarray:
         raise ValueError("glb has no BIN chunk")
     gltf = json.loads(json_data.decode("utf-8"))
 
-    # Find the first primitive exposing POSITION.
-    accessor_index: int | None = None
-    indices_index: int | None = None
-    for mesh in gltf.get("meshes", []):
-        for primitive in mesh.get("primitives", []):
-            attributes = primitive.get("attributes", {})
-            if _POSITION_ATTRIBUTE in attributes:
-                accessor_index = attributes[_POSITION_ATTRIBUTE]
-                indices_index = primitive.get("indices")
-                break
-        if accessor_index is not None:
-            break
-    if accessor_index is None:
-        raise ValueError("no POSITION attribute in glb")
-
-    def read_accessor(acc_index: int, expected_type: str, expected_comp: int) -> np.ndarray:
+    def read_accessor(acc_index: int, expected_type: str) -> np.ndarray:
         accessor = gltf["accessors"][acc_index]
+        if "sparse" in accessor or "bufferView" not in accessor:
+            raise ValueError("sparse GLB accessors are unsupported")
         view = gltf["bufferViews"][accessor["bufferView"]]
+        if view.get("buffer", 0) != 0:
+            raise ValueError("external GLB buffers are unsupported")
         count = accessor["count"]
         component_type = accessor["componentType"]
-        if accessor.get("type") != expected_type or component_type != expected_comp:
-            raise ValueError(f"accessor must be {expected_type} 0x{expected_comp:x}")
-        dtype = _COMPONENT_DTYPE[component_type]
+        if accessor.get("type") != expected_type or component_type not in _COMPONENT_DTYPE:
+            raise ValueError(f"unsupported accessor for {expected_type}")
+        if expected_type == "VEC3" and component_type != 5126:
+            raise ValueError("POSITION must use float32")
+        if expected_type == "SCALAR" and component_type not in (5121, 5123, 5125):
+            raise ValueError("triangle indices must be unsigned integers")
+        dtype = np.dtype(_COMPONENT_DTYPE[component_type]).newbyteorder("<")
         byte_offset = view.get("byteOffset", 0) + accessor.get("byteOffset", 0)
-        byte_length = _COMPONENT_BYTES[component_type] * _TYPE_COUNT[expected_type] * count
-        raw = bin_data[byte_offset : byte_offset + byte_length]
-        if len(raw) != byte_length:
+        size = _COMPONENT_BYTES[component_type] * _TYPE_COUNT[expected_type]
+        stride = view.get("byteStride", size)
+        end = byte_offset + (count - 1) * stride + size if count else byte_offset
+        if stride < size or byte_offset < 0 or end > len(bin_data) or end > view.get("byteOffset", 0) + view["byteLength"]:
             raise ValueError("accessor bufferView out of range")
-        return np.frombuffer(raw, dtype=dtype)
+        return np.ndarray((count, _TYPE_COUNT[expected_type]), dtype=dtype,
+                          buffer=bin_data, offset=byte_offset, strides=(stride, dtype.itemsize)).copy()
 
-    vertices = read_accessor(accessor_index, "VEC3", 5126).astype(np.float64).reshape(-1, 3)
-    indices: np.ndarray | None = None
-    if indices_index is not None:
-        indices = read_accessor(indices_index, "SCALAR", 5125).astype(np.int64)
-    return vertices, indices
+    def node_matrix(node):
+        if "matrix" in node:
+            matrix = np.asarray(node["matrix"], dtype=float).reshape(4, 4, order="F")
+        else:
+            q = np.asarray(node.get("rotation", [0, 0, 0, 1]), dtype=float)
+            if q.shape != (4,) or not np.isfinite(q).all() or np.linalg.norm(q) < 1e-12:
+                raise ValueError("invalid GLB node rotation")
+            x, y, z, w = q / np.linalg.norm(q)
+            rotation = np.array([[1-2*(y*y+z*z), 2*(x*y-z*w), 2*(x*z+y*w)],
+                                 [2*(x*y+z*w), 1-2*(x*x+z*z), 2*(y*z-x*w)],
+                                 [2*(x*z-y*w), 2*(y*z+x*w), 1-2*(x*x+y*y)]])
+            matrix = np.eye(4)
+            matrix[:3, :3] = rotation @ np.diag(node.get("scale", [1, 1, 1]))
+            matrix[:3, 3] = node.get("translation", [0, 0, 0])
+        if not np.isfinite(matrix).all() or not np.allclose(matrix[3], [0, 0, 0, 1]):
+            raise ValueError("invalid GLB node transform")
+        return matrix
+
+    vertex_parts, face_parts, offset = [], [], 0
+    def add_mesh(mesh_index, matrix):
+        nonlocal offset
+        for primitive in gltf["meshes"][mesh_index].get("primitives", []):
+            if _POSITION_ATTRIBUTE not in primitive.get("attributes", {}):
+                continue
+            if primitive.get("mode", 4) != 4:
+                raise ValueError("ADD surface sampling requires triangle primitives")
+            vertices = read_accessor(primitive["attributes"][_POSITION_ATTRIBUTE], "VEC3").astype(float)
+            faces = (read_accessor(primitive["indices"], "SCALAR").ravel().astype(np.int64)
+                     if "indices" in primitive else np.arange(len(vertices)))
+            if len(faces) % 3 or (faces < 0).any() or (faces >= len(vertices)).any():
+                raise ValueError("invalid GLB triangle indices")
+            vertices = vertices @ matrix[:3, :3].T + matrix[:3, 3]
+            vertex_parts.append(vertices)
+            face_parts.append(faces.reshape(-1, 3) + offset)
+            offset += len(vertices)
+
+    nodes = gltf.get("nodes", [])
+    def visit(index, parent, ancestors):
+        if index in ancestors:
+            raise ValueError("GLB node hierarchy contains a cycle")
+        node = nodes[index]
+        matrix = parent @ node_matrix(node)
+        if "mesh" in node:
+            add_mesh(node["mesh"], matrix)
+        for child in node.get("children", []):
+            visit(child, matrix, ancestors | {index})
+    if nodes:
+        scenes = gltf.get("scenes", [])
+        roots = (scenes[gltf.get("scene", 0)].get("nodes", []) if scenes else
+                 sorted(set(range(len(nodes))) - {i for node in nodes for i in node.get("children", [])}))
+        for index in roots:
+            visit(index, np.eye(4), set())
+    else:
+        for index in range(len(gltf.get("meshes", []))):
+            add_mesh(index, np.eye(4))
+    if not vertex_parts:
+        raise ValueError("no active POSITION triangle geometry in GLB")
+    return np.concatenate(vertex_parts), np.concatenate(face_parts).ravel()
 
 
 def sample_surface(
