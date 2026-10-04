@@ -212,16 +212,42 @@ def voxel_downsample(pts: np.ndarray, voxel: float) -> np.ndarray:
     return pts[np.sort(idx)]
 
 
-def trim_cloud(pts: np.ndarray, k: float = 2.5, iters: int = 3) -> np.ndarray:
-    """Iterative statistical outlier removal."""
-    p = pts
+def trim_cloud(pts: np.ndarray, k: float | None = None, iters: int | None = None,
+               method: str = "local_density") -> np.ndarray:
+    """Remove isolated depth samples without erasing connected handles/rims.
+
+    Distance from the object's center cannot distinguish a valid elongated
+    feature from noise. Local neighbour spacing is rigid-transform invariant.
+    The old radial method is retained only for frozen-baseline comparisons.
+    """
+    if method not in ("local_density", "radial"):
+        raise ValueError("unknown cloud filter")
+    if k is None:
+        k = 3.5 if method == "local_density" else 2.5
+    if iters is None:
+        iters = 1 if method == "local_density" else 3
+    p = np.asarray(pts)
+    if p.ndim != 2 or p.shape[1] != 3 or not np.isfinite(p).all():
+        raise ValueError("cloud filter requires finite (N,3) points")
+    if not np.isfinite(k) or k <= 0 or not isinstance(iters, int) or iters < 1:
+        raise ValueError("invalid cloud filter threshold or iteration count")
     for _ in range(iters):
         if len(p) < 80:
             break
-        med = np.median(p, 0)
-        d = np.linalg.norm(p - med, axis=1)
-        s = 1.4826 * np.median(np.abs(d - np.median(d))) + 1e-9
-        keep = d <= np.median(d) + k * s
+        if method == "local_density":
+            from scipy.spatial import cKDTree
+
+            # Include self then remove it: eleven nearby samples measure density.
+            d = cKDTree(p).query(p, k=12)[0][:, 1:].mean(axis=1)
+            s = max(1.4826 * np.median(np.abs(d - np.median(d))), 1e-9)
+            # Boundaries have fewer neighbours. On uniform sampling MAD can be
+            # nearly zero, so retain spacing up to twice the interior median.
+            threshold = max(np.median(d) + k * s, 2 * np.median(d))
+        else:
+            d = np.linalg.norm(p - np.median(p, 0), axis=1)
+            s = 1.4826 * np.median(np.abs(d - np.median(d))) + 1e-9
+            threshold = np.median(d) + k * s
+        keep = d <= threshold
         if keep.sum() < 80:
             break
         p = p[keep]
@@ -421,6 +447,8 @@ def main():
     ap.add_argument("--mask-manifest", type=Path,
                     help="frozen rectified mask manifest; bypass DINO/SAM and preserve producer hashes")
     ap.add_argument("--seed", type=int, default=0, help="deterministic CAD surface sampling seed")
+    ap.add_argument("--cloud-filter", choices=("local_density", "radial"), default="local_density",
+                    help="local density preserves elongated features; radial replays the old baseline")
     a = ap.parse_args()
     if a.out.exists() and any(a.out.iterdir()):
         ap.error("output must be a fresh directory")
@@ -482,7 +510,12 @@ def main():
         "rectification_sha256": rectification_hash,
         "params": {"stride": a.stride, "allow_scale": a.allow_scale,
                    "max_residual_m": a.max_residual, "box_threshold": a.box_threshold,
-                   "cad_samples": 6000, "cad_seed": a.seed},
+                   "cad_samples": 6000, "cad_seed": a.seed,
+                   "cloud_filter": {"method": a.cloud_filter,
+                       "mad_threshold": 3.5 if a.cloud_filter == "local_density" else 2.5,
+                       "iterations": 1 if a.cloud_filter == "local_density" else 3,
+                       "minimum_spacing_ratio": 2.0 if a.cloud_filter == "local_density" else None,
+                       "neighbors": 11 if a.cloud_filter == "local_density" else None}},
         "frames": {}, "accepted_by_object": dict.fromkeys(names, 0), "input_errors": []}
     t0 = time.time()
 
@@ -523,7 +556,9 @@ def main():
             d.mkdir(parents=True, exist_ok=True)
             if m.sum() < 300:
                 continue
-            cloud = trim_cloud(voxel_downsample(pts[m], 0.004))
+            downsampled = voxel_downsample(pts[m], 0.004)
+            detail["downsampled_cloud_points"] = len(downsampled)
+            cloud = trim_cloud(downsampled, method=a.cloud_filter)
             detail["filtered_cloud_points"] = len(cloud)
             if len(cloud) < 120:
                 detail["reason"] = "insufficient_filtered_cloud"

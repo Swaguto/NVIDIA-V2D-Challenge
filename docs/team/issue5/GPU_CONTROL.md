@@ -117,7 +117,8 @@ python scripts/eval/prepare_issue5_pan_masks_gpu.py \
 export V2D_PUBLIC="$DATA"
 export V2D_CALIB="$DATA/meta/camera_calibration.json"
 python scripts/track3/register_poses.py --episode 39 --no-gt --objects mini_dust_pan \
-  --mask-manifest "$RUN/masks/manifest.json" --out "$RUN/poses" --seed 0 --log 40
+  --mask-manifest "$RUN/masks/manifest.json" --out "$RUN/poses" --seed 0 --log 40 \
+  --cloud-filter radial
 python scripts/eval/render_issue5_pan_control.py --data "$DATA" \
   --masks "$RUN/masks" --depth-probe "$RUN/native-probe" --poses "$RUN/poses" \
   --out "$RUN/overlays" --video
@@ -134,6 +135,16 @@ use the frontmost z-buffer. The clip is a visualization of this camera-space con
 The image SAM2 loader warns that the checkpoint type is `sam2_video`; the video
 control uses `Sam2VideoModel`, including the checkpoint's temporal memory weights.
 No FoundationPose or robot-training runtime is installed by these commands.
+
+### Cloud-filter regression
+
+The subsequent density-filter regression retains the same frozen 319 SAM2 masks:
+319/319 accepted observations, median/max residual 6.24/15.34 mm, no >90-degree
+increments, and sampled CAD/SAM IoU 0.658–0.904. See
+[CLOUD_AND_POSE_SUPPORT.md](CLOUD_AND_POSE_SUPPORT.md) for the filter, sampled
+pot improvements and remaining rotation failures. The native CLI now defaults to
+`local_density`; the command above explicitly selects `radial` for historical
+replay. Neither run establishes automatic target acquisition or world accuracy.
 
 ## Remaining requirements
 

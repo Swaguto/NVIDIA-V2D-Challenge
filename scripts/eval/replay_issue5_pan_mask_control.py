@@ -90,7 +90,7 @@ def iou(a, b):
 results = {}
 for name, mask in [("table_inclusive", table), ("pan_only", pan)]:
     start = time.perf_counter()
-    cloud = trim_cloud(voxel_downsample(points[(mask > 0) & valid], .004))
+    cloud = trim_cloud(voxel_downsample(points[(mask > 0) & valid], .004), method="radial")
     count = len(cloud)
     if count > 1600:
         cloud = cloud[np.random.default_rng(7).choice(count, 1600, replace=False)]

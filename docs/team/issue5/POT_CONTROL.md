@@ -5,6 +5,11 @@ This control adds actual episode-2/0 model/geometry evidence after the episode-3
 reviewed-box recovery. It does not reproduce the unidentified team run or establish
 recovery of the prepared FoundationStereo/point-to-plane pipeline.
 
+Latest follow-up: [handle preservation and competing 6D poses](CLOUD_AND_POSE_SUPPORT.md)
+reduces eight-frame positional RPE from 29.00 to 7.09 cm, with canonical relative
+rotation still failing at 46.81 degrees. The records below preserve earlier
+controls; their thresholds, masks and scores must not be mixed with the new run.
+
 ## Frozen experiment
 
 The same hash-verified DINO/SAM2 checkpoints and local RTX 5060 environment from

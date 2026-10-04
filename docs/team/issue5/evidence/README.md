@@ -1,7 +1,8 @@
 # Recorded repair evidence
 
 These are small October 3-4, 2026 CPU validation and actual local GPU control
-records. They do not establish GT object-pose accuracy or a policy rollout.
+records. They include sampled GT-relative diagnostics, without establishing full
+fixed-world object-pose accuracy or a policy rollout.
 The follow-up records below also document a user-reported tracking failure;
 that run has not been reproduced or verified fixed.
 The JSON/XML records and audit snapshot preserve their original bytes across
@@ -115,6 +116,25 @@ FoundationPose is proposed initialization/recovery and has not run. These
 observations do not establish continuous tracking, world pose or all-20 acceptance.
 
 The original local snapshots and previews remain archived in the author's workspace.
+
+October 4 handle-preservation / competing-pose follow-up:
+
+- `pot_local_density_observations.json` / `pot_local_density_relative.json`:
+  both objects refit on eight frozen episode-2 inputs; RPE 14.36 cm and canonical
+  relative rotation median 122.37 degrees.
+- `pot_pose_support_observations.json` / `pot_pose_support_relative.json`:
+  all 25 pot candidates retained per frame, native geometric replay, selected
+  visible-support hypothesis and frozen lid; RPE 7.09 cm, relative translation
+  median 2.55 cm, canonical relative rotation median 46.81 degrees. Failures stay.
+- `pot_pose_support_render.json` / `pot_pose_support_preview.jpg`: eight full-mesh
+  overlays against the frozen masks, with prediction and output hashes.
+- `pan_density_registration.json`, `pan_density_poses.json`,
+  `pan_density_overlays.json`, `pan_density_preview.jpg`: actual 319-frame density
+  regression and sampled camera-fit overlays, with no GT/world-pose accuracy claim.
+- `cloud_pose_validation.json`: source/input/prediction/test bindings, exact replay
+  receipts and comparison limits. `tests-pose-support.xml`: 150 passed, zero skips.
+
+Portable commands and limits: [../CLOUD_AND_POSE_SUPPORT.md](../CLOUD_AND_POSE_SUPPORT.md).
 Use the portable commands in [../HANDOFF.md](../HANDOFF.md) to regenerate evidence
 on a teammate's checkout. Source revisions are identified there; these snapshots
 are not an assertion that later source or data revisions have been validated.

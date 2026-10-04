@@ -136,7 +136,7 @@ for episode in [2, 0]:
                 row["fits"][name] = fit
                 if masked.sum() < 300:
                     continue
-                cloud = registration.trim_cloud(registration.voxel_downsample(points[masked], .004))
+                cloud = registration.trim_cloud(registration.voxel_downsample(points[masked], .004), method="radial")
                 fit["cloud_points"] = len(cloud)
                 fit["cloud_extent_m"] = np.ptp(cloud, axis=0).tolist()
                 if len(cloud) < 120:

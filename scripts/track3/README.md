@@ -5,6 +5,14 @@
 > The native tracker rejects unmatched single-object labels and emits
 > `registration_report.json`. Zero-solve objects and input-read failures exit nonzero.
 
+> October 4 follow-up: the native cloud filter now preserves thin handles using
+> local neighbour density, requiring **SciPy** in the runtime (`python -m pip install scipy`).
+> Use `--cloud-filter radial` to replay the historical filter. The pinned tested
+> environment and the eight-frame competing-pose diagnostic are documented in
+> `docs/team/issue5/CLOUD_AND_POSE_SUPPORT.md`. Sampled relative geometry improves;
+> canonical rotation and automatic acquisition still fail. Pose-support ranking
+> is a separate diagnostic and is not enabled in native temporal tracking.
+
 > Local issue-5 repairs: see `docs/team/issue5/REPAIR_STATUS.md`. The measurements
 > below are historical team reports from PR28. Centered translation and export
 > convention defects invalidate their use as a repaired baseline or root-cause

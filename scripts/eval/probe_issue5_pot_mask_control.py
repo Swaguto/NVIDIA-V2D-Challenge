@@ -109,7 +109,7 @@ for original in baseline['frames']:
         row['views'][rig.left]['objects'][name]=detail
         fit={'status':'rejected','reason':'insufficient_masked_depth'};row['fits'][name]=fit
         if selected.sum()<300: continue
-        cloud=reg.trim_cloud(reg.voxel_downsample(points[selected],.004))
+        cloud=reg.trim_cloud(reg.voxel_downsample(points[selected],.004),method='radial')
         fit['cloud_points']=len(cloud)
         if len(cloud)<120: continue
         s,R,t,res=reg.register(cads[name],torch.tensor(cloud,device='cuda',dtype=torch.float32))

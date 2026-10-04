@@ -1,11 +1,21 @@
 # Issue 5 repair review and validation handoff
 
 This draft makes the software repairs reviewable while issue #5 remains open.
-It does not establish improved real tracking accuracy, successful robot training,
-or a policy-rollout submission. The accepted CHORD/stereo/contact experiment is
+Measured gains are limited to sampled relative geometry and camera-fit controls;
+full tracking acceptance, robot training and policy-rollout submission remain open.
+The accepted CHORD/stereo/contact experiment is
 unchanged. FoundationPose remains optional initialization, not a replacement tracker.
 
-The latest [eight-frame RGB-prompted pot control](POT_CONTROL.md#rgb-prompted-mask--6d-pose-follow-up)
+The [cloud/competing-pose follow-up](CLOUD_AND_POSE_SUPPORT.md) now preserves thin
+handles and compares all 25 global pot hypotheses against visible masks/depth.
+On the same eight episode-2 frames, positional RPE improves 29.00 → 14.36 → 7.09 cm
+and median canonical relative rotation 165.95 → 122.37 → 46.81 degrees. The last
+step refits/selects only the pot and freezes the density-baseline lid. Rotation
+still fails. 150 CPU tests pass; the new filter also accepts 319/319 pan frames
+with no >90-degree increments. The pose-ranking diagnostic is not the native
+temporal default. Exact inputs, candidates, failures and replay commands are saved.
+
+The earlier [eight-frame RGB-prompted pot control](POT_CONTROL.md#rgb-prompted-mask--6d-pose-follow-up)
 preserves native depth/CAD/solver inputs, excludes lid overlap, and still measures
 165.95 degrees median canonical relative rotation error despite accepted fits.
 Current ICP already outputs 6D pose. Compare FoundationPose initialization/recovery

@@ -12,6 +12,8 @@ parser.add_argument("--models", type=Path, required=True)
 parser.add_argument("--out", type=Path, required=True)
 parser.add_argument("--episode", type=int, choices=[0, 2], default=2)
 parser.add_argument("--frames", type=int, default=1, help="one-frame diagnostic by default; 0 means full episode")
+parser.add_argument("--cloud-filter", choices=["local_density", "radial"], default="radial",
+                    help="radial replays the frozen candidate-control baseline")
 args = parser.parse_args()
 REPO = Path(__file__).resolve().parents[2]
 if args.out.exists() and any(args.out.iterdir()):
@@ -34,5 +36,6 @@ native.SAM2 = str(args.models / "facebook--sam2.1-hiera-large/665f8e2ad61cf5f53d
 native.torch.set_num_threads(4)
 sys.argv = ["register_poses", "--episode", str(args.episode), "--no-gt",
             "--objects", "white_pot,white_pot_lid", "--frames", str(args.frames),
-            "--out", str(args.out), "--log", "1", "--seed", "0"]
+            "--out", str(args.out), "--log", "1", "--seed", "0",
+            "--cloud-filter", args.cloud_filter]
 native.main()
