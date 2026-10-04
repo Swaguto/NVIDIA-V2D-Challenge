@@ -115,6 +115,11 @@ def cli_case(tmp_path, monkeypatch):
         }
 
     monkeypatch.setattr(fit, 'solve_frame', solve)
+    # This fixture isolates CLI transforms/reporting, with ideal residuals at its known fits.
+    monkeypatch.setattr(fit, 'pose_metrics', lambda *args: {
+        'cam_left': {'count': 3, 'inlier': 1.0, 'rmse': 0.0},
+        'cam_right': {'count': 0, 'inlier': 0.0, 'rmse': None},
+    })
     argv = ['fit_object_pose', '--data-root', str(data), '--work', str(work),
             '--episode', '2', '--objects', 'target', '--no-smooth']
     return SimpleNamespace(data=data, work=work, ref=ref, loader=loader,
@@ -200,3 +205,70 @@ def test_cli_reports_visible_frames_when_none_solve(cli_case, monkeypatch):
     assert target['gt_score']['n_visible'] == 3
     assert target['gt_score']['coverage_visible'] == 0
     assert target['gt_score']['median_rot_deg'] is None
+
+
+def test_every_object_uses_one_shared_camera_hash(cli_case, monkeypatch):
+    case = cli_case
+    case.ref.visible[:, 0] = True
+    other = case.work / 'ego_cam_poses/other/world_to_cam/left'
+    other.mkdir(parents=True)
+    for frame in range(2):
+        (other / f'{frame:06d}.json').write_text(json.dumps(fit.mat_to_js(_transform(170, (10, 0, 0)))))
+    argv = case.argv.copy(); argv[argv.index('--objects') + 1] = 'target,other'
+    monkeypatch.setattr(sys, 'argv', argv + ['--score-gt'])
+    assert fit.main() == 0
+    report = json.loads((case.work / 'ego_object_poses/e002/report.json').read_text())
+    for frame in range(2):
+        a = report['objects']['target']['framedetails'][str(frame)]['camera_source']
+        b = report['objects']['other']['framedetails'][str(frame)]['camera_source']
+        assert a == b
+        assert 'target' in a['path']
+    assert report['gt_use'] == ['gt_assisted']
+    assert report['camera_gt_use'] == ['unknown']
+
+
+def test_no_gt_requires_independent_camera_when_requested(cli_case, monkeypatch):
+    case = cli_case
+    masks = case.work / 'masks/left/target/0'; masks.mkdir(parents=True)
+    (masks / '000000.png').touch()
+    monkeypatch.setattr(sys, 'argv', case.argv + ['--no-gt', '--require-independent'])
+    with pytest.raises(SystemExit) as error:
+        fit.main()
+    assert error.value.code == 2
+
+
+def test_jump_rejection_controls_export_and_propagation(cli_case, monkeypatch):
+    case = cli_case
+    root = case.work / 'ego_cam_poses/target/world_to_cam/left'
+    (root / '000002.json').write_text(json.dumps(fit.mat_to_js(case.cameras[1])))
+    calls = []
+
+    def solve(seed, mesh, normals, stereo, left, right, *args):
+        frame = int(left[0, 0])
+        calls.append((frame, seed.copy()))
+        camera = case.cameras[0] if frame == 0 else case.cameras[1]
+        X = case.world if frame != 1 else case.world @ _transform(160)
+        return camera @ X, {'cam_left': {'count': 3, 'inlier': 1.0},
+                            'cam_right': {'count': 0, 'inlier': 0.0}}
+
+    monkeypatch.setattr(fit, 'frame_cloud', lambda *args, **kwargs: np.array([[args[4], 0, 1]] * 3))
+    monkeypatch.setattr(fit, 'solve_frame', solve)
+    monkeypatch.setattr(sys, 'argv', case.argv + ['--score-gt'])
+    assert fit.main() == 0
+    output = case.work / 'ego_object_poses/e002/target/object_to_world'
+    assert (output / '000000.json').exists()
+    assert not (output / '000001.json').exists()
+    assert (output / '000002.json').exists()
+    frame2_seed = next(seed for frame, seed in calls if frame == 2)
+    np.testing.assert_allclose(frame2_seed, case.cameras[1] @ case.world, atol=1e-12)
+    report = json.loads((case.work / 'ego_object_poses/e002/report.json').read_text())
+    assert report['objects']['target']['framedetails']['1']['status'] == 'rejected'
+
+
+def test_rerun_preserves_existing_outputs(cli_case, monkeypatch):
+    monkeypatch.setattr(sys, 'argv', cli_case.argv + ['--score-gt'])
+    assert fit.main() == 0
+    path = cli_case.work / 'ego_object_poses/e002/report.json'
+    before = path.read_bytes()
+    with pytest.raises(SystemExit): fit.main()
+    assert path.read_bytes() == before

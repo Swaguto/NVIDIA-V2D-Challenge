@@ -10,7 +10,7 @@ self-contained point-to-plane ICP fitter that reuses only the *verified* inputs:
   - SAM2 masks                               (work/masks/{cam}/{obj}/0)
   - FoundationStereo depth                   (work/depth/{cam}/{frame}.png)
   - scanned object GLB meshes                (data_root/mesh)
-  - parquet GT world->object per frame       (reference_loader)
+  - parquet GT T_world_object per frame      (reference_loader)
 
 Key modelling fact.  The two ego cameras form a rigid rig and move together:
 
@@ -28,7 +28,8 @@ the mesh (robust, Tukey-weighted point-to-plane), minimised jointly by
 Levenberg-Gauss-Newton on SE(3).  Because both cameras constrain the *same* T
 through a fixed rigid transform, rotation is far better identified than with
 per-camera FP; temporal continuity and (optionally) the FoundationPose poses
-are used only as initialisations.
+are used only as initialisations. This remains a GT-assisted diagnostic, not
+an independent camera-motion producer. Geometry can leave symmetric spin ambiguous.
 
 Multi-object cross check.  Each object is fit independently; every frame where
 two objects are simultaneously *passing* must yield the same T, which is a
@@ -75,6 +76,10 @@ def _skew(v: np.ndarray) -> np.ndarray:
 
 
 def _qmat(q: np.ndarray) -> np.ndarray:
+    q = np.asarray(q, dtype=np.float64)
+    if q.shape != (4,) or not np.isfinite(q).all() or np.linalg.norm(q) < 1e-12:
+        raise ValueError("rotation must be a finite, nonzero wxyz quaternion")
+    q = q / np.linalg.norm(q)
     w, x, y, z = q
     return np.array(
         [
@@ -146,6 +151,11 @@ def _log_se3_vee(T: np.ndarray) -> np.ndarray:
 
 
 def mat_to_js(M: np.ndarray) -> dict:
+    M = np.asarray(M, dtype=np.float64)
+    if M.shape != (4, 4) or not np.isfinite(M).all() or not np.allclose(M[3], [0, 0, 0, 1]):
+        raise ValueError("transform must be a finite homogeneous 4x4 matrix")
+    if not np.allclose(M[:3, :3].T @ M[:3, :3], np.eye(3), atol=1e-8) or not np.isclose(np.linalg.det(M[:3, :3]), 1, atol=1e-8):
+        raise ValueError("transform rotation must be proper SO(3)")
     return {
         "rotation": _rmat_to_quat_wxyz(M[:3, :3]),
         "translation": [float(v) for v in M[:3, 3]],
@@ -157,7 +167,14 @@ def js_to_mat(d: dict) -> np.ndarray:
     q = np.asarray(d["rotation"], dtype=np.float64)
     M = np.eye(4)
     M[:3, :3] = _qmat(q)
-    M[:3, 3] = np.asarray(d["translation"], dtype=np.float64)
+    translation = np.asarray(d["translation"], dtype=np.float64)
+    if translation.shape != (3,):
+        raise ValueError("translation must be xyz")
+    M[:3, 3] = translation
+    if not np.isfinite(M).all():
+        raise ValueError("transform must be finite")
+    if not np.allclose(d.get("scale", 1.0), 1.0):
+        raise ValueError("SE(3) camera/object transforms require metric scale 1")
     return M
 
 
@@ -176,7 +193,7 @@ def load_depth_meters(path: Path) -> np.ndarray:
     from PIL import Image
 
     a = np.asarray(Image.open(str(path)), dtype=np.float64)
-    return 65535.0 / np.maximum(a, 1.0) - 1.0
+    return np.where(a > 0, 65535.0 / np.maximum(a, 1.0) - 1.0, np.nan)
 
 
 def load_mask(path: Path) -> np.ndarray:
@@ -204,12 +221,20 @@ def backproject_cloud(depth: np.ndarray, mask: np.ndarray, K: np.ndarray) -> np.
     return pts
 
 
-def mesh_points_and_normals(path: Path, k: int, seed: int = 3) -> tuple[np.ndarray, np.ndarray]:
+def load_mesh(path: Path):
+    """Full mesh in the scanned object frame, including all GLB node transforms."""
     import trimesh
 
     m = trimesh.load(str(path), force=None)
     if isinstance(m, trimesh.Scene):
-        m = next(iter(m.geometry.values()))
+        m = m.to_mesh() if hasattr(m, "to_mesh") else m.dump(concatenate=True)
+    if not isinstance(m, trimesh.Trimesh) or not len(m.vertices):
+        raise ValueError(f"no mesh geometry in {path}")
+    return m
+
+
+def mesh_points_and_normals(path: Path, k: int, seed: int = 3) -> tuple[np.ndarray, np.ndarray]:
+    m = load_mesh(path)
     v = np.asarray(m.vertices, dtype=np.float64)
     vn = np.asarray(m.vertex_normals, dtype=np.float64)
     if len(v) > k:
@@ -237,9 +262,12 @@ def ego_rig_matrix(rig: dict) -> tuple[str, str, np.ndarray]:
 
 
 def _w_obj(pq: np.ndarray) -> np.ndarray:
-    """world->object (maps object coords -> world) from GT xyzw."""
+    """T_world_object: map scanned object coordinates into world, from GT xyzw."""
+    pq = np.asarray(pq, dtype=np.float64)
+    if pq.shape != (7,) or not np.isfinite(pq).all():
+        raise ValueError("visible GT pose must be finite [xyz, xyzw]")
     W = np.eye(4)
-    W[:3, :3] = _qmat(pq[3:])
+    W[:3, :3] = _qmat(pq[[6, 3, 4, 5]])
     W[:3, 3] = pq[:3]
     return W
 
@@ -252,7 +280,7 @@ def _w_obj(pq: np.ndarray) -> np.ndarray:
 def _residual_metrics(mesh_cam: np.ndarray, n_cam: np.ndarray, q: np.ndarray,
                       tukey: float) -> dict:
     if len(q) == 0:
-        return {"count": 0, "rmse": float("nan"), "inlier": 0.0}
+        return {"count": 0, "rmse": None, "inlier": 0.0}
     from scipy.spatial import cKDTree
 
     idx = np.clip(cKDTree(mesh_cam.astype(np.float32)).query(q.astype(np.float32), k=1)[1],
@@ -313,9 +341,10 @@ def estimate_right_depth_scale(
     for t in range(Tmax):
         if used >= max_frames or not bool(ref.visible[t, b]):
             continue
-        wc_r = work / "ego_cam_poses" / obj / "world_to_cam" / cam_right / f"{t:06d}.json"
-        mask_p = work / "masks" / cam_right / obj / "0" / f"{t:06d}.png"
-        depth_p = work / "depth" / cam_right / f"{t:06d}.png"
+        frame = int(ref.frame_index[t])
+        wc_r = work / "ego_cam_poses" / obj / "world_to_cam" / cam_right / f"{frame:06d}.json"
+        mask_p = work / "masks" / cam_right / obj / "0" / f"{frame:06d}.png"
+        depth_p = work / "depth" / cam_right / f"{frame:06d}.png"
         if not (wc_r.exists() and mask_p.exists() and depth_p.exists()):
             continue
         pq = np.asarray(ref.pose_xyzw[t, b], dtype=np.float64)
@@ -415,10 +444,46 @@ def solve_frame(
 # --------------------------------------------------------------------------- #
 
 
+def smooth_poses(poses, window=4, sigma=2.0, frame_ids=None):
+    """Smooth from an immutable snapshot; never fill missing observations."""
+    raw = [None if p is None else p.copy() for p in poses]
+    result = [None if p is None else p.copy() for p in raw]
+    ids = np.arange(len(raw)) if frame_ids is None else np.asarray(frame_ids)
+    for t, pose in enumerate(raw):
+        if pose is None:
+            continue
+        xi, total = np.zeros(6), 0.0
+        for k in range(len(raw)):
+            if raw[k] is None or abs(ids[k] - ids[t]) > window:
+                continue
+            weight = np.exp(-0.5 * ((ids[k] - ids[t]) / sigma) ** 2)
+            xi += weight * np.real(_log_se3_vee(raw[k] @ _inv4(pose)))
+            total += weight
+        result[t] = _exp_se3(xi / total) @ pose
+    return result
+
+
+def pose_metrics(T, mesh, normals, M, ql, qr, tukey):
+    """Residuals on exactly the transform being accepted or exported."""
+    left = (T[:3, :3] @ mesh.T).T + T[:3, 3]
+    right = (M[:3, :3] @ left.T).T + M[:3, 3]
+    nl = T[:3, :3] @ normals.T
+    return {"cam_left": _residual_metrics(left, nl, ql, tukey),
+            "cam_right": _residual_metrics(right, M[:3, :3] @ nl, qr, tukey)}
+
+
+def inlier_pass(metrics, threshold, joint_right=False):
+    return bool(metrics["cam_left"]["count"] > 0
+                and metrics["cam_left"]["inlier"] >= threshold
+                and (not joint_right or metrics["cam_right"]["count"] == 0
+                     or metrics["cam_right"]["inlier"] >= 0.7 * threshold))
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--data-root", required=True)
     ap.add_argument("--work", required=True)
+    ap.add_argument("--out", type=Path, help="fresh camera output root; default work/ego_cam_poses")
     ap.add_argument("--episode", type=int, default=2)
     ap.add_argument("--objects", default="", help="comma list; default = all in parquet")
     ap.add_argument("--iters", type=int, default=40)
@@ -442,7 +507,9 @@ def main() -> int:
                     help="estimate the episode-level right-depth scale m from saved poses + "
                          "raw right depth, print it, and use it for --joint-right (also "
                          "recorded in report.json)")
-    ap.add_argument("--no-smooth", action="store_true")
+    smoothing = ap.add_mutually_exclusive_group()
+    smoothing.add_argument("--smooth", action="store_true", help="optional snapshot smoothing")
+    smoothing.add_argument("--no-smooth", action="store_true", help="raw poses (default)")
     ap.add_argument("--reuse-fp", action="store_true", help="FP poses (work/poses) as extra inits")
     args = ap.parse_args()
 
@@ -458,6 +525,8 @@ def main() -> int:
     ref = loader.load_reference(args.episode, str(data_root))
     objects = list(ref.object_names)
     obj_order = [o.strip() for o in args.objects.split(",") if o.strip()] or objects
+    if len(set(obj_order)) != len(obj_order) or set(obj_order) - set(objects):
+        ap.error("--objects must contain distinct names present in episode GT")
     mesh_dirs = loader.object_mesh_dir(obj_order, str(data_root))
 
     right_depth_scale = args.right_depth_scale
@@ -466,7 +535,7 @@ def main() -> int:
         print("[est] deriving right-depth scale from saved poses + raw right depth...")
         est_obj = obj_order[0]
         est_m, est_profile = estimate_right_depth_scale(
-            work, est_obj, int(ref.steps), 0, ref, M, cam_right, mesh_dirs,
+            work, est_obj, int(ref.steps), objects.index(est_obj), ref, M, cam_right, mesh_dirs,
             args.mesh_pts,
         )
         print(f"[est] best right_depth_scale for {est_obj}: {est_m:.4f}")
@@ -476,12 +545,16 @@ def main() -> int:
     print(f"episode {args.episode}: objects={obj_order} ego cams=({cam_left},{cam_right})")
     print(f"ego rig |t|={np.linalg.norm(M[:3, 3]):.4f} m")
 
-    out_root = work / "ego_cam_poses"
+    out_root = args.out or work / "ego_cam_poses"
+    if any(out_root.glob("*/world_to_cam/*/*.json")) or (out_root / "report.json").exists():
+        ap.error("camera output already exists; use a fresh work directory")
     out_root.mkdir(parents=True, exist_ok=True)
     Tmax = int(ref.steps)
     per_obj_out: dict[str, dict] = {}
 
-    for b, obj in enumerate(obj_order):
+    frame_ids = np.asarray(getattr(ref, "frame_index", np.arange(Tmax)), dtype=int)
+    for obj in obj_order:
+        b = objects.index(obj)
         mesh, mesh_n = mesh_points_and_normals(mesh_dirs[obj], args.mesh_pts)
         mesh = np.asarray(mesh, dtype=np.float64)
         mesh_n = np.asarray(mesh_n, dtype=np.float64)
@@ -497,19 +570,20 @@ def main() -> int:
         quals: list[dict | None] = [None] * Tmax
         prev: np.ndarray | None = None
         for t in range(Tmax):
+            frame = int(frame_ids[t])
             if t % 100 == 0:
                 print(f"  frame {t}/{Tmax}")
             if not bool(ref.visible[t, b]):
                 continue
             ql = frame_cloud(
-                work / "masks" / cam_left / obj / "0" / f"{t:06d}.png",
-                work / "depth" / cam_left / f"{t:06d}.png",
-                work / "intrinsics" / f"{cam_left}.json", args.max_pts, t,
+                work / "masks" / cam_left / obj / "0" / f"{frame:06d}.png",
+                work / "depth" / cam_left / f"{frame:06d}.png",
+                work / "intrinsics" / f"{cam_left}.json", args.max_pts, frame,
             )
             qr = (np.empty((0, 3), dtype=np.float32) if not args.joint_right else frame_cloud(
-                work / "masks" / cam_right / obj / "0" / f"{t:06d}.png",
-                work / "depth" / cam_right / f"{t:06d}.png",
-                work / "intrinsics" / f"{cam_right}.json", args.max_pts, t,
+                work / "masks" / cam_right / obj / "0" / f"{frame:06d}.png",
+                work / "depth" / cam_right / f"{frame:06d}.png",
+                work / "intrinsics" / f"{cam_right}.json", args.max_pts, frame,
                 scale=right_depth_scale,
             ))
             if len(ql) == 0 and len(qr) == 0:
@@ -525,10 +599,10 @@ def main() -> int:
             if prev is not None:
                 inits.append(("propagate", prev))
             if args.reuse_fp:
-                fp_l = work / "poses" / cam_left / obj / f"{t:06d}.json"
+                fp_l = work / "poses" / cam_left / obj / f"{frame:06d}.json"
                 if fp_l.exists():
                     inits.append(("fp_cam_c", js_to_mat(json.loads(fp_l.read_text())) @ W_inv))
-                fp_r = work / "poses" / cam_right / obj / f"{t:06d}.json"
+                fp_r = work / "poses" / cam_right / obj / f"{frame:06d}.json"
                 if fp_r.exists():
                     T_wc_r = js_to_mat(json.loads(fp_r.read_text())) @ W_inv
                     inits.append(("fp_cam_b", _inv4(M) @ T_wc_r))
@@ -552,59 +626,67 @@ def main() -> int:
             if best is None:
                 continue
             Tf, met = best
-            Ts[t], quals[t], prev = Tf, met, Tf
+            quals[t] = met
+            if inlier_pass(met, args.pass_inlier, args.joint_right):
+                Ts[t], prev = Tf, Tf
 
-        if not args.no_smooth and sum(x is not None for x in Ts) > 3:
-            window, sigma = 4, 2.0
-            for t in range(Tmax):
-                if Ts[t] is None:
-                    continue
-                xi = np.zeros(6)
-                wtot = 0.0
-                for k in range(max(0, t - window), min(Tmax, t + window + 1)):
-                    if Ts[k] is None:
-                        continue
-                    wgt = np.exp(-0.5 * ((k - t) / sigma) ** 2)
-                    xi += wgt * _log_se3_vee(Ts[k] @ _inv4(Ts[t]))
-                    wtot += wgt
-                if wtot > 0:
-                    Ts[t] = _exp_se3(xi / wtot) @ Ts[t]
+        if args.smooth:
+            Ts = smooth_poses(Ts, frame_ids=frame_ids)
 
         per_obj: dict = {"frames": Tmax, "solved": 0, "passed": 0, "framedetails": {}}
         for t in range(Tmax):
+            frame = int(frame_ids[t])
             if Ts[t] is None:
+                if quals[t] is not None:
+                    per_obj["framedetails"][str(frame)] = {"pass": False, "status": "rejected"}
                 continue
             pq = np.asarray(ref.pose_xyzw[t, b], dtype=np.float64)
-            W_inv = _inv4(_w_obj(pq))
+            W = _w_obj(pq)
+            mesh_w = (W[:3, :3] @ mesh.T).T + W[:3, 3]
+            mesh_nw = (W[:3, :3] @ mesh_n.T).T
             T_lft, T_rgt = Ts[t], M @ Ts[t]
             per_obj["solved"] += 1
-            met = quals[t]
+            ql = frame_cloud(work / "masks" / cam_left / obj / "0" / f"{frame:06d}.png",
+                             work / "depth" / cam_left / f"{frame:06d}.png",
+                             work / "intrinsics" / f"{cam_left}.json", args.max_pts, frame)
+            qr = (frame_cloud(work / "masks" / cam_right / obj / "0" / f"{frame:06d}.png",
+                              work / "depth" / cam_right / f"{frame:06d}.png",
+                              work / "intrinsics" / f"{cam_right}.json", args.max_pts, frame,
+                              scale=right_depth_scale) if args.joint_right else np.empty((0, 3)))
+            met = pose_metrics(T_lft, mesh_w, mesh_nw, M, ql, qr, args.tukey_m)
+            met["init"] = quals[t]["init"]
             inls = (met["cam_left"]["inlier"], met["cam_right"]["inlier"])
             flags = (met["cam_left"]["count"] > 0, met["cam_right"]["count"] > 0)
             # right-cam 2D coverage: fraction of mesh verts (rig-projected) inside mask
             cover2d = None
-            mask_rp = work / "masks" / cam_right / obj / "0" / f"{t:06d}.png"
+            mask_rp = work / "masks" / cam_right / obj / "0" / f"{frame:06d}.png"
             if mask_rp.exists():
                 im_r = load_mask(mask_rp)
                 if im_r.sum() > 0:
                     p_r = (T_rgt[:3, :3] @ mesh_w.T).T + T_rgt[:3, 3]
                     u = Kr[0, 0] * p_r[:, 0] / p_r[:, 2] + Kr[0, 2]
                     v = Kr[1, 1] * p_r[:, 1] / p_r[:, 2] + Kr[1, 2]
-                    ok = (u >= 0) & (u < Wr) & (v >= 0) & (v < Hr)
+                    ok = (p_r[:, 2] > 0) & (u >= 0) & (u < Wr) & (v >= 0) & (v < Hr)
                     if ok.sum():
                         cover2d = float(im_r[np.clip(v[ok].astype(int), 0, Hr - 1),
                                             np.clip(u[ok].astype(int), 0, Wr - 1)].mean())
             passed = bool(
-                met["cam_left"]["count"] > 0
-                and met["cam_left"]["inlier"] >= args.pass_inlier
+                inlier_pass(met, args.pass_inlier, args.joint_right)
                 and (cover2d is None or cover2d >= args.cover2d_min)
             )
-            for cam, Twc in ((cam_left, T_lft), (cam_right, T_rgt)):
-                (out_root / obj / "world_to_cam" / cam / f"{t:06d}.json").write_text(
-                    json.dumps(mat_to_js(Twc), indent=2))
-                (out_root / obj / "object_to_cam" / cam / f"{t:06d}.json").write_text(
-                    json.dumps(mat_to_js(Twc @ W_inv), indent=2))
-            per_obj["framedetails"][str(t)] = {
+            timestamp = float(ref.capture_time[t]) if hasattr(ref, "capture_time") else None
+            if passed:
+                for cam, Twc in ((cam_left, T_lft), (cam_right, T_rgt)):
+                    provenance = {"episode": args.episode, "frame_index": frame,
+                                  "timestamp": timestamp, "gt_use": "gt_assisted",
+                                  "camera_frame": cam, "status": "observed",
+                                  "coordinate_frame": "original_camera",
+                                  "producer": "fit_ego_rig", "source_object": obj}
+                    (out_root / obj / "world_to_cam" / cam / f"{frame:06d}.json").write_text(
+                        json.dumps({**mat_to_js(Twc), **provenance}, indent=2))
+                    (out_root / obj / "object_to_cam" / cam / f"{frame:06d}.json").write_text(
+                        json.dumps({**mat_to_js(Twc @ W), **provenance}, indent=2))
+            per_obj["framedetails"][str(frame)] = {
                 "inlier_left": (inls[0] if flags[0] else None),
                 "inlier_right": (inls[1] if flags[1] else None),
                 "rmse_left": met["cam_left"]["rmse"],
@@ -613,6 +695,8 @@ def main() -> int:
                 "count_right": met["cam_right"]["count"],
                 "cover_right_2d": cover2d,
                 "pass": passed,
+                "status": "observed" if passed else "rejected",
+                "frame_index": frame, "timestamp": timestamp,
                 "init": met["init"],
             }
             if passed:
@@ -659,7 +743,9 @@ def main() -> int:
                    "right_depth_scale": right_depth_scale,
                    "right_depth_scale_profile": est_profile,
                    "est_right_scale": args.est_right_scale,
-                   "smoothing": not args.no_smooth, "reuse_fp": args.reuse_fp},
+                   "smoothing": args.smooth, "reuse_fp": args.reuse_fp},
+        "gt_use": "gt_assisted", "coordinate_frame": "original_camera",
+        "contract": "T_camera_object = T_camera_world @ T_world_object; metres; wxyz JSON",
         "cross_object_agreement_left": cross,
         "objects": per_obj_out,
     }

@@ -107,6 +107,13 @@ poses → keypoint cache is added once a first pose bundle comes back.
   proxy episode is passed as a fit frame.
 ## Object pose fitting and validation (Issue #5)
 
+See `docs/team/issue5/REPAIR_STATUS.md` at the repository root for the current
+local repairs and validation limits. Camera paths are shared by all objects,
+GT-use provenance is retained, smoothing defaults off, and rejected observations
+are excluded from exports and propagation. Use fresh `--out` directories to
+preserve old artifacts. `--camera-root` accepts an external shared trajectory;
+`--require-independent` rejects cameras without independent provenance.
+
 `vm.fit_object_pose` estimates object-to-world poses using prepared W1 camera
 poses, masks, depth and intrinsics. Its CPU fitter additionally needs `scipy`,
 `trimesh` and `Pillow`; reading public GT needs `pyarrow`.
@@ -156,8 +163,11 @@ For a full validation run:
    zero solved frames so missing coverage cannot disappear from the evidence.
 4. Review the per-episode medians and coverage before claiming completion.
 
-The public dataset and prepared W1 inputs are absent from the PR repair
-sandbox. No all-episode benchmark result is claimed here. Evaluation episodes
+The local repair workspace now has public GT/calibration, ten CAD meshes and
+episode-0/2 stereo videos; prepared W1 masks and independent camera paths remain
+unavailable. See `docs/team/issue5/REPAIR_STATUS.md` and `contracts.json` for the
+input checks and repaired coordinate/provenance contract. No all-episode benchmark
+result is claimed here. Evaluation episodes
 without CAD assets cannot use this fitter; retain masks/depth/camera outputs
 for a separate asset-free reconstruction path instead of reporting fitted
 poses or GT scores.

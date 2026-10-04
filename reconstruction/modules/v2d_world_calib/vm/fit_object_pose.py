@@ -5,7 +5,7 @@
 
 Issue5 / [A2] Object tracking from CAD templates.  Inverse of fit_ego_rig:
 there the world->cam pose is the unknown and the object pose is fixed by GT;
-here the world->cam poses are the verified W1 output (work/ego_cam_poses)
+here one shared time-varying world->cam trajectory is supplied by W1
 and the unknown is one SE(3) ``X = T_WO`` (object->world) per frame and per
 object, with the mutually registered mesh as the CAD template.
 
@@ -16,8 +16,8 @@ object, with the mutually registered mesh as the CAD template.
 so the unknown reduces to ``P = T_WC_left @ X`` (object->cam_left) and the
 same joint Levenberg-Gauss-Newton point-to-plane solver as fit_ego_rig
 applies verbatim (solve_frame already solves "body->cam_left").  Both
-cameras constrain the same P through the fixed rig (M), so rotation is well
-identified even for textureless objects (white_pot / white_pot_lid).
+cameras constrain the same P through the fixed rig (M). Rotation observability
+still depends on visible geometry; symmetric spin can remain ambiguous.
 
 Outputs under ``{work}/ego_object_poses/e{episode}/``:
   {obj}/object_to_world/{frame:06d}.json   Transform3d object->world (w-first)
@@ -39,6 +39,7 @@ parquet world_T_object are accumulated into report.json under "gt_score".
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 import time
@@ -56,6 +57,9 @@ from v2d.world_calib.vm.fit_ego_rig import (
     load_reference_loader,
     mat_to_js,
     mesh_points_and_normals,
+    pose_metrics,
+    inlier_pass,
+    smooth_poses,
     solve_frame,
 )
 
@@ -120,18 +124,35 @@ def _summarize_gt(angles: list[float], displacements: list[float],
 # --------------------------------------------------------------------------- #
 
 
+def temporal_check(previous, current, frame_delta=1, time_delta=None, fps=None,
+                   jump_deg=40.0, jump_m=0.30):
+    """Gate velocity using actual elapsed time, or source-frame distance when unknown."""
+    if previous is None:
+        return True
+    if frame_delta <= 0 or (time_delta is not None and time_delta <= 0):
+        raise ValueError("frames and timestamps must increase strictly")
+    scale = time_delta * fps if time_delta is not None and fps else frame_delta
+    angle, displacement = _pose_error(current, previous)
+    return bool(angle <= jump_deg * scale and displacement <= jump_m * scale)
+
+
 def main() -> int:
     """Fit object poses from fixed camera inputs and write per-episode reports."""
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--data-root", required=True)
     ap.add_argument("--work", required=True)
+    ap.add_argument("--out", type=Path, help="fresh episode output directory")
+    ap.add_argument("--camera-root", type=Path,
+                    help="one shared world_to_cam root containing <camera>/<frame>.json")
+    ap.add_argument("--require-independent", action="store_true",
+                    help="reject cameras lacking explicit independent GT-use provenance")
+    ap.add_argument("--frame-times", type=Path, help="JSON mapping source frame IDs to capture times")
+    ap.add_argument("--max-gap-frames", type=int, default=10,
+                    help="reinitialize after this many source frames without an accepted fit")
     ap.add_argument("--episode", type=int, default=2)
     ap.add_argument("--objects", default="", help="comma list; default = all in parquet")
     ap.add_argument("--pose-obj", default="auto",
-                    help="which object's fixed world_to_cam poses seed the solve. "
-                         "'auto' (default) gives each object its own rig, falling "
-                         "back to the first available one when a per-object rig is "
-                         "missing. Otherwise name a single object to share.")
+                    help="single camera source shared by every object; auto selects the first available")
     ap.add_argument("--iters", type=int, default=40)
     ap.add_argument("--mesh-pts", type=int, default=2500)
     ap.add_argument("--max-pts", type=int, default=3000)
@@ -152,7 +173,9 @@ def main() -> int:
                     help="load parquet GT: drive frames by GT visibility, report errors")
     mode.add_argument("--no-gt", action="store_true",
                     help="eval split: no parquet; process frames where the mask exists")
-    ap.add_argument("--no-smooth", action="store_true")
+    smoothing = ap.add_mutually_exclusive_group()
+    smoothing.add_argument("--smooth", action="store_true")
+    smoothing.add_argument("--no-smooth", action="store_true", help="raw poses (default)")
     args = ap.parse_args()
 
     data_root = Path(args.data_root)
@@ -175,26 +198,80 @@ def main() -> int:
 
     # Shared rig root, used when an object has no rig of its own. Resolved before
     # any reporting so the printout below never names a literal "auto".
-    if args.pose_obj == "auto":
+    if args.camera_root:
+        shared = str(args.camera_root)
+        cam_root = args.camera_root
+    elif args.pose_obj == "auto":
         avail = [o for o in obj_order
                  if (work / "ego_cam_poses" / o / "world_to_cam" / cam_left).exists()]
         if not avail:
             sys.exit(f"no world_to_cam under {work / 'ego_cam_poses'}/<obj>/ "
                      f"for any of {obj_order} (run fit_ego_rig first)")
         shared = avail[0]
+        cam_root = work / "ego_cam_poses" / shared / "world_to_cam"
     else:
-        if args.pose_obj not in obj_order:
-            sys.exit(f"--pose-obj {args.pose_obj} not in {obj_order}")
         shared = args.pose_obj
-    cam_root = work / "ego_cam_poses" / shared / "world_to_cam"
+        cam_root = work / "ego_cam_poses" / shared / "world_to_cam"
 
     print(f"episode {args.episode}: objects={obj_order} cams=({cam_left},{cam_right})")
-    print(f"pose source: {'per-object' if args.pose_obj == 'auto' else 'shared ' + shared}"
+    print(f"pose source: shared {shared}"
           f"  rig |t|={np.linalg.norm(M[:3, 3]):.4f} m")
 
     out_root = work / "ego_object_poses"
-    ep_dir = out_root / f"e{args.episode:03d}"
-    Tmax = int(ref.steps) if ref is not None else -1
+    ep_dir = args.out or out_root / f"e{args.episode:03d}"
+    if ep_dir.exists() and any(ep_dir.iterdir()):
+        ap.error("episode output already exists; pass --out with a new directory")
+    if len(set(obj_order)) != len(obj_order):
+        ap.error("object names must be distinct")
+    if ref is not None:
+        frame_ids = np.asarray(getattr(ref, "frame_index", np.arange(ref.steps)), dtype=int)
+        times = dict(zip(frame_ids, ref.capture_time)) if hasattr(ref, "capture_time") else {}
+    else:
+        frame_ids = np.array(sorted({int(p.stem) for obj in obj_order for p in
+            (work / "masks" / cam_left / obj / "0").glob("[0-9]*.png")}), dtype=int)
+        times = {}
+    if args.frame_times:
+        times = {int(k): float(v) for k, v in json.loads(args.frame_times.read_text()).items()}
+    if len(frame_ids) and (np.diff(frame_ids) <= 0).any():
+        ap.error("source frame IDs must increase strictly")
+    Tmax = len(frame_ids)
+    fps = getattr(ref, "fps", None)
+    info_path = data_root / "meta" / "info.json"
+    if fps is None and info_path.exists():
+        fps = json.loads(info_path.read_text()).get("fps")
+    if fps is not None and (not np.isfinite(fps) or fps <= 0):
+        ap.error("metadata fps must be finite and positive")
+    if any(not np.isfinite(value) for value in times.values()):
+        ap.error("capture times must be finite")
+    cameras, camera_sources = {}, {}
+    for frame in frame_ids:
+        path = cam_root / cam_left / f"{frame:06d}.json"
+        if not path.exists():
+            continue
+        raw = path.read_bytes()
+        record = json.loads(raw)
+        if record.get("status", "observed") != "observed":
+            continue
+        if record.get("frame_index", int(frame)) != int(frame):
+            ap.error(f"camera frame ID mismatch: {path}")
+        if record.get("episode", args.episode) != args.episode:
+            ap.error(f"camera episode mismatch: {path}")
+        if record.get("camera_frame", cam_left) != cam_left:
+            ap.error(f"camera axes mismatch: {path}")
+        if record.get("coordinate_frame", "original_camera") != "original_camera":
+            ap.error(f"prepared-input fitter requires original camera axes: {path}")
+        gt_use = record.get("gt_use", "unknown")
+        if record.get("timestamp") is not None:
+            stamp = float(record["timestamp"])
+            if not np.isfinite(stamp) or (int(frame) in times and not np.isclose(times[int(frame)], stamp, rtol=0, atol=1e-9)):
+                ap.error(f"camera timestamp mismatch: {path}")
+            times[int(frame)] = stamp
+        if args.require_independent and gt_use != "independent":
+            ap.error(f"camera is {gt_use}, not independently produced: {path}")
+        cameras[int(frame)] = js_to_mat(record)
+        camera_sources[int(frame)] = {"path": str(path.resolve()),
+            "sha256": hashlib.sha256(raw).hexdigest(), "gt_use": gt_use,
+            "camera_frame": cam_left}
     per_obj_out: dict[str, dict] = {}
 
     for obj in obj_order:
@@ -207,20 +284,6 @@ def main() -> int:
             (ep_dir / obj / "object_to_cam" / cam).mkdir(parents=True, exist_ok=True)
         c_o = mesh_o.mean(axis=0)
         Tmax_o = Tmax
-        if Tmax_o < 0:
-            frames = sorted(int(p.stem) for p in
-                            (work / "masks" / cam_left / obj / "0").glob("[0-9]*.png"))
-            Tmax_o = (frames[-1] + 1) if frames else 0
-        # Rig poses are solved per object by fit_ego_rig, and they differ in
-        # quality: driving every object from one object's rig couples them and
-        # lets a bad rig contaminate a good one. Prefer this object's own rig.
-        if args.pose_obj == "auto":
-            own = work / "ego_cam_poses" / obj / "world_to_cam"
-            pose_root = own if (own / cam_left).exists() else cam_root
-        else:
-            pose_root = cam_root
-        if pose_root is not cam_root:
-            print(f"[pose] {obj}: own rig {pose_root.parent.parent.name}")
 
         print(f"[fit] {obj}: mesh {len(mesh_o)} pts, frames {Tmax_o}")
 
@@ -229,31 +292,25 @@ def main() -> int:
         Xs: list[np.ndarray | None] = [None] * Tmax_o
         quals: list[dict | None] = [None] * Tmax_o
         prev: np.ndarray | None = None
-        used_rig: dict[int, Path] = {}
-        for t in range(Tmax_o):
+        prev_frame, prev_time = None, None
+        for t, frame in enumerate(frame_ids):
+            frame = int(frame)
             if ref is not None and not args.no_gt and not bool(ref.visible[t, b]):
                 continue
-            # An object may have its own rig, but that rig covers only the frames
-            # fit_ego_rig actually solved. Fall back to the shared rig per frame
-            # rather than dropping the frame, so a partial per-object rig
-            # degrades to shared coverage instead of losing frames.
-            wc_l = pose_root / cam_left / f"{t:06d}.json"
-            if not wc_l.exists():
-                alt = cam_root / cam_left / f"{t:06d}.json"
-                if not alt.exists():
-                    continue
-                wc_l = alt
-            C_l = js_to_mat(json.loads(wc_l.read_text()))
-            used_rig[t] = wc_l
+            if frame not in cameras:
+                continue
+            C_l = cameras[frame]
+            if prev_frame is not None and frame - prev_frame > args.max_gap_frames:
+                prev, prev_frame, prev_time = None, None, None
             ql = frame_cloud(
-                work / "masks" / cam_left / obj / "0" / f"{t:06d}.png",
-                work / "depth" / cam_left / f"{t:06d}.png",
-                work / "intrinsics" / f"{cam_left}.json", args.max_pts, t,
+                work / "masks" / cam_left / obj / "0" / f"{frame:06d}.png",
+                work / "depth" / cam_left / f"{frame:06d}.png",
+                work / "intrinsics" / f"{cam_left}.json", args.max_pts, frame,
             )
             qr = (np.empty((0, 3), dtype=np.float32) if not args.joint_right else frame_cloud(
-                work / "masks" / cam_right / obj / "0" / f"{t:06d}.png",
-                work / "depth" / cam_right / f"{t:06d}.png",
-                work / "intrinsics" / f"{cam_right}.json", args.max_pts, t,
+                work / "masks" / cam_right / obj / "0" / f"{frame:06d}.png",
+                work / "depth" / cam_right / f"{frame:06d}.png",
+                work / "intrinsics" / f"{cam_right}.json", args.max_pts, frame,
                 scale=args.right_depth_scale,
             ))
             if len(ql) == 0 and len(qr) == 0:
@@ -284,51 +341,52 @@ def main() -> int:
             if best is None:
                 continue
             Pf, met = best
-            Xs[t], quals[t] = _inv4(C_l) @ Pf, met
-            prev = Xs[t]
+            X = _inv4(C_l) @ Pf
+            timestamp = times.get(frame)
+            jump_ok = temporal_check(prev, X, frame - prev_frame if prev_frame is not None else 1,
+                                    timestamp - prev_time if timestamp is not None and prev_time is not None else None,
+                                    fps, args.jump_deg, args.jump_m)
+            met["jump_ok"] = jump_ok
+            met["pass"] = inlier_pass(met, args.pass_inlier, args.joint_right) and jump_ok
+            quals[t] = met
+            if met["pass"]:
+                Xs[t] = X
+                prev, prev_frame, prev_time = X, frame, timestamp
 
-        if not args.no_smooth and sum(x is not None for x in Xs) > 3:
-            window, sigma = 4, 2.0
-            for t in range(len(Xs)):
-                if Xs[t] is None:
-                    continue
-                xi = np.zeros(6)
-                wtot = 0.0
-                for k in range(max(0, t - window), min(len(Xs), t + window + 1)):
-                    if Xs[k] is None:
-                        continue
-                    wgt = np.exp(-0.5 * ((k - t) / sigma) ** 2)
-                    xi += wgt * _log_se3_vee(Xs[k] @ _inv4(Xs[t]))
-                    wtot += wgt
-                if wtot > 0:
-                    Xs[t] = _exp_se3(xi / wtot) @ Xs[t]
-            for t in range(len(Xs)):
-                if Xs[t] is not None and quals[t] is not None:
-                    quals[t]["init"] = quals[t].get("init", "smooth")
+        raw_Xs = [None if x is None else x.copy() for x in Xs]
+        if args.smooth:
+            Xs = smooth_poses(Xs, frame_ids=frame_ids)
 
         per_obj: dict = {"frames": Tmax_o, "solved": 0, "passed": 0, "framedetails": {},
                          "gt_score": {}}
         gt_ang, gt_disp, gt_chm = [], [], []
-        for t in range(len(Xs)):
+        prev, prev_frame, prev_time = None, None, None
+        for t, frame in enumerate(frame_ids):
+            frame = int(frame)
             if Xs[t] is None:
+                if quals[t] is not None:
+                    per_obj["framedetails"][str(frame)] = {"pass": False, "status": "rejected",
+                        "jump_ok": quals[t]["jump_ok"], "camera_source": camera_sources[frame]}
                 continue
-            C_l = js_to_mat(json.loads(used_rig[t].read_text()))
-            X, met = Xs[t], quals[t]
+            C_l = cameras[frame]
+            X = Xs[t]
             per_obj["solved"] += 1
             Pf = C_l @ X
-            jump_ok = True
-            if t > 0 and quals[t - 1] is not None and Xs[t - 1] is not None:
-                Del = _inv4(Xs[t - 1]) @ X
-                ang = float(np.degrees(np.arccos(np.clip((np.trace(Del[:3, :3]) - 1) / 2, -1, 1))))
-                disp = float(np.linalg.norm(Del[:3, 3]))
-                jump_ok = ang <= args.jump_deg and disp <= args.jump_m
-            inlier_ok = bool(
-                met["cam_left"]["count"] > 0 and met["cam_left"]["inlier"] >= args.pass_inlier
-            )
-            right_ok = True
-            if args.joint_right and met["cam_right"]["count"] > 0:
-                right_ok = met["cam_right"]["inlier"] >= 0.7 * args.pass_inlier
-            passed = inlier_ok and right_ok and jump_ok
+            ql = frame_cloud(work / "masks" / cam_left / obj / "0" / f"{frame:06d}.png",
+                             work / "depth" / cam_left / f"{frame:06d}.png",
+                             work / "intrinsics" / f"{cam_left}.json", args.max_pts, frame)
+            qr = (frame_cloud(work / "masks" / cam_right / obj / "0" / f"{frame:06d}.png",
+                              work / "depth" / cam_right / f"{frame:06d}.png",
+                              work / "intrinsics" / f"{cam_right}.json", args.max_pts, frame,
+                              scale=args.right_depth_scale) if args.joint_right else np.empty((0, 3)))
+            met = pose_metrics(Pf, mesh_o, mesh_on, M, ql, qr, args.tukey_m)
+            timestamp = times.get(frame)
+            delta = frame - prev_frame if prev_frame is not None else None
+            dt = timestamp - prev_time if timestamp is not None and prev_time is not None else None
+            if delta is not None and delta > args.max_gap_frames:
+                prev = None
+            jump_ok = temporal_check(prev, X, delta or 1, dt, fps, args.jump_deg, args.jump_m)
+            passed = inlier_pass(met, args.pass_inlier, args.joint_right) and jump_ok
 
             meta: dict = {
                 "inlier_left": met["cam_left"]["inlier"],
@@ -336,14 +394,33 @@ def main() -> int:
                 "count_left": met["cam_left"]["count"],
                 "count_right": met["cam_right"]["count"],
                 "jump_ok": jump_ok,
-                "init": met["init"],
+                "init": quals[t]["init"],
                 "pass": passed,
+                "status": "observed" if passed else "rejected",
+                "frame_index": frame, "timestamp": timestamp,
+                "frame_delta": delta, "time_delta": dt,
+                "camera_source": camera_sources[frame],
+                "rmse_left": met["cam_left"]["rmse"],
+                "rmse_right": met["cam_right"]["rmse"],
             }
-            (ep_dir / obj / "object_to_world" / f"{t:06d}.json").write_text(
-                json.dumps(mat_to_js(X), indent=2))
+            provenance = {"episode": args.episode, "frame_index": frame, "timestamp": timestamp,
+                          "status": "observed", "camera_source": camera_sources[frame],
+                          "gt_use": "gt_assisted" if args.score_gt else camera_sources[frame]["gt_use"],
+                          "inference_gt": "visibility" if args.score_gt else "none"}
+            raw_dir = ep_dir / obj / "raw_object_to_world"
+            raw_dir.mkdir(exist_ok=True)
+            (raw_dir / f"{frame:06d}.json").write_text(json.dumps(
+                {**mat_to_js(raw_Xs[t]), **provenance, "coordinate_frame": "fixed_world"}, indent=2))
+            if not passed:
+                per_obj["framedetails"][str(frame)] = meta
+                continue
+            prev, prev_frame, prev_time = X, frame, timestamp
+            (ep_dir / obj / "object_to_world" / f"{frame:06d}.json").write_text(json.dumps(
+                {**mat_to_js(X), **provenance, "coordinate_frame": "fixed_world"}, indent=2))
             for cam, Pc in ((cam_left, Pf), (cam_right, M @ Pf)):
-                (ep_dir / obj / "object_to_cam" / cam / f"{t:06d}.json").write_text(
-                    json.dumps(mat_to_js(Pc), indent=2))
+                (ep_dir / obj / "object_to_cam" / cam / f"{frame:06d}.json").write_text(json.dumps(
+                    {**mat_to_js(Pc), **provenance, "camera_frame": cam,
+                     "coordinate_frame": "original_camera"}, indent=2))
 
             if args.score_gt and not args.no_gt:
                 pq = np.asarray(ref.pose_xyzw[t, b], dtype=np.float64)
@@ -356,16 +433,22 @@ def main() -> int:
                 chm = _chamfer(mesh_w_fit, mesh_w_gt)
                 meta["rot_err_deg"] = round(ang, 3)
                 meta["trans_err_m"] = round(disp, 4)
+                meta["trans_err_cm"] = round(100 * disp, 3)
                 meta["chamfer_mm"] = round(chm, 3)
                 meta["gt_pass"] = bool(ang <= 10.0 and disp <= 0.05)
                 gt_ang.append(ang)
                 gt_disp.append(disp)
                 gt_chm.append(chm)
-            per_obj["framedetails"][str(t)] = meta
+            per_obj["framedetails"][str(frame)] = meta
             if passed:
                 per_obj["passed"] += 1
         if args.score_gt:
             per_obj["gt_score"] = _summarize_gt(gt_ang, gt_disp, gt_chm, n_vis)
+            per_obj["gt_score"]["median_trans_cm"] = float(100 * np.median(gt_disp)) if gt_disp else None
+            per_obj["gt_score"]["p90_trans_cm"] = float(100 * np.percentile(gt_disp, 90)) if gt_disp else None
+        per_obj["attempted"] = sum(q is not None for q in quals)
+        per_obj["raw_accepted"] = sum(x is not None for x in raw_Xs)
+        per_obj["exported"] = per_obj["passed"]
         per_obj["elapsed_s"] = round(time.time() - t_start, 1)
         per_obj_out[obj] = per_obj
         print(f"  {obj}: solved {per_obj['solved']} passed {per_obj['passed']} "
@@ -375,13 +458,19 @@ def main() -> int:
         "episode": args.episode,
         "cam_left": cam_left,
         "cam_right": cam_right,
-        "pose_source": "per-object" if args.pose_obj == "auto" else f"ego_cam_poses/{shared}",
+        "pose_source": str(cam_root.resolve()),
+        "camera_sources": {str(k): v for k, v in camera_sources.items()},
+        "coordinate_frame": "fixed_world", "quaternion_order": "wxyz", "units": "metres",
+        "gt_score_kind": "unaligned public diagnostic; official alignment is in the separate scorer",
+        "inference_reads_gt": bool(args.score_gt),
+        "gt_use": ["gt_assisted"] if args.score_gt else sorted({v["gt_use"] for v in camera_sources.values()}),
+        "camera_gt_use": sorted({v["gt_use"] for v in camera_sources.values()}),
         "params": {"iters": args.iters, "mesh_pts": args.mesh_pts,
                    "tukey_m": args.tukey_m, "start_sigma_m": args.start_sigma,
                    "pass_inlier": args.pass_inlier, "joint_right": args.joint_right,
                    "right_depth_scale": args.right_depth_scale,
                    "jump_deg": args.jump_deg, "jump_m": args.jump_m,
-                   "smoothing": not args.no_smooth},
+                   "smoothing": args.smooth},
         "objects": per_obj_out,
     }
     (ep_dir / "report.json").write_text(json.dumps(report, indent=2))
