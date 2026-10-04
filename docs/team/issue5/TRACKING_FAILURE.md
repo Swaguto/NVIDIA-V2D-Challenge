@@ -100,6 +100,14 @@ Yes, as a controlled alternative for initialization and recovery. The current IC
 already estimates a 6-DoF object pose: three position and three orientation degrees
 of freedom. Adding the term "6D" does not itself change the estimator.
 
+The later [pot mask control](POT_CONTROL.md#rgb-prompted-mask--6d-pose-follow-up)
+tests RGB-reviewed prompts with the lid excluded from the pot observation, on
+unchanged depth/CAD/native ICP. All eight sampled fits pass the residual gate,
+but median canonical relative rotation error remains 165.95 degrees. This is
+evidence that the tested observation changes do not recover correct 6D geometry,
+not proof that another estimator will recover it. Masks lack independent human
+review, and depth/symmetry/scan-frame attribution remains unresolved.
+
 [FoundationPose](https://arxiv.org/abs/2312.08344) supplies learned pose refinement
 and scoring for novel objects using a CAD model or reference images. Its
 [official demo](https://github.com/NVlabs/FoundationPose/blob/main/run_demo.py)

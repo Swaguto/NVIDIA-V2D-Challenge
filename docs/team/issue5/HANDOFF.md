@@ -5,6 +5,13 @@ It does not establish improved real tracking accuracy, successful robot training
 or a policy-rollout submission. The accepted CHORD/stereo/contact experiment is
 unchanged. FoundationPose remains optional initialization, not a replacement tracker.
 
+The latest [eight-frame RGB-prompted pot control](POT_CONTROL.md#rgb-prompted-mask--6d-pose-follow-up)
+preserves native depth/CAD/solver inputs, excludes lid overlap, and still measures
+165.95 degrees median canonical relative rotation error despite accepted fits.
+Current ICP already outputs 6D pose. Compare FoundationPose initialization/recovery
+on independently reviewed observations before claiming a benefit; its inference
+remains unrun. No automatic mask or rotation-prior change is promoted here.
+
 The team lead subsequently reported that tracking still fails. The provided episode-39
 clip shows a tabletop-sized green mask and a displaced dustpan CAD. See
 [TRACKING_FAILURE.md](TRACKING_FAILURE.md) for observed evidence, the removed

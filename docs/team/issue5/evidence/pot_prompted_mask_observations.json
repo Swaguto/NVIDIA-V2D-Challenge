@@ -1,0 +1,1123 @@
+{
+  "episodes": [
+    2
+  ],
+  "objects": [
+    "white_pot",
+    "white_pot_lid"
+  ],
+  "gt_use": "none",
+  "prompt": "white pot. white pot lid.",
+  "frame_selection": "eight rounded linspace source indices per full video; no GT read",
+  "inputs": [
+    {
+      "path": "mesh/white_pot/white_pot.glb",
+      "bytes": 8948208,
+      "sha256": "2627b01350864cc7f52540cb1ccfb9d67544e245d7061d8e313ecfd9d3eb5151"
+    },
+    {
+      "path": "mesh/white_pot_lid/white_pot_lid.glb",
+      "bytes": 8262028,
+      "sha256": "672a2965dd785fc958db39a2ce94a6df215f58dfdfafedf7dd193ffc6d83b363"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.ego_cam_b/episode_000000.mp4",
+      "bytes": 5648231,
+      "sha256": "55e5e8b76766eef2c209a84b54a86d108c4ed07b4ed6fdf182deb6c76e8657b5"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.ego_cam_b/episode_000002.mp4",
+      "bytes": 4919102,
+      "sha256": "0c054cd1ba87781fb2da50bd812ef782e27ad7d32f9c30f9b0116d0095107e30"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.ego_cam_c/episode_000000.mp4",
+      "bytes": 4545702,
+      "sha256": "64e32dded47e4fd3b74015ccd8aaf71183140853d3f6f105136b91917fec4b99"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.ego_cam_c/episode_000002.mp4",
+      "bytes": 3937003,
+      "sha256": "255208a8be8d6ef7a817b68b9fe444bea6886981a6d210249e6da199a5770ee0"
+    }
+  ],
+  "calibration_sha256": "23e2d9c46369292cdda492a777e7a6083815369a25d1af4bb82560669fde5d52",
+  "models": [
+    {
+      "model": "IDEA-Research/grounding-dino-base",
+      "revision": "12bdfa3120f3e7ec7b434d90674b3396eccf88eb",
+      "file": "config.json",
+      "bytes": 1737,
+      "sha256": "eda416dae6f49419ff831b1c190ec430a060b19aae688dbaf2425a075b650608"
+    },
+    {
+      "model": "IDEA-Research/grounding-dino-base",
+      "revision": "12bdfa3120f3e7ec7b434d90674b3396eccf88eb",
+      "file": "model.safetensors",
+      "bytes": 933400872,
+      "sha256": "5548f844c928c4b6f411fa8cbcc2bfa8dbbba437cb1d513975519f93c2a9ed21"
+    },
+    {
+      "model": "IDEA-Research/grounding-dino-base",
+      "revision": "12bdfa3120f3e7ec7b434d90674b3396eccf88eb",
+      "file": "preprocessor_config.json",
+      "bytes": 457,
+      "sha256": "8454179ba95e2ad22947835aad7b45862a601fc0055ab88bf1ee70892d3aea60"
+    },
+    {
+      "model": "IDEA-Research/grounding-dino-base",
+      "revision": "12bdfa3120f3e7ec7b434d90674b3396eccf88eb",
+      "file": "special_tokens_map.json",
+      "bytes": 125,
+      "sha256": "b6d346be366a7d1d48332dbc9fdf3bf8960b5d879522b7799ddba59e76237ee3"
+    },
+    {
+      "model": "IDEA-Research/grounding-dino-base",
+      "revision": "12bdfa3120f3e7ec7b434d90674b3396eccf88eb",
+      "file": "tokenizer.json",
+      "bytes": 711396,
+      "sha256": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66"
+    },
+    {
+      "model": "IDEA-Research/grounding-dino-base",
+      "revision": "12bdfa3120f3e7ec7b434d90674b3396eccf88eb",
+      "file": "tokenizer_config.json",
+      "bytes": 1237,
+      "sha256": "d40ab645b68211910b9170d22433d43186a6ec8ee6fd10ba170524b25bf4fb56"
+    },
+    {
+      "model": "IDEA-Research/grounding-dino-base",
+      "revision": "12bdfa3120f3e7ec7b434d90674b3396eccf88eb",
+      "file": "vocab.txt",
+      "bytes": 231508,
+      "sha256": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+    },
+    {
+      "model": "facebook/sam2.1-hiera-large",
+      "revision": "665f8e2ad61cf5f53d65644ff27c8ee525124610",
+      "file": "config.json",
+      "bytes": 5705,
+      "sha256": "00446988cf4d617118d2d347eabe2c46aebed744628facdd540508be30b69ec3"
+    },
+    {
+      "model": "facebook/sam2.1-hiera-large",
+      "revision": "665f8e2ad61cf5f53d65644ff27c8ee525124610",
+      "file": "model.safetensors",
+      "bytes": 897897416,
+      "sha256": "dc407dce21301fd94abb395c5099b4f2c455fdc8a8f261ac3d0ea6d4cd197230"
+    },
+    {
+      "model": "facebook/sam2.1-hiera-large",
+      "revision": "665f8e2ad61cf5f53d65644ff27c8ee525124610",
+      "file": "preprocessor_config.json",
+      "bytes": 683,
+      "sha256": "6ebf229ee259368ce4a8d4f2fe893a72b053023710853e257253939e601f583d"
+    },
+    {
+      "model": "facebook/sam2.1-hiera-large",
+      "revision": "665f8e2ad61cf5f53d65644ff27c8ee525124610",
+      "file": "processor_config.json",
+      "bytes": 95,
+      "sha256": "f8a68e865cfad115c1c2763f3d93eca7b1c622da06da2a9273eb437fb2389b6d"
+    },
+    {
+      "model": "facebook/sam2.1-hiera-large",
+      "revision": "665f8e2ad61cf5f53d65644ff27c8ee525124610",
+      "file": "video_preprocessor_config.json",
+      "bytes": 705,
+      "sha256": "9fccfe5f464ec38c2f236d0e6a68e95511c80c22132fc2fa4b9f7b65f24fad95"
+    }
+  ],
+  "source_sha256_lf": {
+    "scripts\\track3\\register_poses.py": "252866db4deb066e780df1b34d08e29a48a6acb88d5830418de72fad1e9a10fd",
+    "reconstruction\\modules\\v2d_world_calib\\vm\\visualize_object_pose.py": "ea452472a25408db77e2e25fec8116eb017519830cfb333426a89aac6111bb6b"
+  },
+  "worker_sha256_lf": "de122100f323afa4092222c62bb973ed9493e3e2970685eb73d5f52a5317c232",
+  "environment": {
+    "torch": "2.11.0+cu128",
+    "transformers": "5.18.0",
+    "cuda": "12.8",
+    "device": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "opencv": "5.0.0"
+  },
+  "params": {
+    "box_threshold": 0.3,
+    "text_threshold": 0.25,
+    "scale": 1,
+    "cad_samples": 6000,
+    "seed": 0,
+    "max_residual_m": 0.05,
+    "warm_starts": false,
+    "smoothing": false
+  },
+  "frames": [
+    {
+      "episode": 2,
+      "frame_index": 0,
+      "total_source_frames": 343,
+      "depth_sha256": "320f61bf9d39b0cc61c57da0b21d6f1d91eb9dea2a7753d85f480232860c20f1",
+      "views": {
+        "ego_cam_c": {
+          "objects": {
+            "white_pot": {
+              "mask_pixels": 40286,
+              "valid_depth_pixels": 37408,
+              "mask_sha256": "cb2f868b89e5e823b76fe43b94be8d9e26c0fbeaa9e0ee7bb713237893b9d6b9"
+            },
+            "white_pot_lid": {
+              "mask_pixels": 28106,
+              "valid_depth_pixels": 25920,
+              "mask_sha256": "00e3334a329d548b118281f54f073875974000054c85742dab15b5601cfdbfdc"
+            }
+          }
+        }
+      },
+      "fits": {
+        "white_pot": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 4751,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.7014835748601291,
+            0.27829786893568353,
+            -0.380901881139431,
+            0.5342142335166236
+          ],
+          "translation": [
+            0.007562289014458656,
+            0.11677483469247818,
+            0.5472157597541809
+          ],
+          "residual_m": 0.012519106268882751,
+          "cad_model_mask_iou": 0.6615620214395099
+        },
+        "white_pot_lid": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 3994,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.5668214947500503,
+            0.3958672477980808,
+            0.16427316614161053,
+            -0.7035743330280764
+          ],
+          "translation": [
+            0.006498612463474274,
+            0.1044640764594078,
+            0.5295291543006897
+          ],
+          "residual_m": 0.005843393038958311,
+          "cad_model_mask_iou": 0.9143549322687412
+        }
+      }
+    },
+    {
+      "episode": 2,
+      "frame_index": 49,
+      "total_source_frames": 343,
+      "depth_sha256": "8bee4adfb3a12e57e3faa96d56c11f3c5c0807aae32ea2fe6a5102220cabc47e",
+      "views": {
+        "ego_cam_c": {
+          "objects": {
+            "white_pot": {
+              "mask_pixels": 31919,
+              "valid_depth_pixels": 28642,
+              "mask_sha256": "899ea7d52fa4121ef3dd24e520ef25de2aa80dabad891f840bc440da06997d8a"
+            },
+            "white_pot_lid": {
+              "mask_pixels": 17928,
+              "valid_depth_pixels": 16270,
+              "mask_sha256": "e0c1e8782ca90e9a095b93f6952ad2f2a749b99bf72e1e385f53eef0e3b5dd86"
+            }
+          }
+        }
+      },
+      "fits": {
+        "white_pot": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 3927,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            -0.21389259683112238,
+            0.8060070733912363,
+            0.5215991845689919,
+            0.1803797253604063
+          ],
+          "translation": [
+            0.016311293467879295,
+            0.11147218197584152,
+            0.5391180515289307
+          ],
+          "residual_m": 0.013214051723480225,
+          "cad_model_mask_iou": 0.6986297981796596
+        },
+        "white_pot_lid": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 2881,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.5742302112151381,
+            0.2482187643028878,
+            0.20742418597497045,
+            -0.7520786638699347
+          ],
+          "translation": [
+            0.008682576939463615,
+            0.0874132290482521,
+            0.536061704158783
+          ],
+          "residual_m": 0.00783200841397047,
+          "cad_model_mask_iou": 0.6613502382298312
+        }
+      }
+    },
+    {
+      "episode": 2,
+      "frame_index": 98,
+      "total_source_frames": 343,
+      "depth_sha256": "2a8814214f3f9e3e4c05804ce6a486be1f53a9db1e92fd14115c763d11a2afa8",
+      "views": {
+        "ego_cam_c": {
+          "objects": {
+            "white_pot": {
+              "mask_pixels": 36373,
+              "valid_depth_pixels": 31248,
+              "mask_sha256": "0d1a6123c7fbc3a499a75fc18617e407b18774338a238009ac7acccac77fe008"
+            },
+            "white_pot_lid": {
+              "mask_pixels": 17983,
+              "valid_depth_pixels": 16699,
+              "mask_sha256": "40123d2d1f03e9a995cb6459dc5d19b4f24a33eced04a572da89220a615ce113"
+            }
+          }
+        }
+      },
+      "fits": {
+        "white_pot": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 5189,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.2812005067920921,
+            -0.5980742156946481,
+            0.7427326530956434,
+            0.10761836983809411
+          ],
+          "translation": [
+            -0.009302157908678055,
+            0.14410048723220825,
+            0.5651844143867493
+          ],
+          "residual_m": 0.010166218504309654,
+          "cad_model_mask_iou": 0.6807092357760072
+        },
+        "white_pot_lid": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 3199,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.6299667031195761,
+            0.15816596418010437,
+            0.3437499929417049,
+            -0.6782045584395666
+          ],
+          "translation": [
+            0.22296717762947083,
+            0.1412835270166397,
+            0.5812405943870544
+          ],
+          "residual_m": 0.007532224059104919,
+          "cad_model_mask_iou": 0.6846744844318642
+        }
+      }
+    },
+    {
+      "episode": 2,
+      "frame_index": 147,
+      "total_source_frames": 343,
+      "depth_sha256": "2c8a225f0234fad7e156f35bd0a73b622e3cb1fb83e9047618f78cdf0145ee0e",
+      "views": {
+        "ego_cam_c": {
+          "objects": {
+            "white_pot": {
+              "mask_pixels": 39715,
+              "valid_depth_pixels": 32357,
+              "mask_sha256": "a56110e6e3ebf77c2b01bc8fb96f5586e53784db09ed9475849e84927b86e9e3"
+            },
+            "white_pot_lid": {
+              "mask_pixels": 26065,
+              "valid_depth_pixels": 24033,
+              "mask_sha256": "a534871b92415ef34f1214b6272f76e0fa48b16de15bbccc5bec1897d644f31a"
+            }
+          }
+        }
+      },
+      "fits": {
+        "white_pot": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 5194,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.5425854195530267,
+            0.3588694173898152,
+            0.0866182658978063,
+            -0.7545270570122834
+          ],
+          "translation": [
+            -0.04341569170355797,
+            0.06103424355387688,
+            0.5494111776351929
+          ],
+          "residual_m": 0.011965848505496979,
+          "cad_model_mask_iou": 0.7582896820562797
+        },
+        "white_pot_lid": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 4178,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.6674694268486503,
+            0.0038919625563180542,
+            0.44418840756045036,
+            -0.5976337301715037
+          ],
+          "translation": [
+            0.2606843411922455,
+            0.148930624127388,
+            0.571681559085846
+          ],
+          "residual_m": 0.0069947196170687675,
+          "cad_model_mask_iou": 0.8919567369944398
+        }
+      }
+    },
+    {
+      "episode": 2,
+      "frame_index": 195,
+      "total_source_frames": 343,
+      "depth_sha256": "4455c84dcb224293eae29671a2a86fe64c52de531e11e00ffca05b132c4efe89",
+      "views": {
+        "ego_cam_c": {
+          "objects": {
+            "white_pot": {
+              "mask_pixels": 38071,
+              "valid_depth_pixels": 32041,
+              "mask_sha256": "5abbccef2add97d0a3fced7f8a63409aef46ce6048e3d9706cadad875b627dbb"
+            },
+            "white_pot_lid": {
+              "mask_pixels": 25266,
+              "valid_depth_pixels": 23623,
+              "mask_sha256": "6de00b63a6711af5ed71c723fddcdcb3ef9f847bea22963b222d99f81866a83e"
+            }
+          }
+        }
+      },
+      "fits": {
+        "white_pot": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 4983,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.6066313788201104,
+            -0.06462131135462226,
+            0.6094123080677645,
+            -0.5063981586905117
+          ],
+          "translation": [
+            -0.02549944818019867,
+            0.1009281575679779,
+            0.5678485631942749
+          ],
+          "residual_m": 0.010232103988528252,
+          "cad_model_mask_iou": 0.7320252042454299
+        },
+        "white_pot_lid": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 4079,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.4666249390483213,
+            -0.47087257115426284,
+            0.7472963779520618,
+            0.04569804692164884
+          ],
+          "translation": [
+            0.2521657943725586,
+            0.14921818673610687,
+            0.5721250772476196
+          ],
+          "residual_m": 0.007030605338513851,
+          "cad_model_mask_iou": 0.9102530944023647
+        }
+      }
+    },
+    {
+      "episode": 2,
+      "frame_index": 244,
+      "total_source_frames": 343,
+      "depth_sha256": "1b1c274cb500adb42fdb258d55038e24a6f7db331d7a1c8ddb88ecce37b1041b",
+      "views": {
+        "ego_cam_c": {
+          "objects": {
+            "white_pot": {
+              "mask_pixels": 40664,
+              "valid_depth_pixels": 34444,
+              "mask_sha256": "c12344c5d78206eace480e1cea465140b7242adcf5e37d01b0bb9c826fee925a"
+            },
+            "white_pot_lid": {
+              "mask_pixels": 17834,
+              "valid_depth_pixels": 16458,
+              "mask_sha256": "5016c91029b0636cb134997e64898e606632c3bcfb01d173c3ca4ae08704b4b1"
+            }
+          }
+        }
+      },
+      "fits": {
+        "white_pot": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 5267,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.6105756076541669,
+            0.32711366343569653,
+            0.16686230409848066,
+            -0.7016773118765981
+          ],
+          "translation": [
+            -0.05132387951016426,
+            0.1051405593752861,
+            0.5819304585456848
+          ],
+          "residual_m": 0.00944669172167778,
+          "cad_model_mask_iou": 0.677795268190682
+        },
+        "white_pot_lid": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 3126,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.6467428268572152,
+            0.11652023212866418,
+            0.3470970821848404,
+            -0.6690817341343215
+          ],
+          "translation": [
+            0.2269110232591629,
+            0.12904532253742218,
+            0.5825628042221069
+          ],
+          "residual_m": 0.007010194938629866,
+          "cad_model_mask_iou": 0.6584271530056915
+        }
+      }
+    },
+    {
+      "episode": 2,
+      "frame_index": 293,
+      "total_source_frames": 343,
+      "depth_sha256": "993acade78da00cbd1da635de54ae02db010f0e036c1c0c349dd02e6d468a8f5",
+      "views": {
+        "ego_cam_c": {
+          "objects": {
+            "white_pot": {
+              "mask_pixels": 29875,
+              "valid_depth_pixels": 26506,
+              "mask_sha256": "bde07450f6a8cec4c63334cdde21c1dac89bcbec64b216d000ba0e4c795e7d0d"
+            },
+            "white_pot_lid": {
+              "mask_pixels": 18170,
+              "valid_depth_pixels": 16229,
+              "mask_sha256": "192d3042d2ba1c700496e8bb92a9fd7beb2d40cb960164224be7b4af9300d3cf"
+            }
+          }
+        }
+      },
+      "fits": {
+        "white_pot": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 3536,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.7247530579208062,
+            0.3101803062320533,
+            -0.32742622749683864,
+            0.5208773830830231
+          ],
+          "translation": [
+            0.014344397000968456,
+            0.08688205480575562,
+            0.5525194406509399
+          ],
+          "residual_m": 0.013449426740407944,
+          "cad_model_mask_iou": 0.5360604933680426
+        },
+        "white_pot_lid": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 2706,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.6024900856802304,
+            0.24874853962669927,
+            0.2184813346086837,
+            -0.7262201918965222
+          ],
+          "translation": [
+            -0.00037783372681587934,
+            0.07194657623767853,
+            0.5342585444450378
+          ],
+          "residual_m": 0.007811959367245436,
+          "cad_model_mask_iou": 0.6295035236360756
+        }
+      }
+    },
+    {
+      "episode": 2,
+      "frame_index": 342,
+      "total_source_frames": 343,
+      "depth_sha256": "e247d7fedaaaa15e482b64d762550d7959698d0565990c8b05dc53873212aa1b",
+      "views": {
+        "ego_cam_c": {
+          "objects": {
+            "white_pot": {
+              "mask_pixels": 38280,
+              "valid_depth_pixels": 34741,
+              "mask_sha256": "c7abd8f09a82e76dc3869cdd8f0317ed52004a82cdff4f06f07ac99227d4eab5"
+            },
+            "white_pot_lid": {
+              "mask_pixels": 28523,
+              "valid_depth_pixels": 25423,
+              "mask_sha256": "781b3c0285ae523c1ddd373c77a11fb8dcac8c73ce5b1b9afc6fc84aa109a1f8"
+            }
+          }
+        }
+      },
+      "fits": {
+        "white_pot": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 4637,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.7418272787783712,
+            0.27266315977053535,
+            -0.3616995187079967,
+            0.4944901899235492
+          ],
+          "translation": [
+            0.0016454780707135797,
+            0.08734408766031265,
+            0.5673096776008606
+          ],
+          "residual_m": 0.012145180255174637,
+          "cad_model_mask_iou": 0.6478153417952348
+        },
+        "white_pot_lid": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 4164,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.4372904263833481,
+            -0.47885229548061325,
+            0.7559203804750521,
+            0.08978830931067398
+          ],
+          "translation": [
+            0.003807694185525179,
+            0.07899435609579086,
+            0.5429301857948303
+          ],
+          "residual_m": 0.007341358810663223,
+          "cad_model_mask_iou": 0.8487529894089512
+        }
+      }
+    }
+  ],
+  "limits": [
+    "8 preselected episode-2 frames, rectified ego_cam_c only; not continuous tracking.",
+    "Prompts reviewed by Codex from RGB; no independent human mask review or mask-IoU truth.",
+    "Depth/CAD/native solver/gate unchanged; no GT read before prediction freeze.",
+    "SAM2 masks may retain occluders; all output masks and overlays require review.",
+    "FoundationPose is not run; camera-space fitting does not establish world-pose accuracy."
+  ],
+  "elapsed_s": 210.8186013000086,
+  "baseline_sha256": "331c3af567b104d469485caf05a8c91e8876a4454971bc6b8b7a1b427f0be4ff",
+  "producer": "RGB reviewed per-frame SAM2 box/point prompts; provisional control",
+  "annotations": {
+    "0": [
+      [
+        [
+          517,
+          420,
+          730,
+          800
+        ],
+        [
+          [
+            630,
+            611
+          ],
+          [
+            647,
+            730
+          ]
+        ],
+        [
+          [
+            625,
+            520
+          ],
+          [
+            790,
+            650
+          ]
+        ]
+      ],
+      [
+        [
+          517,
+          420,
+          730,
+          600
+        ],
+        [
+          [
+            620,
+            508
+          ]
+        ],
+        [
+          [
+            644,
+            630
+          ],
+          [
+            790,
+            600
+          ]
+        ]
+      ]
+    ],
+    "49": [
+      [
+        [
+          534,
+          406,
+          736,
+          800
+        ],
+        [
+          [
+            610,
+            598
+          ],
+          [
+            676,
+            749
+          ]
+        ],
+        [
+          [
+            622,
+            490
+          ],
+          [
+            643,
+            676
+          ],
+          [
+            790,
+            650
+          ]
+        ]
+      ],
+      [
+        [
+          534,
+          406,
+          729,
+          583
+        ],
+        [
+          [
+            591,
+            506
+          ]
+        ],
+        [
+          [
+            658,
+            536
+          ],
+          [
+            634,
+            620
+          ]
+        ]
+      ]
+    ],
+    "98": [
+      [
+        [
+          487,
+          415,
+          705,
+          800
+        ],
+        [
+          [
+            596,
+            554
+          ],
+          [
+            619,
+            770
+          ]
+        ],
+        [
+          [
+            560,
+            735
+          ],
+          [
+            850,
+            555
+          ],
+          [
+            740,
+            620
+          ]
+        ]
+      ],
+      [
+        [
+          740,
+          458,
+          947,
+          640
+        ],
+        [
+          [
+            818,
+            539
+          ]
+        ],
+        [
+          [
+            882,
+            556
+          ],
+          [
+            760,
+            651
+          ]
+        ]
+      ]
+    ],
+    "147": [
+      [
+        [
+          456,
+          350,
+          682,
+          767
+        ],
+        [
+          [
+            560,
+            498
+          ],
+          [
+            619,
+            716
+          ],
+          [
+            583,
+            558
+          ]
+        ],
+        [
+          [
+            555,
+            665
+          ],
+          [
+            860,
+            549
+          ],
+          [
+            700,
+            625
+          ]
+        ]
+      ],
+      [
+        [
+          773,
+          459,
+          990,
+          634
+        ],
+        [
+          [
+            864,
+            551
+          ]
+        ],
+        [
+          [
+            744,
+            595
+          ],
+          [
+            1000,
+            656
+          ]
+        ]
+      ]
+    ],
+    "195": [
+      [
+        [
+          464,
+          375,
+          681,
+          800
+        ],
+        [
+          [
+            565,
+            526
+          ],
+          [
+            589,
+            767
+          ],
+          [
+            581,
+            590
+          ]
+        ],
+        [
+          [
+            553,
+            693
+          ],
+          [
+            862,
+            540
+          ],
+          [
+            730,
+            630
+          ]
+        ]
+      ],
+      [
+        [
+          763,
+          459,
+          979,
+          634
+        ],
+        [
+          [
+            858,
+            546
+          ]
+        ],
+        [
+          [
+            742,
+            599
+          ],
+          [
+            1000,
+            658
+          ]
+        ]
+      ]
+    ],
+    "244": [
+      [
+        [
+          459,
+          391,
+          680,
+          800
+        ],
+        [
+          [
+            570,
+            553
+          ],
+          [
+            583,
+            729
+          ]
+        ],
+        [
+          [
+            720,
+            674
+          ],
+          [
+            860,
+            530
+          ]
+        ]
+      ],
+      [
+        [
+          751,
+          447,
+          952,
+          619
+        ],
+        [
+          [
+            817,
+            536
+          ]
+        ],
+        [
+          [
+            885,
+            569
+          ],
+          [
+            724,
+            640
+          ]
+        ]
+      ]
+    ],
+    "293": [
+      [
+        [
+          531,
+          394,
+          746,
+          800
+        ],
+        [
+          [
+            632,
+            591
+          ],
+          [
+            663,
+            766
+          ]
+        ],
+        [
+          [
+            622,
+            485
+          ],
+          [
+            642,
+            651
+          ],
+          [
+            800,
+            635
+          ]
+        ]
+      ],
+      [
+        [
+          531,
+          394,
+          741,
+          568
+        ],
+        [
+          [
+            585,
+            482
+          ]
+        ],
+        [
+          [
+            656,
+            509
+          ],
+          [
+            644,
+            600
+          ]
+        ]
+      ]
+    ],
+    "342": [
+      [
+        [
+          521,
+          401,
+          729,
+          800
+        ],
+        [
+          [
+            631,
+            584
+          ],
+          [
+            646,
+            720
+          ]
+        ],
+        [
+          [
+            626,
+            501
+          ],
+          [
+            791,
+            647
+          ]
+        ]
+      ],
+      [
+        [
+          521,
+          401,
+          729,
+          575
+        ],
+        [
+          [
+            622,
+            485
+          ]
+        ],
+        [
+          [
+            643,
+            615
+          ],
+          [
+            790,
+            600
+          ]
+        ]
+      ]
+    ]
+  }
+}

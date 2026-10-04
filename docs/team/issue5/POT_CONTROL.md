@@ -123,6 +123,65 @@ hashes are in the validation receipt.
 
 ## Remaining work
 
+### RGB-prompted mask / 6D-pose follow-up
+
+The next episode-2 control keeps the same eight source IDs, frozen SGBM depth
+bytes, metric CAD, seed-0 samples, native solver and 50 mm gate. Per-frame SAM2
+boxes/foreground/background points are chosen from rectified RGB, including the
+visible pot handle and hand/lid exclusions. These are Codex-reviewed development
+annotations, not independently verified ground-truth masks. In four stacked
+frames SAM2 still includes the lid in the pot mask; the published control removes
+lid-mask pixels from the pot observation. Hands/uncertain boundaries may remain.
+No GT pose enters the producer, and evaluation runs separately after freeze.
+
+On the **same six source IDs accepted by the native baseline**:
+
+| Observation control | Mean pot-to-lid relative position error, cm | Median canonical relative rotation error, degrees |
+|---|---:|---:|
+| Native detector/SAM2 | 41.00 | 144.83 |
+| RGB prompts, lid overlap excluded | 32.90 | 153.38 |
+
+The lid-excluded control accepts all eight pot/lid fits. Across those eight, the
+participant RPE kernel is **29.00 cm**, median canonical relative rotation error
+is **165.95 degrees**, and pot/lid median fit residuals are **17.29/7.19 mm**.
+The eight-frame score has a different denominator from the native six-frame score;
+it must not be presented as a matched-frame improvement. The first prompted-only
+control also fails orientation, and is retained in the validation comparison.
+
+All sixteen prompted masks reproduce the initial control exactly; every depth
+file retains its baseline hash. All eight overlays were inspected. Uncovered-pot
+frames still show several CAD handles pointing away from the observed handle.
+Stacked/partially visible pot fits also fail. Full-CAD silhouette IoU against a
+mask with external occluders removed is not visible-mask accuracy. These results
+do not establish that masks are correct, isolate depth/scan-frame/symmetry effects,
+or demonstrate a complete tracking repair.
+
+**6D pose is already the current output contract.** The comparison shows why
+target acquisition alone is insufficient to validate that pose. FoundationPose
+is worth a bounded initialization/recovery comparison because it adds learned
+RGB/geometry refinement and scoring, potentially using visible asymmetric cues
+that trimmed geometric fitting fails to align. This is a method-based hypothesis,
+not measured FoundationPose improvement. Its repository source is present, but
+`nvdiffrast`, `warp` and `kaolin` are absent from the isolated GPU environment;
+FoundationPose inference remains unrun. The accepted tracker is unchanged.
+
+Replay after producing the native baseline above:
+
+```bash
+python scripts/eval/probe_issue5_pot_mask_control.py \
+  --data "$DATA" --models "$MODELS" --baseline "$RUN/native" \
+  --out "$RUN/visible-mask-control"
+python scripts/eval/evaluate_issue5_pot_relative.py \
+  --data "$DATA" --predictions "$RUN/visible-mask-control/probe_results.json" \
+  --kit "$KIT" --out "$RUN/visible-mask-relative.json"
+```
+
+Raw predictions, evaluator-only GT binding, replay checks and the exact executed
+source/runtime hashes are in `evidence/pot_visible_mask_*.json`. This is eight
+development frames in the left camera, without continuous tracking, independent
+mask/depth truth or world-camera estimation. No production acquisition, threshold,
+rotation prior or method is changed.
+
 Sampled masks in both views, with left-camera CAD contours:
 
 ![Native pot/lid mask failures](evidence/pot_masks_preview.jpg)

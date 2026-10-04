@@ -89,6 +89,31 @@ Subsequent October 4 pot/lid control, software `f8bc24f`:
 See [../POT_CONTROL.md](../POT_CONTROL.md). Sparse relative measurements are
 conditional on common visible accepted observations; missing cases are retained.
 
+October 4 episode-2 RGB-prompted / external-lid-exclusion follow-up:
+
+- `pot_prompted_mask_observations.json` and `pot_prompted_mask_relative.json`:
+  the first box/point control before lid exclusion; all eight accepted fits still
+  fail canonical relative orientation. This original frozen record retains
+  inherited native baseline metadata; its `producer`/`annotations` identify the
+  actual RGB-prompted acquisition. The published portable control clears the text
+  prompt and records camera axes explicitly.
+- `pot_visible_mask_observations.json`: eight frozen no-GT camera fits, exact
+  RGB-only point/box annotations, unchanged native depth hashes, SAM2/model/source
+  provenance, mask hashes and pre-exclusion overlap counts.
+- `pot_visible_mask_relative.json`: separate frozen-prediction GT evaluation;
+  eight common visible accepted samples, positional RPE kernel 29.00 cm and
+  separate median canonical relative rotation error 165.95 degrees.
+- `pot_visible_mask_validation.json`: executed helper/native source hashes,
+  unchanged depth/geometry verification, all sixteen prompted-mask replay checks,
+  runtime/commands, matched-six-frame comparisons and explicit limitations.
+- `pot_visible_mask_preview.jpg`: four sampled left-view masks/CAD contours;
+  green pot / magenta lid / yellow CAD. The CAD handle remains misaligned in
+  several uncovered-pot frames. All eight local overlays were reviewed.
+
+The masks are Codex-reviewed RGB prompts, not independent human mask truth.
+FoundationPose is proposed initialization/recovery and has not run. These
+observations do not establish continuous tracking, world pose or all-20 acceptance.
+
 The original local snapshots and previews remain archived in the author's workspace.
 Use the portable commands in [../HANDOFF.md](../HANDOFF.md) to regenerate evidence
 on a teammate's checkout. Source revisions are identified there; these snapshots
