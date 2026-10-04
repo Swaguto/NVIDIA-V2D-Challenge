@@ -1,0 +1,4 @@
+{
+  "wooden_piece_1": {"frame": 0, "box_xyxy": [510, 450, 685, 680]},
+  "wooden_piece_2": {"frame": 0, "box_xyxy": [785, 430, 1040, 680]}
+}

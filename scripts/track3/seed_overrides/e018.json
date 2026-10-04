@@ -1,0 +1,4 @@
+{
+  "mini_dust_pan": {"frame": 0, "box_xyxy": [510, 520, 710, 720]},
+  "mini_sweeper": {"frame": 0, "box_xyxy": [775, 490, 915, 650]}
+}
