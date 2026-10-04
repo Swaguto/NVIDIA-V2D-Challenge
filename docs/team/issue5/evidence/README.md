@@ -1,7 +1,7 @@
 # Recorded repair evidence
 
-These are small October 3-4, 2026 CPU validation records. They do not establish
-real object-pose accuracy or a policy rollout.
+These are small October 3-4, 2026 CPU validation and actual local GPU control
+records. They do not establish GT object-pose accuracy or a policy rollout.
 The follow-up records below also document a user-reported tracking failure;
 that run has not been reproduced or verified fixed.
 The JSON/XML records and audit snapshot preserve their original bytes across
@@ -19,7 +19,7 @@ Follow-up at tested software commit `ea38fff4c70445343ad5e5cfcb8acd8508d872d1`:
 
 - `tests-review.xml`: 133 passed, zero skipped, including 24 additional controls
   relative to the original run. The detector/model outputs in these controls are
-  generated fixtures; actual GPU perception was not run.
+  generated fixtures; actual GPU perception was not run in that earlier test run.
 - `review_validation.json`: source Git-blob hashes, environment, commands,
   results, evidence hashes and remaining work.
 - `review-input-results.json`: full expected fourteen-asset verification under
@@ -42,6 +42,30 @@ October 4 public episode-39 frame-0 observation control:
   Replay with `scripts/eval/replay_issue5_pan_mask_control.py`; masks/overlays remain
   local and are regenerated into a fresh directory. No FoundationPose inference,
   independent camera estimation, official pose accuracy or full tracking is measured.
+
+Subsequent October 4 actual local GPU control, tested native software `45a9fc5`:
+
+- `episode39_models.json`: fixed model revisions and verified hashes/bytes for
+  DINO/SAM2 weights and processor data, 1,832,251,936 bytes; binaries remain external.
+- `episode39_native_probe.json` and `episode39_noun_probe.json`: actual fixed-frame
+  detector/SAM results. The requested pan label selects a tabletop; the standard
+  noun control has zero detections at unchanged thresholds.
+- `episode39_sam2_tracking.json` and `episode39_prepared_masks.json`: all 319 mask
+  hashes and explicit one-box RGB initialization, model/producer provenance,
+  calibration/rectification and source-frame records. No pose GT is used.
+- `episode39_registration_report.json`: the actual native frozen-mask run,
+  accepted/rejected observations, source/runtime and input provenance.
+- `episode39_gpu_validation.json`: exact software/commands, 319 raw pose hashes,
+  residual/increment summaries, evidence hashes, verification and limitations.
+- `episode39_pose_overlays.json`: eight z-buffer/depth/mask comparisons and the
+  locally retained control-video hash/metadata. Silhouette overlap is not official
+  pose error; camera motion and independent depth truth are absent.
+- `tests-gpu-control.xml`: 145 targeted CPU tests passed, zero skips; generated
+  fixtures cover mask integrity/provenance and native gap behavior. Actual model
+  execution is evidenced separately above.
+
+See [../GPU_CONTROL.md](../GPU_CONTROL.md) for portable replay and remaining gates.
+The semi-automatic observation control does not close all-20 world-pose acceptance.
 
 The original local snapshots and previews remain archived in the author's workspace.
 Use the portable commands in [../HANDOFF.md](../HANDOFF.md) to regenerate evidence

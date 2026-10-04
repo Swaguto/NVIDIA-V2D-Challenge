@@ -7,6 +7,14 @@ command, source commit, detector outputs, masks, depth and pose JSONs are unavai
 This prevents attributing the rendered failure to a particular version of the pipeline
 or reproducing that exact run. The initial 109 CPU tests did not establish real tracking.
 
+**Subsequent local GPU evidence:** the current DINO/SAM2 configuration reproduces
+the tabletop-mask pattern on eight public episode-39 frames, even with a matched
+pan label. With one reviewed first-frame RGB box and SAM2 video propagation, the
+native fitter accepts 319/319 camera poses and sampled CAD/mask overlap improves
+to 0.657-0.904. See [GPU_CONTROL.md](GPU_CONTROL.md) for the exact controlled
+workflow, frozen-mask reader, gap repair, 145 CPU tests and measured limitations.
+Automatic acquisition, independent world cameras and the full issue gates remain open.
+
 ## What the clip establishes
 
 The clip contains 319 frames at 20 FPS, 1280 x 440 pixels, lasting 15.95 seconds.
@@ -112,8 +120,10 @@ exists. Preserve both failures and runtime/model/checkpoint hashes. Evaluate opt
 FoundationPose initialization of ICP only with an explicit implemented pose-frame
 contract; do not silently replace the accepted tracker or experiment.
 
-FoundationPose inference was **not run** here: the local runtime is CPU-only and
-compatible CUDA/model checkpoints and shared-VM access are unavailable. Object
+FoundationPose inference was **not run** here. The initial runtime was CPU-only;
+[GPU_CONTROL.md](GPU_CONTROL.md) subsequently establishes local DINO/SAM2 and ICP
+CUDA execution in a separate environment. FoundationPose's own runtime/checkpoints
+are not prepared, and shared-VM access remains unavailable. Object
 camera pose also does not solve egomotion; fixed-world output still needs
 `X(t)=inv(C(t))@P(t)` with the appropriate rectification conversion.
 
@@ -124,7 +134,9 @@ to object 0 when only one object was requested**. A `table` detection could ther
 become the `mini_dust_pan` mask. That fallback is removed. Unmatched labels are retained
 in diagnostic records with null object assignment. A generated detector/SAM control
 checks that a table-sized mask is excluded while a correctly labeled small pan mask
-is retained. This verifies the software behavior; actual DINO/SAM inference was not run.
+is retained. This earlier test verified software behavior with generated fixtures.
+The subsequent actual DINO/SAM2 inference in [GPU_CONTROL.md](GPU_CONTROL.md)
+exposes a wrong but matched pan label that this routing repair cannot exclude.
 Whether this fallback caused the supplied clip remains unconfirmed.
 
 The native tracker now writes `registration_report.json` with detector labels/scores,
@@ -167,4 +179,4 @@ These commands were not run on the shared VM. Archive the probe overlay, console
 `rectification.json` and `registration_report.json`; one frame is a diagnostic, not an
 episode benchmark. Independent cameras and fixed-world scoring are separate subsequent
 gates described in [HANDOFF.md](HANDOFF.md). Original issue-5 criteria remain open.
-Do not merge this draft to main or close issue 5 on the new CPU controls.
+Do not merge this draft to main or close issue 5 on these controls.

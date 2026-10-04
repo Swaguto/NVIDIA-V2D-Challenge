@@ -1,6 +1,6 @@
 # Issue 5 software repairs
 
-Updated October 3, 2026 (America/Toronto). Repairs are on
+Updated October 4, 2026 (America/Toronto). Repairs are on
 `Evc-r/issue5-repairs`, prepared for a draft PR targeting PR #26's branch.
 No merge, GPU VM run, robot training or policy submission was performed.
 
@@ -9,6 +9,13 @@ a tabletop mask instead of an isolated dustpan. [TRACKING_FAILURE.md](TRACKING_F
 separates this visible evidence from unconfirmed causes and records the additional
 mask-assignment/tool repairs. Real tracking is still unresolved; initial CPU tests
 were not an end-to-end tracking validation.
+
+The local [GPU control](GPU_CONTROL.md) now confirms detector mislocalization on
+eight episode-39 frames. One reviewed initial RGB box plus SAM2 video masks yields
+319 accepted native camera poses with sampled CAD/mask IoU 0.657-0.904. Native
+frozen-mask input validates hashes, calibration/rectification and GT-use; gaps and
+rejections clear warm starts. Software `45a9fc5` passes 145 targeted CPU tests.
+Automatic acquisition and original world-pose criteria remain open.
 
 Base: PR26 `ef8a7ac4615aaf9b499387fa68b76b27246d9d55`. The stereo/registration
 and official pose-metric utilities were imported from PR28
@@ -67,7 +74,9 @@ Follow-up results and exact tested source hashes are in `evidence/review_validat
 and `evidence/tests-review.xml`. The real-input checks were rerun with `python -O`
 against the full expected fourteen-asset set, plus pinned calibration/reference hashes;
 see `evidence/review-input-results.json`. These checks do not use the episode-39
-tracking inputs, which are unavailable.
+original team tracking inputs, which remain unavailable. The subsequent public
+episode-39 GPU inputs, models, masks and pose controls are recorded separately in
+[GPU_CONTROL.md](GPU_CONTROL.md); original 109/133-test records remain historical.
 
 ## Real input checks
 
@@ -153,9 +162,10 @@ The repo's TEAM_ACCESS.md names a Brev L40S VM and paths under
 `/home/ubuntu/v2d_track3/data/hf/track_3/public`; it provides no usable host/IP or
 authorized login. Source inspection found no prepared masks/depth or independent
 camera artifacts in Git. The issue-4 branch has no source diff from the fetched main.
-The remote-device connector lists only an offline desktop. The local PyTorch build
-is CPU-only and perception checkpoints are absent. RGB/CAD/GT/calibration now exist
-locally, but original VM observations and lineage cannot yet be compared.
+The remote-device connector lists only an offline desktop. The original test
+environment is CPU-only; the later separate CUDA environment and pinned DINO/SAM2
+checkpoints now support the local episode-39 control. Original VM observations and
+lineage still cannot be compared. See GPU_CONTROL.md for the current compute evidence.
 
 Original issue acceptance remains unverified: all 20 public-episode error reports;
 general median <5 cm/<5 degrees; pot median <10 cm/<10 degrees in both ego views;

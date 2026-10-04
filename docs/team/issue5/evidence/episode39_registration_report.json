@@ -1,0 +1,6761 @@
+{
+  "episode": 39,
+  "objects": [
+    "mini_dust_pan"
+  ],
+  "coordinate_frame": "rectified_camera",
+  "camera_frame": "ego_cam_c",
+  "gt_use": "none",
+  "source_sha256_lf": "3a8c63ab3755706ce2c6bfe717fd1462c5bfc694b14558f713611d99602a0f3a",
+  "runtime": {
+    "torch": "2.11.0+cu128",
+    "cuda": "12.8",
+    "device": "cuda",
+    "device_name": "NVIDIA GeForce RTX 5060 Laptop GPU"
+  },
+  "models": null,
+  "observation_source": {
+    "kind": "prepared_masks",
+    "manifest_path": "C:\\Users\\evanc\\OneDrive\\Desktop\\Nvidia V2D\\runs\\issue5_episode39_control\\portable-sam2-masks\\manifest.json",
+    "manifest_sha256": "5ec00d7f45bd161f4d56fbb1f3edb3239f6a5205bdd9f9d39cae9f17e434c787",
+    "gt_use": "none",
+    "producer": {
+      "model": "facebook/sam2.1-hiera-large",
+      "model_revision": "665f8e2ad61cf5f53d65644ff27c8ee525124610",
+      "model_weights_sha256": "dc407dce21301fd94abb395c5099b4f2c455fdc8a8f261ac3d0ea6d4cd197230",
+      "initial_box_xyxy": [
+        567,
+        408,
+        721,
+        558
+      ],
+      "initial_box_producer": "bounds of the manually reviewed frame-0 RGB polygon; no GT pose",
+      "source_script_sha256_lf": "61370bb17f5a195a185c15d014ce0fe7c0ee650c8d96d5d4d8e4b6750ed638b2",
+      "environment": {
+        "torch": "2.11.0+cu128",
+        "transformers": "5.18.0",
+        "cuda": "12.8",
+        "device": "NVIDIA GeForce RTX 5060 Laptop GPU"
+      },
+      "limits": [
+        "One manually reviewed RGB box at frame zero; not fully automatic target acquisition.",
+        "No later manual corrections or GT poses supplied.",
+        "Only mask propagation; pose/world accuracy not measured."
+      ]
+    }
+  },
+  "rectification_sha256": "7e5d28c71ec9744fa0fff27e623c44d5879678c44f152d1fc78bdfec41d729d3",
+  "params": {
+    "stride": 1,
+    "allow_scale": false,
+    "max_residual_m": 0.05,
+    "box_threshold": 0.3,
+    "cad_samples": 6000,
+    "cad_seed": 0
+  },
+  "frames": {
+    "0": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "6c38bf04a8ed265a1cdd2f5d75542184a14f3e669579875bbbebf4e0a62c8f4a"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12488,
+          "valid_depth_pixels": 11117,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": null,
+          "filtered_cloud_points": 2117,
+          "residual_m": 0.006526058539748192
+        }
+      }
+    },
+    "1": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "6acf9efd350cae3e397e5e5cbc715b69fd5fb29e88b203129ab3ec37044ba137"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12321,
+          "valid_depth_pixels": 10908,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 0,
+          "filtered_cloud_points": 2083,
+          "residual_m": 0.005929630249738693
+        }
+      }
+    },
+    "2": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "cd123af58c0f0ff46c4b7222e3ee74df2b5c7c6cac6178d9d0c9c8a426641265"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12187,
+          "valid_depth_pixels": 10678,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 1,
+          "filtered_cloud_points": 2117,
+          "residual_m": 0.006018941290676594
+        }
+      }
+    },
+    "3": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "35788ab1ce6239eb47ddf27ff83c0f06d2c5984c35eb1d10b4eaf5925862d2e9"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12161,
+          "valid_depth_pixels": 10756,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 2,
+          "filtered_cloud_points": 2081,
+          "residual_m": 0.005707161501049995
+        }
+      }
+    },
+    "4": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "e3026065eb711daf17846166e77de30494389922d94bf9c6c6109a880028cb8a"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12184,
+          "valid_depth_pixels": 10742,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 3,
+          "filtered_cloud_points": 2071,
+          "residual_m": 0.005887852981686592
+        }
+      }
+    },
+    "5": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "1002c80adcccfbcda15199bc6b6dfd3fd39e6be19fcb73ec8aee26d2c33e59df"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12116,
+          "valid_depth_pixels": 10641,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 4,
+          "filtered_cloud_points": 2019,
+          "residual_m": 0.005694961175322533
+        }
+      }
+    },
+    "6": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "006d9c24046b3000277b463b210b60531e6c1a9ff164e304824201a03f2649f0"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12126,
+          "valid_depth_pixels": 10257,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 5,
+          "filtered_cloud_points": 1968,
+          "residual_m": 0.005296562798321247
+        }
+      }
+    },
+    "7": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "4be476a6721cbfc7425d70f6901e21d49b7164c20af78610c022a43fdf0d66aa"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12104,
+          "valid_depth_pixels": 10715,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 6,
+          "filtered_cloud_points": 2071,
+          "residual_m": 0.005687393713742495
+        }
+      }
+    },
+    "8": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "5221178970f716acd2dd9facd270a7368dc65af990199a34caff0ca7c9f9fa88"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12158,
+          "valid_depth_pixels": 10602,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 7,
+          "filtered_cloud_points": 2167,
+          "residual_m": 0.005886746570467949
+        }
+      }
+    },
+    "9": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "ccc7cc380fa30705421c23441deeff7ba191a3af9b4f0a334ca09d7aa336fbc0"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12125,
+          "valid_depth_pixels": 10610,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 8,
+          "filtered_cloud_points": 2041,
+          "residual_m": 0.006014526821672916
+        }
+      }
+    },
+    "10": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "74e2c5543043f029b03f569a99618ab86dc7d4ef412c7c762ed97a00b8dec425"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12106,
+          "valid_depth_pixels": 10729,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 9,
+          "filtered_cloud_points": 2046,
+          "residual_m": 0.005948349833488464
+        }
+      }
+    },
+    "11": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "568caa6be70929e39bb4a06ffc43b538c5a721514a2b055b6254437ca191f032"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12100,
+          "valid_depth_pixels": 10754,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 10,
+          "filtered_cloud_points": 2120,
+          "residual_m": 0.005773450247943401
+        }
+      }
+    },
+    "12": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "186eb9b1fabd89472560c0ed7badd10ec64beb593c837ff156592ee686f6429f"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12110,
+          "valid_depth_pixels": 10553,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 11,
+          "filtered_cloud_points": 2035,
+          "residual_m": 0.0057101501151919365
+        }
+      }
+    },
+    "13": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "559f0cc8b67fbce64fadc3777e0d74268e264765c21549b43cee4c91079748ba"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12134,
+          "valid_depth_pixels": 10608,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 12,
+          "filtered_cloud_points": 2092,
+          "residual_m": 0.005989622324705124
+        }
+      }
+    },
+    "14": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "50cd09986f2ff664046f521c0d951a12bf3f181e3f0bd70ea4fb9b17b41e32df"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12130,
+          "valid_depth_pixels": 10593,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 13,
+          "filtered_cloud_points": 2074,
+          "residual_m": 0.00588525366038084
+        }
+      }
+    },
+    "15": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "cb6764bb56bc94fdc20779cf69dc93f34cc4d891d813e9935cc19c09fe67a594"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12124,
+          "valid_depth_pixels": 10984,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 14,
+          "filtered_cloud_points": 2160,
+          "residual_m": 0.005945923738181591
+        }
+      }
+    },
+    "16": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "a78b64dbd13a6c202f43ddd1b6c17bc481be52e6efd77fefbaf6b44e32c092d9"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12135,
+          "valid_depth_pixels": 10841,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 15,
+          "filtered_cloud_points": 2088,
+          "residual_m": 0.005956725217401981
+        }
+      }
+    },
+    "17": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "52a4dbddfbd9703efca9e2bd55f84dc26346e9269965d03d03d874fe9f8dae61"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12145,
+          "valid_depth_pixels": 10952,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 16,
+          "filtered_cloud_points": 2158,
+          "residual_m": 0.006111257243901491
+        }
+      }
+    },
+    "18": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "9b06046babdf879c569e1188fbaad1ffe22093c81c534fcd35e3b9ebfa180c17"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12119,
+          "valid_depth_pixels": 10813,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 17,
+          "filtered_cloud_points": 2115,
+          "residual_m": 0.005918974056839943
+        }
+      }
+    },
+    "19": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "2dd7228d21bba6f2b2650b7aee4bfc09550592ead4598d8d15d698d12f559ff0"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12104,
+          "valid_depth_pixels": 10781,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 18,
+          "filtered_cloud_points": 2121,
+          "residual_m": 0.005777849815785885
+        }
+      }
+    },
+    "20": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "8ba4d1748c60469b52801d88867b99c7e86f64afa83b189a44a20942ee994950"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12068,
+          "valid_depth_pixels": 10691,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 19,
+          "filtered_cloud_points": 2168,
+          "residual_m": 0.006193685345351696
+        }
+      }
+    },
+    "21": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "ce7e3142a2d692fb357a92c133c38ef6807c9a990c9cb63e9dcbd09252115d73"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12026,
+          "valid_depth_pixels": 10721,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 20,
+          "filtered_cloud_points": 2154,
+          "residual_m": 0.005970986094325781
+        }
+      }
+    },
+    "22": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "bdff5bbdf8421dcb9ce8d94a9701e62d1dc6e0e14ffc6199fa612e679f3c7274"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 11974,
+          "valid_depth_pixels": 10603,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 21,
+          "filtered_cloud_points": 2092,
+          "residual_m": 0.006173265166580677
+        }
+      }
+    },
+    "23": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "2a4cd2fac597beb3dc335b6550179ce7a1d31bbafb719ad9e59bf9a89f264272"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 11880,
+          "valid_depth_pixels": 10834,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 22,
+          "filtered_cloud_points": 2117,
+          "residual_m": 0.0060195354744791985
+        }
+      }
+    },
+    "24": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "0195282f7d7334de013ea20e836f676f1348f30bdab3527105ff9c076c7e0076"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 11906,
+          "valid_depth_pixels": 10659,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 23,
+          "filtered_cloud_points": 2090,
+          "residual_m": 0.006209551356732845
+        }
+      }
+    },
+    "25": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "007988025b7f77bac6282221c03a7843000fa233e3402d4114afa49d48226fd9"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 11799,
+          "valid_depth_pixels": 10730,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 24,
+          "filtered_cloud_points": 2137,
+          "residual_m": 0.006136543117463589
+        }
+      }
+    },
+    "26": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "fab5bc57bb06c03b524743ad12311b4a45a53b2fb36a378e4e27a48394c6ad35"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 11781,
+          "valid_depth_pixels": 10743,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 25,
+          "filtered_cloud_points": 2102,
+          "residual_m": 0.006254112347960472
+        }
+      }
+    },
+    "27": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "45a9b88ca266bfc035bac7a6a5c69bd405aab0f12278ad81578e029adbfe0e77"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 11673,
+          "valid_depth_pixels": 10343,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 26,
+          "filtered_cloud_points": 2056,
+          "residual_m": 0.00603675190359354
+        }
+      }
+    },
+    "28": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "ebaf4fdf1c8aedb3b3ac8786a59e70231fcf1e8e61cab786163a7c85eeee8308"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 11658,
+          "valid_depth_pixels": 10295,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 27,
+          "filtered_cloud_points": 2042,
+          "residual_m": 0.006036716978996992
+        }
+      }
+    },
+    "29": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "5c271ed24f458e332014729ee95acef58b5929caa803e2711544254babab8545"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 10870,
+          "valid_depth_pixels": 9653,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 28,
+          "filtered_cloud_points": 1955,
+          "residual_m": 0.006779557093977928
+        }
+      }
+    },
+    "30": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "cb4e75d9df68c9ab98f5fe3e6ad68c2adb14d41df1c964e66f256f668238e68d"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 10269,
+          "valid_depth_pixels": 8641,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 29,
+          "filtered_cloud_points": 1710,
+          "residual_m": 0.006704484112560749
+        }
+      }
+    },
+    "31": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "bd2b181b7b110e6cc956af77525786ed4ba898e3004a04e008c5c7f933719cd8"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 10129,
+          "valid_depth_pixels": 8672,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 30,
+          "filtered_cloud_points": 1780,
+          "residual_m": 0.006831128150224686
+        }
+      }
+    },
+    "32": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "7116085f356de64a89530d5484dd946b6a765301a6be6dc3fb62821352f28ab1"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 10133,
+          "valid_depth_pixels": 8547,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 31,
+          "filtered_cloud_points": 1679,
+          "residual_m": 0.006477303337305784
+        }
+      }
+    },
+    "33": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "244a0e9324f6493e450cf60d3f944efc9e523710ba1dd18d5fde8ff462485504"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 10330,
+          "valid_depth_pixels": 8736,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 32,
+          "filtered_cloud_points": 1828,
+          "residual_m": 0.0067477053962647915
+        }
+      }
+    },
+    "34": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "1fe19bda9bf81f2fd4c9cf022a19dcc4de1a12b4ff4b908369bd263c7dd372d5"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 10482,
+          "valid_depth_pixels": 8901,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 33,
+          "filtered_cloud_points": 1831,
+          "residual_m": 0.00675810594111681
+        }
+      }
+    },
+    "35": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "895de860e272b3964e15ec5bc067ff0cee37bb0c0df2972c1ed12c465ad15cf4"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 10542,
+          "valid_depth_pixels": 9173,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 34,
+          "filtered_cloud_points": 1866,
+          "residual_m": 0.006554082501679659
+        }
+      }
+    },
+    "36": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "b7f5163ab765dd47b8dc6b03c543c680a3b7b063c9a4d6355cbc3828bd2fdbe0"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 10507,
+          "valid_depth_pixels": 9005,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 35,
+          "filtered_cloud_points": 1834,
+          "residual_m": 0.006744942162185907
+        }
+      }
+    },
+    "37": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "921696e83400eabf8b7dd72cc220d3f62627d559d94621412f08ed2e976a39af"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 10526,
+          "valid_depth_pixels": 8959,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 36,
+          "filtered_cloud_points": 1782,
+          "residual_m": 0.006441664416342974
+        }
+      }
+    },
+    "38": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "94812f34d4e968c2a66b91b717dc4d9126f43ecf793b473cc1fa02008ad1015e"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 10548,
+          "valid_depth_pixels": 8776,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 37,
+          "filtered_cloud_points": 1740,
+          "residual_m": 0.005869036540389061
+        }
+      }
+    },
+    "39": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "c6660f8eb617e72707a11837f6e66c315daed045538445f2ca05d823ecb2c2e8"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 10567,
+          "valid_depth_pixels": 8836,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 38,
+          "filtered_cloud_points": 1761,
+          "residual_m": 0.0064428867772221565
+        }
+      }
+    },
+    "40": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "715a3c19c4b40343c18132458fc5a6c961e2066fc7faa5d13c829cea3cb7ac10"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 10567,
+          "valid_depth_pixels": 9314,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 39,
+          "filtered_cloud_points": 1927,
+          "residual_m": 0.00642603263258934
+        }
+      }
+    },
+    "41": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "17a33781e7967356492f72cb1cb9da31eef0855ec3e5cc2e856f2e5a7e7d0bc6"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 10498,
+          "valid_depth_pixels": 9234,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 40,
+          "filtered_cloud_points": 1879,
+          "residual_m": 0.006482917349785566
+        }
+      }
+    },
+    "42": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "fd6b728f5f0f7923bcc778ea5483e080e1b4861d9712fef5e2e76c115067f918"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 10461,
+          "valid_depth_pixels": 9015,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 41,
+          "filtered_cloud_points": 1870,
+          "residual_m": 0.0065506817772984505
+        }
+      }
+    },
+    "43": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "092886f43e278c14b119d423a619e95454ba45575a6c7d2e619fc494d2b8978b"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 10447,
+          "valid_depth_pixels": 8969,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 42,
+          "filtered_cloud_points": 1800,
+          "residual_m": 0.005980869755148888
+        }
+      }
+    },
+    "44": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "b9689a4cbe7bdbfdd6bc36a17f3572a705985abd69ceec3af98646d6620a47b6"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 10416,
+          "valid_depth_pixels": 8920,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 43,
+          "filtered_cloud_points": 1791,
+          "residual_m": 0.006348435766994953
+        }
+      }
+    },
+    "45": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "2de45aac19296248edb5dfafadc371ddfb6f22c51da4954fddc8a3d8ce7279c7"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 10232,
+          "valid_depth_pixels": 8700,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 44,
+          "filtered_cloud_points": 1773,
+          "residual_m": 0.006293016020208597
+        }
+      }
+    },
+    "46": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "42de438f59481c8ffcb609d18e4fe1ce74bd78af18ddeb1eed1be65e4047ae2b"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 10265,
+          "valid_depth_pixels": 8781,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 45,
+          "filtered_cloud_points": 1811,
+          "residual_m": 0.006209553685039282
+        }
+      }
+    },
+    "47": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "14f449b7d21a0751653a4fe8560413d0dab021b54c5cf07dfeacefde3d219e10"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 10186,
+          "valid_depth_pixels": 8478,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 46,
+          "filtered_cloud_points": 1821,
+          "residual_m": 0.006443141959607601
+        }
+      }
+    },
+    "48": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "0e3fccd417a9d8b10618d52d28d7a62759b0f7f36943cc9ec451f019c5b9bbc4"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 10084,
+          "valid_depth_pixels": 8206,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 47,
+          "filtered_cloud_points": 1692,
+          "residual_m": 0.006302924826741219
+        }
+      }
+    },
+    "49": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "d9b9fa475bf1a205cb47e9234930e205b8c14186c871b1c66c128fe0a3088ddf"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 9692,
+          "valid_depth_pixels": 7697,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 48,
+          "filtered_cloud_points": 1603,
+          "residual_m": 0.006459084339439869
+        }
+      }
+    },
+    "50": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "7d7cde2edd9b0f84a004bb99bf9bf7dc1800feccaa522246b46eadb01974a0b3"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 9408,
+          "valid_depth_pixels": 7367,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 49,
+          "filtered_cloud_points": 1515,
+          "residual_m": 0.006374542135745287
+        }
+      }
+    },
+    "51": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "14abf868f8e46d31396b111d0e02a9e4b16629f9fbb30b5c261c6bf0017c0e08"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 9113,
+          "valid_depth_pixels": 7200,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 50,
+          "filtered_cloud_points": 1451,
+          "residual_m": 0.006192865781486034
+        }
+      }
+    },
+    "52": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "21a84627bedc3659ebc573811a992d2636f7f2d2905e27515cf64af3f80ed5a5"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 9005,
+          "valid_depth_pixels": 6991,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 51,
+          "filtered_cloud_points": 1431,
+          "residual_m": 0.006319248117506504
+        }
+      }
+    },
+    "53": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "edff498ce81762d8455d30df49670114d080309ed1c64532d0ca2befabf0821b"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 9568,
+          "valid_depth_pixels": 7202,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 52,
+          "filtered_cloud_points": 1317,
+          "residual_m": 0.0068411147221922874
+        }
+      }
+    },
+    "54": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "29ec621fe74c83177ec055100111c636cce217b5a513c49d8662e6e128e793ad"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 10154,
+          "valid_depth_pixels": 8324,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 53,
+          "filtered_cloud_points": 1461,
+          "residual_m": 0.006057390011847019
+        }
+      }
+    },
+    "55": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "85929311897dbd03ebd390d229084a19feb9fb95499ebbcd58c8204c45b08542"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 11569,
+          "valid_depth_pixels": 9647,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 54,
+          "filtered_cloud_points": 1569,
+          "residual_m": 0.005995648913085461
+        }
+      }
+    },
+    "56": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "e297c2754c5a8ee8ad25992b01bdaeb5071e825d742192de11e08e01d311fa45"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12909,
+          "valid_depth_pixels": 10343,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 55,
+          "filtered_cloud_points": 1617,
+          "residual_m": 0.005412723869085312
+        }
+      }
+    },
+    "57": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "af6dc7c831ff61afd3fc4453753be824126ed9b1be7df9739b615f292771dff4"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 13681,
+          "valid_depth_pixels": 10633,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 56,
+          "filtered_cloud_points": 1523,
+          "residual_m": 0.005183295346796513
+        }
+      }
+    },
+    "58": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "c2477914708ed664413223afeb2a84376708891bff282e42ee48c71251a3cf1b"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 14528,
+          "valid_depth_pixels": 11443,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 57,
+          "filtered_cloud_points": 1627,
+          "residual_m": 0.005418884567916393
+        }
+      }
+    },
+    "59": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "e49b5f7c91d6445ca3207781fe351a81a5c7c03e76e8d392c35ef87b2b531dba"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 15576,
+          "valid_depth_pixels": 11568,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 58,
+          "filtered_cloud_points": 1575,
+          "residual_m": 0.00514010526239872
+        }
+      }
+    },
+    "60": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "7c1353660f7c1a93b28ac933e76c1f993281505a8344e9adbed1e6669cca2a7e"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 15984,
+          "valid_depth_pixels": 12408,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 59,
+          "filtered_cloud_points": 1611,
+          "residual_m": 0.005036978516727686
+        }
+      }
+    },
+    "61": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "b01675e892b686c8b57267097d2de2d5b4eba498f925e47dd8d2592b805a44dc"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 16571,
+          "valid_depth_pixels": 12847,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 60,
+          "filtered_cloud_points": 1531,
+          "residual_m": 0.004890794865787029
+        }
+      }
+    },
+    "62": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "50423328444cb87bdabce5ac4cb82d513a49acd7ac2a422461748ae443a25f20"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 17130,
+          "valid_depth_pixels": 13714,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 61,
+          "filtered_cloud_points": 1630,
+          "residual_m": 0.00516247795894742
+        }
+      }
+    },
+    "63": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "3991425ab3f256e565f50538158d1ac891de6f8583e6bb850af6ca5ff00acf04"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 17804,
+          "valid_depth_pixels": 13830,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 62,
+          "filtered_cloud_points": 1654,
+          "residual_m": 0.005171897821128368
+        }
+      }
+    },
+    "64": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "e23e5d07522390704a81be462b286c63f4aaf3249b86e79b8deeb808c1d7a60a"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 18304,
+          "valid_depth_pixels": 13375,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 63,
+          "filtered_cloud_points": 1597,
+          "residual_m": 0.0052660442888736725
+        }
+      }
+    },
+    "65": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "c482c118364c4374ec75b14df7502a3f48154e8cbed0a930d115372489accc1e"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 18564,
+          "valid_depth_pixels": 14139,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 64,
+          "filtered_cloud_points": 1711,
+          "residual_m": 0.00540172541514039
+        }
+      }
+    },
+    "66": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "8ca474b13c6e3fcecf796170b9e656868a3a33dcd5edc364f66cd6d90654f73d"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 18657,
+          "valid_depth_pixels": 14421,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 65,
+          "filtered_cloud_points": 1702,
+          "residual_m": 0.005679634399712086
+        }
+      }
+    },
+    "67": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "cce70e5ef6c82f16f2129883c94f93849e34f5662aa9e79454618515b3f0aea1"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 18223,
+          "valid_depth_pixels": 14194,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 66,
+          "filtered_cloud_points": 1657,
+          "residual_m": 0.006014643236994743
+        }
+      }
+    },
+    "68": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "1f267113144d554fa8d118b75c3f9fb1e056631f4f11bc489154760b091f42e1"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 17772,
+          "valid_depth_pixels": 14248,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 67,
+          "filtered_cloud_points": 1790,
+          "residual_m": 0.0056115733459591866
+        }
+      }
+    },
+    "69": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "c5dfc8ccd8fb249b633a0112889b3a150e8216920974a0c9cc793e5af9ac61a7"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 17415,
+          "valid_depth_pixels": 13595,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 68,
+          "filtered_cloud_points": 1664,
+          "residual_m": 0.005990143865346909
+        }
+      }
+    },
+    "70": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "73ebad882fa8427a01ee15ea6456a235e1746402da7a7e90042b9920e782a8e7"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 17146,
+          "valid_depth_pixels": 13225,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 69,
+          "filtered_cloud_points": 1592,
+          "residual_m": 0.006190193817019463
+        }
+      }
+    },
+    "71": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "ea5bd4fe5a95e2d4aa9f24e301ca5ecad3405fbe9ac32869c30dd69293d65bd6"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 16866,
+          "valid_depth_pixels": 13455,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 70,
+          "filtered_cloud_points": 1694,
+          "residual_m": 0.005617322400212288
+        }
+      }
+    },
+    "72": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "bf4c01c6c66cfcaee6f4d266bec4244fc578ea0a075d6201ef875f41914f400c"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 16878,
+          "valid_depth_pixels": 13794,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 71,
+          "filtered_cloud_points": 1690,
+          "residual_m": 0.006232141517102718
+        }
+      }
+    },
+    "73": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "7a00235d9b8acc59761d260e4b28ce75b387b1ed30723a7c82db693d2fb44d99"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 16558,
+          "valid_depth_pixels": 13619,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 72,
+          "filtered_cloud_points": 1700,
+          "residual_m": 0.006548871751874685
+        }
+      }
+    },
+    "74": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "a33afb6a701c0e9157c146fcf6d0279eb51d7170087e5fda589faebec9a72c93"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 16136,
+          "valid_depth_pixels": 12812,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 73,
+          "filtered_cloud_points": 1602,
+          "residual_m": 0.007558287121355534
+        }
+      }
+    },
+    "75": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "c7a0238df5e58766cb3ed42250ee8fc71b12a7daab124b695c31939e2d3d2abb"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 15568,
+          "valid_depth_pixels": 12299,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 74,
+          "filtered_cloud_points": 1658,
+          "residual_m": 0.007191415876150131
+        }
+      }
+    },
+    "76": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "8c2772f143e48bec0fdb2372fedadc5ccd00b75eb1e992ed84727185531b4ab0"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 15122,
+          "valid_depth_pixels": 11448,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 75,
+          "filtered_cloud_points": 1634,
+          "residual_m": 0.007492511998862028
+        }
+      }
+    },
+    "77": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "db25c8ad889919f84f0721ba897511d4e352251e0b9bb7afc8ab0b12cb2d1d27"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 14893,
+          "valid_depth_pixels": 10645,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 76,
+          "filtered_cloud_points": 1539,
+          "residual_m": 0.006149525288492441
+        }
+      }
+    },
+    "78": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "bccece8e565d2499650fb8c5b7cf921d88962254aecf925db5febb90a4f7face"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 14912,
+          "valid_depth_pixels": 10861,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 77,
+          "filtered_cloud_points": 1565,
+          "residual_m": 0.0065161362290382385
+        }
+      }
+    },
+    "79": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "b922d84d9217be6a08f757654a3ed377a79498a41732b8c4efc69e0c755125a6"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 15236,
+          "valid_depth_pixels": 11073,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 78,
+          "filtered_cloud_points": 1574,
+          "residual_m": 0.006810165476053953
+        }
+      }
+    },
+    "80": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "c749406f51303f8d4d40863ec629edbc0a05f5dd6714e002769dded56a2644b4"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 15277,
+          "valid_depth_pixels": 10986,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 79,
+          "filtered_cloud_points": 1546,
+          "residual_m": 0.005925803445279598
+        }
+      }
+    },
+    "81": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "b53f37f9e73aff2755deec23dff9f94cff5acc12dc0170dcea4a604dd1c66d15"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 15612,
+          "valid_depth_pixels": 11537,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 80,
+          "filtered_cloud_points": 1636,
+          "residual_m": 0.005700408481061459
+        }
+      }
+    },
+    "82": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "e4868985e1bb6eba23216df93d59408a915feb9ba608602a5de6c05579ceecdd"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 16242,
+          "valid_depth_pixels": 11534,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 81,
+          "filtered_cloud_points": 1546,
+          "residual_m": 0.005594083108007908
+        }
+      }
+    },
+    "83": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "711eb9b537aa6e872abb8cee99407f70dfe5a6129aa52171f727d99e864a5252"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 17037,
+          "valid_depth_pixels": 12225,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 82,
+          "filtered_cloud_points": 1602,
+          "residual_m": 0.005150540731847286
+        }
+      }
+    },
+    "84": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "750202f9075f13e206e46e7b80ae43195d976ef1222bd6a54ab4850020ca6129"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 17461,
+          "valid_depth_pixels": 13116,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 83,
+          "filtered_cloud_points": 1624,
+          "residual_m": 0.004911396186798811
+        }
+      }
+    },
+    "85": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "802741b9c858ede294ec2b31c99e56f5b2cabf9a87ee60fe7e64c49fa929c584"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 17727,
+          "valid_depth_pixels": 12774,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 84,
+          "filtered_cloud_points": 1581,
+          "residual_m": 0.005132470279932022
+        }
+      }
+    },
+    "86": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "57f369ce6b8feb4987c716ee9f768862804d040a817c5ab30ad4da600e3b410e"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 18169,
+          "valid_depth_pixels": 13033,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 85,
+          "filtered_cloud_points": 1618,
+          "residual_m": 0.005234532058238983
+        }
+      }
+    },
+    "87": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "5d9d1ef9a2b66e0d5f936ab2575f974e1bed3261359a5315dc8d8a9c1672616c"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 17954,
+          "valid_depth_pixels": 13396,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 86,
+          "filtered_cloud_points": 1596,
+          "residual_m": 0.005032306537032127
+        }
+      }
+    },
+    "88": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "3939bc71a4ac7217589ce827962798aad7bc8c33c75bbbc1393f2c76c70a96b6"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 18911,
+          "valid_depth_pixels": 14399,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 87,
+          "filtered_cloud_points": 2039,
+          "residual_m": 0.006128189153969288
+        }
+      }
+    },
+    "89": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "d2e686a35c60a9751b44b7f68df228b9b86acb38fafab7257cbf29023dfc4363"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 19775,
+          "valid_depth_pixels": 16556,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 88,
+          "filtered_cloud_points": 2273,
+          "residual_m": 0.007491442374885082
+        }
+      }
+    },
+    "90": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "029982b63d58021149f46b82ed3357ce28d2b3a0e808147b0e84679a886d90e0"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 20720,
+          "valid_depth_pixels": 18078,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 89,
+          "filtered_cloud_points": 2345,
+          "residual_m": 0.005950648337602615
+        }
+      }
+    },
+    "91": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "df6ff327faab72112af4b42372ffdbc0fda52745fff91ae0c11e9d7954c2f0df"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 19976,
+          "valid_depth_pixels": 16657,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 90,
+          "filtered_cloud_points": 2184,
+          "residual_m": 0.00542146060615778
+        }
+      }
+    },
+    "92": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "6994c69197f2ec97554e4a0496ac9d10e1f238d341de2fb1fd204c0e061a5ab3"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 19391,
+          "valid_depth_pixels": 16468,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 91,
+          "filtered_cloud_points": 2132,
+          "residual_m": 0.005453065037727356
+        }
+      }
+    },
+    "93": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "4c16a18b86d84cf710bd77e7813f5764a9364f73ab8a9510796f268a5a32962f"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 19217,
+          "valid_depth_pixels": 16738,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 92,
+          "filtered_cloud_points": 2217,
+          "residual_m": 0.005557691678404808
+        }
+      }
+    },
+    "94": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "143bbf40bd4c0d7205d07be897df9a9f53ac6de63c4a04c58f3044d5e6b272a2"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 19244,
+          "valid_depth_pixels": 16479,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 93,
+          "filtered_cloud_points": 2227,
+          "residual_m": 0.005634800530970097
+        }
+      }
+    },
+    "95": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "506e95ed45c2a04429d2fd532fee78b81310a3ae6e5de33d895f9674987efe8c"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 18824,
+          "valid_depth_pixels": 16146,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 94,
+          "filtered_cloud_points": 2164,
+          "residual_m": 0.00598397059366107
+        }
+      }
+    },
+    "96": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "1baa0b71dcb79787b17437bbfec968feb7452b5cf17d3c64fe082dd217a75311"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 18345,
+          "valid_depth_pixels": 15563,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 95,
+          "filtered_cloud_points": 2172,
+          "residual_m": 0.006171460263431072
+        }
+      }
+    },
+    "97": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "601f78be093eb1c0cac0ecca1b93b95c8615e6f53d02963a4f716f3850d0da7e"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 17668,
+          "valid_depth_pixels": 15076,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 96,
+          "filtered_cloud_points": 2132,
+          "residual_m": 0.005701134912669659
+        }
+      }
+    },
+    "98": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "088153595bb800cf65fbb9076fcc892475aae7e15df2c32ac2e2a7790d0b4b82"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 17785,
+          "valid_depth_pixels": 15224,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 97,
+          "filtered_cloud_points": 2192,
+          "residual_m": 0.006006985902786255
+        }
+      }
+    },
+    "99": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "dc63781d6e0ce5b63faf5f9d3720a706c003408e00a20da311f9a4c6acc9519d"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 17822,
+          "valid_depth_pixels": 15301,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 98,
+          "filtered_cloud_points": 2224,
+          "residual_m": 0.006356342229992151
+        }
+      }
+    },
+    "100": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "791a2f107d68d5e8e45a9b97a6dc714305aa58a13960374da1c992710c3ce404"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 18035,
+          "valid_depth_pixels": 15799,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 99,
+          "filtered_cloud_points": 2278,
+          "residual_m": 0.005813530646264553
+        }
+      }
+    },
+    "101": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "b718b5fa7343a5ff7de0d8955faac249c056160f1878c65abb3fa9d5fbf532f6"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 18452,
+          "valid_depth_pixels": 15816,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 100,
+          "filtered_cloud_points": 2325,
+          "residual_m": 0.006041879300028086
+        }
+      }
+    },
+    "102": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "76d821deb5c29a2e1ee2c111a6209cf0dbf65363f5bed1d1a8f20957a271aed5"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 18045,
+          "valid_depth_pixels": 15333,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 101,
+          "filtered_cloud_points": 2319,
+          "residual_m": 0.005628040060400963
+        }
+      }
+    },
+    "103": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "9f2458af026730c7a72956e361b0256b7dcffe5e4b9a5c2e2c0ef451edd6eabb"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 17681,
+          "valid_depth_pixels": 15379,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 102,
+          "filtered_cloud_points": 2351,
+          "residual_m": 0.005970558617264032
+        }
+      }
+    },
+    "104": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "d4296614945232665ea892af68c7aebb2b936254fd92ba247d0aae938b2257d9"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 18209,
+          "valid_depth_pixels": 15861,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 103,
+          "filtered_cloud_points": 2320,
+          "residual_m": 0.005959144793450832
+        }
+      }
+    },
+    "105": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "d0adcfe69542f90a62132ae05139718e31ad349958e4edd1f8a5e2de565491ed"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 18221,
+          "valid_depth_pixels": 15917,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 104,
+          "filtered_cloud_points": 2509,
+          "residual_m": 0.006089548580348492
+        }
+      }
+    },
+    "106": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "e81243fda49899a493735bd28c47a85ba2b15ed458c295ec74a3cf92b4b2a45a"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 20070,
+          "valid_depth_pixels": 17339,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 105,
+          "filtered_cloud_points": 2570,
+          "residual_m": 0.0063890619203448296
+        }
+      }
+    },
+    "107": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "c1f9ccce4cad699af06a04fdf69cef5a9b35e7ad56dc75ade36fcdf49173ee52"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 19869,
+          "valid_depth_pixels": 17309,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 106,
+          "filtered_cloud_points": 2451,
+          "residual_m": 0.006539859808981419
+        }
+      }
+    },
+    "108": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "555694de9de2de54c413e0237c7a7207d8ae5d6ccb7244bcf199457d9261324c"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 19549,
+          "valid_depth_pixels": 16957,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 107,
+          "filtered_cloud_points": 2435,
+          "residual_m": 0.006645449437201023
+        }
+      }
+    },
+    "109": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "cd2aa825fe0110175bd6e00edd053bcb602bde0f97fadd040eb59af7f244b8d8"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 19875,
+          "valid_depth_pixels": 17151,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 108,
+          "filtered_cloud_points": 2364,
+          "residual_m": 0.006534113083034754
+        }
+      }
+    },
+    "110": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "bb76c7396b8f51f8155516d9ba3029961b28ef7d5434f8d4608e904666b4810f"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 19489,
+          "valid_depth_pixels": 17231,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 109,
+          "filtered_cloud_points": 2327,
+          "residual_m": 0.007188174873590469
+        }
+      }
+    },
+    "111": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "099743d96d5c4f2b55df67da8dd0684400c799f17c8e6152dffca30edf10f291"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 19223,
+          "valid_depth_pixels": 16549,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 110,
+          "filtered_cloud_points": 2267,
+          "residual_m": 0.0062163593247532845
+        }
+      }
+    },
+    "112": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "01e4ae23c31269d421822207a9b3eb686fd0ad020b2ce4eb3048415d03cae076"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 19318,
+          "valid_depth_pixels": 16747,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 111,
+          "filtered_cloud_points": 2400,
+          "residual_m": 0.006145740859210491
+        }
+      }
+    },
+    "113": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "f7133e81e1646956dce8a9a0d7f78eebcdd8a517c7ff53d463d35e2e259c58b1"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 19206,
+          "valid_depth_pixels": 16137,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 112,
+          "filtered_cloud_points": 2411,
+          "residual_m": 0.006026566959917545
+        }
+      }
+    },
+    "114": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "651a71f9e8d36a8823c29f87a0a43d123e7e979a6eea73d784b9512488d66050"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 18747,
+          "valid_depth_pixels": 16302,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 113,
+          "filtered_cloud_points": 2449,
+          "residual_m": 0.005965773016214371
+        }
+      }
+    },
+    "115": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "9db781d1bbdfccd1bd4cc277a02369d7850dcce9af492a50f38d6c35519c091d"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 18609,
+          "valid_depth_pixels": 16343,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 114,
+          "filtered_cloud_points": 2591,
+          "residual_m": 0.005571251269429922
+        }
+      }
+    },
+    "116": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "fe00271dbbdfceb5a90ba8a25609f2654f5a22b2e9428310c031797e3cdefcfe"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 18442,
+          "valid_depth_pixels": 15177,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 115,
+          "filtered_cloud_points": 2518,
+          "residual_m": 0.00664508156478405
+        }
+      }
+    },
+    "117": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "c4cf82f245fe0b85c1cec6e804ac9d0e1fc1c01d14fbfeaa410ca33d879a702f"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 17425,
+          "valid_depth_pixels": 14551,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 116,
+          "filtered_cloud_points": 2176,
+          "residual_m": 0.006382976658642292
+        }
+      }
+    },
+    "118": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "51b789787e132b9db5b75071536f1714e28fcc47408343e0fec9d2a2bd95f774"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 17477,
+          "valid_depth_pixels": 14840,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 117,
+          "filtered_cloud_points": 2259,
+          "residual_m": 0.0065207816660404205
+        }
+      }
+    },
+    "119": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "5a6799a21222434a993d46621125a4c1557c8bcca76c81dfafc28d48bc9242b7"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 17666,
+          "valid_depth_pixels": 14609,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 118,
+          "filtered_cloud_points": 2114,
+          "residual_m": 0.006638705264776945
+        }
+      }
+    },
+    "120": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "8e2026016f09f2d1fef53e5d4070fffe7d497b2b34a8be9037276144c9d0eb5e"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 18574,
+          "valid_depth_pixels": 14968,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 119,
+          "filtered_cloud_points": 2331,
+          "residual_m": 0.006225206423550844
+        }
+      }
+    },
+    "121": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "36310c1f53c681d4c5daa243a6a80178138c6c3f010d0a8df3950bf70c948076"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 19445,
+          "valid_depth_pixels": 17191,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 120,
+          "filtered_cloud_points": 2452,
+          "residual_m": 0.005562885664403439
+        }
+      }
+    },
+    "122": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "28fb5ce08e385cfcc8ab6bf6f2315bc1ddf4f694885b8e30a73e837d76d607df"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 19491,
+          "valid_depth_pixels": 17124,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 121,
+          "filtered_cloud_points": 2250,
+          "residual_m": 0.005707711912691593
+        }
+      }
+    },
+    "123": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "ed165d12d86511120c002a51046135c5526dbae235446720fe92d3114bb693b7"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 20720,
+          "valid_depth_pixels": 18458,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 122,
+          "filtered_cloud_points": 2353,
+          "residual_m": 0.006178421899676323
+        }
+      }
+    },
+    "124": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "38b34f5ae6a087c1b31bf152b7a703fbd66e188909a0608c90e39f1a4f3807c9"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 21739,
+          "valid_depth_pixels": 18945,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 123,
+          "filtered_cloud_points": 2507,
+          "residual_m": 0.006218503694981337
+        }
+      }
+    },
+    "125": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "3dbd6814d1faaf0a6e918e4fb79ca167450f5c2e735607eff80075bd0a0bfcab"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 22870,
+          "valid_depth_pixels": 19546,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 124,
+          "filtered_cloud_points": 2630,
+          "residual_m": 0.007290573325008154
+        }
+      }
+    },
+    "126": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "3b79795e19cf707e7252d54eb0c7712efa2fdce4febf0346f139d1ac0fdc0a32"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 22789,
+          "valid_depth_pixels": 18550,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 125,
+          "filtered_cloud_points": 2287,
+          "residual_m": 0.008357642218470573
+        }
+      }
+    },
+    "127": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "5bd5ec3662234d4bfcadccf60c69abbd60092d7d69b802e21756ae0fbfeadf9c"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 23801,
+          "valid_depth_pixels": 19479,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 126,
+          "filtered_cloud_points": 2541,
+          "residual_m": 0.009339059703052044
+        }
+      }
+    },
+    "128": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "e7f9513b04e765997c56912a5e5d460b4f3d4bf7da9f647883272e5d6e99e92a"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 24121,
+          "valid_depth_pixels": 19338,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 127,
+          "filtered_cloud_points": 2385,
+          "residual_m": 0.008943003602325916
+        }
+      }
+    },
+    "129": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "2db1fcbded958a3cfc725a825072cd3ed815a7f663694d0321512de40d2054c6"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 24512,
+          "valid_depth_pixels": 19525,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 128,
+          "filtered_cloud_points": 2391,
+          "residual_m": 0.0093760434538126
+        }
+      }
+    },
+    "130": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "f3b84f5e3f5873a139616119e4f2378e3e20b6c671aded5b1ca9584c3018b8b8"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 24798,
+          "valid_depth_pixels": 19152,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 129,
+          "filtered_cloud_points": 2378,
+          "residual_m": 0.009091978892683983
+        }
+      }
+    },
+    "131": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "bf3e0202dd73e17c0ac3c630d36594f86db3cbe272de0abf30a9c70259ed474e"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 25019,
+          "valid_depth_pixels": 19632,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 130,
+          "filtered_cloud_points": 2451,
+          "residual_m": 0.008785584941506386
+        }
+      }
+    },
+    "132": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "e48c6191ecbd987b28fa4b57c9849d5f557b955de3b6ea3a7e1af11d30a09afa"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 24784,
+          "valid_depth_pixels": 18340,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 131,
+          "filtered_cloud_points": 2318,
+          "residual_m": 0.009557371027767658
+        }
+      }
+    },
+    "133": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "58c3e9c98d6e308b6aa8557692949dffc63c2bd898616afcf44f743b9fc2a937"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 24085,
+          "valid_depth_pixels": 18594,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 132,
+          "filtered_cloud_points": 2410,
+          "residual_m": 0.008912548422813416
+        }
+      }
+    },
+    "134": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "55968662627b0d9ae68279650117c410058d8c7d02595717ad918676fbf7fca0"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 23501,
+          "valid_depth_pixels": 18972,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 133,
+          "filtered_cloud_points": 2619,
+          "residual_m": 0.009231938049197197
+        }
+      }
+    },
+    "135": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "dab8a5118157f545882607baff60e62ba48a8eb57abc88d0edaac2eb5d2e216c"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 23373,
+          "valid_depth_pixels": 19589,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 134,
+          "filtered_cloud_points": 2538,
+          "residual_m": 0.008115503005683422
+        }
+      }
+    },
+    "136": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "fd1bd8101aa0890b0af1a11e74f5b8122298678c8a5297bf5c376a52a88e19d8"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 22168,
+          "valid_depth_pixels": 18451,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 135,
+          "filtered_cloud_points": 2743,
+          "residual_m": 0.0077369664795696735
+        }
+      }
+    },
+    "137": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "3bd8e491ff464e5fcdbd1025cb632d9a7d6f0858fd182c3da047af294bd732d4"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 20998,
+          "valid_depth_pixels": 18617,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 136,
+          "filtered_cloud_points": 2705,
+          "residual_m": 0.007837867364287376
+        }
+      }
+    },
+    "138": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "87fef534053b840f7309b7847f27c0701943a374216da5c5a595452ae2300ef1"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 20025,
+          "valid_depth_pixels": 17220,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 137,
+          "filtered_cloud_points": 2749,
+          "residual_m": 0.007223870605230331
+        }
+      }
+    },
+    "139": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "10a04df6d4f1f9172fc5a83b15fc98fe2b5202e8c000733c3ac59651a3b7e8d3"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 19692,
+          "valid_depth_pixels": 17325,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 138,
+          "filtered_cloud_points": 2676,
+          "residual_m": 0.007690414320677519
+        }
+      }
+    },
+    "140": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "9de4962612901cd3042af5473a5e89fcddc7d1ad1d2b5c25f8a51334d5c7f6ec"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 19444,
+          "valid_depth_pixels": 17001,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 139,
+          "filtered_cloud_points": 2939,
+          "residual_m": 0.007509023882448673
+        }
+      }
+    },
+    "141": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "a9109d9cd8fc5180c8fad448b29bbc540a0a97a1822516b212cd094646346e85"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 18787,
+          "valid_depth_pixels": 16663,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 140,
+          "filtered_cloud_points": 2772,
+          "residual_m": 0.006953502539545298
+        }
+      }
+    },
+    "142": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "e38f54f75c95b4d4bd1e01f2b738ab62d03223c9ad69a6222b572f650eb411b8"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 18372,
+          "valid_depth_pixels": 16765,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 141,
+          "filtered_cloud_points": 2801,
+          "residual_m": 0.006095970515161753
+        }
+      }
+    },
+    "143": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "2c45b178f9d302664f9905e980b25d722d1dc88a7d8e8e74ff2d4576c2ccb283"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 18133,
+          "valid_depth_pixels": 16306,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 142,
+          "filtered_cloud_points": 2718,
+          "residual_m": 0.005749577656388283
+        }
+      }
+    },
+    "144": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "963d80530ebc63d82a1bfcc3adc2707ae197af8810e08c8c99004896a798f30b"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 17915,
+          "valid_depth_pixels": 16203,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 143,
+          "filtered_cloud_points": 2712,
+          "residual_m": 0.006417362485080957
+        }
+      }
+    },
+    "145": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "661456606a02ccd6d3fe6d1b7dd44abbcf0670909db1dfb391c4497fa2bc1c01"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 17659,
+          "valid_depth_pixels": 15931,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 144,
+          "filtered_cloud_points": 2583,
+          "residual_m": 0.006173298228532076
+        }
+      }
+    },
+    "146": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "e510aae9a312fe981d0bf597f535eea8323ee5d672231e3dcc58a7e906f719bf"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 17379,
+          "valid_depth_pixels": 15753,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 145,
+          "filtered_cloud_points": 2639,
+          "residual_m": 0.0059746429324150085
+        }
+      }
+    },
+    "147": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "973c6eb550427a420a2a3009fbe2122ff8f4e2566703db7ea0c8788b453cb7f0"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 17263,
+          "valid_depth_pixels": 15667,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 146,
+          "filtered_cloud_points": 2623,
+          "residual_m": 0.006042002700269222
+        }
+      }
+    },
+    "148": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "3de994a4c6721c5f41492788fca082de7eb405023cdfa32c30b4106873d1d7f5"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 16952,
+          "valid_depth_pixels": 15049,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 147,
+          "filtered_cloud_points": 2631,
+          "residual_m": 0.006049030460417271
+        }
+      }
+    },
+    "149": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "0212043d9955230febf74af419ec2c31a51ae39912a2568966a5891817ceaffb"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 16771,
+          "valid_depth_pixels": 15093,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 148,
+          "filtered_cloud_points": 2530,
+          "residual_m": 0.006496122106909752
+        }
+      }
+    },
+    "150": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "b4ffdb46604c4b18b11482498ef18de1f110bd9125eb6b0678d08aeabff36174"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 16586,
+          "valid_depth_pixels": 15059,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 149,
+          "filtered_cloud_points": 2450,
+          "residual_m": 0.006568555254489183
+        }
+      }
+    },
+    "151": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "c6be9e47ac44a831b0df2fa498ef07d99ab129ffd156c9a389c2c6aabc2830cf"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 16295,
+          "valid_depth_pixels": 14857,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 150,
+          "filtered_cloud_points": 2568,
+          "residual_m": 0.007076560519635677
+        }
+      }
+    },
+    "152": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "705a05055c1aa260a2046819e6df6bffb200d881d2d4b73eab82441cfe1f8a62"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 15965,
+          "valid_depth_pixels": 14634,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 151,
+          "filtered_cloud_points": 2521,
+          "residual_m": 0.006975832395255566
+        }
+      }
+    },
+    "153": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "2db1471dfebc39bfa378c1d24b9c739f1d1e84722ccd25b1a725433b396d53e1"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 15777,
+          "valid_depth_pixels": 14310,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 152,
+          "filtered_cloud_points": 2375,
+          "residual_m": 0.007875284180045128
+        }
+      }
+    },
+    "154": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "c16fad58a37023387d6dfab32d9e21ad822e5fe3d0632c28c1218d00548d3e69"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 15591,
+          "valid_depth_pixels": 14379,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 153,
+          "filtered_cloud_points": 2376,
+          "residual_m": 0.008321557193994522
+        }
+      }
+    },
+    "155": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "04ffe29ce7008a3c6e58a8064465b629980dc71c6635ba4aaa6143dc00af6976"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 15311,
+          "valid_depth_pixels": 14389,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 154,
+          "filtered_cloud_points": 2297,
+          "residual_m": 0.009321928024291992
+        }
+      }
+    },
+    "156": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "39d0f607facffa89520123e48146660a1986209752f8a6a85f86b0b67ee8ea86"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 15100,
+          "valid_depth_pixels": 14099,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 155,
+          "filtered_cloud_points": 2340,
+          "residual_m": 0.009387729689478874
+        }
+      }
+    },
+    "157": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "f670422d218167d576061628050c58426fbba8cc4b1ebb64f7f93ff85e514d62"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 15084,
+          "valid_depth_pixels": 13943,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 156,
+          "filtered_cloud_points": 2414,
+          "residual_m": 0.00850095134228468
+        }
+      }
+    },
+    "158": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "180224b3c38735e1408c7ddfcfbfff78229b12b23ef6aa42c118c39a6df46c05"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 15056,
+          "valid_depth_pixels": 13513,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 157,
+          "filtered_cloud_points": 2229,
+          "residual_m": 0.007621544413268566
+        }
+      }
+    },
+    "159": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "577db27b9256094f6c7537d6b42e39c22bd48a7538841603161dde1677b2917f"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 14966,
+          "valid_depth_pixels": 13295,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 158,
+          "filtered_cloud_points": 2143,
+          "residual_m": 0.007697741501033306
+        }
+      }
+    },
+    "160": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "7bd14d7c5e37cff49c10f30dd8844433c8f704d2da756d7d37918ad84c385124"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 14853,
+          "valid_depth_pixels": 13197,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 159,
+          "filtered_cloud_points": 2160,
+          "residual_m": 0.006883561611175537
+        }
+      }
+    },
+    "161": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "5992f1219d056daa223db31ea0f72b40c4e420b8125ef3e61de5a0d6fea6ccf0"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 14897,
+          "valid_depth_pixels": 13114,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 160,
+          "filtered_cloud_points": 2073,
+          "residual_m": 0.00689312256872654
+        }
+      }
+    },
+    "162": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "15cdf1e9eda9a8b65c1ff4f92c1d34f4221aff14ee5ebf64705529bb97b08036"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 14998,
+          "valid_depth_pixels": 13236,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 161,
+          "filtered_cloud_points": 2182,
+          "residual_m": 0.006980935111641884
+        }
+      }
+    },
+    "163": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "08022ce2de472db85e0508b23caf603b3fa15753068d228a3b9023903ebadc5f"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 14964,
+          "valid_depth_pixels": 13384,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 162,
+          "filtered_cloud_points": 2093,
+          "residual_m": 0.0073151132091879845
+        }
+      }
+    },
+    "164": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "8c6ecce2cd0dc9c5bc12fa19ed12f45ee56e814a79531dc53062ffb5b911d16f"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 14978,
+          "valid_depth_pixels": 13348,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 163,
+          "filtered_cloud_points": 2284,
+          "residual_m": 0.006361048202961683
+        }
+      }
+    },
+    "165": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "d3b1245a66de6236232d92272f09042c7431ee65f5c57cb1c25e612b6fc6b458"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 14865,
+          "valid_depth_pixels": 13287,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 164,
+          "filtered_cloud_points": 2215,
+          "residual_m": 0.006482887081801891
+        }
+      }
+    },
+    "166": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "60c16b6ae34a185216ee348f6c622e5ce6d627128131a988aba340c374f0cb85"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 14821,
+          "valid_depth_pixels": 13047,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 165,
+          "filtered_cloud_points": 2227,
+          "residual_m": 0.006677140481770039
+        }
+      }
+    },
+    "167": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "fb6080eade4942af231ae75155da5cabdf710c5a196a61e191452f30b3584eb2"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 14841,
+          "valid_depth_pixels": 12977,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 166,
+          "filtered_cloud_points": 2163,
+          "residual_m": 0.006331282667815685
+        }
+      }
+    },
+    "168": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "14f1390ffe3165cc366c25345c600ab3d9ac8b17ff9e3051697c0e17c08ccdcf"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 14936,
+          "valid_depth_pixels": 13656,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 167,
+          "filtered_cloud_points": 2186,
+          "residual_m": 0.006241851486265659
+        }
+      }
+    },
+    "169": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "bfa4b4337b9c1b888e02074a5133018baabdca35ed29da2022cb5adf74dbf0a6"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 15293,
+          "valid_depth_pixels": 14179,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 168,
+          "filtered_cloud_points": 2405,
+          "residual_m": 0.006442042998969555
+        }
+      }
+    },
+    "170": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "2eb2ffd3c0452682927b6a65b5ca8625ea6e5848875f660b1218a92cceff4fe2"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 15592,
+          "valid_depth_pixels": 14643,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 169,
+          "filtered_cloud_points": 2515,
+          "residual_m": 0.007101895287632942
+        }
+      }
+    },
+    "171": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "721c408d8d97c2fd3c93f7c9f028cbc6b0a040a7655b2a43ccca636e79732b84"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 15564,
+          "valid_depth_pixels": 13815,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 170,
+          "filtered_cloud_points": 2447,
+          "residual_m": 0.007229780778288841
+        }
+      }
+    },
+    "172": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "73741db64a85f97e045bbac1cf4c3a4beda28da12c6cd3474e4dad392ceff834"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 15723,
+          "valid_depth_pixels": 13402,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 171,
+          "filtered_cloud_points": 2344,
+          "residual_m": 0.007443125359714031
+        }
+      }
+    },
+    "173": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "b6291bc29242462c9190a6da5c059d95fa89046e8f3b10ac8d115fedfb5ba862"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 16300,
+          "valid_depth_pixels": 14093,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 172,
+          "filtered_cloud_points": 2255,
+          "residual_m": 0.006384632550179958
+        }
+      }
+    },
+    "174": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "a4efcbb7ed5e866ea7bc7a0409f5c61a4e6e50178842770e18a7ac0c1b7907de"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 15804,
+          "valid_depth_pixels": 14107,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 173,
+          "filtered_cloud_points": 2344,
+          "residual_m": 0.005791707895696163
+        }
+      }
+    },
+    "175": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "8655c14e9fe744c1ac41fa263cc439e43b8b2d9825ccbae27f8aa4796f70f5e2"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 16706,
+          "valid_depth_pixels": 14178,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 174,
+          "filtered_cloud_points": 2331,
+          "residual_m": 0.006088580936193466
+        }
+      }
+    },
+    "176": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "27edd71839cab6c3636845a54f3f78d5264d262b2bb6a3ade0f860b5c9d9b8fb"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 17299,
+          "valid_depth_pixels": 14685,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 175,
+          "filtered_cloud_points": 2339,
+          "residual_m": 0.006001596804708242
+        }
+      }
+    },
+    "177": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "7be78b18af823e3f2e97ac0d0b528856b1dad55e1acd541dfa5e6fa340f97f21"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 17712,
+          "valid_depth_pixels": 14666,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 176,
+          "filtered_cloud_points": 2256,
+          "residual_m": 0.006305004470050335
+        }
+      }
+    },
+    "178": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "ca05274988f942ccba1f122a410c1596879acb6dcaf2402b93d0abb1b974e4e1"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 18204,
+          "valid_depth_pixels": 15390,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 177,
+          "filtered_cloud_points": 2323,
+          "residual_m": 0.006866653449833393
+        }
+      }
+    },
+    "179": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "365dcce5415ab00b5935d43023ecec677e50cc064aaffac91cc2dd31afabb1fb"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 18460,
+          "valid_depth_pixels": 14852,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 178,
+          "filtered_cloud_points": 2078,
+          "residual_m": 0.006291746161878109
+        }
+      }
+    },
+    "180": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "4a920498131e2768b36886b1bd3d60b41a1d5489f84d19522b1b8a09c26a31fd"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 19087,
+          "valid_depth_pixels": 14410,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 179,
+          "filtered_cloud_points": 1934,
+          "residual_m": 0.006482996977865696
+        }
+      }
+    },
+    "181": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "4b3719ad2a0a9f306fd12e89a2d7fbe446f38ad28601864a5a7118a9eaa55de1"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 20378,
+          "valid_depth_pixels": 14902,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 180,
+          "filtered_cloud_points": 1892,
+          "residual_m": 0.006156072020530701
+        }
+      }
+    },
+    "182": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "cfebf7437a2ad6af82fdd983381c396ce3297e4112f80b5871fe75f3dc0fc6d2"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 21667,
+          "valid_depth_pixels": 16479,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 181,
+          "filtered_cloud_points": 1954,
+          "residual_m": 0.005870162509381771
+        }
+      }
+    },
+    "183": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "d10a9d468bbab9d44f00705368112a7803e38227b33a2610631b14a18584b9c0"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 22687,
+          "valid_depth_pixels": 17165,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 182,
+          "filtered_cloud_points": 1943,
+          "residual_m": 0.005776293575763702
+        }
+      }
+    },
+    "184": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "7747b53922fbc728625123e8418f91c2102d1b5f0bed3aad1367ef4f479d6094"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 23340,
+          "valid_depth_pixels": 16976,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 183,
+          "filtered_cloud_points": 1831,
+          "residual_m": 0.005493649747222662
+        }
+      }
+    },
+    "185": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "811c68fd91ba6bcf45ed86767a8ba194ad247d8cba97c47d7ec0b8b2b4b762c5"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 24417,
+          "valid_depth_pixels": 17787,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 184,
+          "filtered_cloud_points": 1840,
+          "residual_m": 0.0056554414331912994
+        }
+      }
+    },
+    "186": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "fdbb932bb30cc4d686ac0f651ee118f89dd5c3255faceaa163a75f17ac6f2aef"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 26665,
+          "valid_depth_pixels": 20323,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 185,
+          "filtered_cloud_points": 2086,
+          "residual_m": 0.005572057329118252
+        }
+      }
+    },
+    "187": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "ff95bbce46653afd8d2ddb05f214bd7f1e75fc0b28a97a3e2130c08d6e4fc042"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 27484,
+          "valid_depth_pixels": 21664,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 186,
+          "filtered_cloud_points": 2178,
+          "residual_m": 0.005221116356551647
+        }
+      }
+    },
+    "188": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "1fc423ba054e09e1f9e182affdb360a529dc2e56e5c489180d5d5647b1fefe32"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 27678,
+          "valid_depth_pixels": 21050,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 187,
+          "filtered_cloud_points": 2007,
+          "residual_m": 0.0051947059109807014
+        }
+      }
+    },
+    "189": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "dff99da8df905ed6e3e0ef6e2285e5fccca4dbaebbdd91ad07e832b4e57071d3"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 27344,
+          "valid_depth_pixels": 22019,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 188,
+          "filtered_cloud_points": 2327,
+          "residual_m": 0.005111043341457844
+        }
+      }
+    },
+    "190": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "1bfe34277f277074249fb55199c612c2b580674d33a488766ff868f1875884e1"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 27025,
+          "valid_depth_pixels": 21778,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 189,
+          "filtered_cloud_points": 2259,
+          "residual_m": 0.0052839238196611404
+        }
+      }
+    },
+    "191": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "ccadb54a75b5957ed71cba33cde6f016b54716eca0c674a6c14330afba810f57"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 26639,
+          "valid_depth_pixels": 21118,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 190,
+          "filtered_cloud_points": 2204,
+          "residual_m": 0.005272986833006144
+        }
+      }
+    },
+    "192": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "03ff4488c419f60c56ac7a972d20cf85321409fa3479e19835080e3b7245b2d6"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 26475,
+          "valid_depth_pixels": 20772,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 191,
+          "filtered_cloud_points": 2162,
+          "residual_m": 0.0052347732707858086
+        }
+      }
+    },
+    "193": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "8024acd871371c4d8acff8afc83531a3ca5d9a3160d779eea0816e8bd7601b37"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 26269,
+          "valid_depth_pixels": 21259,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 192,
+          "filtered_cloud_points": 2233,
+          "residual_m": 0.00551343709230423
+        }
+      }
+    },
+    "194": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "ad5a896808de1c1f39a32076a84dd6758c70c130f066f83036e404c0090701a6"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 26015,
+          "valid_depth_pixels": 20874,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 193,
+          "filtered_cloud_points": 2341,
+          "residual_m": 0.005671266466379166
+        }
+      }
+    },
+    "195": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "28f0471dfc1b7c6a79ba97196f750f87d2a8ece333c6f939a1851076b4c49861"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 25873,
+          "valid_depth_pixels": 20203,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 194,
+          "filtered_cloud_points": 2183,
+          "residual_m": 0.005566207692027092
+        }
+      }
+    },
+    "196": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "68cae9a2491483ad25d0600c22cab345c07c0e029375c17996784c29f8ff2f39"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 25661,
+          "valid_depth_pixels": 20349,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 195,
+          "filtered_cloud_points": 2231,
+          "residual_m": 0.005614638328552246
+        }
+      }
+    },
+    "197": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "ccb77f56c0da95de2c1bd90cdb63a8ebab2f4d90d59d7abd50c03f4fa1dd7fc4"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 25283,
+          "valid_depth_pixels": 20280,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 196,
+          "filtered_cloud_points": 2192,
+          "residual_m": 0.005698308348655701
+        }
+      }
+    },
+    "198": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "bb5bb0e8601577fdd1faef1fb1e0b07025c8c5e24b13466af72881019a76af07"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 25470,
+          "valid_depth_pixels": 20509,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 197,
+          "filtered_cloud_points": 2294,
+          "residual_m": 0.005648459307849407
+        }
+      }
+    },
+    "199": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "4b5242cde18554177f1442d10713dd15bf09607f90bbf3781f51c7b8460bd4ee"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 25174,
+          "valid_depth_pixels": 19735,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 198,
+          "filtered_cloud_points": 2230,
+          "residual_m": 0.006294895429164171
+        }
+      }
+    },
+    "200": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "dc2c63420a8565b35669ac5db1433e13275b27a716f5f26cfc20c49b993758fa"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 25747,
+          "valid_depth_pixels": 19543,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 199,
+          "filtered_cloud_points": 2096,
+          "residual_m": 0.00629704724997282
+        }
+      }
+    },
+    "201": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "25991baa03dae650ca5e5670f100352e6b09d0b7522375fafaa16a1c49d02a8d"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 25550,
+          "valid_depth_pixels": 19860,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 200,
+          "filtered_cloud_points": 2111,
+          "residual_m": 0.007449176162481308
+        }
+      }
+    },
+    "202": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "5c293ce411775f21a4ceadbba2c22d0170fc13a7804b07511ac7ddec2d651450"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 27767,
+          "valid_depth_pixels": 20407,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 201,
+          "filtered_cloud_points": 2204,
+          "residual_m": 0.0074061243794858456
+        }
+      }
+    },
+    "203": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "c0202e97ad037acc4dd1946161c898a41f519bde0d57069b9d61a109845d9681"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 26235,
+          "valid_depth_pixels": 21224,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 202,
+          "filtered_cloud_points": 2233,
+          "residual_m": 0.008206894621253014
+        }
+      }
+    },
+    "204": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "5cf20d15f23bfc6a0b8d1eb27751aaa621e3a0d9e526e7a18f9b4bd4d3d89a9f"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 26778,
+          "valid_depth_pixels": 21157,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 203,
+          "filtered_cloud_points": 2310,
+          "residual_m": 0.009835794568061829
+        }
+      }
+    },
+    "205": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "e5b69332e867361ab34edb6d56bf608c6aa5a0e76349ba44df39e3b5d2c10a69"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 27578,
+          "valid_depth_pixels": 22110,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 204,
+          "filtered_cloud_points": 2244,
+          "residual_m": 0.011109758168458939
+        }
+      }
+    },
+    "206": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "262cd4af2c7ca56a4d1d349dc2accbddd513e6fa8543c14bc53bec78a2e711c8"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 28300,
+          "valid_depth_pixels": 22998,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 205,
+          "filtered_cloud_points": 2372,
+          "residual_m": 0.011822335422039032
+        }
+      }
+    },
+    "207": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "8eeb0e0e0f557831c46354a124bb9b79ec751f4c3e7fec10adf246ceeacda97f"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 29641,
+          "valid_depth_pixels": 22912,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 206,
+          "filtered_cloud_points": 2365,
+          "residual_m": 0.011323977261781693
+        }
+      }
+    },
+    "208": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "58ae65cc78efed12983ac78e79aec9b175b19e03bcfc13ba27e2e9e01774bcdf"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 30837,
+          "valid_depth_pixels": 22298,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 207,
+          "filtered_cloud_points": 2217,
+          "residual_m": 0.01230661477893591
+        }
+      }
+    },
+    "209": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "6bd50087593bf58ab90257efd6266836c492c8912d552525895deb0c5a6fcdf2"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 31198,
+          "valid_depth_pixels": 22822,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 208,
+          "filtered_cloud_points": 2177,
+          "residual_m": 0.012760685756802559
+        }
+      }
+    },
+    "210": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "4a2430cc3ea8ce91ec18228042f974fd80e84e19f279f406253098b8bcc57ad0"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 32076,
+          "valid_depth_pixels": 22841,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 209,
+          "filtered_cloud_points": 2128,
+          "residual_m": 0.014042298309504986
+        }
+      }
+    },
+    "211": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "defbda6ea3864cc481a788900100f3c88694b90e3df482d461b9959c1dddfb23"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 33323,
+          "valid_depth_pixels": 24560,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 210,
+          "filtered_cloud_points": 2269,
+          "residual_m": 0.013150843791663647
+        }
+      }
+    },
+    "212": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "312e4565cb19f0473cafa9f7c985ecb84ec5a0ebe16935582d4396ab4d7a52ce"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 34356,
+          "valid_depth_pixels": 25151,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 211,
+          "filtered_cloud_points": 2294,
+          "residual_m": 0.012625603005290031
+        }
+      }
+    },
+    "213": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "8f6e6797928bba48de65190836d313350bc75797dd711b2fa5a9b9e68a5c8a21"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 35358,
+          "valid_depth_pixels": 25971,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 212,
+          "filtered_cloud_points": 2259,
+          "residual_m": 0.012854374945163727
+        }
+      }
+    },
+    "214": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "98556af2e503d60db85c683e436a4cf15aa1e89d92cfead12a8690579c8b4a20"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 36510,
+          "valid_depth_pixels": 26325,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 213,
+          "filtered_cloud_points": 2343,
+          "residual_m": 0.013680652715265751
+        }
+      }
+    },
+    "215": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "bfcef6f0fe50e7689e45d44df1bac026ab32924e805ef5fb9fa29a2b52c1f47f"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 37174,
+          "valid_depth_pixels": 26432,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 214,
+          "filtered_cloud_points": 2289,
+          "residual_m": 0.013491088524460793
+        }
+      }
+    },
+    "216": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "f9bf31bc6fd824f248ae5eefa9b559e93b0fc4fa21164ec4de65aeab82af8528"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 36983,
+          "valid_depth_pixels": 26927,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 215,
+          "filtered_cloud_points": 2402,
+          "residual_m": 0.013591970317065716
+        }
+      }
+    },
+    "217": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "c103f17698aef412bce0250cecfd5390d9b280c93a7d9794fb3d5d54e72f0b59"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 37260,
+          "valid_depth_pixels": 28505,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 216,
+          "filtered_cloud_points": 2612,
+          "residual_m": 0.011505650356411934
+        }
+      }
+    },
+    "218": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "3fcaf4e31c62999ca730af6247399f5c08a51cff88d589dcf519320709026288"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 37576,
+          "valid_depth_pixels": 28512,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 217,
+          "filtered_cloud_points": 2642,
+          "residual_m": 0.012808737345039845
+        }
+      }
+    },
+    "219": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "e0d38a4525b44534ef738baab9211806f91bf821b9e514b2f65083d4c45c03e5"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 37525,
+          "valid_depth_pixels": 30036,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 218,
+          "filtered_cloud_points": 2546,
+          "residual_m": 0.010000590234994888
+        }
+      }
+    },
+    "220": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "3a6ff4645801db03608b7255b94c5aa024fe164e3e4e6a5c3cb095e88b4b3ef9"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 37779,
+          "valid_depth_pixels": 29695,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 219,
+          "filtered_cloud_points": 2790,
+          "residual_m": 0.009174334816634655
+        }
+      }
+    },
+    "221": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "5140bc07ec21cbee6e248b0dedf1517a5f41203578abff73387157c05f9b7e28"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 38093,
+          "valid_depth_pixels": 28537,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 220,
+          "filtered_cloud_points": 2629,
+          "residual_m": 0.009306000545620918
+        }
+      }
+    },
+    "222": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "656b2ff97729433e893f59cd50c965cfb27158aa48e45059b4829c96e12fe5e9"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 37557,
+          "valid_depth_pixels": 26294,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 221,
+          "filtered_cloud_points": 2516,
+          "residual_m": 0.009422173723578453
+        }
+      }
+    },
+    "223": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "ca100de07448edf54b6dc34fd5c0d464659b558fc8c08e1172eb73188613586b"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 37695,
+          "valid_depth_pixels": 26495,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 222,
+          "filtered_cloud_points": 2418,
+          "residual_m": 0.009186213836073875
+        }
+      }
+    },
+    "224": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "a5c2489a359fc23fd8fd9aaf3311c57523c0e072676d777a40d488fbc5a51118"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 38176,
+          "valid_depth_pixels": 24771,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 223,
+          "filtered_cloud_points": 2245,
+          "residual_m": 0.010236425325274467
+        }
+      }
+    },
+    "225": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "b957b05e5e689607deb843b4266f25a9d64d2c83ea1ed49df05e03d8c0207996"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 38379,
+          "valid_depth_pixels": 25960,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 224,
+          "filtered_cloud_points": 2253,
+          "residual_m": 0.010375088080763817
+        }
+      }
+    },
+    "226": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "c203855a7400d608478c39375ef24032b9af7809da2ee0b8b3edbe2fcc3c7961"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 38305,
+          "valid_depth_pixels": 24468,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 225,
+          "filtered_cloud_points": 1967,
+          "residual_m": 0.010517705231904984
+        }
+      }
+    },
+    "227": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "403678be91fc6bb0b180340691824f9d10eef3ba66ba26f6f24407f0bf1140ee"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 38019,
+          "valid_depth_pixels": 20813,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 226,
+          "filtered_cloud_points": 1689,
+          "residual_m": 0.011316154152154922
+        }
+      }
+    },
+    "228": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "45e47c73432b56949a80dee689e3ef51f37d5e55e058806ca0c341b77d2b0d37"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 37809,
+          "valid_depth_pixels": 20019,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 227,
+          "filtered_cloud_points": 1600,
+          "residual_m": 0.011623574420809746
+        }
+      }
+    },
+    "229": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "b739d200d650e091355bc333c97a22d084ab56d514b29faa1da36049b0f45a4a"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 37627,
+          "valid_depth_pixels": 19067,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 228,
+          "filtered_cloud_points": 1509,
+          "residual_m": 0.01101827435195446
+        }
+      }
+    },
+    "230": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "c39e8f43ca04f15b673d8c5c00937cba7fdd203871d44617f716e5e78306b955"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 37848,
+          "valid_depth_pixels": 18040,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 229,
+          "filtered_cloud_points": 1526,
+          "residual_m": 0.011402260512113571
+        }
+      }
+    },
+    "231": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "1aca33af022b1e35088d35bc6a859e1d81c623ceb25a1f89ba28f7cd6625e5da"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 37830,
+          "valid_depth_pixels": 18899,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 230,
+          "filtered_cloud_points": 1477,
+          "residual_m": 0.012545684352517128
+        }
+      }
+    },
+    "232": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "2ed43e22e6358d813e5820dc6c2cf608487fd05da74340c3268922fb58af0bab"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 38723,
+          "valid_depth_pixels": 18275,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 231,
+          "filtered_cloud_points": 1485,
+          "residual_m": 0.010545250028371811
+        }
+      }
+    },
+    "233": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "1144753c25e2c439f8f6237ec60bc62e535888d892dc66a0342e5db7ce0d2e26"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 38573,
+          "valid_depth_pixels": 17721,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 232,
+          "filtered_cloud_points": 1394,
+          "residual_m": 0.010596320033073425
+        }
+      }
+    },
+    "234": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "b77ad0327d802023819a0404fb48f3d41c565b9e7751d1a04ca59b3fd506f2de"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 38508,
+          "valid_depth_pixels": 17260,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 233,
+          "filtered_cloud_points": 1306,
+          "residual_m": 0.009996647946536541
+        }
+      }
+    },
+    "235": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "01394098a1097639f5b49de95e538f981cea5c064be2c352f79165e1391cbdc4"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 38110,
+          "valid_depth_pixels": 18141,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 234,
+          "filtered_cloud_points": 1413,
+          "residual_m": 0.009387070313096046
+        }
+      }
+    },
+    "236": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "b9c0563127fa45fda1e86ad4e342193645a7af7f7804b4376c65a71e196980d1"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 37795,
+          "valid_depth_pixels": 19404,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 235,
+          "filtered_cloud_points": 1453,
+          "residual_m": 0.008977310732007027
+        }
+      }
+    },
+    "237": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "e43a3526560f9958282a35ffee978848a22b515d80082789645646d3f35e1dc7"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 37706,
+          "valid_depth_pixels": 19216,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 236,
+          "filtered_cloud_points": 1404,
+          "residual_m": 0.00829528272151947
+        }
+      }
+    },
+    "238": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "1de6de4ff6e830ee9854ebd72ecf7275ab0b2b2d4ef72fe7a57e9363079459ea"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 38842,
+          "valid_depth_pixels": 21165,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 237,
+          "filtered_cloud_points": 1828,
+          "residual_m": 0.008715515956282616
+        }
+      }
+    },
+    "239": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "42936a84227b64d290167b788f36480b40bbb072c7117bb769301ff875b30142"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 40320,
+          "valid_depth_pixels": 27360,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 238,
+          "filtered_cloud_points": 1906,
+          "residual_m": 0.007932459004223347
+        }
+      }
+    },
+    "240": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "0a38b5473ebfd922dcb0dafda5e720bd7cecd01f850a8e993df2bfb553ae0eb0"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 42231,
+          "valid_depth_pixels": 31548,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 239,
+          "filtered_cloud_points": 2042,
+          "residual_m": 0.007684512995183468
+        }
+      }
+    },
+    "241": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "21833cc3e2c654049cdf4f30cc7254038a08058311bb510656a1744db89b1d2d"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 43485,
+          "valid_depth_pixels": 34784,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 240,
+          "filtered_cloud_points": 2221,
+          "residual_m": 0.006844560615718365
+        }
+      }
+    },
+    "242": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "df6ac1c7a46adf2e63ad1f8eef0df4253fe55433b1c844f039d769b99fdd46bd"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 45210,
+          "valid_depth_pixels": 34817,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 241,
+          "filtered_cloud_points": 2610,
+          "residual_m": 0.007164266891777515
+        }
+      }
+    },
+    "243": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "d20a37d25d4e279c9c56d4edf8c129b5f32aaa65e74f5380b9c7e2e844fa40d9"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 46783,
+          "valid_depth_pixels": 33080,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 242,
+          "filtered_cloud_points": 2602,
+          "residual_m": 0.00668584369122982
+        }
+      }
+    },
+    "244": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "093b2660ea1f87407383db4961c656d25a1f5f248cf5105901e6467f619e4635"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 40256,
+          "valid_depth_pixels": 29357,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 243,
+          "filtered_cloud_points": 2404,
+          "residual_m": 0.007621601223945618
+        }
+      }
+    },
+    "245": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "636a5b24b1731d374df37cc8276f1e6754a54433ae75a74f235deba4dc2202a8"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 34291,
+          "valid_depth_pixels": 26566,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 244,
+          "filtered_cloud_points": 2310,
+          "residual_m": 0.007709078025072813
+        }
+      }
+    },
+    "246": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "cb9c888637b758cedb4f6dd63618e6e71d0eb1de63f965cc9f605c2af5e6200a"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 32492,
+          "valid_depth_pixels": 22819,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 245,
+          "filtered_cloud_points": 2371,
+          "residual_m": 0.009667078033089638
+        }
+      }
+    },
+    "247": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "7db072599b2d206a0f80fad0ab621d59aa703df2471f06500e2e684390c5fbf1"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 28274,
+          "valid_depth_pixels": 22881,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 246,
+          "filtered_cloud_points": 2415,
+          "residual_m": 0.00942615419626236
+        }
+      }
+    },
+    "248": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "0c4f4fa29ac1ba0c9a052938f76fe25bcbaace705d2d7746fddd414d0bce650e"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 25230,
+          "valid_depth_pixels": 22076,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 247,
+          "filtered_cloud_points": 2362,
+          "residual_m": 0.009272325783967972
+        }
+      }
+    },
+    "249": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "516b2d1186f7f973e22cd6903b2b50255683e668e5942b1eb9fc23b263456978"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 23428,
+          "valid_depth_pixels": 19587,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 248,
+          "filtered_cloud_points": 2335,
+          "residual_m": 0.009435610845685005
+        }
+      }
+    },
+    "250": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "d9ac4f87d10fdc40f50f0f0bf13bc1d60f9a4fe826214377a602e34729be75a1"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 22818,
+          "valid_depth_pixels": 19514,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 249,
+          "filtered_cloud_points": 2296,
+          "residual_m": 0.010585538111627102
+        }
+      }
+    },
+    "251": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "15d0870abd0d1e42747145f92a11834ce8bb7cb45416177b76ed567122b27961"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 21399,
+          "valid_depth_pixels": 18928,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 250,
+          "filtered_cloud_points": 2294,
+          "residual_m": 0.009497016668319702
+        }
+      }
+    },
+    "252": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "01bfb22b4bcd86764bfbcdfa61f7696c53ecce81b413811107a40398d6c400b3"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 20804,
+          "valid_depth_pixels": 18522,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 251,
+          "filtered_cloud_points": 2352,
+          "residual_m": 0.010404996573925018
+        }
+      }
+    },
+    "253": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "73e0f3c6db0512b0117be96a2eb23782161a46b16282d3f3c5df7b19b13e4653"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 19679,
+          "valid_depth_pixels": 16694,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 252,
+          "filtered_cloud_points": 2280,
+          "residual_m": 0.00995785091072321
+        }
+      }
+    },
+    "254": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "b487d2878a7c3e9e98e1ad19aafeed4257d7a39fe13786eab0b7012e503b2ebc"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 18412,
+          "valid_depth_pixels": 15435,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 253,
+          "filtered_cloud_points": 2248,
+          "residual_m": 0.009770401753485203
+        }
+      }
+    },
+    "255": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "d00e956dcf7694e229aa2bb7038ef72c845c5bb667c7b73c934b8fbc6a0160f5"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 17517,
+          "valid_depth_pixels": 14453,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 254,
+          "filtered_cloud_points": 2147,
+          "residual_m": 0.009773129597306252
+        }
+      }
+    },
+    "256": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "8b4e1a3c9610a7652f0c5fcbea27e53c4d575f305fdb356cdeccd4264b506d12"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 16952,
+          "valid_depth_pixels": 13665,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 255,
+          "filtered_cloud_points": 2174,
+          "residual_m": 0.009204981848597527
+        }
+      }
+    },
+    "257": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "38dee4f0337bcdbcb1f0dce1f9778afd704a7d9ea28957824e7f2dce8f6d25f9"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 15854,
+          "valid_depth_pixels": 12386,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 256,
+          "filtered_cloud_points": 2070,
+          "residual_m": 0.007668155245482922
+        }
+      }
+    },
+    "258": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "20ac0e9ec7df8500107983cfaea428a1572fbe05ae44a2dbb30906a46545f5ed"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 15023,
+          "valid_depth_pixels": 11290,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 257,
+          "filtered_cloud_points": 1977,
+          "residual_m": 0.00832962617278099
+        }
+      }
+    },
+    "259": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "9280be33ca7342ca5c35b69e8c074c9ff6194cda8c982783e65932ee46e85214"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 14801,
+          "valid_depth_pixels": 11861,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 258,
+          "filtered_cloud_points": 2091,
+          "residual_m": 0.006781125441193581
+        }
+      }
+    },
+    "260": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "d10b8d2481cc2b0e35595e7f7b2883df309aa811d3fce9037372bd5a09ca9ae1"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 14192,
+          "valid_depth_pixels": 11330,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 259,
+          "filtered_cloud_points": 2016,
+          "residual_m": 0.006147704087197781
+        }
+      }
+    },
+    "261": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "383e57ca192ceb267e592e9dd4c3eec16eac52353488ef315d6179248f570bce"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 13901,
+          "valid_depth_pixels": 10941,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 260,
+          "filtered_cloud_points": 1857,
+          "residual_m": 0.005624212324619293
+        }
+      }
+    },
+    "262": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "3a23616d4d33a25bedc2369873cbc346f90a2f615adbef01c37554c0af2b6799"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 13768,
+          "valid_depth_pixels": 10908,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 261,
+          "filtered_cloud_points": 1827,
+          "residual_m": 0.00524775218218565
+        }
+      }
+    },
+    "263": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "351cb18004766d0553068c7082a5a89cc01f507743261a231e23375a698a71bd"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 13657,
+          "valid_depth_pixels": 10852,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 262,
+          "filtered_cloud_points": 1833,
+          "residual_m": 0.005562327802181244
+        }
+      }
+    },
+    "264": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "b2a5b4047331dc0ea7fca7386c79ec2da23ec52bb8ec02a7fdeca841346cb928"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12925,
+          "valid_depth_pixels": 10330,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 263,
+          "filtered_cloud_points": 1982,
+          "residual_m": 0.005242376588284969
+        }
+      }
+    },
+    "265": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "9a109dfeb98eda568a1d0880af50da6d342c68901d27fce947c0bb568f894749"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12449,
+          "valid_depth_pixels": 8635,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 264,
+          "filtered_cloud_points": 1680,
+          "residual_m": 0.005222768522799015
+        }
+      }
+    },
+    "266": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "4e0e09cacc8e0f6c8d5f29cdf4cf056cb831ed0d2d32cf3f8b8f727f8c832ba3"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12158,
+          "valid_depth_pixels": 7284,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 265,
+          "filtered_cloud_points": 1201,
+          "residual_m": 0.006263352930545807
+        }
+      }
+    },
+    "267": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "cd4a0bd18c8ee27e5060a766d33410ebd696b1f66bfac30d657c634896442eaf"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 11800,
+          "valid_depth_pixels": 7900,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 266,
+          "filtered_cloud_points": 1285,
+          "residual_m": 0.005786839872598648
+        }
+      }
+    },
+    "268": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "dfc2e263f8beef7167152022eba15c28664498b5a9d2b329574666e3ad7e1b6f"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 11745,
+          "valid_depth_pixels": 7711,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 267,
+          "filtered_cloud_points": 1534,
+          "residual_m": 0.005410655401647091
+        }
+      }
+    },
+    "269": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "373d060de1ad3c52280345aeec9bc1481bb4052cc9d85f33381b91b8aa42fdd4"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 11482,
+          "valid_depth_pixels": 7539,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 268,
+          "filtered_cloud_points": 1307,
+          "residual_m": 0.005265883170068264
+        }
+      }
+    },
+    "270": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "a229765e6d55951dbb885553e65a106220d9997071f23ffa9e87530f95e19cb4"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 11274,
+          "valid_depth_pixels": 8038,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 269,
+          "filtered_cloud_points": 1444,
+          "residual_m": 0.005129520315676928
+        }
+      }
+    },
+    "271": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "764d8a69bfa4811afb10245f141179524cc01ca94b2b39a257fd99a36353bb29"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 11179,
+          "valid_depth_pixels": 8779,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 270,
+          "filtered_cloud_points": 1639,
+          "residual_m": 0.00512223644182086
+        }
+      }
+    },
+    "272": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "29751cd013503427b642e0ff6352e87e405a8c158105ac5a2c6c5a0a7b1ddebd"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 11152,
+          "valid_depth_pixels": 8974,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 271,
+          "filtered_cloud_points": 1796,
+          "residual_m": 0.00521025899797678
+        }
+      }
+    },
+    "273": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "3ccb826316ca195d8ac707349d2800ded209e0fbbeaf5d2d4dfb9a071def5315"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 11118,
+          "valid_depth_pixels": 8982,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 272,
+          "filtered_cloud_points": 2092,
+          "residual_m": 0.005400904454290867
+        }
+      }
+    },
+    "274": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "6367de63d8412457b0cde3383f942b617e6277361b09bfb7637692421f16e7d9"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 11186,
+          "valid_depth_pixels": 8815,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 273,
+          "filtered_cloud_points": 2142,
+          "residual_m": 0.005524910986423492
+        }
+      }
+    },
+    "275": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "4bd6dc87c432da336dcabd8fff624a6347c44cdb8aba8eb7d4cd61e9870b8394"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 11389,
+          "valid_depth_pixels": 9187,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 274,
+          "filtered_cloud_points": 2131,
+          "residual_m": 0.005905674770474434
+        }
+      }
+    },
+    "276": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "f4880f33631a0768f93d0535ac42e49f8b20429e2aa24b65e30963a266805c02"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 11436,
+          "valid_depth_pixels": 9092,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 275,
+          "filtered_cloud_points": 2131,
+          "residual_m": 0.005441717803478241
+        }
+      }
+    },
+    "277": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "23ee95fb976a5595b93e25cbce357ace0ea0f25ecba35361f4b87af7ce0a4edd"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 11815,
+          "valid_depth_pixels": 9560,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 276,
+          "filtered_cloud_points": 2256,
+          "residual_m": 0.005398675799369812
+        }
+      }
+    },
+    "278": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "dd49438171784715ffaa6c6e5da274d84a366ca241fd3f0915eafcba34ed1db5"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12333,
+          "valid_depth_pixels": 10003,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 277,
+          "filtered_cloud_points": 2310,
+          "residual_m": 0.005494837649166584
+        }
+      }
+    },
+    "279": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "1d06c938c4faf507625c4099c313e41713ae76276a645b0453cc52d8ade91663"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12073,
+          "valid_depth_pixels": 9813,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 278,
+          "filtered_cloud_points": 2252,
+          "residual_m": 0.005406629294157028
+        }
+      }
+    },
+    "280": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "1b7ee10c2a0ee612339f2eb3b381b14c6985d3dd95b370fd9492873cdc19d7f2"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12340,
+          "valid_depth_pixels": 9639,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 279,
+          "filtered_cloud_points": 2126,
+          "residual_m": 0.005344187840819359
+        }
+      }
+    },
+    "281": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "4a93987793822bf7b8c0480cd7230c995c53dc0f1d3425289f9dbcfea15f4d52"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12671,
+          "valid_depth_pixels": 9716,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 280,
+          "filtered_cloud_points": 2132,
+          "residual_m": 0.005248050205409527
+        }
+      }
+    },
+    "282": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "b6edbeee760255050933ec490f83f9cfa7bc6fcfb00bc77ca8b2ad0b8ae5c7c8"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12840,
+          "valid_depth_pixels": 10498,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 281,
+          "filtered_cloud_points": 2104,
+          "residual_m": 0.004928037524223328
+        }
+      }
+    },
+    "283": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "6bc5185ee728410f901591e3f4f73ff24b712ed43766c2f645f5ba1757c03757"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12621,
+          "valid_depth_pixels": 9481,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 282,
+          "filtered_cloud_points": 1815,
+          "residual_m": 0.004911839962005615
+        }
+      }
+    },
+    "284": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "b13a830e8bc8fd442c2d3b8d8451578eaf305b9f07f8820d154fd63ec13b518d"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12751,
+          "valid_depth_pixels": 9632,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 283,
+          "filtered_cloud_points": 1815,
+          "residual_m": 0.005191734991967678
+        }
+      }
+    },
+    "285": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "c2d1d53464ebedad0396e133e19a3922fc31ac0eb576a168f7fda52f074629c7"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12961,
+          "valid_depth_pixels": 9939,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 284,
+          "filtered_cloud_points": 1967,
+          "residual_m": 0.004977512173354626
+        }
+      }
+    },
+    "286": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "bb887b4f45579ae9dbdae4dacae06f2b6211413f7f53c359c40eab1ea161af84"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12986,
+          "valid_depth_pixels": 9923,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 285,
+          "filtered_cloud_points": 1932,
+          "residual_m": 0.0049741026014089584
+        }
+      }
+    },
+    "287": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "67b2247fafea2b55d421fb242860cfe64e62982be30084834cad4f8d7c5d4d5a"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12909,
+          "valid_depth_pixels": 9954,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 286,
+          "filtered_cloud_points": 1823,
+          "residual_m": 0.004867227282375097
+        }
+      }
+    },
+    "288": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "88744fb71b285f08330a1bfa2546a52b6daaacca469d41a38b7220479db12e41"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12935,
+          "valid_depth_pixels": 9963,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 287,
+          "filtered_cloud_points": 1774,
+          "residual_m": 0.0049822768196463585
+        }
+      }
+    },
+    "289": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "00e77f8ad8429a0a49788d1441dc90dc46de5c27fb55aae7c0b38d4e71217175"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12886,
+          "valid_depth_pixels": 10400,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 288,
+          "filtered_cloud_points": 1925,
+          "residual_m": 0.005106305703520775
+        }
+      }
+    },
+    "290": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "4523034699efe70dc8cccba278a35d1bb9839609907395daf88fc34a3b1913d8"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12811,
+          "valid_depth_pixels": 9749,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 289,
+          "filtered_cloud_points": 1990,
+          "residual_m": 0.005030177067965269
+        }
+      }
+    },
+    "291": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "baaec4ffa3a397b36f1fc1f710415fc2a821391255dfe487daee74e28d8499fe"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12794,
+          "valid_depth_pixels": 10571,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 290,
+          "filtered_cloud_points": 2102,
+          "residual_m": 0.005177512299269438
+        }
+      }
+    },
+    "292": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "b512edcd03405a46d9b13d1fb3e9110b8e9968d92fbb42cbaa289bd20b25f3d1"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12895,
+          "valid_depth_pixels": 10575,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 291,
+          "filtered_cloud_points": 1959,
+          "residual_m": 0.005016964860260487
+        }
+      }
+    },
+    "293": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "9c76e9cdb77780a30380cba5494f7bfc33dabab1683b44f08aa8ae2c8f0597d2"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12834,
+          "valid_depth_pixels": 10115,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 292,
+          "filtered_cloud_points": 1951,
+          "residual_m": 0.005160771310329437
+        }
+      }
+    },
+    "294": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "879069098ce1ed3d4cc41d9e9ab823772d09777692c9b29b8f1b8433869bba7f"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12921,
+          "valid_depth_pixels": 10328,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 293,
+          "filtered_cloud_points": 2286,
+          "residual_m": 0.005375761538743973
+        }
+      }
+    },
+    "295": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "12a7c9505eb43a85fce8a42f005fa3c98816aee01e27bb64ed2f1d4880584a2c"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12803,
+          "valid_depth_pixels": 10523,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 294,
+          "filtered_cloud_points": 2392,
+          "residual_m": 0.00578145869076252
+        }
+      }
+    },
+    "296": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "8a321cc90590e2c02b1e3285c89909cd54a7c43249d6d514a2c73c4ef0f35888"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12827,
+          "valid_depth_pixels": 9802,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 295,
+          "filtered_cloud_points": 2254,
+          "residual_m": 0.005317478906363249
+        }
+      }
+    },
+    "297": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "a9984a8823abbeffa43c742dd552d1054e41a9350dbcd22cd0d09a5c82580a26"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12779,
+          "valid_depth_pixels": 9909,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 296,
+          "filtered_cloud_points": 2192,
+          "residual_m": 0.0054537709802389145
+        }
+      }
+    },
+    "298": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "c0344d83e7c02cf83dc7102cd70590a80250eac9189b5c64aedb4e8040305369"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12697,
+          "valid_depth_pixels": 10100,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 297,
+          "filtered_cloud_points": 2212,
+          "residual_m": 0.005590361542999744
+        }
+      }
+    },
+    "299": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "9f2856da4d29221d660c5ede868bbd3999d51b1d32cc8304052ea3c582bb72ae"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12653,
+          "valid_depth_pixels": 9931,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 298,
+          "filtered_cloud_points": 2056,
+          "residual_m": 0.0051270825788378716
+        }
+      }
+    },
+    "300": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "7544fa379c6653996ea7f0b7a6fa6d055669bbbb2e1232a091bbd4e845572b4a"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12668,
+          "valid_depth_pixels": 9990,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 299,
+          "filtered_cloud_points": 2188,
+          "residual_m": 0.005814509000629187
+        }
+      }
+    },
+    "301": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "2bda19a4516d51c619eeade2d4fe804c297a4d39ec6e421498e76d84c4e49f6e"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12678,
+          "valid_depth_pixels": 9955,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 300,
+          "filtered_cloud_points": 1987,
+          "residual_m": 0.0053924862295389175
+        }
+      }
+    },
+    "302": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "e7423060b829549007507c6fd27864735b77d8343a418345672ecfbbfe9c0edf"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12703,
+          "valid_depth_pixels": 10434,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 301,
+          "filtered_cloud_points": 2337,
+          "residual_m": 0.006087092217057943
+        }
+      }
+    },
+    "303": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "183f7ef9b089c4bd2d77452daa29b4515d066d550cf3ae7511c611d6cf5719a1"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12747,
+          "valid_depth_pixels": 10026,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 302,
+          "filtered_cloud_points": 2235,
+          "residual_m": 0.005546987988054752
+        }
+      }
+    },
+    "304": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "f32f36fbfe5b992058fbf72131672cbc91169cc65905d905f9ef6bf1c6eb133e"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12740,
+          "valid_depth_pixels": 10285,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 303,
+          "filtered_cloud_points": 2189,
+          "residual_m": 0.0055126408115029335
+        }
+      }
+    },
+    "305": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "cbf3d57e5cea5891e0c3a65147bd2041d1452975bd2ca047136801ed3d5c6a59"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12760,
+          "valid_depth_pixels": 10156,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 304,
+          "filtered_cloud_points": 2187,
+          "residual_m": 0.005508109927177429
+        }
+      }
+    },
+    "306": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "cd1cd79de0d5301109e44efabb3ab899d8ff3b2681dd899e83e24e6f5dbe2a1b"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12795,
+          "valid_depth_pixels": 10074,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 305,
+          "filtered_cloud_points": 2270,
+          "residual_m": 0.006189684849232435
+        }
+      }
+    },
+    "307": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "6f4fc0cd9c47249098af80bd0b154afebeeed43d2fc25192c12158d84459744e"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12630,
+          "valid_depth_pixels": 10244,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 306,
+          "filtered_cloud_points": 2314,
+          "residual_m": 0.005677107721567154
+        }
+      }
+    },
+    "308": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "dac92d2e17be8f76b44659e054a8d9e8c5b6a57cbd835f8a708b85ea734c76e0"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12702,
+          "valid_depth_pixels": 10413,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 307,
+          "filtered_cloud_points": 2297,
+          "residual_m": 0.006016734056174755
+        }
+      }
+    },
+    "309": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "b13ea070606837e3cb61604e9f4481afa74e9d52a8f61c601e681cb411cd5381"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12781,
+          "valid_depth_pixels": 10852,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 308,
+          "filtered_cloud_points": 2457,
+          "residual_m": 0.006365046836435795
+        }
+      }
+    },
+    "310": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "0002e68cbd6a81a91b2525f238429f0baf0d6acb6bc170a96e83ab24601bee93"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12824,
+          "valid_depth_pixels": 10997,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 309,
+          "filtered_cloud_points": 2497,
+          "residual_m": 0.006708613596856594
+        }
+      }
+    },
+    "311": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "91ee15c576ec475872b1bc09ce1648281846c6adeb9d903d9adc603d1f960ec2"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12880,
+          "valid_depth_pixels": 11044,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 310,
+          "filtered_cloud_points": 2409,
+          "residual_m": 0.0057620336301624775
+        }
+      }
+    },
+    "312": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "71ad226168e5993af9e5a1cec0b2e23c29cc76f5d772f1c21278f2254862c840"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12889,
+          "valid_depth_pixels": 11090,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 311,
+          "filtered_cloud_points": 2517,
+          "residual_m": 0.0063216835260391235
+        }
+      }
+    },
+    "313": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "3e23e1cec2a0a101bd7e92cddc1224dba27371e261c16d3082b243f033667e73"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 12937,
+          "valid_depth_pixels": 11023,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 312,
+          "filtered_cloud_points": 2433,
+          "residual_m": 0.006614288780838251
+        }
+      }
+    },
+    "314": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "4d7e3401ba6912932e9f81632b1d657a2d59a23c8f01dab28e2924771e3b1cd4"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 13048,
+          "valid_depth_pixels": 11193,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 313,
+          "filtered_cloud_points": 2519,
+          "residual_m": 0.006732644978910685
+        }
+      }
+    },
+    "315": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "a07aeae729e37ff729d9898c77bf4755a36ec5de9745348dad90b1acf18999ae"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 13051,
+          "valid_depth_pixels": 11453,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 314,
+          "filtered_cloud_points": 2475,
+          "residual_m": 0.0071325358003377914
+        }
+      }
+    },
+    "316": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "66b1ed9ed520272597d1a7c5ff21d0b5f35f312245d603696a1f503d7d10e300"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 13128,
+          "valid_depth_pixels": 11519,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 315,
+          "filtered_cloud_points": 2506,
+          "residual_m": 0.006953236646950245
+        }
+      }
+    },
+    "317": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "b974d04228177f6367aa73916e20164c8a4dd983b35a630dac7874601e0c93ba"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 13078,
+          "valid_depth_pixels": 11229,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 316,
+          "filtered_cloud_points": 2484,
+          "residual_m": 0.0073450785130262375
+        }
+      }
+    },
+    "318": {
+      "timestamp": null,
+      "detections": [
+        {
+          "object": "mini_dust_pan",
+          "status": "prepared",
+          "sha256": "7d38fc358b2f6ca10482954ad9fba6f13e614e8d52e5234ca79daceb868d7795"
+        }
+      ],
+      "objects": {
+        "mini_dust_pan": {
+          "mask_pixels": 13143,
+          "valid_depth_pixels": 11375,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": 317,
+          "filtered_cloud_points": 2376,
+          "residual_m": 0.006880708038806915
+        }
+      }
+    }
+  },
+  "accepted_by_object": {
+    "mini_dust_pan": 319
+  },
+  "input_errors": []
+}

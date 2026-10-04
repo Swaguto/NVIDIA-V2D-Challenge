@@ -22,6 +22,15 @@ in [TRACKING_FAILURE.md](TRACKING_FAILURE.md). FoundationPose already estimates
 camera-frame 6-DoF poses in the repo, but its model was not run here and it still
 needs a correct initial target mask and a separate world-camera trajectory.
 
+The later [local GPU control](GPU_CONTROL.md) reproduces the detector's table
+mislocalization at all eight probe frames. One reviewed RGB initialization box with
+SAM2 video propagation supplies 319 masks; the frozen-mask native path accepts all
+319 camera poses, with sampled CAD/mask IoU 0.657-0.904. Software `45a9fc5` adds the
+hash/axes/GT-use checked `--mask-manifest` input, seeded CAD sampling and native
+gap reinitialization; 145 CPU tests pass. This is a semi-automatic observation
+control, not an automatic detector repair or official world-pose score. See its
+portable GPU commands and receipts before requesting another unknown VM run.
+
 ## Background and branch dependencies
 
 The repair branch starts at PR #26 (`issue5/object-world-icp`,
@@ -91,9 +100,9 @@ input integrity, fixed-world smoothing and single-object segmentation controls;
 its exact source revision/results are in `evidence/review_validation.json`.
 Missing-kit parity tests skip
 explicitly; such a reduced run is not equivalent to the recorded check. Whole-repo
-IsaacLab/GPU/training tests were not run. Native DINO/SAM2/registration entrypoints
-still need the operator's compatible CUDA/perception environment and checkpoints;
-CPU registration unit tests do not demonstrate native inference performance.
+IsaacLab/training tests were not run. The separate October 4 GPU control now runs
+real DINO/SAM2 and native registration on local RTX hardware; operator replays need
+compatible CUDA and the pinned models. CPU unit tests do not establish inference.
 See [evidence/validation_snapshot.json](evidence/validation_snapshot.json) for the
 tested environment, commands, hashes and check boundaries.
 
@@ -144,7 +153,7 @@ These are workstream handoffs, not new team assignments or sent messages.
 | Issue #3 calibration / prepared perception | Original episode-0/2 masks, raw depth/disparity validity, matching intrinsics/rectification, original `make_masks.py`/`make_depth.py` or actual producer versions, logs/model/input hashes and frozen old outputs. These scripts/observations were not found in the reviewed Git branches. |
 | Issue #4 camera/depth | One metric time-varying camera trajectory per source frame in one fixed gauge, shared across objects. Include episode/frame/capture time, axes, rectification/calibration hash, scale check, producer and GT-use classification. Independent lane must not use object-trajectory GT. The reviewed issue-4 branch equals main and supplies no such implementation/artifact. |
 | Issue #5 tracking | Run bug-only corrected episode 2 and 0 with frozen observations, scale 1 and smoothing off; compare one lid-derived shared GT-assisted camera versus pot-derived camera separately, then the independent path. Keep lanes/output roots distinct and retain failures. |
-| Episode-39 perception / tracking | Recover the original run receipts; replay the manual-mask control on its frozen depth; inspect additional lifting/occluded frames. Compare current ICP and the existing FoundationPose baseline on identical corrected observations before considering optional initialization. Keep the one-frame evidence separate from unrun CUDA inference and episode acceptance. |
+| Episode-39 perception / tracking | Recover the original run receipts. Reproduce GPU_CONTROL.md's detector failure and reviewed-box SAM2/frozen-mask control on the original inputs; validate automatic acquisition separately. FoundationPose comparison remains unrun; camera-space fits do not close world-pose acceptance. |
 | Evaluation / integration | Score frozen candidates with the five kit pose metrics and raw/fill coverage; reconcile kit roster with issue wording; inspect an asymmetric control, then expand to all 20 public IDs. Coordinate overlapping PR #28 files before integration. |
 
 Detailed prepared-input and conversion commands are in
