@@ -116,6 +116,12 @@ Tracked in issue #29.
 
 ## Reproducing
 
+The optional lid-appearance diagnostic and RGB annotation replay are documented
+in [LID_SPIN.md](../../docs/team/issue5/LID_SPIN.md). They hold translation/axis
+tilt fixed, record ambiguity and recompute saved-pose residuals; they are not
+native temporal defaults. Episode-0 replication still fails canonical rotation
+despite improved relative position.
+
 ```bash
 # depth + calibration validation
 python scripts/track3/validate_stereo.py 0 120

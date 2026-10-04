@@ -1,0 +1,1184 @@
+{
+  "episodes": [
+    0
+  ],
+  "objects": [
+    "white_pot",
+    "white_pot_lid"
+  ],
+  "gt_use": "none",
+  "prompt": null,
+  "frame_selection": "eight rounded linspace source indices per full video; no GT read",
+  "inputs": [
+    {
+      "path": "mesh/white_pot/white_pot.glb",
+      "bytes": 8948208,
+      "sha256": "2627b01350864cc7f52540cb1ccfb9d67544e245d7061d8e313ecfd9d3eb5151"
+    },
+    {
+      "path": "mesh/white_pot_lid/white_pot_lid.glb",
+      "bytes": 8262028,
+      "sha256": "672a2965dd785fc958db39a2ce94a6df215f58dfdfafedf7dd193ffc6d83b363"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.ego_cam_b/episode_000000.mp4",
+      "bytes": 5648231,
+      "sha256": "55e5e8b76766eef2c209a84b54a86d108c4ed07b4ed6fdf182deb6c76e8657b5"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.ego_cam_b/episode_000002.mp4",
+      "bytes": 4919102,
+      "sha256": "0c054cd1ba87781fb2da50bd812ef782e27ad7d32f9c30f9b0116d0095107e30"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.ego_cam_c/episode_000000.mp4",
+      "bytes": 4545702,
+      "sha256": "64e32dded47e4fd3b74015ccd8aaf71183140853d3f6f105136b91917fec4b99"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.ego_cam_c/episode_000002.mp4",
+      "bytes": 3937003,
+      "sha256": "255208a8be8d6ef7a817b68b9fe444bea6886981a6d210249e6da199a5770ee0"
+    }
+  ],
+  "calibration_sha256": "23e2d9c46369292cdda492a777e7a6083815369a25d1af4bb82560669fde5d52",
+  "models": [
+    {
+      "model": "IDEA-Research/grounding-dino-base",
+      "revision": "12bdfa3120f3e7ec7b434d90674b3396eccf88eb",
+      "file": "config.json",
+      "bytes": 1737,
+      "sha256": "eda416dae6f49419ff831b1c190ec430a060b19aae688dbaf2425a075b650608"
+    },
+    {
+      "model": "IDEA-Research/grounding-dino-base",
+      "revision": "12bdfa3120f3e7ec7b434d90674b3396eccf88eb",
+      "file": "model.safetensors",
+      "bytes": 933400872,
+      "sha256": "5548f844c928c4b6f411fa8cbcc2bfa8dbbba437cb1d513975519f93c2a9ed21"
+    },
+    {
+      "model": "IDEA-Research/grounding-dino-base",
+      "revision": "12bdfa3120f3e7ec7b434d90674b3396eccf88eb",
+      "file": "preprocessor_config.json",
+      "bytes": 457,
+      "sha256": "8454179ba95e2ad22947835aad7b45862a601fc0055ab88bf1ee70892d3aea60"
+    },
+    {
+      "model": "IDEA-Research/grounding-dino-base",
+      "revision": "12bdfa3120f3e7ec7b434d90674b3396eccf88eb",
+      "file": "special_tokens_map.json",
+      "bytes": 125,
+      "sha256": "b6d346be366a7d1d48332dbc9fdf3bf8960b5d879522b7799ddba59e76237ee3"
+    },
+    {
+      "model": "IDEA-Research/grounding-dino-base",
+      "revision": "12bdfa3120f3e7ec7b434d90674b3396eccf88eb",
+      "file": "tokenizer.json",
+      "bytes": 711396,
+      "sha256": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66"
+    },
+    {
+      "model": "IDEA-Research/grounding-dino-base",
+      "revision": "12bdfa3120f3e7ec7b434d90674b3396eccf88eb",
+      "file": "tokenizer_config.json",
+      "bytes": 1237,
+      "sha256": "d40ab645b68211910b9170d22433d43186a6ec8ee6fd10ba170524b25bf4fb56"
+    },
+    {
+      "model": "IDEA-Research/grounding-dino-base",
+      "revision": "12bdfa3120f3e7ec7b434d90674b3396eccf88eb",
+      "file": "vocab.txt",
+      "bytes": 231508,
+      "sha256": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+    },
+    {
+      "model": "facebook/sam2.1-hiera-large",
+      "revision": "665f8e2ad61cf5f53d65644ff27c8ee525124610",
+      "file": "config.json",
+      "bytes": 5705,
+      "sha256": "00446988cf4d617118d2d347eabe2c46aebed744628facdd540508be30b69ec3"
+    },
+    {
+      "model": "facebook/sam2.1-hiera-large",
+      "revision": "665f8e2ad61cf5f53d65644ff27c8ee525124610",
+      "file": "model.safetensors",
+      "bytes": 897897416,
+      "sha256": "dc407dce21301fd94abb395c5099b4f2c455fdc8a8f261ac3d0ea6d4cd197230"
+    },
+    {
+      "model": "facebook/sam2.1-hiera-large",
+      "revision": "665f8e2ad61cf5f53d65644ff27c8ee525124610",
+      "file": "preprocessor_config.json",
+      "bytes": 683,
+      "sha256": "6ebf229ee259368ce4a8d4f2fe893a72b053023710853e257253939e601f583d"
+    },
+    {
+      "model": "facebook/sam2.1-hiera-large",
+      "revision": "665f8e2ad61cf5f53d65644ff27c8ee525124610",
+      "file": "processor_config.json",
+      "bytes": 95,
+      "sha256": "f8a68e865cfad115c1c2763f3d93eca7b1c622da06da2a9273eb437fb2389b6d"
+    },
+    {
+      "model": "facebook/sam2.1-hiera-large",
+      "revision": "665f8e2ad61cf5f53d65644ff27c8ee525124610",
+      "file": "video_preprocessor_config.json",
+      "bytes": 705,
+      "sha256": "9fccfe5f464ec38c2f236d0e6a68e95511c80c22132fc2fa4b9f7b65f24fad95"
+    }
+  ],
+  "source_sha256_lf": {
+    "scripts\\track3\\register_poses.py": "252866db4deb066e780df1b34d08e29a48a6acb88d5830418de72fad1e9a10fd",
+    "reconstruction\\modules\\v2d_world_calib\\vm\\visualize_object_pose.py": "ea452472a25408db77e2e25fec8116eb017519830cfb333426a89aac6111bb6b"
+  },
+  "worker_sha256_lf": "8616c0182221b97ef199664fa6ba5163d6bfafc1b78cbfabcd4d3acc246fa651",
+  "environment": {
+    "torch": "2.11.0+cu128",
+    "transformers": "5.18.0",
+    "cuda": "12.8",
+    "device": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "opencv": "5.0.0"
+  },
+  "params": {
+    "box_threshold": 0.3,
+    "text_threshold": 0.25,
+    "scale": 1,
+    "cad_samples": 6000,
+    "seed": 0,
+    "max_residual_m": 0.05,
+    "warm_starts": false,
+    "smoothing": false
+  },
+  "frames": [
+    {
+      "episode": 0,
+      "frame_index": 0,
+      "total_source_frames": 373,
+      "depth_sha256": "08980b8401df108174bb93cda6c11c79dc2367b2d84c45dcb0927b92d308efeb",
+      "views": {
+        "ego_cam_c": {
+          "objects": {
+            "white_pot": {
+              "mask_pixels": 9045,
+              "valid_depth_pixels": 8720,
+              "mask_sha256": "a5a199e2e078118d0e991f31ffa68aefffe767bcde70ceb13e11f22dedd8e811"
+            },
+            "white_pot_lid": {
+              "mask_pixels": 32525,
+              "valid_depth_pixels": 30244,
+              "mask_sha256": "3e0186cef9cdb64bedcd312baf7cd0238cd1d2e44587adcf0eff9bfc01051d45"
+            }
+          }
+        }
+      },
+      "fits": {
+        "white_pot": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 702,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            -0.10765476039590902,
+            0.8787740965973204,
+            0.4623702949110429,
+            -0.0487878068531256
+          ],
+          "translation": [
+            0.04814653843641281,
+            0.22952905297279358,
+            0.45219820737838745
+          ],
+          "residual_m": 0.030568022280931473,
+          "cad_model_mask_iou": 0.22937709344896529
+        },
+        "white_pot_lid": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 4312,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.5728634007910894,
+            0.3568724311985246,
+            0.13818830416071756,
+            -0.724826589245805
+          ],
+          "translation": [
+            0.01831885240972042,
+            0.12867628037929535,
+            0.5142449140548706
+          ],
+          "residual_m": 0.006119138561189175,
+          "cad_model_mask_iou": 0.8536315190707143
+        }
+      },
+      "pot_lid_overlap_pixels_before_exclusion": 31726
+    },
+    {
+      "episode": 0,
+      "frame_index": 53,
+      "total_source_frames": 373,
+      "depth_sha256": "5c290cc16fec22f2a494ea8f54d1fcbfa1100fedee904f246139c446faa03060",
+      "views": {
+        "ego_cam_c": {
+          "objects": {
+            "white_pot": {
+              "mask_pixels": 10168,
+              "valid_depth_pixels": 8929,
+              "mask_sha256": "fa7f18b68286f57a421f6c58c6ded549cf03d1eced6e790a21ca33aa404e4ef3"
+            },
+            "white_pot_lid": {
+              "mask_pixels": 17645,
+              "valid_depth_pixels": 16538,
+              "mask_sha256": "d3d44944235f6a165672e283ae21f68bd7f381797f8d5581a890532a0222308d"
+            }
+          }
+        }
+      },
+      "fits": {
+        "white_pot": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 1242,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            -0.4761979389095897,
+            0.48760352154771586,
+            0.42746651080965153,
+            0.5939282034798035
+          ],
+          "translation": [
+            0.05822838097810745,
+            0.1531006246805191,
+            0.5031646490097046
+          ],
+          "residual_m": 0.019862718880176544,
+          "cad_model_mask_iou": 0.2202885726224713
+        },
+        "white_pot_lid": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 2320,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.5933191249253047,
+            0.3870116131103439,
+            -0.0014497068844969894,
+            -0.7058274050116994
+          ],
+          "translation": [
+            0.030836617574095726,
+            0.12533949315547943,
+            0.5148538947105408
+          ],
+          "residual_m": 0.007142785005271435,
+          "cad_model_mask_iou": 0.5374991113954646
+        }
+      },
+      "pot_lid_overlap_pixels_before_exclusion": 16695
+    },
+    {
+      "episode": 0,
+      "frame_index": 106,
+      "total_source_frames": 373,
+      "depth_sha256": "1454d9e9ff44981ebc9e4836160d59d2160162d761e7674bcaa4a83f67badc5b",
+      "views": {
+        "ego_cam_c": {
+          "objects": {
+            "white_pot": {
+              "mask_pixels": 39247,
+              "valid_depth_pixels": 33356,
+              "mask_sha256": "2cba576e7c1b657dc6802fcf7ce17c5f46706bbdd6a3bccf310fe4da6cf89ee4"
+            },
+            "white_pot_lid": {
+              "mask_pixels": 28798,
+              "valid_depth_pixels": 25769,
+              "mask_sha256": "bf86c0ecfb255edd9b77b9e9e42876c5d354b83b418f281c890add04bb4b7633"
+            }
+          }
+        }
+      },
+      "fits": {
+        "white_pot": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 5148,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.6042097358002471,
+            -0.08478218098976091,
+            0.5886338361432064,
+            -0.5303327105677603
+          ],
+          "translation": [
+            0.029384994879364967,
+            0.16197523474693298,
+            0.5628547072410583
+          ],
+          "residual_m": 0.009826963767409325,
+          "cad_model_mask_iou": 0.7428810137157975
+        },
+        "white_pot_lid": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 4360,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.29995172003288934,
+            -0.6093302075478356,
+            0.7230595102048324,
+            0.12621651445579785
+          ],
+          "translation": [
+            0.22950106859207153,
+            0.17958860099315643,
+            0.5509790182113647
+          ],
+          "residual_m": 0.006855315528810024,
+          "cad_model_mask_iou": 0.8907291595079376
+        }
+      },
+      "pot_lid_overlap_pixels_before_exclusion": 0
+    },
+    {
+      "episode": 0,
+      "frame_index": 159,
+      "total_source_frames": 373,
+      "depth_sha256": "7bfbaa6b251a36d3aaf4de1b5f182052046c1054e939cb0988b4aaf7ba60126c",
+      "views": {
+        "ego_cam_c": {
+          "objects": {
+            "white_pot": {
+              "mask_pixels": 61521,
+              "valid_depth_pixels": 42966,
+              "mask_sha256": "107b160b1fc07abc02e57fc405797e2ab16cabc4f2d1d7280d69306f62005a2d"
+            },
+            "white_pot_lid": {
+              "mask_pixels": 29609,
+              "valid_depth_pixels": 27084,
+              "mask_sha256": "0df1d89e1415de484f86d00e45ae59a30464f8d4921ec8b94191096cac2bac19"
+            }
+          }
+        }
+      },
+      "fits": {
+        "white_pot": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 4948,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.5431610222179347,
+            0.41642283561760135,
+            0.22296342326876153,
+            -0.694158078396873
+          ],
+          "translation": [
+            0.01950095407664776,
+            0.0018794476054608822,
+            0.4479467272758484
+          ],
+          "residual_m": 0.00917019136250019,
+          "cad_model_mask_iou": 0.7536933845523147
+        },
+        "white_pot_lid": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 4574,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.3183852004034519,
+            -0.5673855315100481,
+            0.7386569771946724,
+            0.17632468017479352
+          ],
+          "translation": [
+            0.25769323110580444,
+            0.1663566678762436,
+            0.5468021035194397
+          ],
+          "residual_m": 0.006756932474672794,
+          "cad_model_mask_iou": 0.9461075854736353
+        }
+      },
+      "pot_lid_overlap_pixels_before_exclusion": 0
+    },
+    {
+      "episode": 0,
+      "frame_index": 213,
+      "total_source_frames": 373,
+      "depth_sha256": "480c797b497fd76e6f837ec3283cd97c0f0a64ab79eaaf4f97c9ed7af01c8802",
+      "views": {
+        "ego_cam_c": {
+          "objects": {
+            "white_pot": {
+              "mask_pixels": 36893,
+              "valid_depth_pixels": 30856,
+              "mask_sha256": "9e087e8a6a5a97c7e6cb7e7ff080586283b6a6352bc7c219e71ca03d151ee324"
+            },
+            "white_pot_lid": {
+              "mask_pixels": 29971,
+              "valid_depth_pixels": 27773,
+              "mask_sha256": "2ec63f87d5cf5f963812abf7181f1d02ebf5a38db6f30009279041390e7db0a7"
+            }
+          }
+        }
+      },
+      "fits": {
+        "white_pot": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 5195,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.601385895031084,
+            0.31787929453897323,
+            0.18081210341225615,
+            -0.7103483248524645
+          ],
+          "translation": [
+            0.026766132563352585,
+            0.11687016487121582,
+            0.5686534643173218
+          ],
+          "residual_m": 0.00991736724972725,
+          "cad_model_mask_iou": 0.774936451448907
+        },
+        "white_pot_lid": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 4321,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.38692145960917584,
+            -0.5512249803411583,
+            0.7323283543611292,
+            0.10068756894728785
+          ],
+          "translation": [
+            0.2594459652900696,
+            0.16269956529140472,
+            0.543775737285614
+          ],
+          "residual_m": 0.006517480593174696,
+          "cad_model_mask_iou": 0.9390038060565944
+        }
+      },
+      "pot_lid_overlap_pixels_before_exclusion": 0
+    },
+    {
+      "episode": 0,
+      "frame_index": 266,
+      "total_source_frames": 373,
+      "depth_sha256": "ca21f07962ef8ac9b234c15568b63a47df17cf08aff501bee000d405b4eca7a7",
+      "views": {
+        "ego_cam_c": {
+          "objects": {
+            "white_pot": {
+              "mask_pixels": 11581,
+              "valid_depth_pixels": 10352,
+              "mask_sha256": "8fdf240356826762246c1f189fea231fd7fbe6c25cee9ff6497f03c353f7f3be"
+            },
+            "white_pot_lid": {
+              "mask_pixels": 19697,
+              "valid_depth_pixels": 17755,
+              "mask_sha256": "242e6a0f9c1c2b7ac2fee6139c0a94cc205b0d8f948a920154252ac0d0d112f2"
+            }
+          }
+        }
+      },
+      "fits": {
+        "white_pot": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 1159,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            -0.32740284727677293,
+            0.8110956084237745,
+            -0.23772465887116018,
+            0.4223958761106925
+          ],
+          "translation": [
+            0.08192180097103119,
+            0.13225996494293213,
+            0.512196958065033
+          ],
+          "residual_m": 0.019557710736989975,
+          "cad_model_mask_iou": 0.1836063941038793
+        },
+        "white_pot_lid": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 2715,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.5985571319567337,
+            0.34070839834203664,
+            0.11714313444788547,
+            -0.7154890866635619
+          ],
+          "translation": [
+            0.07031857222318649,
+            0.07451778650283813,
+            0.525331437587738
+          ],
+          "residual_m": 0.00665221456438303,
+          "cad_model_mask_iou": 0.6447122919620867
+        }
+      },
+      "pot_lid_overlap_pixels_before_exclusion": 18192
+    },
+    {
+      "episode": 0,
+      "frame_index": 319,
+      "total_source_frames": 373,
+      "depth_sha256": "ff0fcb548ad081dc0857b30411c6ca8dde28da26bd391f1093be1a9110caf938",
+      "views": {
+        "ego_cam_c": {
+          "objects": {
+            "white_pot": {
+              "mask_pixels": 12910,
+              "valid_depth_pixels": 11900,
+              "mask_sha256": "14688cff14969dc0ca8b8f553c1270c3dd49a9502a080061776dba420a81c8e1"
+            },
+            "white_pot_lid": {
+              "mask_pixels": 24810,
+              "valid_depth_pixels": 23000,
+              "mask_sha256": "8854f911bc7a89e0f527aa9f8ef255aee6c6f17f67823950b7ea91a1accb4ea3"
+            }
+          }
+        }
+      },
+      "fits": {
+        "white_pot": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 1365,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.23733927255695333,
+            0.4603254449808124,
+            0.449063382474817,
+            0.7280883414295477
+          ],
+          "translation": [
+            0.009798581711947918,
+            0.22871415317058563,
+            0.47748661041259766
+          ],
+          "residual_m": 0.02366330847144127,
+          "cad_model_mask_iou": 0.2159709618874773
+        },
+        "white_pot_lid": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 4012,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.38113149828018694,
+            -0.5418371489218595,
+            0.7489239451607133,
+            -0.01625452035107291
+          ],
+          "translation": [
+            0.0058586690574884415,
+            0.11251170933246613,
+            0.5619888305664062
+          ],
+          "residual_m": 0.006751710548996925,
+          "cad_model_mask_iou": 0.8182182342573305
+        }
+      },
+      "pot_lid_overlap_pixels_before_exclusion": 24707
+    },
+    {
+      "episode": 0,
+      "frame_index": 372,
+      "total_source_frames": 373,
+      "depth_sha256": "25071e677c952308797744e354d283f474b4b2aee0ee813336a45996d21a4483",
+      "views": {
+        "ego_cam_c": {
+          "objects": {
+            "white_pot": {
+              "mask_pixels": 8331,
+              "valid_depth_pixels": 7558,
+              "mask_sha256": "3b308b8f0e7d6dde13945373b384a6b5d49f1110cd1c8d2bf1fb0a263a9cd844"
+            },
+            "white_pot_lid": {
+              "mask_pixels": 29539,
+              "valid_depth_pixels": 28181,
+              "mask_sha256": "d801bda08c5b5040459bc937ca0b1c2ead7b9f3542744e9f8f7cfc67fb805993"
+            }
+          }
+        }
+      },
+      "fits": {
+        "white_pot": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 889,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.5885315929108796,
+            -0.5336378458052479,
+            0.09503430856270295,
+            -0.5998580614329744
+          ],
+          "translation": [
+            -0.0012796428054571152,
+            0.25520214438438416,
+            0.5168483257293701
+          ],
+          "residual_m": 0.020460497587919235,
+          "cad_model_mask_iou": 0.16987612282040745
+        },
+        "white_pot_lid": {
+          "status": "observed",
+          "reason": null,
+          "cloud_points": 3930,
+          "scale": 1.0,
+          "rotation_wxyz": [
+            0.511938703303994,
+            0.41146644585888903,
+            -0.0625550629437248,
+            -0.7514658954947894
+          ],
+          "translation": [
+            -0.006422953214496374,
+            0.19294069707393646,
+            0.5304474830627441
+          ],
+          "residual_m": 0.005142709240317345,
+          "cad_model_mask_iou": 0.8999599171621351
+        }
+      },
+      "pot_lid_overlap_pixels_before_exclusion": 29268
+    }
+  ],
+  "limits": [
+    "8 preselected episode-0 frames, rectified ego_cam_c only; not continuous tracking.",
+    "Prompts reviewed by Codex from RGB; no independent human mask review or mask-IoU truth.",
+    "Depth/CAD/native solver/gate unchanged; no GT read before prediction freeze.",
+    "Lid-mask pixels are excluded from the pot mask; hands and other uncertain pixels may remain.",
+    "All masks require independent review; no automatic acquisition fix is claimed.",
+    "FoundationPose is not run; camera-space fitting does not establish world-pose accuracy."
+  ],
+  "elapsed_s": 210.8186013000086,
+  "baseline_sha256": "331c3af567b104d469485caf05a8c91e8876a4454971bc6b8b7a1b427f0be4ff",
+  "producer": "RGB reviewed per-frame SAM2 box/point prompts; provisional control",
+  "coordinate_frame": "rectified_camera",
+  "camera_frame": "ego_cam_c",
+  "annotations": {
+    "0": [
+      [
+        [
+          532,
+          440,
+          749,
+          800
+        ],
+        [
+          [
+            632,
+            649
+          ],
+          [
+            663,
+            762
+          ]
+        ],
+        [
+          [
+            620,
+            520
+          ],
+          [
+            801,
+            671
+          ]
+        ]
+      ],
+      [
+        [
+          528,
+          443,
+          744,
+          632
+        ],
+        [
+          [
+            612,
+            530
+          ],
+          [
+            656,
+            576
+          ]
+        ],
+        [
+          [
+            666,
+            690
+          ],
+          [
+            790,
+            650
+          ]
+        ]
+      ]
+    ],
+    "53": [
+      [
+        [
+          559,
+          429,
+          799,
+          800
+        ],
+        [
+          [
+            674,
+            615
+          ],
+          [
+            694,
+            646
+          ]
+        ],
+        [
+          [
+            701,
+            746
+          ],
+          [
+            623,
+            527
+          ],
+          [
+            894,
+            640
+          ]
+        ]
+      ],
+      [
+        [
+          558,
+          428,
+          774,
+          607
+        ],
+        [
+          [
+            626,
+            533
+          ],
+          [
+            660,
+            579
+          ]
+        ],
+        [
+          [
+            714,
+            484
+          ],
+          [
+            695,
+            649
+          ]
+        ]
+      ]
+    ],
+    "106": [
+      [
+        [
+          524,
+          439,
+          750,
+          800
+        ],
+        [
+          [
+            632,
+            544
+          ],
+          [
+            649,
+            659
+          ],
+          [
+            696,
+            789
+          ]
+        ],
+        [
+          [
+            627,
+            745
+          ],
+          [
+            857,
+            570
+          ],
+          [
+            790,
+            710
+          ]
+        ]
+      ],
+      [
+        [
+          748,
+          485,
+          967,
+          682
+        ],
+        [
+          [
+            834,
+            548
+          ],
+          [
+            856,
+            633
+          ]
+        ],
+        [
+          [
+            963,
+            579
+          ],
+          [
+            637,
+            543
+          ],
+          [
+            979,
+            686
+          ]
+        ]
+      ]
+    ],
+    "159": [
+      [
+        [
+          508,
+          260,
+          777,
+          800
+        ],
+        [
+          [
+            642,
+            400
+          ],
+          [
+            665,
+            527
+          ],
+          [
+            710,
+            760
+          ]
+        ],
+        [
+          [
+            648,
+            663
+          ],
+          [
+            883,
+            568
+          ],
+          [
+            790,
+            430
+          ]
+        ]
+      ],
+      [
+        [
+          774,
+          480,
+          992,
+          666
+        ],
+        [
+          [
+            881,
+            568
+          ],
+          [
+            874,
+            619
+          ]
+        ],
+        [
+          [
+            638,
+            400
+          ],
+          [
+            1230,
+            665
+          ]
+        ]
+      ]
+    ],
+    "213": [
+      [
+        [
+          539,
+          400,
+          749,
+          800
+        ],
+        [
+          [
+            641,
+            500
+          ],
+          [
+            662,
+            632
+          ],
+          [
+            690,
+            777
+          ]
+        ],
+        [
+          [
+            649,
+            692
+          ],
+          [
+            889,
+            581
+          ]
+        ]
+      ],
+      [
+        [
+          782,
+          479,
+          1001,
+          672
+        ],
+        [
+          [
+            865,
+            562
+          ],
+          [
+            897,
+            627
+          ]
+        ],
+        [
+          [
+            640,
+            508
+          ],
+          [
+            1177,
+            679
+          ],
+          [
+            1005,
+            681
+          ]
+        ]
+      ]
+    ],
+    "266": [
+      [
+        [
+          608,
+          389,
+          817,
+          800
+        ],
+        [
+          [
+            711,
+            572
+          ],
+          [
+            731,
+            617
+          ],
+          [
+            748,
+            751
+          ]
+        ],
+        [
+          [
+            719,
+            675
+          ],
+          [
+            679,
+            485
+          ],
+          [
+            781,
+            453
+          ]
+        ]
+      ],
+      [
+        [
+          607,
+          389,
+          820,
+          558
+        ],
+        [
+          [
+            665,
+            485
+          ],
+          [
+            705,
+            530
+          ]
+        ],
+        [
+          [
+            768,
+            459
+          ],
+          [
+            730,
+            615
+          ],
+          [
+            839,
+            596
+          ]
+        ]
+      ]
+    ],
+    "319": [
+      [
+        [
+          526,
+          431,
+          756,
+          800
+        ],
+        [
+          [
+            626,
+            617
+          ],
+          [
+            659,
+            733
+          ]
+        ],
+        [
+          [
+            616,
+            514
+          ],
+          [
+            810,
+            673
+          ]
+        ]
+      ],
+      [
+        [
+          526,
+          428,
+          743,
+          594
+        ],
+        [
+          [
+            617,
+            511
+          ],
+          [
+            640,
+            555
+          ]
+        ],
+        [
+          [
+            653,
+            674
+          ],
+          [
+            781,
+            608
+          ]
+        ]
+      ]
+    ],
+    "372": [
+      [
+        [
+          503,
+          511,
+          731,
+          800
+        ],
+        [
+          [
+            633,
+            711
+          ],
+          [
+            637,
+            774
+          ]
+        ],
+        [
+          [
+            601,
+            598
+          ],
+          [
+            795,
+            710
+          ]
+        ]
+      ],
+      [
+        [
+          503,
+          511,
+          709,
+          696
+        ],
+        [
+          [
+            604,
+            591
+          ],
+          [
+            615,
+            657
+          ]
+        ],
+        [
+          [
+            641,
+            765
+          ],
+          [
+            759,
+            674
+          ]
+        ]
+      ]
+    ]
+  },
+  "annotations_input_sha256": "25703c0ded0e0c5ab22d1ca92e87a1fe6d7f3267caa5d3c3b46b5c9cd9208ca5",
+  "annotations_source_sha256_lf": "94f6ef43a3ae892a41fa00d6c6cb5f3d3c6b7b4bdcec37d56e2ab1d8632ccb99"
+}

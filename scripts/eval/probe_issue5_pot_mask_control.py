@@ -7,6 +7,7 @@ parser.add_argument('--data',type=Path,required=True)
 parser.add_argument('--models',type=Path,required=True)
 parser.add_argument('--baseline',type=Path,required=True,help='native pot probe output directory')
 parser.add_argument('--out',type=Path,required=True)
+parser.add_argument('--annotations',type=Path,help='hash-bound RGB-only prompts; default preserves the historical episode-2 control')
 args = parser.parse_args()
 REPO = Path(__file__).resolve().parents[2]
 DATA, MODELS, BASE, OUT = args.data, args.models, args.baseline, args.out
@@ -19,6 +20,7 @@ from transformers import Sam2Model, Sam2Processor
 import register_poses as reg
 from v2d.world_calib.vm.fit_ego_rig import load_mesh
 from v2d.world_calib.vm.visualize_object_pose import render_depth
+from rgb_annotations import load_rgb_annotations, verify_review_image
 
 def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
 if OUT.exists(): raise ValueError('fresh output required')
@@ -32,12 +34,9 @@ for item in baseline['models']:
     if sha(p) != item['sha256']: raise ValueError('changed model input')
 for item in baseline['inputs']:
     if sha(DATA/item['path']) != item['sha256']: raise ValueError('changed data input')
-torch.set_num_threads(4)
-processor = Sam2Processor.from_pretrained(checkpoint)
-model = Sam2Model.from_pretrained(checkpoint).to('cuda').eval()
 names = baseline['objects']
-cads = {n: torch.tensor(reg.load_cad(n,6000,0),device='cuda',dtype=torch.float32) for n in names}
-meshes = {n: load_mesh(DATA/f'mesh/{n}/{n}.glb') for n in names}
+if names != ['white_pot', 'white_pot_lid']:
+    raise ValueError('expected pot/lid object order')
 # Coordinates reviewed from rectified RGB only, before any pose evaluation.
 # Each tuple: box, foreground points, background/other-object/occluder points.
 annotations = {
@@ -58,30 +57,44 @@ annotations = {
  342: [[[521,401,729,800],[[631,584],[646,720]],[[626,501],[791,647]]],
        [[521,401,729,575],[[622,485]],[[643,615],[790,600]]]],
 }
+episode, reviewed_images = 2, {}
+if args.annotations:
+    episode, annotations, reviewed_images = load_rgb_annotations(
+        args.annotations, baseline, sha(BASE/'probe_results.json'))
+torch.set_num_threads(4)
+processor = Sam2Processor.from_pretrained(checkpoint)
+model = Sam2Model.from_pretrained(checkpoint).to('cuda').eval()
+cads = {n: torch.tensor(reg.load_cad(n,6000,0),device='cuda',dtype=torch.float32) for n in names}
+meshes = {n: load_mesh(DATA/f'mesh/{n}/{n}.glb') for n in names}
 OUT.mkdir(parents=True)
 report=copy.deepcopy(baseline)
-report.update(episodes=[2],frames=[],baseline_sha256=sha(BASE/'probe_results.json'),
+report.update(episodes=[episode],frames=[],baseline_sha256=sha(BASE/'probe_results.json'),
               gt_use='none',prompt=None,producer='RGB reviewed per-frame SAM2 box/point prompts; provisional control',
               coordinate_frame='rectified_camera',camera_frame=rig.left,
               annotations=annotations,worker_sha256_lf=hashlib.sha256(Path(__file__).read_text().encode()).hexdigest(),
-              limits=['8 preselected episode-2 frames, rectified ego_cam_c only; not continuous tracking.',
+              limits=[f'8 preselected episode-{episode} frames, rectified ego_cam_c only; not continuous tracking.',
                       'Prompts reviewed by Codex from RGB; no independent human mask review or mask-IoU truth.',
                       'Depth/CAD/native solver/gate unchanged; no GT read before prediction freeze.',
                       'Lid-mask pixels are excluded from the pot mask; hands and other uncertain pixels may remain.',
                       'All masks require independent review; no automatic acquisition fix is claimed.',
                       'FoundationPose is not run; camera-space fitting does not establish world-pose accuracy.'])
+if args.annotations:
+    report['annotations_input_sha256'] = sha(args.annotations)
+    report['annotations_source_sha256_lf'] = hashlib.sha256((REPO/'scripts/track3/rgb_annotations.py').read_text().encode()).hexdigest()
 for original in baseline['frames']:
-    if original['episode'] != 2: continue
+    if original['episode'] != episode: continue
     frame=original['frame_index']
-    folder=OUT/f'e002/{frame:06d}';folder.mkdir(parents=True)
-    raw=[reg.read_frame(DATA/f'videos/chunk-000/observation.images.{cam}/episode_000002.mp4',frame) for cam in [rig.left,rig.right]]
+    folder=OUT/f'e{episode:03d}/{frame:06d}';folder.mkdir(parents=True)
+    raw=[reg.read_frame(DATA/f'videos/chunk-000/observation.images.{cam}/episode_{episode:06d}.mp4',frame) for cam in [rig.left,rig.right]]
     image=rig.rectify_pair(*raw)[0]
+    if frame in reviewed_images:
+        verify_review_image(image,reviewed_images[frame])
     rgb=cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
-    frozen=BASE/f'e002/{frame:06d}/depth.npz'
+    frozen=BASE/f'e{episode:03d}/{frame:06d}/depth.npz'
     if sha(frozen)!=original['depth_sha256']: raise ValueError('depth changed')
     observation=np.load(frozen);depth,valid=observation['depth'],observation['valid']
     points=reg.backproject_full(depth,valid,rig.P1)
-    row={'episode':2,'frame_index':frame,'total_source_frames':original['total_source_frames'],
+    row={'episode':episode,'frame_index':frame,'total_source_frames':original['total_source_frames'],
          'depth_sha256':original['depth_sha256'],'views':{rig.left:{'objects':{}}},'fits':{}}
     overlay=image.copy()
     masks={}
@@ -121,7 +134,7 @@ for original in baseline['frames']:
         fit['cad_model_mask_iou']=float((mask&sil).sum()/max(1,(mask|sil).sum()))
         contours=cv2.findContours(sil.astype('uint8'),cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)[0]
         cv2.drawContours(overlay,contours,-1,(0,255,255),2)
-    cv2.putText(overlay,f'ep2 {frame}: prompted pot green / lid magenta / CAD yellow',(10,30),cv2.FONT_HERSHEY_SIMPLEX,.65,(255,255,255),2)
+    cv2.putText(overlay,f'ep{episode} {frame}: prompted pot green / lid magenta / CAD yellow',(10,30),cv2.FONT_HERSHEY_SIMPLEX,.65,(255,255,255),2)
     cv2.imwrite(str(folder/'overlay.jpg'),overlay)
     report['frames'].append(row)
     print(json.dumps({'frame':frame,'fits':row['fits'],'masks':row['views'][rig.left]['objects']}),flush=True)

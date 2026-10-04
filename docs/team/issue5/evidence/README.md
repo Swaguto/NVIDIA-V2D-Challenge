@@ -8,6 +8,29 @@ that run has not been reproduced or verified fixed.
 The JSON/XML records and audit snapshot preserve their original bytes across
 checkouts so the published evidence SHA-256s remain valid on Windows and Linux.
 
+October 4 lid appearance and episode-0 replication:
+
+- `lid_spin/validation.json`: twelve executed source bindings, prediction/evaluator
+  hashes, full frame denominators, 156 passing CPU tests and exact historical replay.
+- `lid_spin/native_observations.json`: exact native receipt bound by the episode-0
+  RGB annotations; depth/RGB/CAD/model binaries stay external.
+- `lid_spin/e000/`: RGB annotation pixel hashes, all four frozen control stages,
+  separate relative evaluations and actual applied-pose overlays. Positional RPE
+  improves 21.40 → 13.31 → 4.43 cm; rotation remains 72.66 degrees.
+- `lid_spin/e002/`: guarded lid predictions/evaluation, failed grayscale and derived
+  geometry-only controls, texture, curves and individual canonical errors. Median
+  rotation improves 46.81 → 11.87 degrees; occluded-pot failures remain.
+- `lid_spin/controls/`: executed source snapshots for the failed grayscale,
+  deterministic geometric derivation and scientific plots. Their original execution
+  directory was the local `runs/issue5_pot_control` layout, not this evidence folder.
+- `lid_spin/tests-lid-spin.xml`: 156 passed, zero errors/failures/skips. Historical
+  episode-2 default replay preserves all 32 mask PNGs and 16 fit records exactly.
+
+See [../LID_SPIN.md](../LID_SPIN.md) for commands, fixed guards, development-data
+limits and the unresolved full-issue criteria. The mask/filter/support receipts
+inherit their parent's `elapsed_s`; these fields are not new-stage timing
+measurements. The new lid worker records its own CPU runtime separately.
+
 - `tests-pr.xml`: full portable-input test run, 109 passed, zero skipped.
 - `validation_snapshot.json`: tested environment, commands, kit and evidence hashes.
 - `asset_download_manifest.json`: pinned public dataset, advertised sizes and verified

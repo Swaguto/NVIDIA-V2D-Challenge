@@ -6,6 +6,16 @@ full tracking acceptance, robot training and policy-rollout submission remain op
 The accepted CHORD/stereo/contact experiment is
 unchanged. FoundationPose remains optional initialization, not a replacement tracker.
 
+The latest [lid appearance/episode-0 replication](LID_SPIN.md) adds an optional
+fixed-axis marker diagnostic, with uncertainty and recomputed residuals.
+Episode-2 median relative rotation improves 46.81 → 11.87 degrees. Unchanged
+guards on episode 0 give 72.66 degrees; its reviewed-mask positional RPE improves
+21.40 → 13.31 → 4.43 cm through filtering and pot hypothesis selection. Every
+stage retains all eight visible/accepted pairs. Rotation still fails. 156 CPU
+tests pass, and the episode-2 default replays all 32 masks byte-for-byte and 16
+fits exactly. The failed controls and operator commands are recorded; these are
+development-frame relative measurements rather than full tracking acceptance.
+
 The [cloud/competing-pose follow-up](CLOUD_AND_POSE_SUPPORT.md) now preserves thin
 handles and compares all 25 global pot hypotheses against visible masks/depth.
 On the same eight episode-2 frames, positional RPE improves 29.00 → 14.36 → 7.09 cm

@@ -4,6 +4,12 @@ October 4, 2026. These repairs and experiments improve sampled relative geometry
 **automatic acquisition, canonical rotation and issue #5 acceptance remain open**.
 Keep PR #30 draft. Do not merge to main.
 
+The subsequent [lid appearance and episode-0 replication](LID_SPIN.md) keeps this
+baseline frozen, adds guarded spin diagnostics, and tests the same selection
+method on eight episode-0 frames. Canonical rotation still fails. Its latest
+suite has 156 tests; the 150-test results below are historical cloud/support
+validation.
+
 ## What failed
 
 The radial point-cloud filter used distance from a coordinatewise median. It can

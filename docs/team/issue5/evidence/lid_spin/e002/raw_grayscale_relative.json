@@ -1,0 +1,259 @@
+{
+  "prediction_sha256": "f19acbc087bf36c389ffde6c5dfc2e774bfcd1a2d8a8bffca002dc8684204a3a",
+  "gt_sources": [
+    {
+      "episode": 2,
+      "parquet_sha256": "a1cd007e34edbdaa51138c168312ad4f0bb6e60ed65b52e72d253d6f949ae00b"
+    },
+    {
+      "episode": 0,
+      "parquet_sha256": "cec5ecb4f696e3ecde143afaa4d655f71e8311d4c3dfceb7b264d515a8ef94bb"
+    }
+  ],
+  "info_sha256": "37d81af0bf3554ffb65cbb36967c3a3b5709a9b037ac0e2fde19ed5e3c2e204c",
+  "official_rpe_source_sha256": "12315085e9c674e4476e90c56b457854f686ca80bbf86d1f3b06121630bd6f40",
+  "evaluator_source_sha256_lf": "a0215aa032a4d54933101cc0579aea83954311dd7e8ff184780260373a439ff9",
+  "object_order": [
+    "white_pot",
+    "white_pot_lid"
+  ],
+  "episodes": [
+    {
+      "episode": 2,
+      "sampled_frames": 8,
+      "common_visible_sampled": 8,
+      "common_visible_accepted": 8,
+      "frames": [
+        {
+          "frame_index": 0,
+          "capture_time": 0.06956248730421066,
+          "gt_visible": {
+            "white_pot": true,
+            "white_pot_lid": true
+          },
+          "accepted": {
+            "white_pot": true,
+            "white_pot_lid": true
+          },
+          "pair_errors": [
+            {
+              "from_object": "white_pot",
+              "to_object": "white_pot_lid",
+              "translation_error_cm": 2.5058492851159246,
+              "canonical_rotation_error_deg": 7.030568174406408
+            },
+            {
+              "from_object": "white_pot_lid",
+              "to_object": "white_pot",
+              "translation_error_cm": 2.4677315408171285,
+              "canonical_rotation_error_deg": 7.0305681744062
+            }
+          ]
+        },
+        {
+          "frame_index": 49,
+          "capture_time": 2.520637273788452,
+          "gt_visible": {
+            "white_pot": true,
+            "white_pot_lid": true
+          },
+          "accepted": {
+            "white_pot": true,
+            "white_pot_lid": true
+          },
+          "pair_errors": [
+            {
+              "from_object": "white_pot",
+              "to_object": "white_pot_lid",
+              "translation_error_cm": 12.75613554908733,
+              "canonical_rotation_error_deg": 163.56247054392304
+            },
+            {
+              "from_object": "white_pot_lid",
+              "to_object": "white_pot",
+              "translation_error_cm": 12.775417929848132,
+              "canonical_rotation_error_deg": 163.56247054392315
+            }
+          ]
+        },
+        {
+          "frame_index": 98,
+          "capture_time": 4.969035625457764,
+          "gt_visible": {
+            "white_pot": true,
+            "white_pot_lid": true
+          },
+          "accepted": {
+            "white_pot": true,
+            "white_pot_lid": true
+          },
+          "pair_errors": [
+            {
+              "from_object": "white_pot",
+              "to_object": "white_pot_lid",
+              "translation_error_cm": 0.7725915863060313,
+              "canonical_rotation_error_deg": 90.29824290221853
+            },
+            {
+              "from_object": "white_pot_lid",
+              "to_object": "white_pot",
+              "translation_error_cm": 33.47758263979332,
+              "canonical_rotation_error_deg": 90.29824290221852
+            }
+          ]
+        },
+        {
+          "frame_index": 147,
+          "capture_time": 7.418179512023926,
+          "gt_visible": {
+            "white_pot": true,
+            "white_pot_lid": true
+          },
+          "accepted": {
+            "white_pot": true,
+            "white_pot_lid": true
+          },
+          "pair_errors": [
+            {
+              "from_object": "white_pot",
+              "to_object": "white_pot_lid",
+              "translation_error_cm": 2.594838240470148,
+              "canonical_rotation_error_deg": 8.570523599061122
+            },
+            {
+              "from_object": "white_pot_lid",
+              "to_object": "white_pot",
+              "translation_error_cm": 2.662829720126245,
+              "canonical_rotation_error_deg": 8.57052359906061
+            }
+          ]
+        },
+        {
+          "frame_index": 195,
+          "capture_time": 9.817521095275879,
+          "gt_visible": {
+            "white_pot": true,
+            "white_pot_lid": true
+          },
+          "accepted": {
+            "white_pot": true,
+            "white_pot_lid": true
+          },
+          "pair_errors": [
+            {
+              "from_object": "white_pot",
+              "to_object": "white_pot_lid",
+              "translation_error_cm": 2.350892162021001,
+              "canonical_rotation_error_deg": 7.204125757307423
+            },
+            {
+              "from_object": "white_pot_lid",
+              "to_object": "white_pot",
+              "translation_error_cm": 1.7487512539641037,
+              "canonical_rotation_error_deg": 7.204125757307324
+            }
+          ]
+        },
+        {
+          "frame_index": 244,
+          "capture_time": 12.269081115722656,
+          "gt_visible": {
+            "white_pot": true,
+            "white_pot_lid": true
+          },
+          "accepted": {
+            "white_pot": true,
+            "white_pot_lid": true
+          },
+          "pair_errors": [
+            {
+              "from_object": "white_pot",
+              "to_object": "white_pot_lid",
+              "translation_error_cm": 1.294118007596333,
+              "canonical_rotation_error_deg": 89.43777246867322
+            },
+            {
+              "from_object": "white_pot_lid",
+              "to_object": "white_pot",
+              "translation_error_cm": 38.998789217369975,
+              "canonical_rotation_error_deg": 89.43777246867322
+            }
+          ]
+        },
+        {
+          "frame_index": 293,
+          "capture_time": 14.718852996826172,
+          "gt_visible": {
+            "white_pot": true,
+            "white_pot_lid": true
+          },
+          "accepted": {
+            "white_pot": true,
+            "white_pot_lid": true
+          },
+          "pair_errors": [
+            {
+              "from_object": "white_pot",
+              "to_object": "white_pot_lid",
+              "translation_error_cm": 16.410573791054638,
+              "canonical_rotation_error_deg": 158.50749077253002
+            },
+            {
+              "from_object": "white_pot_lid",
+              "to_object": "white_pot",
+              "translation_error_cm": 13.087192468658381,
+              "canonical_rotation_error_deg": 158.50749077253002
+            }
+          ]
+        },
+        {
+          "frame_index": 342,
+          "capture_time": 17.168109893798828,
+          "gt_visible": {
+            "white_pot": true,
+            "white_pot_lid": true
+          },
+          "accepted": {
+            "white_pot": true,
+            "white_pot_lid": true
+          },
+          "pair_errors": [
+            {
+              "from_object": "white_pot",
+              "to_object": "white_pot_lid",
+              "translation_error_cm": 18.041742889857517,
+              "canonical_rotation_error_deg": 124.43181735913153
+            },
+            {
+              "from_object": "white_pot_lid",
+              "to_object": "white_pot",
+              "translation_error_cm": 15.859654195201259,
+              "canonical_rotation_error_deg": 124.43181735913153
+            }
+          ]
+        }
+      ],
+      "official_rpe_kernel_cm": 7.090843090100372,
+      "median_relative_translation_cm": 2.5503437627930365,
+      "median_relative_canonical_rotation_deg": 89.86800768544587
+    },
+    {
+      "episode": 0,
+      "sampled_frames": 0,
+      "common_visible_sampled": 0,
+      "common_visible_accepted": 0,
+      "frames": [],
+      "official_rpe_kernel_cm": null,
+      "median_relative_translation_cm": null,
+      "median_relative_canonical_rotation_deg": null
+    }
+  ],
+  "gt_use": "evaluation_only_after_frozen_inference",
+  "limits": [
+    "Eight sampled frames per public episode; no full coverage or all-20 score.",
+    "RPE uses common GT-visible accepted observations; missing/rejected counts retained.",
+    "Camera motion cancels for within-frame relative transforms; no independent C(t) supplied.",
+    "This is direct participant-kit RPE mathematics, not a policy-rollout score() submission.",
+    "Other five metrics and fixed-world accuracy are not claimed."
+  ]
+}
