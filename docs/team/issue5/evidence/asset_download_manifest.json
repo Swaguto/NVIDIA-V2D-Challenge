@@ -1,0 +1,77 @@
+{
+  "dataset": "nvidia/video_to_data_challenge",
+  "revision": "5f68335f3acc802033d1e80728c1633197521de8",
+  "files": [
+    {
+      "path": "mesh/beige_cup/beige_cup.glb",
+      "bytes": 8238412,
+      "sha256": "63666c81013009d0c396163a34207efbc5fcf77bd3325dcfa68161017d2ddc50"
+    },
+    {
+      "path": "mesh/blue_cup/blue_cup.glb",
+      "bytes": 8175052,
+      "sha256": "c8d97225b932cecfd9ec9e8a844df9ffe71c1944ce10580d7ea333c8f0c4ae4c"
+    },
+    {
+      "path": "mesh/mini_dust_pan/mini_dust_pan.glb",
+      "bytes": 8492620,
+      "sha256": "6358b4f913fd8164a797b9375948cd09d47c5e60abcef0843fe43af5109737e3"
+    },
+    {
+      "path": "mesh/mini_sweeper/mini_sweeper_visual.glb",
+      "bytes": 8378616,
+      "sha256": "5aa3af228ce53d0fc2e8252391aeb09930535d66f7af9129ff2dd6edf55bb216"
+    },
+    {
+      "path": "mesh/plastic_dish_rack/plastic_dish_rack.glb",
+      "bytes": 11360704,
+      "sha256": "4ee134a483b39bae7d7fabf3a07858a7401a21920e13b86c97face8f7578f963"
+    },
+    {
+      "path": "mesh/water_pitcher/water_pitcher.glb",
+      "bytes": 8341496,
+      "sha256": "1780f92ff3ae3e471874799f5133ae49d09d18f062892878550606ea611b6e1e"
+    },
+    {
+      "path": "mesh/white_pot/white_pot.glb",
+      "bytes": 8948208,
+      "sha256": "2627b01350864cc7f52540cb1ccfb9d67544e245d7061d8e313ecfd9d3eb5151"
+    },
+    {
+      "path": "mesh/white_pot_lid/white_pot_lid.glb",
+      "bytes": 8262028,
+      "sha256": "672a2965dd785fc958db39a2ce94a6df215f58dfdfafedf7dd193ffc6d83b363"
+    },
+    {
+      "path": "mesh/wooden_piece_1/wooden_piece_1_visual.glb",
+      "bytes": 7762620,
+      "sha256": "30b681f4030fd85c8cee426f27f1e09d9c0dd9f33dca54f7fd82aa5a25f2e8b9"
+    },
+    {
+      "path": "mesh/wooden_piece_2/wooden_piece_2_visual.glb",
+      "bytes": 8230028,
+      "sha256": "2063471068b6c3f73f89223f4f541502c84cc8c7f99a0075487e4cb65faf0025"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.ego_cam_b/episode_000000.mp4",
+      "bytes": 5648231,
+      "sha256": "55e5e8b76766eef2c209a84b54a86d108c4ed07b4ed6fdf182deb6c76e8657b5"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.ego_cam_b/episode_000002.mp4",
+      "bytes": 4919102,
+      "sha256": "0c054cd1ba87781fb2da50bd812ef782e27ad7d32f9c30f9b0116d0095107e30"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.ego_cam_c/episode_000000.mp4",
+      "bytes": 4545702,
+      "sha256": "64e32dded47e4fd3b74015ccd8aaf71183140853d3f6f105136b91917fec4b99"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.ego_cam_c/episode_000002.mp4",
+      "bytes": 3937003,
+      "sha256": "255208a8be8d6ef7a817b68b9fe444bea6886981a6d210249e6da199a5770ee0"
+    }
+  ],
+  "scope": "public visual meshes and episode 0/2 stereo RGB; no prepared observations or cameras"
+}
