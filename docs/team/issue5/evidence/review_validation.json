@@ -1,0 +1,85 @@
+{
+  "tested_software_commit": "ea38fff4c70445343ad5e5cfcb8acd8508d872d1",
+  "previous_draft_head": "3c7aa41709264171b63572554f09b17259bdad18",
+  "source_hash_kind": "SHA-256 of canonical Git blob bytes at tested_software_commit",
+  "source_sha256": {
+    "reconstruction/modules/v2d_world_calib/vm/fit_ego_rig.py": "f6d082e0a9943acdc8eb187bca4aa13d73df92da4769b74db3f71d8bb76dad92",
+    "reconstruction/modules/v2d_world_calib/vm/visualize_object_pose.py": "ea452472a25408db77e2e25fec8116eb017519830cfb333426a89aac6111bb6b",
+    "scripts/eval/validate_issue5_inputs.py": "5f2b6c3fa0112f94d079b7ae0ad838d0b5acaab8b5e5f2d7d2c36ef64798f4d9",
+    "scripts/fetch_issue5_test_inputs.py": "f86cabeb5dd55e51d872fb72ce7085c7dd3271fe4253b595704ba1fd611965a6",
+    "scripts/track3/diag_gt_orientation.py": "a9648d22f679feb0f119ba6c4746d987cf67c90c8d5d587f089bc7bdef50647f",
+    "scripts/track3/diag_relative_geometry.py": "962e97f6322e14b66163db7a78ed78bb9fbcaddaf5d72005d97323ace53c2de2",
+    "scripts/track3/diag_rotation_offset.py": "69542d1c882a375b4b2127b3537a733184f581d04d106645a1e5ae5fc6340ec6",
+    "scripts/track3/probe_depth.py": "2bbbd7189a214ae83f97f426413b8cd14b98c19fe188ba385f24555a506f60fc",
+    "scripts/track3/probe_segmentation.py": "4eb562fbd8e43e204a8c8750213ddad4b9caa02f62904a761bb9198da2a5939f",
+    "scripts/track3/register_poses.py": "955d03b65630a7f65437307df878d24eea0808ce751079e66f18a71b05bcc069",
+    "scripts/track3/smooth_rotation.py": "ede3eeb67a17f7e47d9bd3010d0d90ea70b2bf1ba46dc155890cfee12451b00b",
+    "tests/test_issue5_repairs.py": "6285857a45e2157e50171ad71097fa93307036b62b652121a7a8767caaae122c",
+    "tests/test_issue5_review_regressions.py": "d464de9ed603a86843d6c3e5b4b8575d27142958fad3207ab9195861cf932e90"
+  },
+  "environment": {
+    "python": "3.14.0",
+    "platform": "Windows",
+    "opencv": "5.0.0",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "torch": "2.14.0",
+    "pandas": "3.0.6",
+    "pyarrow": "25.0.1",
+    "trimesh": "5.1.0",
+    "pytest": "9.1.1"
+  },
+  "tests": {
+    "passed": 133,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 11.801,
+    "junit_timestamp": "2026-10-04T00:54:00.727707-04:00",
+    "command": "python -m pytest tests/test_issue5_official_wrapper.py tests/test_issue5_repairs.py tests/test_issue5_review_regressions.py tests/test_issue5_stereo_diagnostic.py reconstruction/modules/v2d_world_calib/tests -q --junitxml=tests-review.xml",
+    "kit_sha256": "b1f8f703c2e772684a57d048cf28f40c7b9b54cf7a61aff6917b46d826915e1f",
+    "controls": "Generated trajectory, detector/model-output and CLI fixtures are synthetic, including native-path software guards; no actual perception inference or robot simulation."
+  },
+  "checks": {
+    "changed_python_compileall": "passed",
+    "metric_selfcheck": "passed",
+    "git_diff_check": "passed"
+  },
+  "real_input_check": {
+    "command": "python -O scripts/eval/validate_issue5_inputs.py --data <public> --out <fresh>",
+    "assets_verified": 14,
+    "meshes_checked": 10,
+    "stereo_frames_checked": 8,
+    "episodes": [
+      0,
+      2
+    ],
+    "exit_code": 0,
+    "calibration_and_reference_hashes_verified": true,
+    "pose_accuracy_measured": false
+  },
+  "video_check": {
+    "file_sha256": "ccd46524af5db070d108f3d612a6a89dcc9d1127f69f2008b09f7eb9c9885964",
+    "rendered_frames_inspected": [
+      0,
+      39,
+      79,
+      119,
+      159,
+      199,
+      239,
+      318
+    ],
+    "original_tracking_run_reproduced": false
+  },
+  "evidence_sha256": {
+    "tests-review.xml": "4c1177959e361cff6af02b791c1408b73e0a421082baa424bc10a57f4586ee99",
+    "review-input-results.json": "7698d97675ed7d99f4206a02f088042457e83a30681c63d4d8afd35353416363",
+    "tracking_video_review.json": "bf6c16ffd8bee97727405480722bd1752b1b337c54b6131044b975e3ed6a3bd4"
+  },
+  "remaining": [
+    "Obtain original episode-39 generating script/commit and mask/depth/pose/detector inputs.",
+    "Compare reviewed target-only masks against contaminated masks on frozen observations.",
+    "Real tracking accuracy, independent cameras, original issue-5 acceptance, native CUDA inference, robot training and policy rollout remain unresolved."
+  ]
+}

@@ -5,6 +5,13 @@ It does not establish improved real tracking accuracy, successful robot training
 or a policy-rollout submission. The accepted CHORD/stereo/contact experiment is
 unchanged. FoundationPose remains optional initialization, not a replacement tracker.
 
+The team lead subsequently reported that tracking still fails. The provided episode-39
+clip shows a tabletop-sized green mask and a displaced dustpan CAD. See
+[TRACKING_FAILURE.md](TRACKING_FAILURE.md) for observed evidence, the removed
+single-object unmatched-label fallback, new native rejection reports, and the exact
+run artifacts needed. The video generator and inputs are not available, so this
+follow-up does not claim to have reproduced or fixed the team's run.
+
 ## Background and branch dependencies
 
 The repair branch starts at PR #26 (`issue5/object-world-icp`,
@@ -59,7 +66,7 @@ module from this branch:
 python -m pip install -e 'reconstruction/modules/v2d_world_calib[data]' scipy trimesh Pillow pytest torch pandas opencv-python
 python scripts/fetch_issue5_test_inputs.py --output /absolute/fresh/issue5-test-inputs
 export V2D_SUBMISSION_KIT=/absolute/fresh/issue5-test-inputs/v2d_submission_kit
-python -m pytest tests/test_issue5_official_wrapper.py tests/test_issue5_repairs.py tests/test_issue5_stereo_diagnostic.py reconstruction/modules/v2d_world_calib/tests -q
+python -m pytest tests/test_issue5_official_wrapper.py tests/test_issue5_repairs.py tests/test_issue5_review_regressions.py tests/test_issue5_stereo_diagnostic.py reconstruction/modules/v2d_world_calib/tests -q
 python scripts/eval/official_metric.py --selfcheck
 ```
 
@@ -69,13 +76,30 @@ instead of `export`. The public calibration is a small checked-in test fixture;
 `b1f8f703c2e772684a57d048cf28f40c7b9b54cf7a61aff6917b46d826915e1f` before extraction.
 `--kit-zip` can reuse an existing archive after the same hash check.
 
-The recorded run has 109 passed and zero skipped. Missing-kit parity tests skip
+The initial recorded run has 109 passed and zero skipped. The follow-up adds CLI,
+input integrity, fixed-world smoothing and single-object segmentation controls;
+its exact source revision/results are in `evidence/review_validation.json`.
+Missing-kit parity tests skip
 explicitly; such a reduced run is not equivalent to the recorded check. Whole-repo
 IsaacLab/GPU/training tests were not run. Native DINO/SAM2/registration entrypoints
 still need the operator's compatible CUDA/perception environment and checkpoints;
 CPU registration unit tests do not demonstrate native inference performance.
 See [evidence/validation_snapshot.json](evidence/validation_snapshot.json) for the
 tested environment, commands, hashes and check boundaries.
+
+For fresh-output camera scale estimates, `--est-right-scale` needs existing saved
+poses under the input work directory and an explicit fresh `--out`. Render fresh
+object-fitting output with `visualize_object_pose --poses /path/from/fit_object_pose/--out`;
+`--work` still supplies RGB, depth, masks and intrinsics. The rotation filter accepts
+declared fixed-world `object_to_world` records, after `convert_camera_poses.py`, and
+writes inferred rotations without validated residuals. `--window` is measured in
+source frame IDs; episode averaging can erase real object motion.
+
+The real-input validator requires all fourteen pinned assets in the supplied manifest
+and checks their actual sizes/hashes against the committed expected manifest. It also
+checks the pinned calibration and episode-0/2 reference hashes before opening them.
+An episode-subset download manifest is insufficient, even if older files remain on disk.
+Operational checks remain enabled under `python -O`.
 
 ## Real input evidence
 

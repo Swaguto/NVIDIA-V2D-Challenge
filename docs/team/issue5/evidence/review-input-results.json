@@ -1,0 +1,710 @@
+{
+  "dataset": "nvidia/video_to_data_challenge",
+  "revision": "5f68335f3acc802033d1e80728c1633197521de8",
+  "input_manifest_sha256": "35416d1cc14a88114278c74fe103622c9a2b36566b9b6379779eea35e78993f4",
+  "expected_asset_manifest_sha256": "35416d1cc14a88114278c74fe103622c9a2b36566b9b6379779eea35e78993f4",
+  "verified_asset_count": 14,
+  "all_14_downloaded_asset_hashes_verified": true,
+  "camera_calibration_sha256": "23e2d9c46369292cdda492a777e7a6083815369a25d1af4bb82560669fde5d52",
+  "mesh_checks": [
+    {
+      "path": "mesh\\beige_cup\\beige_cup.glb",
+      "vertices": 295579,
+      "triangles": 98563,
+      "bounds_m": [
+        [
+          -0.04874536395072937,
+          -0.048973869532346725,
+          -0.08201078325510025
+        ],
+        [
+          0.05528194084763527,
+          0.06205829977989197,
+          0.08745184540748596
+        ]
+      ],
+      "full_trimesh_geometry_matches": true
+    },
+    {
+      "path": "mesh\\blue_cup\\blue_cup.glb",
+      "vertices": 298377,
+      "triangles": 99487,
+      "bounds_m": [
+        [
+          -0.05431491509079933,
+          -0.053030408918857574,
+          -0.084274522960186
+        ],
+        [
+          0.04854067414999008,
+          0.04720832780003548,
+          0.08753757178783417
+        ]
+      ],
+      "full_trimesh_geometry_matches": true
+    },
+    {
+      "path": "mesh\\mini_dust_pan\\mini_dust_pan.glb",
+      "vertices": 298618,
+      "triangles": 99560,
+      "bounds_m": [
+        [
+          -0.02078586257994175,
+          -0.08484704047441483,
+          -0.07190404832363129
+        ],
+        [
+          0.024457722902297974,
+          0.08505769819021225,
+          0.10597061365842819
+        ]
+      ],
+      "full_trimesh_geometry_matches": true
+    },
+    {
+      "path": "mesh\\mini_sweeper\\mini_sweeper_visual.glb",
+      "vertices": 299442,
+      "triangles": 99838,
+      "bounds_m": [
+        [
+          -0.02419481799006462,
+          -0.056298717856407166,
+          -0.06041921302676201
+        ],
+        [
+          0.02337230183184147,
+          0.057644911110401154,
+          0.08115532994270325
+        ]
+      ],
+      "full_trimesh_geometry_matches": true
+    },
+    {
+      "path": "mesh\\plastic_dish_rack\\plastic_dish_rack.glb",
+      "vertices": 298326,
+      "triangles": 99460,
+      "bounds_m": [
+        [
+          -0.041775431483983994,
+          -0.08613108098506927,
+          -0.21452823281288147
+        ],
+        [
+          0.0752314105629921,
+          0.08934906870126724,
+          0.2950802147388458
+        ]
+      ],
+      "full_trimesh_geometry_matches": true
+    },
+    {
+      "path": "mesh\\water_pitcher\\water_pitcher.glb",
+      "vertices": 292522,
+      "triangles": 97540,
+      "bounds_m": [
+        [
+          -0.07231482863426208,
+          -0.11358603090047836,
+          -0.14571750164031982
+        ],
+        [
+          0.06878549605607986,
+          0.158424511551857,
+          0.2693249583244324
+        ]
+      ],
+      "full_trimesh_geometry_matches": true
+    },
+    {
+      "path": "mesh\\white_pot\\white_pot.glb",
+      "vertices": 293329,
+      "triangles": 97803,
+      "bounds_m": [
+        [
+          -0.054525669664144516,
+          -0.09366308152675629,
+          -0.11430861055850983
+        ],
+        [
+          0.07766931504011154,
+          0.09522098302841187,
+          0.24315449595451355
+        ]
+      ],
+      "full_trimesh_geometry_matches": true
+    },
+    {
+      "path": "mesh\\white_pot_lid\\white_pot_lid.glb",
+      "vertices": 297615,
+      "triangles": 99231,
+      "bounds_m": [
+        [
+          -0.009649643674492836,
+          -0.09388552606105804,
+          -0.09471416473388672
+        ],
+        [
+          0.03754470497369766,
+          0.09422984719276428,
+          0.09543097019195557
+        ]
+      ],
+      "full_trimesh_geometry_matches": true
+    },
+    {
+      "path": "mesh\\wooden_piece_1\\wooden_piece_1_visual.glb",
+      "vertices": 281545,
+      "triangles": 93912,
+      "bounds_m": [
+        [
+          -0.006130083929747343,
+          -0.06949509680271149,
+          -0.11242493242025375
+        ],
+        [
+          0.020371124148368835,
+          0.06916330009698868,
+          0.11436355113983154
+        ]
+      ],
+      "full_trimesh_geometry_matches": true
+    },
+    {
+      "path": "mesh\\wooden_piece_2\\wooden_piece_2_visual.glb",
+      "vertices": 296002,
+      "triangles": 98734,
+      "bounds_m": [
+        [
+          -0.02065962553024292,
+          -0.06865259259939194,
+          -0.1134805977344513
+        ],
+        [
+          0.0054885027930140495,
+          0.07005783170461655,
+          0.11326821148395538
+        ]
+      ],
+      "full_trimesh_geometry_matches": true
+    }
+  ],
+  "episodes": [
+    {
+      "episode": 0,
+      "objects": [
+        "white_pot",
+        "white_pot_lid"
+      ],
+      "gt_frames": 373,
+      "gt_parquet_sha256": "cec5ecb4f696e3ecde143afaa4d655f71e8311d4c3dfceb7b264d515a8ef94bb",
+      "capture_time_range_s": [
+        0.04982300475239754,
+        18.649784088134766
+      ],
+      "both_videos_exactly_match_gt_source_frame_ids": true,
+      "videos": {
+        "ego_cam_c": {
+          "decoded_frames": 373,
+          "resolution": [
+            1280,
+            800
+          ],
+          "container_fps": 20.0
+        },
+        "ego_cam_b": {
+          "decoded_frames": 373,
+          "resolution": [
+            1280,
+            800
+          ],
+          "container_fps": 20.0
+        }
+      },
+      "frames": [
+        {
+          "frame_index": 0,
+          "capture_time_s": 0.04982300475239754,
+          "valid_depth_pixels": 509872,
+          "valid_depth_fraction": 0.497921875,
+          "whole_image_depth_quantiles_m": [
+            0.4577547609806061,
+            1.3881505727767944,
+            2.8457086086273193
+          ],
+          "left_right_consistency": {
+            "reverse_valid_textured_pixels": 144542,
+            "disagreement_fraction": {
+              "0.5": 0.260678557097591,
+              "1.5": 0.15009478213944735,
+              "3.0": 0.12627471599950188
+            }
+          },
+          "vertical_shift_controls": {
+            "2": {
+              "reverse_valid_textured_pixels": 127343,
+              "disagreement_fraction": {
+                "0.5": 0.3762829523413144,
+                "1.5": 0.25476076423517585,
+                "3.0": 0.22272916453986477
+              }
+            },
+            "4": {
+              "reverse_valid_textured_pixels": 121875,
+              "disagreement_fraction": {
+                "0.5": 0.40626051282051284,
+                "1.5": 0.29158564102564105,
+                "3.0": 0.2607425641025641
+              }
+            }
+          },
+          "largest_plane": {
+            "sampled_points": 60000,
+            "inlier_fraction_at_10mm": 0.10106666666666667,
+            "rms_mm": 5.755565129220486
+          }
+        },
+        {
+          "frame_index": 120,
+          "capture_time_s": 6.049075603485107,
+          "valid_depth_pixels": 519563,
+          "valid_depth_fraction": 0.5073857421875,
+          "whole_image_depth_quantiles_m": [
+            0.4184865653514862,
+            1.339156985282898,
+            2.822190523147583
+          ],
+          "left_right_consistency": {
+            "reverse_valid_textured_pixels": 140493,
+            "disagreement_fraction": {
+              "0.5": 0.27571480429629946,
+              "1.5": 0.16441388538930765,
+              "3.0": 0.13837700098937314
+            }
+          },
+          "vertical_shift_controls": {
+            "2": {
+              "reverse_valid_textured_pixels": 124193,
+              "disagreement_fraction": {
+                "0.5": 0.3881539217186154,
+                "1.5": 0.2620759624133405,
+                "3.0": 0.23039945890670166
+              }
+            },
+            "4": {
+              "reverse_valid_textured_pixels": 121404,
+              "disagreement_fraction": {
+                "0.5": 0.421468814866067,
+                "1.5": 0.30003953741227635,
+                "3.0": 0.2648759513689829
+              }
+            }
+          },
+          "largest_plane": {
+            "sampled_points": 60000,
+            "inlier_fraction_at_10mm": 0.1177,
+            "rms_mm": 5.198723170906305
+          }
+        },
+        {
+          "frame_index": 200,
+          "capture_time_s": 10.04955768585205,
+          "valid_depth_pixels": 559568,
+          "valid_depth_fraction": 0.546453125,
+          "whole_image_depth_quantiles_m": [
+            0.4070143699645996,
+            1.2910587787628174,
+            2.787632942199707
+          ],
+          "left_right_consistency": {
+            "reverse_valid_textured_pixels": 141792,
+            "disagreement_fraction": {
+              "0.5": 0.2722579553148273,
+              "1.5": 0.16123617693522907,
+              "3.0": 0.1355224554276687
+            }
+          },
+          "vertical_shift_controls": {
+            "2": {
+              "reverse_valid_textured_pixels": 128312,
+              "disagreement_fraction": {
+                "0.5": 0.3769639628405761,
+                "1.5": 0.2546449279880292,
+                "3.0": 0.22358002369225013
+              }
+            },
+            "4": {
+              "reverse_valid_textured_pixels": 124140,
+              "disagreement_fraction": {
+                "0.5": 0.4164894473980989,
+                "1.5": 0.2934992750120831,
+                "3.0": 0.26138231029482845
+              }
+            }
+          },
+          "largest_plane": {
+            "sampled_points": 60000,
+            "inlier_fraction_at_10mm": 0.11818333333333333,
+            "rms_mm": 5.621719639748335
+          }
+        },
+        {
+          "frame_index": 372,
+          "capture_time_s": 18.649784088134766,
+          "valid_depth_pixels": 476459,
+          "valid_depth_fraction": 0.4652919921875,
+          "whole_image_depth_quantiles_m": [
+            0.4860997200012207,
+            1.440865159034729,
+            2.8457086086273193
+          ],
+          "left_right_consistency": {
+            "reverse_valid_textured_pixels": 149054,
+            "disagreement_fraction": {
+              "0.5": 0.21976599084895407,
+              "1.5": 0.1254176338776551,
+              "3.0": 0.10364029143800234
+            }
+          },
+          "vertical_shift_controls": {
+            "2": {
+              "reverse_valid_textured_pixels": 124090,
+              "disagreement_fraction": {
+                "0.5": 0.34279152228221454,
+                "1.5": 0.23972117011846242,
+                "3.0": 0.2138125554033363
+              }
+            },
+            "4": {
+              "reverse_valid_textured_pixels": 119271,
+              "disagreement_fraction": {
+                "0.5": 0.3937587510794745,
+                "1.5": 0.28995313194322175,
+                "3.0": 0.26245273369050315
+              }
+            }
+          },
+          "largest_plane": {
+            "sampled_points": 60000,
+            "inlier_fraction_at_10mm": 0.0787,
+            "rms_mm": 5.159324035048485
+          }
+        }
+      ]
+    },
+    {
+      "episode": 2,
+      "objects": [
+        "white_pot",
+        "white_pot_lid"
+      ],
+      "gt_frames": 343,
+      "gt_parquet_sha256": "a1cd007e34edbdaa51138c168312ad4f0bb6e60ed65b52e72d253d6f949ae00b",
+      "capture_time_range_s": [
+        0.06956248730421066,
+        17.168109893798828
+      ],
+      "both_videos_exactly_match_gt_source_frame_ids": true,
+      "videos": {
+        "ego_cam_c": {
+          "decoded_frames": 343,
+          "resolution": [
+            1280,
+            800
+          ],
+          "container_fps": 20.0
+        },
+        "ego_cam_b": {
+          "decoded_frames": 343,
+          "resolution": [
+            1280,
+            800
+          ],
+          "container_fps": 20.0
+        }
+      },
+      "frames": [
+        {
+          "frame_index": 0,
+          "capture_time_s": 0.06956248730421066,
+          "valid_depth_pixels": 528496,
+          "valid_depth_fraction": 0.516109375,
+          "whole_image_depth_quantiles_m": [
+            0.4596030116081238,
+            1.3339259624481201,
+            2.8339006900787354
+          ],
+          "left_right_consistency": {
+            "reverse_valid_textured_pixels": 142042,
+            "disagreement_fraction": {
+              "0.5": 0.2862322411681052,
+              "1.5": 0.1735261401557286,
+              "3.0": 0.14666788696301095
+            }
+          },
+          "vertical_shift_controls": {
+            "2": {
+              "reverse_valid_textured_pixels": 128895,
+              "disagreement_fraction": {
+                "0.5": 0.3879824663485783,
+                "1.5": 0.2680709104309709,
+                "3.0": 0.23521470964738742
+              }
+            },
+            "4": {
+              "reverse_valid_textured_pixels": 123871,
+              "disagreement_fraction": {
+                "0.5": 0.41715171428340775,
+                "1.5": 0.2964454957173188,
+                "3.0": 0.262442379572297
+              }
+            }
+          },
+          "largest_plane": {
+            "sampled_points": 60000,
+            "inlier_fraction_at_10mm": 0.10488333333333333,
+            "rms_mm": 5.395428277552128
+          }
+        },
+        {
+          "frame_index": 120,
+          "capture_time_s": 6.068689346313477,
+          "valid_depth_pixels": 567215,
+          "valid_depth_fraction": 0.5539208984375,
+          "whole_image_depth_quantiles_m": [
+            0.4290013015270233,
+            1.2327979803085327,
+            2.8025133371345103
+          ],
+          "left_right_consistency": {
+            "reverse_valid_textured_pixels": 140881,
+            "disagreement_fraction": {
+              "0.5": 0.28456640710954634,
+              "1.5": 0.16851101284062436,
+              "3.0": 0.14133204619501566
+            }
+          },
+          "vertical_shift_controls": {
+            "2": {
+              "reverse_valid_textured_pixels": 130185,
+              "disagreement_fraction": {
+                "0.5": 0.37343011867726694,
+                "1.5": 0.2536774590006529,
+                "3.0": 0.22156162384299266
+              }
+            },
+            "4": {
+              "reverse_valid_textured_pixels": 125611,
+              "disagreement_fraction": {
+                "0.5": 0.39818964899570897,
+                "1.5": 0.28222050616586125,
+                "3.0": 0.2489113214607001
+              }
+            }
+          },
+          "largest_plane": {
+            "sampled_points": 60000,
+            "inlier_fraction_at_10mm": 0.13595,
+            "rms_mm": 5.502201151102781
+          }
+        },
+        {
+          "frame_index": 200,
+          "capture_time_s": 10.068382263183594,
+          "valid_depth_pixels": 540440,
+          "valid_depth_fraction": 0.5277734375,
+          "whole_image_depth_quantiles_m": [
+            0.4350127875804901,
+            1.2554597854614258,
+            2.822190523147583
+          ],
+          "left_right_consistency": {
+            "reverse_valid_textured_pixels": 144243,
+            "disagreement_fraction": {
+              "0.5": 0.2875217514888071,
+              "1.5": 0.16694744285684573,
+              "3.0": 0.13855785029429504
+            }
+          },
+          "vertical_shift_controls": {
+            "2": {
+              "reverse_valid_textured_pixels": 131200,
+              "disagreement_fraction": {
+                "0.5": 0.36621189024390244,
+                "1.5": 0.23926067073170731,
+                "3.0": 0.20754573170731708
+              }
+            },
+            "4": {
+              "reverse_valid_textured_pixels": 126274,
+              "disagreement_fraction": {
+                "0.5": 0.3950932100036429,
+                "1.5": 0.27176615930436987,
+                "3.0": 0.2396534520170423
+              }
+            }
+          },
+          "largest_plane": {
+            "sampled_points": 60000,
+            "inlier_fraction_at_10mm": 0.11015,
+            "rms_mm": 5.241996143013239
+          }
+        },
+        {
+          "frame_index": 342,
+          "capture_time_s": 17.168109893798828,
+          "valid_depth_pixels": 522211,
+          "valid_depth_fraction": 0.5099716796875,
+          "whole_image_depth_quantiles_m": [
+            0.43529003858566284,
+            1.237264633178711,
+            2.7539117336273193
+          ],
+          "left_right_consistency": {
+            "reverse_valid_textured_pixels": 142379,
+            "disagreement_fraction": {
+              "0.5": 0.2820078803756172,
+              "1.5": 0.15652589216106308,
+              "3.0": 0.13263191903300348
+            }
+          },
+          "vertical_shift_controls": {
+            "2": {
+              "reverse_valid_textured_pixels": 130449,
+              "disagreement_fraction": {
+                "0.5": 0.3648245674554807,
+                "1.5": 0.23453610223152344,
+                "3.0": 0.20388044369830355
+              }
+            },
+            "4": {
+              "reverse_valid_textured_pixels": 126249,
+              "disagreement_fraction": {
+                "0.5": 0.39676353872109876,
+                "1.5": 0.27225562182670754,
+                "3.0": 0.23981180048950881
+              }
+            }
+          },
+          "largest_plane": {
+            "sampled_points": 60000,
+            "inlier_fraction_at_10mm": 0.17576666666666665,
+            "rms_mm": 4.097157157957554
+          }
+        }
+      ]
+    }
+  ],
+  "evidence_limits": [
+    "No segmentation or object poses estimated in this diagnostic.",
+    "Stereo statistics cover whole images, not a validated object mask.",
+    "Plane is measured in camera coordinates; no support-surface identification.",
+    "No independent camera trajectory or real official pose accuracy measured."
+  ],
+  "rectification": {
+    "left": "ego_cam_c",
+    "right": "ego_cam_b",
+    "baseline_m": 0.07547102070195856,
+    "raw_translation_norm_m": 0.07547102070195857,
+    "fx_rect": 565.5896606445312,
+    "R1": [
+      [
+        0.9996962098328074,
+        -0.021331219406281254,
+        -0.012347757875850414
+      ],
+      [
+        0.02127939252700971,
+        0.9997642625451443,
+        -0.004313558999845559
+      ],
+      [
+        0.012436860520283213,
+        0.004049495796367131,
+        0.9999144593834987
+      ]
+    ],
+    "R2": [
+      [
+        0.9999980036812999,
+        -0.001994652947638769,
+        -0.00011829215194356785
+      ],
+      [
+        0.0019951301861640736,
+        0.9999892662410503,
+        0.00418172909523224
+      ],
+      [
+        0.00010994978395807362,
+        -0.004181956755411351,
+        0.9999912495360852
+      ]
+    ],
+    "P1": [
+      [
+        565.5896606445312,
+        0.0,
+        612.2412567138672,
+        0.0
+      ],
+      [
+        0.0,
+        565.5896606445312,
+        391.17577362060547,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ]
+    ],
+    "P2": [
+      [
+        565.5896606445312,
+        0.0,
+        612.2412567138672,
+        -42.68562898731714
+      ],
+      [
+        0.0,
+        565.5896606445312,
+        391.17577362060547,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ]
+    ],
+    "Q": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        -612.2412567138672
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        -391.17577362060547
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        565.5896606445312
+      ],
+      [
+        0.0,
+        0.0,
+        13.250118929079871,
+        -0.0
+      ]
+    ]
+  }
+}

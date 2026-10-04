@@ -4,6 +4,12 @@ Updated October 3, 2026 (America/Toronto). Repairs are on
 `Evc-r/issue5-repairs`, prepared for a draft PR targeting PR #26's branch.
 No merge, GPU VM run, robot training or policy submission was performed.
 
+Follow-up: the team reports continued tracking failure. The episode-39 overlay shows
+a tabletop mask instead of an isolated dustpan. [TRACKING_FAILURE.md](TRACKING_FAILURE.md)
+separates this visible evidence from unconfirmed causes and records the additional
+mask-assignment/tool repairs. Real tracking is still unresolved; initial CPU tests
+were not an end-to-end tracking validation.
+
 Base: PR26 `ef8a7ac4615aaf9b499387fa68b76b27246d9d55`. The stereo/registration
 and official pose-metric utilities were imported from PR28
 `a6e0cb2e87299278fd610a9f3afc7fa754732668` and repaired in this checkout.
@@ -41,11 +47,11 @@ and does not call a camera-frame plane a horizontal world support surface.
 Run from this checkout with the workspace Python environment:
 
 ```powershell
-../.venv/Scripts/python.exe -m pytest tests/test_issue5_official_wrapper.py tests/test_issue5_repairs.py tests/test_issue5_stereo_diagnostic.py reconstruction/modules/v2d_world_calib/tests -q
+../.venv/Scripts/python.exe -m pytest tests/test_issue5_official_wrapper.py tests/test_issue5_repairs.py tests/test_issue5_review_regressions.py tests/test_issue5_stereo_diagnostic.py reconstruction/modules/v2d_world_calib/tests -q
 ../.venv/Scripts/python.exe scripts/eval/official_metric.py --selfcheck
 ```
 
-109 tests passed; results are recorded in
+The initial 109 tests passed; results are recorded in
 `evidence/tests-pr.xml` (portable-input rerun); earlier records remain archived locally.
 Five downloaded official pose kernels match within 1e-9 on oracle, constant
 gauge, moving camera, body-offset, noise, scale and multiworld controls. Oracle
@@ -56,6 +62,12 @@ rows, inconsistent provenance, invalid commit URLs, nonfinite positions and zero
 quaternions. Fixture provenance explicitly says `synthetic-test-only`; no rollout is
 claimed. The JSON-to-episode CLI is tested with noncontiguous IDs, missing rows,
 inferred rows and a structured report. CD-O and real policy-rollout scoring were not run.
+
+Follow-up results and exact tested source hashes are in `evidence/review_validation.json`
+and `evidence/tests-review.xml`. The real-input checks were rerun with `python -O`
+against the full expected fourteen-asset set, plus pinned calibration/reference hashes;
+see `evidence/review-input-results.json`. These checks do not use the episode-39
+tracking inputs, which are unavailable.
 
 ## Real input checks
 

@@ -1,5 +1,10 @@
 # Track 3 pose pipeline — status and open problems
 
+> Tracking remains unresolved after draft PR #30. The user-provided episode-39 clip
+> shows a tabletop mask and misplaced dustpan CAD; see `docs/team/issue5/TRACKING_FAILURE.md`.
+> The native tracker rejects unmatched single-object labels and emits
+> `registration_report.json`. Zero-solve objects and input-read failures exit nonzero.
+
 > Local issue-5 repairs: see `docs/team/issue5/REPAIR_STATUS.md`. The measurements
 > below are historical team reports from PR28. Centered translation and export
 > convention defects invalidate their use as a repaired baseline or root-cause
@@ -119,5 +124,12 @@ python scripts/eval/score_track3_official.py \
     --data <track_3 public root> --oracle
 ```
 
-Defaults point at the remote working copy; override with `V2D_PUBLIC`, `V2D_VIDEOS`,
-`V2D_REPO`, and `V2D_CALIB`.
+Set `V2D_PUBLIC` to the actual public dataset and `V2D_CALIB` to its calibration.
+Diagnostics locate evaluation/stereo modules in the checkout by default; `V2D_REPO`
+and `V2D_RUNTIME` override those module directories. `V2D_VIDEOS` overrides stereo
+probe video paths and `V2D_OUT` overrides probe output. Native inference needs the
+existing compatible CUDA/DINO/SAM2 environment.
+
+Convert camera observations before running `smooth_rotation.py`: it accepts only
+declared fixed-world `object_to_world` records. Its output is inferred and retains
+missing frames. Episode-wide rotation averaging can erase genuine object motion.
