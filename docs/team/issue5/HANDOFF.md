@@ -12,6 +12,16 @@ single-object unmatched-label fallback, new native rejection reports, and the ex
 run artifacts needed. The video generator and inputs are not available, so this
 follow-up does not claim to have reproduced or fixed the team's run.
 
+The October 4 public episode-39 frame-0 control now measures the effect of manually
+reviewed masks on identical SGBM depth/CAD: table-inclusive versus pan-only gives
+40.55 versus 8.12 mm ICP residual and 0.164 versus 0.662 projected-CAD/pan IoU.
+Both pass the native 50 mm residual gate. This isolates an observation/gate weakness
+on one frame, not world-pose accuracy or episode tracking. The portable replay,
+hash-pinned inputs/annotations/results and proposed FoundationPose comparison are
+in [TRACKING_FAILURE.md](TRACKING_FAILURE.md). FoundationPose already estimates
+camera-frame 6-DoF poses in the repo, but its model was not run here and it still
+needs a correct initial target mask and a separate world-camera trajectory.
+
 ## Background and branch dependencies
 
 The repair branch starts at PR #26 (`issue5/object-world-icp`,
@@ -134,6 +144,7 @@ These are workstream handoffs, not new team assignments or sent messages.
 | Issue #3 calibration / prepared perception | Original episode-0/2 masks, raw depth/disparity validity, matching intrinsics/rectification, original `make_masks.py`/`make_depth.py` or actual producer versions, logs/model/input hashes and frozen old outputs. These scripts/observations were not found in the reviewed Git branches. |
 | Issue #4 camera/depth | One metric time-varying camera trajectory per source frame in one fixed gauge, shared across objects. Include episode/frame/capture time, axes, rectification/calibration hash, scale check, producer and GT-use classification. Independent lane must not use object-trajectory GT. The reviewed issue-4 branch equals main and supplies no such implementation/artifact. |
 | Issue #5 tracking | Run bug-only corrected episode 2 and 0 with frozen observations, scale 1 and smoothing off; compare one lid-derived shared GT-assisted camera versus pot-derived camera separately, then the independent path. Keep lanes/output roots distinct and retain failures. |
+| Episode-39 perception / tracking | Recover the original run receipts; replay the manual-mask control on its frozen depth; inspect additional lifting/occluded frames. Compare current ICP and the existing FoundationPose baseline on identical corrected observations before considering optional initialization. Keep the one-frame evidence separate from unrun CUDA inference and episode acceptance. |
 | Evaluation / integration | Score frozen candidates with the five kit pose metrics and raw/fill coverage; reconcile kit roster with issue wording; inspect an asymmetric control, then expand to all 20 public IDs. Coordinate overlapping PR #28 files before integration. |
 
 Detailed prepared-input and conversion commands are in

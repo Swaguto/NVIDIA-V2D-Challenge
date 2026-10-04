@@ -55,7 +55,8 @@ def main():
         records.append({"path": relative.as_posix(), "bytes": item["size"], "sha256": expected})
         print(f"verified {relative.as_posix()}", flush=True)
     manifest = {"dataset": dataset, "revision": args.revision, "files": records,
-        "scope": "public visual meshes and episode 0/2 stereo RGB; no prepared observations or cameras"}
+        "episodes": sorted(episodes),
+        "scope": "public visual meshes and selected episode stereo RGB; no prepared observations or cameras"}
     (args.output / "asset_download_manifest.json").write_text(json.dumps(manifest, indent=2))
     print(json.dumps({"files": len(records), "bytes": sum(r["bytes"] for r in records)}))
 
