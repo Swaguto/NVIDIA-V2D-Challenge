@@ -12,7 +12,7 @@ GT-independent; public ground truth is read only by the final scorer.
 | metric (inferred / gap-filled set) | value |
 | --- | --- |
 | mean ADD-AUC | **0.7304** |
-| median ADD-AUC | 0.7359 |
+| median ADD-AUC | 0.7308 |
 | mean RPE | 0.99 cm |
 | mean MPPE | 3.00 cm |
 | episodes with coverage 1.0 | 20 / 20 |
