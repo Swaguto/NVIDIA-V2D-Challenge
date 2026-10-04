@@ -262,6 +262,12 @@ def test_single_object_segmenter_does_not_assign_table_mask_to_pan():
     assert masks.sum() == 4 and masks[0, 2:4, 2:4].all()
     assert not masks[0, 0, 0]
     assert [item[:2] for item in detections] == [(None, "table"), ("mini_dust_pan", "mini dust pan")]
+    assert [x["box_xyxy"] for x in segmenter.last_candidates] == [[0., 0., 8., 8.], [2., 2., 4., 4.]]
+    assert [x["mask_pixels"] for x in segmenter.last_candidates] == [64, 4]
+    assert [x["object"] for x in segmenter.last_candidates] == [None, "mini_dust_pan"]
+    detector.update(boxes=torch.empty((0, 4)), text_labels=[], scores=torch.empty(0))
+    masks, detections = segmenter(np.zeros((8, 8, 3), np.uint8))
+    assert not masks.any() and not detections and segmenter.last_candidates == []
 
 
 @pytest.mark.parametrize("failure", [None, "mask", "residual", "read"])
@@ -284,8 +290,11 @@ def test_native_tracker_records_rejections_and_fails_zero_solve(tmp_path, monkey
     monkeypatch.setattr(registration, "stereo_depth", lambda *args: (np.ones((32, 32)), np.ones((32, 32), bool)))
     yy, xx = np.indices((32, 32)); cloud = np.stack([xx.ravel()*.01, yy.ravel()*.01, np.ones(1024)], axis=1)
     monkeypatch.setattr(registration, "backproject_full", lambda *args: cloud)
-    monkeypatch.setattr(registration, "Segmenter", lambda names: lambda *args: (
-        np.full((1, 32, 32), failure != "mask", bool), [(None, "table", .9)] if failure == "mask" else [(names[0], "mini dust pan", .9)]))
+    segmenter = lambda *args: (
+        np.full((1, 32, 32), failure != "mask", bool), [(None, "table", .9)] if failure == "mask" else [("mini_dust_pan", "mini dust pan", .9)])
+    segmenter.last_candidates = [{"object": "mini_dust_pan", "label": "mini dust pan",
+                                  "score": .9, "box_xyxy": [0., 0., 32., 32.], "mask_pixels": 1024}]
+    monkeypatch.setattr(registration, "Segmenter", lambda names: segmenter)
     monkeypatch.setattr(registration, "register", lambda *args, **kwargs: (
         1., torch.eye(3), torch.tensor([0., 0., 1.]), .1 if failure == "residual" else .001))
     out = tmp_path / "pred"
@@ -303,6 +312,7 @@ def test_native_tracker_records_rejections_and_fails_zero_solve(tmp_path, monkey
         assert report["input_errors"][0]["frame_index"] == 100
     else:
         assert sorted(report["frames"]) == ["100", "104"]
+        assert report["frames"]["100"]["detection_candidates"] == segmenter.last_candidates
         detail = report["frames"]["100"]["objects"]["mini_dust_pan"]
         assert detail["reason"] == {None: None, "mask": "insufficient_masked_depth", "residual": "residual_gate"}[failure]
 

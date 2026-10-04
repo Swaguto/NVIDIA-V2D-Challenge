@@ -259,6 +259,7 @@ class Segmenter:
 
     @torch.inference_mode()
     def __call__(self, rgb, box_threshold=0.30):
+        self.last_candidates = []
         inp = self.gp(images=rgb, text=self.prompt, return_tensors="pt").to(self.device)
         det = self.gp.post_process_grounded_object_detection(
             self.gm(**inp), inp.input_ids, threshold=box_threshold, text_threshold=0.25,
@@ -279,6 +280,11 @@ class Segmenter:
         for k, (lab, sc, bi) in enumerate(zip(det["text_labels"],
                                              det["scores"].tolist(),
                                              self._assign(det["text_labels"]))):
+            self.last_candidates.append({
+                "object": self.names[bi] if bi is not None else None,
+                "label": lab, "score": float(sc), "box_xyxy": boxes[0][k],
+                "mask_pixels": int(m[k].sum()),
+            })
             if bi is None:
                 info.append((None, lab, float(sc)))
                 continue
@@ -496,7 +502,9 @@ def main():
             report["input_errors"].append({"frame_index": t, "error": str(error)})
             break
         frame_report = {"timestamp": float(times[t]) if t in times else None,
-                        "detections": _info, "objects": {}}
+                        "detections": _info,
+                        "detection_candidates": getattr(seg, "last_candidates", []),
+                        "objects": {}}
         report["frames"][str(t)] = frame_report
         pts = backproject_full(depth, valid, rig.P1)
 
