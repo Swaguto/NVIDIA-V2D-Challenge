@@ -42,7 +42,11 @@ import trimesh
 
 _ROOT = Path(os.environ.get("V2D_PUBLIC", "/home/ubuntu/v2d_track3/data/hf/track_3/public"))
 _FP = os.environ.get("FOUNDERATIONPOSE", "/home/ubuntu/FoundationPose")
-sys.path.insert(0, str(Path(__file__).resolve().parent))     # stereo_depth
+# stereo_depth is a real module in the tree, not a VM-only file; render_track.py does the
+# same. Several older scripts here still import it from /home/ubuntu, which only resolves
+# on one machine.
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]
+                       / "reconstruction" / "modules" / "v2d_stereo_depth" / "lib"))
 sys.path.insert(0, _FP)
 sys.path.insert(0, f"{_FP}/mycpp/build")
 
