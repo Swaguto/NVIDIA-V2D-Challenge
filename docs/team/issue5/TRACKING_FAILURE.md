@@ -15,6 +15,12 @@ to 0.657-0.904. See [GPU_CONTROL.md](GPU_CONTROL.md) for the exact controlled
 workflow, frozen-mask reader, gap repair, 145 CPU tests and measured limitations.
 Automatic acquisition, independent world cameras and the full issue gates remain open.
 
+The subsequent [pot/lid control](POT_CONTROL.md) shows the same observation problem
+in the primary issue-5 objects, with failed sampled relative 6D geometry. It records
+actual both-view masks, left-camera fits, frozen RPE/canonical-rotation evaluation,
+language controls and native box persistence. Its measurements are separate from
+the unknown original clip and the earlier retracted rotation diagnosis.
+
 ## What the clip establishes
 
 The clip contains 319 frames at 20 FPS, 1280 x 440 pixels, lasting 15.95 seconds.

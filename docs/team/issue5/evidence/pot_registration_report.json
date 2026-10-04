@@ -1,0 +1,101 @@
+{
+  "episode": 2,
+  "objects": [
+    "white_pot",
+    "white_pot_lid"
+  ],
+  "coordinate_frame": "rectified_camera",
+  "camera_frame": "ego_cam_c",
+  "gt_use": "none",
+  "source_sha256_lf": "252866db4deb066e780df1b34d08e29a48a6acb88d5830418de72fad1e9a10fd",
+  "runtime": {
+    "torch": "2.11.0+cu128",
+    "cuda": "12.8",
+    "device": "cuda",
+    "device_name": "NVIDIA GeForce RTX 5060 Laptop GPU"
+  },
+  "models": {
+    "detector": "C:\\Users\\evanc\\.cache\\v2d-issue5\\models\\IDEA-Research--grounding-dino-base\\12bdfa3120f3e7ec7b434d90674b3396eccf88eb",
+    "segmenter": "C:\\Users\\evanc\\.cache\\v2d-issue5\\models\\facebook--sam2.1-hiera-large\\665f8e2ad61cf5f53d65644ff27c8ee525124610"
+  },
+  "observation_source": {
+    "kind": "dino_sam2"
+  },
+  "rectification_sha256": "471b0deb0692a7f41ff71d33fb316b72ba23b5f3ac47436541677d38e6faffab",
+  "params": {
+    "stride": 1,
+    "allow_scale": false,
+    "max_residual_m": 0.05,
+    "box_threshold": 0.3,
+    "cad_samples": 6000,
+    "cad_seed": 0
+  },
+  "frames": {
+    "0": {
+      "timestamp": null,
+      "detections": [
+        [
+          "white_pot_lid",
+          "white white pot lid",
+          0.46299198269844055
+        ],
+        [
+          "white_pot",
+          "white pot pot",
+          0.4237225353717804
+        ]
+      ],
+      "detection_candidates": [
+        {
+          "object": "white_pot_lid",
+          "label": "white white pot lid",
+          "score": 0.46299198269844055,
+          "box_xyxy": [
+            518.091796875,
+            419.7809753417969,
+            725.81103515625,
+            628.2415161132812
+          ],
+          "mask_pixels": 30929
+        },
+        {
+          "object": "white_pot",
+          "label": "white pot pot",
+          "score": 0.4237225353717804,
+          "box_xyxy": [
+            461.1877746582031,
+            411.7994384765625,
+            959.8792724609375,
+            796.5869750976562
+          ],
+          "mask_pixels": 118564
+        }
+      ],
+      "objects": {
+        "white_pot": {
+          "mask_pixels": 118564,
+          "valid_depth_pixels": 84087,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": null,
+          "filtered_cloud_points": 10065,
+          "residual_m": 0.038516007363796234
+        },
+        "white_pot_lid": {
+          "mask_pixels": 30929,
+          "valid_depth_pixels": 28222,
+          "status": "observed",
+          "reason": null,
+          "warm_start_frame_index": null,
+          "filtered_cloud_points": 4343,
+          "residual_m": 0.006098615936934948
+        }
+      }
+    }
+  },
+  "accepted_by_object": {
+    "white_pot": 1,
+    "white_pot_lid": 1
+  },
+  "input_errors": []
+}

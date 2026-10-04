@@ -67,6 +67,28 @@ Subsequent October 4 actual local GPU control, tested native software `45a9fc5`:
 See [../GPU_CONTROL.md](../GPU_CONTROL.md) for portable replay and remaining gates.
 The semi-automatic observation control does not close all-20 world-pose acceptance.
 
+Subsequent October 4 pot/lid control, software `f8bc24f`:
+
+- `pot_native_observations.json`: actual DINO/SAM2 both-view boxes/masks and native
+  scale-1 left-camera fits at eight fixed frames per episode 2 and 0; all 64 mask
+  hashes and all 32 fit records reproduce the initial control exactly.
+- `pot_language_controls.json`: 30 actual predetermined single-phrase controls;
+  none is promoted as a production prompt fix.
+- `pot_relative_evaluation.json`: evaluator-only public GT sources/visibility,
+  frozen inference binding, both pair directions and direct participant RPE
+  kernel results; no policy-rollout score or full-episode accuracy claim.
+- `pot_registration_report.json`: actual native one-frame CLI report with
+  persisted individual detector boxes, scores, assignments and mask counts.
+- `pot_validation.json`: source/commands/runtime/receipt hashes, current tests,
+  exact-replay checks and explicit remaining gates.
+- `pot_masks_preview.jpg`: sampled both-view masks and left-view CAD contours;
+  green pot / magenta lid / yellow CAD. No right-camera pose fit is shown.
+- `tests-pot-control.xml`: 145 CPU tests passed, zero skips at this source;
+  strengthened candidate capture/reset/report controls use generated fixtures.
+
+See [../POT_CONTROL.md](../POT_CONTROL.md). Sparse relative measurements are
+conditional on common visible accepted observations; missing cases are retained.
+
 The original local snapshots and previews remain archived in the author's workspace.
 Use the portable commands in [../HANDOFF.md](../HANDOFF.md) to regenerate evidence
 on a teammate's checkout. Source revisions are identified there; these snapshots

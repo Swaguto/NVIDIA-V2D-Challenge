@@ -31,6 +31,16 @@ gap reinitialization; 145 CPU tests pass. This is a semi-automatic observation
 control, not an automatic detector repair or official world-pose score. See its
 portable GPU commands and receipts before requesting another unknown VM run.
 
+The subsequent [pot/lid control](POT_CONTROL.md) probes eight fixed frames each in
+episodes 2 and 0, generating both-view masks and left-camera native fits. It confirms
+table contamination and missed/mixed targets. Frozen relative-pose evaluation gives
+participant RPE-kernel values 41.00/24.81 cm and median canonical relative rotation
+errors about 145 degrees. All missing/rejected samples are retained. These are sparse
+pipeline-C diagnostics; they do not satisfy original all-20/both-camera gates or
+reproduce the team's prepared FoundationStereo/point-to-plane pipeline. Software
+`f8bc24f` also records each native detector box/label/score/individual mask count;
+145 CPU tests pass with strengthened candidate persistence/reset checks.
+
 ## Background and branch dependencies
 
 The repair branch starts at PR #26 (`issue5/object-world-icp`,

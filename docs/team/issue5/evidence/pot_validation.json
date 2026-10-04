@@ -1,0 +1,98 @@
+{
+  "source_commit": "f8bc24fed728e555a572de4c86aab4c8946ecfd4",
+  "source_sha256_lf": {
+    "scripts/track3/register_poses.py": "252866db4deb066e780df1b34d08e29a48a6acb88d5830418de72fad1e9a10fd",
+    "scripts/eval/probe_issue5_pot_observations.py": "27de3b7a2ba74d4b2f96534cef3de0334b9759ed9d608e8f89c00b444e597d19",
+    "scripts/eval/probe_issue5_pot_language.py": "6e02a2c55d9e2ab1089d04fbf556612166c78b165d1947582d4e6d93f28bcba2",
+    "scripts/eval/evaluate_issue5_pot_relative.py": "a0215aa032a4d54933101cc0579aea83954311dd7e8ff184780260373a439ff9",
+    "tests/test_issue5_review_regressions.py": "fa3ef6c34310af6b5a8844c22db676edddc5393298ad04e631a0d35e950dc3b9"
+  },
+  "evidence_sha256": {
+    "pot_native_observations.json": "331c3af567b104d469485caf05a8c91e8876a4454971bc6b8b7a1b427f0be4ff",
+    "pot_language_controls.json": "709a9b5e7ade16f15ec57f603033092f84ca7a4aaa074c46faf93fe5819e0262",
+    "pot_relative_evaluation.json": "2f20f4ce864cfa62b4790be815426d7494f72370186b92f4a6334e552b4ca26a",
+    "pot_registration_report.json": "1b097ccd4d2ccae0d5fc4363a9eb0eda2c0e8c20005c1d297912bca100883891",
+    "tests-pot-control.xml": "289d69c1b59d3c6423b1d5cbab6804cb9b9dcf0094fa107666a6cdd79d079d24",
+    "pot_masks_preview.jpg": "3ed2f1e429b69ed9d417c53f0522bc207ab4119ebcc376cf83f24100e72b797d"
+  },
+  "commands": [
+    "python scripts/eval/probe_issue5_pot_observations.py --data ../data/track3/public --models C:/Users/evanc/.cache/v2d-issue5/models --out ../runs/issue5_pot_control/portable-native-probe",
+    "python scripts/eval/probe_issue5_pot_language.py --data ../data/track3/public --models C:/Users/evanc/.cache/v2d-issue5/models --baseline ../runs/issue5_pot_control/portable-native-probe/probe_results.json --out ../runs/issue5_pot_control/portable-language",
+    "python scripts/eval/evaluate_issue5_pot_relative.py --data ../data/track3/public --predictions ../runs/issue5_pot_control/portable-native-probe/probe_results.json --kit ../runs/issue5_pr_20261003/test-inputs/v2d_submission_kit --out ../runs/issue5_pot_control/portable-relative.json",
+    "python scripts/eval/run_issue5_pot_native.py --data ../data/track3/public --models C:/Users/evanc/.cache/v2d-issue5/models --out ../runs/issue5_pot_control/portable-native-candidate-report",
+    "python -m pytest tests/test_issue5_official_wrapper.py tests/test_issue5_repairs.py tests/test_issue5_review_regressions.py tests/test_issue5_stereo_diagnostic.py reconstruction/modules/v2d_world_calib/tests -q"
+  ],
+  "gpu_environment": {
+    "torch": "2.11.0+cu128",
+    "transformers": "5.18.0",
+    "cuda": "12.8",
+    "device": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "opencv": "5.0.0"
+  },
+  "cpu_tests": {
+    "passed": 145,
+    "skipped": 0,
+    "env_overrides": {
+      "V2D_SUBMISSION_KIT": "../runs/issue5_pr_20261003/test-inputs/v2d_submission_kit",
+      "V2D_CALIB": "tests/fixtures/track3_camera_calibration.json"
+    }
+  },
+  "replay": {
+    "same_64_mask_hashes": true,
+    "same_32_fit_records": true,
+    "same_30_language_masks_and_detections": true,
+    "native_candidates_match_probe": true,
+    "relative_scores_match_initial_evaluator": true
+  },
+  "relative_summary": [
+    {
+      "episode": 2,
+      "sampled_frames": 8,
+      "common_visible_sampled": 8,
+      "common_visible_accepted": 6,
+      "official_rpe_kernel_cm": 41.002832854482634,
+      "median_relative_translation_cm": 46.60900908633549,
+      "median_relative_canonical_rotation_deg": 144.83250954121272
+    },
+    {
+      "episode": 0,
+      "sampled_frames": 8,
+      "common_visible_sampled": 8,
+      "common_visible_accepted": 8,
+      "official_rpe_kernel_cm": 24.805419963865354,
+      "median_relative_translation_cm": 21.39173113779379,
+      "median_relative_canonical_rotation_deg": 144.9811404579496
+    }
+  ],
+  "limits": [
+    "Eight sampled frames per public episode; no full coverage or all-20 score.",
+    "RPE uses common GT-visible accepted observations; missing/rejected counts retained.",
+    "Camera motion cancels for within-frame relative transforms; no independent C(t) supplied.",
+    "This is direct participant-kit RPE mathematics, not a policy-rollout score() submission.",
+    "Other five metrics and fixed-world accuracy are not claimed.",
+    "Native candidate report is one actual frame, not full tracking.",
+    "Both-view masks, but left-view native depth/pose fits only.",
+    "Aliases are controls; no production detector/threshold change.",
+    "Independent C(t), original prepared observations, both-camera absolute pot accuracy and all-20 world criteria remain open.",
+    "FoundationPose, policy training, robot rollout and official submission unrun."
+  ],
+  "native_smoke_wrapper_sha256_lf": "066503ec5db9514a1b57ca51e0a6425d1e988bd0318280d814930a05651ec9c5",
+  "source_boundary": "Native and probe/evaluation source plus 145-test run at f8bc24f. Portable smoke wrapper is a later CLI addition, executed separately and identified by its source hash.",
+  "negative_controls": [
+    {
+      "control": "fresh_output",
+      "exit_status": 2,
+      "expected_error": "output must be fresh"
+    },
+    {
+      "control": "gt_assisted",
+      "exit_status": 1,
+      "expected_error": "expected frozen GT-free"
+    },
+    {
+      "control": "modified_kit",
+      "exit_status": 1,
+      "expected_error": "RPE scorer differs"
+    }
+  ]
+}

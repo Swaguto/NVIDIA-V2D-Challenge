@@ -17,6 +17,14 @@ frozen-mask input validates hashes, calibration/rectification and GT-use; gaps a
 rejections clear warm starts. Software `45a9fc5` passes 145 targeted CPU tests.
 Automatic acquisition and original world-pose criteria remain open.
 
+The later [pot/lid diagnostic](POT_CONTROL.md) confirms native target failures on
+eight sampled frames each of episodes 2 and 0. Frozen common-visible accepted
+observations yield RPE-kernel 41.00/24.81 cm and about 145-degree median canonical
+relative rotation error. Masks can look plausible without correct relative geometry.
+Native reports now include individual candidate boxes/labels/scores/mask counts at
+`f8bc24f`; 145 CPU tests pass. Default masks and acceptance thresholds are unchanged.
+These results do not close F8 or replace the original prepared-input regeneration.
+
 Base: PR26 `ef8a7ac4615aaf9b499387fa68b76b27246d9d55`. The stereo/registration
 and official pose-metric utilities were imported from PR28
 `a6e0cb2e87299278fd610a9f3afc7fa754732668` and repaired in this checkout.
