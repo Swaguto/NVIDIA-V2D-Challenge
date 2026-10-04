@@ -48,13 +48,13 @@ def build(data: Path, root: Path) -> str:
         mask_text = ", ".join(f"{html.escape(k)} {v}/{masks.get('frames', '?')}"
                               for k, v in masks.get("mask_counts", {}).items())
         cover_text = ", ".join(f"{html.escape(k)} {v:.1%}" for k, v in coverage.items())
-        video_html = (f'<video controls preload="none" src="e{episode:03d}/{video.name}"></video>'
+        video_html = (f'<video controls preload="none" src="e{episode:03d}/{video.name}?v=2"></video>'
                       if video.is_file() else "<p>Overlay pending.</p>")
         if color_video.is_file() and mesh_video.is_file():
-            video_html += (f'<p><a href="e{episode:03d}/cad_mesh_overlay.mp4">'
+            video_html += (f'<p><a href="e{episode:03d}/cad_mesh_overlay.mp4?v=2">'
                            'View natural CAD materials</a></p>')
         if (color_video.is_file() or mesh_video.is_file()) and (item / "overlay.mp4").is_file():
-            video_html += (f'<p><a href="e{episode:03d}/overlay.mp4">'
+            video_html += (f'<p><a href="e{episode:03d}/overlay.mp4?v=2">'
                            'View outline diagnostic</a></p>')
         cards.append(f'<section id="episode-{episode}"><h2>Episode {episode}: '
                      f'{html.escape(names_text)}</h2>{video_html}'
