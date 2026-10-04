@@ -346,14 +346,16 @@ def test_camera_fitter_selected_gt_index_export_and_saved_residual(tmp_path, mon
     assert not (out / 'target/object_to_cam/left/000000.json').exists()
 
 
-def test_overlay_repeated_invocation_excludes_vis_and_uses_shared_source(tmp_path, monkeypatch):
+@pytest.mark.parametrize("external_poses", [False, True])
+def test_overlay_repeated_invocation_excludes_vis_and_uses_shared_source(tmp_path, monkeypatch, external_poses):
     import cv2
     import hashlib
     import trimesh
     data, work = tmp_path / 'data', tmp_path / 'work'
     (data / 'meta').mkdir(parents=True)
     (data / 'meta/camera_calibration.json').write_text('{}')
-    output = work / 'ego_object_poses/e002/target/object_to_world'; output.mkdir(parents=True)
+    episode_dir = tmp_path / 'fresh-fit-output' if external_poses else work / 'ego_object_poses/e002'
+    output = episode_dir / 'target/object_to_world'; output.mkdir(parents=True)
     camera = tmp_path / 'shared.json'; camera.write_text(json.dumps(rig.mat_to_js(np.eye(4))))
     source = {'path': str(camera), 'sha256': hashlib.sha256(camera.read_bytes()).hexdigest()}
     (output / '000010.json').write_text(json.dumps({**rig.mat_to_js(transform(0, (0, 0, 1))), 'camera_source': source}))
@@ -369,11 +371,14 @@ def test_overlay_repeated_invocation_excludes_vis_and_uses_shared_source(tmp_pat
         sizes.append((len(vertices), int(faces.max())))
         img[16, 16] = [255, 255, 0]
     monkeypatch.setattr(vis, '_render_mesh', render)
-    monkeypatch.setattr(sys, 'argv', ['vis', '--data-root', str(data), '--work', str(work), '--episode', '2'])
+    argv = ['vis', '--data-root', str(data), '--work', str(work), '--episode', '2']
+    if external_poses:
+        argv += ['--poses', str(episode_dir)]
+    monkeypatch.setattr(sys, 'argv', argv)
     assert vis.main() == vis.main() == 0
     assert len(sizes) == 2
     assert all(n > 4000 and maximum < n for n, maximum in sizes)
-    img = cv2.imread(str(work / 'ego_object_poses/e002/vis/target/frames/000010.png'))
+    img = cv2.imread(str(episode_dir / 'vis/target/frames/000010.png'))
     assert img[16, 16, 0] > 0
 
 

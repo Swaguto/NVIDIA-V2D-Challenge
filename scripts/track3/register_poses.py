@@ -252,8 +252,8 @@ class Segmenter:
                 if ph in lab:
                     hit = self.phrase2idx[ph]
                     break
-            if hit is None:
-                hit = 0 if len(self.names) == 1 else None
+            # An unrelated detection is not evidence for the only requested object.
+            # In single-object episodes the old fallback could turn a table into a pan.
             out.append(hit)
         return out
 
@@ -280,6 +280,7 @@ class Segmenter:
                                              det["scores"].tolist(),
                                              self._assign(det["text_labels"]))):
             if bi is None:
+                info.append((None, lab, float(sc)))
                 continue
             masks[bi] |= m[k]
             info.append((self.names[bi], lab, float(sc)))
@@ -399,28 +400,44 @@ def main():
     rectification_path = out / "rectification.json"
     rectification_path.write_text(json.dumps(rectification, indent=2))
     rectification_hash = hashlib.sha256(rectification_path.read_bytes()).hexdigest()
+    report = {"episode": a.episode, "objects": names, "coordinate_frame": "rectified_camera",
+        "camera_frame": rig.left, "gt_use": "none" if a.no_gt else "metadata_only",
+        "models": {"detector": GDINO, "segmenter": SAM2},
+        "rectification_sha256": rectification_hash,
+        "params": {"stride": a.stride, "allow_scale": a.allow_scale,
+                   "max_residual_m": a.max_residual, "box_threshold": a.box_threshold},
+        "frames": {}, "accepted_by_object": dict.fromkeys(names, 0), "input_errors": []}
     t0 = time.time()
 
     for t in frames[::a.stride]:
         t = int(t)
         try:
             il, ir = read_frame(vlp, t), read_frame(vrp, t)
-        except RuntimeError:
+        except RuntimeError as error:
+            report["input_errors"].append({"frame_index": t, "error": str(error)})
             break
         pl, _ = rig.rectify_pair(il, ir)
         depth, valid = stereo_depth(rig, il, ir)
         masks, _info = seg(cv2.cvtColor(pl, cv2.COLOR_BGR2RGB), a.box_threshold)
+        frame_report = {"timestamp": float(times[t]) if t in times else None,
+                        "detections": _info, "objects": {}}
+        report["frames"][str(t)] = frame_report
         pts = backproject_full(depth, valid, rig.P1)
 
         for bi, n in enumerate(names):
             m = masks[bi].ravel() & valid.ravel()
+            detail = {"mask_pixels": int(masks[bi].sum()), "valid_depth_pixels": int(m.sum()),
+                      "status": "rejected", "reason": "insufficient_masked_depth"}
+            frame_report["objects"][n] = detail
             d = out / f"e{a.episode:03d}" / "ego_object_poses" / f"e{a.episode:03d}" / n \
                 / "object_to_cam" / rig.left
             d.mkdir(parents=True, exist_ok=True)
             if m.sum() < 300:
                 continue
             cloud = trim_cloud(voxel_downsample(pts[m], 0.004))
+            detail["filtered_cloud_points"] = len(cloud)
             if len(cloud) < 120:
+                detail["reason"] = "insufficient_filtered_cloud"
                 continue
             dst = torch.tensor(cloud, dtype=torch.float32, device=DEV)
             R0 = t0_ = None
@@ -431,13 +448,19 @@ def main():
                 reg = register(cads[n], dst, R0=R0, t0=t0_, allow_scale=a.allow_scale,
                                s0=previous_scale if R0 is not None else 1.0)
             except Exception as error:                       # noqa: BLE001
+                detail.update(reason="registration_error", error=f"{type(error).__name__}: {error}")
                 print(f"    t={t} {n}: {type(error).__name__}: {error}", flush=True)
                 continue
             if reg is None:
+                detail["reason"] = "no_registration_result"
                 continue
             s, R, tt, res = reg
+            detail["residual_m"] = float(res) if np.isfinite(res) else None
             if not np.isfinite(res) or res > a.max_residual:
+                detail["reason"] = "residual_gate"
                 continue
+            detail.update(status="observed", reason=None)
+            report["accepted_by_object"][n] += 1
             prev[n] = (R, tt, res, s)   # camera-space warm start, including free scale
             (d / f"{t:06d}.json").write_text(json.dumps({
                 "translation": [float(x) for x in tt.cpu().numpy()],
@@ -454,7 +477,11 @@ def main():
             done = [prev[n][2] for n in names if prev[n] is not None]
             print(f"  t={t:>4}/{steps}  residual="
                   f"{[round(d, 4) for d in done]}  [{time.time() - t0:.0f}s]", flush=True)
-    print(f"done {a.episode} in {time.time() - t0:.0f}s", flush=True)
+    (out / "registration_report.json").write_text(json.dumps(report, indent=2, allow_nan=False))
+    print(f"done {a.episode} in {time.time() - t0:.0f}s; accepted={report['accepted_by_object']}; "
+          f"report={out / 'registration_report.json'}", flush=True)
+    if report["input_errors"] or not all(report["accepted_by_object"].values()):
+        raise SystemExit("incomplete tracking: input read failed or an object has zero accepted poses; inspect registration_report.json")
 
 
 if __name__ == "__main__":

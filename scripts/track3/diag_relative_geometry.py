@@ -8,9 +8,8 @@ GT supplies it directly:
     rel_gt = inv(world_T_lid) @ world_T_pot
     rel_pred = inv(cam_T_lid)  @ cam_T_pot
 
-If rel_pred tracks rel_gt, the pipeline's internal geometry is right and any remaining error
-is just the (scored) offset to the reference frame. If rel_pred is off, the failure is in
-segmentation or registration, which is worth far more attention.
+Agreement checks relative geometry only. Absolute trajectories still require a
+time-varying camera transform; a constant scored alignment does not remove egomotion.
 """
 import json
 import os
@@ -19,10 +18,11 @@ from pathlib import Path
 
 import numpy as np
 
-sys.path.insert(0, os.environ.get("V2D_REPO", "/home/ubuntu/repoeval"))
+REPO_ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, os.environ.get("V2D_REPO", str(REPO_ROOT / "scripts/eval")))
 from reference_loader import load_reference   # noqa: E402
 
-ROOT = Path("/home/ubuntu/v2d_track3/data/hf/track_3/public")
+ROOT = Path(os.environ.get("V2D_PUBLIC", str(REPO_ROOT / "data/hf/track_3/public")))
 PRED = Path(sys.argv[1] if len(sys.argv) > 1 else "/home/ubuntu/pred_e000")
 EP = int(sys.argv[2] if len(sys.argv) > 2 else 0)
 
@@ -85,12 +85,15 @@ def T_from(p):
     return M
 
 
-common = sorted(set(preds[0]) & set(preds[1]) & set(range(gt.shape[0])))
+row_of = {int(frame): row for row, frame in enumerate(ref.frame_index)}
+common = sorted(set(preds[0]) & set(preds[1]) & set(row_of))
 print(f"frames with both predictions: {len(common)}/{gt.shape[0]}")
+if not common:
+    raise SystemExit("no common prediction/reference source frame IDs")
 
 dt, dr, dt_obj, dr_obj = [], [], [[], []], [[], []]
 for t in common:
-    Pg = [T_from(gt[t, b]) for b in range(2)]
+    Pg = [T_from(gt[row_of[t], b]) for b in range(2)]
     Pp = [preds[b][t] for b in range(2)]
     rel_g = np.linalg.inv(Pg[1]) @ Pg[0]
     rel_p = np.linalg.inv(Pp[1]) @ Pp[0]
@@ -101,7 +104,7 @@ for t in common:
         dt_obj[b].append(np.linalg.norm(Pp[b][:3, 3] - Pg[b][:3, 3]))
         dr_obj[b].append(angle(Pp[b][:3, :3]))
 
-print("\nrelative transform  lid_T_pot  (frame-invariant, directly comparable to GT):")
+print(f"\nrelative transform  {names[1]}_T_{names[0]}  (frame-invariant, directly comparable to GT):")
 print(f"  translation error : median {np.median(dt) * 100:.2f} cm   "
       f"p90 {np.percentile(dt, 90) * 100:.2f} cm")
 print(f"  rotation error    : median {np.median(dr):.2f} deg  "
@@ -111,6 +114,6 @@ for b, n in enumerate(names):
     print(f"  {n:<18} median {np.median(dt_obj[b]) * 100:6.2f} cm")
 print("\nsanity: GT object separation (cm), and predicted separation:")
 for t in common[:5]:
-    g = np.linalg.norm(T_from(gt[t, 0])[:3, 3] - T_from(gt[t, 1])[:3, 3]) * 100
+    g = np.linalg.norm(T_from(gt[row_of[t], 0])[:3, 3] - T_from(gt[row_of[t], 1])[:3, 3]) * 100
     p = np.linalg.norm(preds[0][t][:3, 3] - preds[1][t][:3, 3]) * 100
     print(f"  t={t:>4}  gt_sep={g:7.2f}  pred_sep={p:7.2f}  diff={p - g:+7.2f}")

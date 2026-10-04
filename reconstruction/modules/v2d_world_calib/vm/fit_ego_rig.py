@@ -515,6 +515,11 @@ def main() -> int:
 
     data_root = Path(args.data_root)
     work = Path(args.work)
+    if args.est_right_scale and args.out is None:
+        ap.error("--est-right-scale reads saved work/ego_cam_poses; provide a fresh --out")
+    out_root = args.out or work / "ego_cam_poses"
+    if out_root.exists() and (not out_root.is_dir() or any(out_root.iterdir())):
+        ap.error("camera output already exists; pass --out with a new directory")
     rig_root = data_root / "meta" / "camera_calibration.json"
     if not rig_root.exists():
         sys.exit(f"{rig_root}: camera_calibration.json not found")
@@ -545,9 +550,6 @@ def main() -> int:
     print(f"episode {args.episode}: objects={obj_order} ego cams=({cam_left},{cam_right})")
     print(f"ego rig |t|={np.linalg.norm(M[:3, 3]):.4f} m")
 
-    out_root = args.out or work / "ego_cam_poses"
-    if any(out_root.glob("*/world_to_cam/*/*.json")) or (out_root / "report.json").exists():
-        ap.error("camera output already exists; use a fresh work directory")
     out_root.mkdir(parents=True, exist_ok=True)
     Tmax = int(ref.steps)
     per_obj_out: dict[str, dict] = {}

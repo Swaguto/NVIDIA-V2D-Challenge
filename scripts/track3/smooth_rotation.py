@@ -1,14 +1,11 @@
 #!/usr/bin/env python3
-"""Temporal regularisation of object rotations.
+"""Optional rotation filtering of fixed-world trajectories, leaving translations intact.
 
-Context: after fixing the quaternion writer, per-frame ICP rotations scored WORSE than
-simply reporting identity (AUC 0.036 vs 0.169). That is not a bug in the fix -- it says the
-per-frame rotation estimates are noisy, while GT rotations are nearly constant within an
-episode (measured spread: lid 6.2 deg median). Averaging the rotation trajectory on the
-manifold therefore reduces error, exactly as averaging a noisy signal does.
-
-This replaces each frame's rotation by the geodesic mean of its episode (optionally a local
-window), leaving translations untouched.
+Convert camera observations with convert_camera_poses.py before using this tool.
+Camera-frame averaging erases real ego rotation even when observations are perfect.
+Episode-wide averaging (--window 0) also erases real object rotation; compare raw
+and short-window controls before choosing it. Outputs are inferred, with unvalidated
+residuals; filtering is neither a new observation nor evidence of better tracking.
 """
 import argparse
 import json
@@ -53,24 +50,43 @@ def main():
     if (source == destination or source in destination.parents or destination in source.parents
             or destination.exists()):
         ap.error("--out must be a new directory outside the input tree")
-    shutil.copytree(source, destination)
-    base = a.out / ep / "ego_object_poses" / ep
+    if a.window < 0:
+        ap.error("--window must be nonnegative")
+    bases = [source / ep / "ego_object_poses" / ep,
+             source / "ego_object_poses" / ep, source]
+    base = next((p for p in bases if p.is_dir() and
+                 any((d / "object_to_world").is_dir() for d in p.iterdir())), None)
+    if base is None:
+        ap.error("no fixed-world object_to_world records; run convert_camera_poses.py first")
 
+    pending, summaries = [], []
     for obj_dir in sorted(base.iterdir()):
-        d = obj_dir / "object_to_cam" / "ego_cam_c"
-        files = sorted(d.glob("*.json"))
+        d = obj_dir / "object_to_world"
+        files = sorted(d.glob("[0-9]*.json"), key=lambda f: int(f.stem))
         if not files:
             continue
         recs = [json.loads(f.read_text()) for f in files]
+        frames = np.array([int(f.stem) for f in files])
+        if len(set(frames)) != len(frames):
+            raise ValueError(f"duplicate source frame IDs: {d}")
+        for f, r in zip(files, recs):
+            if r.get("coordinate_frame") != "fixed_world":
+                raise ValueError(f"smoothing requires declared fixed-world coordinates: {f}")
+            if r.get("frame_index", int(f.stem)) != int(f.stem) or r.get("episode", a.episode) != a.episode:
+                raise ValueError(f"pose frame/episode mismatch: {f}")
+            if r.get("status", "observed") not in ("observed", "inferred"):
+                raise ValueError(f"cannot smooth rejected/fill records: {f}")
         # challenge order is (w, x, y, z); scipy wants (x, y, z, w)
         wxyz = np.array([r["rotation"] for r in recs], float)
+        if wxyz.shape != (len(recs), 4) or not np.isfinite(wxyz).all():
+            raise ValueError(f"expected finite wxyz rotations: {d}")
         quats = wxyz[:, [1, 2, 3, 0]]
-        if a.window and a.window < len(quats):
+        if a.window:
             means = []
-            half = a.window // 2
-            for i in range(len(quats)):
-                lo, hi = max(0, i - half), min(len(quats), i + half + 1)
-                means.append(geodesic_mean(quats[lo:hi]))
+            before, after = a.window // 2, (a.window - 1) // 2
+            for frame in frames:
+                keep = (frames >= frame - before) & (frames <= frame + after)
+                means.append(geodesic_mean(quats[keep]))
         else:
             means = [geodesic_mean(quats)] * len(quats)
 
@@ -78,12 +94,21 @@ def main():
         for r, q in zip(recs, means):
             r["rotation"] = [float(q[3]), float(q[0]), float(q[1]), float(q[2])]
             r["status"] = "inferred"
-            r["smoothing"] = {"window": a.window, "residual_validated": False}
+            r["smoothing"] = {"window": a.window, "coordinate_frame": "fixed_world",
+                              "residual_validated": False}
             r.pop("residual", None)
         for f, r in zip(files, recs):
-            f.write_text(json.dumps(r))
-        print(f"  {obj_dir.name:18} frames={len(files):4d} "
+            pending.append((destination / f.relative_to(source), json.dumps(r, allow_nan=False)))
+        summaries.append(f"  {obj_dir.name:18} frames={len(files):4d} "
               f"raw spread median={np.median(spread):6.2f} p90={np.percentile(spread,90):6.2f} deg")
+    if not pending:
+        ap.error("no fixed-world poses to smooth")
+    # Validate every track before creating output. Preserve all original camera/raw files.
+    shutil.copytree(source, destination)
+    for f, content in pending:
+        f.write_text(content)
+    for summary in summaries:
+        print(summary)
     print(f"wrote {a.out}")
 
 

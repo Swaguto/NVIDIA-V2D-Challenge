@@ -168,6 +168,8 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--data-root", required=True)
     ap.add_argument("--work", required=True)
+    ap.add_argument("--poses", type=Path,
+                    help="fitted episode directory from fit_object_pose --out; default work/ego_object_poses/eNNN")
     ap.add_argument("--episode", type=int, default=2)
     ap.add_argument("--objects", default="", help="comma list; default = fitted dirs")
     ap.add_argument("--cam", default="",
@@ -183,7 +185,7 @@ def main() -> int:
 
     data_root = Path(args.data_root)
     work = Path(args.work)
-    ep_dir = work / "ego_object_poses" / f"e{args.episode:03d}"
+    ep_dir = args.poses or work / "ego_object_poses" / f"e{args.episode:03d}"
     if not ep_dir.exists():
         sys.exit(f"{ep_dir}: not fitted yet (run fit_object_pose first)")
 

@@ -16,10 +16,11 @@ from pathlib import Path
 
 import numpy as np
 
-sys.path.insert(0, os.environ.get("V2D_REPO", "/home/ubuntu/repoeval"))
+REPO_ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, os.environ.get("V2D_REPO", str(REPO_ROOT / "scripts/eval")))
 from reference_loader import load_reference   # noqa: E402
 
-ROOT = Path("/home/ubuntu/v2d_track3/data/hf/track_3/public")
+ROOT = Path(os.environ.get("V2D_PUBLIC", str(REPO_ROOT / "data/hf/track_3/public")))
 PRED = Path(sys.argv[1])
 EPS = [int(x) for x in (sys.argv[2] if len(sys.argv) > 2 else "0").split(",")]
 
@@ -94,7 +95,8 @@ for ep in EPS:
     if len(names) < 2:
         continue
     preds = [load_pred(PRED, ep, n, len(names)) for n in names]
-    common = sorted(set(preds[0]) & set(preds[1]) & set(range(ref.pose_xyzw.shape[0])))
+    row_of = {int(frame): row for row, frame in enumerate(ref.frame_index)}
+    common = sorted(set(preds[0]) & set(preds[1]) & set(row_of))
     if len(common) < 10:
         print(f"ep {ep}: only {len(common)} common frames, skipped")
         continue
@@ -103,7 +105,7 @@ for ep in EPS:
         for b in range(a + 1, len(names)):
             ws, ts = [], []
             for t in common:
-                Pg = [T_from(ref.pose_xyzw[t, k]) for k in (a, b)]
+                Pg = [T_from(ref.pose_xyzw[row_of[t], k]) for k in (a, b)]
                 Pp = [preds[k][t] for k in (a, b)]
                 rel_g = np.linalg.inv(Pg[1]) @ Pg[0]
                 rel_p = np.linalg.inv(Pp[1]) @ Pp[0]

@@ -8,6 +8,7 @@ import zipfile
 
 URL = "https://raw.githubusercontent.com/nvidia-isaac/video_to_data/main/docs/v2d_challenge/assets/v2d_submission_kit.zip"
 SHA256 = "b1f8f703c2e772684a57d048cf28f40c7b9b54cf7a61aff6917b46d826915e1f"
+MAX_BYTES = 5_000_000
 
 
 def main():
@@ -18,12 +19,15 @@ def main():
     if args.output.exists() and any(args.output.iterdir()):
         raise ValueError("test-input output must be a fresh directory")
     if args.kit_zip:
-        content = args.kit_zip.read_bytes()
+        if args.kit_zip.stat().st_size > MAX_BYTES:
+            raise ValueError("kit exceeds the expected download bound")
+        with args.kit_zip.open("rb") as archive:
+            content = archive.read(MAX_BYTES + 1)
     else:
         with urllib.request.urlopen(URL, timeout=60) as response:
-            content = response.read(5_000_001)
-        if len(content) > 5_000_000:
-            raise ValueError("kit exceeds the expected download bound")
+            content = response.read(MAX_BYTES + 1)
+    if len(content) > MAX_BYTES:
+        raise ValueError("kit exceeds the expected download bound")
     if hashlib.sha256(content).hexdigest() != SHA256:
         raise ValueError("official kit hash changed; inspect the revision before using it")
     args.output.mkdir(parents=True, exist_ok=True)

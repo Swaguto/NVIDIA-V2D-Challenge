@@ -130,7 +130,7 @@ def main():
         ext = p.max(0) - p.min(0)
         print(f"  {n:<22} {ext[0]:.3f} x {ext[1]:.3f} x {ext[2]:.3f}")
 
-    out = Path("/home/ubuntu/seg_probe"); out.mkdir(exist_ok=True)
+    out = Path(os.environ.get("V2D_OUT", str(REPO_ROOT / "seg_probe"))); out.mkdir(exist_ok=True, parents=True)
     vis = pl.copy()
     colours = [(0, 0, 255), (0, 255, 0), (255, 0, 0), (255, 255, 0), (0, 255, 255)]
     for i, n in enumerate(names):

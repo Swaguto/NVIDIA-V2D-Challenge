@@ -18,12 +18,13 @@ from pathlib import Path
 import cv2
 import numpy as np
 
-sys.path.insert(0, "/home/ubuntu")
+REPO_ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, os.environ.get("V2D_RUNTIME", str(REPO_ROOT / "reconstruction/modules/v2d_stereo_depth/lib")))
 from stereo_depth import backproject, load_rig, stereo_depth   # noqa: E402
 
 VID = Path(os.environ.get("V2D_VIDEOS",
-                    "/home/ubuntu/v2d_track3/data/hf/track_3/public/videos/chunk-000"))
-OUT = Path(os.environ.get("V2D_OUT", "/home/ubuntu/depth_probe")); OUT.mkdir(exist_ok=True, parents=True)
+                    str(Path(os.environ.get("V2D_PUBLIC", str(REPO_ROOT / "data/hf/track_3/public"))) / "videos/chunk-000")))
+OUT = Path(os.environ.get("V2D_OUT", str(REPO_ROOT / "depth_probe"))); OUT.mkdir(exist_ok=True, parents=True)
 
 rig = load_rig()
 print(f"pair {rig.left} <-> {rig.right}  baseline={rig.baseline_m:.6f} m  size={rig.size}")
@@ -36,6 +37,12 @@ n_frames = int(sys.argv[2]) if len(sys.argv) > 2 else 6
 cap_l = cv2.VideoCapture(str(VID / f"observation.images.{rig.left}" / f"episode_{episode:06d}.mp4"))
 cap_r = cv2.VideoCapture(str(VID / f"observation.images.{rig.right}" / f"episode_{episode:06d}.mp4"))
 total = int(cap_l.get(cv2.CAP_PROP_FRAME_COUNT))
+if total <= 0 or total != int(cap_r.get(cv2.CAP_PROP_FRAME_COUNT)):
+    cap_l.release(); cap_r.release()
+    raise SystemExit("stereo videos require matching, nonempty frame counts")
+if n_frames <= 0:
+    cap_l.release(); cap_r.release()
+    raise SystemExit("number of sampled frames must be positive")
 print(f"episode {episode}: {total} frames")
 
 panels, stats = [], []
@@ -47,8 +54,8 @@ for want in idxs:
             break
         if cap_l.get(cv2.CAP_PROP_POS_FRAMES) - 1 == want:
             break
-    if not ok_l:
-        break
+    if not ok_l or not ok_r:
+        raise RuntimeError(f"cannot read stereo frame {want}")
     depth, valid = stereo_depth(rig, il, ir)
     frac = valid.mean()
     med = float(np.median(depth[valid])) if valid.any() else float("nan")
@@ -77,4 +84,4 @@ if panels:
           f"(raw-left | raw-right | depth, blue=far red=near, grey=invalid)")
     z = np.array([s[2] for s in stats])
     print(f"median depth across sampled frames: {np.nanmean(z):.3f} m "
-          f"(std {np.nanstd(z):.3f}) — a stable value means the stereo match is real")
+          f"(std {np.nanstd(z):.3f}); stability alone does not validate stereo accuracy")

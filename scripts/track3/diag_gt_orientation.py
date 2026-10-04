@@ -19,10 +19,11 @@ from pathlib import Path
 
 import numpy as np
 
-sys.path.insert(0, os.environ.get("V2D_REPO", "/home/ubuntu/repoeval"))
+REPO_ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, os.environ.get("V2D_REPO", str(REPO_ROOT / "scripts/eval")))
 from reference_loader import load_reference, TRAIN_EPISODES, PROXY_EPISODES   # noqa: E402
 
-ROOT = Path("/home/ubuntu/v2d_track3/data/hf/track_3/public")
+ROOT = Path(os.environ.get("V2D_PUBLIC", str(REPO_ROOT / "data/hf/track_3/public")))
 
 
 def q2m(q):
@@ -67,6 +68,8 @@ for ep in sorted(set(TRAIN_EPISODES) | set(PROXY_EPISODES)):
         Rs = np.array([q2m(ref.pose_xyzw[t, b, 3:7]) for t in range(ref.pose_xyzw.shape[0])])
         per_obj[name].append((ep, Rs))
 
+if not eps:
+    raise SystemExit(f"no public reference episodes found under {ROOT}")
 print(f"scanned {len(eps)} public episodes\n")
 hdr = (f"{'object':<21} {'n':>6} {'eps':>4} {'within-ep spread':>17} "
        f"{'clusters>15d':>13} {'max dev':>9}")
