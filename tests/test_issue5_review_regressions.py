@@ -305,3 +305,126 @@ def test_native_tracker_records_rejections_and_fails_zero_solve(tmp_path, monkey
         assert sorted(report["frames"]) == ["100", "104"]
         detail = report["frames"]["100"]["objects"]["mini_dust_pan"]
         assert detail["reason"] == {None: None, "mask": "insufficient_masked_depth", "residual": "residual_gate"}[failure]
+
+
+@pytest.mark.parametrize("gap", ["mask", "residual", "error", "source_ids"])
+def test_native_tracker_reinitializes_after_rejection_or_source_gap(tmp_path, monkeypatch, gap):
+    import torch
+    frames = [0, 1, 4, 5] if gap == "source_ids" else [0, 1, 2, 3]
+    ref = SimpleNamespace(object_names=["pan"], frame_index=np.array(frames),
+                          capture_time=np.array(frames) / 20.)
+    monkeypatch.setattr(registration, "load_reference", lambda *args: ref)
+    monkeypatch.setattr(registration, "DEV", "cpu")
+    monkeypatch.setattr(registration, "load_cad", lambda *args: np.ones((80, 3)))
+    rig_fixture = SimpleNamespace(left="left", right="right", baseline_m=.1,
+        **{k: np.eye(4) for k in ("R1", "R2", "P1", "P2", "Q")})
+    rig_fixture.rectify_pair = lambda a, b: (a, b)
+    monkeypatch.setattr(registration, "load_rig", lambda: rig_fixture)
+    current = {}
+    def read(path, frame):
+        current["frame"] = frame
+        return np.zeros((32, 32, 3), np.uint8)
+    monkeypatch.setattr(registration, "read_frame", read)
+    monkeypatch.setattr(registration, "stereo_depth", lambda *args: (np.ones((32, 32)), np.ones((32, 32), bool)))
+    yy, xx = np.indices((32, 32))
+    cloud = np.stack([xx.ravel()*.01, yy.ravel()*.01, np.ones(1024)], axis=1)
+    monkeypatch.setattr(registration, "backproject_full", lambda *args: cloud)
+    monkeypatch.setattr(registration, "Segmenter", lambda names: lambda *args: (
+        np.full((1, 32, 32), not (gap == "mask" and current["frame"] == 1), bool), []))
+    calls = {}
+    def solve(*args, **kwargs):
+        calls[current["frame"]] = kwargs["R0"] is not None
+        if gap == "error" and current["frame"] == 1:
+            raise RuntimeError("synthetic solve failure")
+        return 1., torch.eye(3), torch.tensor([0., 0., 1.]), (
+            .1 if gap == "residual" and current["frame"] == 1 else .001)
+    monkeypatch.setattr(registration, "register", solve)
+    out = tmp_path / "pred"
+    monkeypatch.setattr(sys, "argv", ["register", "--episode", "39", "--out", str(out)])
+    registration.main()
+    assert calls[frames[0]] is False
+    assert calls[frames[2]] is False, "a gap must restart global registration"
+    assert calls[frames[3]] is True, "consecutive accepted observations may warm-start"
+    report = json.loads((out / "registration_report.json").read_text())
+    assert report["frames"][str(frames[2])]["objects"]["pan"]["warm_start_frame_index"] is None
+    assert report["frames"][str(frames[3])]["objects"]["pan"]["warm_start_frame_index"] == frames[2]
+    if gap != "source_ids":
+        assert not list(out.glob("**/object_to_cam/*/000001.json"))
+
+
+def prepared_mask_fixture(tmp_path, monkeypatch):
+    import cv2
+    calibration = tmp_path / "calibration.json"
+    write_json(calibration, {"fixture": "synthetic calibration"})
+    monkeypatch.setattr(registration, "CALIB_PATH", str(calibration))
+    rig_fixture = SimpleNamespace(left="left", right="right", baseline_m=.1, size=(32, 32),
+        **{k: np.eye(4) for k in ("R1", "R2", "P1", "P2", "Q")})
+    directory = tmp_path / "observations"
+    directory.mkdir()
+    mask = directory / "pan.png"
+    cv2.imwrite(str(mask), np.full((32, 32), 255, dtype=np.uint8))
+    item = {"path": "pan.png", "sha256": hashlib.sha256(mask.read_bytes()).hexdigest()}
+    record = {"schema_version": 1, "episode": 39, "objects": ["pan"], "camera_frame": "left",
+              "coordinate_frame": "rectified_camera", "resolution": [32, 32], "gt_use": "none",
+              "calibration_sha256": hashlib.sha256(calibration.read_bytes()).hexdigest(),
+              "rectification": {k: np.eye(4).tolist() for k in ("R1", "R2", "P1", "P2", "Q")},
+              "producer": {"kind": "generated test fixture"}, "frames": {"0": {"pan": item}}}
+    path = directory / "manifest.json"
+    write_json(path, record)
+    return path, record, rig_fixture
+
+
+@pytest.mark.parametrize("failure", ["axes", "calibration", "gt", "rectification", "bytes", "resolution", "path"])
+def test_prepared_masks_reject_incompatible_or_changed_observations(tmp_path, monkeypatch, failure):
+    import cv2
+    path, record, rig_fixture = prepared_mask_fixture(tmp_path, monkeypatch)
+    if failure == "axes":
+        record["coordinate_frame"] = "original_camera"
+    elif failure == "calibration":
+        record["calibration_sha256"] = "0" * 64
+    elif failure == "gt":
+        record["gt_use"] = "gt_assisted"
+    elif failure == "rectification":
+        record["rectification"]["R1"][0][0] = 0
+    elif failure in ("bytes", "resolution"):
+        mask = path.parent / "pan.png"
+        cv2.imwrite(str(mask), np.zeros((16, 16), np.uint8))
+        if failure == "resolution":
+            record["frames"]["0"]["pan"]["sha256"] = hashlib.sha256(mask.read_bytes()).hexdigest()
+    else:
+        record["frames"]["0"]["pan"]["path"] = "../calibration.json"
+    write_json(path, record)
+    with pytest.raises(ValueError):
+        source = registration.PreparedMasks(path, 39, ["pan"], rig_fixture, require_no_gt=True)
+        source.load(0, (32, 32, 3))
+
+
+def test_native_tracker_consumes_frozen_masks_and_preserves_provenance(tmp_path, monkeypatch):
+    import torch
+    path, record, rig_fixture = prepared_mask_fixture(tmp_path, monkeypatch)
+    ref = SimpleNamespace(object_names=["pan"], frame_index=np.array([0, 1]), capture_time=np.array([0., .05]))
+    monkeypatch.setattr(registration, "load_reference", lambda *args: ref)
+    monkeypatch.setattr(registration, "DEV", "cpu")
+    monkeypatch.setattr(registration, "load_cad", lambda *args: np.ones((80, 3)))
+    monkeypatch.setattr(registration, "load_rig", lambda: rig_fixture)
+    rig_fixture.rectify_pair = lambda a, b: (a, b)
+    monkeypatch.setattr(registration, "read_frame", lambda *args: np.zeros((32, 32, 3), np.uint8))
+    monkeypatch.setattr(registration, "stereo_depth", lambda *args: (np.ones((32, 32)), np.ones((32, 32), bool)))
+    yy, xx = np.indices((32, 32))
+    cloud = np.stack([xx.ravel()*.01, yy.ravel()*.01, np.ones(1024)], axis=1)
+    monkeypatch.setattr(registration, "backproject_full", lambda *args: cloud)
+    monkeypatch.setattr(registration, "Segmenter", lambda *args: pytest.fail("perception must not rerun"))
+    monkeypatch.setattr(registration, "register", lambda *args, **kwargs: (1., torch.eye(3), torch.tensor([0., 0., 1.]), .001))
+    out = tmp_path / "pred"
+    monkeypatch.setattr(sys, "argv", ["register", "--episode", "39", "--out", str(out), "--mask-manifest", str(path)])
+    registration.main()
+    report = json.loads((out / "registration_report.json").read_text())
+    assert report["accepted_by_object"] == {"pan": 1}
+    assert report["models"] is None
+    pose_path = next(out.glob("**/object_to_cam/*/000000.json"))
+    pose = json.loads(pose_path.read_text())
+    assert pose["gt_use"] == "metadata_only"
+    assert pose["mask_sha256"] == record["frames"]["0"]["pan"]["sha256"]
+    assert pose["observation_source"]["manifest_sha256"] == hashlib.sha256(path.read_bytes()).hexdigest()
+    assert not list(out.glob("**/object_to_cam/*/000001.json"))
+    assert report["frames"]["1"]["detections"] == [{"object": "pan", "status": "missing_prepared_mask"}]
