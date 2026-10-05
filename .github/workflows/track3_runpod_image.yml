@@ -5,6 +5,7 @@ on:
     branches: [feat/track3-runpod-validation]
     paths:
       - docker/track3-runpod/Dockerfile
+      - docker/track3-runpod/start.sh
       - reconstruction/modules/v2d_foundation_pose/lib/FoundationPose/**
       - .github/workflows/track3_runpod_image.yml
   workflow_dispatch:

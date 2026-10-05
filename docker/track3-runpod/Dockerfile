@@ -8,6 +8,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential cmake git ffmpeg libboost-all-dev libeigen3-dev pybind11-dev \
+    openssh-server \
     libegl1 libgl1 libglib2.0-0 libgomp1 libsm6 libxext6 libxrender1 \
     && rm -rf /var/lib/apt/lists/*
 
@@ -35,4 +36,8 @@ RUN cmake -S /opt/FoundationPose/mycpp -B /opt/FoundationPose/mycpp/build \
 RUN python -c 'import cv2, pyarrow, pyrender, scipy, torch, transformers, trimesh; import nvdiffrast.torch; import pytorch3d; from estimater import FoundationPose; print("Track 3 imports OK")'
 
 WORKDIR /workspace
+COPY docker/track3-runpod/start.sh /usr/local/bin/track3-start
+RUN chmod 755 /usr/local/bin/track3-start
+EXPOSE 22
+ENTRYPOINT ["/usr/local/bin/track3-start"]
 CMD ["sleep", "infinity"]
