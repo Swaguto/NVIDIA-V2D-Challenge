@@ -15,8 +15,9 @@ RUN python -m pip install --upgrade pip setuptools wheel ninja && \
     python -m pip install \
       'numpy<2' 'opencv-python-headless<4.12' scipy pyarrow trimesh \
       pyrender imageio scikit-image scikit-learn omegaconf pyyaml \
-      einops kornia transformers huggingface_hub accelerate \
-      fvcore iopath pybind11 warp-lang
+      einops kornia transformers huggingface_hub accelerate gdown \
+      fvcore iopath pybind11 warp-lang joblib psutil pandas open3d \
+      matplotlib transformations ruamel.yaml
 
 # FoundationPose uses both compiled rasterization and PyTorch3D geometry.
 RUN TORCH_CUDA_ARCH_LIST='8.0;8.6;8.9;9.0' \
