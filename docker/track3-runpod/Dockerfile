@@ -24,7 +24,7 @@ RUN TORCH_CUDA_ARCH_LIST='8.0;8.6;8.9;9.0' \
       'git+https://github.com/NVlabs/nvdiffrast.git@v0.4.0' && \
     TORCH_CUDA_ARCH_LIST='8.0;8.6;8.9;9.0' \
     python -m pip install --no-build-isolation \
-      'git+https://github.com/facebookresearch/pytorch3d.git@v0.7.8'
+      'git+https://github.com/facebookresearch/pytorch3d.git@V0.7.8'
 
 COPY reconstruction/modules/v2d_foundation_pose/lib/FoundationPose /opt/FoundationPose
 RUN cmake -S /opt/FoundationPose/mycpp -B /opt/FoundationPose/mycpp/build \
