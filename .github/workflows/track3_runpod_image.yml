@@ -14,6 +14,10 @@ permissions:
   contents: read
   packages: write
 
+concurrency:
+  group: track3-runpod-image
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
