@@ -32,6 +32,6 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/track3-runpod:${{ github.sha }}
+            ghcr.io/swaguto/track3-runpod:${{ github.sha }}
             ttl.sh/v2d-track3-${{ github.sha }}:24h
           provenance: false
