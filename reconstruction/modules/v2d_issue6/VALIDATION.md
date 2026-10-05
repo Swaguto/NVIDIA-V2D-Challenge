@@ -1,5 +1,33 @@
 # Validation and remaining gates
 
+## Track 3 integration on 2026-10-05
+
+The `feat/issue6-stereo-contact` branch adds a rectified `ego_cam_c` adapter on
+top of the issue-6 CPU integration. It was exercised on the team's Thunder
+A6000 host, with Track 3 outputs from the completed public run. Three 64-frame
+bundles passed the manifest and calibrated depth stages:
+
+| Episode | Original frames | Objects with directly observed CAD poses | Initial stereo-valid pixels |
+| --- | --- | --- | ---: |
+| 2 | 60–123 | white pot 64/64; lid 64/64 | 50.8% |
+| 13 | 60–123 | blue cup 64/64; dish rack 64/64 | 52.3% |
+| 22 | 30–93 | blue cup 64/64; water pitcher 64/64 | 57.0% |
+
+The frame windows were chosen from the public rectified video to include
+visible hand-object activity and directly observed object poses. The adapter
+uses public parquet rows only for object names, frame IDs, and timestamps. It
+does not read reference poses. The VM bundles and CPU stage receipts are under
+`/home/ubuntu/issue6_runs/`; the input root is
+`/home/ubuntu/track3_all_20261004`. The current local CPU suite passes 55
+tests, including `ego_cam_c` and rejection of inferred/wrong-frame object poses.
+
+**The three-episode acceptance gate remains open.** The VM has no
+`MANO_RIGHT.pkl` or HaMeR checkpoint at the checked locations, and its Docker
+daemon refused the `v2d_mediapipe` build with `unshare: operation not permitted`.
+No real MANO hand inference, contact event or hand/contact overlay was produced
+by this run. Stereo-valid pixel fraction across the full image does not establish
+depth support on the hands; that still needs checking after hand masks exist.
+
 Implementation session: September 28, 2026.
 
 ## Local evidence

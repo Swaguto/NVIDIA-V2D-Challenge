@@ -27,9 +27,7 @@ def test_rectified_stereo_left_camera_is_accepted(bundle):
 
 
 def test_track3_adapter_rejects_unobserved_or_wrong_frame_poses(tmp_path):
-    folder = (
-        tmp_path / "poses/e002/ego_object_poses/e002/white_pot/object_to_cam/ego_cam_c"
-    )
+    folder = tmp_path / "poses/e002/ego_object_poses/e002/white_pot/object_to_cam/ego_cam_c"
     folder.mkdir(parents=True)
     path = folder / "000000.json"
     row = {
@@ -48,6 +46,10 @@ def test_track3_adapter_rejects_unobserved_or_wrong_frame_poses(tmp_path):
     write_json(path, {**row, "status": "inferred"})
     assert observed_object_state(tmp_path, 2, "white_pot", 0, "ego_cam_c") == {"valid": False}
     write_json(path, {**row, "frame_index": 1})
+    assert observed_object_state(tmp_path, 2, "white_pot", 0, "ego_cam_c") == {"valid": False}
+    write_json(path, {**row, "gt_use": "ground_truth_assisted"})
+    assert observed_object_state(tmp_path, 2, "white_pot", 0, "ego_cam_c") == {"valid": False}
+    write_json(path, {**row, "camera_frame": "ego_cam_a"})
     assert observed_object_state(tmp_path, 2, "white_pot", 0, "ego_cam_c") == {"valid": False}
 
 

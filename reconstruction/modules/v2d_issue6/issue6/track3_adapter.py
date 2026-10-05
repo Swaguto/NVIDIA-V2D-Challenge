@@ -56,8 +56,7 @@ def mesh_for(data: Path, name: str) -> Path:
     raise FileNotFoundError(f"Public CAD mesh missing for {name}")
 
 
-def export(data: Path, results: Path, episode: int, output: Path, start: int, frames: int,
-           hand_source: dict) -> Path:
+def export(data: Path, results: Path, episode: int, output: Path, start: int, frames: int, hand_source: dict) -> Path:
     # Import heavy dependencies only when an actual dataset bundle is requested.
     import cv2
     import pyarrow.parquet as pq
@@ -118,14 +117,16 @@ def export(data: Path, results: Path, episode: int, output: Path, start: int, fr
             np.save(output / "depth" / f"{stem}.npy", np.where(valid, depth, np.nan))
             if not cv2.imwrite(str(output / "valid" / f"{stem}.png"), valid.astype(np.uint8) * 255):
                 raise OSError(f"Could not write depth validity frame {frame}")
-            manifest_frames.append({
-                "id": frame,
-                "timestamp_s": float(row["timestamp"]),
-                "color": f"color/{stem}.png",
-                "depth_path": f"depth/{stem}.npy",
-                "depth_validity": f"valid/{stem}.png",
-                "objects": {name: observed_object_state(ep, episode, name, frame, rig.left) for name in names},
-            })
+            manifest_frames.append(
+                {
+                    "id": frame,
+                    "timestamp_s": float(row["timestamp"]),
+                    "color": f"color/{stem}.png",
+                    "depth_path": f"depth/{stem}.npy",
+                    "depth_validity": f"valid/{stem}.png",
+                    "objects": {name: observed_object_state(ep, episode, name, frame, rig.left) for name in names},
+                }
+            )
     finally:
         left.release()
         right.release()
