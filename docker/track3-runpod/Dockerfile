@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONPATH=/opt/FoundationPose:/opt/FoundationPose/mycpp/build
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential cmake git ffmpeg libboost-all-dev libeigen3-dev \
+    build-essential cmake git ffmpeg libboost-all-dev libeigen3-dev pybind11-dev \
     libegl1 libgl1 libglib2.0-0 libgomp1 libsm6 libxext6 libxrender1 \
     && rm -rf /var/lib/apt/lists/*
 
