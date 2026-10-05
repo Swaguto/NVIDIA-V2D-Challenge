@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONPATH=/opt/FoundationPose:/opt/FoundationPose/mycpp/build
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential cmake git ffmpeg libboost-all-dev libeigen3-dev pybind11-dev \
+    build-essential cmake git ffmpeg libboost-all-dev libeigen3-dev \
     openssh-server \
     libegl1 libgl1 libglib2.0-0 libgomp1 libsm6 libxext6 libxrender1 \
     && rm -rf /var/lib/apt/lists/*
@@ -30,7 +30,8 @@ RUN TORCH_CUDA_ARCH_LIST='8.0;8.6;8.9;9.0' \
 
 COPY reconstruction/modules/v2d_foundation_pose/lib/FoundationPose /opt/FoundationPose
 RUN cmake -S /opt/FoundationPose/mycpp -B /opt/FoundationPose/mycpp/build \
-      -DPYTHON_EXECUTABLE=/opt/conda/bin/python && \
+      -DPYTHON_EXECUTABLE=/opt/conda/bin/python \
+      -Dpybind11_DIR="$(python -m pybind11 --cmakedir)" && \
     cmake --build /opt/FoundationPose/mycpp/build -j 4
 
 RUN python -c 'import cv2, pyarrow, pyrender, scipy, torch, transformers, trimesh; import nvdiffrast.torch; import pytorch3d; from estimater import FoundationPose; print("Track 3 imports OK")'
