@@ -13,6 +13,13 @@ bundles passed the manifest and calibrated depth stages:
 | 13 | 60–123 | blue cup 64/64; dish rack 64/64 | 52.3% |
 | 22 | 30–93 | blue cup 64/64; water pitcher 64/64 | 57.0% |
 
+Full input bundles also passed the manifest and depth stages: episode 2 has
+343/343 depth files, 285/343 observed pot poses and 343/343 observed lid poses;
+episode 13 has 190/190 depth files and observed poses for both objects; episode
+22 has 189/189 depth files and observed poses for both objects. The 58 missing
+episode-2 pot poses remain unknown contact inputs, with no inferred pose silently
+substituted.
+
 The frame windows were chosen from the public rectified video to include
 visible hand-object activity and directly observed object poses. The adapter
 uses public parquet rows only for object names, frame IDs, and timestamps. It
@@ -24,6 +31,9 @@ tests, including `ego_cam_c` and rejection of inferred/wrong-frame object poses.
 **The three-episode acceptance gate remains open.** The VM has no
 `MANO_RIGHT.pkl` or HaMeR checkpoint at the checked locations, and its Docker
 daemon refused the `v2d_mediapipe` build with `unshare: operation not permitted`.
+After installing Docker Buildx, even a two-line Alpine smoke build failed to
+mount a BuildKit work directory with `operation not permitted`; this confirms
+the current daemon cannot build the required images.
 No real MANO hand inference, contact event or hand/contact overlay was produced
 by this run. Stereo-valid pixel fraction across the full image does not establish
 depth support on the hands; that still needs checking after hand masks exist.
