@@ -147,8 +147,8 @@ def validate(m):
     if m["episode"] in (0, 11, 23, 31, 39) and m["mode"] != "synthetic":
         raise ValueError("Proxy holdout is excluded from issue-6 development runs")
     camera(m["color_camera"])
-    if m["color_camera"].get("id") != "ego_cam_a":
-        raise ValueError("v1 consumes color camera ego_cam_a")
+    if m["color_camera"].get("id") not in {"ego_cam_a", "ego_cam_c"}:
+        raise ValueError("v1 consumes rectified color camera ego_cam_a or ego_cam_c")
     for key in ("camera_provenance", "hand_provenance"):
         if m.get(key) not in PROVENANCE:
             raise ValueError(f"Declare {key}")

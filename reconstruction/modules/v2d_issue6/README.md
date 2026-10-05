@@ -24,6 +24,39 @@ no CUDA. `contacts` consumes the alignment stage's outputs; the CPU integration
 test explicitly substitutes **synthetic** hands for the unavailable GPU worker.
 Synthetic tests do not validate the worker or count toward the three episodes.
 
+## Public Track 3 stereo-left adapter
+
+On the prepared Track 3 host, use `track3_adapter` to export a frame-exact bundle
+from rectified `ego_cam_c` video, metre-valued stereo depth, temporal object masks,
+and directly observed FoundationPose CAD poses. All four sources share the same
+rectified pixel grid, so `color_from_depth` is identity. The adapter reads the
+public parquet **only for object names, frame IDs, and timestamps**; it never
+reads reference object poses. It marks a missing or rejected pose invalid rather
+than silently substituting an inferred pose. The original `ego_cam_a` manifest
+path remains supported when calibrated reprojection is available.
+
+```sh
+python -m issue6.track3_adapter \
+  --episode 2 \
+  --data /home/ubuntu/v2d_track3/data/hf/track_3/public \
+  --results /home/ubuntu/track3_all_20261004 \
+  --output /home/ubuntu/issue6_runs/e002_bundle_64 \
+  --frames 64 \
+  --hand-source-json /home/ubuntu/issue6_hand_source.json
+python -m issue6.cli validate \
+  --manifest /home/ubuntu/issue6_runs/e002_bundle_64/manifest.json \
+  --output /home/ubuntu/issue6_runs/e002_hamer_64
+```
+
+`--hand-source-json` is optional for preparing inputs, but the GPU stages need
+the authorized MANO asset, actual model checkpoint paths and built containers
+listed below. A missing hand source appears as pending in the validation
+readiness report. Use a **fresh** bundle and run directory for a full episode.
+The adapter requires OpenCV and PyArrow in addition to this package's CPU
+dependencies; run it in the prepared V2D host environment. Episode 12 still has
+known blue-cup CAD drift and should not be counted as a contact acceptance run
+until that upstream pose is repaired and reviewed.
+
 ## Input contract and handoff from #4/#5
 
 Copy `examples/episode2.template.json` outside the source tree. It is intentionally
@@ -35,6 +68,7 @@ Provide the actual color-camera intrinsics and **rectified** frames. Rectifying
 or cropping changes the intrinsics; record the resulting pixel grid. The v1
 adapter rejects raw distorted images. The depth-to-color transform must likewise
 include rectification rotations, not just the factory raw-camera extrinsic.
+The color camera may be rectified `ego_cam_a` or rectified stereo-left `ego_cam_c`.
 
 Add a `depth` object:
 

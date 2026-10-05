@@ -10,7 +10,8 @@ have usable inputs and complete visual review.
 Deliver an episode-2 bundle with a manifest derived from
 `examples/episode2.template.json`, original frame IDs and actual timestamps:
 
-- Rectified `ego_cam_a` color frames and the intrinsics for that exact pixel grid.
+- Rectified color frames and intrinsics for that exact pixel grid. The Track 3
+  adapter uses stereo-left `ego_cam_c`; the legacy manifest path uses `ego_cam_a`.
 - Stereo-left depth files, declared encoding and validity masks; identify the
   actual source camera. Supply its rectified intrinsics and `color_from_depth`.
 - Per-frame `camera_from_world` (world-to-color), validity and calibration report.
@@ -40,8 +41,10 @@ The `issue5/object-world-icp` exporter interface maps as follows:
 Pose JSON uses normalized `[w,x,y,z]` rotation, metre translation and unit scale.
 Use exactly one pose representation. World poses require the matching camera
 trajectory: `camera_from_object = camera_from_world @ world_from_object`.
-Stereo-camera object poses must first be composed into `ego_cam_a`; renaming a
-directory does not transform them. Filenames must match original frame IDs.
+Stereo-camera object poses must be composed into the selected manifest color
+camera; renaming a directory does not transform them. The Track 3 adapter uses
+the already rectified `ego_cam_c` pose and image grid. Filenames must match
+original frame IDs.
 
 Supply color-view object masks when available. Otherwise valid CAD poses provide
 conservative occlusion masks. Unknown occlusion prevents metric hand alignment;

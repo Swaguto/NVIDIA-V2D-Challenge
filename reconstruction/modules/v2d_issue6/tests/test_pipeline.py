@@ -17,6 +17,38 @@ from issue6.manifest import (
     write_json,
 )
 from issue6.pipeline import compare_reports, contacts_stage, execute
+from issue6.track3_adapter import observed_object_state
+
+
+def test_rectified_stereo_left_camera_is_accepted(bundle):
+    bundle["color_camera"]["id"] = "ego_cam_c"
+    bundle["depth"]["camera"]["id"] = "ego_cam_c"
+    validate(bundle)
+
+
+def test_track3_adapter_rejects_unobserved_or_wrong_frame_poses(tmp_path):
+    folder = (
+        tmp_path / "poses/e002/ego_object_poses/e002/white_pot/object_to_cam/ego_cam_c"
+    )
+    folder.mkdir(parents=True)
+    path = folder / "000000.json"
+    row = {
+        "episode": 2,
+        "frame_index": 0,
+        "status": "observed",
+        "gt_use": "none",
+        "camera_frame": "ego_cam_c",
+        "coordinate_frame": "rectified_camera",
+        "rotation": [1, 0, 0, 0],
+        "translation": [0, 0, 1],
+    }
+    write_json(path, row)
+    state = observed_object_state(tmp_path, 2, "white_pot", 0, "ego_cam_c")
+    assert state["valid"] is True and state["direction"] == "camera_from_object"
+    write_json(path, {**row, "status": "inferred"})
+    assert observed_object_state(tmp_path, 2, "white_pot", 0, "ego_cam_c") == {"valid": False}
+    write_json(path, {**row, "frame_index": 1})
+    assert observed_object_state(tmp_path, 2, "white_pot", 0, "ego_cam_c") == {"valid": False}
 
 
 @pytest.mark.parametrize(
