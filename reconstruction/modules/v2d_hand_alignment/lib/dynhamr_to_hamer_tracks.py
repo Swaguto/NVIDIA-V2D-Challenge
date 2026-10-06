@@ -105,9 +105,17 @@ def _axis_angle_to_rotmat(aa: np.ndarray) -> np.ndarray:
 def _rotmat_to_axis_angle(R: np.ndarray) -> np.ndarray:
     """(3, 3) → (3,) axis-angle. Canonical |θ| ≤ π."""
     R = np.asarray(R, dtype=np.float64)
+    # Float32 camera matrices are only approximately orthogonal. Project onto
+    # SO(3) before extracting the angle, especially near a half-turn.
+    u, _, vt = np.linalg.svd(R)
+    correction = np.eye(3)
+    correction[2, 2] = np.linalg.det(u @ vt)
+    R = u @ correction @ vt
     tr = R[0, 0] + R[1, 1] + R[2, 2]
     cos_theta = np.clip((tr - 1.0) / 2.0, -1.0, 1.0)
-    theta = float(np.arccos(cos_theta))
+    skew = np.array([R[2, 1] - R[1, 2], R[0, 2] - R[2, 0], R[1, 0] - R[0, 1]])
+    sin_theta = float(np.linalg.norm(skew) * 0.5)
+    theta = float(np.arctan2(sin_theta, cos_theta))
     if theta < 1e-8:
         # Near identity: axis is undefined; small-angle approximation gives
         # aa ≈ (R − R.T)/2 vee-mapped.
@@ -125,12 +133,10 @@ def _rotmat_to_axis_angle(R: np.ndarray) -> np.ndarray:
                 if j == i:
                     continue
                 axis[j] = (R[i, j] + R[j, i]) / (4.0 * axis[i])
-                if axis[j] < 0:
-                    axis[j] = -axis[j]
-        # Sign of axis[i] from R[i, i].
-        # (Both ±axis represent the same rotation when θ = π, so pick + arbitrarily.)
+        axis /= np.linalg.norm(axis)
+        if np.dot(axis, skew) < 0:
+            axis = -axis
         return axis * theta
-    sin_theta = float(np.sin(theta))
     axis = np.array([R[2, 1] - R[1, 2],
                      R[0, 2] - R[2, 0],
                      R[1, 0] - R[0, 1]], dtype=np.float64) / (2.0 * sin_theta)

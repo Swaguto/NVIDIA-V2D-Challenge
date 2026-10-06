@@ -12,6 +12,15 @@ converter = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(converter)
 
 
+@pytest.mark.parametrize("angle", [0.0, 1e-9, 0.7, np.pi - 1e-3, np.pi - 1e-7, np.pi])
+def test_rotation_conversion_preserves_float32_half_turns(angle):
+    axis = np.array([1.0, -2.0, 3.0])
+    axis /= np.linalg.norm(axis)
+    expected = converter._axis_angle_to_rotmat(axis * angle)
+    recovered = converter._rotmat_to_axis_angle(expected.astype(np.float32))
+    np.testing.assert_allclose(converter._axis_angle_to_rotmat(recovered), expected, atol=1e-7)
+
+
 @pytest.mark.parametrize("right", [False, True])
 def test_conversion_preserves_vertices_about_nonzero_mano_wrist(tmp_path, right):
     camera_rotation = converter._axis_angle_to_rotmat(np.array([0.3, -0.6, 0.2]))

@@ -1,5 +1,29 @@
 # Validation and remaining gates
 
+## October 6, 2026: full-episode validation in progress
+
+All three episodes have completed the six pipeline stages at least once; this
+does **not** establish final acceptance. Episodes 2 and 13 passed sampled mesh
+and contact review. Episode 22 exposed two failures: unconstrained MANO shape
+drift and selection of a background bystander's hand. Failed outputs are retained.
+Its replacement run fixes shape to the initial sequence-average HaMeR estimate
+and excludes the manually reviewed background region before detector confidence
+selection, retaining every candidate. This episode-specific review is not an
+automatic general-purpose wearer identity method.
+
+The fixed-shape checkpoint exposed rotation-conversion error near a half-turn.
+Projecting rounded camera rotations onto SO(3), extracting the angle with atan2,
+and preserving mixed-axis signs reduced the failing checkpoint's maximum vertex
+error from 4.13e-5 m to 1.43e-7 m, below the unchanged 1e-5 m tolerance. Six new
+regressions cover identity, small angles and float32 half-turns. **77 CPU tests
+pass, with zero skips.** A broader check found additional affected frames in
+episodes 2 and 13, so their downstream outputs are being regenerated too.
+
+Final full-frame geometry checks, three-episode visual/contact acceptance,
+verified evidence backup and compute shutdown remain pending. Earlier paused
+entries below are historical. No independent ground-truth contact accuracy or
+successful robot training is claimed.
+
 ## October 6, 2026: repaired source and paused real-run checkpoint
 
 The repaired CPU suite passes **71 tests with zero skips**; Ruff lint/format and
