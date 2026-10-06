@@ -1,15 +1,16 @@
 # Issue 6 handoff
 
-The latest operator checkpoint is
-[October 6's paused validation handoff](CHECKPOINT_2026-10-06.md): episode 2 has
-completed temporal fitting and depth, while final three-episode acceptance is
-pending and GPU compute is off. The producer/consumer contract below describes
-the original integration milestone.
+The current results are in [VALIDATION.md](VALIDATION.md) and the
+[replay helpers](../../validation/issue6/README.md). Episodes 2, 13 and 22 now
+pass the six stages, full-frame conversion checks, contact artifact audits and
+sampled visual/motion review. The earlier
+[paused checkpoint](CHECKPOINT_2026-10-06.md) is historical.
 
-This is the integration/CPU milestone, not completion of issue #6. No recipient
-has been assigned or notified by this contribution. Responsibilities below are
-handoff roles to confirm with the team. Keep issue #6 open until three episodes
-have usable inputs and complete visual review.
+No recipient has been assigned or notified by this contribution. Responsibilities
+below describe the producer/consumer contracts. Downstream work should use
+metric-valid observations and preserve unknown contacts. Episode 22 required
+an explicitly reviewed wearer-identity exclusion; this is not a general identity
+classifier. Independent contact accuracy and robot training remain unmeasured.
 
 ## 1. Calibration producer (#4) → reconstruction operator
 

@@ -1,0 +1,485 @@
+{
+  "source_commit": "af6ed6fdd46b55e5ca0254246a1ad18275bfebd4",
+  "date": "2026-10-06",
+  "backend": "native upstream import",
+  "episodes": [
+    {
+      "episode": 2,
+      "source_frames": 343,
+      "stages": {
+        "validate": "complete",
+        "hands": "complete",
+        "depth": "complete",
+        "align": "complete",
+        "contacts": "complete",
+        "report": "complete"
+      },
+      "review": {
+        "review_method": "Assistant visual inspection of 12 evenly spaced mesh/contact frames and four consecutive-frame triples selected by maximum measured joint acceleration, alongside full-frame geometry and contact audits",
+        "sampled_frames": [
+          0,
+          31,
+          62,
+          93,
+          124,
+          155,
+          187,
+          218,
+          249,
+          280,
+          311,
+          342
+        ],
+        "motion_triples": [
+          [
+            45,
+            46,
+            47
+          ],
+          [
+            228,
+            229,
+            230
+          ],
+          [
+            293,
+            294,
+            295
+          ],
+          [
+            143,
+            144,
+            145
+          ]
+        ],
+        "combined_cad_overlay": "Completed after initial archive started: all343 video frames decoded locally at1280x800, SHA256a6c8c243b61c751b017cc7a5b066353e2be6f33e18ca3bc00a2896ec87f85a5c. Twelve uniform combined samples reviewed: observed pot/lid CAD aligns with source objects and temporal hands; missing pot poses omitted.",
+        "findings": [
+          "Left wearer hand follows pot handle and right wearer hand follows lid grasp/placement",
+          "No gross mesh distortion or identity flip in reviewed frames",
+          "Consecutive frames at measured motion extremes show image-space continuity",
+          "Missing hand detections at143/144 and unsupported depth are not filled with confident contact labels"
+        ],
+        "status": "passed",
+        "max_conversion_error_m": 1.8414821478995362e-07,
+        "contact_audit": "passed:6860 rows;5560 valid,1300 unknown,1503 raw,127 bridged",
+        "limitations": [
+          "Sampled visual review, not independent annotation of every frame",
+          "ViPE-world consistency is not ground-truth accuracy",
+          "No independent contact precision or successful robot training claim"
+        ],
+        "episode": 2,
+        "geometry_checks": 676,
+        "source_commit": "af6ed6fdd46b55e5ca0254246a1ad18275bfebd4"
+      },
+      "contact_audit": {
+        "episode": 2,
+        "status": "passed",
+        "rows": 6860,
+        "valid": 5560,
+        "unknown": 1300,
+        "raw_contacts": 1503,
+        "bridged": 127,
+        "sha256": "c294c351e0dd8f7b093e96256673b613dc6e41ef58fccfb62b9b8e2ee8726e07",
+        "checks": [
+          "full original frame axis",
+          "predicted provenance",
+          "strict 2 cm threshold",
+          "unknown observations remain unknown",
+          "bridges have two raw-contact endpoints, at most 15 consecutive valid same-track gap frames",
+          "report counts match raw artifact"
+        ]
+      },
+      "temporal_consistency": {
+        "basis": "Same upstream MANO implementation, using each checkpoint's own saved shape and pose. Estimated ViPE world frame; not independent ground-truth accuracy.",
+        "hands": {
+          "left": {
+            "initial": {
+              "observed_triples": 307,
+              "wrist_acceleration_m_s2_median": 17.55688414800678,
+              "wrist_acceleration_m_s2_p95": 59.626100482345876,
+              "all_joint_acceleration_m_s2_median": 17.44364186501054,
+              "all_joint_acceleration_m_s2_p95": 58.95301208155453
+            },
+            "final": {
+              "observed_triples": 307,
+              "wrist_acceleration_m_s2_median": 4.060193775831777,
+              "wrist_acceleration_m_s2_p95": 15.913283703747792,
+              "all_joint_acceleration_m_s2_median": 3.988448213329964,
+              "all_joint_acceleration_m_s2_p95": 16.445296861881015
+            }
+          },
+          "right": {
+            "initial": {
+              "observed_triples": 332,
+              "wrist_acceleration_m_s2_median": 19.990637179700325,
+              "wrist_acceleration_m_s2_p95": 83.10243393014505,
+              "all_joint_acceleration_m_s2_median": 20.150085427636995,
+              "all_joint_acceleration_m_s2_p95": 81.23441787354284
+            },
+            "final": {
+              "observed_triples": 332,
+              "wrist_acceleration_m_s2_median": 5.159765629037905,
+              "wrist_acceleration_m_s2_p95": 27.310442178672478,
+              "all_joint_acceleration_m_s2_median": 5.742655111053001,
+              "all_joint_acceleration_m_s2_p95": 26.66936173452786
+            }
+          }
+        }
+      },
+      "aligned_consistency": {
+        "basis": "Estimated ViPE world frame. This measures consistency, not independent ground-truth accuracy.",
+        "hands": {
+          "left": {
+            "records": 325,
+            "metric_valid_records": 273,
+            "direct_observations": {
+              "triples": 307,
+              "wrist_acceleration_m_s2_median": 1.571762238247412,
+              "wrist_acceleration_m_s2_p95": 6.976296690927033,
+              "all_joint_acceleration_m_s2_median": 1.8758866978847282,
+              "all_joint_acceleration_m_s2_p95": 9.979802331331161
+            },
+            "metric_valid_observations": {
+              "triples": 257,
+              "wrist_acceleration_m_s2_median": 1.4501052213908379,
+              "wrist_acceleration_m_s2_p95": 5.028918979900962,
+              "all_joint_acceleration_m_s2_median": 1.671933102531805,
+              "all_joint_acceleration_m_s2_p95": 6.02340801519802
+            }
+          },
+          "right": {
+            "records": 336,
+            "metric_valid_records": 283,
+            "direct_observations": {
+              "triples": 332,
+              "wrist_acceleration_m_s2_median": 1.9029608249686267,
+              "wrist_acceleration_m_s2_p95": 20.898550775822972,
+              "all_joint_acceleration_m_s2_median": 2.438634988541832,
+              "all_joint_acceleration_m_s2_p95": 24.91702412437634
+            },
+            "metric_valid_observations": {
+              "triples": 277,
+              "wrist_acceleration_m_s2_median": 1.6955849721491931,
+              "wrist_acceleration_m_s2_p95": 4.406289287854017,
+              "all_joint_acceleration_m_s2_median": 2.052808210272049,
+              "all_joint_acceleration_m_s2_p95": 9.649390504865929
+            }
+          }
+        }
+      }
+    },
+    {
+      "episode": 13,
+      "source_frames": 190,
+      "stages": {
+        "validate": "complete",
+        "hands": "complete",
+        "depth": "complete",
+        "align": "complete",
+        "contacts": "complete",
+        "report": "complete"
+      },
+      "review": {
+        "review_method": "Assistant visual inspection of12 evenly spaced mesh/contact frames and four consecutive-frame triples selected by maximum measured joint acceleration, alongside full-frame geometry and contact audits",
+        "status": "passed",
+        "findings": [
+          "Wearer left hand grasps cup then transfers to right hand for placement in rack",
+          "No gross mesh distortion or side identity flip in reviewed frames",
+          "Consecutive frames around motion extremes show image-space continuity",
+          "Later right-hand contacts often lack metric support and remain unknown"
+        ],
+        "source_commit": "af6ed6fdd46b55e5ca0254246a1ad18275bfebd4",
+        "geometry_checks": 380,
+        "max_conversion_error_m": 1.7211457114063932e-07,
+        "episode": 13,
+        "contact_audit": "passed:3800 rows;2290 valid,1510 unknown,309 raw,48 bridged",
+        "motion_triples": [
+          [
+            64,
+            65,
+            66
+          ],
+          [
+            20,
+            21,
+            22
+          ],
+          [
+            122,
+            123,
+            124
+          ],
+          [
+            63,
+            64,
+            65
+          ]
+        ],
+        "limitations": [
+          "Sampled visual review, not independent annotation of every frame",
+          "ViPE-world consistency is not ground-truth accuracy",
+          "No independent contact precision or successful robot training claim"
+        ],
+        "combined_cad_overlay": "Completed: 190 frames, SHA256 8564c2cd0ca14d9dd50c91d9e3565f9b726d1b7025b41c4dda2629aed67cc6cc. Inspected 12 uniform combined-render samples: cup and rack track the observed objects through grasp, transfer and placement; both temporal hands remain visible. Sampled visual review does not measure independent pose accuracy.",
+        "sampled_frames": [
+          0,
+          17,
+          34,
+          52,
+          69,
+          86,
+          103,
+          120,
+          137,
+          155,
+          172,
+          189
+        ]
+      },
+      "contact_audit": {
+        "episode": 13,
+        "status": "passed",
+        "rows": 3800,
+        "valid": 2290,
+        "unknown": 1510,
+        "raw_contacts": 309,
+        "bridged": 48,
+        "sha256": "5fec898bb6dfe4ca697f82b1c695b3c6f719d7143c221b2fd0865028da55a4d9",
+        "checks": [
+          "full original frame axis",
+          "predicted provenance",
+          "strict 2 cm threshold",
+          "unknown observations remain unknown",
+          "bridges have two raw-contact endpoints, at most 15 consecutive valid same-track gap frames",
+          "report counts match raw artifact"
+        ]
+      },
+      "temporal_consistency": {
+        "basis": "Same upstream MANO implementation, using each checkpoint's own saved shape and pose. Estimated ViPE world frame; not independent ground-truth accuracy.",
+        "hands": {
+          "left": {
+            "initial": {
+              "observed_triples": 170,
+              "wrist_acceleration_m_s2_median": 8.2668428117899,
+              "wrist_acceleration_m_s2_p95": 63.89266782566457,
+              "all_joint_acceleration_m_s2_median": 8.597781693008493,
+              "all_joint_acceleration_m_s2_p95": 75.35462971498234
+            },
+            "final": {
+              "observed_triples": 170,
+              "wrist_acceleration_m_s2_median": 2.733968455329582,
+              "wrist_acceleration_m_s2_p95": 19.441267091784464,
+              "all_joint_acceleration_m_s2_median": 2.905483098448937,
+              "all_joint_acceleration_m_s2_p95": 19.50677010420286
+            }
+          },
+          "right": {
+            "initial": {
+              "observed_triples": 144,
+              "wrist_acceleration_m_s2_median": 14.895213792745645,
+              "wrist_acceleration_m_s2_p95": 59.205458163713736,
+              "all_joint_acceleration_m_s2_median": 14.579177572415967,
+              "all_joint_acceleration_m_s2_p95": 64.51858533153833
+            },
+            "final": {
+              "observed_triples": 144,
+              "wrist_acceleration_m_s2_median": 3.8855401941118464,
+              "wrist_acceleration_m_s2_p95": 15.273071005851195,
+              "all_joint_acceleration_m_s2_median": 4.070512593029607,
+              "all_joint_acceleration_m_s2_p95": 16.678059030569045
+            }
+          }
+        }
+      },
+      "aligned_consistency": {
+        "basis": "Estimated ViPE world frame. This measures consistency, not independent ground-truth accuracy.",
+        "hands": {
+          "left": {
+            "records": 179,
+            "metric_valid_records": 167,
+            "direct_observations": {
+              "triples": 170,
+              "wrist_acceleration_m_s2_median": 0.8277810960381631,
+              "wrist_acceleration_m_s2_p95": 18.577334816443425,
+              "all_joint_acceleration_m_s2_median": 1.1415040923799729,
+              "all_joint_acceleration_m_s2_p95": 17.614808595869896
+            },
+            "metric_valid_observations": {
+              "triples": 157,
+              "wrist_acceleration_m_s2_median": 0.7706479791305386,
+              "wrist_acceleration_m_s2_p95": 4.978763088716439,
+              "all_joint_acceleration_m_s2_median": 1.0425733193740294,
+              "all_joint_acceleration_m_s2_p95": 8.135885331323802
+            }
+          },
+          "right": {
+            "records": 153,
+            "metric_valid_records": 62,
+            "direct_observations": {
+              "triples": 144,
+              "wrist_acceleration_m_s2_median": 2.538601161140858,
+              "wrist_acceleration_m_s2_p95": 13.135936249337833,
+              "all_joint_acceleration_m_s2_median": 3.283311712484725,
+              "all_joint_acceleration_m_s2_p95": 16.837803254736162
+            },
+            "metric_valid_observations": {
+              "triples": 55,
+              "wrist_acceleration_m_s2_median": 2.299416156569483,
+              "wrist_acceleration_m_s2_p95": 10.452486283457366,
+              "all_joint_acceleration_m_s2_median": 3.3358856297966075,
+              "all_joint_acceleration_m_s2_p95": 13.018142307421614
+            }
+          }
+        }
+      }
+    },
+    {
+      "episode": 22,
+      "source_frames": 189,
+      "stages": {
+        "validate": "complete",
+        "hands": "complete",
+        "depth": "complete",
+        "align": "complete",
+        "contacts": "complete",
+        "report": "complete"
+      },
+      "review": {
+        "limitations": [
+          "Episode-specific reviewed bystander exclusion, not general automatic identity solution",
+          "Sampled visual review, not independent annotation of every frame",
+          "ViPE-world consistency is not ground-truth accuracy",
+          "No independent contact precision or successful robot training claim"
+        ],
+        "combined_cad_overlay": "Not requested for this episode; single combined deliverable is episode13",
+        "max_conversion_error_m": 1.6739677710629905e-07,
+        "episode": 22,
+        "status": "passed",
+        "geometry_checks": 378,
+        "contact_audit": "passed:3780 rows,1500 valid,2280 unknown,224 raw,17 bridged",
+        "source_commit": "af6ed6fdd46b55e5ca0254246a1ad18275bfebd4",
+        "sampled_frames": [
+          0,
+          17,
+          34,
+          51,
+          68,
+          85,
+          103,
+          120,
+          137,
+          154,
+          171,
+          188
+        ],
+        "review_method": "Assistant inspected 12 uniform mesh/contact samples and four consecutive-frame triples selected by maximum median joint acceleration, alongside full-frame geometry and contact audits",
+        "findings": [
+          "Wearer left hand remains on cup through lifting and placement; background bystander no longer selected in reviewed frames",
+          "No gross shape distortion or side identity flip in reviewed frames",
+          "Largest-motion triples show image-space continuity",
+          "Right hand occluded by pitcher is omitted; unsupported contact observations remain unknown"
+        ]
+      },
+      "contact_audit": {
+        "episode": 22,
+        "status": "passed",
+        "rows": 3780,
+        "valid": 1500,
+        "unknown": 2280,
+        "raw_contacts": 224,
+        "bridged": 17,
+        "sha256": "3695a55bf1121ebeefffcecade28e1376e1ee8dd9c457a1459d962821f5710a9",
+        "checks": [
+          "full original frame axis",
+          "predicted provenance",
+          "strict 2 cm threshold",
+          "unknown observations remain unknown",
+          "bridges have two raw-contact endpoints, at most 15 consecutive valid same-track gap frames",
+          "report counts match raw artifact"
+        ]
+      },
+      "temporal_consistency": {
+        "basis": "Same upstream MANO implementation, using each checkpoint's own saved shape and pose. Estimated ViPE world frame; not independent ground-truth accuracy.",
+        "hands": {
+          "left": {
+            "initial": {
+              "observed_triples": 187,
+              "wrist_acceleration_m_s2_median": 20.170624489381925,
+              "wrist_acceleration_m_s2_p95": 68.03360482958553,
+              "all_joint_acceleration_m_s2_median": 19.43254119561148,
+              "all_joint_acceleration_m_s2_p95": 62.85791203660729
+            },
+            "final": {
+              "observed_triples": 187,
+              "wrist_acceleration_m_s2_median": 4.602608656505345,
+              "wrist_acceleration_m_s2_p95": 32.79334081778655,
+              "all_joint_acceleration_m_s2_median": 5.250204584319598,
+              "all_joint_acceleration_m_s2_p95": 21.025667527987512
+            }
+          },
+          "right": {
+            "initial": {
+              "observed_triples": 81,
+              "wrist_acceleration_m_s2_median": 23.323103213419962,
+              "wrist_acceleration_m_s2_p95": 65.5970694097548,
+              "all_joint_acceleration_m_s2_median": 21.96823335391236,
+              "all_joint_acceleration_m_s2_p95": 65.60666082743904
+            },
+            "final": {
+              "observed_triples": 81,
+              "wrist_acceleration_m_s2_median": 5.794769451972479,
+              "wrist_acceleration_m_s2_p95": 21.825605193447107,
+              "all_joint_acceleration_m_s2_median": 6.316756059040564,
+              "all_joint_acceleration_m_s2_p95": 22.25384926902808
+            }
+          }
+        }
+      },
+      "aligned_consistency": {
+        "basis": "Estimated ViPE world frame. This measures consistency, not independent ground-truth accuracy.",
+        "hands": {
+          "left": {
+            "records": 189,
+            "metric_valid_records": 89,
+            "direct_observations": {
+              "triples": 187,
+              "wrist_acceleration_m_s2_median": 3.1104571903377036,
+              "wrist_acceleration_m_s2_p95": 21.607073563978023,
+              "all_joint_acceleration_m_s2_median": 4.062794102052253,
+              "all_joint_acceleration_m_s2_p95": 23.178920083309848
+            },
+            "metric_valid_observations": {
+              "triples": 80,
+              "wrist_acceleration_m_s2_median": 2.198099764692375,
+              "wrist_acceleration_m_s2_p95": 15.776065153776223,
+              "all_joint_acceleration_m_s2_median": 2.928956427182224,
+              "all_joint_acceleration_m_s2_p95": 12.150081794175364
+            }
+          },
+          "right": {
+            "records": 96,
+            "metric_valid_records": 61,
+            "direct_observations": {
+              "triples": 81,
+              "wrist_acceleration_m_s2_median": 2.686900429005087,
+              "wrist_acceleration_m_s2_p95": 15.03997374119871,
+              "all_joint_acceleration_m_s2_median": 3.788645455152514,
+              "all_joint_acceleration_m_s2_p95": 22.384506277571234
+            },
+            "metric_valid_observations": {
+              "triples": 55,
+              "wrist_acceleration_m_s2_median": 2.067373924877271,
+              "wrist_acceleration_m_s2_p95": 9.052094674096757,
+              "all_joint_acceleration_m_s2_median": 2.8191212083170423,
+              "all_joint_acceleration_m_s2_p95": 17.809101355993114
+            }
+          }
+        }
+      }
+    }
+  ],
+  "combined_overlay_episodes": [
+    2,
+    13
+  ]
+}

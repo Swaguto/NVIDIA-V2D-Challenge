@@ -2,12 +2,14 @@
 
 Local integration for [issue #6](https://github.com/Swaguto/NVIDIA-V2D-Challenge/issues/6).
 This supplies independent stages, strict camera/frame contracts and CPU-tested
-geometry. **No real episode, GPU inference, MANO fit or contact precision result
-has been validated by this contribution.** The GPU adapters need a prepared host.
+geometry. Native upstream inference, temporal MANO fitting, stereo alignment,
+hand overlays and contact annotations have now been validated on three real
+episodes (722 source frames). Independent contact precision is not measured.
+The GPU adapters need a prepared host with licensed MANO assets.
 
 Start with [HANDOFF.md](HANDOFF.md) for producer contracts, operator steps and
 reviewer handback; [VALIDATION.md](VALIDATION.md) separates completed checks from
-the remaining GPU and three-episode gates.
+the measured three-episode acceptance from historical checkpoints and limitations.
 
 ## What can run now
 

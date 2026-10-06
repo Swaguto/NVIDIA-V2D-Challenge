@@ -1,5 +1,67 @@
 # Validation and remaining gates
 
+## October 6, 2026: three-episode acceptance passed
+
+Validated source: `af6ed6fdd46b55e5ca0254246a1ad18275bfebd4`, native upstream
+runtime on one A40 using PR #33's pinned image. All six pipeline stages completed
+on 722 real rectified `ego_cam_c` frames. Actual HaMeR, SAM2, ViPE and Dyn-HaMR
+outputs feed calibrated stereo ray alignment and observed-CAD contact distances.
+
+| Episode | Source frames | Persisted MANO conversion checks | Maximum vertex error (m) | Valid / unknown contact rows | Raw / bridged contacts |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 2 | 343 | 676 | 1.84e-7 | 5560 / 1300 | 1503 / 127 |
+| 13 | 190 | 380 | 1.72e-7 | 2290 / 1510 | 309 / 48 |
+| 22 | 189 | 378 | 1.67e-7 | 1500 / 2280 | 224 / 17 |
+
+All 1,434 persisted hand-frame comparisons pass the unchanged `1e-5 m`
+conversion tolerance. Episode 2's fitted sequence starts after the first five
+source frames; the output restores the original axis and leaves missing
+observations unknown. The contact audit covers every row: timestamps/frame IDs,
+predicted provenance, strict distance below 2 cm, null unknown observations,
+and at most 15 consecutive valid same-track gap frames between raw-contact
+endpoints. Counts are hand/fingertip/object/frame rows, not independent events.
+
+Visual acceptance inspected 12 evenly spaced hand/contact frames per episode,
+plus four consecutive-frame triples selected at measured motion extremes.
+Reviewed meshes follow the wearer through grasp, transfer or pouring and release,
+without the previously observed gross shape distortion or bystander identity
+switch. Occluded hands are omitted; insufficient stereo support leaves contacts
+unknown. This is sampled review, not independent annotation of every frame.
+Full-length hand and contact videos were generated for all three episodes.
+The separately requested combined CAD-plus-temporal-hand videos cover episodes
+2 (343 frames) and 13 (190 frames). Episode 2 was fully decoded locally at
+1280×800, and both videos passed sampled visual review and SHA256 transfer checks:
+
+- Episode 2: `a6c8c243b61c751b017cc7a5b066353e2be6f33e18ca3bc00a2896ec87f85a5c`.
+- Episode 13: `8564c2cd0ca14d9dd50c91d9e3565f9b726d1b7025b41c4dda2629aed67cc6cc`.
+
+Episode 22 required fixed initial MANO shape and a manually reviewed background
+region exclusion before detector selection. All candidates and failed runs are
+retained. Its median joint acceleration before/after temporal fitting was
+19.43/5.25 m/s² (left) and 21.97/6.32 m/s² (right), using directly observed
+consecutive triples in estimated ViPE world coordinates. These are consistency
+measurements, not ground-truth pose accuracy. Sparse stereo support remains a
+limitation: episode 22 has 2,280 unknown contact rows out of 3,780.
+
+The CPU suite passes **77 tests, zero skips**; Ruff lint/format checks pass.
+The Docker-default backend was not exercised by this native run. No independent
+contact precision, reference-pose accuracy or successful robot training is
+claimed. No heavy optimization was added.
+
+Machine-readable measurements and review scope are in
+[acceptance.json](../../validation/issue6/acceptance.json); pinned runtime and
+replay instructions are in the [validation helpers](../../validation/issue6/README.md).
+At the user's pause checkpoint, all three final review bundles (including full
+contact JSONs and videos) and both combined videos are downloaded and hash-checked.
+All three task pods were verified `EXITED` with no live runtime; the temporary
+account SSH key was removed. The full reproducibility archive was interrupted
+before completion. RunPod then refused GPU and CPU-only recovery because the
+host had no available GPU capacity. Retained volumes preserve the remaining
+runtime files and incur storage charges. **Issue closure remains pending full
+backup recovery and final PR integration.** Do not delete the retained volumes
+or mistake the partial archive for a verified backup. Earlier entries below
+describe historical states, not current acceptance.
+
 ## October 6, 2026: full-episode validation in progress
 
 All three episodes have completed the six pipeline stages at least once; this
