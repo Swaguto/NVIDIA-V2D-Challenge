@@ -1,5 +1,23 @@
 # Validation and remaining gates
 
+## October 6, 2026: repaired source and paused real-run checkpoint
+
+The repaired CPU suite passes **71 tests with zero skips**; Ruff lint/format and
+compilation checks pass. Actual enhanced YOLO/HaMeR predictions are saved for
+all 722 frames of episodes 2, 13 and 22. Episode 2 completed ViPE camera
+reconstruction, SAM2 masks, Dyn-HaMR root/smooth fitting (50/300 iterations),
+and validate/hands/depth stages. Alignment was paused in progress; contacts and
+report remain absent. Episodes 13/22 still need camera/mask/temporal/pipeline work.
+
+The original PR's real 64-frame baseline failed visual acceptance (missing hands
+and incorrect identities). The repaired three-episode acceptance gate remains
+open. Both task GPU pods were verified stopped, and a complete local checkpoint
+archive passed all 12,914 member hashes. See
+[the checkpoint handoff](CHECKPOINT_2026-10-06.md) for exact evidence, runtime,
+remaining checks and safe resume commands. The earlier milestones below are
+historical; their asset blockers and unrun-inference statements describe those
+earlier runs.
+
 ## Track 3 integration on 2026-10-05
 
 The `feat/issue6-stereo-contact` branch adds a rectified `ego_cam_c` adapter on
@@ -40,7 +58,7 @@ depth support on the hands; that still needs checking after hand masks exist.
 
 Implementation session: September 28, 2026.
 
-## Local evidence
+## September 28, 2026: local CPU evidence
 
 **53 tests passed** in the local CPU environment. Python compilation and the
 installed command-line entry point also passed. This validates the CPU path and
@@ -89,7 +107,7 @@ python -m ruff check reconstruction/modules/v2d_issue6
 python -m ruff format --check reconstruction/modules/v2d_issue6
 ```
 
-## Not yet verified
+## Unverified at the original CPU checkpoint (historical)
 
 - Actual HaMeR / ViPE / Dyn-HaMR execution or rendering in the team GPU images.
 - Actual MANO assets, joint ordering from the installed manotorch version, and

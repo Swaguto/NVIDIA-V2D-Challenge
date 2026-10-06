@@ -297,6 +297,7 @@ def contacts_stage(m, root, out):
                         "object_provenance": obj["provenance"],
                         "hand_provenance": m["hand_provenance"],
                         "hand": "right" if right else "left",
+                        "hand_track_id": hand["track_id"] if hand is not None else None,
                         "fingertip": tip,
                         "object_id": obj["id"],
                         "valid": bool(valid),
@@ -309,7 +310,9 @@ def contacts_stage(m, root, out):
                         "geometry_ambiguous": not meshes[obj["id"]].is_volume,
                     }
                     records.append(record)
-                    series[(right, obj["id"], tip)].append(record)
+                    # A side can be reacquired as a different track. Never fill
+                    # a contact gap using another track's observations.
+                    series[(right, record["hand_track_id"], obj["id"], tip)].append(record)
     for group in series.values():
         values = bridge_contacts([r["raw_contact"] for r in group], [r["frame_id"] for r in group], maximum)
         for r, value in zip(group, values):

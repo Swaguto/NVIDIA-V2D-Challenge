@@ -8,6 +8,7 @@ from issue6.geometry import (
     camera,
     decode_depth,
     hand_geometry,
+    hand_translation,
     reproject_depth,
     rigid,
     surface_contacts,
@@ -79,6 +80,41 @@ def test_transform_rejects_scale_reflection_and_distorted_camera():
             rigid(value)
     with pytest.raises(ValueError, match="rectified"):
         camera({**cam(), "convention": "raw_distorted"})
+
+
+def test_calibrated_hand_translation_preserves_noncentered_anisotropic_camera():
+    target = {**cam(1280, 800), "fx": 565.6, "fy": 580.2, "cx": 612.24, "cy": 391.18}
+    point = np.array([0.2, -0.1, 0.8])
+    source = dict(
+        pred_cam_t_full=point,
+        scaled_focal_length=target["fx"],
+        scaled_focal_length_y=target["fy"],
+        principal_point=[target["cx"], target["cy"]],
+    )
+    np.testing.assert_allclose(hand_translation(source, target), point, atol=1e-15)
+
+
+def test_legacy_hamer_translation_preserves_centered_virtual_camera_ray():
+    target = {**cam(1280, 800), "fx": 565.6, "fy": 580.2, "cx": 612.24, "cy": 391.18}
+    source = dict(pred_cam_t_full=[0.2, -0.1, 0.8], scaled_focal_length=5000)
+    result = hand_translation(source, target)
+    pixel = result[:2] / result[2] * [target["fx"], target["fy"]] + [target["cx"], target["cy"]]
+    np.testing.assert_allclose(pixel, [1890, -225])
+    assert result[2] == pytest.approx(0.8 * 565.6 / 5000)
+
+
+@pytest.mark.parametrize(
+    "replacement",
+    [
+        {"principal_point": [np.nan, 0]},
+        {"principal_point": [1]},
+        {"scaled_focal_length_y": 0},
+        {"pred_cam_t_full": [0, 0, -1]},
+    ],
+)
+def test_hand_translation_rejects_invalid_camera_parameters(replacement):
+    with pytest.raises(ValueError, match="virtual-camera"):
+        hand_translation({"pred_cam_t_full": [0, 0, 1], "scaled_focal_length": 500, **replacement}, cam())
 
 
 def test_left_hand_mirrors_and_joints_share_mesh_scale_pivot():

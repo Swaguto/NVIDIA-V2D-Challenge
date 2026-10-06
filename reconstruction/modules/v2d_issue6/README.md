@@ -255,6 +255,34 @@ The local preparation milestone does not claim robot training, a submission,
 measured forces, or a leaderboard improvement. No commits, pushes, PRs, cloud
 provisioning or external messages are performed by these tools.
 
+## Native alignment in the Track 3 RunPod image
+
+The [October 6 checkpoint handoff](CHECKPOINT_2026-10-06.md) records the actual
+native run, source repairs, saved evidence and remaining acceptance gates.
+
+For an existing CUDA environment such as PR #33's image, imported real hand
+predictions can use `hand_source.runtime: "native"`. Run the issue-6 CLI from the
+Python environment containing CUDA PyTorch, manotorch, pyrender, and the shipped
+HaMeR alignment/render modules; set `PYOPENGL_PLATFORM=egl`. Supply
+`mano_assets_root` with the licensed `models/MANO_RIGHT.pkl`. The same worker
+performs alignment in either runtime, and native mode checks CUDA availability.
+The Docker runtime remains the default. Native inference is an explicit upstream
+run whose records, masks, model hashes, and temporal result are supplied through
+the import backend.
+
+The Dyn-HaMR adapter selects the final numbered checkpoint from exactly one
+`smooth_fit` run and reads `track_info.json` to preserve the cropped sequence's
+original frame offset. Initial/root checkpoints are excluded. Contacts retain
+`hand_track_id` and bridge only within the same uninterrupted track. Track 3
+exports resolve CAD, observed pose, and mask input paths independently of the
+manifest output directory.
+
+Converted temporal records preserve both focal lengths and the calibrated
+principal point. Alignment accepts these explicitly; legacy HaMeR records keep
+their centered virtual-camera convention. Camera conversion also uses the
+shape-dependent MANO wrist pivot, requiring licensed assets or explicit root
+offsets when the camera rotates.
+
 ## Research basis
 
 - [HaMeR](https://github.com/geopavlakos/hamer): per-frame MANO estimation.

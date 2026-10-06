@@ -87,6 +87,28 @@ def reproject_depth(z, source, target, target_from_source):
     return out.reshape(h, w)
 
 
+def hand_translation(source, target):
+    """Preserve the image ray for centered HaMeR or calibrated Dyn-HaMR cameras."""
+    camera(target)
+    p = np.asarray(source["pred_cam_t_full"], dtype=float)
+    fx = float(source["scaled_focal_length"])
+    fy = float(source.get("scaled_focal_length_y", fx))
+    principal = np.asarray(source.get("principal_point", [target["width"] / 2, target["height"] / 2]), float)
+    if (
+        p.shape != (3,)
+        or not np.isfinite(p).all()
+        or p[2] <= 0
+        or not np.isfinite([fx, fy]).all()
+        or min(fx, fy) <= 0
+        or principal.shape != (2,)
+        or not np.isfinite(principal).all()
+    ):
+        raise ValueError("Invalid hand virtual-camera parameters")
+    uv = np.array([fx, fy]) * p[:2] / p[2] + principal
+    z = p[2] * target["fx"] / fx
+    return np.array([(uv[0] - target["cx"]) * z / target["fx"], (uv[1] - target["cy"]) * z / target["fy"], z])
+
+
 def hand_geometry(vertices, joints, is_right, scale, translation):
     """Match the upstream renderer: mirror, scale about MESH centroid, translate."""
     vertices, joints = np.array(vertices, float), np.array(joints, float)

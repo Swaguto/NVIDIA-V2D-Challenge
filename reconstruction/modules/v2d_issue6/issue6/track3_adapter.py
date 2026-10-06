@@ -18,6 +18,7 @@ from .manifest import load, write_json
 
 def observed_object_state(episode_root: Path, episode: int, name: str, frame: int, camera: str) -> dict:
     """Expose only a directly observed, matching-camera CAD pose to contacts."""
+    episode_root = episode_root.resolve()
     pose = (
         episode_root
         / "poses"
@@ -52,11 +53,14 @@ def mesh_for(data: Path, name: str) -> Path:
     for suffix in ("", "_visual", "_collision"):
         candidate = data / "mesh" / name / f"{name}{suffix}.glb"
         if candidate.is_file():
-            return candidate
+            return candidate.resolve()
     raise FileNotFoundError(f"Public CAD mesh missing for {name}")
 
 
 def export(data: Path, results: Path, episode: int, output: Path, start: int, frames: int, hand_source: dict) -> Path:
+    # Input paths are relative to the caller, whereas paths inside the manifest
+    # are resolved relative to its output directory. Preserve their locations.
+    data, results, output = data.resolve(), results.resolve(), output.resolve()
     # Import heavy dependencies only when an actual dataset bundle is requested.
     import cv2
     import pyarrow.parquet as pq

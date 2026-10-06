@@ -26,7 +26,9 @@ expects):
       "frame_idx": int,
       "image_size": [W, H],
       "camera": {
-        "scaled_focal_length": float,    # = fx_vipe; align_hands rescales to fx_real
+        "scaled_focal_length": float,    # = fx_vipe
+        "scaled_focal_length_y": float,  # = fy_vipe
+        "principal_point":    [cx,cy],   # calibrated, may differ from image center
         "pred_cam_t_full":     [x,y,z]   # cam-frame translation in DynHaMR units
       },
       "mano": {
@@ -43,19 +45,20 @@ Per (hand h, frame t):
 
   R_root_cam  = M · cam_R · M · R(root_orient_world)        # = cam_R·R for right
   global_aa   = axis_angle(R_root_cam)
-  cam_t_cam   = cam_R · (M · trans) + cam_t                 # = cam_R·trans+cam_t for right
+  J0          = canonical MANO wrist for the fitted shape
+  cam_t_cam   = cam_R · M · (trans + J0) + cam_t − M · J0
 
 Verification (per-vertex projection equality):
+  verts_local_mano = R_root_world · (v_base − J0) + J0
   v_world_dynhamr = M · (verts_local_mano + trans)          # mirror after add for left
   v_cam_dynhamr   = cam_R · v_world_dynhamr + cam_t
                   = cam_R · M · verts_local + cam_R · M · trans + cam_t
-                  = (cam_R·M·verts_local) + cam_t_cam
+                  = cam_R·M·R_root_world·(v_base−J0) + cam_R·M·J0 + cam_R·M·trans + cam_t
 
   v_cam_hamer     = M · verts_local_hamer + cam_t_hamer    # v2d_hamer left convention
-                  = M · R(global_aa) · root_relative + cam_t_hamer
-                  = M · (M·cam_R·M·R_root_world) · root_relative + cam_t_cam
-                  = cam_R · M · R_root_world · root_relative + cam_t_cam
-                  = cam_R · M · verts_local + cam_t_cam                ✓
+                  = M · (R(global_aa) · (v_base−J0) + J0) + cam_t_cam
+                  = cam_R · M · R_root_world · (v_base−J0) + M·J0 + cam_t_cam
+                  = v_cam_dynhamr                                   ✓
 
 So projecting v_cam_hamer through the same intrinsics gives the same pixel
 the unaligned DynHaMR render produces — image-stable by construction.
@@ -141,6 +144,22 @@ def _rotmat_to_axis_angle(R: np.ndarray) -> np.ndarray:
 _M_MIRROR = np.diag([-1.0, 1.0, 1.0])
 
 
+def _camera_translation(trans, cam_R, cam_t, mirror, root_offset):
+    """MANO rotates about its shape-dependent wrist, rather than the origin."""
+    return cam_R @ (mirror @ (trans + root_offset)) + cam_t - mirror @ root_offset
+
+
+def _mano_root_offsets(betas, mano_assets_root):
+    import torch
+    from manotorch.manolayer import ManoLayer
+
+    layer = ManoLayer(rot_mode="axisang", use_pca=False, side="right", center_idx=None,
+                      mano_assets_root=mano_assets_root)
+    with torch.no_grad():
+        result = layer(torch.zeros((len(betas), 48)), torch.as_tensor(betas, dtype=torch.float32))
+    return result.joints[:, 0].numpy().astype(np.float64)
+
+
 def convert_dynhamr_to_hamer_tracks(
     input_npz: str,
     output_dir: str,
@@ -148,6 +167,8 @@ def convert_dynhamr_to_hamer_tracks(
     image_size: Optional[tuple[int, int]] = None,
     left_id: int = 2,
     right_id: int = 3,
+    mano_assets_root: Optional[str] = None,
+    root_offsets: Optional[np.ndarray] = None,
 ) -> None:
     """Write per-frame v2d_hamer-style JSON records into ``output_dir``.
 
@@ -156,6 +177,10 @@ def convert_dynhamr_to_hamer_tracks(
     ``--intrinsics_path``). When ``intrinsics_path`` is omitted, (W, H) is
     inferred from ViPE's ``cx, cy`` assuming a center-aligned principal
     point.
+
+    Moving cameras require the licensed MANO assets, explicit ``root_offsets``
+    (B, 3), or ``mano_root_offsets`` in the NPZ. These offsets are the canonical
+    wrist locations for each fitted shape; assuming zero changes mesh position.
     """
     wr = np.load(input_npz, allow_pickle=True)
 
@@ -170,7 +195,21 @@ def convert_dynhamr_to_hamer_tracks(
 
     B, T = trans.shape[:2]
     is_right_track = is_right.mean(axis=1) > 0.5             # (B,)
+    if root_offsets is None:
+        if "mano_root_offsets" in wr:
+            root_offsets = wr["mano_root_offsets"]
+        elif mano_assets_root is not None:
+            root_offsets = _mano_root_offsets(betas, mano_assets_root)
+        elif np.allclose(cam_R, np.eye(3), atol=1e-7, rtol=0):
+            root_offsets = np.zeros((B, 3))  # Pivot cancels for identity camera rotations.
+        else:
+            raise ValueError("Moving-camera conversion requires mano_assets_root or explicit MANO root offsets")
+    root_offsets = np.asarray(root_offsets, dtype=np.float64)
+    if root_offsets.shape != (B, 3) or not np.isfinite(root_offsets).all():
+        raise ValueError("Expected one finite MANO root offset per hand")
 
+    if intrins_v.shape != (4,) or not np.isfinite(intrins_v).all() or min(intrins_v[:2]) <= 0:
+        raise ValueError("Expected finite positive Dyn-HaMR focal lengths and a principal point")
     fx_vipe = float(intrins_v[0])
     if image_size is None:
         if intrinsics_path is not None:
@@ -208,7 +247,7 @@ def convert_dynhamr_to_hamer_tracks(
             # cam_t in DynHaMR cam frame.
             #   right: cam_R · trans + cam_t
             #   left:  cam_R · (M · trans) + cam_t
-            cam_t_cam = cam_R[h, f] @ (M @ trans[h, f]) + cam_t[h, f]
+            cam_t_cam = _camera_translation(trans[h, f], cam_R[h, f], cam_t[h, f], M, root_offsets[h])
 
             rec = {
                 "track_id":   int(track_id),
@@ -217,6 +256,8 @@ def convert_dynhamr_to_hamer_tracks(
                 "image_size": [int(W), int(H)],
                 "camera": {
                     "scaled_focal_length": fx_vipe,
+                    "scaled_focal_length_y": float(intrins_v[1]),
+                    "principal_point": intrins_v[2:].tolist(),
                     "pred_cam_t_full":     cam_t_cam.tolist(),
                 },
                 "mano": {
@@ -257,6 +298,8 @@ def main() -> None:
                         "matching SAM2 mask convention).")
     p.add_argument("--right_id", type=int, default=3,
                    help="Track-id subdir for the right hand (default 3).")
+    p.add_argument("--mano_assets_root", default=None,
+                   help="Licensed MANO root containing models/MANO_RIGHT.pkl; required for moving cameras unless the NPZ supplies mano_root_offsets.")
     args = p.parse_args()
     convert_dynhamr_to_hamer_tracks(
         input_npz       = args.input_npz,
@@ -264,6 +307,7 @@ def main() -> None:
         intrinsics_path = args.intrinsics_path,
         left_id         = args.left_id,
         right_id        = args.right_id,
+        mano_assets_root = args.mano_assets_root,
     )
 
 

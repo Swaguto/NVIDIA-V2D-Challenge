@@ -17,7 +17,39 @@ from issue6.manifest import (
     write_json,
 )
 from issue6.pipeline import compare_reports, contacts_stage, execute
-from issue6.track3_adapter import observed_object_state
+from issue6.track3_adapter import mesh_for, observed_object_state
+
+
+def test_dynhamr_uses_final_smooth_fit_checkpoint(tmp_path):
+    root = tmp_path / "run"
+    for phase, iteration in (("init", 0), ("root_fit", 50), ("smooth_fit", 20), ("smooth_fit", 300)):
+        path = root / phase / f"episode_2_{iteration:06d}_world_results.npz"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(b"checkpoint")
+    assert backend.final_dynhamr_result(tmp_path) == root / "smooth_fit/episode_2_000300_world_results.npz"
+    ambiguous = tmp_path / "second/smooth_fit/episode_2_000300_world_results.npz"
+    ambiguous.parent.mkdir(parents=True)
+    ambiguous.write_bytes(b"checkpoint")
+    with pytest.raises(ValueError, match="one smooth_fit run"):
+        backend.final_dynhamr_result(tmp_path)
+
+
+def test_unknown_runtime_rejected(bundle):
+    bundle["hand_source"]["runtime"] = "unverified"
+    with pytest.raises(ValueError, match="Unknown hand runtime"):
+        validate(bundle)
+
+
+def test_dynhamr_preserves_cropped_frame_offset(bundle, tmp_path):
+    result = tmp_path / "fit/smooth_fit/episode_000300_world_results.npz"
+    result.parent.mkdir(parents=True)
+    np.savez(result, trans=np.zeros((2, 3, 3)))
+    info = result.parent.parent / "track_info.json"
+    write_json(info, {"meta": {"seq_interval": [1, 4]}})
+    assert [f["id"] for f in backend.dynhamr_frame_axis(result, bundle["frames"])] == [11, 12, 13]
+    write_json(info, {"meta": {"seq_interval": [0, 5]}})
+    with pytest.raises(ValueError, match="result length"):
+        backend.dynhamr_frame_axis(result, bundle["frames"])
 
 
 def test_rectified_stereo_left_camera_is_accepted(bundle):
@@ -51,6 +83,36 @@ def test_track3_adapter_rejects_unobserved_or_wrong_frame_poses(tmp_path):
     assert observed_object_state(tmp_path, 2, "white_pot", 0, "ego_cam_c") == {"valid": False}
     write_json(path, {**row, "camera_frame": "ego_cam_a"})
     assert observed_object_state(tmp_path, 2, "white_pot", 0, "ego_cam_c") == {"valid": False}
+
+
+def test_track3_adapter_keeps_relative_input_paths_resolvable(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    mesh = tmp_path / "public/mesh/white_pot/white_pot.glb"
+    mesh.parent.mkdir(parents=True)
+    trimesh.creation.box().export(mesh)
+    episode = Path("results/e002")
+    pose_path = episode / "poses/e002/ego_object_poses/e002/white_pot/object_to_cam/ego_cam_c/000000.json"
+    write_json(
+        pose_path,
+        {
+            "episode": 2,
+            "frame_index": 0,
+            "status": "observed",
+            "gt_use": "none",
+            "camera_frame": "ego_cam_c",
+            "coordinate_frame": "rectified_camera",
+            "rotation": [1, 0, 0, 0],
+            "translation": [0, 0, 1],
+        },
+    )
+    mask = episode / "masks/white_pot/000000.png"
+    mask.parent.mkdir(parents=True)
+    Image.new("L", (64, 48), 255).save(mask)
+    state = observed_object_state(episode, 2, "white_pot", 0, "ego_cam_c")
+    assert mesh_for(Path("public"), "white_pot") == mesh
+    assert Path(state["pose_path"]) == pose_path.resolve()
+    assert Path(state["mask"]) == mask.resolve()
+    assert all(Path(state[key]).is_file() for key in ("pose_path", "mask"))
 
 
 @pytest.mark.parametrize(
@@ -181,6 +243,27 @@ def synthetic_worker(m, root, out):
         out / "hands.npz",
         joints_camera_m=np.array([h["joints_camera_m"] for h in hands]),
     )
+
+
+@pytest.mark.parametrize("track_ids", [[1, 1, 1], [1, 2, 2], [1, 2, 1]])
+def test_contacts_only_bridge_within_continuous_hand_track(bundle, tmp_path, track_ids):
+    bundle["frames"] = bundle["frames"][:3]
+    root = tmp_path / "identities"
+    out = root / "contacts"
+    out.mkdir(parents=True)
+    synthetic_worker(bundle, root, root / "align")
+    hand_file = root / "align/hands.json"
+    hands = read_json(hand_file)
+    for hand, track_id in zip(hands, track_ids):
+        hand["track_id"] = track_id
+    write_json(hand_file, hands)
+    contacts_stage(bundle, root, out)
+    rows = [r for r in read_json(out / "contacts.json") if r["hand"] == "right" and r["fingertip"] == "index"]
+    assert [r["raw_contact"] for r in rows] == [True, False, True]
+    assert [r["hand_track_id"] for r in rows] == track_ids
+    should_bridge = len(set(track_ids)) == 1
+    assert rows[1]["bridged"] is should_bridge
+    assert rows[1]["window_contact"] is should_bridge
 
 
 def test_cpu_pipeline_synthetic_only(bundle, tmp_path, monkeypatch):

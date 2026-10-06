@@ -203,6 +203,8 @@ def validate(m):
         for o in objects:
             camera_from_object(f, o)
     if "hand_source" in m:
+        if m["hand_source"].get("runtime", "docker") not in {"docker", "native"}:
+            raise ValueError("Unknown hand runtime")
         if m["hand_source"]["backend"] not in {"hamer", "dynhamr", "import"}:
             raise ValueError("Unknown hand backend")
     settings = m.get("settings", {})

@@ -43,8 +43,16 @@ def fps(m):
 
 
 def gpu_preflight(source, temporal=False, inference=True):
-    if os.name != "posix" or not shutil.which("docker"):
+    runtime = source.get("runtime", "docker")
+    if runtime == "native" and inference:
+        raise RuntimeError("Native inference must be run explicitly and supplied through the import backend")
+    if os.name != "posix" or (runtime == "docker" and not shutil.which("docker")):
         raise RuntimeError("GPU stages need the prepared Linux Docker host; CPU stages remain available")
+    if runtime == "native":
+        import torch
+
+        if not torch.cuda.is_available():
+            raise RuntimeError("Native alignment requires a CUDA-enabled PyTorch runtime")
     root = Path(source["mano_assets_root"])
     real_file(root / "models" / "MANO_RIGHT.pkl")
     if inference and not source.get("model_files"):
@@ -133,6 +141,31 @@ def prepare_render_inputs(frames_dir, records_dir, frame_axis, destination):
         [{"render_index": n, **f} for n, f in enumerate(frame_axis)],
     )
     return image_dir, hand_dir
+
+
+def final_dynhamr_result(root):
+    """Select the final smooth-fit result, excluding initial/root checkpoints."""
+    candidates = [p for p in Path(root).rglob("*_world_results.npz") if p.parent.name == "smooth_fit"]
+    if not candidates or len({p.parent for p in candidates}) != 1:
+        raise ValueError("Dyn-HaMR needs one smooth_fit run; inspect native outputs")
+    try:
+        return max(candidates, key=lambda p: int(p.name.rsplit("_", 3)[-3]))
+    except ValueError as exc:
+        raise ValueError("Unrecognized Dyn-HaMR result checkpoint filename") from exc
+
+
+def dynhamr_frame_axis(result, frames):
+    """Upstream crops leading/trailing frames without any tracked hand."""
+    info = read_json(real_file(Path(result).parent.parent / "track_info.json"))
+    start, end = info["meta"]["seq_interval"]
+    if not all(isinstance(v, int) and not isinstance(v, bool) for v in (start, end)):
+        raise ValueError("Invalid Dyn-HaMR frame interval")
+    if not 0 <= start < end <= len(frames):
+        raise ValueError("Dyn-HaMR frame interval is outside selected frames")
+    with np.load(result, allow_pickle=False) as data:
+        if data["trans"].shape[1] != end - start:
+            raise ValueError("Dyn-HaMR result length disagrees with its frame interval")
+    return frames[start:end]
 
 
 def reconstruct(m, out):
@@ -263,9 +296,7 @@ def reconstruct(m, out):
             ],
             out,
         )
-        candidates = list(temporal.rglob("world_results.npz"))
-        if len(candidates) != 1:
-            raise ValueError("Dyn-HaMR needs exactly one world_results.npz; inspect native outputs")
+        result = final_dynhamr_result(temporal)
         raw = out / "native_converted"
         intrinsics = out / "intrinsics.json"
         write_json(intrinsics, m["color_camera"])
@@ -275,21 +306,40 @@ def reconstruct(m, out):
                 "-m",
                 "v2d.hand_alignment.docker.run_dynhamr_to_hamer_tracks",
                 "--input_npz",
-                candidates[0],
+                result,
                 "--output_dir",
                 raw,
                 "--intrinsics_path",
                 intrinsics,
+                "--mano_assets_root",
+                source["mano_assets_root"],
             ],
             out,
         )
-    _copy_records(raw, out, m["frames"], remap=True)
+    frame_axis = dynhamr_frame_axis(result, m["frames"]) if backend == "dynhamr" else m["frames"]
+    _copy_records(raw, out, frame_axis, remap=True)
     _copy_masks(pipeline / "masks", pipeline / "hand_tracks.json", out, m["frames"], remap=True)
 
 
 def align_worker(m, run_root, out):
     source = m["hand_source"]
     gpu_preflight(source, inference=False)
+    if source.get("runtime", "docker") == "native":
+        command(
+            [
+                sys.executable,
+                "-m",
+                "issue6.worker",
+                "--job",
+                run_root,
+                "--modules",
+                MODULES,
+                "--mano-assets-root",
+                source["mano_assets_root"],
+            ],
+            out,
+        )
+        return
     command(["docker", "image", "inspect", "v2d_hamer", "--format", "{{.Id}}"], out)
     # Read-only source and model mounts; one writable run directory. Existing
     # model container provides torch/manotorch/pyrender; no new image is built.

@@ -9,7 +9,7 @@ from pathlib import Path
 import numpy as np
 
 from .backend import prepare_render_inputs
-from .geometry import alignment_offset, hand_geometry, transform
+from .geometry import alignment_offset, hand_geometry, hand_translation, transform
 from .manifest import read_json, write_json
 
 
@@ -20,18 +20,18 @@ def upstream(name, path):
     return module
 
 
-def run(job):
+def run(job, modules=Path("/modules"), mano_assets_root=Path("/mano")):
     import pyrender
     import torch
     import trimesh
     from PIL import Image
 
-    align = upstream("issue6_upstream_align", "/modules/v2d_hamer/lib/align_hands.py")
-    render = upstream("issue6_upstream_render", "/modules/v2d_hamer/lib/render_hands_aligned_video.py")
+    align = upstream("issue6_upstream_align", modules / "v2d_hamer/lib/align_hands.py")
+    render = upstream("issue6_upstream_render", modules / "v2d_hamer/lib/render_hands_aligned_video.py")
     config = read_json(job / "align" / "job.json")
     c = config["camera"]
     by_id = {f["id"]: f for f in config["frames"]}
-    mano = align._make_mano("/mano")
+    mano = align._make_mano(str(mano_assets_root))
     renderer = pyrender.OffscreenRenderer(c["width"], c["height"])
     cam = pyrender.IntrinsicsCamera(c["fx"], c["fy"], c["cx"], c["cy"])
     out = job / "align"
@@ -79,13 +79,7 @@ def run(job):
             if r["image_size"] != [c["width"], c["height"]]:
                 raise ValueError("Hand image_size disagrees with calibration")
             vertices, joints = materialize(r)
-            p = np.array(r["camera"]["pred_cam_t_full"], float)
-            focal = float(r["camera"]["scaled_focal_length"])
-            if p.shape != (3,) or not np.isfinite(p).all() or p[2] <= 0 or not np.isfinite(focal) or focal <= 0:
-                raise ValueError("Invalid hand virtual-camera parameters")
-            uv = focal * p[:2] / p[2] + [c["width"] / 2, c["height"] / 2]
-            z = p[2] * c["fx"] / focal
-            translation = np.array([(uv[0] - c["cx"]) * z / c["fx"], (uv[1] - c["cy"]) * z / c["fy"], z])
+            translation = hand_translation(r["camera"], c)
             verts, _ = hand_geometry(vertices, joints, r["is_right"], 1.0, np.zeros(3))
             faces = mano.th_faces.numpy()
             if not r["is_right"]:
@@ -192,7 +186,7 @@ def run(job):
             render.render_hands_aligned_video(
                 str(image_dir),
                 str(hand_dir),
-                "/mano",
+                str(mano_assets_root),
                 str(out / "hand_mesh_overlay.mp4"),
                 fps=float(1 / np.median(dt)),
             )
@@ -201,4 +195,7 @@ def run(job):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--job", type=Path, required=True)
-    run(parser.parse_args().job)
+    parser.add_argument("--modules", type=Path, default=Path("/modules"))
+    parser.add_argument("--mano-assets-root", type=Path, default=Path("/mano"))
+    args = parser.parse_args()
+    run(args.job, args.modules, args.mano_assets_root)

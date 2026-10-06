@@ -1,5 +1,11 @@
 # Issue 6 handoff
 
+The latest operator checkpoint is
+[October 6's paused validation handoff](CHECKPOINT_2026-10-06.md): episode 2 has
+completed temporal fitting and depth, while final three-episode acceptance is
+pending and GPU compute is off. The producer/consumer contract below describes
+the original integration milestone.
+
 This is the integration/CPU milestone, not completion of issue #6. No recipient
 has been assigned or notified by this contribution. Responsibilities below are
 handoff roles to confirm with the team. Keep issue #6 open until three episodes
