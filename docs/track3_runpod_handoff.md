@@ -12,10 +12,10 @@ as a draft until runtime results and artifacts are reviewed; do not merge it.
 - Draft PR #33 contains a custom Dockerfile, image build workflow, SSH startup
   script, and `docker/track3-runpod/validate_e000.sh`. Branch head before this
   handoff was `83bfd5b52f0377e7003cf78e7a76a5ad74c7c30e`.
-- GitHub Actions run `37364642833`, attempt 2, was building and pushing the
-  image at handoff. Check its conclusion before using the image. The workflow
-  publishes `ghcr.io/swaguto/track3-runpod:<image-source-sha>` and
-  `ttl.sh/v2d-track3-<image-source-sha>:24h`. The TTL tag expires after 24h.
+- GitHub Actions run `37364642833`, attempt 2, built the image successfully.
+  The workflow publishes `ghcr.io/swaguto/track3-runpod:<image-source-sha>`
+  and `ttl.sh/v2d-track3-<image-source-sha>:24h`. The GHCR manifest was
+  verified anonymously pullable on 2026-10-06; the TTL tag expires after 24h.
 - OpenCode 1.18.1 already has a connected RunPod MCP server (`opencode mcp
   list`). Codex has a separate local RunPod MCP configuration. Never echo or
   commit the API key. The OpenCode connection can call RunPod tools directly.
@@ -39,8 +39,8 @@ GHCR tag, wrong PyTorch3D tag, missing pybind11 CMake location, and missing
 `h5py` have already been fixed. The image source SHA is the workflow run's
 `head_sha`, even if this handoff doc is committed later.
 
-Use the public TTL tag if GHCR is private to RunPod. Verify the chosen image
-can be pulled before creating a billed pod when possible.
+Use the public GHCR tag for a durable reference. Verify that the chosen image
+can be pulled before creating a billed pod.
 
 ## Create and access a validation pod
 
@@ -50,7 +50,7 @@ A40 Secure price/capacity, then `create-pod` with a body equivalent to:
 ```json
 {
   "name": "track3-pr31-validation",
-  "image": "ttl.sh/v2d-track3-<image-source-sha>:24h",
+  "image": "ghcr.io/swaguto/track3-runpod:<image-source-sha>",
   "gpu": {"id": "NVIDIA A40", "count": 1, "minCudaVersion": "12.4"},
   "cloud": "SECURE",
   "disk": 150,
@@ -84,6 +84,10 @@ git clone --branch feat/track3-runpod-validation \
 bash /workspace/NVIDIA-V2D-Challenge/docker/track3-runpod/validate_e000.sh \
   2>&1 | tee /workspace/track3-e000.log
 ```
+
+The script can also clone `main` after PR merge; set `TRACK3_REF` to choose a
+different branch. It accepts FoundationPose weights in either `weights/` or
+`weights/no_diffusion/` without a manual move.
 
 Use `tmux` or `nohup` so an SSH disconnect does not kill the run. The script
 downloads public e000 stereo video, parquet metadata, white-pot CAD, and

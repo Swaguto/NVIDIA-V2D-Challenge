@@ -2,7 +2,7 @@ name: Track 3 RunPod image
 
 on:
   push:
-    branches: [feat/track3-runpod-validation]
+    branches: [main, feat/track3-runpod-validation]
     paths:
       - docker/track3-runpod/Dockerfile
       - docker/track3-runpod/start.sh

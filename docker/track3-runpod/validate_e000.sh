@@ -2,13 +2,14 @@
 set -euo pipefail
 
 repo="${TRACK3_REPO:-/workspace/NVIDIA-V2D-Challenge}"
+repo_ref="${TRACK3_REF:-main}"
 data_root="${TRACK3_DATA_ROOT:-/workspace/data}"
 run_root="${TRACK3_RUN_ROOT:-/workspace/track3-validation}"
 weights="${FOUNDATIONPOSE_WEIGHTS_DIR:-/workspace/weights}"
 public="$data_root/track_3/public"
 
 if [[ ! -d "$repo/.git" ]]; then
-  git clone --branch feat/track3-runpod-validation \
+  git clone --branch "$repo_ref" \
     https://github.com/Swaguto/NVIDIA-V2D-Challenge.git "$repo"
 fi
 
@@ -22,23 +23,43 @@ hf download nvidia/video_to_data_challenge --repo-type dataset \
   --include 'track_3/public/videos/chunk-000/observation.images.ego_cam_b/episode_000000.mp4' \
   --local-dir "$data_root"
 
-if [[ ! -f "$weights/2023-10-28-18-33-37/model_best.pth" || \
-      ! -f "$weights/2024-01-11-20-02-45/model_best.pth" ]]; then
+resolve_weights() {
+  for candidate in "$weights" "$weights/no_diffusion"; do
+    if [[ -s "$candidate/2023-10-28-18-33-37/model_best.pth" && \
+          -s "$candidate/2023-10-28-18-33-37/config.yml" && \
+          -s "$candidate/2024-01-11-20-02-45/model_best.pth" && \
+          -s "$candidate/2024-01-11-20-02-45/config.yml" ]]; then
+      printf '%s\n' "$candidate"
+      return 0
+    fi
+  done
+  return 1
+}
+weight_dir="$(resolve_weights || true)"
+if [[ -z "$weight_dir" ]]; then
   gdown --continue \
     'https://drive.google.com/drive/folders/1DFezOAD0oD1BblsXVxqDsl8fj0qzB82i' \
     -O "$weights/"
 fi
+if [[ -z "$weight_dir" ]]; then
+  weight_dir="$(resolve_weights || true)"
+fi
+if [[ -z "$weight_dir" ]]; then
+  echo "FoundationPose weights missing under $weights or $weights/no_diffusion" >&2
+  exit 1
+fi
 for stamp in 2023-10-28-18-33-37 2024-01-11-20-02-45; do
-  test -s "$weights/$stamp/model_best.pth"
-  test -s "$weights/$stamp/config.yml"
+  test -s "$weight_dir/$stamp/model_best.pth"
+  test -s "$weight_dir/$stamp/config.yml"
 done
+echo "FoundationPose weights: $weight_dir"
 
 export V2D_PUBLIC="$public"
 export V2D_CALIB="$public/meta/camera_calibration.json"
 export V2D_FOUNDATIONPOSE=/opt/FoundationPose
 export V2D_FP_SHIM=''
 export V2D_FP_PYTHON=/opt/conda/bin/python
-export FOUNDATIONPOSE_WEIGHTS_DIR="$weights"
+export FOUNDATIONPOSE_WEIGHTS_DIR="$weight_dir"
 
 cd "$repo"
 for phase in cameras masks poses scores overlays; do
