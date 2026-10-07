@@ -42,6 +42,18 @@ The invisible period has no supported geometry, raw contact or bridging. Contact
 is also absent after visible release. Current geometry/identity/event review and
 normal-speed playback remain required; episode 22 still fails quality metrics.
 
+`probe_hand_detector.py` prepares a detection-only cloud diagnostic for these
+missing observations. It compares the pinned detector/Ultralytics 8.1.34 on the
+complete source axis at two full-image resolutions and fixed overlapping crops,
+with confidence cutoffs 0.5, 0.25 and 0.1. Wearer association, calibrated depth
+requirements and quality thresholds remain unchanged. Source-coordinate mapping,
+candidate isolation, opposite-hand merge protection and holdout exclusions have
+five CPU tests. Actual inference has not run; no detector variant is selected,
+no raw fit is replaced, and candidate counts will not establish reconstruction
+quality. Adaptive sweeps reject the five holdout episode IDs. Each inference
+receipt binds the exact source image/depth bytes, model, code, runtime and full
+candidate/rejection history before any new fit can be evaluated.
+
 Episode 12 also completed six repaired stages, all three integrity/geometry/contact
 audits, three review videos and a verified private checkpoint. Independent sequential
 inspection of all 181 source frames and six event closeups identified three cup grasps.
