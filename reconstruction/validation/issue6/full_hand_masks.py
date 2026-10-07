@@ -36,7 +36,8 @@ for side, track in [('left', 2), ('right', 3)]:
     last_prompt = -32
     for number, row in enumerate(cleaned):
         box = row[f'{side}_bbox']
-        candidates = [raw[number][f'{s}_bbox'] for s in ('left', 'right') if raw[number][f'{s}_bbox'] is not None]
+        # Only the same wearer hand supports this observation after cleaning.
+        candidates = [raw[number][f'{side}_bbox']] if raw[number][f'{side}_bbox'] is not None else []
         direct = box is not None and any(iou(box, candidate) >= 0.25 for candidate in candidates)
         observed[side].append(direct)
         if direct and number-last_prompt >= 32:
@@ -56,10 +57,9 @@ for side, track in [('left', 2), ('right', 3)]:
             path.parent.mkdir(parents=True, exist_ok=True)
             Image.new('L', (manifest['color_camera']['width'], manifest['color_camera']['height']), 0).save(path)
 (out / 'observation_gate.json').write_text(json.dumps({'direct_observation': observed,
-        'rule': 'Corrected bbox must overlap an actual raw detector box by IoU>=0.25; otherwise mask is empty and contact remains unknown',
+        'rule': 'Corrected bbox must overlap the same-side automatically selected wearer observation by IoU>=0.25; otherwise mask is empty and contact remains unknown',
         'frames': len(cleaned), 'prompt_interval_frames': 32,
-        'manual_annotations': (out / 'wearer_review_receipt.json').exists(),
-        'wearer_review_receipt': str(out / 'wearer_review_receipt.json')
-            if (out / 'wearer_review_receipt.json').exists() else None}, indent=2)+'\n')
+        'manual_annotations': False,
+        'wearer_selection_receipt': str(out / 'wearer_candidates.json')}, indent=2)+'\n')
 print(json.dumps({'episode': args.episode, 'left_observed': sum(observed['left']),
                   'right_observed': sum(observed['right']), 'prompts': len(prompts)}, indent=2), flush=True)

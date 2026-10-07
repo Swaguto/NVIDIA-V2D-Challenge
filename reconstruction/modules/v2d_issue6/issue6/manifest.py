@@ -145,7 +145,22 @@ def validate(m):
     if not isinstance(m.get("episode"), int) or m["episode"] < 0:
         raise ValueError("Episode must be a nonnegative integer")
     if m["episode"] in (0, 11, 23, 31, 39) and m["mode"] != "synthetic":
-        raise ValueError("Proxy holdout is excluded from issue-6 development runs")
+        evaluation = m.get("evaluation", {})
+        configuration_hash = evaluation.get("configuration_sha256", "")
+        frozen_review = (
+            m["mode"] == "predicted_object_integration"
+            and m.get("camera_provenance") == "predicted"
+            and m.get("hand_provenance") == "predicted"
+            and all(obj.get("provenance") == "predicted" for obj in m.get("objects", []))
+            and (m.get("depth") is None or m["depth"].get("provenance") == "predicted")
+            and evaluation.get("purpose") == "frozen_all_episode_review"
+            and evaluation.get("tuning_allowed") is False
+            and isinstance(configuration_hash, str)
+            and len(configuration_hash) == 64
+            and all(character in "0123456789abcdef" for character in configuration_hash)
+        )
+        if not frozen_review:
+            raise ValueError("Proxy holdout is excluded from issue-6 development runs; declare frozen evaluation")
     camera(m["color_camera"])
     if m["color_camera"].get("id") not in {"ego_cam_a", "ego_cam_c"}:
         raise ValueError("v1 consumes rectified color camera ego_cam_a or ego_cam_c")

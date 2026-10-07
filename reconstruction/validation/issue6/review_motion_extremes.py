@@ -1,6 +1,7 @@
 """Render consecutive frames around measured motion extremes for visual review."""
 import argparse
 import json
+import os
 from pathlib import Path
 
 import cv2
@@ -11,8 +12,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--episode', type=int, required=True)
 args = parser.parse_args()
 root = Path(f'/workspace/temporal-hands/e{args.episode:03d}')
-run = Path(f'/workspace/issue6-full-runs/calibrated-temporal/e{args.episode:03d}')
-out = Path(f'/workspace/pr32-evidence/review/e{args.episode:03d}')
+run = Path(os.environ.get('V2D_ISSUE6_RUN_ROOT','/workspace/issue6-full-runs/calibrated-temporal')) / f'e{args.episode:03d}'
+out = Path(os.environ.get('V2D_ISSUE6_REVIEW_ROOT','/workspace/pr32-evidence/review')) / f'e{args.episode:03d}'
 hands = json.loads((run / 'align/hands.json').read_text())
 with np.load(root / 'cameras/vipe_c2w.npz', allow_pickle=False) as data:
     cameras = data['data']

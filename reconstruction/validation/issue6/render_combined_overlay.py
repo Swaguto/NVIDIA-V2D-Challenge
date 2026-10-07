@@ -21,13 +21,13 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--episode', type=int, required=True)
 args = parser.parse_args()
 label = f'e{args.episode:03d}'
-root = Path('/workspace/issue6-full-runs/calibrated-temporal') / label
-out = Path('/workspace/pr32-evidence/review') / label
+root = Path(os.environ.get('V2D_ISSUE6_RUN_ROOT','/workspace/issue6-full-runs/calibrated-temporal')) / label
+out = Path(os.environ.get('V2D_ISSUE6_REVIEW_ROOT','/workspace/pr32-evidence/review')) / label
 out.mkdir(parents=True, exist_ok=True)
 config = json.loads((root / 'align/job.json').read_text())
 camera = config['camera']
 frames = config['frames']
-manifest = load(Path('/workspace/issue6-full-inputs') / label / 'manifest.temporal.json')
+manifest = load(Path(os.environ.get('V2D_ISSUE6_INPUT_ROOT','/workspace/issue6-full-inputs')) / label / 'manifest.temporal.json')
 source_frames = {f['id']: f for f in manifest['frames']}
 meshes = {o['id']: load_mesh(o['mesh']) for o in manifest['objects']}
 for frame in frames:

@@ -1,0 +1,63 @@
+{
+  "episode": 0,
+  "status": "complete_private_checkpoint_verified",
+  "archive_bytes": 1782444043,
+  "archive_sha256": "ac74c1e3939b1c41c898fc00e7ff71020d103b229ab626e9883143d524d52483",
+  "compressed_stream_fully_read": true,
+  "member_hashes_verified": 11975,
+  "uncompressed_bytes": 4901820270,
+  "stages_verified": {
+    "validate": 1,
+    "hands": 1280,
+    "depth": 374,
+    "align": 2192,
+    "contacts": 3,
+    "report": 378
+  },
+  "implementation_files_verified": 12,
+  "archived_locked_inputs_verified": 3648,
+  "external_dependencies_verified": [
+    {
+      "remote_path": "/workspace/hamer-weights/_DATA/hamer_ckpts/checkpoints/hamer.ckpt",
+      "bytes": 2689536166,
+      "sha256": "e5cc06f294d88a92dee24e603480aab04de532b49f0e08200804ee7d90e16f53"
+    },
+    {
+      "remote_path": "/workspace/mano/models/LICENSE.txt",
+      "bytes": 4330,
+      "sha256": "75fc4da03259504ce9a4ed2418ab98dd59647add7ff95e7691c4d55fb0e3cf63"
+    },
+    {
+      "remote_path": "/workspace/mano/models/MANO_LEFT.pkl",
+      "bytes": 3821391,
+      "sha256": "c4022f7083f2ca7c78b2b3d595abbab52debd32b09d372b16923a801f0ea6a30"
+    },
+    {
+      "remote_path": "/workspace/mano/models/MANO_RIGHT.pkl",
+      "bytes": 3821356,
+      "sha256": "45d60aa3b27ef9107a7afd4e00808f307fd91111e1cfa35afd5c4a62de264767"
+    },
+    {
+      "remote_path": "/workspace/pr32-models/detector.pt",
+      "bytes": 53582271,
+      "sha256": "5ef3df44e42d2db52d4ffe91f83a22ce9925e2acc9abebf453f2c5d22e380033"
+    },
+    {
+      "remote_path": "/workspace/pr32-models/sam2.1_hiera_large.pt",
+      "bytes": 898083611,
+      "sha256": "2647878d5dfa5098f2f8649825738a9345572bae2d4350a2468587ece47dd318"
+    },
+    {
+      "remote_path": "/workspace/track3/public/mesh/white_pot/white_pot.glb",
+      "bytes": 8948208,
+      "sha256": "2627b01350864cc7f52540cb1ccfb9d67544e245d7061d8e313ecfd9d3eb5151"
+    },
+    {
+      "remote_path": "/workspace/track3/public/mesh/white_pot_lid/white_pot_lid.glb",
+      "bytes": 8262028,
+      "sha256": "672a2965dd785fc958db39a2ce94a6df215f58dfdfafedf7dd193ffc6d83b363"
+    }
+  ],
+  "configuration_sha256": "e5d3cc9c5ce4cb4383cbb147297a3e0e7b3a157564526bd8426df98bc30386fd",
+  "visual_receipt_sha256": "0def682afc160970475029aaddb66a8e9aaf14672bcfba57dcbb0541d48ed0f4"
+}

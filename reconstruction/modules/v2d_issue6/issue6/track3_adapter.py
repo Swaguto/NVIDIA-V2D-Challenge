@@ -57,7 +57,16 @@ def mesh_for(data: Path, name: str) -> Path:
     raise FileNotFoundError(f"Public CAD mesh missing for {name}")
 
 
-def export(data: Path, results: Path, episode: int, output: Path, start: int, frames: int, hand_source: dict) -> Path:
+def export(
+    data: Path,
+    results: Path,
+    episode: int,
+    output: Path,
+    start: int,
+    frames: int,
+    hand_source: dict,
+    evaluation: dict | None = None,
+) -> Path:
     # Input paths are relative to the caller, whereas paths inside the manifest
     # are resolved relative to its output directory. Preserve their locations.
     data, results, output = data.resolve(), results.resolve(), output.resolve()
@@ -155,6 +164,8 @@ def export(data: Path, results: Path, episode: int, output: Path, start: int, fr
         "frames": manifest_frames,
     }
     manifest = output / "manifest.json"
+    if evaluation is not None:
+        m["evaluation"] = evaluation
     write_json(manifest, m)
     load(manifest)
     return manifest

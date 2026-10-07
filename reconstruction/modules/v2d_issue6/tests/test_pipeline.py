@@ -352,6 +352,31 @@ def test_gt_camera_provenance_retained_with_predicted_objects(bundle):
     assert bundle["camera_provenance"] == "ground_truth_assisted"
 
 
+@pytest.mark.parametrize("episode", [0, 11, 23, 31, 39])
+def test_holdouts_require_explicit_frozen_predicted_evaluation(bundle, episode):
+    bundle["mode"] = "predicted_object_integration"
+    bundle["episode"] = episode
+    bundle["camera_provenance"] = bundle["hand_provenance"] = "predicted"
+    bundle["depth"]["provenance"] = "predicted"
+    for obj in bundle["objects"]:
+        obj["provenance"] = "predicted"
+    with pytest.raises(ValueError, match="holdout"):
+        validate(bundle)
+    bundle["evaluation"] = {
+        "purpose": "frozen_all_episode_review",
+        "tuning_allowed": False,
+        "configuration_sha256": "a" * 64,
+    }
+    validate(bundle)
+    bundle["evaluation"]["tuning_allowed"] = True
+    with pytest.raises(ValueError, match="holdout"):
+        validate(bundle)
+    bundle["evaluation"]["tuning_allowed"] = False
+    bundle["camera_provenance"] = "ground_truth_assisted"
+    with pytest.raises(ValueError, match="holdout"):
+        validate(bundle)
+
+
 def test_transform3d_wxyz_and_object_world_composition(tmp_path):
     p = tmp_path / "000010.json"
     write_json(p, dict(rotation=[1, 0, 0, 0], translation=[1, 2, 3]))

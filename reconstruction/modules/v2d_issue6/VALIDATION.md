@@ -1,5 +1,73 @@
 # Validation and remaining gates
 
+## October 7, 2026: all-20 review in progress
+
+The user now requires all 20 public episodes. The earlier three-episode result
+below is historical partial evidence under that requirement. **Final episodes
+0,2,11,12,22 are accepted (5/20) as of October7 03:34UTC; issue #6 and PR #32
+remain unfinished.**
+
+All 106 public input files match pinned dataset revision
+`5f68335f3acc802033d1e80728c1633197521de8`. All three camera streams are fully
+decoded: 5,246 source frames and 15,738 camera frames. Actual model weights and
+the user's licensed MANO assets are reachable locally and on the replacement
+A40. Asset recovery does not establish reconstruction acceptance.
+
+Automatic wearer selection uses measured stereo depth and image continuity,
+without episode-specific exclusion boxes. All 20 detector passes completed.
+Twelve uniformly spaced samples plus up to four multi-candidate samples per
+episode were reviewed: selected boxes match the wearer, with no sampled
+bystander selection. Some visible fast-motion detections are conservatively
+rejected and remain unknown. This image prior is not a learned universal wearer
+identity classifier, and sampled detector review is not mesh/contact acceptance.
+
+Matched episode-12 CAD controls use the same masks and independent camera
+estimates. Continuous tracking yields diagnostic RPE 2.384 cm, MPPE 2.072 cm,
+ADD AUC 0.8455, and full observed coverage for both objects. Re-registering every
+30 frames worsens RPE to 3.334 cm, MPPE to 4.984 cm and ADD AUC to 0.4018.
+The reviewed samples retain cup/rack alignment. The earlier large drift is not
+reproduced with the recovered inputs; no improvement from re-registration is
+claimed. Continuous tracking is retained with identical settings for all 20.
+Reference poses are used only by the separate diagnostic scorer.
+
+Accepted results use continuous CAD and automatic wearer selection:
+
+| Episode | Source frames | Persisted geometry checks | Maximum vertex error (m) | Valid / unknown contact rows | Raw / bridged contacts |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 0 | 373 | 564 | 1.5911e-7 | 3660 / 3800 | 898 / 144 |
+| 2 | 343 | 676 | 1.8156e-7 | 5560 / 1300 | 1446 / 88 |
+| 11 | 137 | 274 | 1.9195e-7 | 2620 / 120 | 987 / 56 |
+| 12 | 181 | 362 | 1.7468e-7 | 2260 / 1360 | 435 / 145 |
+| 22 | 189 | 378 | 1.7858e-7 | 1520 / 2260 | 224 / 17 |
+
+Each has six independently checked stage receipts, every persisted geometry
+comparison, every contact row audited, and three fully decoded final videos.
+Uniform samples, consecutive motion extremes and full video playback were
+reviewed;2/11/12/22 also include the largest decoded image-change samples.
+Episode0's fitted282-frame axis is restored to the original373-frame axis with
+unsupported observations unknown. Episode12's counts above belong to the
+final continuous-tracking run, not its periodic-registration quality control.
+These remain sampled visual assessments without independent per-frame hand
+or contact ground-truth annotations.
+
+Three disjoint native preparation queues now share one A40 while two independent
+reconstruction/media jobs, audits and review overlap. Fitting settings and
+acceptance gates remain fixed. Four accepted episode checkpoints (0/2/12/22)
+are independently verified locally, including all locked CAD inputs and eight
+separately recovered model/footage dependencies. Episode11 archive is active.
+Authenticated SFTP transferred the roughly0.9GB 12/22 archives in70seconds
+each, followed by full archive/member/input/output verification.
+The remaining15 native/final reviews, all20 aggregate audits and complete final
+backups are required before closure.
+The current CPU suite passes 86 tests with zero skips. New replay orchestration
+is in [run_all_episode_review.sh](../../validation/issue6/run_all_episode_review.sh).
+The portable parallel entry point is
+[run_parallel_episode_review.py](../../validation/issue6/run_parallel_episode_review.py);
+the running one-time transition preserves active jobs separately. Its consolidated
+fresh replay has syntax checks; the live partitioned preparation and review
+have actual runtime evidence. Neither claim establishes all20 completion.
+Do not infer all-20 acceptance from a completed detector or CAD process.
+
 ## October 6, 2026: three-episode acceptance passed
 
 Validated source: `af6ed6fdd46b55e5ca0254246a1ad18275bfebd4`, native upstream

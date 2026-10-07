@@ -21,7 +21,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--episode', type=int, required=True)
 args = parser.parse_args()
 root = Path(f'/workspace/temporal-hands/e{args.episode:03d}')
-manifest_path = Path(f'/workspace/issue6-full-inputs/e{args.episode:03d}/manifest.json')
+manifest_path = Path(os.environ.get('V2D_ISSUE6_INPUT_ROOT', '/workspace/issue6-full-inputs')) / f'e{args.episode:03d}' / 'manifest.json'
 manifest = load(manifest_path)
 result = backend.final_dynhamr_result(root / 'fit')
 axis = backend.dynhamr_frame_axis(result, manifest['frames'])
@@ -54,7 +54,7 @@ manifest['hand_source'] = {'backend': 'import', 'runtime': 'native',
 destination = manifest_path.parent / 'manifest.temporal.json'
 write_json(destination, manifest)
 loaded = load(destination)
-out = Path(f'/workspace/issue6-full-runs/calibrated-temporal/e{args.episode:03d}')
+out = Path(os.environ.get('V2D_ISSUE6_RUN_ROOT', '/workspace/issue6-full-runs/calibrated-temporal')) / f'e{args.episode:03d}'
 started = time.time()
 for stage in ('validate', 'hands', 'depth', 'align', 'contacts', 'report'):
     execute(loaded, out, stage)

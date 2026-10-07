@@ -8,12 +8,16 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--root', type=Path, default=Path(__file__).parent / 'completion-review')
+parser.add_argument('--episodes', default='2,13,22', help='comma-separated required episode IDs')
+parser.add_argument('--direct-run-root', action='store_true', help='root contains eNNN pipeline runs directly')
+parser.add_argument('--require-complete', action='store_true', help='return failure if any required episode is pending')
+parser.add_argument('--output', type=Path, help='separate receipt path for concurrent episode subsets')
 args = parser.parse_args()
 root = args.root
 audits = []
-for episode in (2, 13, 22):
+for episode in map(int,args.episodes.split(',')):
     bundle = root / f'e{episode:03d}'
-    run = bundle / f'issue6-full-runs/calibrated-temporal/e{episode:03d}'
+    run = bundle if args.direct_run_root else bundle / f'issue6-full-runs/calibrated-temporal/e{episode:03d}'
     source = run / 'contacts/contacts.json'
     if not source.exists():
         audits.append({'episode': episode, 'status': 'pending'})
@@ -67,6 +71,9 @@ for episode in (2, 13, 22):
                    'sha256':hashlib.sha256(source.read_bytes()).hexdigest(),
                    'checks':['full original frame axis','predicted provenance','strict 2 cm threshold',
                              'unknown observations remain unknown','bridges have two raw-contact endpoints, at most 15 consecutive valid same-track gap frames','report counts match raw artifact']})
-output = root / 'contact-artifact-audit.json'
+output = args.output or root / 'contact-artifact-audit.json'
+output.parent.mkdir(parents=True, exist_ok=True)
 output.write_text(json.dumps(audits,indent=2)+'\n')
 print(json.dumps(audits,indent=2))
+if args.require_complete and any(audit['status'] != 'passed' for audit in audits):
+    raise SystemExit('Required contact artifacts are incomplete')

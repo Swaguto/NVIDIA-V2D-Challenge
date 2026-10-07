@@ -147,7 +147,9 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
     right.release()
     report = {"episode": episode, "object": name, "frames": frame,
               "observed": len(observed), "missing_mask_or_depth": missing,
-              "rejected": rejected, "gt_use": "none"}
+              "rejected": rejected, "gt_use": "none",
+              "reinit_every": reinit_every, "register_iterations": register_iterations,
+              "track_iterations": track_iterations}
     (out / f"e{episode:03d}" / f"{name}_fp_report.json").write_text(json.dumps(report, indent=2))
     return report
 

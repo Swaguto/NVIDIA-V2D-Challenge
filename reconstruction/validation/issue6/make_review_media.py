@@ -1,6 +1,7 @@
 """Source-camera video and timestamped sampled panels for visual acceptance."""
 import argparse
 import json
+import os
 from pathlib import Path
 import subprocess
 
@@ -11,9 +12,10 @@ from PIL import Image,ImageDraw
 parser=argparse.ArgumentParser()
 parser.add_argument('--episode',type=int,required=True)
 args=parser.parse_args()
-run=Path(f'/workspace/issue6-full-runs/calibrated-temporal/e{args.episode:03d}')
-manifest=json.loads(Path(f'/workspace/issue6-full-inputs/e{args.episode:03d}/manifest.json').read_text())
-out=Path(f'/workspace/pr32-evidence/review/e{args.episode:03d}')
+label=f'e{args.episode:03d}'
+run=Path(os.environ.get('V2D_ISSUE6_RUN_ROOT','/workspace/issue6-full-runs/calibrated-temporal'))/label
+manifest=json.loads((Path(os.environ.get('V2D_ISSUE6_INPUT_ROOT','/workspace/issue6-full-inputs'))/label/'manifest.json').read_text())
+out=Path(os.environ.get('V2D_ISSUE6_REVIEW_ROOT','/workspace/pr32-evidence/review'))/label
 out.mkdir(parents=True,exist_ok=True)
 mesh=run/'align/hand_mesh_overlay.mp4'
 source=out/'hand-camera-overlay.mp4'
