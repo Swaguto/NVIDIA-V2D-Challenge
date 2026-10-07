@@ -31,6 +31,20 @@ record this separate pass; all20 acceptance remains unfinished. Exact executed
 implementation hashes are recorded; the upstream converter differs from this
 working copy only in line endings, with identical canonical source content.
 
+As of October7 06:45UTC, revised episodes0,11,12,13,22,41 have passed actual
+three-video/five-sheet review (6/20). Twelve episodes have all six stages;
+complete local backup verification has passed for0,11,12,22,41, with13 queued.
+The twelve historical configurations remain separate from current acceptance.
+
+Episode27 exposed a float32 native-reference precision failure: maximum vertex
+discrepancy14.90 micrometres exceeded the unchanged10-micrometre audit limit.
+The actual float32 worker agrees with a float64 upstream MANO reference within
+0.094 micrometres over all492 fitted-hand frame checks. The audit now evaluates
+only its independent native reference in float64; reconstruction remains
+float32. Failed evidence is retained, episode27 postchecks are resumed, and one
+uniform all20 precise-reference audit is queued. This does not grant visual
+acceptance or change fits, wearer selection, CAD, contacts or the tolerance.
+
 The revised native pass remains in progress. The network volume reached its
 quota, so new output and converted-record directories use the same pod's free
 temporary disk. Every new accepted episode requires a fully verified local

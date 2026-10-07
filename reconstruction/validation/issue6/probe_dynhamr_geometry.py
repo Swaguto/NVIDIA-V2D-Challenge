@@ -26,15 +26,18 @@ path = args.checkpoint or final_dynhamr_result(root / 'fit')
 with np.load(path, allow_pickle=False) as data:
     ids = list(range(data['trans'].shape[1])) if args.all_frames else [0, data['trans'].shape[1]//2, data['trans'].shape[1]-1]
     b, t = data['trans'].shape[0], len(ids)
+    # Use a higher-precision independent reference. Float32 native skinning can
+    # lose precision for particular poses; the actual worker stays float32.
     model = MANO('/workspace/hamer-weights/_DATA/data/mano', batch_size=b*t, pose2rot=True,
-                 num_hand_joints=15, create_body_pose=False)
-    tensors = {key: torch.tensor(data[key][:,ids], dtype=torch.float32)
+                 num_hand_joints=15, create_body_pose=False, dtype=torch.float64)
+    tensors = {key: torch.tensor(data[key][:,ids], dtype=torch.float64)
                for key in ('trans','root_orient','pose_body','is_right')}
-    tensors['betas'] = torch.tensor(data['betas'], dtype=torch.float32)
+    tensors['betas'] = torch.tensor(data['betas'], dtype=torch.float64)
     with torch.no_grad():
         vertices = run_mano(model,tensors['trans'],tensors['root_orient'],
                              tensors['pose_body'].reshape(b,t,45),tensors['is_right'],tensors['betas'])['vertices'].numpy()
-    spec = importlib.util.spec_from_file_location('align_probe', '/workspace/pr32/reconstruction/modules/v2d_hamer/lib/align_hands.py')
+    worker_source = Path(__file__).resolve().parents[2] / 'modules/v2d_hamer/lib/align_hands.py'
+    spec = importlib.util.spec_from_file_location('align_probe', worker_source)
     align = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(align)
     worker = align._make_mano('/workspace/mano')
@@ -51,7 +54,7 @@ with np.load(path, allow_pickle=False) as data:
                 record = json.loads((args.converted_records / str(3 if right else 2) / f'{frame:06d}.json').read_text())
                 pose = np.array(record['mano']['global_orient'] + record['mano']['hand_pose'], dtype=np.float32)
             with torch.no_grad():
-                hand = worker(torch.tensor(pose)[None],tensors['betas'][h:h+1])
+                hand = worker(torch.tensor(pose)[None],tensors['betas'][h:h+1].float())
                 local = hand.verts[0].numpy()
             translation = _camera_translation(data['trans'][h,frame],cam_r,cam_t,mirror,hand.joints[0,0].numpy())
             if record:
@@ -62,6 +65,8 @@ with np.load(path, allow_pickle=False) as data:
             rows.append({'hand':'right' if right else 'left','cropped_frame':frame,
                          'max_vertex_error_m':float(errors.max()),'mean_vertex_error_m':float(errors.mean())})
 receipt = {'episode': args.episode, 'result_used':str(path),
+           'native_reference_dtype': 'float64', 'reconstructed_worker_dtype': 'float32',
+           'tolerance_m': 1e-5,
            'purpose':'Final checkpoint camera conversion agrees with actual upstream MANO vertices; this checks geometry conventions, not ground-truth accuracy',
            'converted_records': str(args.converted_records) if args.converted_records else None,
            'checks':rows}

@@ -22,8 +22,18 @@ Episode41's revised native pilot has now passed all six stages,598 persisted
 geometry checks, the2990-row contact audit and actual review of all three full
 299-frame videos and five sample sheets. The known191–193 depth-error segment
 now has15 unknown,unbridged right-fingertip rows. Four independent review slots
-are active;1/20 revised episodes is accepted. Its complete private backup and
-all20 aggregate validation remain required.
+are active. As of October7 06:45UTC,0,11,12,13,22,41 are accepted (6/20), with
+twelve complete six-stage runs. Complete local backups for0,11,12,22,41 are verified;
+13 and all20 aggregate validation remain pending.
+
+The geometry auditor now uses float64 for its independent native MANO reference
+while evaluating the actual production float32 worker. Episode27's old float32
+reference produced14.90 micrometres discrepancy; the corrected reference gives
+0.094 micrometres over492 checks, under the unchanged10-micrometre limit.
+The failed comparison is retained. Its remaining postchecks and actual video
+review remain required, and a uniform all20 precise-reference audit is queued.
+This audit correction leaves all twelve locked implementation files and frozen
+fits, automatic wearer selection, continuous CAD and contact settings unchanged.
 
 The other revised native runs,all20 visual passes and complete backup verification
 remain pending. New outputs use free container scratch after the network volume
