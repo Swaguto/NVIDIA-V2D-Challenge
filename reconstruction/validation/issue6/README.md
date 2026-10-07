@@ -1,5 +1,70 @@
 # Issue 6 real-run validation helpers
 
+## October 7, 2026: quality repair active; issue 6 reopened
+
+Issue 6 is open and PR32 is draft again. The user requires all 20 episodes to
+meet a decent degree of reconstruction quality and contact evidence. Sustained
+missing meshes during visible grasps prevent that claim. The previous v3 visual
+passes establish completed review and artifact integrity, not continuous grasp
+quality. Follow [QUALITY_ACCEPTANCE.md](QUALITY_ACCEPTANCE.md): at least 90%
+usable reconstruction and 80% raw contact evidence per visible holding interval,
+no unsupported gap over 0.50 seconds, and explicit geometry/identity/onset/release
+review. Missing annotations mean pending; closure requires 20/20 quality passes.
+The records below are preserved baseline history, not current quality acceptance.
+
+`point_hand_masks.py` repairs hand segmentation using automatic wrist/palm
+projections from the frozen temporal fits. It preserves direct-observation and
+identity gates, keeps unsupported inputs empty, and leaves metric acceptance to
+the existing stereo alignment and contact stages. It accepts explicit local
+input/model paths and writes per-frame mask and source-hash receipts. No manual
+regions, reference poses or episode-specific selection rules are used.
+
+The episode 22 pilot recovered the wearer hand where the old masks were empty
+or selected the cup. With the old track scale frozen, two failed frames became
+stereo-supported with median residuals of 0.70 cm and 0.51 cm; their ten cup
+fingertip queries were below the unchanged 2 cm threshold. The subsequent full
+189-frame local GPU mask run completed in 42.6 seconds. Its six metric stages
+completed in 390 seconds and supported all 284 directly observed hand fits,
+compared with 151 previously. Raw contact rows rose from 224 to 648; 940 unknown
+rows remain unknown. These are measured pilot/stage results, not contact ground
+truth or an episode quality pass.
+
+Independent sequential inspection of all 189 source frames and eight event/border
+closeups now labels episode 22's complete cup and pitcher grasps. Its
+[current grasp diagnostic](quality-repair/e022-grasp-diagnostic.json) records
+139/139 supported left-cup frames and 137/139 raw-contact frames. The right-pitcher
+grasp reaches only 39/96 supported visible frames (41%), 25/96 raw-contact frames
+(26%), and a 1.14-second unsupported visible gap. All 57 unsupported visible
+right-hand frames lack a direct wearer observation; 56 have no same-side detector
+candidate, and one candidate is rejected during re-entry. Only the 24 source-confirmed
+invisible frames at 58–81 are excluded; ambiguous border frames remain included.
+The invisible period has no supported geometry, raw contact or bridging. Contact
+is also absent after visible release. Current geometry/identity/event review and
+normal-speed playback remain required; episode 22 still fails quality metrics.
+
+Episode 12 also completed six repaired stages, all three integrity/geometry/contact
+audits, three review videos and a verified private checkpoint. Independent sequential
+inspection of all 181 source frames and six event closeups identified three cup grasps.
+The [current grasp diagnostic](quality-repair/e012-grasp-diagnostic.json) records
+only 16/43 supported/raw-contact frames during the first right-hand grasp (37%).
+This grasp fails under every plausible onset/release boundary choice. Twenty-two
+frames lack a direct right-hand detector observation; five observed fits fail
+alignment support. The conservative left-hand interval reaches 36/41 (88%); the
+later right-hand grasp reaches 71/76 (93%) numerically. Boundary sensitivity is
+recorded separately. These results do not accept any episode: current geometry,
+identity and complete normal-speed review remain required. Source-separated
+periods have no raw, windowed or bridged cup contact. No visible hold is excluded.
+
+All 20 private input caches are verified locally. Episodes 12 and 22 have complete
+new private backups. The remaining 18 reconstructions will run on cloud compute;
+the prepared replacement worker is stopped pending explicit private-input transfer
+approval. The user increased the cumulative compute/storage cap to US$30. This
+supersedes the historical US$15 text below. Current quality acceptance remains 0/20.
+
+`render_combined_overlay.py` accepts explicit run, manifest, module and licensed
+MANO paths for local review, and binds its video to the executed configuration
+and renderer/model hashes.
+
 ## October 7, 2026: all 20 native episodes validated and preserved
 
 All 20 required episodes completed all six stages and passed final visual review.
