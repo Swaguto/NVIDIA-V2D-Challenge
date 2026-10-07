@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import subprocess
+import time
 from pathlib import Path
 
 import numpy as np
@@ -45,12 +47,45 @@ def digest(value):
     return hashlib.sha256(json.dumps(value, sort_keys=True, allow_nan=False).encode()).hexdigest()
 
 
+_FILE_HASH_CACHE = {}
+_USE_FILE_HASH_CACHE = os.name == "posix"
+
+
+def _file_signature(stat):
+    return (stat.st_dev, stat.st_ino, stat.st_size, stat.st_mtime_ns, stat.st_ctime_ns)
+
+
+def _cacheable_file(stat):
+    # Even nanosecond-shaped ctime values may share a kernel clock tick.
+    # Recently changed files always require an actual byte scan.
+    return _USE_FILE_HASH_CACHE and bool(stat.st_ino) and stat.st_ctime_ns + 2_000_000_000 < time.time_ns()
+
+
 def file_hash(path):
+    """Cache on POSIX change times; Windows always rereads actual bytes."""
+    path = Path(path).resolve()
+    before = path.stat()
+    signature = _file_signature(before)
+    cacheable = _cacheable_file(before)
+    cached = _FILE_HASH_CACHE.get(path)
+    if cacheable and cached is not None and cached[0] == signature:
+        return cached[1]
     h = hashlib.sha256()
-    with Path(path).open("rb") as f:
+    with path.open("rb") as f:
+        opened = _file_signature(os.fstat(f.fileno()))
+        if opened != signature if _USE_FILE_HASH_CACHE else opened[:3] != signature[:3]:
+            raise ValueError(f"File changed before hashing: {path}")
         for chunk in iter(lambda: f.read(1024 * 1024), b""):
             h.update(chunk)
-    return h.hexdigest()
+        after_read = _file_signature(os.fstat(f.fileno()))
+        if after_read != signature if _USE_FILE_HASH_CACHE else after_read[:3] != signature[:3]:
+            raise ValueError(f"File changed during hashing: {path}")
+    if _file_signature(path.stat()) != signature:
+        raise ValueError(f"File changed during hashing: {path}")
+    value = h.hexdigest()
+    if cacheable:
+        _FILE_HASH_CACHE[path] = (signature, value)
+    return value
 
 
 def real_file(path):

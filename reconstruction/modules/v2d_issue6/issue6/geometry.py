@@ -163,6 +163,30 @@ def alignment_offset(rendered, measured, hand_mask, occluder, centroid, minimum=
     }
 
 
+def final_alignment_support(rendered, measured, hand_mask, occluder, minimum, maximum_residual):
+    """Accept final stereo support only below the contact-distance error budget."""
+    if not (rendered.shape == measured.shape == hand_mask.shape == occluder.shape):
+        raise ValueError("Alignment images/masks must share a pixel grid")
+    if not np.isfinite(maximum_residual) or maximum_residual <= 0:
+        raise ValueError("Invalid alignment residual limit")
+    keep = (
+        np.asarray(hand_mask, bool)
+        & ~np.asarray(occluder, bool)
+        & np.isfinite(rendered)
+        & (rendered > 0)
+        & np.isfinite(measured)
+        & (measured > 0)
+    )
+    result = {"metric_valid": False, "n_pixels": int(keep.sum()), "maximum_residual_m": float(maximum_residual)}
+    if result["n_pixels"] < minimum:
+        return {**result, "reason": "insufficient_final_depth"}
+    residual = float(np.median(np.abs(measured[keep] - rendered[keep])))
+    result["median_abs_residual_m"] = residual
+    if residual >= maximum_residual:
+        return {**result, "reason": "inconsistent_final_depth"}
+    return {**result, "metric_valid": True}
+
+
 def surface_contacts(points_camera, mesh, camera_from_object):
     points = transform(points_camera, np.linalg.inv(rigid(camera_from_object)))
     # Bounded batches; naive triangle distance avoids an rtree system dependency.

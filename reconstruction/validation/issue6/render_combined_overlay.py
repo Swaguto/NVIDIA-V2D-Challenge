@@ -66,6 +66,8 @@ try:
         upstream._add_lights(scene, np.eye(4))
         hand_rows = records.get(frame['id'], [])
         for record in hand_rows:
+            if not record['diagnostics']['metric_valid']:
+                continue
             with torch.no_grad():
                 vertices, faces = upstream._build_hand_mesh(record, mano)
             mesh = trimesh.Trimesh(vertices * cv_to_gl, faces, process=False)
@@ -88,7 +90,7 @@ try:
         draw.text((12, 8), f"{label} | frame {frame['id']} | {frame['timestamp_s']:.3f}s | temporal hands + observed CAD", font=upstream._font(17), fill='white')
         draw.text((12, 36), 'Hands: left blue / right red  |  CAD: ' + ' / '.join(str(o) for o in object_ids), font=upstream._font(15), fill='white')
         if any(not r['diagnostics']['metric_valid'] for r in hand_rows):
-            draw.text((12, camera['height']-28), 'Some hand depth unsupported: associated contacts remain unknown', font=upstream._font(15), fill=(255,220,80), stroke_width=2, stroke_fill=(10,10,10))
+            draw.text((12, camera['height']-28), 'Unsupported hand meshes omitted: associated contacts remain unknown', font=upstream._font(15), fill=(255,220,80), stroke_width=2, stroke_fill=(10,10,10))
         process.stdin.write(np.asarray(image).tobytes())
         counts.append({'frame_id':frame['id'], 'timestamp_s':frame['timestamp_s'], 'hands':len(hand_rows), 'observed_objects':[o['id'] for o in frame['projected_objects']]})
         if index in selected:

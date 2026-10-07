@@ -1,6 +1,44 @@
 # Issue 6 real-run validation helpers
 
-## Current all-20 pass: October 7, 2026
+## Revised depth-reliability pass: October 7, 2026
+
+Episode41 revealed a roughly20cm depth jump at frame192 which the previous
+worker incorrectly marked metric-valid. Final alignment now requires median
+absolute stereo residual strictly below the existing contact threshold (2cm).
+Rejected geometry remains in the raw aligned records; its contacts are unknown
+and its mesh is omitted from the final source-camera and combined videos.
+This is a consistency gate, not proof of contact precision.
+
+The revised all20 pass reuses every completed50/300-iteration fixed-shape fit.
+An episode41 pilot must pass actual stage/contact/geometry/video checks before
+four independent review slots proceed. Source-camera rendering reuses already
+materialized MANO meshes and avoids three unused camera-relative panels and
+their temporary PNG files. It preserves every source frame at full resolution.
+POSIX integrity checks reuse hashes only while device/inode/size/mtime/ctime
+match and the file's change time is more than two seconds old. Recent files and
+Windows files require actual byte scans. Mutation and same-size/mtime-restored
+regressions pass on the actual worker;100 CPU tests pass on Windows and Linux.
+On the actual2.69GB checkpoint, the current guarded-hash benchmark measured
+3.2seconds for the first scan and1–2milliseconds per repeated unchanged check;
+this is not an end-to-end pipeline speedup measurement.
+
+The revised episode41 pilot passed all six stages,598 geometry checks, an
+independent2990-row contact audit and actual review of three complete299-frame
+videos and five risk/uniform sample sheets. Frames191–193 are unsupported and
+all15 right fingertip rows remain unknown and unbridged. Four review slots now
+run on the same A40. [Revised receipts](all20-progress/quality-v3/progress.json)
+record this separate pass; all20 acceptance remains unfinished. Exact executed
+implementation hashes are recorded; the upstream converter differs from this
+working copy only in line endings, with identical canonical source content.
+
+The revised native pass remains in progress. The network volume reached its
+quota, so new output and converted-record directories use the same pod's free
+temporary disk. Every new accepted episode requires a fully verified local
+checkpoint before shutdown. All twelve earlier complete backups are retained.
+The table and receipts below describe the earlier execution configuration;
+they do not establish acceptance under the new depth gate.
+
+## Earlier all-20 pass: October 7, 2026
 
 This pass is **in progress**, with final episodes **0,2,11,12,13,18,21,22,23,24,26,39 accepted (12/20)**
 as of October7 04:50UTC. Source starts

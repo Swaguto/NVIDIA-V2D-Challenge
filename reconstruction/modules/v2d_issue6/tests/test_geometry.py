@@ -7,6 +7,7 @@ from issue6.geometry import (
     bridge_contacts,
     camera,
     decode_depth,
+    final_alignment_support,
     hand_geometry,
     hand_translation,
     reproject_depth,
@@ -27,6 +28,31 @@ def cam(w=4, h=3, focal=2):
         height=h,
         convention="rectified_pinhole",
     )
+
+
+@pytest.mark.parametrize("residual,expected", [(0.019, True), (0.02, False), (0.19654063880443573, False)])
+def test_final_stereo_error_must_be_below_contact_threshold(residual, expected):
+    rendered = np.zeros((16, 16))
+    measured = np.full((16, 16), residual)
+    rendered += 0.4
+    measured += 0.4
+    # Avoid cancellation at the strict equality boundary by using an exact limit.
+    limit = float(np.median(np.abs(measured - rendered))) if residual == 0.02 else 0.02
+    support = final_alignment_support(
+        rendered, measured, np.ones_like(rendered, bool), np.zeros_like(rendered, bool), 256, limit
+    )
+    assert support["metric_valid"] is expected
+    if not expected:
+        assert support["reason"] == "inconsistent_final_depth"
+
+
+def test_final_stereo_support_excludes_occlusion_invalid_depth_and_missing_overlap():
+    rendered = np.full((2, 2), 0.4)
+    measured = np.array([[0.401, np.nan], [0.41, 0.9]])
+    occluded = np.array([[False, False], [False, True]])
+    support = final_alignment_support(rendered, measured, np.ones((2, 2), bool), occluded, 2, 0.02)
+    assert support["metric_valid"] and support["n_pixels"] == 2
+    assert not final_alignment_support(rendered, measured, np.ones((2, 2), bool), occluded, 3, 0.02)["metric_valid"]
 
 
 @pytest.mark.parametrize(

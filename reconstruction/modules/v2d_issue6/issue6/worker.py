@@ -4,12 +4,12 @@ from __future__ import annotations
 
 import argparse
 import importlib.util
+import subprocess
 from pathlib import Path
 
 import numpy as np
 
-from .backend import prepare_render_inputs
-from .geometry import alignment_offset, hand_geometry, hand_translation, transform
+from .geometry import alignment_offset, final_alignment_support, hand_geometry, hand_translation, transform
 from .manifest import read_json, write_json
 
 
@@ -18,6 +18,100 @@ def upstream(name, path):
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
+
+
+def render_source_camera(job, config, supported_meshes, exported, renderer, cam, render):
+    """Reuse aligned meshes for one source view; retain every original frame."""
+    import pyrender
+    import trimesh
+    from PIL import Image, ImageDraw
+
+    frames = config["frames"]
+    if len(frames) < 2:
+        return
+    dt = np.diff([f["timestamp_s"] for f in frames])
+    if not np.allclose(dt, np.median(dt), rtol=0.01, atol=1e-6):
+        return
+    fps = float(1 / np.median(dt))
+    c = config["camera"]
+    out = job / "align"
+    unsupported = {row["frame_id"] for row in exported if not row["metric_valid"]}
+    process = subprocess.Popen(
+        [
+            "ffmpeg",
+            "-nostdin",
+            "-y",
+            "-v",
+            "error",
+            "-f",
+            "rawvideo",
+            "-pix_fmt",
+            "rgb24",
+            "-s",
+            f"{c['width']}x{c['height']}",
+            "-r",
+            str(fps),
+            "-i",
+            "pipe:0",
+            "-an",
+            "-c:v",
+            "libx264",
+            "-threads",
+            "2",
+            "-crf",
+            "18",
+            "-pix_fmt",
+            "yuv420p",
+            str(out / "hand_mesh_overlay.mp4"),
+        ],
+        stdin=subprocess.PIPE,
+    )
+    try:
+        for frame in frames:
+            scene = pyrender.Scene(bg_color=[0, 0, 0, 0], ambient_light=[0.35] * 3)
+            scene.add(cam, pose=np.eye(4))
+            render._add_lights(scene, np.eye(4))
+            for vertices, faces, right in supported_meshes.get(frame["id"], []):
+                mesh = trimesh.Trimesh(vertices * [1, -1, -1], faces, process=False)
+                color = (235, 70, 70) if right else (60, 150, 235)
+                scene.add(pyrender.Mesh.from_trimesh(mesh, material=render._material(color), smooth=False))
+            rgb, depth = renderer.render(scene)
+            source = np.array(Image.open(out / "frames" / f"{frame['id']:06d}.png").convert("RGB"))
+            visible = depth > 0
+            source[visible] = (0.45 * source[visible] + 0.55 * rgb[visible]).astype(np.uint8)
+            image = Image.fromarray(source)
+            draw = ImageDraw.Draw(image)
+            draw.rectangle((0, 0, c["width"], 40), fill=(12, 17, 24))
+            draw.text(
+                (12, 8),
+                f"Frame {frame['id']} | supported temporal hands | left blue / right red",
+                font=render._font(17),
+                fill="white",
+            )
+            if frame["id"] in unsupported:
+                draw.text(
+                    (12, c["height"] - 28),
+                    "Unsupported hand depth: mesh omitted, contacts unknown",
+                    font=render._font(15),
+                    fill=(255, 220, 80),
+                    stroke_width=2,
+                    stroke_fill=(10, 10, 10),
+                )
+            process.stdin.write(np.asarray(image).tobytes())
+    finally:
+        process.stdin.close()
+    if process.wait() != 0:
+        raise RuntimeError("Source-camera hand video encoding failed")
+    write_json(
+        out / "hand_mesh_layout.json",
+        {
+            "layout": "source_camera_only",
+            "frames": len(frames),
+            "fps": fps,
+            "supported_hand_records": sum(len(value) for value in supported_meshes.values()),
+            "raw_aligned_records_preserved": True,
+        },
+    )
 
 
 def run(job, modules=Path("/modules"), mano_assets_root=Path("/mano")):
@@ -38,6 +132,7 @@ def run(job, modules=Path("/modules"), mano_assets_root=Path("/mano")):
     records = []
     samples = {}
     occlusions = {}
+    supported_meshes = {}
 
     def materialize(r):
         aa = np.array(r["mano"]["global_orient"] + r["mano"]["hand_pose"], np.float32)
@@ -123,13 +218,16 @@ def run(job, modules=Path("/modules"), mano_assets_root=Path("/mano")):
             if diag["metric_valid"]:
                 # Rerender to measure residual in the actual final silhouette.
                 final_depth = align._render_depth(renderer, cam, mesh, final_t)
-                valid = hm & ~occ & np.isfinite(measured) & (measured > 0) & (final_depth > 0)
-                diag["n_pixels"] = int(valid.sum())
-                diag["metric_valid"] = bool(valid.sum() >= config["minimum_pixels"])
-                if diag["metric_valid"]:
-                    diag["median_abs_residual_m"] = float(np.median(np.abs(measured[valid] - final_depth[valid])))
-                else:
-                    diag["reason"] = "insufficient_final_depth"
+                diag.update(
+                    final_alignment_support(
+                        final_depth,
+                        measured,
+                        hm,
+                        occ,
+                        config["minimum_pixels"],
+                        config["maximum_residual_m"],
+                    )
+                )
             aligned = {
                 **r,
                 "cam_t": final_t.tolist(),
@@ -137,6 +235,8 @@ def run(job, modules=Path("/modules"), mano_assets_root=Path("/mano")):
                 "intrinsics": c,
                 "diagnostics": {**diag, "cam_t_pre_dz": translation.tolist()},
             }
+            if diag["metric_valid"]:
+                supported_meshes.setdefault(r["frame_idx"], []).append((verts + final_t, faces, r["is_right"]))
             write_json(
                 out / "records" / str(r["track_id"]) / f"{r['frame_idx']:06d}.json",
                 aligned,
@@ -173,23 +273,9 @@ def run(job, modules=Path("/modules"), mano_assets_root=Path("/mano")):
             mano_global_orient=np.array([r["mano"]["global_orient"] for r in exported]),
             mano_hand_pose=np.array([r["mano"]["hand_pose"] for r in exported]),
         )
+        render_source_camera(job, config, supported_meshes, exported, renderer, cam, render)
     finally:
         renderer.delete()
-    # Native renderer is reused for mesh overlays. Its side panels are
-    # camera-relative views, not a verified world trajectory.
-    if len(config["frames"]) >= 2:
-        dt = np.diff([f["timestamp_s"] for f in config["frames"]])
-        if np.allclose(dt, np.median(dt), rtol=0.01, atol=1e-6):
-            image_dir, hand_dir = prepare_render_inputs(
-                out / "frames", out / "records", config["frames"], out / "render_inputs"
-            )
-            render.render_hands_aligned_video(
-                str(image_dir),
-                str(hand_dir),
-                str(mano_assets_root),
-                str(out / "hand_mesh_overlay.mp4"),
-                fps=float(1 / np.median(dt)),
-            )
 
 
 if __name__ == "__main__":

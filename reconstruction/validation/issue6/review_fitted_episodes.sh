@@ -24,7 +24,7 @@ PY
   if [ ! -f "$V2D_ISSUE6_RUN_ROOT/$item/report/receipt.json" ]; then
     /workspace/hand-runtime/bin/python -u "$helpers/convert_and_validate.py" --episode "$episode" > "/workspace/pr32-evidence/$item-final-pipeline.log" 2>&1
   fi
-  /opt/conda/bin/python "$helpers/audit_stage_receipts.py" --root "$V2D_ISSUE6_RUN_ROOT" --episodes "$episode" --modules-dir /workspace/pr32/reconstruction/modules --require-complete --output "$V2D_ISSUE6_REVIEW_ROOT/$item/pre-media-stage-integrity-audit.json"
+  /opt/conda/bin/python "$helpers/audit_stage_receipts.py" --root "$V2D_ISSUE6_RUN_ROOT" --episodes "$episode" --modules-dir /workspace/pr32/reconstruction/modules --require-complete --output "$V2D_ISSUE6_REVIEW_ROOT/$item/stage-integrity-audit.json"
   /workspace/hand-runtime/bin/python -u "$helpers/probe_dynhamr_geometry.py" --episode "$episode" --all-frames --converted-records "$root/converted"
   /workspace/hand-runtime/bin/python -u "$helpers/measure_temporal_consistency.py" --episode "$episode"
   /workspace/hand-runtime/bin/python -u "$helpers/measure_aligned_consistency.py" --episode "$episode"

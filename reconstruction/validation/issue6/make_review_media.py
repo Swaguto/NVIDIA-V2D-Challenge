@@ -19,12 +19,15 @@ out=Path(os.environ.get('V2D_ISSUE6_REVIEW_ROOT','/workspace/pr32-evidence/revie
 out.mkdir(parents=True,exist_ok=True)
 mesh=run/'align/hand_mesh_overlay.mp4'
 source=out/'hand-camera-overlay.mp4'
-subprocess.run(['ffmpeg','-nostdin','-y','-v','error','-i',str(mesh),'-vf','crop=iw/2:ih/2:0:0',
+layout_path=run/'align/hand_mesh_layout.json'
+source_only=layout_path.is_file() and json.loads(layout_path.read_text())['layout']=='source_camera_only'
+crop=[] if source_only else ['-vf','crop=iw/2:ih/2:0:0']
+subprocess.run(['ffmpeg','-nostdin','-y','-v','error','-i',str(mesh),*crop,
                 '-c:v','libx264','-crf','18','-pix_fmt','yuv420p',str(source)],check=True)
 selected=np.unique(np.linspace(0,len(manifest['frames'])-1,12).round().astype(int)).tolist()
 receipt={'episode':args.episode,'original_frame_ids':selected,
          'sampling':'Twelve evenly spaced original frames; this is sampled visual review, not independent labeling of every frame',
-         'source_camera_crop':'Top-left panel from the native mesh renderer; no trajectory claim from its three camera-relative side panels',
+         'source_camera_crop':'Complete original source-camera view; unsupported meshes omitted' if source_only else 'Top-left panel from the legacy native mesh renderer; no trajectory claim from its three camera-relative side panels',
          'videos':{}}
 for name,path in [('mesh',source),('contacts',run/'report/contact_overlay.mp4')]:
     cap=cv2.VideoCapture(str(path))

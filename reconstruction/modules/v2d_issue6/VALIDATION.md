@@ -1,6 +1,37 @@
 # Validation and remaining gates
 
-## October 7, 2026: all-20 review in progress
+## October 7, 2026: revised depth gate and faster review in progress
+
+Episode41 frame192 had final median depth residual0.19654m and an approximately
+20cm translation jump, despite metric_valid=true. The revised worker requires
+final median absolute stereo residual strictly below contact_threshold_m (0.02m).
+Unsupported estimates retain their raw aligned records, receive unknown contact
+rows and are omitted from the final mesh/combined videos. This gates measurement
+consistency; it does not establish ground-truth contact precision.
+
+All20 existing fixed-shape50/300 fits are reused in isolated fresh runs. One
+episode41 pilot precedes four ready-first reconstruction/review slots. The source
+view now renders already materialized meshes directly at the original camera
+resolution and skips three discarded side panels. Every original frame remains
+required in all three final videos. POSIX hashes are cached only for aged files
+with unchanged device/inode/size/mtime/ctime; recent files and Windows reread bytes.
+100 CPU regressions pass on Windows and on the actual Linux worker, including
+same-size edits with restored mtime and coarse change-time behavior.
+
+Episode41's revised native pilot has now passed all six stages,598 persisted
+geometry checks, the2990-row contact audit and actual review of all three full
+299-frame videos and five sample sheets. The known191–193 depth-error segment
+now has15 unknown,unbridged right-fingertip rows. Four independent review slots
+are active;1/20 revised episodes is accepted. Its complete private backup and
+all20 aggregate validation remain required.
+
+The other revised native runs,all20 visual passes and complete backup verification
+remain pending. New outputs use free container scratch after the network volume
+hit its quota. Existing remote backups are retained, and local full verification
+is required before stopping the pod. The twelve earlier passes below remain
+historical evidence for their exact old locked configurations.
+
+## October 7, 2026: earlier all-20 review
 
 The user now requires all 20 public episodes. The earlier three-episode result
 below is historical partial evidence under that requirement. **Final episodes

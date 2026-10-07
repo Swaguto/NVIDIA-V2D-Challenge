@@ -117,7 +117,7 @@ def _copy_masks(mask_root, track_path, out, frames, remap=False):
                 shutil.copy2(real_file(paths[0]), target)
 
 
-def prepare_render_inputs(frames_dir, records_dir, frame_axis, destination):
+def prepare_render_inputs(frames_dir, records_dir, frame_axis, destination, metric_supported_only=False):
     """Upstream mesh renderer indexes by enumeration, not image filename."""
     destination = Path(destination)
     image_dir, hand_dir = destination / "frames", destination / "records"
@@ -133,6 +133,8 @@ def prepare_render_inputs(frames_dir, records_dir, frame_axis, destination):
         original = r["frame_idx"]
         if original not in mapping:
             raise ValueError("Unexpected frame in mesh-render input")
+        if metric_supported_only and not r.get("diagnostics", {}).get("metric_valid", False):
+            continue
         r["original_frame_idx"] = original
         r["frame_idx"] = mapping[original]
         write_json(hand_dir / p.parent.name / f"{mapping[original]:06d}.json", r)

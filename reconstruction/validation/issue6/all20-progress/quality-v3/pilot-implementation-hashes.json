@@ -1,0 +1,14 @@
+{
+  "v2d_issue6/issue6/__init__.py": "8315a026833f2a6f7367698770cbe138c0f73c1f6a35cef48089f9e1d0939104",
+  "v2d_issue6/issue6/backend.py": "3fb6437cc513ad6043d2ce7634dd1598ce126e7bdf2c7cf2fbcbaa6c2faf9243",
+  "v2d_issue6/issue6/cli.py": "7b4e9724d656c568909470a579eb48cfe059112a14a8ae5665feb84fc09369b5",
+  "v2d_issue6/issue6/geometry.py": "628117e8eb5b9e94863d18b7d4c4eda8a85ebd37d6e71b73dada5d0c60b92075",
+  "v2d_issue6/issue6/manifest.py": "cbb1a6769a0801e3601d37423ade091a205d38a0c819f8ba1ffb5146839c759c",
+  "v2d_issue6/issue6/pipeline.py": "1b7e6f7c3dac82d41b1fd8c566770eae673b458f09830f37e3c374b3b713f20e",
+  "v2d_issue6/issue6/track3_adapter.py": "ab44494963e100ea2ebe7099e5afd44d8caceaa5ca1d0b331fe98632864fb07e",
+  "v2d_issue6/issue6/worker.py": "8a8ef343e32d0c9a3273e290691b9028fd9a7b62c9ee706c9a027e97e013bd54",
+  "v2d_hamer/lib/align_hands.py": "e63a664653c4fa4227c75dd559729b3783cda90fd2a9b795de67ebe47b07aaa3",
+  "v2d_hamer/lib/render_hands_aligned_video.py": "7d6c953e19764e6cc7a9b8aa50ea550a320e2d450b78e29434e6356199d76559",
+  "v2d_hamer/lib/masks_to_hands.py": "44821042c6ab807f44770089560b8fa20494db76c2d46e4c83567b80e8ded603",
+  "v2d_hand_alignment/lib/dynhamr_to_hamer_tracks.py": "a10c470f3d3d096087597c029138a31684310b191e53908e9c7079c9dafeb3f5"
+}

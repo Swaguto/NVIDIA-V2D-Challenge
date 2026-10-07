@@ -1,0 +1,16 @@
+{
+  "verified_at": "2026-10-07T06:11:29.802911+00:00",
+  "episode": 41,
+  "status": "explicit_visual_pilot_passed_four_slots_released",
+  "configuration_sha256": "92f88e82f92774bb3fcb6ddf0e2427ca8789829eef472732f23185dac22b46f7",
+  "visual_receipt_sha256": "3ddc629c9d989552d6fae20fcc64c1dd91333a38c2b4223dcc06b63a4b0dd25a",
+  "full_frames_per_video": 299,
+  "geometry_checks": 598,
+  "depth_regression_frames": [
+    191,
+    192,
+    193
+  ],
+  "cpu_tests_windows_and_worker": 100,
+  "all_episodes_require_their_own_visual_reviews": true
+}

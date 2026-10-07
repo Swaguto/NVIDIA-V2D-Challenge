@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "verified_at": "2026-10-07T06:13:02.283696+00:00",
+  "model_bytes": 2689536166,
+  "model_sha256": "e5cc06f294d88a92dee24e603480aab04de532b49f0e08200804ee7d90e16f53",
+  "initial_actual_byte_hash_s": 3.2024186197668314,
+  "five_unchanged_guarded_hash_s": [
+    0.0015542409382760525,
+    0.0010506333783268929,
+    0.0015889331698417664,
+    0.0011435309424996376,
+    0.0011071651242673397
+  ],
+  "scope": "Repeated integrity checks on one actual asset; not measured end-to-end pipeline speedup"
+}

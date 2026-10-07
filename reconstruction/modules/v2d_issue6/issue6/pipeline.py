@@ -221,6 +221,7 @@ def align_stage(m, root, out):
             "camera": m["color_camera"],
             "frames": frames,
             "minimum_pixels": m.get("settings", {}).get("minimum_pixels", 256),
+            "maximum_residual_m": m.get("settings", {}).get("contact_threshold_m", 0.02),
             "mode": m["mode"],
             "camera_provenance": m["camera_provenance"],
             "hand_provenance": m["hand_provenance"],
