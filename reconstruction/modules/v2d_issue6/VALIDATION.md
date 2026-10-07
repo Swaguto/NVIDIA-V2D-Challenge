@@ -4,7 +4,7 @@
 
 The user now requires all 20 public episodes. The earlier three-episode result
 below is historical partial evidence under that requirement. **Final episodes
-0,2,11,12,13,21,22 are accepted (7/20) as of October7 03:47UTC; issue #6 and PR #32
+0,2,11,12,13,18,21,22,23,24,26,39 are accepted (12/20) as of October7 04:50UTC; issue #6 and PR #32
 remain unfinished.**
 
 All 106 public input files match pinned dataset revision
@@ -39,13 +39,18 @@ Accepted results use continuous CAD and automatic wearer selection:
 | 11 | 137 | 274 | 1.9195e-7 | 2620 / 120 | 987 / 56 |
 | 12 | 181 | 362 | 1.7468e-7 | 2260 / 1360 | 435 / 145 |
 | 13 | 190 | 380 | 1.7381e-7 | 2180 / 1620 | 309 / 51 |
+| 18 | 353 | 706 | 1.6193e-7 | 3940 / 3120 | 1018 / 26 |
 | 21 | 186 | 372 | 1.7957e-7 | 1110 / 2610 | 415 / 6 |
 | 22 | 189 | 378 | 1.7858e-7 | 1520 / 2260 | 224 / 17 |
+| 23 | 325 | 650 | 1.8307e-7 | 4150 / 2350 | 1125 / 50 |
+| 24 | 275 | 550 | 1.6468e-7 | 4770 / 730 | 1215 / 73 |
+| 26 | 158 | 316 | 1.8653e-7 | 1300 / 1860 | 111 / 3 |
+| 39 | 319 | 638 | 1.7509e-7 | 2155 / 1035 | 552 / 50 |
 
 Each has six independently checked stage receipts, every persisted geometry
 comparison, every contact row audited, and three fully decoded final videos.
 Uniform samples, consecutive motion extremes and full video playback were
-reviewed;2/11/12/13/21/22 also include the largest decoded image-change samples.
+reviewed; all accepted episodes except0 also include the largest decoded image-change samples.
 Episode0's fitted282-frame axis is restored to the original373-frame axis with
 unsupported observations unknown. Episode12's counts above belong to the
 final continuous-tracking run, not its periodic-registration quality control.
@@ -54,17 +59,31 @@ or contact ground-truth annotations.
 
 Three disjoint native preparation queues now share one A40 while two independent
 reconstruction/media jobs, audits and review overlap. Fitting settings and
-acceptance gates remain fixed. Five accepted episode checkpoints (0/2/11/12/22)
-are independently verified locally, including all locked CAD inputs and eight
-separately recovered model/footage dependencies. Episode13/21 archives are active.
+acceptance gates remain fixed. Twelve accepted episode checkpoints (0/2/11/12/13/18/21/22/23/24/26/39)
+are independently verified locally, including all locked CAD inputs and
+separately recovered model/footage dependencies.
 Authenticated SFTP transferred the roughly0.9GB 12/22 archives in70seconds
 each, followed by full archive/member/input/output verification.
-Episodes13/21 have limited contact coverage: visibly held objects still produce
+Several episodes have limited contact coverage: visibly held objects still produce
 unknown rows when metric evidence is unavailable. No contact-precision claim
 is inferred from their visual passes.
-The remaining13 native/final reviews, all20 aggregate audits and complete final
+The remaining8 native/final reviews, all20 aggregate audits and complete final
 backups are required before closure.
-The current CPU suite passes 86 tests with zero skips. New replay orchestration
+Holdouts23/39 were reviewed under the frozen settings without episode-specific
+tuning. Episode39's unsupported right-hand mesh is very small at frames48-50
+and omitted through parts of the visible grasp; associated contacts remain
+unknown. Its separate CAD MPPE4.367cm and ADD AUC0.5668 show residual pose error.
+The [all20 CAD diagnostic summary](../../validation/issue6/all20-progress/frozen-cad-diagnostics.json)
+does not establish hand/contact accuracy. Single-object RPE0 is uninformative;
+the scorer's missing-pose fill is not used by contact inference.
+Episode43 remains unaccepted after an invalid behind-camera left-hand prediction
+at frame158 stopped alignment. A native-record gate now preserves raw fitted
+outputs, records rejected observations and leaves their contacts unknown; the
+failed run is retained and fresh reconstruction/review remains pending. Invalid
+calibration is still fatal. Five regression tests cover this actual failure and
+other unsupported rays. The parallel scheduler continues independent reviews
+but still records and returns failure for any failed episode.
+The current CPU suite passes 91 tests with zero skips. New replay orchestration
 is in [run_all_episode_review.sh](../../validation/issue6/run_all_episode_review.sh).
 The portable parallel entry point is
 [run_parallel_episode_review.py](../../validation/issue6/run_parallel_episode_review.py);

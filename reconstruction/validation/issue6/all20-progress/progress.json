@@ -1,8 +1,8 @@
 {
-  "verified_at": "2026-10-07T03:48:18.480910+00:00",
+  "verified_at": "2026-10-07T04:49:36.086829+00:00",
   "detections_complete": 20,
-  "accepted": 7,
-  "current": "All 20 wearer detection passes complete. 7 verified fixed-shape hand fits; 7 final six-stage reconstructions. Episode 12 control passed geometry and contact audits. Final acceptance requires reviewed videos.",
+  "accepted": 12,
+  "current": "16 verified fixed-shape hand fits; 12 final six-stage reconstructions. Final acceptance requires reviewed videos.",
   "episodes": [
     {
       "episode": 0,
@@ -109,20 +109,20 @@
       "calibrated_inputs": true,
       "wearer_detections": true,
       "hand_predictions": true,
-      "fit": false,
+      "fit": true,
       "stages": {
-        "validate": false,
-        "hands": false,
-        "depth": false,
-        "align": false,
-        "contacts": false,
-        "report": false
+        "validate": true,
+        "hands": true,
+        "depth": true,
+        "align": true,
+        "contacts": true,
+        "report": true
       },
-      "contact_audit": false,
-      "stage_integrity": false,
-      "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "contact_audit": true,
+      "stage_integrity": true,
+      "all_frame_geometry": true,
+      "accepted": true,
+      "local_review_ready": true
     },
     {
       "episode": 21,
@@ -169,67 +169,67 @@
       "calibrated_inputs": true,
       "wearer_detections": true,
       "hand_predictions": true,
-      "fit": false,
+      "fit": true,
       "stages": {
-        "validate": false,
-        "hands": false,
-        "depth": false,
-        "align": false,
-        "contacts": false,
-        "report": false
+        "validate": true,
+        "hands": true,
+        "depth": true,
+        "align": true,
+        "contacts": true,
+        "report": true
       },
-      "contact_audit": false,
-      "stage_integrity": false,
-      "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "contact_audit": true,
+      "stage_integrity": true,
+      "all_frame_geometry": true,
+      "accepted": true,
+      "local_review_ready": true
     },
     {
       "episode": 24,
       "calibrated_inputs": true,
       "wearer_detections": true,
-      "hand_predictions": false,
-      "fit": false,
+      "hand_predictions": true,
+      "fit": true,
       "stages": {
-        "validate": false,
-        "hands": false,
-        "depth": false,
-        "align": false,
-        "contacts": false,
-        "report": false
+        "validate": true,
+        "hands": true,
+        "depth": true,
+        "align": true,
+        "contacts": true,
+        "report": true
       },
-      "contact_audit": false,
-      "stage_integrity": false,
-      "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "contact_audit": true,
+      "stage_integrity": true,
+      "all_frame_geometry": true,
+      "accepted": true,
+      "local_review_ready": true
     },
     {
       "episode": 26,
       "calibrated_inputs": true,
       "wearer_detections": true,
-      "hand_predictions": false,
-      "fit": false,
+      "hand_predictions": true,
+      "fit": true,
       "stages": {
-        "validate": false,
-        "hands": false,
-        "depth": false,
-        "align": false,
-        "contacts": false,
-        "report": false
+        "validate": true,
+        "hands": true,
+        "depth": true,
+        "align": true,
+        "contacts": true,
+        "report": true
       },
-      "contact_audit": false,
-      "stage_integrity": false,
-      "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "contact_audit": true,
+      "stage_integrity": true,
+      "all_frame_geometry": true,
+      "accepted": true,
+      "local_review_ready": true
     },
     {
       "episode": 27,
       "calibrated_inputs": true,
       "wearer_detections": true,
-      "hand_predictions": false,
-      "fit": false,
+      "hand_predictions": true,
+      "fit": true,
       "stages": {
         "validate": false,
         "hands": false,
@@ -248,7 +248,7 @@
       "episode": 31,
       "calibrated_inputs": true,
       "wearer_detections": true,
-      "hand_predictions": false,
+      "hand_predictions": true,
       "fit": false,
       "stages": {
         "validate": false,
@@ -269,20 +269,20 @@
       "calibrated_inputs": true,
       "wearer_detections": true,
       "hand_predictions": true,
-      "fit": false,
+      "fit": true,
       "stages": {
-        "validate": false,
-        "hands": false,
-        "depth": false,
-        "align": false,
-        "contacts": false,
-        "report": false
+        "validate": true,
+        "hands": true,
+        "depth": true,
+        "align": true,
+        "contacts": true,
+        "report": true
       },
-      "contact_audit": false,
-      "stage_integrity": false,
-      "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "contact_audit": true,
+      "stage_integrity": true,
+      "all_frame_geometry": true,
+      "accepted": true,
+      "local_review_ready": true
     },
     {
       "episode": 40,
@@ -308,8 +308,8 @@
       "episode": 41,
       "calibrated_inputs": true,
       "wearer_detections": true,
-      "hand_predictions": false,
-      "fit": false,
+      "hand_predictions": true,
+      "fit": true,
       "stages": {
         "validate": false,
         "hands": false,
@@ -328,7 +328,7 @@
       "episode": 42,
       "calibrated_inputs": true,
       "wearer_detections": true,
-      "hand_predictions": false,
+      "hand_predictions": true,
       "fit": false,
       "stages": {
         "validate": false,
@@ -348,8 +348,8 @@
       "episode": 43,
       "calibrated_inputs": true,
       "wearer_detections": true,
-      "hand_predictions": false,
-      "fit": false,
+      "hand_predictions": true,
+      "fit": true,
       "stages": {
         "validate": false,
         "hands": false,
@@ -368,8 +368,8 @@
       "episode": 44,
       "calibrated_inputs": true,
       "wearer_detections": true,
-      "hand_predictions": false,
-      "fit": false,
+      "hand_predictions": true,
+      "fit": true,
       "stages": {
         "validate": false,
         "hands": false,
@@ -388,7 +388,7 @@
       "episode": 45,
       "calibrated_inputs": true,
       "wearer_detections": true,
-      "hand_predictions": false,
+      "hand_predictions": true,
       "fit": false,
       "stages": {
         "validate": false,
@@ -406,7 +406,7 @@
     }
   ],
   "scope": "Partial final all20 pass; not issue6 completion",
-  "prepared_at": "2026-10-07T03:48:55.481363+00:00",
+  "prepared_at": "2026-10-07T04:50:12.072297+00:00",
   "validated_base_commit": "620ec548953d7ccd76890066512f6b364482e14d",
   "execution_source": "Base plus preserved repairs; exact implementation hashes live in each locked private checkpoint",
   "final_checkpoint_backups": [
@@ -431,15 +431,50 @@
       "bytes": 891778803
     },
     {
+      "episode": 13,
+      "sha256": "0c95370cb47e271f02d69e1465a30dfb2952c103ada61864f41b231e4a27146d",
+      "bytes": 911643028
+    },
+    {
+      "episode": 18,
+      "sha256": "cb480cae3ddd79bd1b27a9d1e3b0363ebf6b51f435b9f7783615f1443d78b4b1",
+      "bytes": 1703184778
+    },
+    {
+      "episode": 21,
+      "sha256": "e5c826b713f383d8c864c81e0e52d60a1a963734db1b693e02da1134e8def2a8",
+      "bytes": 879936495
+    },
+    {
       "episode": 22,
       "sha256": "eb204ed9b9dbbca3324272fb67c897353fd3975a8dca55df45229a1d351365b1",
       "bytes": 891353606
+    },
+    {
+      "episode": 23,
+      "sha256": "16e1565baadc06a7617f6fa97ff7a12f4ba8a58cdbfce77a1b504747fefa38bc",
+      "bytes": 1569227983
+    },
+    {
+      "episode": 24,
+      "sha256": "93d1e4fc568dce055dca7b65f566708dcc3baa3ddd031150347fe8fc91a5c30e",
+      "bytes": 1320026075
+    },
+    {
+      "episode": 26,
+      "sha256": "d641e53a67a023b0a97f13c090df52a6b813c8e159e8023028b8ac0f9740431b",
+      "bytes": 750570010
+    },
+    {
+      "episode": 39,
+      "sha256": "cb9320e7e196c09d6db818de70894bad39a10e6422ae2a95e721e1aaa221b58d",
+      "bytes": 1437248585
     }
   ],
   "current_cpu_tests": {
-    "passed": 86,
+    "passed": 91,
     "skipped": 0,
-    "scope": "CPU contracts and synthetic geometry, not native acceptance"
+    "scope": "CPU contracts, synthetic geometry and actual invalid-camera regression, not native acceptance"
   },
   "final_acceptance_required_episodes": [
     0,

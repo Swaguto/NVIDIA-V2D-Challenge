@@ -2,19 +2,19 @@
 
 ## Current all-20 pass: October 7, 2026
 
-This pass is **in progress**, with final episodes **0,2,11,12,13,21,22 accepted (7/20)**
-as of October7 03:47UTC. Source starts
+This pass is **in progress**, with final episodes **0,2,11,12,13,18,21,22,23,24,26,39 accepted (12/20)**
+as of October7 04:50UTC. Source starts
 from PR #32 `620ec548953d7ccd76890066512f6b364482e14d` plus the recorded source
 repairs in this checkout. It replaces the historical manual episode-22
 exclusion with automatic measured-depth/continuity selection. All 20 actual
 footage episodes and detector passes are complete; full native reconstruction,
-audits and final visual reviews remain required for the other13 episodes.
+audits and final visual reviews remain required for the other8 episodes.
 Accepted episodes have complete six-stage receipts, independent stage/contact
 audits, all-frame persisted geometry checks and reviewed full-length videos.
 Machine checks and video decoding are batched; uniform, motion-extreme and
 large-image-change samples guide visual review without automatic acceptance.
 The current [public receipts](all20-progress/progress.json) record all20 status,
-seven actual visual passes, stage/contact audits and five verified private
+twelve actual visual passes, stage/contact audits and twelve verified private
 checkpoint summaries. Their execution configuration hashes identify the
 preserved inputs and sources; a later documentation/scheduling commit is not
 claimed to be the byte-for-byte source of already completed native runs.
@@ -137,10 +137,36 @@ Each downloaded compressed archive is fully read, every member is checked,
 all six stages match their configuration and outputs, and all locked inputs
 are verified either inside the checkpoint or in separately recovered footage
 and model assets. Early12/22 archives include verified locked-CAD supplements.
-Archives0/2/11/12/22 are verified locally; episode13/21 archives are active. Approximately
+Archives0/2/11/12/13/18/21/22/23/24/26/39 are verified locally. Approximately
 0.9GB transferred in70seconds for each of12/22. Transfer speed does not reduce
 any verification step. Models, licensed assets, raw footage and full private
 archives are excluded from Git.
+
+The separate [frozen CAD diagnostics](all20-progress/frozen-cad-diagnostics.json)
+cover all20 episodes. They are prediction/reference pose scores, not final
+hand/contact acceptance. Single-object RPE is identically zero and cannot assess
+pose quality. Episodes39/42 have MPPE about4.4cm and ADD AUC about0.56 despite
+no gross tracking loss in the reviewed CAD samples. Episode39's final review
+also records depth-unsupported, very small or omitted right-hand meshes during
+parts of the grasp. Those contact observations remain unknown. The scorer's
+missing-pose fill is used only for diagnostics; contact inference uses observed
+poses and does not convert missing observations into measured contacts.
+
+Episode43's first alignment failed on a single fitted left-hand estimate behind
+the camera at original frame158. The native adapter now records a gate receipt
+and omits invalid virtual-camera predictions from observed input records; raw
+fits and converted geometry remain preserved, and affected contacts stay unknown.
+Invalid calibration remains fatal. The gate's source hashes and rejected
+observations are embedded in the locked manifest. The failed run is preserved;
+its fresh reconstruction and visual review are still pending. Five new CPU
+regressions include the actual negative-depth parameters. The parallel replay
+scheduler records failed reviews separately, completes other independent jobs,
+and still exits unsuccessfully if any failed episode remains unaccepted.
+
+An [eleven-episode input audit](all20-progress/eleven-accepted-stage-input-integrity.json)
+also rehashed actual locked inputs, implementation files and every stage output
+for0/2/11/12/13/18/21/22/23/26/39. The required all20 audit remains pending and
+does not substitute for the individual contact/video reviews or complete backups.
 
 Review all full-length hand, contact and combined CAD/hand videos, timestamped
 samples and consecutive motion-extreme samples before writing any visual pass.

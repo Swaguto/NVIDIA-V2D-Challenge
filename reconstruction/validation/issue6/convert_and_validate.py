@@ -1,6 +1,7 @@
 """Validate the actual temporal result through the repaired issue-6 pipeline."""
 import argparse
 import copy
+import hashlib
 import json
 from pathlib import Path
 import time
@@ -16,6 +17,7 @@ from issue6 import backend
 from issue6.manifest import load, write_json
 from issue6.pipeline import execute
 from v2d.hand_alignment.lib.dynhamr_to_hamer_tracks import convert_dynhamr_to_hamer_tracks
+from temporal_record_gate import rejection_reason
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--episode', type=int, required=True)
@@ -35,20 +37,32 @@ gate = json.loads((root / 'observation_gate.json').read_text())['direct_observat
 # The optimizer estimates occluded frames. Keep them in the raw optimizer output,
 # while contact/overlay inputs only include directly observed hands.
 kept = 0
+rejected = []
 for path in sorted((canonical / 'records').glob('*/*.json')):
     record = json.loads(path.read_text())
     side = 'right' if record['is_right'] else 'left'
     record['temporal_source'] = str(result)
     record['directly_observed'] = gate[side][record['frame_idx']]
-    if not record['directly_observed']:
+    reason = rejection_reason(record, record['directly_observed'], manifest['color_camera'])
+    if reason is not None:
+        rejected.append({'frame_id': record['frame_idx'], 'track_id': record['track_id'],
+                         'is_right': record['is_right'], 'reason': reason,
+                         'camera': record['camera'] if reason == 'invalid_virtual_camera' else None})
         path.unlink()
     else:
         write_json(path, record)
         kept += 1
+record_gate = {'version': 1, 'kept': kept, 'rejected': rejected,
+               'scope': 'Invalid or unobserved native estimates remain unknown; raw fitted and converted records are preserved',
+               'implementation_sha256': {
+                   filename: hashlib.sha256(Path(__file__).with_name(filename).read_bytes()).hexdigest()
+                   for filename in ('convert_and_validate.py', 'temporal_record_gate.py')}}
+write_json(root / 'temporal_record_gate.json', record_gate)
 manifest['hand_source'] = {'backend': 'import', 'runtime': 'native',
         'records_dir': str(canonical / 'records'), 'masks_dir': str(root / 'masks'),
         'tracks_path': str(root / 'hand_tracks.json'), 'mano_assets_root': '/workspace/mano',
         'world_results': str(result),
+        'native_record_gate': record_gate,
         'model_files': ['/workspace/hamer-weights/_DATA/hamer_ckpts/checkpoints/hamer.ckpt',
                         '/workspace/pr32-models/sam2.1_hiera_large.pt', '/workspace/pr32-models/detector.pt']}
 destination = manifest_path.parent / 'manifest.temporal.json'

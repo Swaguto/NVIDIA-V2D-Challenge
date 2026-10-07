@@ -66,7 +66,7 @@ def main():
         loads[queue] += lengths[episode]
     receipt = {'started_at': datetime.datetime.now(datetime.timezone.utc).isoformat(),
                'episode_queues': queues, 'source_frame_loads': loads, 'completed': [],
-               'settings_changed': False, 'status': 'running'}
+               'failed_reviews': [], 'settings_changed': False, 'status': 'running'}
     receipt_path = base / 'parallel-replay-scheduling.json'
 
     def save():
@@ -95,11 +95,14 @@ def main():
             for episode, (process, started) in list(reviews.items()):
                 if process.poll() is None:
                     continue
-                if process.returncode != 0:
-                    raise RuntimeError(f'Episode {episode} reconstruction/review checks failed')
                 remaining.remove(episode)
                 del reviews[episode]
-                receipt['completed'].append({'episode': episode, 'elapsed_s': time.monotonic() - started})
+                result = {'episode': episode, 'elapsed_s': time.monotonic() - started}
+                if process.returncode != 0:
+                    result['returncode'] = process.returncode
+                    receipt['failed_reviews'].append(result)
+                else:
+                    receipt['completed'].append(result)
                 save()
             failed = [process.pid for process in producers if process.poll() not in (None, 0)]
             if failed:
@@ -120,9 +123,12 @@ def main():
         for process in producers + [job[0] for job in reviews.values()]:
             if process.wait() != 0:
                 raise RuntimeError(f'Preparation process {process.pid} failed')
-        receipt.update(status='machine_checks_complete_visual_review_required', active_episode=None,
+        receipt.update(status=('failed_reviews_require_repair' if receipt['failed_reviews']
+                               else 'machine_checks_complete_visual_review_required'), active_episode=None,
                        finished_at=datetime.datetime.now(datetime.timezone.utc).isoformat())
         save()
+        if receipt['failed_reviews']:
+            raise SystemExit('Failed reviews remain unaccepted; inspect their episode logs before replay')
     finally:
         for process in producers:
             if process.poll() is None:
