@@ -354,7 +354,11 @@ def depth_gradient_loss(
     ``union_mask`` and a finite-target check gate both endpoints of each
     difference so we never compare across an invalid pixel.
     """
-    valid = union_mask * torch.isfinite(target_depth).float()
+    finite = torch.isfinite(target_depth)
+    valid = union_mask * finite.float()
+    # Masking multiplies by zero, which cannot remove inf - inf = NaN, so
+    # replace unknown target pixels (e.g. stereo holes) before differencing.
+    target_depth = torch.where(finite, target_depth, torch.ones_like(target_depth))
     if log_space:
         d_r = torch.log(rendered_depth.clamp_min(eps))
         d_t = torch.log(target_depth.clamp_min(eps))

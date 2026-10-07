@@ -4,8 +4,9 @@
 
 This is intentionally much smaller than ``refine.py``. It optimizes only:
   - static Gaussian appearance params: scale, color, opacity;
-  - per-frame object root pose;
-  - optional global object scale;
+  - per-frame root pose of each object (one object via the single-object
+    flags, or several via ``--objects_root``);
+  - optional global scale per object;
   - per-frame hand wrist/root pose (MANO global_orient + cam_t only);
   - per-frame background/camera pose for the static depth-initialized scene.
 
@@ -13,9 +14,10 @@ It does not optimize Gaussian offsets or Gaussian orientation. MANO finger
 pose, MANO shape, hand scale, and object scale are optional via their LR flags.
 Image losses are full-frame
 L1 photometric error plus optional L1 segmentation-mask supervision, with
-optional relative depth-gradient supervision from MoGe depth, and with
-optional temporal smoothness on the absolute and hand/object-relative dynamic
-poses.
+optional relative depth-gradient supervision from MoGe depth, optional
+absolute supervision from metric (e.g. stereo) depth, and with optional
+temporal smoothness on the absolute and hand/object-relative dynamic poses,
+measured in the camera frame or (``--smooth_in_world``) the world frame.
 
 Run inside the gsplat refinement environment, for example:
 
@@ -78,11 +80,14 @@ from .io import (
 )
 from .losses import (
     depth_gradient_loss,
+    depth_loss,
     quat_smoothness,
     rotation_smoothness,
     temporal_smoothness,
 )
 from .pose_fields import HandPoseField, ObjectPoseField, _quat_to_axis_angle
+
+_MESH_SUFFIXES = (".glb", ".gltf", ".obj", ".ply")
 
 
 @dataclass
@@ -96,20 +101,92 @@ class HandSlot:
     frame_to_pos: dict[int, int]
 
 
+@dataclass
+class ObjectSlot:
+    name: str
+    pose_field: ObjectPoseField
+    gaussians: torch.nn.Module
+    verts: torch.Tensor
+    faces: np.ndarray
+    output_pose_dir: str | None
+    sdf: "ObjectSDFGrid | None" = None
+
+
+@dataclass
+class ObjectSpec:
+    name: str
+    mesh_path: str
+    poses_dir: str
+    mask_dir: str
+    output_pose_dir: str | None
+
+
+def _object_specs(
+    object_mesh_path: str | None,
+    object_poses_dir: str | None,
+    object_mask_dir: str | None,
+    refined_object_poses_dir: str | None,
+    objects_root: str | None,
+    refined_objects_root: str | None,
+) -> list[ObjectSpec]:
+    """Resolve the single-object flags and/or a multi-object root.
+
+    ``objects_root/<name>/`` holds one mesh file named ``mesh.<ext>`` plus
+    ``poses/`` (object→camera Transform3d JSONs) and ``masks/``. Refined poses
+    go to ``refined_objects_root/<name>/``.
+    """
+    specs: list[ObjectSpec] = []
+    single = (object_mesh_path, object_poses_dir, object_mask_dir)
+    if any(v is not None for v in single):
+        if any(v is None for v in single):
+            raise ValueError(
+                "object_mesh_path, object_poses_dir and object_mask_dir must be given together"
+            )
+        specs.append(ObjectSpec(
+            "object", object_mesh_path, object_poses_dir, object_mask_dir, refined_object_poses_dir,
+        ))
+    if objects_root is not None:
+        for name in sorted(os.listdir(objects_root)):
+            obj_dir = os.path.join(objects_root, name)
+            if not os.path.isdir(obj_dir):
+                continue
+            meshes = [
+                os.path.join(obj_dir, f"mesh{ext}") for ext in _MESH_SUFFIXES
+                if os.path.exists(os.path.join(obj_dir, f"mesh{ext}"))
+            ]
+            if len(meshes) != 1:
+                raise FileNotFoundError(f"Expected exactly one mesh.<ext> in {obj_dir}, found {meshes}")
+            out_dir = os.path.join(refined_objects_root, name) if refined_objects_root else None
+            specs.append(ObjectSpec(
+                name, meshes[0], os.path.join(obj_dir, "poses"), os.path.join(obj_dir, "masks"), out_dir,
+            ))
+    if not specs:
+        raise ValueError("No objects: pass object_mesh_path/object_poses_dir/object_mask_dir or objects_root")
+    if len({s.name for s in specs}) != len(specs):
+        raise ValueError(f"Duplicate object names: {[s.name for s in specs]}")
+    return specs
+
+
 class SimpleFrameCache:
-    """CPU cache for the small set of supervision this script uses."""
+    """CPU cache for the small set of supervision this script uses.
+
+    ``obj_mask_known[k][t]`` is 0 when object ``k`` has no mask file for frame
+    ``t`` and ``missing_object_mask_unknown`` is set, so the segmentation loss
+    skips that channel instead of treating the object as absent.
+    """
 
     def __init__(
         self,
         frame_indices: list[int],
         frames_dir: str,
         depth_dir: str | None,
-        object_mask_dir: str,
+        object_mask_dirs: list[str],
         hand_mask_dirs: list[str],
         height: int,
         width: int,
         valid_mask_threshold: float = 0.04,
         valid_mask_erode_iters: int = 2,
+        missing_object_mask_unknown: bool = False,
     ) -> None:
         self.frame_indices = list(frame_indices)
         self.height = int(height)
@@ -120,7 +197,11 @@ class SimpleFrameCache:
             torch.empty((n, height, width), dtype=torch.float32)
             if depth_dir is not None else None
         )
-        self.obj_mask = torch.zeros((n, height, width), dtype=torch.float32)
+        self.obj_masks = [
+            torch.zeros((n, height, width), dtype=torch.float32)
+            for _ in object_mask_dirs
+        ]
+        self.obj_mask_known = [torch.ones((n,), dtype=torch.float32) for _ in object_mask_dirs]
         self.hand_masks = [
             torch.zeros((n, height, width), dtype=torch.float32)
             for _ in hand_mask_dirs
@@ -130,7 +211,12 @@ class SimpleFrameCache:
             self.rgb[t] = _load_rgb_resized(_find_frame_file(frames_dir, fidx), width, height)
             if self.depth is not None and depth_dir is not None:
                 self.depth[t] = _load_depth_resized(os.path.join(depth_dir, f"{fidx:06d}.png"), width, height)
-            self.obj_mask[t] = _load_mask_or_zero(object_mask_dir, fidx, width, height)
+            for k, mask_dir in enumerate(object_mask_dirs):
+                self.obj_masks[k][t] = _load_mask_or_zero(mask_dir, fidx, width, height)
+                if missing_object_mask_unknown and not os.path.exists(
+                    os.path.join(mask_dir, f"{fidx:06d}.png")
+                ):
+                    self.obj_mask_known[k][t] = 0.0
             for k, mask_dir in enumerate(hand_mask_dirs):
                 self.hand_masks[k][t] = _load_mask_or_zero(mask_dir, fidx, width, height)
 
@@ -150,16 +236,16 @@ class SimpleFrameCache:
             self.rgb = self.rgb.pin_memory()
             if self.depth is not None:
                 self.depth = self.depth.pin_memory()
-            self.obj_mask = self.obj_mask.pin_memory()
+            self.obj_masks = [m.pin_memory() for m in self.obj_masks]
             self.hand_masks = [m.pin_memory() for m in self.hand_masks]
             self.valid_mask = self.valid_mask.pin_memory()
         except RuntimeError:
             pass
 
     def union_mask(self, t: int, device: torch.device | str) -> torch.Tensor:
-        m = self.obj_mask[t].to(device, non_blocking=True).clone()
-        for hm in self.hand_masks:
-            m = torch.maximum(m, hm[t].to(device, non_blocking=True))
+        m = torch.zeros((self.height, self.width), dtype=torch.float32, device=device)
+        for mask in self.obj_masks + self.hand_masks:
+            m = torch.maximum(m, mask[t].to(device, non_blocking=True))
         return m
 
 
@@ -229,7 +315,10 @@ def _load_mask_or_zero(mask_dir: str, fidx: int, width: int, height: int) -> tor
 
 
 def _restrict_object_track(track: ObjectPoseTrack, keep: set[int]) -> ObjectPoseTrack:
-    idxs = [i for i, fidx in enumerate(track.frame_indices) if fidx in keep]
+    idxs = sorted(
+        (i for i, fidx in enumerate(track.frame_indices) if fidx in keep),
+        key=lambda i: track.frame_indices[i],
+    )
     if not idxs:
         raise RuntimeError("No object pose frames overlap the available RGB frames.")
     return ObjectPoseTrack(
@@ -432,14 +521,16 @@ def _build_object_sdf_grid(
 def _hand_object_penetration_loss(
     t: int,
     fidx: int,
-    obj_pose_field: ObjectPoseField,
-    obj_gaussians: torch.nn.Module,
+    obj_slot: ObjectSlot,
     hand_slots: list[HandSlot],
-    object_sdf: ObjectSDFGrid,
     margin: float,
     max_hand_verts: int,
 ) -> torch.Tensor:
-    R_obj, t_obj = obj_pose_field(t)
+    obj_gaussians = obj_slot.gaussians
+    object_sdf = obj_slot.sdf
+    R_obj, t_obj = obj_slot.pose_field(t)
+    if object_sdf is None:
+        return R_obj.sum() * 0.0
     if hasattr(obj_gaussians, "object_scale"):
         s_obj = obj_gaussians.object_scale().clamp_min(1e-6)
     else:
@@ -658,14 +749,15 @@ def _render_2dgs_depth(
 def _current_frame(
     t: int,
     fidx: int,
-    obj_gaussians: torch.nn.Module,
-    obj_pose_field: ObjectPoseField,
+    obj_slots: list[ObjectSlot],
     hand_slots: list[HandSlot],
     bg_gaussians: BackgroundGaussians | None,
     bg_pose_field: BackgroundPoseField | None,
 ) -> GaussianFrame:
-    R_obj, t_obj = obj_pose_field(t)
-    frames = [obj_gaussians(R_obj, t_obj)]
+    frames = []
+    for obj in obj_slots:
+        R_obj, t_obj = obj.pose_field(t)
+        frames.append(obj.gaussians(R_obj, t_obj))
     for slot in hand_slots:
         local_t = slot.frame_to_pos.get(fidx)
         if local_t is None:
@@ -693,18 +785,22 @@ def _label_block(
 def _current_frame_with_labels(
     t: int,
     fidx: int,
-    obj_gaussians: torch.nn.Module,
-    obj_pose_field: ObjectPoseField,
+    obj_slots: list[ObjectSlot],
     hand_slots: list[HandSlot],
     bg_gaussians: BackgroundGaussians | None,
     bg_pose_field: BackgroundPoseField | None,
     n_classes: int,
 ) -> tuple[GaussianFrame, torch.Tensor]:
-    R_obj, t_obj = obj_pose_field(t)
-    obj_frame = obj_gaussians(R_obj, t_obj)
-    frames = [obj_frame]
-    labels = [_label_block(obj_frame.means.shape[0], n_classes, 0, obj_frame.means.device)]
+    """Class channels are objects ``0..M-1`` followed by hands ``M..M+H-1``."""
+    frames = []
+    labels = []
+    for obj_i, obj in enumerate(obj_slots):
+        R_obj, t_obj = obj.pose_field(t)
+        obj_frame = obj.gaussians(R_obj, t_obj)
+        frames.append(obj_frame)
+        labels.append(_label_block(obj_frame.means.shape[0], n_classes, obj_i, obj_frame.means.device))
 
+    n_obj = len(obj_slots)
     for slot_i, slot in enumerate(hand_slots):
         local_t = slot.frame_to_pos.get(fidx)
         if local_t is None:
@@ -713,7 +809,7 @@ def _current_frame_with_labels(
         hand_frame = slot.gaussians(verts, Rv)
         frames.append(hand_frame)
         labels.append(_label_block(
-            hand_frame.means.shape[0], n_classes, slot_i + 1, hand_frame.means.device
+            hand_frame.means.shape[0], n_classes, n_obj + slot_i, hand_frame.means.device
         ))
 
     if bg_gaussians is not None and bg_pose_field is not None:
@@ -733,13 +829,17 @@ def _segmentation_mask_loss(
     valid_denom: torch.Tensor,
 ) -> torch.Tensor:
     n_classes = int(rendered_class.shape[-1])
+    n_obj = len(cache.obj_masks)
     target = rendered_class.new_zeros(rendered_class.shape)
-    target[..., 0] = cache.obj_mask[t].to(rendered_class.device, non_blocking=True)
+    channel_known = rendered_class.new_ones((n_classes,))
+    for obj_i, obj_mask in enumerate(cache.obj_masks):
+        target[..., obj_i] = obj_mask[t].to(rendered_class.device, non_blocking=True)
+        channel_known[obj_i] = float(cache.obj_mask_known[obj_i][t])
     for slot_i, hand_mask in enumerate(cache.hand_masks):
-        if slot_i + 1 >= n_classes:
+        if n_obj + slot_i >= n_classes:
             break
-        target[..., slot_i + 1] = hand_mask[t].to(rendered_class.device, non_blocking=True)
-    diff = (rendered_class - target).abs()
+        target[..., n_obj + slot_i] = hand_mask[t].to(rendered_class.device, non_blocking=True)
+    diff = (rendered_class - target).abs() * channel_known
     return (diff * valid_mask.unsqueeze(-1)).sum() / (
         valid_denom * float(max(n_classes, 1))
     )
@@ -825,8 +925,23 @@ def _hand_object_relative_smoothness(
     return loss
 
 
+def _camera_pose_to_world(
+    bg_pose_field: BackgroundPoseField,
+    t_idx: torch.Tensor,
+    q_cam: torch.Tensor,
+    t_cam: torch.Tensor,
+) -> tuple[torch.Tensor, torch.Tensor]:
+    """Map camera-frame poses (B,4)/(B,3) to the background world frame."""
+    R_w2c, t_w2c = bg_pose_field.batched_forward(t_idx)
+    q_w2c = axis_angle_to_quat(bg_pose_field.axis_angle[t_idx])
+    q_world = quat_mul(_quat_conj(q_w2c), q_cam)
+    # R_w2c^T (t_cam - t_w2c), written in row-vector form.
+    t_world = torch.matmul((t_cam - t_w2c).unsqueeze(1), R_w2c).squeeze(1)
+    return q_world, t_world
+
+
 def _pose_smoothness(
-    obj_pose_field: ObjectPoseField,
+    obj_slots: list[ObjectSlot],
     hand_slots: list[HandSlot],
     bg_pose_field: BackgroundPoseField | None,
     w_smooth_object_rot: float,
@@ -838,16 +953,36 @@ def _pose_smoothness(
     w_smooth_hand_object_relative_trans: float,
     w_smooth_camera_rot: float,
     w_smooth_camera_trans: float,
+    smooth_in_world: bool = False,
+    frame_to_t: dict[int, int] | None = None,
 ) -> torch.Tensor:
-    loss = obj_pose_field.axis_angle.new_zeros(())
-    T = obj_pose_field.num_frames()
-    loss = loss + float(w_smooth_object_rot) * _normalized_smooth(
-        rotation_smoothness(obj_pose_field.axis_angle), T
-    )
-    loss = loss + float(w_smooth_object_trans) * _normalized_smooth(
-        temporal_smoothness(obj_pose_field.translation), T
-    )
+    """Temporal smoothness on all dynamic poses.
+
+    With ``smooth_in_world`` (and a background pose field), object and hand
+    root poses are smoothed after mapping into the background world frame.
+    On a head-mounted camera this stops the camera-frame smoothness terms from
+    penalizing the wearer's own head motion, and couples them to the camera
+    trajectory so all three are cleaned jointly.
+    """
+    loss = obj_slots[0].pose_field.axis_angle.new_zeros(())
+    in_world = bool(smooth_in_world) and bg_pose_field is not None
+    for obj in obj_slots:
+        pf = obj.pose_field
+        T = pf.num_frames()
+        if in_world:
+            idx = torch.arange(T, device=pf.axis_angle.device)
+            q_w, t_w = _camera_pose_to_world(
+                bg_pose_field, idx, axis_angle_to_quat(pf.axis_angle), pf.translation,
+            )
+            rot_term = quat_smoothness(q_w)
+            trans_term = temporal_smoothness(t_w)
+        else:
+            rot_term = rotation_smoothness(pf.axis_angle)
+            trans_term = temporal_smoothness(pf.translation)
+        loss = loss + float(w_smooth_object_rot) * _normalized_smooth(rot_term, T)
+        loss = loss + float(w_smooth_object_trans) * _normalized_smooth(trans_term, T)
     if bg_pose_field is not None:
+        T = bg_pose_field.num_frames()
         loss = loss + float(w_smooth_camera_rot) * _normalized_smooth(
             rotation_smoothness(bg_pose_field.axis_angle), T
         )
@@ -856,22 +991,150 @@ def _pose_smoothness(
         )
     for slot in hand_slots:
         n = slot.pose_field.num_frames()
-        loss = loss + float(w_smooth_hand_rot) * _normalized_smooth(
-            rotation_smoothness(slot.pose_field.global_orient), n
-        )
+        if in_world and frame_to_t is not None:
+            idx = torch.tensor(
+                [frame_to_t[f] for f in slot.pose_field.frame_indices],
+                device=slot.pose_field.cam_t.device, dtype=torch.long,
+            )
+            local = torch.arange(n, device=idx.device)
+            q_w, t_w = _camera_pose_to_world(
+                bg_pose_field, idx, _hand_root_quats_camera(slot, local), slot.pose_field.cam_t,
+            )
+            rot_term = quat_smoothness(q_w)
+            trans_term = temporal_smoothness(t_w)
+        else:
+            rot_term = rotation_smoothness(slot.pose_field.global_orient)
+            trans_term = temporal_smoothness(slot.pose_field.cam_t)
+        loss = loss + float(w_smooth_hand_rot) * _normalized_smooth(rot_term, n)
         loss = loss + float(w_smooth_hand_articulation) * _normalized_smooth(
             rotation_smoothness(slot.pose_field.hand_pose.view(n, 15, 3)), n
         )
-        loss = loss + float(w_smooth_hand_trans) * _normalized_smooth(
-            temporal_smoothness(slot.pose_field.cam_t), n
-        )
-        loss = loss + _hand_object_relative_smoothness(
-            obj_pose_field,
-            slot,
-            w_smooth_hand_object_relative_rot,
-            w_smooth_hand_object_relative_trans,
-        )
+        loss = loss + float(w_smooth_hand_trans) * _normalized_smooth(trans_term, n)
+        for obj in obj_slots:
+            loss = loss + _hand_object_relative_smoothness(
+                obj.pose_field,
+                slot,
+                w_smooth_hand_object_relative_rot,
+                w_smooth_hand_object_relative_trans,
+            )
     return loss
+
+
+def _hand_verts_joints_camera(
+    pose_field: HandPoseField,
+    chunk: int = 64,
+) -> tuple[np.ndarray, np.ndarray]:
+    """All-frame MANO vertices (T,778,3) and joints (T,21,3) in camera frame.
+
+    Applies the same mirroring, centroid ``hand_scale`` and ``cam_t`` as
+    ``HandPoseField.batched_posed_verts_and_rotmats_camera``.
+    """
+    verts_out, joints_out = [], []
+    n = pose_field.num_frames()
+    with torch.no_grad():
+        for start in range(0, n, chunk):
+            idx = torch.arange(start, min(start + chunk, n), device=pose_field.cam_t.device)
+            pose_aa = torch.cat([pose_field.global_orient[idx], pose_field.hand_pose[idx]], dim=-1)
+            out = pose_field.mano(pose_aa, pose_field.betas.unsqueeze(0).expand(len(idx), -1))
+            verts, joints = out.verts, out.joints
+            if not pose_field.is_right:
+                mirror = verts.new_tensor([-1.0, 1.0, 1.0])
+                verts, joints = verts * mirror, joints * mirror
+            c = verts.mean(dim=1, keepdim=True)
+            s = pose_field.hand_scale
+            verts = (verts - c) * s + c
+            joints = (joints - c) * s + c
+            shift = pose_field.cam_t[idx].unsqueeze(1)
+            verts_out.append((verts + shift).cpu().numpy())
+            joints_out.append((joints + shift).cpu().numpy())
+    return np.concatenate(verts_out).astype(np.float32), np.concatenate(joints_out).astype(np.float32)
+
+
+def _pose_matrices(R: torch.Tensor, t: torch.Tensor, scale: torch.Tensor | float = 1.0) -> np.ndarray:
+    M = torch.eye(4, device=R.device, dtype=R.dtype).repeat(R.shape[0], 1, 1)
+    M[:, :3, :3] = R * scale
+    M[:, :3, 3] = t
+    return M.detach().cpu().numpy().astype(np.float64)
+
+
+def _scene_state(
+    obj_slots: list[ObjectSlot],
+    hand_slots: list[HandSlot],
+    bg_pose_field: BackgroundPoseField | None,
+    n_frames: int,
+) -> dict[str, np.ndarray]:
+    """Snapshot every dynamic pose as plain arrays (used before and after)."""
+    state: dict[str, np.ndarray] = {}
+    with torch.no_grad():
+        if bg_pose_field is not None:
+            idx = torch.arange(n_frames, device=bg_pose_field.axis_angle.device)
+            state["camera_w2c"] = _pose_matrices(*bg_pose_field.batched_forward(idx))
+        else:
+            state["camera_w2c"] = np.tile(np.eye(4), (n_frames, 1, 1))
+        for i, obj in enumerate(obj_slots):
+            idx = torch.arange(obj.pose_field.num_frames(), device=obj.pose_field.axis_angle.device)
+            R, t = obj.pose_field.batched_forward(idx)
+            state[f"object_{i}_o2c"] = _pose_matrices(R, t, obj.gaussians.object_scale())
+        for j, slot in enumerate(hand_slots):
+            verts, joints = _hand_verts_joints_camera(slot.pose_field)
+            state[f"hand_{j}_verts"] = verts
+            state[f"hand_{j}_joints"] = joints
+    return state
+
+
+def _export_scene(
+    path: str,
+    initial: dict[str, np.ndarray] | None,
+    refined: dict[str, np.ndarray],
+    obj_slots: list[ObjectSlot],
+    hand_slots: list[HandSlot],
+    bg_gaussians: BackgroundGaussians | None,
+    frame_indices: list[int],
+    K: torch.Tensor,
+    width: int,
+    height: int,
+    ref_frame_index: int,
+    fps: float,
+    max_bg_points: int,
+) -> None:
+    """Write one ``.npz`` with initial and refined poses for the quality report.
+
+    World is the background reference camera (``camera_w2c`` is world→camera).
+    Object poses are object→camera with the learned global scale folded into
+    the rotation block; hand vertices and joints are in camera metres.
+    """
+    out: dict[str, np.ndarray] = {
+        "frame_indices": np.asarray(frame_indices, dtype=np.int64),
+        "ref_frame_index": np.asarray(ref_frame_index, dtype=np.int64),
+        "fps": np.asarray(fps, dtype=np.float64),
+        "K": K.detach().cpu().numpy().astype(np.float64),
+        "image_size": np.asarray([width, height], dtype=np.int64),
+        "object_names": np.asarray([obj.name for obj in obj_slots]),
+        "hand_sides": np.asarray([slot.side for slot in hand_slots]),
+    }
+    for i, obj in enumerate(obj_slots):
+        out[f"object_{i}_verts"] = obj.verts.detach().cpu().numpy().astype(np.float32)
+        out[f"object_{i}_faces"] = np.asarray(obj.faces, dtype=np.int32)
+    for j, slot in enumerate(hand_slots):
+        out[f"hand_{j}_frame_indices"] = np.asarray(slot.pose_field.frame_indices, dtype=np.int64)
+        out[f"hand_{j}_faces"] = slot.pose_field.mano.th_faces.detach().cpu().numpy().astype(np.int32)
+    if bg_gaussians is not None:
+        with torch.no_grad():
+            pts = (bg_gaussians.anchor + bg_gaussians._delta_p).detach()
+            keep = torch.sigmoid(bg_gaussians._opacity_logit.detach()) > 0.2
+            pts, cols = pts[keep], bg_gaussians._color.detach()[keep].clamp(0.0, 1.0)
+            if max_bg_points > 0 and pts.shape[0] > max_bg_points:
+                sel = torch.randperm(pts.shape[0], device=pts.device)[:max_bg_points]
+                pts, cols = pts[sel], cols[sel]
+        out["background_points"] = pts.cpu().numpy().astype(np.float32)
+        out["background_colors"] = cols.cpu().numpy().astype(np.float32)
+    for prefix, state in (("initial", initial), ("refined", refined)):
+        if state is None:
+            continue
+        for key, value in state.items():
+            out[f"{prefix}_{key}"] = value
+    os.makedirs(os.path.dirname(os.path.abspath(path)) or ".", exist_ok=True)
+    np.savez_compressed(path, **out)
 
 
 def _save_camera_poses(
@@ -895,8 +1158,7 @@ def _write_overlay_video(
     width: int,
     height: int,
     device: torch.device,
-    obj_gaussians: torch.nn.Module,
-    obj_pose_field: ObjectPoseField,
+    obj_slots: list[ObjectSlot],
     hand_slots: list[HandSlot],
     bg_gaussians: BackgroundGaussians | None,
     bg_pose_field: BackgroundPoseField | None,
@@ -907,7 +1169,7 @@ def _write_overlay_video(
         with torch.no_grad():
             for t, fidx in enumerate(tqdm(cache.frame_indices, desc="render overlay", ncols=80)):
                 frame = _current_frame(
-                    t, fidx, obj_gaussians, obj_pose_field, hand_slots,
+                    t, fidx, obj_slots, hand_slots,
                     bg_gaussians, bg_pose_field,
                 )
                 rgb = _render_2dgs_rgb(frame, K, width, height)
@@ -950,8 +1212,7 @@ def _dump_progress_frame(
     width: int,
     height: int,
     device: torch.device,
-    obj_gaussians: torch.nn.Module,
-    obj_pose_field: ObjectPoseField,
+    obj_slots: list[ObjectSlot],
     hand_slots: list[HandSlot],
     bg_gaussians: BackgroundGaussians | None,
     bg_pose_field: BackgroundPoseField | None,
@@ -961,9 +1222,9 @@ def _dump_progress_frame(
     with torch.no_grad():
         fidx = cache.frame_indices[t]
         target = _target_rgb(cache, t, device, mask_background)
-        n_mask_classes = 1 + len(hand_slots)
+        n_mask_classes = len(obj_slots) + len(hand_slots)
         frame, labels = _current_frame_with_labels(
-            t, fidx, obj_gaussians, obj_pose_field, hand_slots,
+            t, fidx, obj_slots, hand_slots,
             bg_gaussians, bg_pose_field, n_mask_classes,
         )
         render_frame = replace(
@@ -1001,11 +1262,14 @@ def refine_simple(
     frames_dir: str,
     depth_dir: str | None,
     intrinsics_path: str,
-    object_mesh_path: str,
-    object_poses_dir: str,
-    object_mask_dir: str,
-    refined_object_poses_dir: str,
+    object_mesh_path: str | None,
+    object_poses_dir: str | None,
+    object_mask_dir: str | None,
+    refined_object_poses_dir: str | None,
     overlay_path: str,
+    objects_root: str | None = None,
+    refined_objects_root: str | None = None,
+    missing_object_mask_unknown: bool = False,
     left_hand_pose_dir: str | None = None,
     left_hand_mask_dir: str | None = None,
     right_hand_pose_dir: str | None = None,
@@ -1037,8 +1301,12 @@ def refine_simple(
     w_smooth_hand_object_relative_trans: float = 0.0,
     w_smooth_camera_rot: float = 0.01,
     w_smooth_camera_trans: float = 0.01,
+    smooth_in_world: bool = False,
     w_mask: float = 1.0,
     w_relative_depth: float = 0.0,
+    w_metric_depth: float = 0.0,
+    metric_depth_huber_delta: float = 0.02,
+    metric_depth_max_m: float = 3.0,
     w_perceptual: float = 0.0,
     vgg_weights_path: str | None = None,
     perceptual_resize: int = 224,
@@ -1062,10 +1330,16 @@ def refine_simple(
     render_every: int = 25,
     progress_dir: str | None = None,
     debug_frame_idx: int | None = None,
+    scene_export_path: str | None = None,
+    scene_export_bg_points: int = 20000,
     fps: float = 30.0,
     seed: int = 0,
     device: str = "cuda",
 ) -> None:
+    object_specs = _object_specs(
+        object_mesh_path, object_poses_dir, object_mask_dir, refined_object_poses_dir,
+        objects_root, refined_objects_root,
+    )
     if (left_hand_pose_dir or right_hand_pose_dir) and mano_assets_root is None:
         raise ValueError("mano_assets_root is required when refining hand tracks")
     if left_hand_pose_dir and left_hand_mask_dir is None:
@@ -1076,6 +1350,8 @@ def refine_simple(
         raise ValueError("depth_dir is required unless --mask-background is set")
     if float(w_relative_depth) > 0.0 and depth_dir is None:
         raise ValueError("depth_dir is required when --w_relative_depth is nonzero")
+    if float(w_metric_depth) > 0.0 and depth_dir is None:
+        raise ValueError("depth_dir is required when --w_metric_depth is nonzero")
     lr_schedule = str(lr_schedule).lower()
     if lr_schedule not in {"constant", "cosine"}:
         raise ValueError("lr_schedule must be 'constant' or 'cosine'")
@@ -1087,6 +1363,7 @@ def refine_simple(
     device_t = torch.device(device)
 
     K, width, height = load_intrinsics(intrinsics_path, str(device_t))
+    full_K, full_width, full_height = K.clone(), int(width), int(height)
     if train_resolution_scale != 1.0:
         s = float(train_resolution_scale)
         K = K.clone()
@@ -1099,9 +1376,17 @@ def refine_simple(
         print(f"Training/render resolution: {width}x{height} (scale={s:.3f})")
 
     available_frames = _list_frame_indices(frames_dir)
-    object_track = _restrict_object_track(load_object_poses(object_poses_dir, str(device_t)), available_frames)
-    frame_indices = list(object_track.frame_indices)
+    # The training frames are those where every object has a pose and an RGB
+    # frame exists; each object field is then indexed by the same positions.
+    raw_object_tracks = [load_object_poses(spec.poses_dir, str(device_t)) for spec in object_specs]
+    keep = set(available_frames)
+    for track in raw_object_tracks:
+        keep &= set(track.frame_indices)
+    object_tracks = [_restrict_object_track(track, keep) for track in raw_object_tracks]
+    frame_indices = list(object_tracks[0].frame_indices)
     keep = set(frame_indices)
+    frame_to_t = {fidx: t for t, fidx in enumerate(frame_indices)}
+    print(f"Objects: {[spec.name for spec in object_specs]} over {len(frame_indices)} frames")
 
     raw_hand_specs: list[tuple[str, str, str, str | None]] = []
     if left_hand_pose_dir is not None:
@@ -1117,33 +1402,47 @@ def refine_simple(
     cache = SimpleFrameCache(
         frame_indices=frame_indices,
         frames_dir=frames_dir,
-        depth_dir=depth_dir if (not mask_background or float(w_relative_depth) > 0.0) else None,
-        object_mask_dir=object_mask_dir,
+        depth_dir=depth_dir if (
+            not mask_background or float(w_relative_depth) > 0.0 or float(w_metric_depth) > 0.0
+        ) else None,
+        object_mask_dirs=[spec.mask_dir for spec in object_specs],
         hand_mask_dirs=[h[2] for h in hand_tracks],
         height=height,
         width=width,
         valid_mask_threshold=valid_mask_threshold,
         valid_mask_erode_iters=valid_mask_erode_iters,
+        missing_object_mask_unknown=missing_object_mask_unknown,
     )
     valid_mask = cache.valid_mask.to(device_t, non_blocking=True)
     valid_denom = valid_mask.sum().clamp_min(1.0)
 
-    obj_pose_field = ObjectPoseField(object_track).to(device_t)
-    obj_verts, obj_colors, obj_faces = load_object_mesh(object_mesh_path, str(device_t))
-    obj_gaussians = init_object_face_gaussians_from_mesh(
-        obj_verts, obj_faces, obj_colors,
-        normal_thin_factor=face_normal_thin_factor_obj,
-        init_opacity=init_opacity_obj,
-        init_scale_factor=init_gaussian_scale_factor,
-    ).to(device_t)
-    obj_g_params = _trainable_gaussian_params(obj_gaussians)
-    if float(lr_object_scale) > 0.0 and hasattr(obj_gaussians, "_log_scale_global"):
-        obj_gaussians._log_scale_global.requires_grad_(True)
-    object_trainable = "appearance"
-    if getattr(obj_gaussians, "_log_scale_global", None) is not None and obj_gaussians._log_scale_global.requires_grad:
-        object_trainable += ", global scale"
-    print(f"Object: {obj_gaussians.num_gaussians()} face-anchored Gaussians "
-          f"(trainable: {object_trainable})")
+    obj_slots: list[ObjectSlot] = []
+    obj_g_params: list[torch.nn.Parameter] = []
+    for spec, track in zip(object_specs, object_tracks):
+        pose_field = ObjectPoseField(track).to(device_t)
+        obj_verts, obj_colors, obj_faces = load_object_mesh(spec.mesh_path, str(device_t))
+        obj_gaussians = init_object_face_gaussians_from_mesh(
+            obj_verts, obj_faces, obj_colors,
+            normal_thin_factor=face_normal_thin_factor_obj,
+            init_opacity=init_opacity_obj,
+            init_scale_factor=init_gaussian_scale_factor,
+        ).to(device_t)
+        obj_g_params.extend(_trainable_gaussian_params(obj_gaussians))
+        if float(lr_object_scale) > 0.0 and hasattr(obj_gaussians, "_log_scale_global"):
+            obj_gaussians._log_scale_global.requires_grad_(True)
+        object_trainable = "appearance"
+        if getattr(obj_gaussians, "_log_scale_global", None) is not None and obj_gaussians._log_scale_global.requires_grad:
+            object_trainable += ", global scale"
+        print(f"Object {spec.name}: {obj_gaussians.num_gaussians()} face-anchored Gaussians "
+              f"(trainable: {object_trainable})")
+        obj_slots.append(ObjectSlot(
+            name=spec.name,
+            pose_field=pose_field,
+            gaussians=obj_gaussians,
+            verts=obj_verts,
+            faces=obj_faces,
+            output_pose_dir=spec.output_pose_dir,
+        ))
 
     hand_slots: list[HandSlot] = []
     for slot_i, (side, ht, mask_dir, out_dir) in enumerate(hand_tracks):
@@ -1271,7 +1570,7 @@ def refine_simple(
         print(f"Background: {bg_gaussians.num_gaussians()} depth-initialized Gaussians")
 
     use_mask_loss = float(w_mask) > 0.0
-    n_mask_classes = 1 + len(hand_slots)
+    n_mask_classes = len(obj_slots) + len(hand_slots)
     if use_mask_loss:
         print(f"Segmentation mask L1: weight={float(w_mask):.4g}, classes={n_mask_classes}")
 
@@ -1282,6 +1581,18 @@ def refine_simple(
         region = "foreground masks" if mask_background else "valid image region"
         print(f"Relative MoGe depth-gradient loss: weight={float(w_relative_depth):.4g}, "
               f"region={region}")
+
+    use_metric_depth_loss = float(w_metric_depth) > 0.0
+    if use_metric_depth_loss:
+        if cache.depth is None:
+            raise RuntimeError("Depth cache is missing; depth_dir is required for metric depth loss.")
+        print(f"Metric depth Huber loss: weight={float(w_metric_depth):.4g}, "
+              f"delta={float(metric_depth_huber_delta):.4g} m, max={float(metric_depth_max_m):.3g} m")
+    if smooth_in_world:
+        if bg_pose_field is None:
+            print("Ignoring smooth_in_world because there is no camera/background pose field.")
+        else:
+            print("Object and hand root smoothness measured in the background world frame.")
 
     if (
         float(w_smooth_hand_object_relative_rot) > 0.0
@@ -1306,16 +1617,17 @@ def refine_simple(
         print(f"VGG16 perceptual L1: weight={float(w_perceptual):.4g}, "
               f"resize={int(perceptual_resize)}")
 
-    object_sdf: ObjectSDFGrid | None = None
+    use_penetration_loss = float(w_hand_object_penetration) > 0.0 and bool(hand_slots)
     if float(w_hand_object_penetration) > 0.0:
         if hand_slots:
-            object_sdf = _build_object_sdf_grid(
-                obj_verts,
-                obj_faces,
-                object_sdf_resolution,
-                hand_object_penetration_margin,
-                device_t,
-            )
+            for obj in obj_slots:
+                obj.sdf = _build_object_sdf_grid(
+                    obj.verts,
+                    obj.faces,
+                    object_sdf_resolution,
+                    hand_object_penetration_margin,
+                    device_t,
+                )
             print(
                 f"Hand/object penetration: weight={float(w_hand_object_penetration):.4g}, "
                 f"margin={float(hand_object_penetration_margin):.4g}, "
@@ -1341,9 +1653,14 @@ def refine_simple(
               f"(frame {frame_indices[progress_t]:06d}, every {render_every} steps)")
         _dump_progress_frame(
             progress_dir, 0, progress_t, cache, K, width, height, device_t,
-            obj_gaussians, obj_pose_field, hand_slots, bg_gaussians, bg_pose_field,
+            obj_slots, hand_slots, bg_gaussians, bg_pose_field,
             mask_background=mask_background,
         )
+
+    initial_state = (
+        _scene_state(obj_slots, hand_slots, bg_pose_field, len(frame_indices))
+        if scene_export_path is not None else None
+    )
 
     param_groups: list[dict] = []
     if obj_g_params:
@@ -1354,12 +1671,13 @@ def refine_simple(
             param_groups.append({"params": params, "lr": lr_gaussians})
     if bg_g_params:
         param_groups.append({"params": bg_g_params, "lr": lr_gaussians})
-    if float(lr_object_scale) > 0.0 and hasattr(obj_gaussians, "_log_scale_global"):
-        param_groups.append({"params": [obj_gaussians._log_scale_global], "lr": lr_object_scale})
-    param_groups.extend([
-        {"params": [obj_pose_field.axis_angle], "lr": lr_object_pose},
-        {"params": [obj_pose_field.translation], "lr": lr_object_pose},
-    ])
+    for obj in obj_slots:
+        if float(lr_object_scale) > 0.0 and hasattr(obj.gaussians, "_log_scale_global"):
+            param_groups.append({"params": [obj.gaussians._log_scale_global], "lr": lr_object_scale})
+        param_groups.extend([
+            {"params": [obj.pose_field.axis_angle], "lr": lr_object_pose},
+            {"params": [obj.pose_field.translation], "lr": lr_object_pose},
+        ])
     if bg_pose_field is not None:
         param_groups.extend([
             {"params": [bg_pose_field.axis_angle], "lr": lr_camera_pose},
@@ -1403,17 +1721,19 @@ def refine_simple(
                 for group, base_lr in zip(optimizer.param_groups, base_lrs):
                     group["lr"] = base_lr * lr_scale
             optimizer.zero_grad(set_to_none=True)
-            photo = obj_pose_field.axis_angle.new_zeros(())
-            mask_l1 = obj_pose_field.axis_angle.new_zeros(())
-            relative_depth = obj_pose_field.axis_angle.new_zeros(())
-            perceptual = obj_pose_field.axis_angle.new_zeros(())
-            penetration = obj_pose_field.axis_angle.new_zeros(())
+            zero = obj_slots[0].pose_field.axis_angle.new_zeros(())
+            photo = zero
+            mask_l1 = zero
+            relative_depth = zero
+            metric_depth = zero
+            perceptual = zero
+            penetration = zero
             for t in batch:
                 fidx = frame_indices[t]
                 target = _target_rgb(cache, t, device_t, mask_background)
                 if use_mask_loss:
                     frame, labels = _current_frame_with_labels(
-                        t, fidx, obj_gaussians, obj_pose_field, hand_slots,
+                        t, fidx, obj_slots, hand_slots,
                         bg_gaussians, bg_pose_field, n_mask_classes,
                     )
                     render_frame = replace(
@@ -1428,7 +1748,7 @@ def refine_simple(
                     )
                 else:
                     frame = _current_frame(
-                        t, fidx, obj_gaussians, obj_pose_field, hand_slots,
+                        t, fidx, obj_slots, hand_slots,
                         bg_gaussians, bg_pose_field,
                     )
                     pred = _render_2dgs_rgb(frame, K, width, height)
@@ -1436,46 +1756,64 @@ def refine_simple(
                 photo = photo + (per_pixel * valid_mask).sum() / valid_denom
                 if perceptual_loss_fn is not None:
                     perceptual = perceptual + perceptual_loss_fn(pred, target, valid_mask)
-                if use_relative_depth_loss:
+                if use_relative_depth_loss or use_metric_depth_loss:
                     rendered_depth, rendered_alpha = _render_2dgs_depth(frame, K, width, height)
                     target_depth = cache.depth[t].to(device_t, non_blocking=True)
                     depth_mask = (
                         cache.union_mask(t, device_t)
                         if mask_background else valid_mask
                     )
-                    depth_mask = depth_mask * (rendered_alpha > 1e-3).to(depth_mask.dtype)
+                if use_relative_depth_loss:
                     relative_depth = relative_depth + depth_gradient_loss(
                         rendered_depth,
                         target_depth,
-                        depth_mask,
+                        depth_mask * (rendered_alpha > 1e-3).to(depth_mask.dtype),
                     )
-                if object_sdf is not None:
-                    penetration = penetration + _hand_object_penetration_loss(
-                        t,
-                        fidx,
-                        obj_pose_field,
-                        obj_gaussians,
-                        hand_slots,
-                        object_sdf,
-                        hand_object_penetration_margin,
-                        hand_object_penetration_max_verts,
+                if use_metric_depth_loss:
+                    # Stereo depth is metric but sparse: zero/inf pixels and
+                    # values past the stereo range are unknown, not far away.
+                    metric_valid = (
+                        torch.isfinite(target_depth)
+                        & (target_depth > 0.0)
+                        & (target_depth < float(metric_depth_max_m))
+                        & (rendered_alpha > 0.5)
+                    ).to(depth_mask.dtype)
+                    metric_depth = metric_depth + depth_loss(
+                        rendered_depth,
+                        torch.where(metric_valid > 0, target_depth, torch.zeros_like(target_depth)),
+                        depth_mask * metric_valid,
+                        huber_delta=float(metric_depth_huber_delta),
                     )
+                if use_penetration_loss:
+                    for obj in obj_slots:
+                        penetration = penetration + _hand_object_penetration_loss(
+                            t,
+                            fidx,
+                            obj,
+                            hand_slots,
+                            hand_object_penetration_margin,
+                            hand_object_penetration_max_verts,
+                        )
             photo = photo / float(max(len(batch), 1))
             mask_l1 = mask_l1 / float(max(len(batch), 1))
             relative_depth = relative_depth / float(max(len(batch), 1))
+            metric_depth = metric_depth / float(max(len(batch), 1))
             perceptual = perceptual / float(max(len(batch), 1))
             penetration = penetration / float(max(len(batch), 1))
             smooth = _pose_smoothness(
-                obj_pose_field, hand_slots, bg_pose_field,
+                obj_slots, hand_slots, bg_pose_field,
                 w_smooth_object_rot, w_smooth_object_trans,
                 w_smooth_hand_rot, w_smooth_hand_articulation, w_smooth_hand_trans,
                 w_smooth_hand_object_relative_rot, w_smooth_hand_object_relative_trans,
                 w_smooth_camera_rot, w_smooth_camera_trans,
+                smooth_in_world=smooth_in_world,
+                frame_to_t=frame_to_t,
             ) / float(n_batches)
             loss = (
                 photo
                 + float(w_mask) * mask_l1
                 + float(w_relative_depth) * relative_depth
+                + float(w_metric_depth) * metric_depth
                 + float(w_perceptual) * perceptual
                 + float(w_hand_object_penetration) * penetration
                 + smooth
@@ -1536,7 +1874,7 @@ def refine_simple(
             if render_every > 0 and progress_dir is not None and step % int(render_every) == 0:
                 _dump_progress_frame(
                     progress_dir, step, progress_t, cache, K, width, height, device_t,
-                    obj_gaussians, obj_pose_field, hand_slots, bg_gaussians, bg_pose_field,
+                    obj_slots, hand_slots, bg_gaussians, bg_pose_field,
                     mask_background=mask_background,
                 )
             pbar.update(1)
@@ -1544,6 +1882,7 @@ def refine_simple(
                 photo=f"{float(photo.detach()):.4f}",
                 mask=f"{float(mask_l1.detach()):.4f}",
                 rdepth=f"{float(relative_depth.detach()):.4f}",
+                mdepth=f"{float(metric_depth.detach()):.4f}",
                 perc=f"{float(perceptual.detach()):.4f}",
                 pen=f"{float(penetration.detach()):.4f}",
                 lr=f"{lr_scale:.3g}",
@@ -1553,18 +1892,38 @@ def refine_simple(
     if render_every > 0 and progress_dir is not None:
         _dump_progress_frame(
             progress_dir, step, progress_t, cache, K, width, height, device_t,
-            obj_gaussians, obj_pose_field, hand_slots, bg_gaussians, bg_pose_field,
+            obj_slots, hand_slots, bg_gaussians, bg_pose_field,
             mask_background=mask_background,
         )
         _stitch_progress_video(progress_dir)
 
-    refined_obj_track = obj_pose_field.export_track()
-    s_obj_learned = float(obj_gaussians.object_scale().detach())
-    refined_obj_track.scales = refined_obj_track.scales * s_obj_learned
-    if float(lr_object_scale) > 0.0:
-        print(f"Learned object scale: {s_obj_learned:.4f}")
-    save_object_poses(refined_obj_track, refined_object_poses_dir)
-    print(f"Wrote refined object poses -> {refined_object_poses_dir}")
+    for obj in obj_slots:
+        refined_obj_track = obj.pose_field.export_track()
+        s_obj_learned = float(obj.gaussians.object_scale().detach())
+        refined_obj_track.scales = refined_obj_track.scales * s_obj_learned
+        if float(lr_object_scale) > 0.0:
+            print(f"Learned {obj.name} scale: {s_obj_learned:.4f}")
+        if obj.output_pose_dir is None:
+            continue
+        save_object_poses(refined_obj_track, obj.output_pose_dir)
+        print(f"Wrote refined {obj.name} poses -> {obj.output_pose_dir}")
+    if scene_export_path is not None:
+        _export_scene(
+            scene_export_path,
+            initial_state,
+            _scene_state(obj_slots, hand_slots, bg_pose_field, len(frame_indices)),
+            obj_slots,
+            hand_slots,
+            bg_gaussians,
+            frame_indices,
+            full_K,
+            full_width,
+            full_height,
+            frame_indices[ref_t],
+            fps,
+            scene_export_bg_points,
+        )
+        print(f"Wrote initial/refined scene -> {scene_export_path}")
     for slot in hand_slots:
         if slot.output_pose_dir is None:
             continue
@@ -1581,8 +1940,7 @@ def refine_simple(
         width=width,
         height=height,
         device=device_t,
-        obj_gaussians=obj_gaussians,
-        obj_pose_field=obj_pose_field,
+        obj_slots=obj_slots,
         hand_slots=hand_slots,
         bg_gaussians=bg_gaussians,
         bg_pose_field=bg_pose_field,
@@ -1597,11 +1955,19 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--depth_dir", default=None,
                    help="Depth frames for background initialization. Required unless --mask-background is set.")
     p.add_argument("--intrinsics_path", required=True)
-    p.add_argument("--object_mesh_path", required=True)
-    p.add_argument("--object_poses_dir", required=True)
-    p.add_argument("--object_mask_dir", required=True)
-    p.add_argument("--refined_object_poses_dir", required=True)
+    p.add_argument("--object_mesh_path", default=None)
+    p.add_argument("--object_poses_dir", default=None)
+    p.add_argument("--object_mask_dir", default=None)
+    p.add_argument("--refined_object_poses_dir", default=None)
     p.add_argument("--overlay_path", required=True)
+    p.add_argument("--objects_root", default=None,
+                   help="Multi-object input: <root>/<name>/{mesh.<ext>, poses/, masks/}. "
+                        "May be combined with the single-object flags.")
+    p.add_argument("--refined_objects_root", default=None,
+                   help="Refined poses for --objects_root go to <root>/<name>/.")
+    p.add_argument("--missing_object_mask_unknown", action="store_true",
+                   help="Treat a missing object mask file as unknown (skip that channel) "
+                        "instead of as an empty mask.")
     p.add_argument("--left_hand_pose_dir", default=None)
     p.add_argument("--left_hand_mask_dir", default=None)
     p.add_argument("--right_hand_pose_dir", default=None)
@@ -1644,10 +2010,19 @@ def parse_args() -> argparse.Namespace:
                         "0 disables.")
     p.add_argument("--w_smooth_camera_rot", type=float, default=0.01)
     p.add_argument("--w_smooth_camera_trans", type=float, default=0.01)
+    p.add_argument("--smooth_in_world", action="store_true",
+                   help="Measure object/hand root smoothness in the background world frame "
+                        "instead of the camera frame.")
     p.add_argument("--w_mask", type=float, default=1.0,
                    help="Weight for L1 segmentation mask loss. 0 disables.")
     p.add_argument("--w_relative_depth", type=float, default=0.0,
                    help="Weight for log-depth-gradient loss against MoGe depth. 0 disables.")
+    p.add_argument("--w_metric_depth", type=float, default=0.0,
+                   help="Weight for absolute Huber depth loss against metric (e.g. stereo) depth. 0 disables.")
+    p.add_argument("--metric_depth_huber_delta", type=float, default=0.02,
+                   help="Huber transition for --w_metric_depth, in metres.")
+    p.add_argument("--metric_depth_max_m", type=float, default=3.0,
+                   help="Ignore target depth at or beyond this range for --w_metric_depth.")
     p.add_argument("--w_perceptual", type=float, default=0.0,
                    help="Weight for VGG16 perceptual feature L1 loss. 0 disables.")
     p.add_argument("--vgg_weights_path", default=None,
@@ -1683,6 +2058,10 @@ def parse_args() -> argparse.Namespace:
                    help="Directory for simple-refinement progress PNGs. Defaults next to overlay_path.")
     p.add_argument("--debug_frame_idx", type=int, default=None,
                    help="Frame index to use for intermediate progress visualizations.")
+    p.add_argument("--scene_export_path", default=None,
+                   help="Write an .npz with initial and refined camera/object/hand state for reporting.")
+    p.add_argument("--scene_export_bg_points", type=int, default=20000,
+                   help="Max background Gaussian centres in --scene_export_path. 0 keeps all.")
     p.add_argument("--fps", type=float, default=30.0)
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--device", default="cuda")

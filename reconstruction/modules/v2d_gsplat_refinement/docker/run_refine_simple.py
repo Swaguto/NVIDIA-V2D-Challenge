@@ -9,11 +9,14 @@ def run_refine_simple(
     frames_dir: str,
     depth_dir: str | None,
     intrinsics_path: str,
-    object_mesh_path: str,
-    object_poses_dir: str,
-    object_mask_dir: str,
-    refined_object_poses_dir: str,
+    object_mesh_path: str | None,
+    object_poses_dir: str | None,
+    object_mask_dir: str | None,
+    refined_object_poses_dir: str | None,
     overlay_path: str,
+    objects_root: str | None = None,
+    refined_objects_root: str | None = None,
+    missing_object_mask_unknown: bool = False,
     left_hand_pose_dir: str | None = None,
     left_hand_mask_dir: str | None = None,
     right_hand_pose_dir: str | None = None,
@@ -45,8 +48,12 @@ def run_refine_simple(
     w_smooth_hand_object_relative_trans: float = 0.0,
     w_smooth_camera_rot: float = 0.1,
     w_smooth_camera_trans: float = 0.1,
+    smooth_in_world: bool = False,
     w_mask: float = 1.0,
     w_relative_depth: float = 0.0,
+    w_metric_depth: float = 0.0,
+    metric_depth_huber_delta: float = 0.02,
+    metric_depth_max_m: float = 3.0,
     w_perceptual: float = 0.0,
     vgg_weights_path: str | None = None,
     perceptual_resize: int = 224,
@@ -70,6 +77,8 @@ def run_refine_simple(
     render_every: int = 25,
     progress_dir: str | None = None,
     debug_frame_idx: int | None = None,
+    scene_export_path: str | None = None,
+    scene_export_bg_points: int = 20000,
     fps: float = 30.0,
     seed: int = 0,
     dev: bool = False,
@@ -78,6 +87,8 @@ def run_refine_simple(
         raise ValueError("depth_dir is required unless --mask-background is set")
     if float(w_relative_depth) > 0.0 and depth_dir is None:
         raise ValueError("depth_dir is required when w_relative_depth is nonzero")
+    if float(w_metric_depth) > 0.0 and depth_dir is None:
+        raise ValueError("depth_dir is required when w_metric_depth is nonzero")
     if vgg_weights_path is not None:
         os.makedirs(
             os.path.dirname(os.path.abspath(vgg_weights_path)) or ".",
@@ -87,13 +98,14 @@ def run_refine_simple(
     inputs: dict[str, str] = {
         "frames_dir":       frames_dir,
         "intrinsics_path":  intrinsics_path,
-        "object_mesh_path": object_mesh_path,
-        "object_poses_dir": object_poses_dir,
-        "object_mask_dir":  object_mask_dir,
     }
     if depth_dir is not None:
         inputs["depth_dir"] = depth_dir
     for k, v in {
+        "object_mesh_path":        object_mesh_path,
+        "object_poses_dir":        object_poses_dir,
+        "object_mask_dir":         object_mask_dir,
+        "objects_root":            objects_root,
         "left_hand_pose_dir":      left_hand_pose_dir,
         "left_hand_mask_dir":      left_hand_mask_dir,
         "right_hand_pose_dir":     right_hand_pose_dir,
@@ -106,10 +118,12 @@ def run_refine_simple(
             inputs[k] = v
 
     outputs: dict[str, str] = {
-        "refined_object_poses_dir": refined_object_poses_dir,
         "overlay_path":             overlay_path,
     }
     for k, v in {
+        "refined_object_poses_dir":    refined_object_poses_dir,
+        "refined_objects_root":        refined_objects_root,
+        "scene_export_path":           scene_export_path,
         "refined_left_hand_pose_dir":  refined_left_hand_pose_dir,
         "refined_right_hand_pose_dir": refined_right_hand_pose_dir,
         "refined_camera_poses_dir":    refined_camera_poses_dir,
@@ -143,6 +157,12 @@ def run_refine_simple(
         "w_smooth_camera_trans": w_smooth_camera_trans,
         "w_mask":                w_mask,
         "w_relative_depth":      w_relative_depth,
+        "w_metric_depth":        w_metric_depth,
+        "metric_depth_huber_delta": metric_depth_huber_delta,
+        "metric_depth_max_m":    metric_depth_max_m,
+        "smooth_in_world":       smooth_in_world,
+        "missing_object_mask_unknown": missing_object_mask_unknown,
+        "scene_export_bg_points": scene_export_bg_points,
         "w_perceptual":          w_perceptual,
         "perceptual_resize":     perceptual_resize,
         "w_hand_object_penetration": w_hand_object_penetration,
@@ -188,11 +208,15 @@ if __name__ == "__main__":
     p.add_argument("--depth_dir", default=None,
                    help="Depth frames for background initialization. Required unless --mask-background is set.")
     p.add_argument("--intrinsics_path", required=True)
-    p.add_argument("--object_mesh_path", required=True)
-    p.add_argument("--object_poses_dir", required=True)
-    p.add_argument("--object_mask_dir", required=True)
-    p.add_argument("--refined_object_poses_dir", required=True)
+    p.add_argument("--object_mesh_path", default=None)
+    p.add_argument("--object_poses_dir", default=None)
+    p.add_argument("--object_mask_dir", default=None)
+    p.add_argument("--refined_object_poses_dir", default=None)
     p.add_argument("--overlay_path", required=True)
+    p.add_argument("--objects_root", default=None,
+                   help="Multi-object input: <root>/<name>/{mesh.<ext>, poses/, masks/}.")
+    p.add_argument("--refined_objects_root", default=None)
+    p.add_argument("--missing_object_mask_unknown", action="store_true")
     p.add_argument("--left_hand_pose_dir", default=None)
     p.add_argument("--left_hand_mask_dir", default=None)
     p.add_argument("--right_hand_pose_dir", default=None)
@@ -235,10 +259,15 @@ if __name__ == "__main__":
                         "0 disables.")
     p.add_argument("--w_smooth_camera_rot", type=float, default=0.1)
     p.add_argument("--w_smooth_camera_trans", type=float, default=0.1)
+    p.add_argument("--smooth_in_world", action="store_true")
     p.add_argument("--w_mask", type=float, default=1.0,
                    help="Weight for L1 segmentation mask loss. 0 disables.")
     p.add_argument("--w_relative_depth", type=float, default=0.0,
                    help="Weight for log-depth-gradient loss against MoGe depth. 0 disables.")
+    p.add_argument("--w_metric_depth", type=float, default=0.0,
+                   help="Weight for absolute Huber loss against metric (stereo) depth. 0 disables.")
+    p.add_argument("--metric_depth_huber_delta", type=float, default=0.02)
+    p.add_argument("--metric_depth_max_m", type=float, default=3.0)
     p.add_argument("--w_perceptual", type=float, default=0.0,
                    help="Weight for VGG16 perceptual feature L1 loss. 0 disables.")
     p.add_argument("--vgg_weights_path", default=None,
@@ -271,6 +300,8 @@ if __name__ == "__main__":
     p.add_argument("--render_every", type=int, default=25)
     p.add_argument("--progress_dir", default=None)
     p.add_argument("--debug_frame_idx", type=int, default=None)
+    p.add_argument("--scene_export_path", default=None)
+    p.add_argument("--scene_export_bg_points", type=int, default=20000)
     p.add_argument("--fps", type=float, default=30.0)
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--dev", action="store_true")

@@ -1,0 +1,102 @@
+#!/usr/bin/env bash
+# Issue #7: joint Gaussian-splat refinement of one Track 3 episode, end to end.
+#
+#   1. gsplat_inputs.py      Track 3 + issue-6 outputs -> refinement input layout
+#   2. refine_simple         photometric + segmentation + metric stereo depth +
+#                            world-frame temporal smoothness; objects, hands and
+#                            camera optimized jointly
+#   3. refinement_report.py  jitter / drift / contact report, 3D viewer, and the
+#                            official diagnostic score before vs after
+#
+# Usage:
+#   EPISODE=2 DATA=... RESULTS=... BUNDLE=... HANDS_RUN=... MANO_ROOT=... OUT=... \
+#     scripts/track3/refine_episode.sh
+#
+# Required:  EPISODE DATA RESULTS BUNDLE OUT
+# Optional:  HANDS_RUN (issue-6 run dir; omit to refine objects + camera only)
+#            MANO_ROOT (dir with models/MANO_RIGHT.pkl; required with HANDS_RUN)
+#            REFINE_MODE=docker|native (default docker; native runs
+#              $REFINE_PYTHON -m v2d.gsplat_refinement.lib.refine_simple in an
+#              env with gsplat>=1.4 + manotorch, e.g. a RunPod pod without docker)
+#            SCORE=0 to skip the official before/after diagnostic score
+#            START / FRAMES (sub-window), EPOCHS, W_METRIC_DEPTH, W_SMOOTH,
+#            LR_POSE, LR_CAMERA, EXTRA_REFINE_ARGS
+set -euo pipefail
+
+: "${EPISODE:?}" "${DATA:?}" "${RESULTS:?}" "${BUNDLE:?}" "${OUT:?}"
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+PY="${PYTHON:-python}"
+REFINE_MODE="${REFINE_MODE:-docker}"
+REFINE_PYTHON="${REFINE_PYTHON:-$PY}"
+EPOCHS="${EPOCHS:-10}"
+W_METRIC_DEPTH="${W_METRIC_DEPTH:-100}"
+W_SMOOTH="${W_SMOOTH:-1000}"
+LR_POSE="${LR_POSE:-1e-3}"
+LR_CAMERA="${LR_CAMERA:-1e-3}"
+
+IN="$OUT/inputs"
+REF="$OUT/refined"
+REPORT="$OUT/report"
+
+window=()
+[[ -n "${START:-}" ]] && window+=(--start "$START")
+[[ -n "${FRAMES:-}" ]] && window+=(--frames "$FRAMES")
+hands_in=()
+[[ -n "${HANDS_RUN:-}" ]] && hands_in+=(--hands-run "$HANDS_RUN")
+
+if [[ ! -f "$IN/inputs.json" ]]; then
+  echo "== 1/3 assembling inputs -> $IN"
+  "$PY" "$REPO/scripts/track3/gsplat_inputs.py" --episode "$EPISODE" --data "$DATA" \
+    --results "$RESULTS" --bundle "$BUNDLE" --out "$IN" ${hands_in[@]+"${hands_in[@]}"} ${window[@]+"${window[@]}"}
+fi
+FPS="$("$PY" -c "import json,sys; print(json.load(open(sys.argv[1]))['fps'] or 20)" "$IN/inputs.json")"
+
+args=(
+  --frames_dir "$IN/frames" --depth_dir "$IN/depth" --intrinsics_path "$IN/intrinsics.json"
+  --objects_root "$IN/objects" --refined_objects_root "$REF/objects" --missing_object_mask_unknown
+  --background_pose_init_dir "$IN/camera_c2w" --refined_camera_poses_dir "$REF/camera"
+  --overlay_path "$REF/overlay.mp4" --progress_dir "$REF/progress" --scene_export_path "$REF/scene.npz"
+  --n_epochs "$EPOCHS" --batch_size 4 --train_resolution_scale 0.5
+  --lr_gaussians 1e-3 --lr_object_pose "$LR_POSE" --lr_object_scale 0
+  --lr_hand_pose "$LR_POSE" --lr_hand_articulation "$LR_POSE" --lr_hand_shape 1e-3 --lr_hand_scale 1e-3
+  --lr_camera_pose "$LR_CAMERA" --lr_schedule cosine --lr_cosine_min_factor 0.1
+  --init_opacity_obj 0.5 --init_opacity_hand 0.5 --init_opacity_bg 0.5
+  --w_mask 1.0 --w_relative_depth 1.0 --w_metric_depth "$W_METRIC_DEPTH"
+  --smooth_in_world
+  --w_smooth_object_rot "$W_SMOOTH" --w_smooth_object_trans "$W_SMOOTH"
+  --w_smooth_hand_rot "$W_SMOOTH" --w_smooth_hand_articulation "$W_SMOOTH" --w_smooth_hand_trans "$W_SMOOTH"
+  --w_smooth_camera_rot "$W_SMOOTH" --w_smooth_camera_trans "$W_SMOOTH"
+  --render_every 25 --fps "$FPS"
+)
+for side in left right; do
+  if [[ -d "$IN/hands/$side/poses" ]]; then
+    : "${MANO_ROOT:?MANO_ROOT (containing models/MANO_RIGHT.pkl) is required to refine hands}"
+    args+=(--"${side}_hand_pose_dir" "$IN/hands/$side/poses" --"${side}_hand_mask_dir" "$IN/hands/$side/masks"
+           --refined_"${side}"_hand_pose_dir "$REF/hands/$side")
+  fi
+done
+[[ -n "${MANO_ROOT:-}" ]] && args+=(--mano_assets_root "$MANO_ROOT")
+# shellcheck disable=SC2206
+args+=(${EXTRA_REFINE_ARGS:-})
+
+echo "== 2/3 refining ($REFINE_MODE) -> $REF"
+mkdir -p "$REF"
+printf '%q ' "${args[@]}" > "$REF/command.txt"
+if [[ "$REFINE_MODE" == docker ]]; then
+  # Host needs: pip install -e reconstruction/modules/v2d_docker \
+  #   -e reconstruction/modules/v2d_gsplat_refinement/docker, and the
+  # v2d_gsplat_refinement image (python -m v2d.gsplat_refinement.docker.build).
+  "$PY" -m v2d.gsplat_refinement.docker.run_refine_simple "${args[@]}" 2>&1 | tee "$REF/refine.log"
+else
+  "$REFINE_PYTHON" -m v2d.gsplat_refinement.lib.refine_simple "${args[@]}" 2>&1 | tee "$REF/refine.log"
+fi
+
+echo "== 3/3 report -> $REPORT"
+contacts=()
+score=()
+# SCORE=0 skips the official scorer (it needs the public parquet reference).
+[[ "${SCORE:-1}" != 0 ]] && score+=(--data "$DATA")
+[[ -n "${HANDS_RUN:-}" && -f "$HANDS_RUN/contacts/contacts.json" ]] && contacts+=(--contacts "$HANDS_RUN/contacts/contacts.json")
+"$PY" "$REPO/scripts/track3/refinement_report.py" --scene "$REF/scene.npz" --episode "$EPISODE" \
+  --out "$REPORT" --inputs "$IN/inputs.json" ${score[@]+"${score[@]}"} ${contacts[@]+"${contacts[@]}"}
+echo "Viewer: $REPORT/viewer.html"
