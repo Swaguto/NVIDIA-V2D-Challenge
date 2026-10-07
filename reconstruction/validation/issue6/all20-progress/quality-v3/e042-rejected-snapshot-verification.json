@@ -1,0 +1,8 @@
+{
+  "status": "rejected_snapshot_complete_local_member_verification_passed",
+  "verified_at": "2026-10-07T08:06:59.054927+00:00",
+  "members_verified": 2910,
+  "archive_bytes": 460047234,
+  "archive_sha256": "51b2622455e9c4f846c53f6d140c6af05c86deaa2b8b92a694f85078b457900c",
+  "repair_receipt_sha256": "9dc8567be9499940a2ec876672fd2f5aeb020e3b05e11b81c6f1badc63dc5445"
+}

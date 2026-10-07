@@ -1,16 +1,18 @@
 # Issue 6 handoff
 
 The current results are in [VALIDATION.md](VALIDATION.md) and the
-[replay helpers](../../validation/issue6/README.md). Episodes 2, 13 and 22 now
-pass the six stages, full-frame conversion checks, contact artifact audits and
-sampled visual/motion review. The earlier
+[replay helpers](../../validation/issue6/README.md). All 20 required episodes now
+pass six-stage receipt checks, native geometry and contact audits, complete video
+decoding and final visual review. All 20 complete private backups are independently
+verified locally. The compute pod is stopped. The earlier
 [paused checkpoint](CHECKPOINT_2026-10-06.md) is historical.
 
 No recipient has been assigned or notified by this contribution. Responsibilities
 below describe the producer/consumer contracts. Downstream work should use
-metric-valid observations and preserve unknown contacts. Episode 22 required
-an explicitly reviewed wearer-identity exclusion; this is not a general identity
-classifier. Independent contact accuracy and robot training remain unmeasured.
+metric-valid observations and preserve unknown contacts. Episode 22 now uses automatic
+stereo-depth and image continuity association without a manual exclusion. A uniform
+cross-hand continuity guard rejects ambiguous detector labels; it is not a universal
+identity classifier. Independent contact accuracy and robot training remain unmeasured.
 
 ## 1. Calibration producer (#4) → reconstruction operator
 

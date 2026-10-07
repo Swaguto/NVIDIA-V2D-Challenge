@@ -1,24 +1,28 @@
 """Run pinned ViPE SLAM on calibrated frames with measured stereo depth."""
 import argparse
 import json
-from pathlib import Path
 import time
+from pathlib import Path
 
 import cv2
 import numpy as np
-from omegaconf import OmegaConf
 import torch
+from omegaconf import OmegaConf
 from vipe.slam.system import SLAMSystem
 from vipe.streams.base import FrameAttribute, VideoFrame, VideoStream
 from vipe.utils.cameras import CameraType
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--episode', type=int, required=True)
+parser.add_argument('--input-root', type=Path, default=Path('/workspace/issue6-full-inputs'))
+parser.add_argument('--hand-root', type=Path, default=Path('/workspace/temporal-hands'))
+parser.add_argument('--runtime-root', type=Path, default=Path('/workspace'))
+parser.add_argument('--output', type=Path)
 args = parser.parse_args()
-root = Path(f'/workspace/issue6-full-inputs/e{args.episode:03d}')
+root = args.input_root / f'e{args.episode:03d}'
 manifest = json.loads((root / 'manifest.json').read_text())
 camera = manifest['color_camera']
-detections = json.loads(Path(f'/workspace/temporal-hands/e{args.episode:03d}/cleaned_detections.json').read_text())
+detections = json.loads((args.hand_root / f'e{args.episode:03d}/cleaned_detections.json').read_text())
 
 
 class StereoStream(VideoStream):
@@ -64,7 +68,7 @@ class StereoStream(VideoStream):
                              camera_type=CameraType.PINHOLE)
 
 
-config = OmegaConf.load('/workspace/ViPE/configs/slam/default.yaml')
+config = OmegaConf.load(args.runtime_root / 'ViPE/configs/slam/default.yaml')
 config.optimize_intrinsics = False
 config.keyframe_depth = None
 config.visualize = False
@@ -72,7 +76,7 @@ started = time.time()
 result = SLAMSystem(torch.device('cuda'), config).run([StereoStream()], camera_type=CameraType.PINHOLE)
 c2w = result.get_view_trajectory(0).matrix().cpu().numpy()
 assert c2w.shape == (len(manifest['frames']), 4, 4) and np.isfinite(c2w).all()
-out = Path(f'/workspace/temporal-hands/e{args.episode:03d}/cameras')
+out = args.output or args.hand_root / f'e{args.episode:03d}/cameras'
 out.mkdir(parents=True, exist_ok=True)
 intrinsics = np.tile([camera[k] for k in ('fx', 'fy', 'cx', 'cy')], (len(c2w), 1)).astype(np.float32)
 np.savez_compressed(out / 'cameras.npz', height=camera['height'], width=camera['width'],

@@ -1,0 +1,36 @@
+{
+  "status": "all20_native_validation_and_local_preservation_complete",
+  "completed_at": "2026-10-07T08:16:21.484104+00:00",
+  "episodes": 20,
+  "stages": 120,
+  "visual_reviews": 20,
+  "verified_private_backups": 20,
+  "geometry_checks": 10300,
+  "source_frames": 5246,
+  "video_frames_decoded": 15738,
+  "full_review_videos": 60,
+  "input_hashes_verified": 51673,
+  "contact_rows_audited": 84920,
+  "valid_contact_rows": 50605,
+  "unknown_contact_rows": 34315,
+  "raw_contacts": 14315,
+  "bridged_contacts": 997,
+  "cpu_tests_per_environment": 105,
+  "fresh_native_real_replay": "passed",
+  "limitations": [
+    "Uses the pinned CUDA image and system torch through isolated venvs; not a Docker-host replay",
+    "Real HaMeR replay covers two frames/four hands, ViPE181 frames and native MANO362 checks",
+    "Does not refit all20 episodes from zero or establish independent geometry/contact accuracy",
+    "Earlier dependency, source-stub, patch-line-ending, extension-loader and probe-inventory failures remain preserved",
+    "Sampled visual assessment plus complete playback; no independent per-frame or contact labels",
+    "Residual CAD offsets and unknown hand/contact periods remain; no sub2cm CAD, complete recall or robot-training claim"
+  ],
+  "aggregate_receipts": [
+    "all20-final-stage-input-integrity.json",
+    "all20-final-native-geometry.json",
+    "all20-final-hand-identity-audit.json",
+    "fresh-native-real-replay.json",
+    "e042-rejected-snapshot-verification.json",
+    "cpu-final-verification.json"
+  ]
+}

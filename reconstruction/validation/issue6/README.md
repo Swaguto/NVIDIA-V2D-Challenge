@@ -1,56 +1,62 @@
 # Issue 6 real-run validation helpers
 
-## Revised depth-reliability pass: October 7, 2026
+## October 7, 2026: all 20 native episodes validated and preserved
 
-Episode41 revealed a roughly20cm depth jump at frame192 which the previous
-worker incorrectly marked metric-valid. Final alignment now requires median
-absolute stereo residual strictly below the existing contact threshold (2cm).
-Rejected geometry remains in the raw aligned records; its contacts are unknown
-and its mesh is omitted from the final source-camera and combined videos.
-This is a consistency gate, not proof of contact precision.
+All 20 required episodes completed all six stages and passed final visual review.
+All 20 complete private checkpoints were transferred and independently verified
+locally before stopping the A40 at 08:18 UTC. Earlier failed and partial results
+remain separate historical evidence. The [final summary](all20-progress/quality-v3/final-summary.json)
+and per-episode receipts bind acceptance to each actual executed configuration.
 
-The revised all20 pass reuses every completed50/300-iteration fixed-shape fit.
-An episode41 pilot must pass actual stage/contact/geometry/video checks before
-four independent review slots proceed. Source-camera rendering reuses already
-materialized MANO meshes and avoids three unused camera-relative panels and
-their temporary PNG files. It preserves every source frame at full resolution.
-POSIX integrity checks reuse hashes only while device/inode/size/mtime/ctime
-match and the file's change time is more than two seconds old. Recent files and
-Windows files require actual byte scans. Mutation and same-size/mtime-restored
-regressions pass on the actual worker;100 CPU tests pass on Windows and Linux.
-On the actual2.69GB checkpoint, the current guarded-hash benchmark measured
-3.2seconds for the first scan and1–2milliseconds per repeated unchanged check;
-this is not an end-to-end pipeline speedup measurement.
+The final evidence covers 120 stage receipts, 10,300 native geometry checks,
+51,673 input hashes, 84,920 contact rows and all 60 complete final videos.
+Each video retains its original source axis: 5,246 source frames and 15,738
+decoded review-video frames in total. Visual review combines normal-speed full
+playback with uniform samples, consecutive motion extremes and large image changes.
+It does not provide independent per-frame hand or contact labels.
 
-The revised episode41 pilot passed all six stages,598 geometry checks, an
-independent2990-row contact audit and actual review of three complete299-frame
-videos and five risk/uniform sample sheets. Frames191–193 are unsupported and
-all15 right fingertip rows remain unknown and unbridged. Four review slots now
-run on the same A40. [Revised receipts](all20-progress/quality-v3/progress.json)
-record this separate pass; all20 acceptance remains unfinished. Exact executed
-implementation hashes are recorded; the upstream converter differs from this
-working copy only in line endings, with identical canonical source content.
+Episode 41's approximately 20 cm depth failure now remains unknown. Final median
+absolute stereo residual must stay strictly below the existing 2 cm threshold.
+Episode 43's invalid negative virtual-camera estimate remains raw and unknown.
+Episode 42 exposed a detector label temporarily assigning the missing left watch
+hand to the right track. A uniform continuity guard rejects that identity conflict
+without relabeling fits, adding detections, using manual regions or reading reference
+poses. All 15 right fingertip rows at frames 45–47 are unknown and unbridged.
+The full derived alignment was rerun; its global stereo scale and support were
+rechecked, including changed support at right 133 and 152. The rejected predecessor's
+2,910 files were separately archived and locally verified. The same guard audited
+all 20 frozen candidate traces; other flags in 43 and 45 were already unknown.
 
-As of October7 06:45UTC, revised episodes0,11,12,13,22,41 have passed actual
-three-video/five-sheet review (6/20). Twelve episodes have all six stages;
-complete local backup verification has passed for0,11,12,22,41, with13 queued.
-The twelve historical configurations remain separate from current acceptance.
+Episode 22 uses automatic stereo-depth and image continuity association without
+its historical manual exclusion. Episode 12's earlier large CAD drift was not
+reproduced with the recovered real inputs and continuous tracking. Matched periodic
+re-registration worsened its diagnostic results; continuous CAD remains fixed.
+Residual CAD offsets, unknown holding intervals and imperfect hand coverage remain.
+No sub-2-cm CAD accuracy, contact precision, complete recall or robot-training result
+is claimed. Holdouts 0,11,23,31,39 were not used for episode-specific tuning.
 
-Episode27 exposed a float32 native-reference precision failure: maximum vertex
-discrepancy14.90 micrometres exceeded the unchanged10-micrometre audit limit.
-The actual float32 worker agrees with a float64 upstream MANO reference within
-0.094 micrometres over all492 fitted-hand frame checks. The audit now evaluates
-only its independent native reference in float64; reconstruction remains
-float32. Failed evidence is retained, episode27 postchecks are resumed, and one
-uniform all20 precise-reference audit is queued. This does not grant visual
-acceptance or change fits, wearer selection, CAD, contacts or the tolerance.
+The consolidated native installer was replayed in isolated directories on the pinned
+CUDA image. Its repaired dependency pins, patch application and ViPE extension loader
+passed imports. Bounded real replay then passed HaMeR inference on two frames/four
+hands, ViPE camera reconstruction on all 181 episode-12 frames, and 362 native MANO
+geometry comparisons. Actual sources, model hashes, package inventories and failed
+attempt logs are preserved. This does not rerun all 20 fits from zero or validate the
+Docker-host orchestration. Both Windows and the actual Linux worker passed all 105
+CPU tests with zero skips; five identity regressions also passed in the fresh runtime.
 
-The revised native pass remains in progress. The network volume reached its
-quota, so new output and converted-record directories use the same pod's free
-temporary disk. Every new accepted episode requires a fully verified local
-checkpoint before shutdown. All twelve earlier complete backups are retained.
-The table and receipts below describe the earlier execution configuration;
-they do not establish acceptance under the new depth gate.
+Review speed improves by reusing immutable 50/300 fixed-shape fits, preparing episodes
+in four independent slots, rendering the original source camera from existing meshes,
+and overlapping review preparation with serial verified backup transfer. Unchanged
+integrity configurations are reused; the changed episode is rehashed separately.
+On the actual 2.69 GB model, an initial hash scan took 3.2 seconds and guarded repeats
+took about 1–2 milliseconds. This is a repeated-check measurement, not an end-to-end
+pipeline speedup. File changes invalidate the cache; recent POSIX files and Windows
+files require byte scans. Acceptance never follows automatically from prefetching.
+
+Private inputs and all result videos remain available in the locally verified
+checkpoint archives. Licensed MANO assets and binary weights are not distributed
+through GitHub. The compute pod is stopped and all existing volumes are retained.
+The user-authorized cumulative compute/storage cap is US$15.
 
 ## Earlier all-20 pass: October 7, 2026
 

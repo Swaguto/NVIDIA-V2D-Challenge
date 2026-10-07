@@ -3,13 +3,15 @@
 Local integration for [issue #6](https://github.com/Swaguto/NVIDIA-V2D-Challenge/issues/6).
 This supplies independent stages, strict camera/frame contracts and CPU-tested
 geometry. Native upstream inference, temporal MANO fitting, stereo alignment,
-hand overlays and contact annotations have now been validated on three real
-episodes (722 source frames). Independent contact precision is not measured.
+hand overlays and contact annotations have now been run and reviewed on all 20
+required real episodes (5,246 source frames). All 120 stage receipts, 60 complete
+videos and 20 private checkpoint backups are independently checked. Independent
+per-frame/contact accuracy is not measured; unsupported observations stay unknown.
 The GPU adapters need a prepared host with licensed MANO assets.
 
 Start with [HANDOFF.md](HANDOFF.md) for producer contracts, operator steps and
 reviewer handback; [VALIDATION.md](VALIDATION.md) separates completed checks from
-the measured three-episode acceptance from historical checkpoints and limitations.
+the completed all-20 native pass from historical checkpoints and accuracy limits.
 
 ## What can run now
 
@@ -24,7 +26,7 @@ python -m issue6.cli --help
 `validate`, `depth`, imported `hands`, `contacts`, `report`, and `compare` require
 no CUDA. `contacts` consumes the alignment stage's outputs; the CPU integration
 test explicitly substitutes **synthetic** hands for the unavailable GPU worker.
-Synthetic tests do not validate the worker or count toward the three episodes.
+Synthetic tests do not validate native inference or count toward real-episode acceptance.
 
 ## Public Track 3 stereo-left adapter
 
@@ -250,8 +252,9 @@ Comparison requires matching frame/time axes, calibration, object inputs and
 settings. Review all frames, especially grasp/release and occlusions. Contact
 precision and reprojection error remain null without independent labels.
 Camera-frame velocity includes wearer motion and is not pure hand jitter.
-No report automatically marks issue #6 complete. Episode 2 is the pilot;
-episodes 12 and 13 need their own validated bundles before three-episode review.
+No report automatically marks issue #6 complete. All 20 required episodes have
+separate completed stages, audits, visual reviews and verified private backups;
+their exact configurations and remaining accuracy limits are recorded in VALIDATION.md.
 
 The local preparation milestone does not claim robot training, a submission,
 measured forces, or a leaderboard improvement. No commits, pushes, PRs, cloud
