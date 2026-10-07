@@ -1,8 +1,8 @@
 {
-  "verified_at": "2026-10-07T06:15:18.061146+00:00",
+  "verified_at": "2026-10-07T06:19:43.633101+00:00",
   "detections_complete": 20,
   "accepted": 1,
-  "current": "20 verified fixed-shape hand fits; 1 final six-stage reconstructions. Final acceptance requires reviewed videos.",
+  "current": "20 verified fixed-shape hand fits; 3 final six-stage reconstructions. Final acceptance requires reviewed videos. Active episode reviews: 0, 12, 22, 27.",
   "episodes": [
     {
       "episode": 0,
@@ -14,15 +14,14 @@
         "validate": true,
         "hands": true,
         "depth": true,
-        "align": false,
+        "align": true,
         "contacts": false,
         "report": false
       },
       "contact_audit": false,
       "stage_integrity": false,
       "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "accepted": false
     },
     {
       "episode": 2,
@@ -41,8 +40,7 @@
       "contact_audit": false,
       "stage_integrity": false,
       "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "accepted": false
     },
     {
       "episode": 11,
@@ -61,8 +59,7 @@
       "contact_audit": false,
       "stage_integrity": false,
       "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "accepted": false
     },
     {
       "episode": 12,
@@ -74,15 +71,14 @@
         "validate": true,
         "hands": true,
         "depth": true,
-        "align": false,
-        "contacts": false,
-        "report": false
+        "align": true,
+        "contacts": true,
+        "report": true
       },
       "contact_audit": false,
-      "stage_integrity": false,
-      "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "stage_integrity": true,
+      "all_frame_geometry": true,
+      "accepted": false
     },
     {
       "episode": 13,
@@ -101,8 +97,7 @@
       "contact_audit": false,
       "stage_integrity": false,
       "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "accepted": false
     },
     {
       "episode": 18,
@@ -121,8 +116,7 @@
       "contact_audit": false,
       "stage_integrity": false,
       "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "accepted": false
     },
     {
       "episode": 21,
@@ -141,8 +135,7 @@
       "contact_audit": false,
       "stage_integrity": false,
       "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "accepted": false
     },
     {
       "episode": 22,
@@ -154,15 +147,14 @@
         "validate": true,
         "hands": true,
         "depth": true,
-        "align": false,
-        "contacts": false,
-        "report": false
+        "align": true,
+        "contacts": true,
+        "report": true
       },
       "contact_audit": false,
-      "stage_integrity": false,
-      "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "stage_integrity": true,
+      "all_frame_geometry": true,
+      "accepted": false
     },
     {
       "episode": 23,
@@ -181,8 +173,7 @@
       "contact_audit": false,
       "stage_integrity": false,
       "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "accepted": false
     },
     {
       "episode": 24,
@@ -201,8 +192,7 @@
       "contact_audit": false,
       "stage_integrity": false,
       "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "accepted": false
     },
     {
       "episode": 26,
@@ -221,8 +211,7 @@
       "contact_audit": false,
       "stage_integrity": false,
       "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "accepted": false
     },
     {
       "episode": 27,
@@ -234,15 +223,14 @@
         "validate": true,
         "hands": true,
         "depth": true,
-        "align": false,
+        "align": true,
         "contacts": false,
         "report": false
       },
       "contact_audit": false,
       "stage_integrity": false,
       "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "accepted": false
     },
     {
       "episode": 31,
@@ -261,8 +249,7 @@
       "contact_audit": false,
       "stage_integrity": false,
       "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "accepted": false
     },
     {
       "episode": 39,
@@ -281,8 +268,7 @@
       "contact_audit": false,
       "stage_integrity": false,
       "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "accepted": false
     },
     {
       "episode": 40,
@@ -301,8 +287,7 @@
       "contact_audit": false,
       "stage_integrity": false,
       "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "accepted": false
     },
     {
       "episode": 41,
@@ -321,8 +306,7 @@
       "contact_audit": true,
       "stage_integrity": true,
       "all_frame_geometry": true,
-      "accepted": true,
-      "local_review_ready": true
+      "accepted": true
     },
     {
       "episode": 42,
@@ -341,8 +325,7 @@
       "contact_audit": false,
       "stage_integrity": false,
       "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "accepted": false
     },
     {
       "episode": 43,
@@ -361,8 +344,7 @@
       "contact_audit": false,
       "stage_integrity": false,
       "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "accepted": false
     },
     {
       "episode": 44,
@@ -381,8 +363,7 @@
       "contact_audit": false,
       "stage_integrity": false,
       "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "accepted": false
     },
     {
       "episode": 45,
@@ -401,16 +382,27 @@
       "contact_audit": false,
       "stage_integrity": false,
       "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "accepted": false
     }
   ],
+  "active_review_episodes": [
+    0,
+    12,
+    22,
+    27
+  ],
   "scope": "Revised depth-gate pass; issue6 remains unfinished",
-  "prepared_at": "2026-10-07T06:16:01.286272+00:00",
+  "prepared_at": "2026-10-07T06:19:44.788915+00:00",
   "preserved_earlier_visual_passes": 12,
   "preserved_earlier_complete_verified_backups": 12,
   "earlier_results_count_toward_revised_acceptance": false,
-  "final_checkpoint_backups": [],
+  "final_checkpoint_backups": [
+    {
+      "episode": 41,
+      "bytes": 1217139784,
+      "sha256": "3fea42784c24e0226edfc96ad3e779483955d7179b0ab02024d935bd05856066"
+    }
+  ],
   "current_cpu_tests": {
     "passed": 100,
     "skipped": 0,
