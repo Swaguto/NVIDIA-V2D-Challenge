@@ -1,8 +1,8 @@
 """Crop coordinates, hypothesis isolation and holdout protection are essential."""
 
 import importlib.util
-from pathlib import Path
 import unittest
+from pathlib import Path
 
 path = Path(__file__).resolve().parents[3] / "validation/issue6/probe_hand_detector.py"
 spec = importlib.util.spec_from_file_location("probe_hand_detector", path)
@@ -11,8 +11,13 @@ spec.loader.exec_module(probe)
 
 
 def candidate(view, confidence, box=(10, 10, 30, 30), side=0, index=0):
-    return {"source_view": view, "confidence": confidence, "box_xyxy": list(box),
-            "class": side, "candidate_id": f"{view}:{index}"}
+    return {
+        "source_view": view,
+        "confidence": confidence,
+        "box_xyxy": list(box),
+        "class": side,
+        "candidate_id": f"{view}:{index}",
+    }
 
 
 class DetectorProbeTests(unittest.TestCase):
@@ -29,8 +34,8 @@ class DetectorProbeTests(unittest.TestCase):
             self.assertIsNone(probe.source_box(box, crop))
 
     def test_baseline_cannot_inherit_low_confidence_or_crop_candidates(self):
-        rows = [candidate("full640", .5), candidate("full640", .49, index=1), candidate("tile00", .9)]
-        baseline = probe.variant_candidates(rows, ("full640",), .5)
+        rows = [candidate("full640", 0.5), candidate("full640", 0.49, index=1), candidate("tile00", 0.9)]
+        baseline = probe.variant_candidates(rows, ("full640",), 0.5)
         self.assertEqual([r["candidate_id"] for r in baseline], ["full640:0"])
         baseline[0]["box_xyxy"][0] = 999
         baseline[0]["owner_rejection"] = "changed by association"
@@ -38,10 +43,13 @@ class DetectorProbeTests(unittest.TestCase):
         self.assertNotIn("owner_rejection", rows[0])
 
     def test_tile_merge_does_not_merge_opposite_hands_or_other_objects(self):
-        rows = [candidate("full640", .9), candidate("tile00", .8),
-                candidate("tile00", .7, side=1, index=1),
-                candidate("tile00", .6, box=(80, 80, 100, 100), index=2)]
-        merged = probe.variant_candidates(rows, ("full640", "tile00"), .1)
+        rows = [
+            candidate("full640", 0.9),
+            candidate("tile00", 0.8),
+            candidate("tile00", 0.7, side=1, index=1),
+            candidate("tile00", 0.6, box=(80, 80, 100, 100), index=2),
+        ]
+        merged = probe.variant_candidates(rows, ("full640", "tile00"), 0.1)
         self.assertEqual([r["candidate_id"] for r in merged], ["full640:0", "tile00:1", "tile00:2"])
 
     def test_development_sweeps_cannot_tune_the_five_holdouts(self):
