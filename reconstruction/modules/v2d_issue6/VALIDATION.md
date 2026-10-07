@@ -4,7 +4,7 @@
 
 The user now requires all 20 public episodes. The earlier three-episode result
 below is historical partial evidence under that requirement. **Final episodes
-0,2,11,12,22 are accepted (5/20) as of October7 03:34UTC; issue #6 and PR #32
+0,2,11,12,13,21,22 are accepted (7/20) as of October7 03:47UTC; issue #6 and PR #32
 remain unfinished.**
 
 All 106 public input files match pinned dataset revision
@@ -38,12 +38,14 @@ Accepted results use continuous CAD and automatic wearer selection:
 | 2 | 343 | 676 | 1.8156e-7 | 5560 / 1300 | 1446 / 88 |
 | 11 | 137 | 274 | 1.9195e-7 | 2620 / 120 | 987 / 56 |
 | 12 | 181 | 362 | 1.7468e-7 | 2260 / 1360 | 435 / 145 |
+| 13 | 190 | 380 | 1.7381e-7 | 2180 / 1620 | 309 / 51 |
+| 21 | 186 | 372 | 1.7957e-7 | 1110 / 2610 | 415 / 6 |
 | 22 | 189 | 378 | 1.7858e-7 | 1520 / 2260 | 224 / 17 |
 
 Each has six independently checked stage receipts, every persisted geometry
 comparison, every contact row audited, and three fully decoded final videos.
 Uniform samples, consecutive motion extremes and full video playback were
-reviewed;2/11/12/22 also include the largest decoded image-change samples.
+reviewed;2/11/12/13/21/22 also include the largest decoded image-change samples.
 Episode0's fitted282-frame axis is restored to the original373-frame axis with
 unsupported observations unknown. Episode12's counts above belong to the
 final continuous-tracking run, not its periodic-registration quality control.
@@ -52,12 +54,15 @@ or contact ground-truth annotations.
 
 Three disjoint native preparation queues now share one A40 while two independent
 reconstruction/media jobs, audits and review overlap. Fitting settings and
-acceptance gates remain fixed. Four accepted episode checkpoints (0/2/12/22)
+acceptance gates remain fixed. Five accepted episode checkpoints (0/2/11/12/22)
 are independently verified locally, including all locked CAD inputs and eight
-separately recovered model/footage dependencies. Episode11 archive is active.
+separately recovered model/footage dependencies. Episode13/21 archives are active.
 Authenticated SFTP transferred the roughly0.9GB 12/22 archives in70seconds
 each, followed by full archive/member/input/output verification.
-The remaining15 native/final reviews, all20 aggregate audits and complete final
+Episodes13/21 have limited contact coverage: visibly held objects still produce
+unknown rows when metric evidence is unavailable. No contact-precision claim
+is inferred from their visual passes.
+The remaining13 native/final reviews, all20 aggregate audits and complete final
 backups are required before closure.
 The current CPU suite passes 86 tests with zero skips. New replay orchestration
 is in [run_all_episode_review.sh](../../validation/issue6/run_all_episode_review.sh).

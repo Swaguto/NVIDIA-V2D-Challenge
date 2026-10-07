@@ -1,8 +1,8 @@
 {
-  "verified_at": "2026-10-07T03:34:26.425344+00:00",
+  "verified_at": "2026-10-07T03:48:18.480910+00:00",
   "detections_complete": 20,
-  "accepted": 5,
-  "current": "All 20 wearer detection passes complete. 7 verified fixed-shape hand fits; 5 final six-stage reconstructions. Episode 12 control passed geometry and contact audits. Final acceptance requires reviewed videos.",
+  "accepted": 7,
+  "current": "All 20 wearer detection passes complete. 7 verified fixed-shape hand fits; 7 final six-stage reconstructions. Episode 12 control passed geometry and contact audits. Final acceptance requires reviewed videos.",
   "episodes": [
     {
       "episode": 0,
@@ -94,15 +94,15 @@
         "validate": true,
         "hands": true,
         "depth": true,
-        "align": false,
-        "contacts": false,
-        "report": false
+        "align": true,
+        "contacts": true,
+        "report": true
       },
-      "contact_audit": false,
-      "stage_integrity": false,
-      "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "contact_audit": true,
+      "stage_integrity": true,
+      "all_frame_geometry": true,
+      "accepted": true,
+      "local_review_ready": true
     },
     {
       "episode": 18,
@@ -134,15 +134,15 @@
         "validate": true,
         "hands": true,
         "depth": true,
-        "align": false,
-        "contacts": false,
-        "report": false
+        "align": true,
+        "contacts": true,
+        "report": true
       },
-      "contact_audit": false,
-      "stage_integrity": false,
-      "all_frame_geometry": false,
-      "accepted": false,
-      "local_review_ready": false
+      "contact_audit": true,
+      "stage_integrity": true,
+      "all_frame_geometry": true,
+      "accepted": true,
+      "local_review_ready": true
     },
     {
       "episode": 22,
@@ -406,7 +406,7 @@
     }
   ],
   "scope": "Partial final all20 pass; not issue6 completion",
-  "prepared_at": "2026-10-07T03:35:29.013586+00:00",
+  "prepared_at": "2026-10-07T03:48:55.481363+00:00",
   "validated_base_commit": "620ec548953d7ccd76890066512f6b364482e14d",
   "execution_source": "Base plus preserved repairs; exact implementation hashes live in each locked private checkpoint",
   "final_checkpoint_backups": [
@@ -419,6 +419,11 @@
       "episode": 2,
       "sha256": "20b2cdc621f78c9ef4bff3734bc3c722ccba5c6529199dfcc8b21260eb1d8df5",
       "bytes": 1633803533
+    },
+    {
+      "episode": 11,
+      "sha256": "debb841a0b9832ba9bf55f50f0f5501ceb86dd6f2ee0832c9769a1ee756b40e6",
+      "bytes": 668351557
     },
     {
       "episode": 12,

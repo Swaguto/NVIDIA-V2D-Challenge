@@ -2,19 +2,19 @@
 
 ## Current all-20 pass: October 7, 2026
 
-This pass is **in progress**, with final episodes **0,2,11,12,22 accepted (5/20)**
-as of October7 03:34UTC. Source starts
+This pass is **in progress**, with final episodes **0,2,11,12,13,21,22 accepted (7/20)**
+as of October7 03:47UTC. Source starts
 from PR #32 `620ec548953d7ccd76890066512f6b364482e14d` plus the recorded source
 repairs in this checkout. It replaces the historical manual episode-22
 exclusion with automatic measured-depth/continuity selection. All 20 actual
 footage episodes and detector passes are complete; full native reconstruction,
-audits and final visual reviews remain required for the other15 episodes.
+audits and final visual reviews remain required for the other13 episodes.
 Accepted episodes have complete six-stage receipts, independent stage/contact
 audits, all-frame persisted geometry checks and reviewed full-length videos.
 Machine checks and video decoding are batched; uniform, motion-extreme and
 large-image-change samples guide visual review without automatic acceptance.
 The current [public receipts](all20-progress/progress.json) record all20 status,
-five actual visual passes, stage/contact audits and four verified private
+seven actual visual passes, stage/contact audits and five verified private
 checkpoint summaries. Their execution configuration hashes identify the
 preserved inputs and sources; a later documentation/scheduling commit is not
 claimed to be the byte-for-byte source of already completed native runs.
@@ -137,7 +137,7 @@ Each downloaded compressed archive is fully read, every member is checked,
 all six stages match their configuration and outputs, and all locked inputs
 are verified either inside the checkpoint or in separately recovered footage
 and model assets. Early12/22 archives include verified locked-CAD supplements.
-Archives0/2/12/22 are verified locally; episode11 archive is active. Approximately
+Archives0/2/11/12/22 are verified locally; episode13/21 archives are active. Approximately
 0.9GB transferred in70seconds for each of12/22. Transfer speed does not reduce
 any verification step. Models, licensed assets, raw footage and full private
 archives are excluded from Git.
