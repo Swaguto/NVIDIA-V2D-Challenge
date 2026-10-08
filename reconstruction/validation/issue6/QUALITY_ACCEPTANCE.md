@@ -70,7 +70,7 @@ contact-reliability ablation; its bridged labels remain separate from raw eviden
 and cannot establish reconstruction quality or observable onset/release agreement.
 
 Use local private evidence first. Cumulative compute/storage authorization remains
-US$30, increased by the user on October 7; refresh billing and enforce a stop
-deadline before paid compute. This supersedes the previous US$15 authorization. Do not
+US$40, increased by the user on October 8; refresh billing and enforce a stop
+deadline before paid compute. This supersedes the previous US$30 authorization. Do not
 delete preserved volumes or publish footage, model weights or licensed MANO assets.
 Do not claim robot-training success or exact contact precision from this work.
