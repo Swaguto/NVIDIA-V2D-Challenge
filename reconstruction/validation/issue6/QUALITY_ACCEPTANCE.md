@@ -61,6 +61,14 @@ test whether projecting the entire CAD silhouette as an occluder incorrectly
 removes visible foreground hand pixels. That is currently a code-level hypothesis,
 not a confirmed measured cause. Reuse immutable fits and rerun affected stages.
 
+The contact artifact audit matches its bridge limit to the immutable input lock
+and requires every declared hand/fingertip/object observation, including explicit
+unknowns, on the original frame and timestamp axis. A manifest with
+`bridge_frames: 0` verifies strict raw evidence without filling measured separation
+gaps. The historical `bridge_frames: 15` configuration remains available for the
+contact-reliability ablation; its bridged labels remain separate from raw evidence
+and cannot establish reconstruction quality or observable onset/release agreement.
+
 Use local private evidence first. Cumulative compute/storage authorization remains
 US$30, increased by the user on October 7; refresh billing and enforce a stop
 deadline before paid compute. This supersedes the previous US$15 authorization. Do not

@@ -25,17 +25,40 @@ for episode in map(int,args.episodes.split(',')):
     rows = json.loads(source.read_text())
     settings = json.loads((run / 'contacts/settings.json').read_text())
     report = json.loads((run / 'report/report.json').read_text())
-    assert settings['threshold_m'] == .02 and settings['bridge_frames'] == 15
+    lock_source = run / 'inputs.lock.json'
+    manifest = json.loads(lock_source.read_text())['manifest']
+    maximum = manifest.get('settings', {}).get('bridge_frames', 15)
+    assert type(maximum) is int and 0 <= maximum <= 15
+    assert type(settings['bridge_frames']) is int
+    assert manifest.get('settings', {}).get('contact_threshold_m', .02) == .02
+    assert settings['threshold_m'] == .02 and settings['bridge_frames'] == maximum
     assert sorted(set(r['frame_id'] for r in rows)) == [f['id'] for f in report['frame_axis']]
+    assert [f['id'] for f in report['frame_axis']] == [f['id'] for f in manifest['frames']]
     times = {f['id']:f['timestamp_s'] for f in report['frame_axis']}
+    assert times == {f['id']:f['timestamp_s'] for f in manifest['frames']}
+    # A file can contain the whole time axis while silently omitting a hand,
+    # fingertip, or object. Require one observation (including explicit unknowns)
+    # for every manifest-declared combination.
+    expected = {
+        (frame_id, side, tip, obj['id'])
+        for frame_id in times
+        for side in ('left', 'right')
+        for tip in ('thumb', 'index', 'middle', 'ring', 'little')
+        for obj in manifest['objects']
+    }
+    actual = [(r['frame_id'], r['hand'], r['fingertip'], r['object_id']) for r in rows]
+    assert len(actual) == len(expected) and set(actual) == expected
     groups = defaultdict(list)
     valid = raw = bridged = unknown = 0
     for row in rows:
+        assert type(row['valid']) is bool and type(row['bridged']) is bool
         assert all(row[key] == 'predicted' for key in ('hand_provenance','object_provenance','camera_provenance'))
         assert math.isfinite(row['timestamp_s'])
         assert row['timestamp_s'] == times[row['frame_id']]
         groups[(row['hand'], row['fingertip'], row['object_id'])].append(row)
         if row['valid']:
+            assert type(row['raw_contact']) is bool and type(row['window_contact']) is bool
+            assert not row['bridged'] or row['raw_contact'] is False
             valid += 1
             distance = row['surface_distance_m']
             assert math.isfinite(distance) and distance >= 0
@@ -61,16 +84,22 @@ for episode in map(int,args.episodes.split(',')):
                 right += 1
             assert left >= 0 and right < len(group)
             assert group[left]['raw_contact'] and group[right]['raw_contact']
-            assert right-left-1 <= 15
+            assert right-left-1 <= maximum
             window = group[left:right+1]
             assert all(r['valid'] and r['hand_track_id'] == row['hand_track_id'] for r in window)
             assert [r['frame_id'] for r in window] == list(range(window[0]['frame_id'],window[-1]['frame_id']+1))
     assert (valid, unknown, raw, bridged) == tuple(report[k] for k in ('contact_valid_count','contact_unknown_count','raw_contact_count','bridged_count'))
     audits.append({'episode':episode,'status':'passed','rows':len(rows),'valid':valid,
                    'unknown':unknown,'raw_contacts':raw,'bridged':bridged,
+                   'bridge_frames':maximum,
+                   'input_lock_sha256':hashlib.sha256(lock_source.read_bytes()).hexdigest(),
                    'sha256':hashlib.sha256(source.read_bytes()).hexdigest(),
-                   'checks':['full original frame axis','predicted provenance','strict 2 cm threshold',
-                             'unknown observations remain unknown','bridges have two raw-contact endpoints, at most 15 consecutive valid same-track gap frames','report counts match raw artifact']})
+                   'checks':['full original frame axis and timestamps match the input lock',
+                             'every declared hand/fingertip/object observation is present',
+                             'predicted provenance','strict 2 cm threshold',
+                             'unknown observations remain unknown',
+                             f'bridges have two raw-contact endpoints and at most {maximum} consecutive valid same-track gap frames',
+                             'report counts match raw artifact']})
 output = args.output or root / 'contact-artifact-audit.json'
 output.parent.mkdir(parents=True, exist_ok=True)
 output.write_text(json.dumps(audits,indent=2)+'\n')
