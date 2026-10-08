@@ -38,7 +38,10 @@ from PIL import Image
 
 
 def quat_wxyz_to_matrix(q) -> np.ndarray:
-    w, x, y, z = np.asarray(q, dtype=np.float64) / np.linalg.norm(q)
+    q = np.asarray(q, dtype=np.float64)
+    if q.shape != (4,) or not np.isfinite(q).all() or np.linalg.norm(q) < 1e-12:
+        raise ValueError("Expected a finite nonzero wxyz quaternion")
+    w, x, y, z = q / np.linalg.norm(q)
     return np.array([
         [1 - 2 * (y * y + z * z), 2 * (x * y - w * z), 2 * (x * z + w * y)],
         [2 * (x * y + w * z), 1 - 2 * (x * x + z * z), 2 * (y * z - w * x)],
@@ -71,11 +74,14 @@ def pose_record_to_matrix(record: dict) -> np.ndarray:
     """Track 3 pose JSON (wxyz rotation, metre translation, unit scale) -> 4x4."""
     scale = record.get("scale", 1.0)
     scale = [scale] * 3 if np.isscalar(scale) else list(scale)
-    if any(abs(float(s) - 1.0) > 1e-6 for s in scale):
+    if len(scale) != 3 or any(not np.isfinite(s) or abs(float(s) - 1.0) > 1e-6 for s in scale):
         raise ValueError(f"Expected unit scale, got {scale}")
     M = np.eye(4)
     M[:3, :3] = quat_wxyz_to_matrix(record["rotation"])
-    M[:3, 3] = record["translation"]
+    translation = np.asarray(record["translation"], dtype=np.float64)
+    if translation.shape != (3,) or not np.isfinite(translation).all():
+        raise ValueError("Expected a finite three-component translation")
+    M[:3, 3] = translation
     return M
 
 
@@ -110,12 +116,12 @@ def depth_to_inverse_u16(depth_m: np.ndarray, valid: np.ndarray | None = None) -
 
 
 def read_json(path: Path) -> dict:
-    return json.loads(Path(path).read_text())
+    return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
 def write_json(path: Path, value) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, indent=2))
+    path.write_text(json.dumps(value, indent=2, allow_nan=False), encoding="utf-8")
 
 
 def mesh_for(data: Path, name: str) -> Path:
@@ -161,12 +167,14 @@ def object_camera_poses(
         inf = inferred_dir / f"{f:06d}.json"
         if inf.is_file() and f in camera_from_world:
             record = read_json(inf)
+            if record.get("gt_use", "none") not in ("none", "independent"):
+                raise ValueError(f"GT-assisted inferred pose cannot initialize refinement: {inf}")
             poses[f] = camera_from_world[f] @ pose_record_to_matrix(record)
             provenance[f] = f"inferred:{record.get('inference_method', record.get('status', 'unknown'))}"
     return poses, provenance
 
 
-def merge_hand_tracks(records_root: Path, frames: set[int], metric_valid_only: bool) -> dict[str, dict[int, dict]]:
+def merge_hand_tracks(records_root: Path, frames: set[int], metric_valid_only: bool = True) -> dict[str, dict[int, dict]]:
     """One record per side per frame; on conflicts prefer the longer track.
 
     A wearer's hand can be reacquired as a new track id; the refinement takes
@@ -181,9 +189,12 @@ def merge_hand_tracks(records_root: Path, frames: set[int], metric_valid_only: b
             f = int(record.get("frame_idx", path.stem))
             if f not in frames:
                 continue
-            if metric_valid_only and not record.get("diagnostics", {}).get("metric_valid", False):
+            if metric_valid_only and record.get("diagnostics", {}).get("metric_valid") is not True:
                 continue
-            side = "right" if record["is_right"] else "left"
+            record_side = "right" if record["is_right"] else "left"
+            if side is not None and side != record_side:
+                raise ValueError(f"Mixed handedness in {track_dir}")
+            side = record_side
             per_frame[f] = record
         if side is not None and per_frame:
             tracks[side][track_dir.name] = per_frame
@@ -205,7 +216,7 @@ def assemble(
     hands_run: Path | None = None,
     start: int | None = None,
     frames_limit: int | None = None,
-    metric_valid_hands_only: bool = False,
+    metric_valid_hands_only: bool = True,
 ) -> dict:
     if out.exists() and any(out.iterdir()):
         raise ValueError(f"Output directory {out} is not empty")
@@ -231,8 +242,13 @@ def assemble(
         path = ep_dir / "camera" / "ego_cam_c" / f"{f:06d}.json"
         if path.is_file():
             record = read_json(path)
+            if record.get("gt_use", "independent") not in ("none", "independent"):
+                raise ValueError(f"GT-assisted camera cannot initialize refinement: {path}")
             camera_from_world[f] = pose_record_to_matrix(record)
             camera_status[f] = record.get("status", "unknown")
+    missing_cameras = sorted(set(frames) - camera_from_world.keys())
+    if missing_cameras:
+        raise ValueError(f"Missing independent camera initialization for frames {missing_cameras}")
 
     out.mkdir(parents=True, exist_ok=True)
     write_json(out / "intrinsics.json", {k: camera[k] for k in ("fx", "fy", "cx", "cy", "width", "height")})
@@ -302,6 +318,7 @@ def assemble(
         "camera_status": {str(f): camera_status.get(f, "missing") for f in frames},
         "object_provenance": object_provenance,
         "hand_frames": hand_frames,
+        "metric_valid_hands_only": metric_valid_hands_only,
         "counts": {
             "frames": len(frames),
             "camera_poses": len(camera_from_world),
@@ -330,8 +347,8 @@ def main() -> None:
     p.add_argument("--out", type=Path, required=True)
     p.add_argument("--start", type=int, default=None)
     p.add_argument("--frames", type=int, default=None)
-    p.add_argument("--metric-valid-hands-only", action="store_true",
-                   help="Drop hand frames whose stereo alignment was not metric-valid")
+    p.add_argument("--metric-valid-hands-only", action=argparse.BooleanOptionalAction, default=True,
+                   help="Drop hand frames whose stereo alignment was not metric-valid (default: enabled)")
     args = p.parse_args()
     summary = assemble(
         args.data, args.results, args.bundle, args.episode, args.out,

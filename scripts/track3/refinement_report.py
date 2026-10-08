@@ -4,9 +4,10 @@
 Reads the ``--scene_export_path`` archive written by ``refine_simple`` (initial
 and refined camera, object and hand state over the same frames) and writes:
 
-* ``report.json`` / ``report.md``: jitter, drift and contact-precision numbers
-  for the initial and refined states, side by side.
-* ``viewer.html``: a self-contained Three.js viewer of the episode
+* ``report.json`` / ``report.md``: jitter, drift and geometric contact consistency
+  for the initial and refined states, side by side. Independent per-fingertip
+  contact precision is unavailable without independent 3D contact labels.
+* ``viewer.html``: a Three.js viewer with embedded episode data
   (background points, CAD objects, MANO hands, camera path), initial vs refined.
 * ``scoring/{initial,refined}/``: object_to_world poses in the Track 3 layout,
   so ``scripts/eval/score_track3_official.py`` can score both against the
@@ -17,12 +18,13 @@ Every number except the optional official score is GT-free:
 * **Jitter**: RMS / median / p95 of acceleration from second differences over
   consecutive frames (m/s^2, deg/s^2), and the RMS of the high-frequency
   residual after a centred 5-frame moving average (mm).
-* **Drift**: while no hand is within ``--rest-clearance`` of an object, the
-  real object is resting and must stay fixed in the world. Its apparent world
+* **Drift proxy**: candidate rest segments require available hand tracks to
+  be observed and outside ``--rest-clearance``. Confirm actual stationary
+  objects in the source video before interpreting these as drift. Apparent world
   motion over each rest segment (start-to-end, and max deviation from the
   segment median) measures camera/world drift plus object-pose wander.
-* **Contact precision**: during each contact run (from issue-6
-  ``contacts.json`` when given, otherwise fingertip within 2 cm in the refined
+* **Contact consistency**: during each contact run (from issue-6
+  ``contacts.json`` when given, otherwise fingertip within 2 cm in the initial
   state), the touch point on the object surface should stay put. We report its
   RMS spread in the object frame, the normal spread, the median fingertip-to-
   surface distance, and the penetration rate (signed distance < -5 mm).
@@ -213,7 +215,7 @@ def rest_segment_drift(
         R = orthonormalize(P)[:, :3, :3]
         rows.append({
             "frames": [int(frames[seg[0]]), int(frames[seg[-1]])],
-            "length": int(len(seg)),
+            "length": len(seg),
             "endpoint_drift_cm": float(np.linalg.norm(c[-1] - c[0]) * 100.0),
             "max_deviation_cm": float(np.linalg.norm(c - med, axis=1).max() * 100.0),
             "endpoint_rot_drift_deg": float(rotation_angle_deg(R[-1] @ R[0].T)),
@@ -242,17 +244,19 @@ def contact_runs_from_labels(contacts: list[dict], frames: set[int], min_len: in
 
 
 def contact_precision(tip_obj: dict, runs: dict, penetration_m: float) -> dict:
-    """GT-free contact precision from fingertip positions in each object frame.
+    """Contact geometry consistency; independent contact precision is unavailable.
 
     ``tip_obj[(side, tip, object)]`` maps frame -> (point, normal, dist, signed).
     """
     spreads, normal_spreads, dists, signed_all, run_count = [], [], [], [], 0
+    expected, observed = 0, 0
     for key, key_runs in runs.items():
-        table = tip_obj.get(key)
-        if table is None:
-            continue
+        table = tip_obj.get(key, {})
         for fs in key_runs:
+            expected += len(fs)
             rows = [table[f] for f in fs if f in table]
+            observed += len(rows)
+            dists.extend(r[2] for r in rows)
             if len(rows) < 2:
                 continue
             run_count += 1
@@ -262,16 +266,19 @@ def contact_precision(tip_obj: dict, runs: dict, penetration_m: float) -> dict:
             mean_n = n.mean(0)
             mean_n /= max(np.linalg.norm(mean_n), 1e-12)
             normal_spreads.append(np.degrees(np.arccos(np.clip(n @ mean_n, -1, 1))).mean())
-            dists.extend(r[2] for r in rows)
     for table in tip_obj.values():
         signed_all.extend(r[3] for r in table.values())
     signed_all = np.asarray(signed_all)
     return {
         "contact_runs": run_count,
+        "expected_contact_rows": expected,
+        "observed_contact_rows": observed,
+        "missing_contact_rows": expected - observed,
+        "contact_geometry_coverage": observed / expected if expected else None,
         "contact_point_spread_rms_mm": float(np.mean(spreads)) if spreads else None,
         "contact_normal_spread_deg": float(np.mean(normal_spreads)) if normal_spreads else None,
         "contact_surface_distance_median_mm": float(np.median(dists) * 1000.0) if dists else None,
-        "contact_within_2cm_fraction": float(np.mean(np.asarray(dists) < 0.02)) if dists else None,
+        "contact_within_2cm_fraction": float(np.count_nonzero(np.asarray(dists) < 0.02) / expected) if expected else None,
         "penetration_rate": float(np.mean(signed_all < -penetration_m)) if signed_all.size else None,
         "penetration_depth_p95_mm": float(np.percentile(np.maximum(-signed_all, 0), 95) * 1000.0) if signed_all.size else None,
     }
@@ -321,11 +328,24 @@ def evaluate(
     min_rest_len: int,
     penetration_m: float,
     surface_samples: int,
+    rest_annotations: dict | None = None,
+    provenance: dict | None = None,
 ) -> dict:
     frames = scene["frame_indices"]
     fps = float(scene["fps"])
     names = [str(n) for n in scene["object_names"]]
     sides = [str(s) for s in scene["hand_sides"]]
+    source_rest = {}
+    if rest_annotations is not None:
+        for interval in rest_annotations["intervals"]:
+            name = interval["object_id"]
+            start, end = interval["frames"]
+            if name not in names or start > end or not interval.get("evidence"):
+                raise ValueError("Invalid source-reviewed rest interval")
+            if not set(range(start, end + 1)).issubset(set(frames.tolist())):
+                raise ValueError("Source-reviewed rest interval includes absent frames")
+            mask = source_rest.setdefault(name, np.zeros(len(frames), bool))
+            mask |= (frames >= start) & (frames <= end)
     states = {s: world_state(scene, s) for s in STATES}
     surfaces = []
     for i in range(len(names)):
@@ -334,7 +354,7 @@ def evaluate(
 
     report: dict = {
         "frames": [int(frames[0]), int(frames[-1])],
-        "n_frames": int(len(frames)),
+        "n_frames": len(frames),
         "fps": fps,
         "objects": names,
         "hands": sides,
@@ -359,7 +379,16 @@ def evaluate(
     # Objects: jitter in world, and rest-segment drift.
     # A frame is "rest" for an object when, in both states, no hand vertex is
     # within rest_clearance of its surface.
-    rest = {name: np.ones(len(frames), bool) for name in names}
+    observed_hands = np.ones(len(frames), bool) if sides else np.zeros(len(frames), bool)
+    for hand in states["initial"]["hands"]:
+        available = np.zeros(len(frames), bool)
+        available[hand["t_idx"]] = True
+        observed_hands &= available
+    rest = {name: observed_hands.copy() for name in names}
+    report["drift_assumption"] = (
+        "Candidate rest proxy: all available hand tracks observed and far from the object. "
+        "Missing hands are unknown. Verify stationary objects in source video; distance alone does not establish rest."
+    )
     for s in STATES:
         st = states[s]
         for i, name in enumerate(names):
@@ -388,6 +417,26 @@ def evaluate(
                 "rotation": rotation_jitter(orthonormalize(o2w)[:, :3, :3], frames, fps),
             }
             report["drift"][name][s] = rest_segment_drift(o2w, surfaces[i][2], rest[name], frames, min_rest_len)
+            if name in source_rest:
+                reviewed = report.setdefault("source_reviewed_drift", {}).setdefault(name, {})
+                reviewed[s] = rest_segment_drift(o2w, surfaces[i][2], source_rest[name], frames, min_rest_len)
+        if provenance is not None:
+            labels = [provenance.get(name, {}).get(str(int(f)), "unknown") for f in frames]
+            observed = np.array([label.startswith("observed") for label in labels])
+            inferred = np.array([label.startswith("inferred") for label in labels])
+            report.setdefault("object_coverage", {})[name] = {
+                "observed_initialization": int(observed.sum()),
+                "inferred_initialization": int(inferred.sum()),
+                "unknown_provenance": int((~(observed | inferred)).sum()),
+            }
+            compared = report.setdefault("object_observed_jitter", {}).setdefault(name, {})
+            for s in STATES:
+                o2w = states[s]["objects"][i]["o2w"][observed]
+                centre = apply(o2w, surfaces[i][2][None].repeat(len(o2w), 0)[:, None])[:, 0]
+                compared[s] = {"translation": translation_jitter(centre, frames[observed], fps),
+                               "rotation": rotation_jitter(orthonormalize(o2w)[:, :3, :3], frames[observed], fps)}
+    if rest_annotations is not None:
+        report["source_rest_annotations"] = rest_annotations
 
     # Hands: wrist (joint 0) and mean fingertip jitter in world.
     tips = list(MANO_TIP_VERTS.values())
@@ -425,11 +474,16 @@ def evaluate(
         source = "issue-6 contacts.json (window_contact)"
     else:
         runs = defaultdict(list)
-        for key, table in tip_tables["refined"].items():
+        for key, table in tip_tables["initial"].items():
             fs = np.array(sorted(f for f, r in table.items() if r[2] < 0.02))
             runs[key] = [fs[r] for r in consecutive_runs(fs) if len(r) >= 3]
-        source = "refined fingertip within 2 cm"
+        source = "initial fingertip within 2 cm (fixed before refinement)"
     report["contact"]["run_source"] = source
+    report["contact"]["independent_precision"] = None
+    report["contact"]["interpretation"] = (
+        "Geometry consistency against fixed predicted contact runs, not independent contact precision. "
+        "Missing geometry remains in the within-2cm denominator. Signed surface distance is an oriented-surface proxy."
+    )
     for s in STATES:
         report["contact"][s] = contact_precision(tip_tables[s], runs, penetration_m)
     return report
@@ -526,11 +580,25 @@ def write_markdown(report: dict, path: Path, episode: int) -> None:
         row(f"{side.title()} wrist", v["initial"]["wrist"], v["refined"]["wrist"])
         row(f"{side.title()} fingertips", v["initial"]["fingertips"], v["refined"]["fingertips"])
     L.append("")
+    if report.get("object_coverage"):
+        L.extend(["Object rows above include inferred initialization. Coverage is retained from the input provenance:", ""])
+        for name, counts in report["object_coverage"].items():
+            L.append(f"- `{name}`: {counts['observed_initialization']} observed, "
+                     f"{counts['inferred_initialization']} inferred, {counts['unknown_provenance']} unknown provenance.")
+        L.extend(["", "Observed initialization frames only, matched before and after:", "",
+                  "| Track | Acceleration RMS (m/s²) initial → refined | High-frequency residual (mm) initial → refined | Angular acceleration RMS (deg/s²) initial → refined |",
+                  "|---|---|---|---|"])
+        for name, values in report["object_observed_jitter"].items():
+            row(f"Object `{name}`", values["initial"]["translation"], values["refined"]["translation"],
+                values["initial"]["rotation"], values["refined"]["rotation"])
+        L.append("")
     c = cam["correction"]
     L.append(f"Camera correction applied by refinement: mean {c['translation_mean_cm']:.2f} cm / {c['rotation_mean_deg']:.2f}°, "
              f"max {c['translation_max_cm']:.2f} cm / {c['rotation_max_deg']:.2f}°.")
     L.append("")
-    L.append("## Drift (resting objects must stay fixed in the world)")
+    L.append("## Drift (candidate rest segments)")
+    L.append("")
+    L.append(report["drift_assumption"])
     L.append("")
     L.append("| Object | Rest frames | Endpoint drift (cm) initial → refined | Max deviation (cm) initial → refined | Rotation drift (deg) initial → refined |")
     L.append("|---|---|---|---|---|")
@@ -541,14 +609,31 @@ def write_markdown(report: dict, path: Path, episode: int) -> None:
                  f"| {_fmt(i['endpoint_rot_drift_deg_mean'])} → {_fmt(r['endpoint_rot_drift_deg_mean'])} |")
     L.append("")
     L.append("Endpoint drift and rotation drift are length-weighted means over rest segments; max deviation is the worst segment.")
+    if report.get("source_reviewed_drift"):
+        L.extend(["", "## Drift on source-reviewed stationary intervals", "",
+                  "Intervals were selected from source images before refinement results. Apparent world motion combines camera drift and object-pose error.", "",
+                  "| Object | Source frames | Endpoint drift (cm) initial → refined | Max deviation (cm) initial → refined | Rotation drift (deg) initial → refined |",
+                  "|---|---|---|---|---|"])
+        for name, values in report["source_reviewed_drift"].items():
+            for ini, ref in zip(values["initial"]["segments"], values["refined"]["segments"]):
+                L.append(f"| `{name}` | {ini['frames'][0]}–{ini['frames'][1]} "
+                         f"| {_fmt(ini['endpoint_drift_cm'])} → {_fmt(ref['endpoint_drift_cm'])} "
+                         f"| {_fmt(ini['max_deviation_cm'])} → {_fmt(ref['max_deviation_cm'])} "
+                         f"| {_fmt(ini['endpoint_rot_drift_deg'])} → {_fmt(ref['endpoint_rot_drift_deg'])} |")
     L.append("")
-    L.append(f"## Contact precision (runs from {report['contact']['run_source']})")
+    L.append(f"## Contact consistency (runs from {report['contact']['run_source']})")
+    L.append("")
+    L.append(report["contact"]["interpretation"])
     L.append("")
     L.append("| Measure | Initial | Refined |")
     L.append("|---|---|---|")
     ci, cr = report["contact"]["initial"], report["contact"]["refined"]
     for key, label, d in (
         ("contact_runs", "Contact runs", 0),
+        ("expected_contact_rows", "Expected contact rows", 0),
+        ("observed_contact_rows", "Observed contact rows", 0),
+        ("missing_contact_rows", "Missing contact rows (unknown)", 0),
+        ("contact_geometry_coverage", "Contact geometry coverage", 3),
         ("contact_point_spread_rms_mm", "Touch-point spread on object (mm RMS)", 1),
         ("contact_normal_spread_deg", "Touch normal spread (deg)", 1),
         ("contact_surface_distance_median_mm", "Fingertip–surface distance in contact, median (mm)", 1),
@@ -565,7 +650,7 @@ def write_markdown(report: dict, path: Path, episode: int) -> None:
         L.append("|---|---|---|")
         for k in ("add_auc", "maniptrans_sr", "spider_sr", "rpe_cm", "mppe_cm"):
             L.append(f"| {k} | {_fmt(report['official']['initial'].get(k), 3)} | {_fmt(report['official']['refined'].get(k), 3)} |")
-    path.write_text("\n".join(L) + "\n")
+    path.write_text("\n".join(L) + "\n", encoding="utf-8")
 
 
 def _b64(a: np.ndarray) -> str:
@@ -599,6 +684,9 @@ def decimate(verts: np.ndarray, faces: np.ndarray, max_faces: int) -> tuple[np.n
     # Recompute faces with original winding after clustering.
     f = inverse[faces]
     f = f[(f[:, 0] != f[:, 1]) & (f[:, 1] != f[:, 2]) & (f[:, 0] != f[:, 2])]
+    if len(f):
+        _, first = np.unique(np.sort(f, axis=1), axis=0, return_index=True)
+        f = f[np.sort(first)]
     return v, f
 
 
@@ -639,7 +727,7 @@ def write_viewer(scene: dict, path: Path, title: str, max_object_faces: int = 20
             "verts": {s: _b64(_quantize(states[s]["hands"][j]["verts_world"], step)) for s in STATES},
         })
     html = VIEWER_TEMPLATE.replace("__TITLE__", title).replace("__DATA__", json.dumps(payload))
-    path.write_text(html)
+    path.write_text(html, encoding="utf-8")
 
 
 VIEWER_TEMPLATE = r"""<!doctype html>
@@ -664,12 +752,15 @@ VIEWER_TEMPLATE = r"""<!doctype html>
 <div id="panel">
   <h1>__TITLE__</h1>
   <button id="play">Pause</button>
-  <input id="slider" type="range" min="0" value="0">
+  <input id="slider" aria-label="Frame" type="range" min="0" value="0">
   <span id="frame"></span>
   <label><input type="checkbox" id="refined" checked> Refined</label>
   <label><input type="checkbox" id="initial"> Initial (ghost)</label>
   <label><input type="checkbox" id="bg" checked> Background</label>
   <label><input type="checkbox" id="cam" checked> Camera</label>
+  <button id="orbit-left">Orbit left</button><button id="orbit-right">Orbit right</button>
+  <button id="zoom-in">Zoom in</button><button id="zoom-out">Zoom out</button>
+  <button id="reset">Reset view</button>
   <span class="legend">Drag to orbit · scroll to zoom</span>
 </div>
 <script type="module">
@@ -707,7 +798,8 @@ const objects = D.objects.map(o => {
   const meshes = {}, poses = {};
   for (const s of STATES) {
     const ghost = s === "initial";
-    const m = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ color: o.color, transparent: ghost, opacity: ghost ? 0.35 : 1, side: THREE.DoubleSide, roughness: 0.6 }));
+    const m = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ color: o.color, transparent: ghost, opacity: ghost ? 0.35 : 1, depthWrite: !ghost, polygonOffset: ghost, polygonOffsetFactor: -1, polygonOffsetUnits: -1, side: THREE.DoubleSide, roughness: 0.6 }));
+    m.renderOrder = ghost ? 1 : 0;
     m.matrixAutoUpdate = false; layers[s].add(m); meshes[s] = m; poses[s] = dec(o.poses[s], Float32Array);
   }
   return { meshes, poses };
@@ -719,7 +811,8 @@ const hands = D.hands.map(h => {
     pos[s] = dec(h.verts[s], Int16Array);
     const g = new THREE.BufferGeometry(); g.setAttribute("position", new THREE.BufferAttribute(new Float32Array(778 * 3), 3)); g.setIndex(new THREE.BufferAttribute(faces, 1));
     const ghost = s === "initial";
-    const m = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ color: h.side === "left" ? 0xf2b5a0 : 0xe8a28a, transparent: ghost, opacity: ghost ? 0.35 : 1, side: THREE.DoubleSide }));
+    const m = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ color: h.side === "left" ? 0xf2b5a0 : 0xe8a28a, transparent: ghost, opacity: ghost ? 0.35 : 1, depthWrite: !ghost, polygonOffset: ghost, polygonOffsetFactor: -1, polygonOffsetUnits: -1, side: THREE.DoubleSide }));
+    m.renderOrder = ghost ? 1 : 0;
     m.frustumCulled = false; layers[s].add(m); meshes[s] = m;
   }
   return { pos, meshes, map };
@@ -761,9 +854,18 @@ const bind = (id, fn) => { const el = document.getElementById(id); el.onchange =
 bind("refined", v => layers.refined.visible = v); bind("initial", v => layers.initial.visible = v);
 bind("bg", v => bg && (bg.visible = v)); bind("cam", v => { for (const s of STATES) { cams[s].frustum.visible = v; paths[s].visible = v; } });
 // Frame the first object.
-const box = new THREE.Box3(); for (const o of objects) { o.meshes.refined.matrix.copy(toMat(o.poses.refined, 0)); o.meshes.refined.updateMatrixWorld(true); box.expandByObject(o.meshes.refined); }
-world.updateMatrixWorld(true); const c = box.isEmpty() ? new THREE.Vector3(0, 0, -0.6) : box.getCenter(new THREE.Vector3());
-controls.target.copy(c); camera.position.copy(c).add(new THREE.Vector3(0.5, 0.45, 0.7));
+for (const o of objects) o.meshes.refined.matrix.copy(toMat(o.poses.refined, 0));
+world.updateMatrixWorld(true);
+const box = new THREE.Box3(); for (const o of objects) box.expandByObject(o.meshes.refined);
+const c = box.isEmpty() ? new THREE.Vector3(0, 0, -0.6) : box.getCenter(new THREE.Vector3());
+const reset = () => { controls.target.copy(c); camera.position.copy(c).add(new THREE.Vector3(0.5, 0.45, 0.7)); controls.update(); };
+const orbit = angle => { const offset = camera.position.clone().sub(controls.target); offset.applyAxisAngle(new THREE.Vector3(0, 1, 0), angle); camera.position.copy(controls.target).add(offset); controls.update(); };
+const zoom = factor => { camera.position.sub(controls.target).multiplyScalar(factor).add(controls.target); controls.update(); };
+document.getElementById("orbit-left").onclick = () => orbit(-Math.PI / 8);
+document.getElementById("orbit-right").onclick = () => orbit(Math.PI / 8);
+document.getElementById("zoom-in").onclick = () => zoom(0.8);
+document.getElementById("zoom-out").onclick = () => zoom(1.25);
+document.getElementById("reset").onclick = reset; reset();
 function resize() { renderer.setSize(innerWidth, innerHeight); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); }
 addEventListener("resize", resize); resize(); show(0);
 renderer.setAnimationLoop(now => {
@@ -781,6 +883,8 @@ def main() -> None:
     p.add_argument("--out", type=Path, required=True)
     p.add_argument("--inputs", type=Path, default=None, help="gsplat_inputs.py inputs.json (pose provenance)")
     p.add_argument("--contacts", type=Path, default=None, help="issue-6 contacts/contacts.json")
+    p.add_argument("--rest-annotations", type=Path, default=None,
+                   help="Source-reviewed stationary intervals selected before seeing refinement results")
     p.add_argument("--data", type=Path, default=None, help="public dataset root; runs the official scorer")
     p.add_argument("--rest-clearance", type=float, default=0.05, help="metres between hand and object for 'rest'")
     p.add_argument("--min-rest-len", type=int, default=10)
@@ -790,19 +894,21 @@ def main() -> None:
     args = p.parse_args()
 
     scene = load_scene(args.scene)
-    contacts = json.loads(args.contacts.read_text()) if args.contacts else None
-    report = evaluate(scene, contacts, args.rest_clearance, args.min_rest_len, args.penetration_m, args.surface_samples)
+    contacts = json.loads(args.contacts.read_text(encoding="utf-8")) if args.contacts else None
+    rest_annotations = json.loads(args.rest_annotations.read_text(encoding="utf-8")) if args.rest_annotations else None
+    provenance = json.loads(args.inputs.read_text(encoding="utf-8"))["object_provenance"] if args.inputs else None
+    report = evaluate(scene, contacts, args.rest_clearance, args.min_rest_len, args.penetration_m,
+                      args.surface_samples, rest_annotations, provenance)
     report["episode"] = args.episode
     args.out.mkdir(parents=True, exist_ok=True)
-    provenance = json.loads(args.inputs.read_text())["object_provenance"] if args.inputs else None
     roots = export_scoring_layout(scene, args.out, args.episode, provenance)
     if args.data is not None:
         report["official"] = run_official_scorer(roots, args.episode, args.data, args.out)
-    (args.out / "report.json").write_text(json.dumps(report, indent=2))
+    (args.out / "report.json").write_text(json.dumps(report, indent=2, allow_nan=False), encoding="utf-8")
     write_markdown(report, args.out / "report.md", args.episode)
     if not args.no_viewer:
         write_viewer(scene, args.out / "viewer.html", f"Episode {args.episode:03d} — joint refinement")
-    print((args.out / "report.md").read_text())
+    print((args.out / "report.md").read_text(encoding="utf-8").encode(sys.stdout.encoding, errors="replace").decode(sys.stdout.encoding))
 
 
 if __name__ == "__main__":

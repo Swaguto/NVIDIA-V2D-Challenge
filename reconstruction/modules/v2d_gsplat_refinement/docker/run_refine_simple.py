@@ -37,6 +37,13 @@ def run_refine_simple(
     lr_hand_shape: float = 0.0,
     lr_hand_scale: float = 0.0,
     lr_camera_pose: float = 3e-3,
+    max_object_translation_change: float = 0.0,
+    max_object_rotation_change_deg: float = 0.0,
+    max_hand_translation_change: float = 0.0,
+    max_hand_rotation_change_deg: float = 0.0,
+    max_hand_articulation_change_deg: float = 0.0,
+    max_camera_translation_change: float = 0.0,
+    max_camera_rotation_change_deg: float = 0.0,
     lr_schedule: str = "constant",
     lr_cosine_min_factor: float = 0.0,
     w_smooth_object_rot: float = 0.1,
@@ -144,6 +151,13 @@ def run_refine_simple(
         "lr_hand_shape":         lr_hand_shape,
         "lr_hand_scale":         lr_hand_scale,
         "lr_camera_pose":        lr_camera_pose,
+        "max_object_translation_change": max_object_translation_change,
+        "max_object_rotation_change_deg": max_object_rotation_change_deg,
+        "max_hand_translation_change": max_hand_translation_change,
+        "max_hand_rotation_change_deg": max_hand_rotation_change_deg,
+        "max_hand_articulation_change_deg": max_hand_articulation_change_deg,
+        "max_camera_translation_change": max_camera_translation_change,
+        "max_camera_rotation_change_deg": max_camera_rotation_change_deg,
         "lr_schedule":           lr_schedule,
         "lr_cosine_min_factor":  lr_cosine_min_factor,
         "w_smooth_object_rot":   w_smooth_object_rot,
@@ -305,5 +319,13 @@ if __name__ == "__main__":
     p.add_argument("--fps", type=float, default=30.0)
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--dev", action="store_true")
+    for limit in (
+        "max_object_translation_change", "max_object_rotation_change_deg",
+        "max_hand_translation_change", "max_hand_rotation_change_deg",
+        "max_hand_articulation_change_deg", "max_camera_translation_change",
+        "max_camera_rotation_change_deg",
+    ):
+        p.add_argument("--" + limit, type=float, default=0.0,
+                       help="Initialization-relative pose limit (metres or degrees); 0 disables.")
     args = p.parse_args()
     run_refine_simple(**vars(args))

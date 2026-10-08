@@ -10,7 +10,7 @@ import pytest
 from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import gsplat_inputs as gi  # noqa: E402
+import gsplat_inputs as gi
 
 
 def random_pose(rng) -> np.ndarray:
@@ -152,3 +152,45 @@ def test_frame_window(tmp_path):
     data, results, bundle, _, _, _ = build_tree(tmp_path)
     summary = gi.assemble(data, results, bundle, 2, tmp_path / "out", start=1, frames_limit=2)
     assert summary["frames"] == [1, 2]
+
+
+def test_invalid_hands_do_not_replace_supported_track_by_default(tmp_path):
+    data, results, bundle, hands, _, _ = build_tree(tmp_path)
+    d = hands / "align/records/99"
+    d.mkdir()
+    source = json.loads((hands / "align/records/7/000001.json").read_text())
+    source["diagnostics"]["metric_valid"] = False
+    for f in range(4):
+        (d / f"{f:06d}.json").write_text(json.dumps({**source, "frame_idx": f, "track_id": 99}))
+    summary = gi.assemble(data, results, bundle, 2, tmp_path / "out", hands_run=hands)
+    assert summary["metric_valid_hands_only"] is True
+    assert json.loads((tmp_path / "out/hands/right/poses/000001.json").read_text())["track_id"] == 7
+
+
+def test_missing_camera_is_not_silently_initialized_to_identity(tmp_path):
+    data, results, bundle, _, _, _ = build_tree(tmp_path)
+    (results / "e002/camera/ego_cam_c/000002.json").unlink()
+    with pytest.raises(ValueError, match="Missing independent camera"):
+        gi.assemble(data, results, bundle, 2, tmp_path / "out")
+
+
+@pytest.mark.parametrize("source", ["camera", "inferred"])
+def test_gt_assisted_initialization_is_rejected(tmp_path, source):
+    data, results, bundle, _, _, _ = build_tree(tmp_path)
+    if source == "camera":
+        p = results / "e002/camera/ego_cam_c/000001.json"
+    else:
+        p = results / "e002/inferred/e002/ego_object_poses/e002/white_pot/object_to_world/000001.json"
+    r = json.loads(p.read_text())
+    r["gt_use"] = "assisted"
+    p.write_text(json.dumps(r))
+    with pytest.raises(ValueError, match="GT-assisted"):
+        gi.assemble(data, results, bundle, 2, tmp_path / "out")
+
+
+@pytest.mark.parametrize("field,value", [("rotation", [0, 0, 0, 0]), ("translation", [0, float('nan'), 0]), ("scale", float('nan'))])
+def test_nonfinite_or_degenerate_pose_is_rejected(field, value):
+    r = record(np.eye(4))
+    r[field] = value
+    with pytest.raises(ValueError):
+        gi.pose_record_to_matrix(r)

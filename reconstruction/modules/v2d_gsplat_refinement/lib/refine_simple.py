@@ -40,6 +40,7 @@ from __future__ import annotations
 
 import argparse
 import glob
+import json
 import math
 import os
 import subprocess
@@ -60,6 +61,7 @@ from .background import (
     init_background_from_depth,
     init_background_multiframe,
 )
+from .constraints import PoseTrustRegion
 from .gaussians import (
     GaussianFrame,
     axis_angle_to_quat,
@@ -849,6 +851,12 @@ def _normalized_smooth(loss: torch.Tensor, n: int) -> torch.Tensor:
     return loss / float(max(n - 1, 1))
 
 
+def _observed_smooth(fn, values: torch.Tensor, frames: list[int]) -> torch.Tensor:
+    """Only consecutive observed pairs contribute; reacquisition gaps stay unknown."""
+    pairs = sum(b == a + 1 for a, b in zip(frames, frames[1:]))
+    return fn(values, frames) / float(max(pairs, 1))
+
+
 def _cosine_lr_scale(step: int, total_steps: int, min_factor: float) -> float:
     if total_steps <= 1:
         return float(min_factor)
@@ -974,13 +982,13 @@ def _pose_smoothness(
             q_w, t_w = _camera_pose_to_world(
                 bg_pose_field, idx, axis_angle_to_quat(pf.axis_angle), pf.translation,
             )
-            rot_term = quat_smoothness(q_w)
-            trans_term = temporal_smoothness(t_w)
+            rot_term = _observed_smooth(quat_smoothness, q_w, pf.frame_indices)
+            trans_term = _observed_smooth(temporal_smoothness, t_w, pf.frame_indices)
         else:
-            rot_term = rotation_smoothness(pf.axis_angle)
-            trans_term = temporal_smoothness(pf.translation)
-        loss = loss + float(w_smooth_object_rot) * _normalized_smooth(rot_term, T)
-        loss = loss + float(w_smooth_object_trans) * _normalized_smooth(trans_term, T)
+            rot_term = _observed_smooth(rotation_smoothness, pf.axis_angle, pf.frame_indices)
+            trans_term = _observed_smooth(temporal_smoothness, pf.translation, pf.frame_indices)
+        loss = loss + float(w_smooth_object_rot) * rot_term
+        loss = loss + float(w_smooth_object_trans) * trans_term
     if bg_pose_field is not None:
         T = bg_pose_field.num_frames()
         loss = loss + float(w_smooth_camera_rot) * _normalized_smooth(
@@ -1000,16 +1008,16 @@ def _pose_smoothness(
             q_w, t_w = _camera_pose_to_world(
                 bg_pose_field, idx, _hand_root_quats_camera(slot, local), slot.pose_field.cam_t,
             )
-            rot_term = quat_smoothness(q_w)
-            trans_term = temporal_smoothness(t_w)
+            rot_term = _observed_smooth(quat_smoothness, q_w, slot.pose_field.frame_indices)
+            trans_term = _observed_smooth(temporal_smoothness, t_w, slot.pose_field.frame_indices)
         else:
-            rot_term = rotation_smoothness(slot.pose_field.global_orient)
-            trans_term = temporal_smoothness(slot.pose_field.cam_t)
-        loss = loss + float(w_smooth_hand_rot) * _normalized_smooth(rot_term, n)
-        loss = loss + float(w_smooth_hand_articulation) * _normalized_smooth(
-            rotation_smoothness(slot.pose_field.hand_pose.view(n, 15, 3)), n
+            rot_term = _observed_smooth(rotation_smoothness, slot.pose_field.global_orient, slot.pose_field.frame_indices)
+            trans_term = _observed_smooth(temporal_smoothness, slot.pose_field.cam_t, slot.pose_field.frame_indices)
+        loss = loss + float(w_smooth_hand_rot) * rot_term
+        loss = loss + float(w_smooth_hand_articulation) * _observed_smooth(
+            rotation_smoothness, slot.pose_field.hand_pose.view(n, 15, 3), slot.pose_field.frame_indices
         )
-        loss = loss + float(w_smooth_hand_trans) * _normalized_smooth(trans_term, n)
+        loss = loss + float(w_smooth_hand_trans) * trans_term
         for obj in obj_slots:
             loss = loss + _hand_object_relative_smoothness(
                 obj.pose_field,
@@ -1097,7 +1105,7 @@ def _export_scene(
     fps: float,
     max_bg_points: int,
 ) -> None:
-    """Write one ``.npz`` with initial and refined poses for the quality report.
+    """Write initial/refined geometry and the optimized Gaussian state.
 
     World is the background reference camera (``camera_w2c`` is world→camera).
     Object poses are object→camera with the learned global scale folded into
@@ -1111,14 +1119,22 @@ def _export_scene(
         "image_size": np.asarray([width, height], dtype=np.int64),
         "object_names": np.asarray([obj.name for obj in obj_slots]),
         "hand_sides": np.asarray([slot.side for slot in hand_slots]),
+        "gaussian_state_format": np.asarray("module_state_dict_v1"),
     }
+    def save_gaussians(label, module):
+        for key, tensor in module.state_dict().items():
+            out[f"refined_gaussian_{label}__{key}"] = tensor.detach().cpu().numpy()
+
     for i, obj in enumerate(obj_slots):
         out[f"object_{i}_verts"] = obj.verts.detach().cpu().numpy().astype(np.float32)
         out[f"object_{i}_faces"] = np.asarray(obj.faces, dtype=np.int32)
+        save_gaussians(f"object_{i}", obj.gaussians)
     for j, slot in enumerate(hand_slots):
         out[f"hand_{j}_frame_indices"] = np.asarray(slot.pose_field.frame_indices, dtype=np.int64)
         out[f"hand_{j}_faces"] = slot.pose_field.mano.th_faces.detach().cpu().numpy().astype(np.int32)
+        save_gaussians(f"hand_{j}", slot.gaussians)
     if bg_gaussians is not None:
+        save_gaussians("background", bg_gaussians)
         with torch.no_grad():
             pts = (bg_gaussians.anchor + bg_gaussians._delta_p).detach()
             keep = torch.sigmoid(bg_gaussians._opacity_logit.detach()) > 0.2
@@ -1133,6 +1149,9 @@ def _export_scene(
             continue
         for key, value in state.items():
             out[f"{prefix}_{key}"] = value
+    for key, value in out.items():
+        if np.issubdtype(value.dtype, np.number) and not np.isfinite(value).all():
+            raise FloatingPointError(f"Non-finite scene output: {key}")
     os.makedirs(os.path.dirname(os.path.abspath(path)) or ".", exist_ok=True)
     np.savez_compressed(path, **out)
 
@@ -1335,6 +1354,13 @@ def refine_simple(
     fps: float = 30.0,
     seed: int = 0,
     device: str = "cuda",
+    max_object_translation_change: float = 0.0,
+    max_object_rotation_change_deg: float = 0.0,
+    max_hand_translation_change: float = 0.0,
+    max_hand_rotation_change_deg: float = 0.0,
+    max_hand_articulation_change_deg: float = 0.0,
+    max_camera_translation_change: float = 0.0,
+    max_camera_rotation_change_deg: float = 0.0,
 ) -> None:
     object_specs = _object_specs(
         object_mesh_path, object_poses_dir, object_mask_dir, refined_object_poses_dir,
@@ -1662,6 +1688,25 @@ def refine_simple(
         if scene_export_path is not None else None
     )
 
+    pose_trust = PoseTrustRegion()
+    for obj in obj_slots:
+        pose_trust.add(f"object/{obj.name}/translation", obj.pose_field.translation,
+                       max_object_translation_change)
+        pose_trust.add(f"object/{obj.name}/rotation", obj.pose_field.axis_angle,
+                       math.radians(max_object_rotation_change_deg))
+    for slot in hand_slots:
+        pose_trust.add(f"hand/{slot.side}/translation", slot.pose_field.cam_t,
+                       max_hand_translation_change)
+        pose_trust.add(f"hand/{slot.side}/rotation", slot.pose_field.global_orient,
+                       math.radians(max_hand_rotation_change_deg))
+        pose_trust.add(f"hand/{slot.side}/articulation", slot.pose_field.hand_pose,
+                       math.radians(max_hand_articulation_change_deg))
+    if bg_pose_field is not None:
+        pose_trust.add("camera/translation", bg_pose_field.translation,
+                       max_camera_translation_change)
+        pose_trust.add("camera/rotation", bg_pose_field.axis_angle,
+                       math.radians(max_camera_rotation_change_deg))
+
     param_groups: list[dict] = []
     if obj_g_params:
         param_groups.append({"params": obj_g_params, "lr": lr_gaussians})
@@ -1711,6 +1756,19 @@ def refine_simple(
     if lr_schedule == "cosine":
         print(f"LR schedule: cosine, min_factor={lr_cosine_min_factor:.4g}, steps={total_steps}")
     pbar = tqdm(total=total_steps, ncols=100, desc="refine_simple")
+    successful_steps = 0
+    trace_path = None
+    if progress_dir is not None:
+        os.makedirs(progress_dir, exist_ok=True)
+        trace_path = os.path.join(progress_dir, "optimization_trace.jsonl")
+
+    def record_step(status, batch, **values):
+        if trace_path is not None:
+            with open(trace_path, "a", encoding="utf-8") as stream:
+                stream.write(json.dumps({"step": step, "status": status,
+                                         "frames": [frame_indices[t] for t in batch],
+                                         **values}, allow_nan=False) + "\n")
+
     step = 0
     for _epoch in range(int(n_epochs)):
         order = torch.randperm(T).tolist()
@@ -1819,6 +1877,7 @@ def refine_simple(
                 + smooth
             )
             if not bool(torch.isfinite(loss)):
+                record_step("skipped", batch, reason="nonfinite_loss")
                 print(
                     f"WARNING: skipping non-finite refinement loss at step={step}, "
                     f"frames={[frame_indices[t] for t in batch]}"
@@ -1835,6 +1894,7 @@ def refine_simple(
                 for param_i, param in enumerate(group["params"])
             ])
             if bad_gradient is not None:
+                record_step("skipped", batch, reason="nonfinite_gradient", detail=bad_gradient)
                 print(
                     f"WARNING: skipping non-finite refinement gradient at step={step}, "
                     f"frames={[frame_indices[t] for t in batch]}: {bad_gradient}"
@@ -1848,6 +1908,7 @@ def refine_simple(
                 trainable_params, max_norm=max_grad_norm, error_if_nonfinite=False
             )
             if not bool(torch.isfinite(grad_norm)):
+                record_step("skipped", batch, reason="nonfinite_gradient_norm")
                 print(
                     f"WARNING: skipping non-finite gradient norm at step={step}, "
                     f"frames={[frame_indices[t] for t in batch]}"
@@ -1870,6 +1931,13 @@ def refine_simple(
                 )
             if bg_pose_field is not None:
                 _anchor_camera_reference(bg_pose_field)
+            trust_clipped = pose_trust.project()
+            successful_steps += 1
+            record_step("updated", batch, epoch=_epoch, loss=float(loss.detach()),
+                        photo=float(photo.detach()), mask=float(mask_l1.detach()),
+                        relative_depth=float(relative_depth.detach()), metric_depth=float(metric_depth.detach()),
+                        smooth=float(smooth.detach()), gradient_norm=float(grad_norm.detach()), lr_scale=lr_scale,
+                        pose_trust_clipped=trust_clipped)
             step += 1
             if render_every > 0 and progress_dir is not None and step % int(render_every) == 0:
                 _dump_progress_frame(
@@ -1889,6 +1957,9 @@ def refine_simple(
                 smooth=f"{float(smooth.detach()):.4f}",
             )
     pbar.close()
+    if successful_steps == 0:
+        raise FloatingPointError("Refinement produced zero successful optimizer updates")
+    print(f"Optimizer updates: {successful_steps}/{total_steps}; skipped: {total_steps - successful_steps}")
     if render_every > 0 and progress_dir is not None:
         _dump_progress_frame(
             progress_dir, step, progress_t, cache, K, width, height, device_t,
@@ -2065,6 +2136,13 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--fps", type=float, default=30.0)
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--device", default="cuda")
+    for name in ("object", "hand", "camera"):
+        p.add_argument(f"--max_{name}_translation_change", type=float, default=0.0,
+                       help="Maximum initialization-relative translation change in metres;0 disables.")
+        p.add_argument(f"--max_{name}_rotation_change_deg", type=float, default=0.0,
+                       help="Maximum initialization-relative axis-angle change in degrees;0 disables.")
+    p.add_argument("--max_hand_articulation_change_deg", type=float, default=0.0,
+                   help="Maximum per-finger-joint change from initialization in degrees;0 disables.")
     return p.parse_args()
 
 

@@ -1,0 +1,736 @@
+{
+  "base_commit": "2e8efa668c9485fbd99f961ff88284a905f2b021",
+  "candidate": "trial2",
+  "episode": 2,
+  "local_milestone": "343-frame refinement, browser-verified 3D viewer and written matched measurements",
+  "github_issue_state": "OPEN; draft-PR publication authorized, review pending",
+  "started_at_utc": "2026-10-08T23:10:24.375576+00:00",
+  "ended_at_utc": "2026-10-08T23:27:31.756401+00:00",
+  "runtime": {
+    "python": "3.11.17",
+    "torch": "2.9.1+cu128",
+    "gsplat": "1.4.0",
+    "cuda": "12.8",
+    "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU"
+  },
+  "configuration": {
+    "missing_object_mask_unknown": true,
+    "n_epochs": 10,
+    "batch_size": 4,
+    "train_resolution_scale": 0.5,
+    "lr_gaussians": 0.001,
+    "lr_object_pose": 5e-05,
+    "lr_object_scale": 0,
+    "lr_hand_pose": 5e-05,
+    "lr_hand_articulation": 5e-05,
+    "lr_hand_shape": 0,
+    "lr_hand_scale": 0,
+    "lr_camera_pose": 1e-05,
+    "lr_schedule": "cosine",
+    "lr_cosine_min_factor": 0.1,
+    "init_opacity_obj": 0.5,
+    "init_opacity_hand": 0.5,
+    "init_opacity_bg": 0.5,
+    "w_mask": 50.0,
+    "w_relative_depth": 1.0,
+    "w_metric_depth": 100,
+    "smooth_in_world": true,
+    "w_smooth_object_rot": 1000,
+    "w_smooth_object_trans": 1000,
+    "w_smooth_hand_rot": 1000,
+    "w_smooth_hand_articulation": 1000,
+    "w_smooth_hand_trans": 1000,
+    "w_smooth_camera_rot": 1000,
+    "w_smooth_camera_trans": 1000,
+    "render_every": 100,
+    "fps": 20,
+    "device": "cuda",
+    "seed": 42,
+    "max_object_translation_change": 0.003,
+    "max_object_rotation_change_deg": 0.5,
+    "max_hand_translation_change": 0.002,
+    "max_hand_rotation_change_deg": 0.5,
+    "max_hand_articulation_change_deg": 1.0,
+    "max_camera_translation_change": 0.002,
+    "max_camera_rotation_change_deg": 0.25
+  },
+  "hashes": {
+    "scene_sha256": "e8e58a896f05f786b39d01bdc1983e9a9eeb579f0cf0d11c7a0d99fdbc2df8e2",
+    "input_lock_sha256": "1c85ea4a6a64c5bd0a38fcce0cd72975fac76f8e39e7a0df700b7d13787d0fac",
+    "run_source_sha256": {
+      "reconstruction/modules/v2d_gsplat_refinement/lib/background.py": "5d4cc2ddca30a4606683107790ab6866d19ecb45ea60169323da1aaabbecc027",
+      "reconstruction/modules/v2d_gsplat_refinement/lib/constraints.py": "87f400c06546da4854a3c9828091757989b95da1c5252b3d9c69728523461716",
+      "reconstruction/modules/v2d_gsplat_refinement/lib/gaussians.py": "824ecf7596ae65a5e71727dce3a362b23fff65e37f3764e4a30121e291104138",
+      "reconstruction/modules/v2d_gsplat_refinement/lib/io.py": "c28a5e5f1793108c8db491f92dd46dfc65df3222ad12bbaf1ca0f3b72316a7ef",
+      "reconstruction/modules/v2d_gsplat_refinement/lib/losses.py": "f9f913e243295c39f9e4012dfead46b8226887ae1b0f73cf7672b9de2320faf5",
+      "reconstruction/modules/v2d_gsplat_refinement/lib/pose_fields.py": "6f21cc0bed444cd0d9fe106ed18ea92284b2ab862b5f6083f78b7035e0caf6dd",
+      "reconstruction/modules/v2d_gsplat_refinement/lib/refine.py": "2aa39314a6ca841a99e4ad2d8cb874d4cd3f4dd8668f588c1d9f6f2921d54c82",
+      "reconstruction/modules/v2d_gsplat_refinement/lib/refine_simple.py": "fd4f6cf1f1772951e05e2372a0b712956f0eff38b3410d4cde9ac00b896ed971",
+      "reconstruction/modules/v2d_gsplat_refinement/lib/render.py": "160a86eed06dfc6163fe288310e22ed860422985372e919f903a643e54c756f9",
+      "reconstruction/modules/v2d_gsplat_refinement/lib/visualize.py": "06babcc5ce809b49f9b92a02d1f0ba447830a4df491173f5d0da300701a06da2",
+      "reconstruction/modules/v2d_gsplat_refinement/lib/__init__.py": "044168d1351bbac80588f3d7b31d5323d835ee0635d1a5ea4510cd014137e15d"
+    },
+    "report_source_sha256": "7d62360806e447c7e498360df54436096e4deafddf4c369efc7e6a345c19dfed",
+    "viewer_sha256": "d7aa186a15c0208a0878441cbdcfd8100715d49670a1882ba363986f927631df",
+    "private_quality_report_sha256": "d40b0e3b1849659822dd1212a8b8a79a1c55c4f725de8cd5300f55c424c56aeb"
+  },
+  "coverage": {
+    "optimizer_updates": 840,
+    "skipped_updates": 20,
+    "frames": 343,
+    "successful_visits_per_frame_min": 7,
+    "successful_visits_per_frame_max": 10,
+    "successful_visit_histogram": {
+      "7": 1,
+      "8": 5,
+      "9": 67,
+      "10": 270
+    },
+    "source_hash_checks": 4673,
+    "source_files_changed": []
+  },
+  "input_counts": {
+    "cameras": 343,
+    "stereo_depth_frames": 343,
+    "pot_observed": 285,
+    "pot_inferred": 58,
+    "lid_observed": 343,
+    "left_hand": 272,
+    "right_hand": 284
+  },
+  "measurements": {
+    "fps": 20.0,
+    "camera": {
+      "initial": {
+        "translation": {
+          "accel_rms_m_s2": 0.3280723622598389,
+          "accel_median_m_s2": 0.1731120960974144,
+          "accel_p95_m_s2": 0.6295374112430351,
+          "n": 341,
+          "highfreq_rms_mm": 0.5093507830401591
+        },
+        "rotation": {
+          "ang_accel_rms_deg_s2": 63.464959877427454,
+          "ang_accel_median_deg_s2": 42.73397604467704,
+          "ang_accel_p95_deg_s2": 116.92723768022537,
+          "n": 341
+        }
+      },
+      "refined": {
+        "translation": {
+          "accel_rms_m_s2": 0.5006269347609675,
+          "accel_median_m_s2": 0.33656025937433054,
+          "accel_p95_m_s2": 0.9414513867271502,
+          "n": 341,
+          "highfreq_rms_mm": 0.6143274647576806
+        },
+        "rotation": {
+          "ang_accel_rms_deg_s2": 80.57342153165311,
+          "ang_accel_median_deg_s2": 65.66647371181317,
+          "ang_accel_p95_deg_s2": 145.3116792149013,
+          "n": 341
+        }
+      },
+      "correction": {
+        "translation_mean_cm": 0.08256398810827968,
+        "translation_max_cm": 0.17379677819238543,
+        "rotation_mean_deg": 0.051916673332855566,
+        "rotation_max_deg": 0.1332944373289956
+      }
+    },
+    "object_coverage": {
+      "white_pot": {
+        "observed_initialization": 285,
+        "inferred_initialization": 58,
+        "unknown_provenance": 0
+      },
+      "white_pot_lid": {
+        "observed_initialization": 343,
+        "inferred_initialization": 0,
+        "unknown_provenance": 0
+      }
+    },
+    "object_observed_jitter": {
+      "white_pot": {
+        "initial": {
+          "translation": {
+            "accel_rms_m_s2": 1.6550999342578523,
+            "accel_median_m_s2": 0.9579950434350698,
+            "accel_p95_m_s2": 3.3003810277872203,
+            "n": 283,
+            "highfreq_rms_mm": 3.0445209089880034
+          },
+          "rotation": {
+            "ang_accel_rms_deg_s2": 559.3497648045864,
+            "ang_accel_median_deg_s2": 427.5177806347918,
+            "ang_accel_p95_deg_s2": 1032.6093043536162,
+            "n": 283
+          }
+        },
+        "refined": {
+          "translation": {
+            "accel_rms_m_s2": 1.3766310784513347,
+            "accel_median_m_s2": 0.6047278082082591,
+            "accel_p95_m_s2": 3.109782071838101,
+            "n": 283,
+            "highfreq_rms_mm": 2.8119422398133076
+          },
+          "rotation": {
+            "ang_accel_rms_deg_s2": 365.82796370410404,
+            "ang_accel_median_deg_s2": 185.71765302085,
+            "ang_accel_p95_deg_s2": 763.9134395777047,
+            "n": 283
+          }
+        }
+      },
+      "white_pot_lid": {
+        "initial": {
+          "translation": {
+            "accel_rms_m_s2": 1.082138514307623,
+            "accel_median_m_s2": 0.6625984557764744,
+            "accel_p95_m_s2": 2.1714946613007364,
+            "n": 341,
+            "highfreq_rms_mm": 1.5409434012150007
+          },
+          "rotation": {
+            "ang_accel_rms_deg_s2": 755.2130905651943,
+            "ang_accel_median_deg_s2": 529.693764145804,
+            "ang_accel_p95_deg_s2": 1466.1004400300428,
+            "n": 341
+          }
+        },
+        "refined": {
+          "translation": {
+            "accel_rms_m_s2": 0.7129067724777984,
+            "accel_median_m_s2": 0.416072379217804,
+            "accel_p95_m_s2": 1.5306863853187223,
+            "n": 341,
+            "highfreq_rms_mm": 1.3023639370122257
+          },
+          "rotation": {
+            "ang_accel_rms_deg_s2": 401.850141509307,
+            "ang_accel_median_deg_s2": 133.69014594401335,
+            "ang_accel_p95_deg_s2": 953.4772693063362,
+            "n": 341
+          }
+        }
+      }
+    },
+    "object_jitter": {
+      "white_pot": {
+        "initial": {
+          "translation": {
+            "accel_rms_m_s2": 1.5185103407502065,
+            "accel_median_m_s2": 0.7843694044902207,
+            "accel_p95_m_s2": 3.169012647490612,
+            "n": 341,
+            "highfreq_rms_mm": 2.7773865284567045
+          },
+          "rotation": {
+            "ang_accel_rms_deg_s2": 520.8266935100777,
+            "ang_accel_median_deg_s2": 373.24457090436226,
+            "ang_accel_p95_deg_s2": 954.8825301314913,
+            "n": 341
+          }
+        },
+        "refined": {
+          "translation": {
+            "accel_rms_m_s2": 1.2653401487046683,
+            "accel_median_m_s2": 0.5049095576795,
+            "accel_p95_m_s2": 3.0076184393012166,
+            "n": 341,
+            "highfreq_rms_mm": 2.56618889229907
+          },
+          "rotation": {
+            "ang_accel_rms_deg_s2": 339.36860354025265,
+            "ang_accel_median_deg_s2": 152.85507524086543,
+            "ang_accel_p95_deg_s2": 706.818315779808,
+            "n": 341
+          }
+        }
+      },
+      "white_pot_lid": {
+        "initial": {
+          "translation": {
+            "accel_rms_m_s2": 1.082138514307623,
+            "accel_median_m_s2": 0.6625984557764744,
+            "accel_p95_m_s2": 2.1714946613007364,
+            "n": 341,
+            "highfreq_rms_mm": 1.5409434012150007
+          },
+          "rotation": {
+            "ang_accel_rms_deg_s2": 755.2130905651943,
+            "ang_accel_median_deg_s2": 529.693764145804,
+            "ang_accel_p95_deg_s2": 1466.1004400300428,
+            "n": 341
+          }
+        },
+        "refined": {
+          "translation": {
+            "accel_rms_m_s2": 0.7129067724777984,
+            "accel_median_m_s2": 0.416072379217804,
+            "accel_p95_m_s2": 1.5306863853187223,
+            "n": 341,
+            "highfreq_rms_mm": 1.3023639370122257
+          },
+          "rotation": {
+            "ang_accel_rms_deg_s2": 401.850141509307,
+            "ang_accel_median_deg_s2": 133.69014594401335,
+            "ang_accel_p95_deg_s2": 953.4772693063362,
+            "n": 341
+          }
+        }
+      }
+    },
+    "hand_jitter": {
+      "left": {
+        "initial": {
+          "wrist": {
+            "accel_rms_m_s2": 2.150214775644556,
+            "accel_median_m_s2": 1.3518030882528027,
+            "accel_p95_m_s2": 4.070402577270827,
+            "n": 254,
+            "highfreq_rms_mm": 3.0167337352400208
+          },
+          "fingertips": {
+            "accel_rms_m_s2": 2.5129277557286556,
+            "accel_median_m_s2": 1.5011763287565374,
+            "accel_p95_m_s2": 4.400170672446417,
+            "n": 254,
+            "highfreq_rms_mm": 3.436993009909908
+          }
+        },
+        "refined": {
+          "wrist": {
+            "accel_rms_m_s2": 1.6406799003346868,
+            "accel_median_m_s2": 1.0199465300070383,
+            "accel_p95_m_s2": 3.12400876401474,
+            "n": 254,
+            "highfreq_rms_mm": 2.5879267048475487
+          },
+          "fingertips": {
+            "accel_rms_m_s2": 2.2383179354428604,
+            "accel_median_m_s2": 1.052244597399051,
+            "accel_p95_m_s2": 3.708212961818139,
+            "n": 254,
+            "highfreq_rms_mm": 3.1710633151872765
+          }
+        }
+      },
+      "right": {
+        "initial": {
+          "wrist": {
+            "accel_rms_m_s2": 2.4152273925554684,
+            "accel_median_m_s2": 1.6474473226843778,
+            "accel_p95_m_s2": 4.818956379224479,
+            "n": 280,
+            "highfreq_rms_mm": 3.202965994625379
+          },
+          "fingertips": {
+            "accel_rms_m_s2": 4.294867897308207,
+            "accel_median_m_s2": 2.297063797266926,
+            "accel_p95_m_s2": 9.121916153258116,
+            "n": 280,
+            "highfreq_rms_mm": 4.833989496754165
+          }
+        },
+        "refined": {
+          "wrist": {
+            "accel_rms_m_s2": 1.7944597985833006,
+            "accel_median_m_s2": 1.0798535324248544,
+            "accel_p95_m_s2": 3.429039164234478,
+            "n": 280,
+            "highfreq_rms_mm": 2.738910550422731
+          },
+          "fingertips": {
+            "accel_rms_m_s2": 4.155834604246502,
+            "accel_median_m_s2": 1.8711153532899794,
+            "accel_p95_m_s2": 9.706165568169649,
+            "n": 280,
+            "highfreq_rms_mm": 4.69532077177166
+          }
+        }
+      }
+    },
+    "drift": {
+      "white_pot": {
+        "initial": {
+          "segments": [
+            {
+              "frames": [
+                238,
+                263
+              ],
+              "length": 26,
+              "endpoint_drift_cm": 0.30644159495611756,
+              "max_deviation_cm": 0.5037735066594731,
+              "endpoint_rot_drift_deg": 1.540159526541073
+            }
+          ],
+          "rest_frames": 26,
+          "endpoint_drift_cm_max": 0.30644159495611756,
+          "endpoint_drift_cm_mean": 0.30644159495611756,
+          "max_deviation_cm_max": 0.5037735066594731,
+          "max_deviation_cm_mean": 0.5037735066594731,
+          "endpoint_rot_drift_deg_max": 1.540159526541073,
+          "endpoint_rot_drift_deg_mean": 1.5401595265410732
+        },
+        "refined": {
+          "segments": [
+            {
+              "frames": [
+                238,
+                263
+              ],
+              "length": 26,
+              "endpoint_drift_cm": 0.18329902389018096,
+              "max_deviation_cm": 0.3821535968133139,
+              "endpoint_rot_drift_deg": 1.406378131908383
+            }
+          ],
+          "rest_frames": 26,
+          "endpoint_drift_cm_max": 0.18329902389018096,
+          "endpoint_drift_cm_mean": 0.18329902389018096,
+          "max_deviation_cm_max": 0.3821535968133139,
+          "max_deviation_cm_mean": 0.38215359681331396,
+          "endpoint_rot_drift_deg_max": 1.406378131908383,
+          "endpoint_rot_drift_deg_mean": 1.406378131908383
+        }
+      },
+      "white_pot_lid": {
+        "initial": {
+          "segments": [
+            {
+              "frames": [
+                129,
+                139
+              ],
+              "length": 11,
+              "endpoint_drift_cm": 0.09275782074822467,
+              "max_deviation_cm": 0.16638370338776348,
+              "endpoint_rot_drift_deg": 0.9873840444895006
+            },
+            {
+              "frames": [
+                145,
+                165
+              ],
+              "length": 21,
+              "endpoint_drift_cm": 0.15178944809094555,
+              "max_deviation_cm": 0.282278020490691,
+              "endpoint_rot_drift_deg": 0.4816223966008593
+            },
+            {
+              "frames": [
+                167,
+                213
+              ],
+              "length": 47,
+              "endpoint_drift_cm": 0.8406783242192316,
+              "max_deviation_cm": 0.9382471959916655,
+              "endpoint_rot_drift_deg": 0.8249901530503942
+            },
+            {
+              "frames": [
+                215,
+                224
+              ],
+              "length": 10,
+              "endpoint_drift_cm": 0.20851099370976195,
+              "max_deviation_cm": 0.1322837515118069,
+              "endpoint_rot_drift_deg": 0.481449258783298
+            }
+          ],
+          "rest_frames": 89,
+          "endpoint_drift_cm_max": 0.8406783242192316,
+          "endpoint_drift_cm_mean": 0.5146618608263127,
+          "max_deviation_cm_max": 0.9382471959916655,
+          "max_deviation_cm_mean": 0.5975114033066995,
+          "endpoint_rot_drift_deg_max": 0.9873840444895006,
+          "endpoint_rot_drift_deg_mean": 0.7254418494292593
+        },
+        "refined": {
+          "segments": [
+            {
+              "frames": [
+                129,
+                139
+              ],
+              "length": 11,
+              "endpoint_drift_cm": 0.2651765862134944,
+              "max_deviation_cm": 0.19226063293011525,
+              "endpoint_rot_drift_deg": 0.3757167377936992
+            },
+            {
+              "frames": [
+                145,
+                165
+              ],
+              "length": 21,
+              "endpoint_drift_cm": 0.3630474029651365,
+              "max_deviation_cm": 0.2836370443480916,
+              "endpoint_rot_drift_deg": 0.24359960705355396
+            },
+            {
+              "frames": [
+                167,
+                213
+              ],
+              "length": 47,
+              "endpoint_drift_cm": 0.9477850016639523,
+              "max_deviation_cm": 0.922585948176934,
+              "endpoint_rot_drift_deg": 0.8690023384641667
+            },
+            {
+              "frames": [
+                215,
+                224
+              ],
+              "length": 10,
+              "endpoint_drift_cm": 0.15499829455917227,
+              "max_deviation_cm": 0.14408116662549533,
+              "endpoint_rot_drift_deg": 0.45280575779623666
+            }
+          ],
+          "rest_frames": 89,
+          "endpoint_drift_cm_max": 0.9477850016639523,
+          "endpoint_drift_cm_mean": 0.6363687183641998,
+          "max_deviation_cm_max": 0.922585948176934,
+          "max_deviation_cm_mean": 0.5940853497091241,
+          "endpoint_rot_drift_deg_max": 0.8690023384641667,
+          "endpoint_rot_drift_deg_mean": 0.6137038578610509
+        }
+      }
+    },
+    "drift_assumption": "Candidate rest proxy: all available hand tracks observed and far from the object. Missing hands are unknown. Verify stationary objects in source video; distance alone does not establish rest.",
+    "source_reviewed_drift": {
+      "white_pot_lid": {
+        "initial": {
+          "segments": [
+            {
+              "frames": [
+                112,
+                228
+              ],
+              "length": 117,
+              "endpoint_drift_cm": 1.1841512088825308,
+              "max_deviation_cm": 1.3443002499481853,
+              "endpoint_rot_drift_deg": 0.5952610750299026
+            }
+          ],
+          "rest_frames": 117,
+          "endpoint_drift_cm_max": 1.1841512088825308,
+          "endpoint_drift_cm_mean": 1.1841512088825308,
+          "max_deviation_cm_max": 1.3443002499481853,
+          "max_deviation_cm_mean": 1.3443002499481853,
+          "endpoint_rot_drift_deg_max": 0.5952610750299026,
+          "endpoint_rot_drift_deg_mean": 0.5952610750299026
+        },
+        "refined": {
+          "segments": [
+            {
+              "frames": [
+                112,
+                228
+              ],
+              "length": 117,
+              "endpoint_drift_cm": 1.0529255562879372,
+              "max_deviation_cm": 1.241336638797108,
+              "endpoint_rot_drift_deg": 0.5955066134501085
+            }
+          ],
+          "rest_frames": 117,
+          "endpoint_drift_cm_max": 1.0529255562879372,
+          "endpoint_drift_cm_mean": 1.0529255562879372,
+          "max_deviation_cm_max": 1.241336638797108,
+          "max_deviation_cm_mean": 1.2413366387971083,
+          "endpoint_rot_drift_deg_max": 0.5955066134501085,
+          "endpoint_rot_drift_deg_mean": 0.5955066134501085
+        }
+      }
+    },
+    "contact": {
+      "run_source": "issue-6 contacts.json (window_contact)",
+      "independent_precision": null,
+      "interpretation": "Geometry consistency against fixed predicted contact runs, not independent contact precision. Missing geometry remains in the within-2cm denominator. Signed surface distance is an oriented-surface proxy.",
+      "initial": {
+        "contact_runs": 44,
+        "expected_contact_rows": 1494,
+        "observed_contact_rows": 1494,
+        "missing_contact_rows": 0,
+        "contact_geometry_coverage": 1.0,
+        "contact_point_spread_rms_mm": 6.802178788493837,
+        "contact_normal_spread_deg": 26.625640808134822,
+        "contact_surface_distance_median_mm": 6.960666168204429,
+        "contact_within_2cm_fraction": 0.9551539491298527,
+        "penetration_rate": 0.08399280575539568,
+        "penetration_depth_p95_mm": 66.91699693328165
+      },
+      "refined": {
+        "contact_runs": 44,
+        "expected_contact_rows": 1494,
+        "observed_contact_rows": 1494,
+        "missing_contact_rows": 0,
+        "contact_geometry_coverage": 1.0,
+        "contact_point_spread_rms_mm": 6.531488012089767,
+        "contact_normal_spread_deg": 26.946543847001,
+        "contact_surface_distance_median_mm": 6.600564446348038,
+        "contact_within_2cm_fraction": 0.964524765729585,
+        "penetration_rate": 0.08525179856115107,
+        "penetration_depth_p95_mm": 66.62100008135619
+      }
+    },
+    "official": {
+      "initial": {
+        "add_auc": 0.8599672011661808,
+        "spider_sr": 1.0,
+        "maniptrans_sr": 1.0,
+        "rpe_cm": 0.8165608904866608,
+        "mppe_cm": 2.009938385882956
+      },
+      "refined": {
+        "add_auc": 0.8588739067055393,
+        "spider_sr": 1.0,
+        "maniptrans_sr": 1.0,
+        "rpe_cm": 0.7763889783002313,
+        "mppe_cm": 1.9860763076629344
+      }
+    }
+  },
+  "exported_pose_bound_checks": {
+    "camera/translation": {
+      "maximum": 0.001737763578200665,
+      "mean": 0.0008282924322000477,
+      "bound": 0.002,
+      "units": "m",
+      "count": 343
+    },
+    "camera/physical_rotation": {
+      "maximum": 0.13354589677434978,
+      "mean": 0.05193223919716961,
+      "bound": 0.25,
+      "units": "deg",
+      "count": 343
+    },
+    "object/white_pot/translation": {
+      "maximum": 0.0030000244729132598,
+      "mean": 0.0026976453713906073,
+      "bound": 0.003,
+      "units": "m",
+      "count": 343
+    },
+    "object/white_pot/physical_rotation": {
+      "maximum": 0.49376326579903446,
+      "mean": 0.2663992511928902,
+      "bound": 0.5,
+      "units": "deg",
+      "count": 343
+    },
+    "object/white_pot_lid/translation": {
+      "maximum": 0.003000025890091803,
+      "mean": 0.002470084610994236,
+      "bound": 0.003,
+      "units": "m",
+      "count": 343
+    },
+    "object/white_pot_lid/physical_rotation": {
+      "maximum": 0.4954690943559451,
+      "mean": 0.37962893197304776,
+      "bound": 0.5,
+      "units": "deg",
+      "count": 343
+    },
+    "hand/left/translation": {
+      "maximum": 0.0020000284305886217,
+      "mean": 0.0019134625698602086,
+      "bound": 0.002,
+      "units": "m",
+      "count": 272
+    },
+    "hand/left/global_orient": {
+      "maximum": 0.5000071537156195,
+      "mean": 0.4846045116209587,
+      "bound": 0.5,
+      "units": "deg (axis-angle parameter difference)",
+      "count": 272
+    },
+    "hand/left/hand_pose": {
+      "maximum": 1.0000030670862137,
+      "mean": 0.9444433839865399,
+      "bound": 1.0,
+      "units": "deg (axis-angle parameter difference)",
+      "count": 4080
+    },
+    "hand/left/frozen_shared_shape": {
+      "maximum": 1.30385160446167e-07,
+      "mean": 1.30385160446167e-07,
+      "bound": 0.0,
+      "units": "beta units",
+      "count": 272
+    },
+    "hand/left/frozen_scale": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "bound": 0.0,
+      "units": "scale units",
+      "count": 272
+    },
+    "hand/right/translation": {
+      "maximum": 0.0020000259426345046,
+      "mean": 0.0018726512973791434,
+      "bound": 0.002,
+      "units": "m",
+      "count": 284
+    },
+    "hand/right/global_orient": {
+      "maximum": 0.5000097233938064,
+      "mean": 0.4869247649161808,
+      "bound": 0.5,
+      "units": "deg (axis-angle parameter difference)",
+      "count": 284
+    },
+    "hand/right/hand_pose": {
+      "maximum": 1.0000040832320638,
+      "mean": 0.9663928806193266,
+      "bound": 1.0,
+      "units": "deg (axis-angle parameter difference)",
+      "count": 4260
+    },
+    "hand/right/frozen_shared_shape": {
+      "maximum": 7.450580596923828e-08,
+      "mean": 7.450580596923828e-08,
+      "bound": 0.0,
+      "units": "beta units",
+      "count": 284
+    },
+    "hand/right/frozen_scale": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "bound": 0.0,
+      "units": "scale units",
+      "count": 284
+    }
+  },
+  "gt_in_optimization": false,
+  "holdout_tuning": false,
+  "contact_precision_independent": null,
+  "interpretation": "Bounded development reconstruction pilot with camera jitter and other reported regressions; no policy rollout or all-episode claim.",
+  "software": {
+    "cpu_tests_passed": 37,
+    "targeted_ruff": "passed",
+    "docker_bound_forwarding": "CLI test only; actual experiment native"
+  },
+  "visual": {
+    "frames_inspected": 343,
+    "contact_sheets": 29,
+    "event_pairs": 12,
+    "continuous_visual_video_audit": false,
+    "viewer_controls": "passed",
+    "limitations": [
+      "Pot/lid lift, motion and replacement remain present; no gross collapse or teleport observed.",
+      "Sparse background holes and speckle remain; forearms are not modeled.",
+      "Missing upstream hand observations remain absent, including hands visible in source frames.",
+      "CAD display speckle remains; appearance is not photorealistic."
+    ]
+  }
+}

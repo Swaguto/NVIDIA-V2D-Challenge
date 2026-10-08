@@ -20,7 +20,9 @@
 #              env with gsplat>=1.4 + manotorch, e.g. a RunPod pod without docker)
 #            SCORE=0 to skip the official before/after diagnostic score
 #            START / FRAMES (sub-window), EPOCHS, W_METRIC_DEPTH, W_SMOOTH,
-#            LR_POSE, LR_CAMERA, EXTRA_REFINE_ARGS
+#            LR_POSE, LR_CAMERA, W_MASK, REST_ANNOTATIONS, EXTRA_REFINE_ARGS
+# Defaults reproduce the bounded episode-2 pilot; see docs/team/issue7/RESULTS.md.
+# Pose limits are initialization-relative engineering priors, not accuracy bounds.
 set -euo pipefail
 
 : "${EPISODE:?}" "${DATA:?}" "${RESULTS:?}" "${BUNDLE:?}" "${OUT:?}"
@@ -31,12 +33,17 @@ REFINE_PYTHON="${REFINE_PYTHON:-$PY}"
 EPOCHS="${EPOCHS:-10}"
 W_METRIC_DEPTH="${W_METRIC_DEPTH:-100}"
 W_SMOOTH="${W_SMOOTH:-1000}"
-LR_POSE="${LR_POSE:-1e-3}"
-LR_CAMERA="${LR_CAMERA:-1e-3}"
+LR_POSE="${LR_POSE:-5e-5}"
+LR_CAMERA="${LR_CAMERA:-1e-5}"
+W_MASK="${W_MASK:-50}"
 
 IN="$OUT/inputs"
 REF="$OUT/refined"
 REPORT="$OUT/report"
+if [[ -e "$REF" || -e "$REPORT" ]]; then
+  echo "Preserve the existing experiment; choose a new OUT: $OUT" >&2
+  exit 1
+fi
 
 window=()
 [[ -n "${START:-}" ]] && window+=(--start "$START")
@@ -58,15 +65,22 @@ args=(
   --overlay_path "$REF/overlay.mp4" --progress_dir "$REF/progress" --scene_export_path "$REF/scene.npz"
   --n_epochs "$EPOCHS" --batch_size 4 --train_resolution_scale 0.5
   --lr_gaussians 1e-3 --lr_object_pose "$LR_POSE" --lr_object_scale 0
-  --lr_hand_pose "$LR_POSE" --lr_hand_articulation "$LR_POSE" --lr_hand_shape 1e-3 --lr_hand_scale 1e-3
+  --lr_hand_pose "$LR_POSE" --lr_hand_articulation "$LR_POSE" --lr_hand_shape 0 --lr_hand_scale 0
   --lr_camera_pose "$LR_CAMERA" --lr_schedule cosine --lr_cosine_min_factor 0.1
   --init_opacity_obj 0.5 --init_opacity_hand 0.5 --init_opacity_bg 0.5
-  --w_mask 1.0 --w_relative_depth 1.0 --w_metric_depth "$W_METRIC_DEPTH"
+  --w_mask "$W_MASK" --w_relative_depth 1.0 --w_metric_depth "$W_METRIC_DEPTH"
+  --max_object_translation_change "${OBJECT_TRANSLATION_LIMIT:-0.003}"
+  --max_object_rotation_change_deg "${OBJECT_ROTATION_LIMIT_DEG:-0.5}"
+  --max_hand_translation_change "${HAND_TRANSLATION_LIMIT:-0.002}"
+  --max_hand_rotation_change_deg "${HAND_ROTATION_LIMIT_DEG:-0.5}"
+  --max_hand_articulation_change_deg "${FINGER_ROTATION_LIMIT_DEG:-1}"
+  --max_camera_translation_change "${CAMERA_TRANSLATION_LIMIT:-0.002}"
+  --max_camera_rotation_change_deg "${CAMERA_ROTATION_LIMIT_DEG:-0.25}"
   --smooth_in_world
   --w_smooth_object_rot "$W_SMOOTH" --w_smooth_object_trans "$W_SMOOTH"
   --w_smooth_hand_rot "$W_SMOOTH" --w_smooth_hand_articulation "$W_SMOOTH" --w_smooth_hand_trans "$W_SMOOTH"
   --w_smooth_camera_rot "$W_SMOOTH" --w_smooth_camera_trans "$W_SMOOTH"
-  --render_every 25 --fps "$FPS"
+  --render_every "${RENDER_EVERY:-100}" --fps "$FPS" --seed "${SEED:-42}"
 )
 for side in left right; do
   if [[ -d "$IN/hands/$side/poses" ]]; then
@@ -94,9 +108,11 @@ fi
 echo "== 3/3 report -> $REPORT"
 contacts=()
 score=()
+rest=()
 # SCORE=0 skips the official scorer (it needs the public parquet reference).
 [[ "${SCORE:-1}" != 0 ]] && score+=(--data "$DATA")
 [[ -n "${HANDS_RUN:-}" && -f "$HANDS_RUN/contacts/contacts.json" ]] && contacts+=(--contacts "$HANDS_RUN/contacts/contacts.json")
+[[ -n "${REST_ANNOTATIONS:-}" ]] && rest+=(--rest-annotations "$REST_ANNOTATIONS")
 "$PY" "$REPO/scripts/track3/refinement_report.py" --scene "$REF/scene.npz" --episode "$EPISODE" \
-  --out "$REPORT" --inputs "$IN/inputs.json" ${score[@]+"${score[@]}"} ${contacts[@]+"${contacts[@]}"}
+  --out "$REPORT" --inputs "$IN/inputs.json" ${score[@]+"${score[@]}"} ${contacts[@]+"${contacts[@]}"} ${rest[@]+"${rest[@]}"}
 echo "Viewer: $REPORT/viewer.html"
