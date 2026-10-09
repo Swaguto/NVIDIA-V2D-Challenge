@@ -1,0 +1,288 @@
+{
+  "date": "2026-10-09",
+  "purpose": "Comparison snapshot of Evan's local work against main",
+  "baseline_main": "0e182aa614f2e360e26c21b12fe53a38d1854506",
+  "integrated_branches": {
+    "Evc-r/issue5-repairs": "955f2f1c05a352530f4238fe4442fda1f1af3ecb",
+    "Evc-r/issue6-validated": "36687297e88b7df7657a50eacf9589e4e367b847",
+    "Evc-r/issue7-refinement-validation": "2d97b015b4e25fc332d83cc258a1471156939fe9",
+    "Evc-r/issue8-episode2-pilot": "43fc832b6c6ceae536d1f89f952126e3c2c6413d"
+  },
+  "already_in_main": [
+    "Evc-r/issue6-validated",
+    "Evc-r/issue7-refinement-validation"
+  ],
+  "superseded_patch": {
+    "branch": "Evc-r/issue6-hand-contacts",
+    "commit": "84016ca",
+    "equivalent_commit_in_main": "048d37a",
+    "stable_patch_id": "6fcc7030a1c200cfcfc4ee22d11d663c56b2afa8"
+  },
+  "local_toolkit_files": [
+    {
+      "source": ".gitignore",
+      "destination": "research/contact-reliability/.gitignore",
+      "sha256": "581afc3d217c8279a8d18c42bf8664f2297f08bae70146c349b4c94154cfe798"
+    },
+    {
+      "source": "NOTICE",
+      "destination": "research/contact-reliability/NOTICE",
+      "sha256": "96ea583ea466f38593b69cf544d16bc6e573297c405066e621236dd23143fc36"
+    },
+    {
+      "source": "README.md",
+      "destination": "research/contact-reliability/README.md",
+      "sha256": "04527e94810cc13ecade6e5bd87dab720e3638a44af000f77a1da231d2d86743"
+    },
+    {
+      "source": "configs/baseline_run.json",
+      "destination": "research/contact-reliability/configs/baseline_run.json",
+      "sha256": "5e2ff34f4ae4bc4d527a2240e4e0174012b7ee3702195db437c8edcfcf5e1c42"
+    },
+    {
+      "source": "configs/experiment.json",
+      "destination": "research/contact-reliability/configs/experiment.json",
+      "sha256": "353ff04ecd9830eb240982ae452aa6c9e2e660d0a9d126724d202f4b1b73e588"
+    },
+    {
+      "source": "configs/submission.json",
+      "destination": "research/contact-reliability/configs/submission.json",
+      "sha256": "736abb3a6438ce31c6703f34b3d265ec78763a80bc6eccaf73b9bd09c28af0a9"
+    },
+    {
+      "source": "configs/team_revision.json",
+      "destination": "research/contact-reliability/configs/team_revision.json",
+      "sha256": "08438a300bea41f52186ab573587b0664385e70aa92da9a4cc2834edf0d8f45b"
+    },
+    {
+      "source": "configs/track3_public_metadata.json",
+      "destination": "research/contact-reliability/configs/track3_public_metadata.json",
+      "sha256": "3d930cf74c7f2f22c9eda641ad65d3ae0cb1e1e519d81fb1fb9827896296edb5"
+    },
+    {
+      "source": "configs/track3_split.json",
+      "destination": "research/contact-reliability/configs/track3_split.json",
+      "sha256": "1a340fd9a72ac72a8a66bbca78720bd539108d8db234c1d0d1bed2f2b5d93637"
+    },
+    {
+      "source": "configs/upstream.json",
+      "destination": "research/contact-reliability/configs/upstream.json",
+      "sha256": "9f107c7471e643605f7122a03f07fccf4d3a0cbb0803b294c6f3f98a4b4a51c4"
+    },
+    {
+      "source": "docs/BACKLOG.md",
+      "destination": "research/contact-reliability/docs/BACKLOG.md",
+      "sha256": "57bb3afcc177dbfa7c96257c3ee09809245098eb5368818bb1ced1247465281e"
+    },
+    {
+      "source": "docs/CONTRACTS.md",
+      "destination": "research/contact-reliability/docs/CONTRACTS.md",
+      "sha256": "733fa58c2ed30b7ebb87bd0f8e8d8a0c259d5951bdb4e37d38b7b584d19c6d38"
+    },
+    {
+      "source": "docs/DEPENDENCIES.md",
+      "destination": "research/contact-reliability/docs/DEPENDENCIES.md",
+      "sha256": "e578fe2482a51e81fcce978976aa893e70ffde7009a639136d2b9fda04a1acce"
+    },
+    {
+      "source": "docs/EVALUATION_HANDOFF.md",
+      "destination": "research/contact-reliability/docs/EVALUATION_HANDOFF.md",
+      "sha256": "b9f6cc62a4ff2209be277a33fd9deb20cd5121b621e8fcce1739939f4bcc4dd1"
+    },
+    {
+      "source": "docs/EVAN_DELIVERABLES.md",
+      "destination": "research/contact-reliability/docs/EVAN_DELIVERABLES.md",
+      "sha256": "f65a7fec0bbc1ab8497c810d65c603be1c24ebb00aa420c587cfac73f35d11bc"
+    },
+    {
+      "source": "docs/ISSUE6_PR_DRAFT.md",
+      "destination": "research/contact-reliability/docs/ISSUE6_PR_DRAFT.md",
+      "sha256": "934da031c1ca9688dc6be781c6746105bf9638b0e4da920ffaea89e14d3b8d26"
+    },
+    {
+      "source": "docs/PR_REVIEW_DRAFT.md",
+      "destination": "research/contact-reliability/docs/PR_REVIEW_DRAFT.md",
+      "sha256": "940bd961007ebf451704c404abe098010e9382c557d87d80e8dc4c1ecc5100ea"
+    },
+    {
+      "source": "docs/REPORT.md",
+      "destination": "research/contact-reliability/docs/REPORT.md",
+      "sha256": "107cf3feb7c9b97858ea2b4b742a4c8282971c424b9d827cd138dda80795a896"
+    },
+    {
+      "source": "docs/RUNBOOK.md",
+      "destination": "research/contact-reliability/docs/RUNBOOK.md",
+      "sha256": "61fed41a6c468be80b7527179990ee6cf512ef9509a17305b395afc01a212ece"
+    },
+    {
+      "source": "docs/TRAINING_CONTRACT.md",
+      "destination": "research/contact-reliability/docs/TRAINING_CONTRACT.md",
+      "sha256": "effd558dacb89927b2f875fff9714476017298ebbd285a9d46685945f76ec076"
+    },
+    {
+      "source": "docs/VALIDATION.md",
+      "destination": "research/contact-reliability/docs/VALIDATION.md",
+      "sha256": "47bc3bb3401f823b2eccbc9e7784b205ced496e1d049f08a61b9658f0a7fab4f"
+    },
+    {
+      "source": "licenses/Apache-2.0.txt",
+      "destination": "research/contact-reliability/licenses/Apache-2.0.txt",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "source": "probe-status-v10-deployment1.deployment.py",
+      "destination": "research/contact-reliability/probe-status-v10-deployment1.deployment.py",
+      "sha256": "07460f5bee76656904d7962f7c55d2f371bb361eaa953923be5dd8eabb382bff"
+    },
+    {
+      "source": "probe-status-v10-deployment1.json",
+      "destination": "research/contact-reliability/probe-status-v10-deployment1.json",
+      "sha256": "acc93b2584af4bfc948fea828280ad2dd2f0b79499d605d5ad80697f91f3b9a5"
+    },
+    {
+      "source": "pyproject.toml",
+      "destination": "research/contact-reliability/pyproject.toml",
+      "sha256": "4c8cd457bd4242a77ec20464be12777c2aece858cc671485fffe99f4f36642ba"
+    },
+    {
+      "source": "requirements-local-windows.txt",
+      "destination": "research/contact-reliability/requirements-local-windows.txt",
+      "sha256": "e354b6431353aab7d0c0374287cb94890af533480b70f64904a35b0c71d5db56"
+    },
+    {
+      "source": "scripts/bootstrap_upstream.py",
+      "destination": "research/contact-reliability/scripts/bootstrap_upstream.py",
+      "sha256": "d61e4728ad0eff0dbdbe6c5c529ec0a7355ef0918ec023cf33272fa2681b6a33"
+    },
+    {
+      "source": "scripts/fetch_track3_public.py",
+      "destination": "research/contact-reliability/scripts/fetch_track3_public.py",
+      "sha256": "1dbe8364fe49588d333bc6c9980a28fd28d0e5635444ac8317f191f28b3f26e7"
+    },
+    {
+      "source": "scripts/smoke_demo.py",
+      "destination": "research/contact-reliability/scripts/smoke_demo.py",
+      "sha256": "9c298237483e9ad6fea63e38252d39f6d145e49355df35012f65c0d33b381e6c"
+    },
+    {
+      "source": "scripts/train_reliability.py",
+      "destination": "research/contact-reliability/scripts/train_reliability.py",
+      "sha256": "dc948cd7def0742482d89c5c52f026fcdc856e5a2b865aa2a8380115874cc7d8"
+    },
+    {
+      "source": "src/v2d_reliability/__init__.py",
+      "destination": "research/contact-reliability/src/v2d_reliability/__init__.py",
+      "sha256": "6f974f0621e44625404ab486fccd639c0a75af5f02d0f10a1a9937e5cc5cae53"
+    },
+    {
+      "source": "src/v2d_reliability/cli.py",
+      "destination": "research/contact-reliability/src/v2d_reliability/cli.py",
+      "sha256": "cd6ec3a2d3a86c410003d01afc262c6060d7c4b417cc64191fd513ad6bedd6d7"
+    },
+    {
+      "source": "src/v2d_reliability/core.py",
+      "destination": "research/contact-reliability/src/v2d_reliability/core.py",
+      "sha256": "03ed675a12de918efcc3bacecff12f0560d4897f2c30481f0a596470967b5881"
+    },
+    {
+      "source": "src/v2d_reliability/corruption.py",
+      "destination": "research/contact-reliability/src/v2d_reliability/corruption.py",
+      "sha256": "feabd5212a25024528a22dc69e56c3de6e60950b6a95da89507fc3359d3cfa6c"
+    },
+    {
+      "source": "src/v2d_reliability/experiments.py",
+      "destination": "research/contact-reliability/src/v2d_reliability/experiments.py",
+      "sha256": "143a10fb249286f985283810555e7ff3d65f29048cc979e5f5261eac2b5783de"
+    },
+    {
+      "source": "src/v2d_reliability/io.py",
+      "destination": "research/contact-reliability/src/v2d_reliability/io.py",
+      "sha256": "4e3df476d61e0d205ef691be9db20647c636a20c2814d895d5068db30c900c88"
+    },
+    {
+      "source": "src/v2d_reliability/isaac_adapter.py",
+      "destination": "research/contact-reliability/src/v2d_reliability/isaac_adapter.py",
+      "sha256": "673242425c506ef6f49d63c37a6d8cc5161646d319d5d9c0805e4259ba144ef5"
+    },
+    {
+      "source": "src/v2d_reliability/ledger.py",
+      "destination": "research/contact-reliability/src/v2d_reliability/ledger.py",
+      "sha256": "2a4072179bf5aca6bc16faa5138a152760d49843a3f6f9e59791ddc6665b699b"
+    },
+    {
+      "source": "src/v2d_reliability/rewards.py",
+      "destination": "research/contact-reliability/src/v2d_reliability/rewards.py",
+      "sha256": "6d0396be06e3a303d8be993f9bca6468a299a4520bc0c3c2e886472ea188be05"
+    },
+    {
+      "source": "src/v2d_reliability/signals.py",
+      "destination": "research/contact-reliability/src/v2d_reliability/signals.py",
+      "sha256": "f3165ef1ef5842ed6f253c7ee21b2a428ad8baaed92a67d0e84b81d8451c6ada"
+    },
+    {
+      "source": "src/v2d_reliability/telemetry.py",
+      "destination": "research/contact-reliability/src/v2d_reliability/telemetry.py",
+      "sha256": "fcb9ec80e779e8d5a4675ca4b0b9ceff97149f2e51b9bbc18fee4fc07218a7c7"
+    },
+    {
+      "source": "src/v2d_reliability/track3.py",
+      "destination": "research/contact-reliability/src/v2d_reliability/track3.py",
+      "sha256": "2ededf8d2ee8755896c473977dba2e29d03cd95d3d001dd8e2a24772477167b8"
+    },
+    {
+      "source": "src/v2d_reliability/workflow.py",
+      "destination": "research/contact-reliability/src/v2d_reliability/workflow.py",
+      "sha256": "8aab67902c622116431e1e9a680ccb39d95cd84132c429abe5733b546e08024e"
+    },
+    {
+      "source": "tests/test_core.py",
+      "destination": "research/contact-reliability/tests/test_core.py",
+      "sha256": "9ede1c0a2025d39f5db96cbefe9a31ef9c6f1c687c8cbc6474d1dfab04637ae0"
+    },
+    {
+      "source": "tests/test_corruption.py",
+      "destination": "research/contact-reliability/tests/test_corruption.py",
+      "sha256": "8ef3d7a1cf9fc66147f41b2135cf02eb5e7d844bd0fd999c76fd27431b7383e9"
+    },
+    {
+      "source": "tests/test_hand_rewards.py",
+      "destination": "research/contact-reliability/tests/test_hand_rewards.py",
+      "sha256": "fa9dc107e7e7e6d5d27d174ab6e6208e4fbd00dc979dd90b8451d6d6a975f330"
+    },
+    {
+      "source": "tests/test_public_audit.py",
+      "destination": "research/contact-reliability/tests/test_public_audit.py",
+      "sha256": "5c602d6fb4c417d58a6f25471e77f4a1b48073bc7a561bf06fe4dd63a7d82236"
+    },
+    {
+      "source": "tests/test_rewards.py",
+      "destination": "research/contact-reliability/tests/test_rewards.py",
+      "sha256": "bbf095080789ee7fa60438934936b9a70ff51c088190bc4165aa3a0457fdd625"
+    },
+    {
+      "source": "tests/test_telemetry.py",
+      "destination": "research/contact-reliability/tests/test_telemetry.py",
+      "sha256": "bf93030f819c365bb9a3e1bf2ac3a11e9514632bc938f219e7474a4eed128d53"
+    },
+    {
+      "source": "tests/test_track3.py",
+      "destination": "research/contact-reliability/tests/test_track3.py",
+      "sha256": "f6f57c36eb1d0389fd03a7c5cb11603ca0f9a802a12c57f93f6adc330a5d3713"
+    },
+    {
+      "source": "tests/test_variants.py",
+      "destination": "research/contact-reliability/tests/test_variants.py",
+      "sha256": "becbc38ca106626d8ae2a167367d0cb1d7208d625978c1a759c37d413c977459"
+    },
+    {
+      "source": "tests/test_workflow.py",
+      "destination": "research/contact-reliability/tests/test_workflow.py",
+      "sha256": "7475b0f47cbd6f6a0b84029c92eac445f8df3d0b79c3eb916e4c5a1c84567ef4"
+    }
+  ],
+  "excluded": [
+    "Local agent instructions and docs/PROJECT_CONTEXT.md (private workspace memory)",
+    "Git-ignored datasets, licensed assets, model weights, environments, caches, and run artifacts",
+    "Nested repository checkouts (their branch histories are integrated instead)"
+  ]
+}

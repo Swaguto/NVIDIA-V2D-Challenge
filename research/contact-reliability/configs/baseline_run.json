@@ -1,0 +1,17 @@
+{
+  "schema_version": "experiment_run_v1",
+  "hypothesis": "The shipped CHORD implementation can learn from a validated team reference.",
+  "variant": "baseline",
+  "seed": 17,
+  "episode_id": null,
+  "robot": "G1/Dex3 (team target; actual task must be recorded)",
+  "task": null,
+  "environment_steps": null,
+  "container_digest": null,
+  "dataset_revision": null,
+  "reference_sha256": null,
+  "sample_gpu": true,
+  "score_kind": "proxy",
+  "status": "template_requires_remote_profile_and_reference",
+  "official_acceptance": false
+}

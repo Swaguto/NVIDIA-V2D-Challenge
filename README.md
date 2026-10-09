@@ -1,5 +1,8 @@
 # V2D Challenge — Track 3 (Egocentric Video → Policy)
 
+Evan's combined code snapshot and source provenance are documented in
+[`docs/team/evan/COMPARISON.md`](docs/team/evan/COMPARISON.md).
+
 **Track 3: team setup, cloud GPU + CHORD smoke test, and the video→policy pipeline.**
 
 This is the team's working monorepo: the full
