@@ -51,7 +51,7 @@ def frame_count(data: Path, episode: int) -> int:
 
 
 def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,
-          python: str, fp_python: str):
+          python: str, fp_python: str, reinit_every: int = 0):
     item = root / f"e{episode:03d}"
     item.mkdir(parents=True, exist_ok=True)
     logs = item / "logs"
@@ -80,10 +80,14 @@ def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,
         if not (masks / "report.json").is_file():
             raise FileNotFoundError(f"masks missing: {masks}")
         env = dict(os.environ)
+        foundationpose = env.get("V2D_FOUNDATIONPOSE", "/home/ubuntu/FoundationPose")
+        # Upstream imports mycpp.build.mycpp as a package. Adding the build
+        # directory itself shadows that package with the bare extension.
+        inherited_paths = [path for path in env.get("PYTHONPATH", "").split(":")
+                           if path and Path(path) != Path(foundationpose) / "mycpp/build"]
         env["PYTHONPATH"] = ":".join(filter(None, [
             env.get("V2D_FP_SHIM", "/home/ubuntu/p3d_shim"),
-            env.get("V2D_FOUNDATIONPOSE", "/home/ubuntu/FoundationPose"),
-            env.get("PYTHONPATH")]))
+            foundationpose, *inherited_paths]))
         env["V2D_RUNTIME"] = str(ROOT / "reconstruction/modules/v2d_stereo_depth/lib")
         for name in names:
             out = item / "poses"
@@ -91,7 +95,8 @@ def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,
                 continue
             run_command([fp_python, str(HERE.parent / "foundationpose_track.py"),
                          "--episode", str(episode), "--object", name,
-                         "--data", str(data), "--masks", str(masks), "--out", str(out)],
+                         "--data", str(data), "--masks", str(masks), "--out", str(out),
+                         "--reinit-every", str(reinit_every)],
                         logs / f"pose_{name}.log", env)
     elif phase == "scores":
         camera, poses = item / "camera", item / "poses"
@@ -151,6 +156,8 @@ def main():
     parser.add_argument("--root", type=Path, required=True)
     parser.add_argument("--episodes", default="", help="comma list; default is all public episodes")
     parser.add_argument("--python", default=sys.executable)
+    parser.add_argument("--reinit-every", type=int, default=0,
+                        help="CAD re-registration interval; recorded by each object tracker")
     parser.add_argument("--fp-python", default=os.environ.get(
         "V2D_FP_PYTHON", "/home/ubuntu/fp_venv/bin/python"))
     args = parser.parse_args()
@@ -161,7 +168,7 @@ def main():
             continue
         try:
             results[str(episode)] = stage(args.phase, episode, names, args.data,
-                                          args.root, args.python, args.fp_python)
+                                          args.root, args.python, args.fp_python, args.reinit_every)
         except Exception as error:
             results[str(episode)] = f"failed: {error}"
             traceback.print_exc()

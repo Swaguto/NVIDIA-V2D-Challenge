@@ -11,6 +11,7 @@ def run_dynhamr_to_hamer_tracks(
     left_id: int = 2,
     right_id: int = 3,
     dev: bool = False,
+    mano_assets_root: str | None = None,
 ) -> None:
     """Convert DynHaMR world_results.npz → per-frame v2d_hamer-style tracks.
 
@@ -27,6 +28,8 @@ def run_dynhamr_to_hamer_tracks(
     }
     if intrinsics_path is not None:
         inputs["intrinsics_path"] = intrinsics_path
+    if mano_assets_root is not None:
+        inputs["mano_assets_root"] = mano_assets_root
     run_in_container(
         image=IMAGE_NAME,
         module="v2d.hand_alignment.lib.dynhamr_to_hamer_tracks",
@@ -50,6 +53,7 @@ if __name__ == "__main__":
     p.add_argument("--input_npz",       required=True)
     p.add_argument("--output_dir",      required=True)
     p.add_argument("--intrinsics_path", default=None)
+    p.add_argument("--mano_assets_root", default=None)
     p.add_argument("--left_id",  type=int, default=2)
     p.add_argument("--right_id", type=int, default=3)
     p.add_argument("--dev",      action="store_true")
@@ -61,4 +65,5 @@ if __name__ == "__main__":
         left_id         = args.left_id,
         right_id        = args.right_id,
         dev             = args.dev,
+        mano_assets_root = args.mano_assets_root,
     )

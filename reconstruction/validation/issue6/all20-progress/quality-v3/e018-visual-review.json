@@ -1,0 +1,306 @@
+{
+  "episode": 18,
+  "status": "passed",
+  "configuration_sha256": "279cfdf17ecf93dda1d0998bfdc51f52838b7c90d54465daf2705df5abf90fac",
+  "geometry": {
+    "checks": 706,
+    "fitted_frame_axis_length": 353,
+    "maximum_vertex_error_m": 1.619279548943591e-07,
+    "tolerance_m": 1e-05
+  },
+  "contact_audit": {
+    "episode": 18,
+    "status": "passed",
+    "rows": 7060,
+    "valid": 3940,
+    "unknown": 3120,
+    "raw_contacts": 1018,
+    "bridged": 26,
+    "sha256": "979d2be97b8e4cca9b8d8bfa8d83e6ec01e392687473f5517d3df66bce33f74c",
+    "checks": [
+      "full original frame axis",
+      "predicted provenance",
+      "strict 2 cm threshold",
+      "unknown observations remain unknown",
+      "bridges have two raw-contact endpoints, at most 15 consecutive valid same-track gap frames",
+      "report counts match raw artifact"
+    ]
+  },
+  "stage_integrity": {
+    "episode": 18,
+    "status": "passed",
+    "config_sha256": "279cfdf17ecf93dda1d0998bfdc51f52838b7c90d54465daf2705df5abf90fac",
+    "stages": {
+      "validate": {
+        "files": 1,
+        "receipt_sha256": "dd78d3f2fb2c3b078415ef88df43ff7f5a1f8761ee0a34ecfdadf2bb8ee35e65"
+      },
+      "hands": {
+        "files": 1383,
+        "receipt_sha256": "b9d76aaf2f1c9e6d08d4096c682e30ef4e5f796ef477e09a954520f762e3f8e4"
+      },
+      "depth": {
+        "files": 354,
+        "receipt_sha256": "ec12a819253e5e49efeedca405c8cd4b01f2cf2c08c2fb814ff8367dcebdbcdd"
+      },
+      "align": {
+        "files": 1389,
+        "receipt_sha256": "a6b478c3a10bad56d475d8f205cb178b2b364d06a936a647d015b28aee2134c7"
+      },
+      "contacts": {
+        "files": 3,
+        "receipt_sha256": "b3b3711c5d0b19837b7eec87e0f910a602c175e693b1d7046a55c67bcf01227c"
+      },
+      "report": {
+        "files": 358,
+        "receipt_sha256": "33475a061a70f6358610d4a4252c2a320e0f141a3b62803e9a9962ebc865901c"
+      }
+    },
+    "implementation_files": 12,
+    "verified_inputs": 0
+  },
+  "videos": [
+    {
+      "kind": "mesh",
+      "path": "pr32-evidence/all20-final-review-v3/e018/hand-camera-overlay.mp4",
+      "frames_decoded": 353,
+      "fps": 20.25411910085913,
+      "sha256": "5fd27d450b56866c644a66e5e2f977bc491d7f6305552bbc1c6d76fb4220e8f6",
+      "largest_image_changes": [
+        {
+          "frame": 317,
+          "mean_greyscale_change": 14.6079375
+        },
+        {
+          "frame": 134,
+          "mean_greyscale_change": 14.548875
+        },
+        {
+          "frame": 133,
+          "mean_greyscale_change": 13.1053125
+        },
+        {
+          "frame": 153,
+          "mean_greyscale_change": 12.8156875
+        },
+        {
+          "frame": 4,
+          "mean_greyscale_change": 12.318875
+        },
+        {
+          "frame": 120,
+          "mean_greyscale_change": 12.245875
+        },
+        {
+          "frame": 3,
+          "mean_greyscale_change": 11.9944375
+        },
+        {
+          "frame": 318,
+          "mean_greyscale_change": 11.966125
+        }
+      ]
+    },
+    {
+      "kind": "contacts",
+      "path": "issue6-full-runs/all20-final-v3/e018/report/contact_overlay.mp4",
+      "frames_decoded": 353,
+      "fps": 20.25411910085913,
+      "sha256": "d35b470c361615d3b0ba1d2cc3593107a36d6920479895fa6e2c68b07735316b",
+      "largest_image_changes": [
+        {
+          "frame": 317,
+          "mean_greyscale_change": 14.673625
+        },
+        {
+          "frame": 134,
+          "mean_greyscale_change": 14.14575
+        },
+        {
+          "frame": 153,
+          "mean_greyscale_change": 12.966125
+        },
+        {
+          "frame": 133,
+          "mean_greyscale_change": 12.60775
+        },
+        {
+          "frame": 120,
+          "mean_greyscale_change": 12.3278125
+        },
+        {
+          "frame": 3,
+          "mean_greyscale_change": 12.02975
+        },
+        {
+          "frame": 318,
+          "mean_greyscale_change": 12.025
+        },
+        {
+          "frame": 4,
+          "mean_greyscale_change": 12.0005625
+        }
+      ]
+    },
+    {
+      "kind": "combined",
+      "path": "pr32-evidence/all20-final-review-v3/e018/cad-temporal-hands.mp4",
+      "frames_decoded": 353,
+      "fps": 20.25411910085913,
+      "sha256": "71c49f95adc22abe5917c155a875108e32d3e4c75b53f54f553da056df372832",
+      "largest_image_changes": [
+        {
+          "frame": 134,
+          "mean_greyscale_change": 13.837
+        },
+        {
+          "frame": 317,
+          "mean_greyscale_change": 13.82725
+        },
+        {
+          "frame": 133,
+          "mean_greyscale_change": 12.2765
+        },
+        {
+          "frame": 153,
+          "mean_greyscale_change": 11.795125
+        },
+        {
+          "frame": 4,
+          "mean_greyscale_change": 11.7575
+        },
+        {
+          "frame": 120,
+          "mean_greyscale_change": 11.5105625
+        },
+        {
+          "frame": 318,
+          "mean_greyscale_change": 11.3135
+        },
+        {
+          "frame": 3,
+          "mean_greyscale_change": 11.2681875
+        }
+      ]
+    }
+  ],
+  "reviewed_at": "2026-10-07T07:00:07.375654+00:00",
+  "scope": "Final frozen all-episode reconstruction; continuous observed CAD; automatic wearer association",
+  "method": [
+    "Viewed uniform mesh/contact/combined montages, consecutive motion extremes and largest image-change triples",
+    "Played all three complete final videos at normal speed with repeated full loops",
+    "Inspected mesh/contact playback and combined CAD/hand playback separately"
+  ],
+  "original_sample_frame_ids": [
+    0,
+    32,
+    64,
+    96,
+    128,
+    160,
+    192,
+    224,
+    256,
+    288,
+    320,
+    352
+  ],
+  "findings": [
+    "All three actual final videos play through the complete 353-frame dustpan and sweeper action at normal speed. The blue left watch hand and red right hand retain their observed roles; no sampled selection of the partial bystander at the left edge was seen.",
+    "The green pan and yellow sweeper follow the circular handle grips, lift and return to the table. Silhouette and orientation offsets remain in sampled views, including 32 and 64, while object identities remain stable and no large sampled CAD translation drift was seen.",
+    "Uniform, motion and image-change sheets were inspected, including left 224-226 and 151-153, right 196-198 and 16-18, and image changes 133-135,316-318,152-154. Close grips and depth interruptions can omit meshes while the actual source hands stay visible; contact markers do not fill these unknown observations.",
+    "The independent all-row audit reports 7060 rows: 3940 valid,3120 unknown,1018 raw contacts and26 bridged contacts. The visible gaps during holding are retained limitations, not proof of complete contact recall. No fit, wearer or CAD tuning was introduced."
+  ],
+  "motion_extremes": {
+    "episode": 18,
+    "selection": "Maximum median joint acceleration on consecutive same-track triples, in estimated ViPE world coordinates; not ground-truth accuracy",
+    "peaks": [
+      {
+        "hand": "left",
+        "subset": "all directly observed",
+        "frame_ids": [
+          224,
+          225,
+          226
+        ],
+        "median_joint_acceleration_m_s2": 219.48502971717127,
+        "metric_valid": [
+          true,
+          false,
+          true
+        ]
+      },
+      {
+        "hand": "left",
+        "subset": "metric supported",
+        "frame_ids": [
+          151,
+          152,
+          153
+        ],
+        "median_joint_acceleration_m_s2": 11.392137773568944,
+        "metric_valid": [
+          true,
+          true,
+          true
+        ]
+      },
+      {
+        "hand": "right",
+        "subset": "all directly observed",
+        "frame_ids": [
+          196,
+          197,
+          198
+        ],
+        "median_joint_acceleration_m_s2": 99.07778989602546,
+        "metric_valid": [
+          true,
+          false,
+          true
+        ]
+      },
+      {
+        "hand": "right",
+        "subset": "metric supported",
+        "frame_ids": [
+          16,
+          17,
+          18
+        ],
+        "median_joint_acceleration_m_s2": 7.8588663398148615,
+        "metric_valid": [
+          true,
+          true,
+          true
+        ]
+      }
+    ]
+  },
+  "image_change_extremes": {
+    "episode": 18,
+    "selection": "Largest whole-image changes; inspection candidates, not an accuracy classifier",
+    "consecutive_frame_ids": [
+      [
+        133,
+        134,
+        135
+      ],
+      [
+        316,
+        317,
+        318
+      ],
+      [
+        152,
+        153,
+        154
+      ]
+    ]
+  },
+  "limits": [
+    "Sampled visual assessment plus full decoding and playback, not independent per-frame hand/contact annotations",
+    "No independent contact precision or robot-training success claimed",
+    "All20 aggregate audits, complete verified private backups and remaining episode reviews are required"
+  ]
+}

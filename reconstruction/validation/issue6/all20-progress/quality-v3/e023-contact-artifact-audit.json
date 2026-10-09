@@ -1,0 +1,20 @@
+[
+  {
+    "episode": 23,
+    "status": "passed",
+    "rows": 6500,
+    "valid": 4150,
+    "unknown": 2350,
+    "raw_contacts": 1125,
+    "bridged": 50,
+    "sha256": "bcef258f827424851c4c41fb40e556b1a616c5c6b435bfd42f0256ff2301384b",
+    "checks": [
+      "full original frame axis",
+      "predicted provenance",
+      "strict 2 cm threshold",
+      "unknown observations remain unknown",
+      "bridges have two raw-contact endpoints, at most 15 consecutive valid same-track gap frames",
+      "report counts match raw artifact"
+    ]
+  }
+]

@@ -1,0 +1,43 @@
+{
+  "public": [
+    {
+      "path": "hand_landmarker.task",
+      "url": "https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task",
+      "bytes": 7819105,
+      "sha256": "fbc2a30080c3c557093b5ddfc334698132eb341044ccee322ccf8bcf3607cde1"
+    },
+    {
+      "path": "sam2.1_hiera_large.pt",
+      "url": "https://dl.fbaipublicfiles.com/segment_anything_2/092824/sam2.1_hiera_large.pt",
+      "bytes": 898083611,
+      "sha256": "2647878d5dfa5098f2f8649825738a9345572bae2d4350a2468587ece47dd318"
+    },
+    {
+      "path": "hamer_demo_data.tar.gz",
+      "url": "https://www.cs.utexas.edu/~pavlakos/hamer/data/hamer_demo_data.tar.gz",
+      "bytes": 6037554929,
+      "sha256": "ccfb70abd672b64c3ea90891c808d4499cc36a37dd6cf86c561a665113aef11e"
+    },
+    {
+      "path": "detector.pt",
+      "url": "https://huggingface.co/spaces/rolpotamias/WiLoR/resolve/main/pretrained_models/detector.pt",
+      "bytes": 53582271,
+      "sha256": "5ef3df44e42d2db52d4ffe91f83a22ce9925e2acc9abebf453f2c5d22e380033"
+    }
+  ],
+  "licensed_mano": [
+    {"path": "MANO_RIGHT.pkl", "bytes": 3821356, "sha256": "45d60aa3b27ef9107a7afd4e00808f307fd91111e1cfa35afd5c4a62de264767"},
+    {"path": "MANO_LEFT.pkl", "bytes": 3821391, "sha256": "c4022f7083f2ca7c78b2b3d595abbab52debd32b09d372b16923a801f0ea6a30"}
+  ],
+  "foundationpose_source": "https://drive.google.com/drive/folders/1DFezOAD0oD1BblsXVxqDsl8fj0qzB82i",
+  "foundationpose": [
+    {"path": "no_diffusion/2023-10-28-18-33-37/config.yml", "bytes": 708, "sha256": "28a6ba94a33230ee5fc3c51939486281578b0972542bd9e38ca6123e75605686"},
+    {"path": "no_diffusion/2023-10-28-18-33-37/model_best.pth", "bytes": 68220109, "sha256": "774700586ddc435d408fc01c9809c43e151232936369dfbea0f0f964ba471d60"},
+    {"path": "no_diffusion/2024-01-11-20-02-45/config.yml", "bytes": 778, "sha256": "a79db4de3b95885dd5ae86833b37b8698a75dad81e87d1086cd50b2fcd8dda3f"},
+    {"path": "no_diffusion/2024-01-11-20-02-45/model_best.pth", "bytes": 190229389, "sha256": "81924d384bf5c26c646ee4783104982ae3d1e049c181c36641b6a7aeae494c26"}
+  ],
+  "extracted_hamer": [
+    {"path": "_DATA/hamer_ckpts/checkpoints/hamer.ckpt", "sha256": "e5cc06f294d88a92dee24e603480aab04de532b49f0e08200804ee7d90e16f53"}
+  ],
+  "scope": "Exact model inputs used by this validation; artifact access does not establish successful inference or episode acceptance. MANO must be supplied by an authorized license holder."
+}

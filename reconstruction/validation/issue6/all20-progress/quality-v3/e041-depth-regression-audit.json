@@ -1,0 +1,24 @@
+{
+  "episode": 41,
+  "status": "passed",
+  "configuration_sha256": "92f88e82f92774bb3fcb6ddf0e2427ca8789829eef472732f23185dac22b46f7",
+  "frame_ids": [
+    191,
+    192,
+    193
+  ],
+  "raw_aligned_records_preserved": true,
+  "metric_supported": [
+    false,
+    false,
+    false
+  ],
+  "final_residuals_m": [
+    0.030702054500579834,
+    0.19654063880443573,
+    0.03763851523399353
+  ],
+  "unknown_unbridged_right_fingertip_rows": 15,
+  "actual_triplet_mesh_contact_and_combined_sheet_inspected": true,
+  "sheet_sha256": "ba70698e093ef50284791a694767fb07eabfa6ce57585387224a75605f4dbc2d"
+}

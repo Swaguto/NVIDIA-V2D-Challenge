@@ -1,0 +1,64 @@
+{
+  "episode": 26,
+  "status": "complete_private_checkpoint_verified",
+  "archive_bytes": 750570010,
+  "archive_sha256": "d641e53a67a023b0a97f13c090df52a6b813c8e159e8023028b8ac0f9740431b",
+  "compressed_stream_fully_read": true,
+  "member_hashes_verified": 5702,
+  "uncompressed_bytes": 2052703859,
+  "stages_verified": {
+    "validate": 1,
+    "hands": 556,
+    "depth": 159,
+    "align": 959,
+    "contacts": 3,
+    "report": 163
+  },
+  "implementation_files_verified": 12,
+  "archived_locked_inputs_verified": 1663,
+  "external_dependencies_verified": [
+    {
+      "remote_path": "/workspace/hamer-weights/_DATA/hamer_ckpts/checkpoints/hamer.ckpt",
+      "bytes": 2689536166,
+      "sha256": "e5cc06f294d88a92dee24e603480aab04de532b49f0e08200804ee7d90e16f53"
+    },
+    {
+      "remote_path": "/workspace/mano/models/LICENSE.txt",
+      "bytes": 4330,
+      "sha256": "75fc4da03259504ce9a4ed2418ab98dd59647add7ff95e7691c4d55fb0e3cf63"
+    },
+    {
+      "remote_path": "/workspace/mano/models/MANO_LEFT.pkl",
+      "bytes": 3821391,
+      "sha256": "c4022f7083f2ca7c78b2b3d595abbab52debd32b09d372b16923a801f0ea6a30"
+    },
+    {
+      "remote_path": "/workspace/mano/models/MANO_RIGHT.pkl",
+      "bytes": 3821356,
+      "sha256": "45d60aa3b27ef9107a7afd4e00808f307fd91111e1cfa35afd5c4a62de264767"
+    },
+    {
+      "remote_path": "/workspace/pr32-models/detector.pt",
+      "bytes": 53582271,
+      "sha256": "5ef3df44e42d2db52d4ffe91f83a22ce9925e2acc9abebf453f2c5d22e380033"
+    },
+    {
+      "remote_path": "/workspace/pr32-models/sam2.1_hiera_large.pt",
+      "bytes": 898083611,
+      "sha256": "2647878d5dfa5098f2f8649825738a9345572bae2d4350a2468587ece47dd318"
+    },
+    {
+      "remote_path": "/workspace/track3/public/mesh/plastic_dish_rack/plastic_dish_rack.glb",
+      "bytes": 11360704,
+      "sha256": "4ee134a483b39bae7d7fabf3a07858a7401a21920e13b86c97face8f7578f963"
+    },
+    {
+      "remote_path": "/workspace/track3/public/mesh/white_pot/white_pot.glb",
+      "bytes": 8948208,
+      "sha256": "2627b01350864cc7f52540cb1ccfb9d67544e245d7061d8e313ecfd9d3eb5151"
+    }
+  ],
+  "locked_input_supplement_verified": null,
+  "configuration_sha256": "e594d42ba33a5dd9169542d8f3120e37e1a0ff00f43139b6467e893afa15e4a4",
+  "visual_receipt_sha256": "3ae7fdd91415a4270a3b0d115ad575578268513ea8e0e11a4ab9c93e38ad5665"
+}

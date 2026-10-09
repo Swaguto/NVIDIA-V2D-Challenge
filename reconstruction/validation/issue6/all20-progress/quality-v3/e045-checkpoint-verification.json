@@ -1,0 +1,59 @@
+{
+  "episode": 45,
+  "status": "complete_private_checkpoint_verified",
+  "archive_bytes": 1155806969,
+  "archive_sha256": "5e91f293e3e615ae4d480fbea62a41f3089d9d63755844e9a94722974508218f",
+  "compressed_stream_fully_read": true,
+  "member_hashes_verified": 8120,
+  "uncompressed_bytes": 3583916157,
+  "stages_verified": {
+    "validate": 1,
+    "hands": 1014,
+    "depth": 291,
+    "align": 1020,
+    "contacts": 3,
+    "report": 295
+  },
+  "implementation_files_verified": 12,
+  "archived_locked_inputs_verified": 2465,
+  "external_dependencies_verified": [
+    {
+      "remote_path": "/workspace/hamer-weights/_DATA/hamer_ckpts/checkpoints/hamer.ckpt",
+      "bytes": 2689536166,
+      "sha256": "e5cc06f294d88a92dee24e603480aab04de532b49f0e08200804ee7d90e16f53"
+    },
+    {
+      "remote_path": "/workspace/mano/models/LICENSE.txt",
+      "bytes": 4330,
+      "sha256": "75fc4da03259504ce9a4ed2418ab98dd59647add7ff95e7691c4d55fb0e3cf63"
+    },
+    {
+      "remote_path": "/workspace/mano/models/MANO_LEFT.pkl",
+      "bytes": 3821391,
+      "sha256": "c4022f7083f2ca7c78b2b3d595abbab52debd32b09d372b16923a801f0ea6a30"
+    },
+    {
+      "remote_path": "/workspace/mano/models/MANO_RIGHT.pkl",
+      "bytes": 3821356,
+      "sha256": "45d60aa3b27ef9107a7afd4e00808f307fd91111e1cfa35afd5c4a62de264767"
+    },
+    {
+      "remote_path": "/workspace/pr32-models/detector.pt",
+      "bytes": 53582271,
+      "sha256": "5ef3df44e42d2db52d4ffe91f83a22ce9925e2acc9abebf453f2c5d22e380033"
+    },
+    {
+      "remote_path": "/workspace/pr32-models/sam2.1_hiera_large.pt",
+      "bytes": 898083611,
+      "sha256": "2647878d5dfa5098f2f8649825738a9345572bae2d4350a2468587ece47dd318"
+    },
+    {
+      "remote_path": "/workspace/track3/public/mesh/white_pot/white_pot.glb",
+      "bytes": 8948208,
+      "sha256": "2627b01350864cc7f52540cb1ccfb9d67544e245d7061d8e313ecfd9d3eb5151"
+    }
+  ],
+  "locked_input_supplement_verified": null,
+  "configuration_sha256": "5442e3c037b6f9ea945e1632fd2aa58a9be0a83e314d32b588d193076c31d65d",
+  "visual_receipt_sha256": "793f0c9f2f931bdea0b67834ab64559f1feba4eadbc8bf1f134f6192a57b03ed"
+}
