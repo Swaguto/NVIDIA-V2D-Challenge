@@ -1,0 +1,2 @@
+# Preserve the original workspace snapshot bytes, including its line endings.
+* -text
