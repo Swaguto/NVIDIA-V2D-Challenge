@@ -2,6 +2,9 @@
 
 **Track 3: game plan, team setup, and the cloud GPU + CHORD smoke test.**
 
+[Reproduce issues 6, 7 and 8](reproduction/README.md): shared Drive bundles,
+pinned setup, portable commands, expected outputs and verification receipts.
+
 We teach a **Unitree G1 + Dex3** humanoid (in Isaac Lab) to reproduce kitchen
 manipulation from a head-worn **stereo camera** video. We use NVIDIA's CHORD
 pipeline as the scaffold and improve the vision half (stereo depth + CAD

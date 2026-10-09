@@ -1,5 +1,13 @@
 # Issue 6: hand reconstruction and stereo contact integration
 
+## Team reproduction entry point — October 9, 2026
+
+Use the [team reproduction guide](reproduction/README.md) and shared Drive pack
+to recompute episode 2's frozen v3 contact outputs from real aligned observations.
+It checks all contact, unknown and bridge decisions across the complete timeline.
+PR32 is now merged; issue 6's stricter all-20 quality acceptance remains 0/20.
+Fresh native processing follows the runbook below; older PR-status notes are historical.
+
 The integration provides separate validation, hand, depth, alignment, contact
 and report stages. The historical all-20 native runs, audits, reviewed videos
 and private backups are preserved. Issue 6 was reopened after visible grasp

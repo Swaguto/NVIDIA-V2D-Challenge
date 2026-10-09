@@ -1,0 +1,6 @@
+{
+  "issue6_cpu": {"name": "issue6-episode2-contacts-stable-20261009.tar.gz", "sha256": "be659e53ee3143ee0727236ce4e12a48a7856d9dd2a97bef05fb2a58eaae2ccb", "bytes": 8980301, "url": "https://drive.google.com/file/d/1kEErXS-0YcGd6qepJ7paMn0UeWzy08aF/view?usp=drivesdk"},
+  "issue7_cpu": {"name": "issue7-episode2-metrics-20261009.tar.gz", "sha256": "686f31a8a5f571a83672b95b80c36e462940d2c12d15295e1f401ab525fb0168", "bytes": 29546380, "url": "https://drive.google.com/file/d/13wJqaDAN-pydBT3GpIt0d-_xBcpV5Ui3/view?usp=drivesdk"},
+  "issue8_baseline": {"name": "episode2-pilot-20261009.tar.gz", "sha256": "35e7708ffd3f7224f3e3b3283b982f3d42c97c649df19ee56de8725da87fa1d6", "bytes": 88374660, "url": "https://drive.google.com/file/d/1mgGvyc72DsXHjYYudwjaIZUG8YHenMpy/view?usp=drivesdk"},
+  "issue8_derived": {"name": "episode2-derived-collision-20261009.tar.gz", "sha256": "cae1353b306360334412a099c423269ea393535429b0b74f1e9e7d93bf8e6a26", "bytes": 45898252, "url": "https://drive.google.com/file/d/1hTl1b45-RXCJNvB3rvLux3QPl-bN4Zg8/view?usp=drivesdk"}
+}
