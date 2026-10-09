@@ -46,10 +46,13 @@ W_CAMERA_ACCELERATION="${W_CAMERA_ACCELERATION:-1000000}"
 IN="$OUT/inputs"
 REF="$OUT/refined"
 REPORT="$OUT/report"
-if [[ -e "$REF" || -e "$REPORT" ]]; then
+if [[ -e "$OUT" || -L "$OUT" ]]; then
   echo "Preserve the existing experiment; choose a new OUT: $OUT" >&2
   exit 1
 fi
+# Reserve the experiment before any stage runs; mkdir also rejects concurrent reuse.
+mkdir -p "$(dirname "$OUT")"
+mkdir "$OUT"
 
 window=()
 [[ -n "${START:-}" ]] && window+=(--start "$START")
@@ -69,16 +72,10 @@ fi
 [[ -n "${SLAM_CAMERA_DIR:-}" ]] && slam_in+=(--slam-camera-dir "$SLAM_CAMERA_DIR")
 [[ "${REQUIRE_SLAM:-1}" != 0 ]] && slam_in+=(--require-slam)
 
-if [[ ! -f "$IN/inputs.json" ]]; then
-  echo "== 1/3 assembling inputs -> $IN"
-  "$PY" "$REPO/scripts/track3/gsplat_inputs.py" --episode "$EPISODE" --data "$DATA" \
-    --results "$RESULTS" --bundle "$BUNDLE" --out "$IN" ${hands_in[@]+"${hands_in[@]}"} \
-    ${window[@]+"${window[@]}"} ${slam_in[@]+"${slam_in[@]}"}
-fi
-# Cached inputs must satisfy the same provenance requirement as fresh assembly.
-if [[ "${REQUIRE_SLAM:-1}" != 0 ]]; then
-  "$PY" -c 'import json,sys; m=json.load(open(sys.argv[1])); assert m.get("camera_is_slam") is True, "Documented independent SLAM initialization required"' "$IN/inputs.json"
-fi
+echo "== 1/3 assembling inputs -> $IN"
+"$PY" "$REPO/scripts/track3/gsplat_inputs.py" --episode "$EPISODE" --data "$DATA" \
+  --results "$RESULTS" --bundle "$BUNDLE" --out "$IN" ${hands_in[@]+"${hands_in[@]}"} \
+  ${window[@]+"${window[@]}"} ${slam_in[@]+"${slam_in[@]}"}
 FPS="$("$PY" -c "import json,sys; print(json.load(open(sys.argv[1]))['fps'] or 20)" "$IN/inputs.json")"
 
 args=(

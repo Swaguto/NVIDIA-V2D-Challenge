@@ -239,6 +239,34 @@ def test_cli_outputs(scene_path, tmp_path):
     assert np.allclose(pose["translation"], expected[:3, 3], atol=1e-6)
 
 
+@pytest.mark.parametrize("provenance,status", [
+    (None, "unknown"), ({}, "unknown"), ({"other_object": {"0": "observed"}}, "unknown"),
+    ({"box": {"1": "observed"}}, "unknown"), ({"box": {"0": None}}, "unknown"),
+    ({"box": {"0": "missing"}}, "unknown"), ({"box": {"0": "observed"}}, "observed"),
+    ({"box": {"0": "inferred:world_hold"}}, "inferred"),
+])
+def test_scoring_export_requires_explicit_observation_provenance(tmp_path, provenance, status):
+    roots = rr.export_scoring_layout(synthetic_scene(T=3), tmp_path, 2, provenance)
+    for root in roots.values():
+        pose = json.loads((root / "e002/ego_object_poses/e002/box/object_to_world/000000.json").read_text())
+        assert pose["status"] == status
+
+
+@pytest.mark.parametrize("manifest", [None, {"episode": 2}])
+def test_cli_without_object_provenance_exports_unknown(scene_path, tmp_path, monkeypatch, manifest):
+    out = tmp_path / "report"
+    args = ["refinement_report.py", "--scene", str(scene_path), "--episode", "2",
+            "--out", str(out), "--no-viewer", "--surface-samples", "100"]
+    if manifest is not None:
+        inputs = tmp_path / "inputs.json"
+        inputs.write_text(json.dumps(manifest))
+        args.extend(["--inputs", str(inputs)])
+    monkeypatch.setattr(sys, "argv", args)
+    rr.main()
+    pose = json.loads((out / "scoring/refined/e002/ego_object_poses/e002/box/object_to_world/000000.json").read_text())
+    assert pose["status"] == "unknown"
+
+
 def test_decimate_reduces_faces():
     rng = np.random.default_rng(0)
     verts = rng.random((3000, 3))

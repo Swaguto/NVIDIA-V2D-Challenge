@@ -992,11 +992,13 @@ def _pose_smoothness(
         loss = loss + float(w_smooth_object_trans) * trans_term
     if bg_pose_field is not None:
         T = bg_pose_field.num_frames()
-        loss = loss + float(w_smooth_camera_rot) * _normalized_smooth(
-            rotation_smoothness(bg_pose_field.axis_angle), T
+        # Camera rows use the shared frame-to-row mapping, including source gaps.
+        camera_frames = sorted(frame_to_t, key=frame_to_t.__getitem__) if frame_to_t is not None else list(range(T))
+        loss = loss + float(w_smooth_camera_rot) * _observed_smooth(
+            rotation_smoothness, bg_pose_field.axis_angle, camera_frames
         )
-        loss = loss + float(w_smooth_camera_trans) * _normalized_smooth(
-            temporal_smoothness(bg_pose_field.translation), T
+        loss = loss + float(w_smooth_camera_trans) * _observed_smooth(
+            temporal_smoothness, bg_pose_field.translation, camera_frames
         )
         if w_camera_acceleration_trans > 0 or w_camera_acceleration_rot > 0:
             # The camera centre moves in world coordinates. Penalizing the
@@ -1005,10 +1007,10 @@ def _pose_smoothness(
             R_w2c, t_w2c = bg_pose_field.batched_forward(idx)
             centre = -torch.matmul(t_w2c.unsqueeze(1), R_w2c).squeeze(1)
             loss = loss + float(w_camera_acceleration_trans) * _normalized_smooth(
-                temporal_acceleration(centre), T
+                temporal_acceleration(centre, camera_frames), T
             )
             loss = loss + float(w_camera_acceleration_rot) * _normalized_smooth(
-                quat_acceleration(axis_angle_to_quat(bg_pose_field.axis_angle)), T
+                quat_acceleration(axis_angle_to_quat(bg_pose_field.axis_angle), camera_frames), T
             )
     for slot in hand_slots:
         n = slot.pose_field.num_frames()

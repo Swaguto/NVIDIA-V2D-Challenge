@@ -41,9 +41,11 @@ acceptance criteria.
 Scene SHA-256:
 `3e3f51aa85c60f0d68384de4896e2f6c8ca0fc1cf3891d83d77c023676a9bc6a`.
 The exact configuration, source hashes, complete numerical measurements and
-requirement assessment are in [RESULTS.json](RESULTS.json). Every current
-optimizer source hash matches the actual executed GPU run. The report's later
-viewer-only fix leaves scene bytes and measurements unchanged.
+requirement assessment are in [RESULTS.json](RESULTS.json). The frozen optimizer
+source hashes identify the actual executed GPU run. The report's later viewer-only
+fix leaves scene bytes and measurements unchanged. Subsequent frame-gap and
+launcher/provenance fixes in the current source are CPU-tested separately; see
+[REVIEW.md](REVIEW.md). They have not been rerun on the GPU.
 
 ## Real metric SLAM and numerical repairs
 
@@ -169,7 +171,7 @@ targeted lint scope.
 ## Reproduction and preserved history
 
 Use [REPRODUCE.md](REPRODUCE.md). Current private evidence is under
-`C:/Users/evanc/OneDrive/Desktop/Nvidia V2D/runs/issue7-validation/trial4`;
+`runs/issue7-validation/trial4` relative to the parent workspace;
 complete native outputs are `/var/tmp/v2d-issue7-e002/trial4`. SLAM evidence
 is separately preserved in `slam-trial2`. Review server:
 `http://127.0.0.1:8138/`, with the full comparison MP4 available for download.

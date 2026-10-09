@@ -521,9 +521,8 @@ def export_scoring_layout(scene: dict, out: Path, episode: int, provenance: dict
             d.mkdir(parents=True, exist_ok=True)
             for t, f in enumerate(scene["frame_indices"]):
                 M = orthonormalize(st["objects"][i]["o2w"][t])
-                status = "observed"
-                if provenance is not None and not str(provenance.get(name, {}).get(str(int(f)), "observed")).startswith("observed"):
-                    status = "inferred"
+                label = str((provenance or {}).get(name, {}).get(str(int(f)), "unknown"))
+                status = "observed" if label.startswith("observed") else "inferred" if label.startswith("inferred") else "unknown"
                 (d / f"{int(f):06d}.json").write_text(json.dumps({
                     "episode": episode, "frame_index": int(f),
                     "rotation": _quat_wxyz(M[:3, :3]), "translation": M[:3, 3].tolist(), "scale": [1.0, 1.0, 1.0],
@@ -935,7 +934,7 @@ def main() -> None:
     input_manifest = json.loads(args.inputs.read_text(encoding="utf-8")) if args.inputs else None
     if input_manifest is not None and input_manifest.get("episode") != args.episode:
         raise ValueError("Input provenance is for a different episode")
-    provenance = input_manifest["object_provenance"] if input_manifest else None
+    provenance = input_manifest.get("object_provenance", {}) if input_manifest else None
     contact_truth = json.loads(args.contact_truth.read_text(encoding="utf-8")) if args.contact_truth else None
     report = evaluate(scene, contacts, args.rest_clearance, args.min_rest_len, args.penetration_m,
                       args.surface_samples, rest_annotations, provenance, contact_truth,
