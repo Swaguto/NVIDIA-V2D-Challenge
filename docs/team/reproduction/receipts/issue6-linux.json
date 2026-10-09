@@ -1,0 +1,34 @@
+{
+  "status": "reproduced",
+  "issue": 6,
+  "archive_sha256": "be659e53ee3143ee0727236ce4e12a48a7856d9dd2a97bef05fb2a58eaae2ccb",
+  "python": "3.11.17 (main, Oct  6 2026, 13:34:32) [GCC 15.3.0]",
+  "source_sha256": {
+    "scripts/reproduce/checkpoint.py": "c99b0aa9976187e9f686c332ae4224850d062d45975e14f75fde6a932d5772e6",
+    "scripts/reproduce/requirements-cpu.txt": "27b71d86cb7dd00059770c752d47fdf27cfde07252cc2caf260c53df6de0dfd9",
+    "reconstruction/modules/v2d_issue6/issue6/backend.py": "3fb6437cc513ad6043d2ce7634dd1598ce126e7bdf2c7cf2fbcbaa6c2faf9243",
+    "reconstruction/modules/v2d_issue6/issue6/cli.py": "7b4e9724d656c568909470a579eb48cfe059112a14a8ae5665feb84fc09369b5",
+    "reconstruction/modules/v2d_issue6/issue6/geometry.py": "044301318b6f55f9f74d88683021a00f8e66caca8e7e1b65e5c2e0df22050b9e",
+    "reconstruction/modules/v2d_issue6/issue6/manifest.py": "cbb1a6769a0801e3601d37423ade091a205d38a0c819f8ba1ffb5146839c759c",
+    "reconstruction/modules/v2d_issue6/issue6/pipeline.py": "771a8c7491d6707d171f1268aad491698c221dec3533baf3dfe1baf01047927b",
+    "reconstruction/modules/v2d_issue6/issue6/track3_adapter.py": "ab44494963e100ea2ebe7099e5afd44d8caceaa5ca1d0b331fe98632864fb07e",
+    "reconstruction/modules/v2d_issue6/issue6/worker.py": "d2d8ea9acd132724c3b303712c715714e10090633fc510c6f53822e16176eab9",
+    "reconstruction/modules/v2d_issue6/issue6/__init__.py": "8315a026833f2a6f7367698770cbe138c0f73c1f6a35cef48089f9e1d0939104"
+  },
+  "packages": {
+    "numpy": "1.26.4",
+    "scipy": "1.15.3",
+    "Pillow": "11.3.0",
+    "trimesh": "4.5.1",
+    "rtree": "1.3.0"
+  },
+  "absolute_float_tolerance": 1e-08,
+  "frames": 343,
+  "contact_rows": 6860,
+  "raw_positive_rows": 1442,
+  "unknown_rows": 1310,
+  "all20_quality_accepted": 0,
+  "historical_contact_decisions_exact": true,
+  "canonical_normals_changed_from_historical": 37,
+  "scope": "frozen v3 baseline contact computation"
+}

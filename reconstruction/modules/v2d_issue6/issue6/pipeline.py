@@ -13,6 +13,7 @@ from PIL import Image, ImageDraw
 
 from . import backend
 from .geometry import (
+    SURFACE_NORMAL_TIE_M,
     bridge_contacts,
     decode_depth,
     reproject_depth,
@@ -349,6 +350,8 @@ def contacts_stage(m, root, out):
             "mode": m["mode"],
             "camera_provenance": m["camera_provenance"],
             "contact_precision": None,
+            "surface_normal_tie_m": SURFACE_NORMAL_TIE_M,
+            "surface_normal_selection": "lowest face index within tie tolerance; distance retains actual minimum",
         },
     )
 

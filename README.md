@@ -2,6 +2,9 @@
 
 **Track 3: team setup, cloud GPU + CHORD smoke test, and the video→policy pipeline.**
 
+For issues 6, 7 and 8, start with the [team reproduction guide](docs/team/reproduction/README.md)
+for pinned CPU setup, shared Drive bundles, exact rerun commands and verified limits.
+
 This is the team's working monorepo: the full
 [`nvidia-isaac/video_to_data`](https://github.com/nvidia-isaac/video_to_data)
 starter toolkit (branch `release/0.2.0`) **flattened into the repo root**, plus

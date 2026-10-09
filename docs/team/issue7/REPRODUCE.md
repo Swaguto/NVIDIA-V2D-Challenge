@@ -1,5 +1,11 @@
 # Reproducing and reviewing the issue-7 pilot
 
+For a teammate starting from a clean checkout, use the
+[team reproduction guide](../reproduction/README.md). Its shared Drive pack and
+portable CPU command regenerate every non-official field of the frozen trial4
+quality report without this laptop's paths, private runtime helpers or CUDA.
+The detailed fresh-experiment instructions below retain the GPU/source distinction.
+
 Read [RESULTS.md](RESULTS.md) and [RESULTS.json](RESULTS.json) first. The frozen
 experiment used native WSL CUDA execution; the Docker CLI forwarding test does
 not validate an existing image. Rebuild `v2d_gsplat_refinement` with the updated

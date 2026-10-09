@@ -5,6 +5,8 @@ from __future__ import annotations
 import numpy as np
 import trimesh
 
+SURFACE_NORMAL_TIE_M = 1e-12
+
 
 def rigid(value):
     a = np.asarray(value, dtype=float)
@@ -189,8 +191,24 @@ def final_alignment_support(rendered, measured, hand_mask, occluder, minimum, ma
 
 def surface_contacts(points_camera, mesh, camera_from_object):
     points = transform(points_camera, np.linalg.inv(rigid(camera_from_object)))
-    # Bounded batches; naive triangle distance avoids an rtree system dependency.
-    nearest, distance, face_id = trimesh.proximity.closest_point_naive(mesh, points)
+    # Edge/vertex queries can have several equally close faces with different
+    # normals. Raw argmin switches faces with floating point roundoff. Choose
+    # the first face within a picometre of the minimum, while retaining the
+    # actual minimum distance for strict contact classification. Work one
+    # point at a time to bound memory without an rtree dependency.
+    nearest, distance, face_id = [], [], []
+    triangles = mesh.triangles.view(np.ndarray)
+    for point in points:
+        candidates = trimesh.triangles.closest_point(triangles, np.broadcast_to(point, (len(triangles), 3)))
+        distances = np.linalg.norm(candidates - point, axis=1)
+        minimum = distances.min()
+        selected = int(np.flatnonzero(distances <= minimum + SURFACE_NORMAL_TIE_M)[0])
+        nearest.append(candidates[selected])
+        distance.append(minimum)
+        face_id.append(selected)
+    nearest = np.asarray(nearest).reshape(-1, 3)
+    distance = np.asarray(distance)
+    face_id = np.asarray(face_id, dtype=int)
     normals = mesh.face_normals[face_id]
     inside = [None] * len(points)
     if mesh.is_watertight and mesh.is_winding_consistent:
