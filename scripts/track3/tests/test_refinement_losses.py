@@ -33,3 +33,28 @@ def test_unknown_stereo_depth_has_finite_loss_and_zero_gradient():
     loss.backward()
     assert torch.isfinite(rendered.grad).all()
     assert rendered.grad[0, 1] == 0 and rendered.grad[1, 0] == 0
+
+
+def test_acceleration_preserves_motion_and_ignores_missing_triplets():
+    positions = torch.tensor([[0.], [1.], [2.], [100.], [101.], [102.]], requires_grad=True)
+    loss = losses.temporal_acceleration(positions, [0, 1, 2, 10, 11, 12])
+    assert loss.item() == 0
+    loss.backward()
+    assert torch.isfinite(positions.grad).all()
+    assert losses.temporal_acceleration(positions).item() > 1000
+    assert losses.temporal_acceleration(torch.tensor([[0.], [1.1], [2.]])).item() > 0
+
+
+def test_angular_acceleration_preserves_constant_turn_and_quaternion_sign():
+    angle = torch.arange(6, dtype=torch.float64) * 0.1
+    q = torch.stack([torch.cos(angle / 2), torch.zeros(6), torch.zeros(6), torch.sin(angle / 2)], dim=-1)
+    q[1::2] *= -1
+    q.requires_grad_(True)
+    loss = losses.quat_acceleration(q)
+    assert loss.item() < 1e-25
+    loss.backward()
+    assert torch.isfinite(q.grad).all()
+    altered = q.detach().clone()
+    altered[3:] = torch.tensor([1., 0., 0., 0.], dtype=q.dtype)
+    assert losses.quat_acceleration(altered).item() > 0
+    assert losses.quat_acceleration(altered, [0, 1, 2, 10, 11, 12]).item() < 1e-25

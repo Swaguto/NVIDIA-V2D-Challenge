@@ -12,7 +12,10 @@
 #   EPISODE=2 DATA=... RESULTS=... BUNDLE=... HANDS_RUN=... MANO_ROOT=... OUT=... \
 #     scripts/track3/refine_episode.sh
 #
-# Required:  EPISODE DATA RESULTS BUNDLE OUT
+# Required:  EPISODE DATA RESULTS BUNDLE OUT, plus documented SLAM camera poses
+#            in RESULTS or SLAM_CAMERA_DIR (camera_to_world in ego_cam_c).
+#            RUN_SLAM=1 runs local DROID-SLAM first; requires DROID_WEIGHTS and
+#            DROID_REPO, with its CUDA dependencies available to SLAM_PYTHON.
 # Optional:  HANDS_RUN (issue-6 run dir; omit to refine objects + camera only)
 #            MANO_ROOT (dir with models/MANO_RIGHT.pkl; required with HANDS_RUN)
 #            REFINE_MODE=docker|native (default docker; native runs
@@ -20,7 +23,9 @@
 #              env with gsplat>=1.4 + manotorch, e.g. a RunPod pod without docker)
 #            SCORE=0 to skip the official before/after diagnostic score
 #            START / FRAMES (sub-window), EPOCHS, W_METRIC_DEPTH, W_SMOOTH,
-#            LR_POSE, LR_CAMERA, W_MASK, REST_ANNOTATIONS, EXTRA_REFINE_ARGS
+#            LR_POSE, LR_CAMERA, W_MASK, REST_ANNOTATIONS, CONTACT_TRUTH,
+#            W_CAMERA_ACCELERATION, EXTRA_REFINE_ARGS
+#            REQUIRE_SLAM=0 permits an explicitly diagnostic odometry pilot.
 # Defaults reproduce the bounded episode-2 pilot; see docs/team/issue7/RESULTS.md.
 # Pose limits are initialization-relative engineering priors, not accuracy bounds.
 set -euo pipefail
@@ -36,6 +41,7 @@ W_SMOOTH="${W_SMOOTH:-1000}"
 LR_POSE="${LR_POSE:-5e-5}"
 LR_CAMERA="${LR_CAMERA:-1e-5}"
 W_MASK="${W_MASK:-50}"
+W_CAMERA_ACCELERATION="${W_CAMERA_ACCELERATION:-1000000}"
 
 IN="$OUT/inputs"
 REF="$OUT/refined"
@@ -50,11 +56,28 @@ window=()
 [[ -n "${FRAMES:-}" ]] && window+=(--frames "$FRAMES")
 hands_in=()
 [[ -n "${HANDS_RUN:-}" ]] && hands_in+=(--hands-run "$HANDS_RUN")
+slam_in=()
+if [[ "${RUN_SLAM:-0}" == 1 ]]; then
+  : "${DROID_WEIGHTS:?}" "${DROID_REPO:?}"
+  SLAM_CAMERA_DIR="$OUT/slam/camera_c2w"
+  "$PY" "$REPO/scripts/track3/gsplat_inputs.py" --episode "$EPISODE" --data "$DATA" \
+    --results "$RESULTS" --bundle "$BUNDLE" --out "$OUT/slam-inputs" \
+    ${hands_in[@]+"${hands_in[@]}"} ${window[@]+"${window[@]}"}
+  "${SLAM_PYTHON:-$REFINE_PYTHON}" "$REPO/scripts/track3/slam_camera.py" \
+    --inputs "$OUT/slam-inputs" --weights "$DROID_WEIGHTS" --droid-repo "$DROID_REPO" --out "$OUT/slam"
+fi
+[[ -n "${SLAM_CAMERA_DIR:-}" ]] && slam_in+=(--slam-camera-dir "$SLAM_CAMERA_DIR")
+[[ "${REQUIRE_SLAM:-1}" != 0 ]] && slam_in+=(--require-slam)
 
 if [[ ! -f "$IN/inputs.json" ]]; then
   echo "== 1/3 assembling inputs -> $IN"
   "$PY" "$REPO/scripts/track3/gsplat_inputs.py" --episode "$EPISODE" --data "$DATA" \
-    --results "$RESULTS" --bundle "$BUNDLE" --out "$IN" ${hands_in[@]+"${hands_in[@]}"} ${window[@]+"${window[@]}"}
+    --results "$RESULTS" --bundle "$BUNDLE" --out "$IN" ${hands_in[@]+"${hands_in[@]}"} \
+    ${window[@]+"${window[@]}"} ${slam_in[@]+"${slam_in[@]}"}
+fi
+# Cached inputs must satisfy the same provenance requirement as fresh assembly.
+if [[ "${REQUIRE_SLAM:-1}" != 0 ]]; then
+  "$PY" -c 'import json,sys; m=json.load(open(sys.argv[1])); assert m.get("camera_is_slam") is True, "Documented independent SLAM initialization required"' "$IN/inputs.json"
 fi
 FPS="$("$PY" -c "import json,sys; print(json.load(open(sys.argv[1]))['fps'] or 20)" "$IN/inputs.json")"
 
@@ -80,6 +103,7 @@ args=(
   --w_smooth_object_rot "$W_SMOOTH" --w_smooth_object_trans "$W_SMOOTH"
   --w_smooth_hand_rot "$W_SMOOTH" --w_smooth_hand_articulation "$W_SMOOTH" --w_smooth_hand_trans "$W_SMOOTH"
   --w_smooth_camera_rot "$W_SMOOTH" --w_smooth_camera_trans "$W_SMOOTH"
+  --w_camera_acceleration_trans "$W_CAMERA_ACCELERATION" --w_camera_acceleration_rot "$W_CAMERA_ACCELERATION"
   --render_every "${RENDER_EVERY:-100}" --fps "$FPS" --seed "${SEED:-42}"
 )
 for side in left right; do
@@ -109,10 +133,13 @@ echo "== 3/3 report -> $REPORT"
 contacts=()
 score=()
 rest=()
+truth=()
 # SCORE=0 skips the official scorer (it needs the public parquet reference).
 [[ "${SCORE:-1}" != 0 ]] && score+=(--data "$DATA")
 [[ -n "${HANDS_RUN:-}" && -f "$HANDS_RUN/contacts/contacts.json" ]] && contacts+=(--contacts "$HANDS_RUN/contacts/contacts.json")
 [[ -n "${REST_ANNOTATIONS:-}" ]] && rest+=(--rest-annotations "$REST_ANNOTATIONS")
+[[ -n "${CONTACT_TRUTH:-}" ]] && truth+=(--contact-truth "$CONTACT_TRUTH")
 "$PY" "$REPO/scripts/track3/refinement_report.py" --scene "$REF/scene.npz" --episode "$EPISODE" \
-  --out "$REPORT" --inputs "$IN/inputs.json" ${score[@]+"${score[@]}"} ${contacts[@]+"${contacts[@]}"} ${rest[@]+"${rest[@]}"}
+  --out "$REPORT" --inputs "$IN/inputs.json" ${score[@]+"${score[@]}"} ${contacts[@]+"${contacts[@]}"} \
+  ${rest[@]+"${rest[@]}"} ${truth[@]+"${truth[@]}"}
 echo "Viewer: $REPORT/viewer.html"

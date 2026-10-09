@@ -62,6 +62,7 @@ from .background import (
     init_background_multiframe,
 )
 from .constraints import PoseTrustRegion
+from .depth import load_inverse_depth
 from .gaussians import (
     GaussianFrame,
     axis_angle_to_quat,
@@ -83,11 +84,14 @@ from .io import (
 from .losses import (
     depth_gradient_loss,
     depth_loss,
+    quat_acceleration,
     quat_smoothness,
     rotation_smoothness,
     temporal_smoothness,
+    temporal_acceleration,
 )
 from .pose_fields import HandPoseField, ObjectPoseField, _quat_to_axis_angle
+from .render_features import pad_render_features
 
 _MESH_SUFFIXES = (".glb", ".gltf", ".obj", ".ply")
 
@@ -290,15 +294,7 @@ def _load_rgb_resized(path: str, width: int, height: int) -> torch.Tensor:
 
 
 def _load_depth_resized(path: str, width: int, height: int) -> torch.Tensor:
-    if not os.path.exists(path):
-        raise FileNotFoundError(f"Depth frame not found: {path}")
-    img = Image.open(path)
-    if img.size != (width, height):
-        img = img.resize((width, height), Image.BILINEAR)
-    px = np.asarray(img).astype(np.float32)
-    with np.errstate(divide="ignore"):
-        depth = 1.0 / (px / 65535.0) - 1.0
-    return torch.from_numpy(depth)
+    return torch.from_numpy(load_inverse_depth(path, width, height))
 
 
 def _load_mask_or_zero(mask_dir: str, fidx: int, width: int, height: int) -> torch.Tensor:
@@ -680,6 +676,8 @@ def _render_2dgs_features(
     if clamp_colors:
         render_colors = render_colors.clamp(0.0, 1.0)
     n_channels = int(render_colors.shape[-1])
+    render_colors = pad_render_features(render_colors)
+    padded_channels = int(render_colors.shape[-1])
     viewmats = torch.eye(4, device=device, dtype=torch.float32).unsqueeze(0)
     kwargs = dict(
         means=frame.means,
@@ -694,7 +692,7 @@ def _render_2dgs_features(
         near_plane=float(near_plane),
         far_plane=float(far_plane),
         render_mode="RGB",
-        backgrounds=torch.zeros(1, n_channels, device=device, dtype=torch.float32),
+        backgrounds=torch.zeros(1, padded_channels, device=device, dtype=torch.float32),
     )
     try:
         result = rasterization_2dgs(**kwargs)
@@ -707,7 +705,7 @@ def _render_2dgs_features(
     colors = result[0] if isinstance(result, tuple) else result
     if colors.ndim == 4:
         colors = colors[0]
-    return colors
+    return colors[..., :n_channels]
 
 
 def _render_2dgs_rgb(
@@ -910,6 +908,7 @@ def _hand_object_relative_smoothness(
     device = obj_pose_field.axis_angle.device
     hand_idx = torch.tensor([h for h, _ in paired], device=device, dtype=torch.long)
     obj_idx = torch.tensor([o for _, o in paired], device=device, dtype=torch.long)
+    paired_frames = [slot.pose_field.frame_indices[h] for h, _ in paired]
 
     R_obj, t_obj = obj_pose_field.batched_forward(obj_idx)
     q_obj = axis_angle_to_quat(obj_pose_field.axis_angle[obj_idx])
@@ -919,7 +918,7 @@ def _hand_object_relative_smoothness(
     if float(w_smooth_hand_object_relative_rot) > 0.0:
         q_rel = quat_mul(_quat_conj(q_obj), q_hand)
         loss = loss + float(w_smooth_hand_object_relative_rot) * _normalized_smooth(
-            quat_smoothness(q_rel),
+            quat_smoothness(q_rel, paired_frames),
             len(paired),
         )
     if float(w_smooth_hand_object_relative_trans) > 0.0:
@@ -927,7 +926,7 @@ def _hand_object_relative_smoothness(
         # camera-frame motion before applying temporal smoothness.
         t_rel = torch.matmul((t_hand - t_obj).unsqueeze(1), R_obj).squeeze(1)
         loss = loss + float(w_smooth_hand_object_relative_trans) * _normalized_smooth(
-            temporal_smoothness(t_rel),
+            temporal_smoothness(t_rel, paired_frames),
             len(paired),
         )
     return loss
@@ -963,6 +962,8 @@ def _pose_smoothness(
     w_smooth_camera_trans: float,
     smooth_in_world: bool = False,
     frame_to_t: dict[int, int] | None = None,
+    w_camera_acceleration_trans: float = 0.0,
+    w_camera_acceleration_rot: float = 0.0,
 ) -> torch.Tensor:
     """Temporal smoothness on all dynamic poses.
 
@@ -997,6 +998,18 @@ def _pose_smoothness(
         loss = loss + float(w_smooth_camera_trans) * _normalized_smooth(
             temporal_smoothness(bg_pose_field.translation), T
         )
+        if w_camera_acceleration_trans > 0 or w_camera_acceleration_rot > 0:
+            # The camera centre moves in world coordinates. Penalizing the
+            # world-to-camera translation instead couples jitter to orientation.
+            idx = torch.arange(T, device=bg_pose_field.axis_angle.device)
+            R_w2c, t_w2c = bg_pose_field.batched_forward(idx)
+            centre = -torch.matmul(t_w2c.unsqueeze(1), R_w2c).squeeze(1)
+            loss = loss + float(w_camera_acceleration_trans) * _normalized_smooth(
+                temporal_acceleration(centre), T
+            )
+            loss = loss + float(w_camera_acceleration_rot) * _normalized_smooth(
+                quat_acceleration(axis_angle_to_quat(bg_pose_field.axis_angle)), T
+            )
     for slot in hand_slots:
         n = slot.pose_field.num_frames()
         if in_world and frame_to_t is not None:
@@ -1361,6 +1374,8 @@ def refine_simple(
     max_hand_articulation_change_deg: float = 0.0,
     max_camera_translation_change: float = 0.0,
     max_camera_rotation_change_deg: float = 0.0,
+    w_camera_acceleration_trans: float = 0.0,
+    w_camera_acceleration_rot: float = 0.0,
 ) -> None:
     object_specs = _object_specs(
         object_mesh_path, object_poses_dir, object_mask_dir, refined_object_poses_dir,
@@ -1386,6 +1401,9 @@ def refine_simple(
         raise ValueError("lr_cosine_min_factor must be in [0, 1]")
 
     torch.manual_seed(seed)
+    if any(not math.isfinite(w) or w < 0 for w in
+           (w_camera_acceleration_trans, w_camera_acceleration_rot)):
+        raise ValueError("Camera acceleration weights must be finite and nonnegative")
     device_t = torch.device(device)
 
     K, width, height = load_intrinsics(intrinsics_path, str(device_t))
@@ -1866,6 +1884,8 @@ def refine_simple(
                 w_smooth_camera_rot, w_smooth_camera_trans,
                 smooth_in_world=smooth_in_world,
                 frame_to_t=frame_to_t,
+                w_camera_acceleration_trans=w_camera_acceleration_trans,
+                w_camera_acceleration_rot=w_camera_acceleration_rot,
             ) / float(n_batches)
             loss = (
                 photo
@@ -2081,6 +2101,10 @@ def parse_args() -> argparse.Namespace:
                         "0 disables.")
     p.add_argument("--w_smooth_camera_rot", type=float, default=0.01)
     p.add_argument("--w_smooth_camera_trans", type=float, default=0.01)
+    p.add_argument("--w_camera_acceleration_trans", type=float, default=0.0,
+                   help="Second-difference penalty on the world camera centre; 0 disables.")
+    p.add_argument("--w_camera_acceleration_rot", type=float, default=0.0,
+                   help="Penalty on changes of camera relative rotation; 0 disables.")
     p.add_argument("--smooth_in_world", action="store_true",
                    help="Measure object/hand root smoothness in the background world frame "
                         "instead of the camera frame.")

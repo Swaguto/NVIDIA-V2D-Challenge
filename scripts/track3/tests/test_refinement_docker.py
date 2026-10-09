@@ -24,6 +24,8 @@ def test_docker_cli_forwards_pose_limits(monkeypatch):
         'max_hand_articulation_change_deg': 1.0,
         'max_camera_translation_change': 0.002,
         'max_camera_rotation_change_deg': 0.25,
+        'w_camera_acceleration_trans': 1e6,
+        'w_camera_acceleration_rot': 1e6,
     }
     argv = ['run_refine_simple', '--frames_dir', '/frames', '--depth_dir', '/depth',
             '--intrinsics_path', '/intrinsics.json', '--overlay_path', '/out/overlay.mp4']

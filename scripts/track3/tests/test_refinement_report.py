@@ -12,6 +12,19 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import refinement_report as rr
 
 
+def test_report_keeps_independent_precision_and_coverage_separate():
+    reference = {'schema_version': 1, 'episode': 2, 'granularity': 'hand_object',
+                 'independent_of_reconstruction': True, 'source': 'Independent source video labels',
+                 'evidence': {'source_sha256': 'a' * 64},
+                 'labels': [{'frame': 25, 'hand': 'right', 'object_id': 'box', 'contact': True}]}
+    report = rr.evaluate(synthetic_scene(), None, .05, 10, .005, 1000,
+                         contact_truth=reference, episode=2)
+    benchmark = report['contact']['independent_benchmark']['refined']
+    assert benchmark['precision_on_labelled_predictions'] == 1
+    assert benchmark['positive_prediction_label_coverage'] < .1
+    assert report['contact']['independent_precision']['granularity'] == 'hand_object'
+
+
 def axis_angle_matrix(v) -> np.ndarray:
     v = np.asarray(v, dtype=np.float64)
     a = np.linalg.norm(v)
@@ -201,7 +214,7 @@ def test_source_rest_intervals_are_fixed_even_when_hand_geometry_is_nearby():
 def test_cli_outputs(scene_path, tmp_path):
     out = tmp_path / "report"
     inputs = tmp_path / "inputs.json"
-    inputs.write_text(json.dumps({"object_provenance": {"box": {str(f): "observed" if f % 2 else "inferred:world_hold"
+    inputs.write_text(json.dumps({"episode": 2, "object_provenance": {"box": {str(f): "observed" if f % 2 else "inferred:world_hold"
                                                                 for f in range(60)}}}))
     sys.argv = ["refinement_report.py", "--scene", str(scene_path), "--episode", 2, "--out", str(out),
                 "--inputs", str(inputs), "--surface-samples", "2000"]

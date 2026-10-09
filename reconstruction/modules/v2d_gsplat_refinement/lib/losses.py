@@ -404,6 +404,42 @@ def temporal_smoothness(param: torch.Tensor, frame_indices=None) -> torch.Tensor
     return (d * d).sum()
 
 
+def temporal_acceleration(param: torch.Tensor, frame_indices=None) -> torch.Tensor:
+    """Sum-squared second differences, retaining constant-velocity motion.
+
+    Only fully observed consecutive triplets contribute. Units are parameter
+    units per frame squared; report acceleration separately using episode FPS.
+    """
+    if param.shape[0] < 3:
+        return param.sum() * 0.0
+    d = param[2:] - 2.0 * param[1:-1] + param[:-2]
+    if frame_indices is not None:
+        frames = torch.as_tensor(frame_indices, device=param.device)
+        adjacent = frames[1:] - frames[:-1] == 1
+        d = d[adjacent[1:] & adjacent[:-1]]
+    return d.square().sum()
+
+
+def quat_acceleration(q: torch.Tensor, frame_indices=None) -> torch.Tensor:
+    """Penalize changes of relative rotations without slowing a constant turn."""
+    if q.shape[0] < 3:
+        return q.sum() * 0.0
+    q = q / q.norm(dim=-1, keepdim=True).clamp_min(1e-8)
+    w0, v0 = q[:-1, ..., :1], q[:-1, ..., 1:]
+    w1, v1 = q[1:, ..., :1], q[1:, ..., 1:]
+    relative = torch.cat([
+        w0 * w1 + (v0 * v1).sum(dim=-1, keepdim=True),
+        w0 * v1 - w1 * v0 + torch.linalg.cross(v0, v1),
+    ], dim=-1)
+    dot = (relative[1:] * relative[:-1]).sum(dim=-1, keepdim=True)
+    d = torch.where(dot < 0, -relative[1:], relative[1:]) - relative[:-1]
+    if frame_indices is not None:
+        frames = torch.as_tensor(frame_indices, device=q.device)
+        adjacent = frames[1:] - frames[:-1] == 1
+        d = d[adjacent[1:] & adjacent[:-1]]
+    return d.square().sum()
+
+
 def quat_smoothness(q: torch.Tensor, frame_indices=None) -> torch.Tensor:
     """Sum-squared first-difference of unit quaternions with sign alignment.
 

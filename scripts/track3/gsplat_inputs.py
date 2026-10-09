@@ -28,6 +28,7 @@ No reference (GT) pose is read.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import shutil
 from collections import defaultdict
@@ -35,6 +36,21 @@ from pathlib import Path
 
 import numpy as np
 from PIL import Image
+
+SLAM_METHODS = {"droid_slam", "stereo_droid_slam", "stereo_depth_droid_slam", "orb_slam3_stereo", "orb_slam3_rgbd"}
+ODOMETRY_METHODS = {"stereo_pnp_ransac"}
+
+
+def camera_provenance(record: dict, source: Path) -> dict:
+    """Preserve estimator evidence; frame-to-frame VO is not a SLAM claim."""
+    method = record.get("method", "unknown")
+    if not isinstance(method, str):
+        raise TypeError(f"Camera method must be a string: {source}")
+    kind = "slam" if method in SLAM_METHODS else "odometry" if method in ODOMETRY_METHODS else "unknown"
+    return {"method": method, "kind": kind, "status": record.get("status", "unknown"),
+            "gt_use": record.get("gt_use", "unknown"),
+            "slam_run_evidence_sha256": record.get("slam_run_evidence_sha256"),
+            "source_sha256": hashlib.sha256(source.read_bytes()).hexdigest()}
 
 
 def quat_wxyz_to_matrix(q) -> np.ndarray:
@@ -217,6 +233,8 @@ def assemble(
     start: int | None = None,
     frames_limit: int | None = None,
     metric_valid_hands_only: bool = True,
+    require_slam: bool = False,
+    slam_camera_dir: Path | None = None,
 ) -> dict:
     if out.exists() and any(out.iterdir()):
         raise ValueError(f"Output directory {out} is not empty")
@@ -227,6 +245,7 @@ def assemble(
     if camera.get("id") != "ego_cam_c":
         raise ValueError(f"Track 3 poses are in rectified ego_cam_c; bundle uses {camera.get('id')}")
     bundle_frames = manifest["frames"]
+    source_frames = [int(f["id"]) for f in bundle_frames]
     if start is not None:
         bundle_frames = [f for f in bundle_frames if f["id"] >= start]
     if frames_limit is not None:
@@ -238,6 +257,7 @@ def assemble(
     ep_dir = results / f"e{episode:03d}"
     camera_from_world: dict[int, np.ndarray] = {}
     camera_status: dict[int, str] = {}
+    camera_evidence: dict[int, dict] = {}
     for f in frames:
         path = ep_dir / "camera" / "ego_cam_c" / f"{f:06d}.json"
         if path.is_file():
@@ -246,9 +266,29 @@ def assemble(
                 raise ValueError(f"GT-assisted camera cannot initialize refinement: {path}")
             camera_from_world[f] = pose_record_to_matrix(record)
             camera_status[f] = record.get("status", "unknown")
+            camera_evidence[f] = camera_provenance(record, path)
     missing_cameras = sorted(set(frames) - camera_from_world.keys())
     if missing_cameras:
         raise ValueError(f"Missing independent camera initialization for frames {missing_cameras}")
+    # Inferred object poses belong to the original results world. Always convert
+    # them with that original camera, even when SLAM supplies a different gauge.
+    initialization_c2w = {f: invert_rigid(M) for f, M in camera_from_world.items()}
+    if slam_camera_dir is not None:
+        for f in frames:
+            path = slam_camera_dir / f"{f:06d}.json"
+            record = read_json(path)
+            if record.get("direction") != "camera_to_world" or record.get("camera_frame") != "ego_cam_c":
+                raise ValueError(f"SLAM pose must declare camera_to_world in ego_cam_c: {path}")
+            evidence = camera_provenance(record, path)
+            if evidence["kind"] != "slam" or evidence["gt_use"] not in ("none", "independent"):
+                raise ValueError(f"Expected documented GT-free SLAM pose: {path}")
+            initialization_c2w[f] = pose_record_to_matrix(record)
+            camera_evidence[f] = evidence
+            camera_status[f] = record.get("status", "unknown")
+    if require_slam and any(p["kind"] != "slam" or p["gt_use"] not in ("none", "independent")
+                            for p in camera_evidence.values()):
+        raise ValueError("Issue 7 requires documented GT-free SLAM camera inputs; "
+                         "odometry or unknown camera provenance cannot satisfy that requirement")
 
     out.mkdir(parents=True, exist_ok=True)
     write_json(out / "intrinsics.json", {k: camera[k] for k in ("fx", "fy", "cx", "cy", "width", "height")})
@@ -263,7 +303,10 @@ def assemble(
             valid = np.asarray(Image.open(bundle / frame["depth_validity"])) > 0
         Image.fromarray(depth_to_inverse_u16(depth, valid)).save(out / "depth" / f"{f:06d}.png")
         if f in camera_from_world:
-            write_json(out / "camera_c2w" / f"{f:06d}.json", matrix_to_transform3d(invert_rigid(camera_from_world[f])))
+            write_json(out / "camera_c2w" / f"{f:06d}.json", {
+                **matrix_to_transform3d(initialization_c2w[f]),
+                **camera_evidence[f], "direction": "camera_to_world",
+            })
 
     object_names = [o["id"] for o in manifest["objects"]]
     object_provenance = {}
@@ -304,18 +347,25 @@ def assemble(
     summary = {
         "episode": episode,
         "frames": frames,
+        "source_frames": source_frames,
+        "full_episode": frames == source_frames,
         "fps": fps,
         "camera_frame": "ego_cam_c",
         "coordinate_frame": "rectified_camera",
-        "world": "stereo odometry camera at the first trajectory frame",
+        "world": "camera estimator's world frame; refinement reanchors to its reference camera",
         "gt_use": "none",
         "sources": {
             "bundle": str(bundle.resolve()),
             "results": str(ep_dir.resolve()),
             "hands_run": str(hands_run.resolve()) if hands_run else None,
             "data": str(data.resolve()),
+            "slam_camera_dir": str(slam_camera_dir.resolve()) if slam_camera_dir else None,
         },
         "camera_status": {str(f): camera_status.get(f, "missing") for f in frames},
+        "camera_provenance": {str(f): camera_evidence[f] for f in frames},
+        "camera_is_slam": all(p["kind"] == "slam" and p["gt_use"] in ("none", "independent")
+                              for p in camera_evidence.values()),
+        "require_slam": require_slam,
         "object_provenance": object_provenance,
         "hand_frames": hand_frames,
         "metric_valid_hands_only": metric_valid_hands_only,
@@ -347,6 +397,10 @@ def main() -> None:
     p.add_argument("--out", type=Path, required=True)
     p.add_argument("--start", type=int, default=None)
     p.add_argument("--frames", type=int, default=None)
+    p.add_argument("--require-slam", action="store_true",
+                   help="Require declared independent SLAM provenance before writing any inputs")
+    p.add_argument("--slam-camera-dir", type=Path, default=None,
+                   help="Independent SLAM camera_to_world poses in ego_cam_c; original cameras still convert inferred objects")
     p.add_argument("--metric-valid-hands-only", action=argparse.BooleanOptionalAction, default=True,
                    help="Drop hand frames whose stereo alignment was not metric-valid (default: enabled)")
     args = p.parse_args()
@@ -354,6 +408,8 @@ def main() -> None:
         args.data, args.results, args.bundle, args.episode, args.out,
         hands_run=args.hands_run, start=args.start, frames_limit=args.frames,
         metric_valid_hands_only=args.metric_valid_hands_only,
+        require_slam=args.require_slam,
+        slam_camera_dir=args.slam_camera_dir,
     )
     print(json.dumps(summary["counts"], indent=2))
 

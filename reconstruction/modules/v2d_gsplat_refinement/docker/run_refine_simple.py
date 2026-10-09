@@ -44,6 +44,8 @@ def run_refine_simple(
     max_hand_articulation_change_deg: float = 0.0,
     max_camera_translation_change: float = 0.0,
     max_camera_rotation_change_deg: float = 0.0,
+    w_camera_acceleration_trans: float = 0.0,
+    w_camera_acceleration_rot: float = 0.0,
     lr_schedule: str = "constant",
     lr_cosine_min_factor: float = 0.0,
     w_smooth_object_rot: float = 0.1,
@@ -158,6 +160,8 @@ def run_refine_simple(
         "max_hand_articulation_change_deg": max_hand_articulation_change_deg,
         "max_camera_translation_change": max_camera_translation_change,
         "max_camera_rotation_change_deg": max_camera_rotation_change_deg,
+        "w_camera_acceleration_trans": w_camera_acceleration_trans,
+        "w_camera_acceleration_rot": w_camera_acceleration_rot,
         "lr_schedule":           lr_schedule,
         "lr_cosine_min_factor":  lr_cosine_min_factor,
         "w_smooth_object_rot":   w_smooth_object_rot,
@@ -273,6 +277,8 @@ if __name__ == "__main__":
                         "0 disables.")
     p.add_argument("--w_smooth_camera_rot", type=float, default=0.1)
     p.add_argument("--w_smooth_camera_trans", type=float, default=0.1)
+    p.add_argument("--w_camera_acceleration_trans", type=float, default=0.0)
+    p.add_argument("--w_camera_acceleration_rot", type=float, default=0.0)
     p.add_argument("--smooth_in_world", action="store_true")
     p.add_argument("--w_mask", type=float, default=1.0,
                    help="Weight for L1 segmentation mask loss. 0 disables.")

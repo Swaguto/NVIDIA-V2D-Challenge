@@ -174,6 +174,67 @@ def test_missing_camera_is_not_silently_initialized_to_identity(tmp_path):
         gi.assemble(data, results, bundle, 2, tmp_path / "out")
 
 
+def test_vo_provenance_is_preserved_and_cannot_pass_slam_requirement(tmp_path):
+    data, results, bundle, _, _, _ = build_tree(tmp_path)
+    for file in (results / "e002/camera/ego_cam_c").glob('*.json'):
+        value = json.loads(file.read_text())
+        value.update(method='stereo_pnp_ransac', gt_use='independent')
+        file.write_text(json.dumps(value))
+    out = tmp_path / 'strict'
+    with pytest.raises(ValueError, match='SLAM'):
+        gi.assemble(data, results, bundle, 2, out, require_slam=True)
+    assert not out.exists()
+    summary = gi.assemble(data, results, bundle, 2, tmp_path / 'diagnostic')
+    assert summary['camera_is_slam'] is False
+    assert summary['camera_provenance']['0']['kind'] == 'odometry'
+    assert len(summary['camera_provenance']['0']['source_sha256']) == 64
+    output = json.loads((tmp_path / 'diagnostic/camera_c2w/000000.json').read_text())
+    assert output['method'] == 'stereo_pnp_ransac' and output['direction'] == 'camera_to_world'
+
+
+def test_documented_slam_input_passes_strict_adapter(tmp_path):
+    data, results, bundle, _, _, _ = build_tree(tmp_path)
+    for file in (results / "e002/camera/ego_cam_c").glob('*.json'):
+        value = json.loads(file.read_text())
+        value.update(method='stereo_droid_slam', gt_use='independent')
+        file.write_text(json.dumps(value))
+    summary = gi.assemble(data, results, bundle, 2, tmp_path / 'out', require_slam=True)
+    assert summary['camera_is_slam'] is True
+
+
+def test_slam_camera_gauge_does_not_change_inferred_camera_object_pose(tmp_path):
+    data, results, bundle, _, cams, objs_world = build_tree(tmp_path)
+    slam = tmp_path / 'slam'
+    slam.mkdir()
+    expected = []
+    for frame in range(4):
+        M = np.eye(4)
+        M[:3, 3] = [5, frame * .1, -2]
+        expected.append(M)
+        value = {**record(M), 'method': 'stereo_depth_droid_slam',
+                 'gt_use': 'none', 'direction': 'camera_to_world', 'camera_frame': 'ego_cam_c'}
+        (slam / f'{frame:06d}.json').write_text(json.dumps(value))
+    out = tmp_path / 'out'
+    summary = gi.assemble(data, results, bundle, 2, out, slam_camera_dir=slam, require_slam=True)
+    assert summary['camera_is_slam'] and summary['full_episode']
+    for frame in range(4):
+        c2w = gi.pose_record_to_matrix(json.loads((out / f'camera_c2w/{frame:06d}.json').read_text()))
+        object_pose = gi.pose_record_to_matrix(json.loads((out / f'objects/white_pot/poses/{frame:06d}.json').read_text()))
+        assert np.allclose(c2w, expected[frame])
+        assert np.allclose(object_pose, cams[frame] @ objs_world[frame])
+
+
+def test_slam_override_rejects_ambiguous_direction_before_writing(tmp_path):
+    data, results, bundle, _, _, _ = build_tree(tmp_path)
+    slam = tmp_path / 'slam'
+    slam.mkdir()
+    (slam / '000000.json').write_text(json.dumps({**record(np.eye(4)), 'method': 'droid_slam', 'gt_use': 'none'}))
+    out = tmp_path / 'out'
+    with pytest.raises(ValueError, match='camera_to_world'):
+        gi.assemble(data, results, bundle, 2, out, slam_camera_dir=slam)
+    assert not out.exists()
+
+
 @pytest.mark.parametrize("source", ["camera", "inferred"])
 def test_gt_assisted_initialization_is_rejected(tmp_path, source):
     data, results, bundle, _, _, _ = build_tree(tmp_path)

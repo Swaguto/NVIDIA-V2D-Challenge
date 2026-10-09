@@ -5,15 +5,16 @@ Reads the ``--scene_export_path`` archive written by ``refine_simple`` (initial
 and refined camera, object and hand state over the same frames) and writes:
 
 * ``report.json`` / ``report.md``: jitter, drift and geometric contact consistency
-  for the initial and refined states, side by side. Independent per-fingertip
-  contact precision is unavailable without independent 3D contact labels.
+  for the initial and refined states, side by side. Optional independent contact
+  labels add precision and coverage at their explicitly declared granularity.
 * ``viewer.html``: a Three.js viewer with embedded episode data
   (background points, CAD objects, MANO hands, camera path), initial vs refined.
 * ``scoring/{initial,refined}/``: object_to_world poses in the Track 3 layout,
   so ``scripts/eval/score_track3_official.py`` can score both against the
   public reference. With ``--data`` the scorer is run here as well.
 
-Every number except the optional official score is GT-free:
+Geometry diagnostics are computed from the input and refined scene. Optional
+independent contact labels and public object reference poses are validation-only:
 
 * **Jitter**: RMS / median / p95 of acceleration from second differences over
   consecutive frames (m/s^2, deg/s^2), and the RMS of the high-frequency
@@ -33,6 +34,7 @@ from __future__ import annotations
 
 import argparse
 import base64
+import hashlib
 import json
 import subprocess
 import sys
@@ -40,6 +42,7 @@ from collections import defaultdict
 from pathlib import Path
 
 import numpy as np
+from contact_validation import score_contact_reference
 
 # MANO fingertip vertices (manopth/manotorch convention), thumb..little.
 MANO_TIP_VERTS = {"thumb": 745, "index": 317, "middle": 444, "ring": 556, "little": 673}
@@ -330,6 +333,9 @@ def evaluate(
     surface_samples: int,
     rest_annotations: dict | None = None,
     provenance: dict | None = None,
+    contact_truth: dict | None = None,
+    camera_provenance: dict | None = None,
+    episode: int | None = None,
 ) -> dict:
     frames = scene["frame_indices"]
     fps = float(scene["fps"])
@@ -361,6 +367,7 @@ def evaluate(
         "world": "refinement reference camera (OpenCV axes), metres",
         "camera": {}, "object_jitter": {}, "hand_jitter": {}, "drift": {}, "contact": {},
     }
+    report["camera_input_provenance"] = camera_provenance
 
     # Camera path.
     for s in STATES:
@@ -486,6 +493,14 @@ def evaluate(
     )
     for s in STATES:
         report["contact"][s] = contact_precision(tip_tables[s], runs, penetration_m)
+    if contact_truth is not None:
+        benchmark = {s: score_contact_reference(tip_tables[s], contact_truth, frames.tolist(), names, sides,
+                                                list(MANO_TIP_VERTS), episode) for s in STATES}
+        report["contact"]["independent_benchmark"] = benchmark
+        report["contact"]["independent_precision"] = {
+            "granularity": contact_truth["granularity"],
+            **{s: benchmark[s]["precision_on_labelled_predictions"] for s in STATES},
+        }
     return report
 
 
@@ -559,7 +574,15 @@ def write_markdown(report: dict, path: Path, episode: int) -> None:
     L = [f"# Episode {episode:03d} joint refinement quality report", ""]
     L.append(f"Frames {report['frames'][0]}–{report['frames'][1]} ({report['n_frames']} frames, {report['fps']:g} fps). "
              f"Objects: {', '.join(report['objects'])}. Hands: {', '.join(report['hands']) or 'none'}.")
-    L.append("Every number except the official score is GT-free. Lower is better unless noted.")
+    L.append("Only the official score uses public reference poses. Independent contact labels are validation-only; "
+             "neither labels nor reference poses enter optimization. Lower is better unless noted.")
+    if report.get("camera_input_provenance"):
+        evidence = report["camera_input_provenance"]
+        methods = sorted({row['method'] for row in evidence.values()})
+        slam_frames = sum(row['kind'] == 'slam' and row['gt_use'] in ('none', 'independent')
+                          for row in evidence.values())
+        L.append(f"Camera initialization: {', '.join(methods)}; {slam_frames}/{report['n_frames']} frames declare independent SLAM provenance. "
+                 "Source-pose hashes are recorded in report.json.")
     L.append("")
     L.append("## Jitter")
     L.append("")
@@ -650,6 +673,17 @@ def write_markdown(report: dict, path: Path, episode: int) -> None:
         L.append("|---|---|---|")
         for k in ("add_auc", "maniptrans_sr", "spider_sr", "rpe_cm", "mppe_cm"):
             L.append(f"| {k} | {_fmt(report['official']['initial'].get(k), 3)} | {_fmt(report['official']['refined'].get(k), 3)} |")
+    if report["contact"].get("independent_benchmark"):
+        benchmark = report["contact"]["independent_benchmark"]
+        L.extend(["", "## Contact validation against independent labels", "",
+                  benchmark['refined']['interpretation'], "",
+                  f"Granularity: `{benchmark['refined']['granularity']}`. Source: {benchmark['refined']['source']}", "",
+                  "| Metric | Initial | Refined |", "|---|---|---|"])
+        for key in ('precision_on_labelled_predictions', 'positive_prediction_label_coverage',
+                    'recall_on_labelled_positives', 'geometry_coverage_on_known_labels',
+                    'true_positive', 'false_positive', 'false_negative', 'unknown_geometry',
+                    'positive_predictions_without_truth'):
+            L.append(f"| {key} | {_fmt(benchmark['initial'][key], 3)} | {_fmt(benchmark['refined'][key], 3)} |")
     path.write_text("\n".join(L) + "\n", encoding="utf-8")
 
 
@@ -690,7 +724,7 @@ def decimate(verts: np.ndarray, faces: np.ndarray, max_faces: int) -> tuple[np.n
     return v, f
 
 
-def write_viewer(scene: dict, path: Path, title: str, max_object_faces: int = 20000) -> None:
+def write_viewer(scene: dict, path: Path, title: str, max_object_faces: int = 100000) -> None:
     step = 2e-4  # metres per int16 unit for streamed geometry
     frames = scene["frame_indices"]
     states = {s: world_state(scene, s) for s in STATES}
@@ -883,6 +917,8 @@ def main() -> None:
     p.add_argument("--out", type=Path, required=True)
     p.add_argument("--inputs", type=Path, default=None, help="gsplat_inputs.py inputs.json (pose provenance)")
     p.add_argument("--contacts", type=Path, default=None, help="issue-6 contacts/contacts.json")
+    p.add_argument("--contact-truth", type=Path, default=None,
+                   help="Independent contact labels with explicit granularity, evidence and unknowns")
     p.add_argument("--rest-annotations", type=Path, default=None,
                    help="Source-reviewed stationary intervals selected before seeing refinement results")
     p.add_argument("--data", type=Path, default=None, help="public dataset root; runs the official scorer")
@@ -896,9 +932,16 @@ def main() -> None:
     scene = load_scene(args.scene)
     contacts = json.loads(args.contacts.read_text(encoding="utf-8")) if args.contacts else None
     rest_annotations = json.loads(args.rest_annotations.read_text(encoding="utf-8")) if args.rest_annotations else None
-    provenance = json.loads(args.inputs.read_text(encoding="utf-8"))["object_provenance"] if args.inputs else None
+    input_manifest = json.loads(args.inputs.read_text(encoding="utf-8")) if args.inputs else None
+    if input_manifest is not None and input_manifest.get("episode") != args.episode:
+        raise ValueError("Input provenance is for a different episode")
+    provenance = input_manifest["object_provenance"] if input_manifest else None
+    contact_truth = json.loads(args.contact_truth.read_text(encoding="utf-8")) if args.contact_truth else None
     report = evaluate(scene, contacts, args.rest_clearance, args.min_rest_len, args.penetration_m,
-                      args.surface_samples, rest_annotations, provenance)
+                      args.surface_samples, rest_annotations, provenance, contact_truth,
+                      input_manifest.get("camera_provenance") if input_manifest else None, args.episode)
+    if args.contact_truth:
+        report["contact"]["reference_sha256"] = hashlib.sha256(args.contact_truth.read_bytes()).hexdigest()
     report["episode"] = args.episode
     args.out.mkdir(parents=True, exist_ok=True)
     roots = export_scoring_layout(scene, args.out, args.episode, provenance)
