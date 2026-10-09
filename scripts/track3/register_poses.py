@@ -42,7 +42,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, os.environ.get("V2D_REPO", str(REPO_ROOT / "scripts/eval")))
 sys.path.insert(0, os.environ.get("V2D_RUNTIME", str(REPO_ROOT / "reconstruction/modules/v2d_stereo_depth/lib")))
 from reference_loader import load_reference                        # noqa: E402
-from stereo_depth import backproject_full, load_rig, stereo_depth  # noqa: E402
+from stereo_depth import CALIB_PATH, backproject_full, load_rig, stereo_depth  # noqa: E402
 
 GDINO = "IDEA-Research/grounding-dino-base"
 SAM2 = "facebook/sam2.1-hiera-large"
@@ -212,16 +212,42 @@ def voxel_downsample(pts: np.ndarray, voxel: float) -> np.ndarray:
     return pts[np.sort(idx)]
 
 
-def trim_cloud(pts: np.ndarray, k: float = 2.5, iters: int = 3) -> np.ndarray:
-    """Iterative statistical outlier removal."""
-    p = pts
+def trim_cloud(pts: np.ndarray, k: float | None = None, iters: int | None = None,
+               method: str = "local_density") -> np.ndarray:
+    """Remove isolated depth samples without erasing connected handles/rims.
+
+    Distance from the object's center cannot distinguish a valid elongated
+    feature from noise. Local neighbour spacing is rigid-transform invariant.
+    The old radial method is retained only for frozen-baseline comparisons.
+    """
+    if method not in ("local_density", "radial"):
+        raise ValueError("unknown cloud filter")
+    if k is None:
+        k = 3.5 if method == "local_density" else 2.5
+    if iters is None:
+        iters = 1 if method == "local_density" else 3
+    p = np.asarray(pts)
+    if p.ndim != 2 or p.shape[1] != 3 or not np.isfinite(p).all():
+        raise ValueError("cloud filter requires finite (N,3) points")
+    if not np.isfinite(k) or k <= 0 or not isinstance(iters, int) or iters < 1:
+        raise ValueError("invalid cloud filter threshold or iteration count")
     for _ in range(iters):
         if len(p) < 80:
             break
-        med = np.median(p, 0)
-        d = np.linalg.norm(p - med, axis=1)
-        s = 1.4826 * np.median(np.abs(d - np.median(d))) + 1e-9
-        keep = d <= np.median(d) + k * s
+        if method == "local_density":
+            from scipy.spatial import cKDTree
+
+            # Include self then remove it: eleven nearby samples measure density.
+            d = cKDTree(p).query(p, k=12)[0][:, 1:].mean(axis=1)
+            s = max(1.4826 * np.median(np.abs(d - np.median(d))), 1e-9)
+            # Boundaries have fewer neighbours. On uniform sampling MAD can be
+            # nearly zero, so retain spacing up to twice the interior median.
+            threshold = max(np.median(d) + k * s, 2 * np.median(d))
+        else:
+            d = np.linalg.norm(p - np.median(p, 0), axis=1)
+            s = 1.4826 * np.median(np.abs(d - np.median(d))) + 1e-9
+            threshold = np.median(d) + k * s
+        keep = d <= threshold
         if keep.sum() < 80:
             break
         p = p[keep]
@@ -252,13 +278,14 @@ class Segmenter:
                 if ph in lab:
                     hit = self.phrase2idx[ph]
                     break
-            if hit is None:
-                hit = 0 if len(self.names) == 1 else None
+            # An unrelated detection is not evidence for the only requested object.
+            # In single-object episodes the old fallback could turn a table into a pan.
             out.append(hit)
         return out
 
     @torch.inference_mode()
     def __call__(self, rgb, box_threshold=0.30):
+        self.last_candidates = []
         inp = self.gp(images=rgb, text=self.prompt, return_tensors="pt").to(self.device)
         det = self.gp.post_process_grounded_object_detection(
             self.gm(**inp), inp.input_ids, threshold=box_threshold, text_threshold=0.25,
@@ -279,14 +306,78 @@ class Segmenter:
         for k, (lab, sc, bi) in enumerate(zip(det["text_labels"],
                                              det["scores"].tolist(),
                                              self._assign(det["text_labels"]))):
+            self.last_candidates.append({
+                "object": self.names[bi] if bi is not None else None,
+                "label": lab, "score": float(sc), "box_xyxy": boxes[0][k],
+                "mask_pixels": int(m[k].sum()),
+            })
             if bi is None:
+                info.append((None, lab, float(sc)))
                 continue
             masks[bi] |= m[k]
             info.append((self.names[bi], lab, float(sc)))
         return masks, info
 
 
-def load_cad(name: str, n: int = 6000) -> np.ndarray:
+class PreparedMasks:
+    """Consume frozen, hash-pinned observations without rerunning perception."""
+
+    def __init__(self, path, episode, names, rig, require_no_gt=False):
+        self.path = Path(path).resolve()
+        self.raw = self.path.read_bytes()
+        self.manifest = json.loads(self.raw)
+        record = self.manifest
+        if (record.get("schema_version") != 1 or record.get("episode") != episode
+                or record.get("objects") != names or record.get("camera_frame") != rig.left
+                or record.get("coordinate_frame") != "rectified_camera"
+                or record.get("resolution") != list(rig.size)):
+            raise ValueError("prepared mask identity/axes/resolution do not match this run")
+        self.gt_use = record.get("gt_use")
+        if self.gt_use not in ("none", "gt_assisted", "unknown") or require_no_gt and self.gt_use != "none":
+            raise ValueError("prepared masks require compatible, explicit GT-use provenance")
+        calibration_sha = hashlib.sha256(Path(CALIB_PATH).read_bytes()).hexdigest()
+        if record.get("calibration_sha256") != calibration_sha:
+            raise ValueError("prepared mask calibration hash differs from this run")
+        for key in ("R1", "R2", "P1", "P2", "Q"):
+            given = np.asarray(record.get("rectification", {}).get(key), dtype=float)
+            expected = np.asarray(getattr(rig, key))
+            if given.shape != expected.shape or not np.allclose(given, expected, rtol=0, atol=1e-9):
+                raise ValueError(f"prepared mask rectification differs: {key}")
+        if not isinstance(record.get("producer"), dict) or not isinstance(record.get("frames"), dict):
+            raise ValueError("prepared masks need producer and source-frame records")
+        self.names, self.size = names, tuple(rig.size)
+
+    def load(self, frame, image_shape):
+        if tuple(image_shape[:2]) != self.size[::-1]:
+            raise ValueError("prepared masks and rectified RGB have different image sizes")
+        records = self.manifest["frames"].get(str(frame), {})
+        if not isinstance(records, dict) or set(records) - set(self.names):
+            raise ValueError("prepared mask source frame has unknown object identities")
+        masks = np.zeros((len(self.names),) + image_shape[:2], dtype=bool)
+        info = []
+        for i, name in enumerate(self.names):
+            item = records.get(name)
+            if item is None:
+                info.append({"object": name, "status": "missing_prepared_mask"})
+                continue
+            path = (self.path.parent / item["path"]).resolve()
+            if not path.is_relative_to(self.path.parent):
+                raise ValueError("prepared mask path leaves its manifest root")
+            content = path.read_bytes()
+            if hashlib.sha256(content).hexdigest() != item["sha256"]:
+                raise ValueError(f"prepared mask hash differs: {frame}/{name}")
+            if not content.startswith(b"\x89PNG\r\n\x1a\n"):
+                raise ValueError(f"prepared mask is not a PNG: {frame}/{name}")
+            mask = cv2.imdecode(np.frombuffer(content, dtype=np.uint8), cv2.IMREAD_UNCHANGED)
+            if (mask is None or mask.shape != image_shape[:2] or mask.dtype != np.uint8
+                    or not np.isin(mask, [0, 255]).all()):
+                raise ValueError(f"prepared mask must be a full-resolution binary PNG: {frame}/{name}")
+            masks[i] = mask > 0
+            info.append({"object": name, "status": "prepared", "sha256": item["sha256"]})
+        return masks, info
+
+
+def load_cad(name: str, n: int = 6000, seed: int = 0) -> np.ndarray:
     d = _MESH / name
     for cand in ("_visual", ""):
         for ext in (".glb", ".ply", ".obj", ".stl"):
@@ -294,7 +385,7 @@ def load_cad(name: str, n: int = 6000) -> np.ndarray:
             if p.exists():
                 m = trimesh_load(str(p), force="mesh")
                 if m.faces is not None and len(m.faces) and len(m.vertices) >= 16:
-                    pts = np.asarray(m.sample(n) if hasattr(m, "sample")
+                    pts = np.asarray(m.sample(n, seed=seed) if hasattr(m, "sample")
                                      else m.vertices, np.float64)
                     if np.isfinite(pts).all():
                         return pts
@@ -353,8 +444,14 @@ def main():
     ap.add_argument("--no-gt", action="store_true", help="never read reference parquet")
     ap.add_argument("--objects", default="", help="comma-separated membership, required with --no-gt")
     ap.add_argument("--frame-times", type=Path, help="JSON mapping video frame IDs to capture times")
-    ap.add_argument("--mask-dir", type=Path,
-                    help="per-object temporal masks at DIR/<object>/<frame:06d>.png")
+    mask_source = ap.add_mutually_exclusive_group()
+    mask_source.add_argument("--mask-manifest", type=Path,
+                             help="frozen rectified mask manifest; bypass DINO/SAM and preserve producer hashes")
+    mask_source.add_argument("--mask-dir", type=Path,
+                             help="per-object temporal masks at DIR/<object>/<frame:06d>.png")
+    ap.add_argument("--seed", type=int, default=0, help="deterministic CAD surface sampling seed")
+    ap.add_argument("--cloud-filter", choices=("local_density", "radial"), default="local_density",
+                    help="local density preserves elongated features; radial replays the old baseline")
     a = ap.parse_args()
     if a.out.exists() and any(a.out.iterdir()):
         ap.error("output must be a fresh directory")
@@ -368,7 +465,10 @@ def main():
     if not names or len(names) != len(set(names)):
         ap.error("provide distinct --objects with --no-gt")
     rig = load_rig()
-    cads = {n: torch.tensor(load_cad(n), dtype=torch.float32, device=DEV)
+    prepared = PreparedMasks(a.mask_manifest, a.episode, names, rig, a.no_gt) if a.mask_manifest else None
+    gt_use = (prepared.gt_use if prepared and prepared.gt_use != "none"
+              else "none" if a.no_gt else "metadata_only")
+    cads = {n: torch.tensor(load_cad(n, 6000, a.seed), dtype=torch.float32, device=DEV)
             for n in names}
     vlp = _VID / f"observation.images.{rig.left}" / f"episode_{a.episode:06d}.mp4"
     vrp = _VID / f"observation.images.{rig.right}" / f"episode_{a.episode:06d}.mp4"
@@ -390,7 +490,7 @@ def main():
     if a.frames:
         frames = frames[:a.frames]
     steps = len(frames)
-    seg = None if a.mask_dir else Segmenter(names)
+    seg = None if prepared or a.mask_dir else Segmenter(names)
     print(f"episode {a.episode}: {names} steps={steps} scale={'free' if a.allow_scale else 'fixed 1.0'}", flush=True)
     prev = {n: None for n in names}
     out = a.out
@@ -401,56 +501,110 @@ def main():
     rectification_path = out / "rectification.json"
     rectification_path.write_text(json.dumps(rectification, indent=2))
     rectification_hash = hashlib.sha256(rectification_path.read_bytes()).hexdigest()
+    report = {"episode": a.episode, "objects": names, "coordinate_frame": "rectified_camera",
+        "camera_frame": rig.left, "gt_use": gt_use,
+        "source_sha256_lf": hashlib.sha256(Path(__file__).read_text(encoding="utf-8").encode()).hexdigest(),
+        "runtime": {"torch": torch.__version__, "cuda": torch.version.cuda, "device": DEV,
+                    "device_name": torch.cuda.get_device_name() if DEV == "cuda" else "cpu"},
+        "models": None if prepared or a.mask_dir else {"detector": GDINO, "segmenter": SAM2},
+        "observation_source": ({"kind": "prepared_masks", "manifest_path": str(prepared.path),
+            "manifest_sha256": hashlib.sha256(prepared.raw).hexdigest(),
+            "gt_use": prepared.gt_use, "producer": prepared.manifest["producer"]} if prepared
+            else {"kind": "temporal_mask_directory", "path": str(a.mask_dir)} if a.mask_dir
+            else {"kind": "dino_sam2"}),
+        "rectification_sha256": rectification_hash,
+        "params": {"stride": a.stride, "allow_scale": a.allow_scale,
+                   "max_residual_m": a.max_residual, "box_threshold": a.box_threshold,
+                   "cad_samples": 6000, "cad_seed": a.seed,
+                   "cloud_filter": {"method": a.cloud_filter,
+                       "mad_threshold": 3.5 if a.cloud_filter == "local_density" else 2.5,
+                       "iterations": 1 if a.cloud_filter == "local_density" else 3,
+                       "minimum_spacing_ratio": 2.0 if a.cloud_filter == "local_density" else None,
+                       "neighbors": 11 if a.cloud_filter == "local_density" else None}},
+        "frames": {}, "accepted_by_object": dict.fromkeys(names, 0), "input_errors": []}
     t0 = time.time()
 
     for t in frames[::a.stride]:
         t = int(t)
         try:
             il, ir = read_frame(vlp, t), read_frame(vrp, t)
-        except RuntimeError:
+        except RuntimeError as error:
+            report["input_errors"].append({"frame_index": t, "error": str(error)})
             break
         pl, _ = rig.rectify_pair(il, ir)
         depth, valid = stereo_depth(rig, il, ir)
-        if a.mask_dir:
-            masks = np.zeros((len(names),) + pl.shape[:2], dtype=bool)
-            for bi, name in enumerate(names):
-                path = a.mask_dir / name / f"{t:06d}.png"
-                mask = cv2.imread(str(path), cv2.IMREAD_GRAYSCALE) if path.is_file() else None
-                if mask is not None:
-                    if mask.shape != pl.shape[:2]:
-                        raise ValueError(f"mask shape mismatch: {path}: {mask.shape} != {pl.shape[:2]}")
-                    masks[bi] = mask > 127
-        else:
-            masks, _info = seg(cv2.cvtColor(pl, cv2.COLOR_BGR2RGB), a.box_threshold)
+        try:
+            if a.mask_dir:
+                masks = np.zeros((len(names),) + pl.shape[:2], dtype=bool)
+                _info = []
+                for bi, name in enumerate(names):
+                    path = a.mask_dir / name / f"{t:06d}.png"
+                    mask = cv2.imread(str(path), cv2.IMREAD_GRAYSCALE) if path.is_file() else None
+                    if mask is not None:
+                        if mask.shape != pl.shape[:2]:
+                            raise ValueError(f"mask shape mismatch: {path}: {mask.shape} != {pl.shape[:2]}")
+                        masks[bi] = mask > 127
+                    _info.append({"object": name, "status": "temporal" if mask is not None else "missing_temporal_mask"})
+            else:
+                masks, _info = (prepared.load(t, pl.shape) if prepared
+                               else seg(cv2.cvtColor(pl, cv2.COLOR_BGR2RGB), a.box_threshold))
+        except (ValueError, OSError) as error:
+            report["input_errors"].append({"frame_index": t, "error": str(error)})
+            break
+        frame_report = {"timestamp": float(times[t]) if t in times else None,
+                        "detections": _info,
+                        "detection_candidates": getattr(seg, "last_candidates", []),
+                        "objects": {}}
+        report["frames"][str(t)] = frame_report
         pts = backproject_full(depth, valid, rig.P1)
 
         for bi, n in enumerate(names):
+            prior = prev[n]
+            # Every rejection path breaks the observed track. A later observation
+            # must reinitialize rather than reuse a camera pose from before the gap.
+            prev[n] = None
             m = masks[bi].ravel() & valid.ravel()
+            detail = {"mask_pixels": int(masks[bi].sum()), "valid_depth_pixels": int(m.sum()),
+                      "status": "rejected", "reason": "insufficient_masked_depth",
+                      "warm_start_frame_index": None}
+            frame_report["objects"][n] = detail
             d = out / f"e{a.episode:03d}" / "ego_object_poses" / f"e{a.episode:03d}" / n \
                 / "object_to_cam" / rig.left
             d.mkdir(parents=True, exist_ok=True)
             if m.sum() < 300:
                 continue
-            cloud = trim_cloud(voxel_downsample(pts[m], 0.004))
+            downsampled = voxel_downsample(pts[m], 0.004)
+            detail["downsampled_cloud_points"] = len(downsampled)
+            cloud = trim_cloud(downsampled, method=a.cloud_filter)
+            detail["filtered_cloud_points"] = len(cloud)
             if len(cloud) < 120:
+                detail["reason"] = "insufficient_filtered_cloud"
                 continue
             dst = torch.tensor(cloud, dtype=torch.float32, device=DEV)
             R0 = t0_ = None
-            if not a.no_warmstart and prev[n] is not None:
-                Rp, tp, _, previous_scale = prev[n]
-                R0, t0_ = Rp.clone(), tp.clone()
+            if not a.no_warmstart and prior is not None:
+                Rp, tp, _, previous_scale, previous_frame = prior
+                if t == previous_frame + a.stride:
+                    R0, t0_ = Rp.clone(), tp.clone()
+                    detail["warm_start_frame_index"] = previous_frame
             try:
                 reg = register(cads[n], dst, R0=R0, t0=t0_, allow_scale=a.allow_scale,
                                s0=previous_scale if R0 is not None else 1.0)
             except Exception as error:                       # noqa: BLE001
+                detail.update(reason="registration_error", error=f"{type(error).__name__}: {error}")
                 print(f"    t={t} {n}: {type(error).__name__}: {error}", flush=True)
                 continue
             if reg is None:
+                detail["reason"] = "no_registration_result"
                 continue
             s, R, tt, res = reg
+            detail["residual_m"] = float(res) if np.isfinite(res) else None
             if not np.isfinite(res) or res > a.max_residual:
+                detail["reason"] = "residual_gate"
                 continue
-            prev[n] = (R, tt, res, s)   # camera-space warm start, including free scale
+            detail.update(status="observed", reason=None)
+            report["accepted_by_object"][n] += 1
+            prev[n] = (R, tt, res, s, t)   # camera-space warm start, including scale/source ID
             (d / f"{t:06d}.json").write_text(json.dumps({
                 "translation": [float(x) for x in tt.cpu().numpy()],
                 "rotation": [float(x) for x in _mat_to_wxyz(R.cpu().numpy())],
@@ -459,15 +613,21 @@ def main():
                 "episode": a.episode, "frame_index": t,
                 "timestamp": float(times[t]) if t in times else None, "status": "observed",
                 "coordinate_frame": "rectified_camera", "camera_frame": rig.left,
-                "gt_use": "none" if a.no_gt else "metadata_only", "quaternion_order": "wxyz",
-                "mask_source": str(a.mask_dir) if a.mask_dir else "per_frame_detection",
+                "gt_use": gt_use, "quaternion_order": "wxyz",
+                "mask_source": str(a.mask_dir) if a.mask_dir else "prepared_masks" if prepared else "per_frame_detection",
                 "rectification_sha256": rectification_hash,
+                "observation_source": report["observation_source"],
+                "mask_sha256": _info[bi]["sha256"] if prepared else None,
             }))
         if a.log and (t // a.stride) % a.log == 0:
             done = [prev[n][2] for n in names if prev[n] is not None]
             print(f"  t={t:>4}/{steps}  residual="
                   f"{[round(d, 4) for d in done]}  [{time.time() - t0:.0f}s]", flush=True)
-    print(f"done {a.episode} in {time.time() - t0:.0f}s", flush=True)
+    (out / "registration_report.json").write_text(json.dumps(report, indent=2, allow_nan=False))
+    print(f"done {a.episode} in {time.time() - t0:.0f}s; accepted={report['accepted_by_object']}; "
+          f"report={out / 'registration_report.json'}", flush=True)
+    if report["input_errors"] or not all(report["accepted_by_object"].values()):
+        raise SystemExit("incomplete tracking: input read failed or an object has zero accepted poses; inspect registration_report.json")
 
 
 if __name__ == "__main__":

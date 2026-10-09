@@ -1,0 +1,27 @@
+{
+  "dataset": "nvidia/video_to_data_challenge",
+  "revision": "5f68335f3acc802033d1e80728c1633197521de8",
+  "files": [
+    {
+      "path": "mesh/mini_dust_pan/mini_dust_pan.glb",
+      "bytes": 8492620,
+      "sha256": "6358b4f913fd8164a797b9375948cd09d47c5e60abcef0843fe43af5109737e3"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.ego_cam_b/episode_000039.mp4",
+      "bytes": 3864358,
+      "sha256": "711598812e993d08b4f9ec9eec06b97388f8d199ed03d67a5aaff7f779d6d95f"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.ego_cam_c/episode_000039.mp4",
+      "bytes": 3183641,
+      "sha256": "5e2b2ca9e0776d1a87cfcbadd106461261b21f5c531bdf9d09a2fded9a2f4e0d"
+    },
+    {
+      "path": "meta/camera_calibration.json",
+      "bytes": 16640,
+      "sha256": "23e2d9c46369292cdda492a777e7a6083815369a25d1af4bb82560669fde5d52"
+    }
+  ],
+  "scope": "One CAD, episode-39 stereo videos, and calibration required by the manual first-frame control; no original team-run masks/depth or world cameras."
+}

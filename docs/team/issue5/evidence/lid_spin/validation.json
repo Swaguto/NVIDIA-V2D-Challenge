@@ -1,0 +1,280 @@
+{
+  "date": "2026-10-04",
+  "baseline_git_head": "2c41de3b83d4e4cf4355207089a3d889fd789f84",
+  "gt_use": "none in inference; evaluation only after frozen predictions",
+  "scope": "eight development samples each in episodes 0 and 2, rectified ego_cam_c; no all-20/world/robot acceptance",
+  "cases": {
+    "e000_radial": {
+      "prediction": "e000/reviewed_mask_predictions.json",
+      "evaluation": "e000/reviewed_mask_relative.json",
+      "episode": 0,
+      "sampled_frames": 8,
+      "common_visible_sampled": 8,
+      "common_visible_accepted": 8,
+      "official_rpe_kernel_cm": 21.398515513302307,
+      "median_relative_translation_cm": 16.97024051236386,
+      "median_relative_canonical_rotation_deg": 119.29073935256525
+    },
+    "e000_density": {
+      "prediction": "e000/density_predictions.json",
+      "evaluation": "e000/density_relative.json",
+      "episode": 0,
+      "sampled_frames": 8,
+      "common_visible_sampled": 8,
+      "common_visible_accepted": 8,
+      "official_rpe_kernel_cm": 13.3140168287118,
+      "median_relative_translation_cm": 11.747144925247081,
+      "median_relative_canonical_rotation_deg": 139.58524072725186
+    },
+    "e000_support": {
+      "prediction": "e000/support_predictions.json",
+      "evaluation": "e000/support_relative.json",
+      "episode": 0,
+      "sampled_frames": 8,
+      "common_visible_sampled": 8,
+      "common_visible_accepted": 8,
+      "official_rpe_kernel_cm": 4.42816055074136,
+      "median_relative_translation_cm": 3.1213291573435527,
+      "median_relative_canonical_rotation_deg": 120.08886972263686
+    },
+    "e000_guarded": {
+      "prediction": "e000/predictions.json",
+      "evaluation": "e000/relative.json",
+      "episode": 0,
+      "sampled_frames": 8,
+      "common_visible_sampled": 8,
+      "common_visible_accepted": 8,
+      "official_rpe_kernel_cm": 4.42816055074136,
+      "median_relative_translation_cm": 3.1213291573435527,
+      "median_relative_canonical_rotation_deg": 72.66013976579688,
+      "lid_update_frames": [
+        159,
+        213,
+        372
+      ]
+    },
+    "e002_guarded": {
+      "prediction": "e002/predictions.json",
+      "evaluation": "e002/relative.json",
+      "episode": 2,
+      "sampled_frames": 8,
+      "common_visible_sampled": 8,
+      "common_visible_accepted": 8,
+      "official_rpe_kernel_cm": 7.090843090100372,
+      "median_relative_translation_cm": 2.5503437627930365,
+      "median_relative_canonical_rotation_deg": 11.866793176928173,
+      "lid_update_frames": [
+        0,
+        147,
+        195,
+        342
+      ]
+    },
+    "e002_failed_grayscale": {
+      "prediction": "e002/raw_grayscale_predictions.json",
+      "evaluation": "e002/raw_grayscale_relative.json",
+      "episode": 2,
+      "sampled_frames": 8,
+      "common_visible_sampled": 8,
+      "common_visible_accepted": 8,
+      "official_rpe_kernel_cm": 7.090843090100372,
+      "median_relative_translation_cm": 2.5503437627930365,
+      "median_relative_canonical_rotation_deg": 89.86800768544587
+    },
+    "e002_geometry_control": {
+      "prediction": "e002/geometry_control_predictions.json",
+      "evaluation": "e002/geometry_control_relative.json",
+      "episode": 2,
+      "sampled_frames": 8,
+      "common_visible_sampled": 8,
+      "common_visible_accepted": 8,
+      "official_rpe_kernel_cm": 7.090843090100372,
+      "median_relative_translation_cm": 2.5503437627930365,
+      "median_relative_canonical_rotation_deg": 24.182077888468594
+    }
+  },
+  "source_sha256_lf": {
+    "scripts/track3/lid_spin.py": "ad2704f5e002b501fd4deb2e4268750af85228591b3e2270644be1e064134590",
+    "scripts/track3/rgb_annotations.py": "94f6ef43a3ae892a41fa00d6c6cb5f3d3c6b7b4bdcec37d56e2ab1d8632ccb99",
+    "scripts/eval/probe_issue5_lid_spin.py": "9a10dc539196ecbb87e7cd5fb25c2d6aafd471490c9444e758ff2890105e8b80",
+    "scripts/eval/probe_issue5_pot_mask_control.py": "8616c0182221b97ef199664fa6ba5163d6bfafc1b78cbfabcd4d3acc246fa651",
+    "scripts/eval/probe_issue5_cloud_filter.py": "ed64c884cf29baa630f21ffe9fce096ce03942f2d38238178649545e9b42eecb",
+    "scripts/eval/probe_issue5_pose_candidates.py": "c11d663fba526154bcdd1c2885c5aacf0fe34bb9ed0b2b663d9c87de4b8c68e8",
+    "scripts/track3/register_poses.py": "fe47a2268c4386119be6b44d461c7eed69d71ec5831ab8e3d89fdbef37292f53",
+    "scripts/track3/pose_support.py": "c95c8926d2b786714e3718b400f12db2962116ee2924377ac53dd94a545544f0",
+    "scripts/eval/evaluate_issue5_pot_relative.py": "a0215aa032a4d54933101cc0579aea83954311dd7e8ff184780260373a439ff9",
+    "scripts/eval/render_issue5_pot_control.py": "52b7474409a17a9b6e2e0aac11a5344ae7f5f4a993a15ce83c40ed5757eadf21",
+    "tests/test_issue5_lid_spin.py": "84d1184e64edaf500bcf4bcedb8b8a11e88ea737a70d6e2706c0008723e5e908",
+    "tests/test_issue5_rgb_annotations.py": "4523e883f3ff2cbe56ff72b10a25d132226dbb43e49db3fd8ce74350fe3ce60c"
+  },
+  "validation": {
+    "cpu_tests": 156,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "historical_episode2_mask_pngs_exact": 32,
+    "historical_episode2_fits_exact": 16,
+    "historical_episode2_frame_records_exact": 8,
+    "ep0_all_candidates_retained": 200,
+    "ep0_max_native_replay_translation_error_m": 0.0,
+    "portable_lid_fit_and_curve_replay_exact": true,
+    "all_experiment_processes_terminal": true,
+    "full_mesh_overlays_reviewed_both_episodes": true
+  },
+  "files": [
+    {
+      "path": "controls/geometry_derivation.py",
+      "bytes": 2585,
+      "sha256": "a67a9e40b3575ade54ab4367ed512cc12519a06fbaad30f8b3a62fdd28450784"
+    },
+    {
+      "path": "controls/plot_source.py",
+      "bytes": 3610,
+      "sha256": "959077ab38e323b11c63f7b25c5b13e59f8e70b3249555646bdf6f0d8f3c5e04"
+    },
+    {
+      "path": "controls/raw_grayscale_producer.py",
+      "bytes": 7396,
+      "sha256": "1ec3dc819bd33f018faaca829409902b1bba3a8c998fd4e3d8a3095ab7b67e12"
+    },
+    {
+      "path": "e000/annotations.json",
+      "bytes": 9141,
+      "sha256": "25703c0ded0e0c5ab22d1ca92e87a1fe6d7f3267caa5d3c3b46b5c9cd9208ca5"
+    },
+    {
+      "path": "e000/density_predictions.json",
+      "bytes": 30659,
+      "sha256": "f2a008108727c94e3cfa03daaa0faea7dc2db6616d1126a7652a6c15296db8fe"
+    },
+    {
+      "path": "e000/density_relative.json",
+      "bytes": 8633,
+      "sha256": "2c73c2c0a1c2046b79ff594606a4a25addc0fe898a62f846e6295c6dd4728e4e"
+    },
+    {
+      "path": "e000/predictions.json",
+      "bytes": 357061,
+      "sha256": "e4439c96f8c3a2815a515a8994dc2931b9bc783c40e5035197277afadf7efde9"
+    },
+    {
+      "path": "e000/preview.jpg",
+      "bytes": 616361,
+      "sha256": "156e5bc57480c0ef4bf0cf32d06d40c28e0b49033566d2794e0dc705f03464b0"
+    },
+    {
+      "path": "e000/relative.json",
+      "bytes": 8633,
+      "sha256": "b916f7743b000ef740beb970c81c02268059307c5c4432bf66a1570931f1aff1"
+    },
+    {
+      "path": "e000/render.json",
+      "bytes": 5337,
+      "sha256": "a262ea6d4d25d45e27b341e0937fb49b5d213d43b0f3509f28ad6da53e5e4a16"
+    },
+    {
+      "path": "e000/reviewed_mask_predictions.json",
+      "bytes": 29604,
+      "sha256": "7ee3bf92972d189c8c42022e0b852c27f84a5857985c37e54c03785ced2148c7"
+    },
+    {
+      "path": "e000/reviewed_mask_relative.json",
+      "bytes": 8628,
+      "sha256": "e742bfe3c26e6a953a4367eb511ece1d5c4a6855b09a6550d8750b2e77d0b6d3"
+    },
+    {
+      "path": "e000/support_predictions.json",
+      "bytes": 215673,
+      "sha256": "2bc18f5beb72b23c2a05db3f6aad574de789389629cc1bc854bc4d913f400133"
+    },
+    {
+      "path": "e000/support_relative.json",
+      "bytes": 8631,
+      "sha256": "59e7b7364ae47a27b064ddbaa61951baf9c95f19540292c9159501f979acab13"
+    },
+    {
+      "path": "e002/canonical_rotation_errors.png",
+      "bytes": 75909,
+      "sha256": "61c1ef13b8da511392282d87542cafa41595a1e93577a2ffe78e78cd19d9213b"
+    },
+    {
+      "path": "e002/canonical_texture.png",
+      "bytes": 152019,
+      "sha256": "2b8083152fd537a9f1b43aec68a475af86170a0b4469f2215a64f2f5f2a4fd6d"
+    },
+    {
+      "path": "e002/geometry_control_predictions.json",
+      "bytes": 217610,
+      "sha256": "f0382da98e89989fa8cbb91af0c62a9df65d8e940362071f217a3266f73d329a"
+    },
+    {
+      "path": "e002/geometry_control_relative.json",
+      "bytes": 8625,
+      "sha256": "72e8395c82304f344c2e1c1b0f0b5886e870bec780cfc2cbfc635881923d6b71"
+    },
+    {
+      "path": "e002/historical_mask_replay.json",
+      "bytes": 28650,
+      "sha256": "2c21dd797e057c53563bee4454256efb377184338328270bc76e07b89f4730fc"
+    },
+    {
+      "path": "e002/predictions.json",
+      "bytes": 356006,
+      "sha256": "8021b399b9716044c1653bf93eb6356f38af31f34c9bd21f012b79b61c18054b"
+    },
+    {
+      "path": "e002/preview.jpg",
+      "bytes": 595334,
+      "sha256": "56609d5730ab2b9b7ec9afbe556d61293497fa1f5efd970b98253aca35bfb203"
+    },
+    {
+      "path": "e002/raw_grayscale_predictions.json",
+      "bytes": 317644,
+      "sha256": "f19acbc087bf36c389ffde6c5dfc2e774bfcd1a2d8a8bffca002dc8684204a3a"
+    },
+    {
+      "path": "e002/raw_grayscale_relative.json",
+      "bytes": 8626,
+      "sha256": "baa556507cf1d93e02bc611c8e74d64e4248d14e4c5cc5ef075ab72376ec583c"
+    },
+    {
+      "path": "e002/relative.json",
+      "bytes": 8631,
+      "sha256": "bceadb560c56cf34dbbc635610e9995d61279c70a1852614cbf78f5cfc8bb51a"
+    },
+    {
+      "path": "e002/render.json",
+      "bytes": 5331,
+      "sha256": "0862625e6dffce62aab5123b07e6183e28d6f80b7d3bfa9c6a53f2e1fd29ec52"
+    },
+    {
+      "path": "e002/spin_curves.png",
+      "bytes": 566047,
+      "sha256": "1da37aeb3c5172a86066177a5261e073dca85d49961b4db62eda580b963490cf"
+    },
+    {
+      "path": "e002/uncertain_proposal_applied.jpg",
+      "bytes": 32862,
+      "sha256": "2d3a483338b2c959942768be1240130db54289ca4058af51f7750033f1f290e2"
+    },
+    {
+      "path": "native_observations.json",
+      "bytes": 108678,
+      "sha256": "331c3af567b104d469485caf05a8c91e8876a4454971bc6b8b7a1b427f0be4ff"
+    },
+    {
+      "path": "tests-lid-spin.xml",
+      "bytes": 24862,
+      "sha256": "b6886b098c39202a9c46a3642967f1c44df7dd6b51e9461e482445f165c5c574"
+    }
+  ],
+  "limitations": [
+    "Masks are Codex RGB review, without independent human mask truth.",
+    "Grayscale failed control lacks applied-pose residual recomputation; retained as exploratory.",
+    "Geometry control is a deterministic derivation from frozen coarse curves.",
+    "Appearance confidence is uncalibrated; seven total updates across 16 frames.",
+    "Rotation, automatic acquisition, independent C(t), full coverage, both-camera/all-20 requirements remain open.",
+    "No FoundationPose inference, robot training, official submission or merge.",
+    "Mask/filter/support elapsed_s is inherited from the parent and is not a new-stage timing measurement; the lid worker has its own CPU timing."
+  ]
+}

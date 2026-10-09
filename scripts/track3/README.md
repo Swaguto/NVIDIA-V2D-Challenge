@@ -1,5 +1,19 @@
 # Track 3 public CAD tracking
 
+## Issue 5 repair and diagnostic work
+
+This checkout also includes Evan's issue 5 repairs, prepared-mask replay,
+handle-preserving cloud filtering, and pose-support/lid diagnostics. See
+[REPAIR_STATUS.md](../../docs/team/issue5/REPAIR_STATUS.md) and
+[LID_SPIN.md](../../docs/team/issue5/LID_SPIN.md) for their evidence and limitations.
+The earlier pipeline notes are preserved in
+[POSE_PIPELINE_HISTORY.md](../../docs/team/issue5/POSE_PIPELINE_HISTORY.md).
+Those historical measurements do not describe the current main pipeline.
+
+`register_poses.py` accepts either main's `--mask-dir` temporal masks or the
+issue 5 `--mask-manifest` hash-pinned replay inputs. The options are mutually
+exclusive; both bypass DINO/SAM2 inference.
+
 This pipeline tracks the public CAD objects in rectified left camera video and
 estimates the camera trajectory independently from stereo video. It uses the
 reference object poses only in the final scoring step.

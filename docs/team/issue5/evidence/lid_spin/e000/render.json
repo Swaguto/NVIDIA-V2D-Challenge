@@ -1,0 +1,147 @@
+{
+  "prediction_sha256": "e4439c96f8c3a2815a515a8994dc2931b9bc783c40e5035197277afadf7efde9",
+  "renderer_sha256_lf": "52b7474409a17a9b6e2e0aac11a5344ae7f5f4a993a15ce83c40ed5757eadf21",
+  "gt_use": "none",
+  "frames": [
+    {
+      "episode": 0,
+      "frame_index": 0,
+      "objects": {
+        "white_pot": {
+          "status": "observed",
+          "full_cad_mask_iou": 0.20867401350870957,
+          "mask_sha256": "a5a199e2e078118d0e991f31ffa68aefffe767bcde70ceb13e11f22dedd8e811"
+        },
+        "white_pot_lid": {
+          "status": "observed",
+          "full_cad_mask_iou": 0.8577592664728972,
+          "mask_sha256": "3e0186cef9cdb64bedcd312baf7cd0238cd1d2e44587adcf0eff9bfc01051d45"
+        }
+      },
+      "overlay_sha256": "5c2fd8d3f465444cf7d7a633185b0c7aacd669c0646ae3ff51e45186c2843a38"
+    },
+    {
+      "episode": 0,
+      "frame_index": 53,
+      "objects": {
+        "white_pot": {
+          "status": "observed",
+          "full_cad_mask_iou": 0.23313920721397707,
+          "mask_sha256": "fa7f18b68286f57a421f6c58c6ded549cf03d1eced6e790a21ca33aa404e4ef3"
+        },
+        "white_pot_lid": {
+          "status": "observed",
+          "full_cad_mask_iou": 0.5524699211224601,
+          "mask_sha256": "d3d44944235f6a165672e283ae21f68bd7f381797f8d5581a890532a0222308d"
+        }
+      },
+      "overlay_sha256": "878032e675867c99ee983eaa93a44dd8a81353d3b26a995011ab42217dfe30e6"
+    },
+    {
+      "episode": 0,
+      "frame_index": 106,
+      "objects": {
+        "white_pot": {
+          "status": "observed",
+          "full_cad_mask_iou": 0.8556970445690393,
+          "mask_sha256": "2cba576e7c1b657dc6802fcf7ce17c5f46706bbdd6a3bccf310fe4da6cf89ee4"
+        },
+        "white_pot_lid": {
+          "status": "observed",
+          "full_cad_mask_iou": 0.876842248908297,
+          "mask_sha256": "bf86c0ecfb255edd9b77b9e9e42876c5d354b83b418f281c890add04bb4b7633"
+        }
+      },
+      "overlay_sha256": "c0689eb783c8b4e681aac87ff7394807c3681743d663cda029446f6f02b35191"
+    },
+    {
+      "episode": 0,
+      "frame_index": 159,
+      "objects": {
+        "white_pot": {
+          "status": "observed",
+          "full_cad_mask_iou": 0.7713222470922648,
+          "mask_sha256": "107b160b1fc07abc02e57fc405797e2ab16cabc4f2d1d7280d69306f62005a2d"
+        },
+        "white_pot_lid": {
+          "status": "observed",
+          "full_cad_mask_iou": 0.9602386348486869,
+          "mask_sha256": "0df1d89e1415de484f86d00e45ae59a30464f8d4921ec8b94191096cac2bac19"
+        }
+      },
+      "overlay_sha256": "137c00633172edda1844016b0c862b31668aac2dd801c1a8a068515b8ce6c394"
+    },
+    {
+      "episode": 0,
+      "frame_index": 213,
+      "objects": {
+        "white_pot": {
+          "status": "observed",
+          "full_cad_mask_iou": 0.8308205694531138,
+          "mask_sha256": "9e087e8a6a5a97c7e6cb7e7ff080586283b6a6352bc7c219e71ca03d151ee324"
+        },
+        "white_pot_lid": {
+          "status": "observed",
+          "full_cad_mask_iou": 0.9350662317779405,
+          "mask_sha256": "2ec63f87d5cf5f963812abf7181f1d02ebf5a38db6f30009279041390e7db0a7"
+        }
+      },
+      "overlay_sha256": "1c9c4aed62d07769c997406d5b8ba13326cfccb4213baf4f623d179fc4e65b5c"
+    },
+    {
+      "episode": 0,
+      "frame_index": 266,
+      "objects": {
+        "white_pot": {
+          "status": "observed",
+          "full_cad_mask_iou": 0.2556568881946199,
+          "mask_sha256": "8fdf240356826762246c1f189fea231fd7fbe6c25cee9ff6497f03c353f7f3be"
+        },
+        "white_pot_lid": {
+          "status": "observed",
+          "full_cad_mask_iou": 0.6403834720570749,
+          "mask_sha256": "242e6a0f9c1c2b7ac2fee6139c0a94cc205b0d8f948a920154252ac0d0d112f2"
+        }
+      },
+      "overlay_sha256": "13419706ddc0b340c45e75d79383f3f78d37bad18045b168f9550d876f851453"
+    },
+    {
+      "episode": 0,
+      "frame_index": 319,
+      "objects": {
+        "white_pot": {
+          "status": "observed",
+          "full_cad_mask_iou": 0.32576371285964406,
+          "mask_sha256": "14688cff14969dc0ca8b8f553c1270c3dd49a9502a080061776dba420a81c8e1"
+        },
+        "white_pot_lid": {
+          "status": "observed",
+          "full_cad_mask_iou": 0.7985819012137965,
+          "mask_sha256": "8854f911bc7a89e0f527aa9f8ef255aee6c6f17f67823950b7ea91a1accb4ea3"
+        }
+      },
+      "overlay_sha256": "2ca80d014cb2cb5108eeb9dc41f3002890b979739843ef26bde8442225076f55"
+    },
+    {
+      "episode": 0,
+      "frame_index": 372,
+      "objects": {
+        "white_pot": {
+          "status": "observed",
+          "full_cad_mask_iou": 0.19359770079799432,
+          "mask_sha256": "3b308b8f0e7d6dde13945373b384a6b5d49f1110cd1c8d2bf1fb0a263a9cd844"
+        },
+        "white_pot_lid": {
+          "status": "observed",
+          "full_cad_mask_iou": 0.9093076354845209,
+          "mask_sha256": "d801bda08c5b5040459bc937ca0b1c2ead7b9f3542744e9f8f7cfc67fb805993"
+        }
+      },
+      "overlay_sha256": "66db7e189d8383d77f24aceb37bf5cad3dd3a3821df10858481a52efa43eecf9"
+    }
+  ],
+  "limits": [
+    "Full CAD versus input SAM masks; occlusion is not independently labelled.",
+    "No canonical pose or world-camera accuracy measured by this renderer."
+  ]
+}

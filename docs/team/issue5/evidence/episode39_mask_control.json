@@ -1,0 +1,460 @@
+{
+  "episode": 39,
+  "frame_index": 0,
+  "coordinate_frame": "rectified_camera",
+  "camera_frame": "ego_cam_c",
+  "data_revision": "5f68335f3acc802033d1e80728c1633197521de8",
+  "inputs": [
+    {
+      "path": "mesh/mini_dust_pan/mini_dust_pan.glb",
+      "bytes": 8492620,
+      "sha256": "6358b4f913fd8164a797b9375948cd09d47c5e60abcef0843fe43af5109737e3"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.ego_cam_b/episode_000039.mp4",
+      "bytes": 3864358,
+      "sha256": "711598812e993d08b4f9ec9eec06b97388f8d199ed03d67a5aaff7f779d6d95f"
+    },
+    {
+      "path": "videos/chunk-000/observation.images.ego_cam_c/episode_000039.mp4",
+      "bytes": 3183641,
+      "sha256": "5e2b2ca9e0776d1a87cfcbadd106461261b21f5c531bdf9d09a2fded9a2f4e0d"
+    },
+    {
+      "path": "meta/camera_calibration.json",
+      "bytes": 16640,
+      "sha256": "23e2d9c46369292cdda492a777e7a6083815369a25d1af4bb82560669fde5d52"
+    }
+  ],
+  "calibration_sha256": "23e2d9c46369292cdda492a777e7a6083815369a25d1af4bb82560669fde5d52",
+  "mesh_bounds_m": [
+    [
+      -0.02078586257994175,
+      -0.08484704047441483,
+      -0.07190404832363129
+    ],
+    [
+      0.024457722902297974,
+      0.08505769819021225,
+      0.10597061365842819
+    ]
+  ],
+  "manual_pan_polygon": [
+    [
+      568,
+      408
+    ],
+    [
+      578,
+      469
+    ],
+    [
+      589,
+      492
+    ],
+    [
+      575,
+      503
+    ],
+    [
+      567,
+      521
+    ],
+    [
+      570,
+      538
+    ],
+    [
+      583,
+      552
+    ],
+    [
+      601,
+      558
+    ],
+    [
+      624,
+      556
+    ],
+    [
+      642,
+      546
+    ],
+    [
+      651,
+      530
+    ],
+    [
+      651,
+      515
+    ],
+    [
+      644,
+      503
+    ],
+    [
+      693,
+      460
+    ],
+    [
+      711,
+      443
+    ],
+    [
+      721,
+      422
+    ],
+    [
+      712,
+      420
+    ],
+    [
+      699,
+      433
+    ],
+    [
+      587,
+      417
+    ]
+  ],
+  "manual_handle_hole": {
+    "center": [
+      609,
+      522
+    ],
+    "radii": [
+      22,
+      20
+    ]
+  },
+  "manual_table_polygon": [
+    [
+      488,
+      457
+    ],
+    [
+      526,
+      397
+    ],
+    [
+      577,
+      365
+    ],
+    [
+      652,
+      344
+    ],
+    [
+      725,
+      347
+    ],
+    [
+      803,
+      366
+    ],
+    [
+      868,
+      410
+    ],
+    [
+      924,
+      477
+    ],
+    [
+      954,
+      541
+    ],
+    [
+      960,
+      597
+    ],
+    [
+      948,
+      648
+    ],
+    [
+      915,
+      702
+    ],
+    [
+      850,
+      737
+    ],
+    [
+      782,
+      754
+    ],
+    [
+      704,
+      754
+    ],
+    [
+      630,
+      735
+    ],
+    [
+      562,
+      694
+    ],
+    [
+      513,
+      637
+    ],
+    [
+      483,
+      571
+    ],
+    [
+      481,
+      512
+    ]
+  ],
+  "registration_parameters": {
+    "cad_samples": 1200,
+    "cad_seed": 3,
+    "cloud_cap": 1600,
+    "cloud_seed": 7,
+    "voxel_m": 0.004,
+    "trim": 0.6,
+    "coarse": 600,
+    "refine": 1200,
+    "n_seed": 3,
+    "scale": 1,
+    "warm_start": false
+  },
+  "rectification": {
+    "R1": [
+      [
+        0.9996962098328074,
+        -0.021331219406281254,
+        -0.012347757875850414
+      ],
+      [
+        0.02127939252700971,
+        0.9997642625451443,
+        -0.004313558999845559
+      ],
+      [
+        0.012436860520283213,
+        0.004049495796367131,
+        0.9999144593834987
+      ]
+    ],
+    "R2": [
+      [
+        0.9999980036812999,
+        -0.001994652947638769,
+        -0.00011829215194356785
+      ],
+      [
+        0.0019951301861640736,
+        0.9999892662410503,
+        0.00418172909523224
+      ],
+      [
+        0.00010994978395807362,
+        -0.004181956755411351,
+        0.9999912495360852
+      ]
+    ],
+    "P1": [
+      [
+        565.5896606445312,
+        0.0,
+        612.2412567138672,
+        0.0
+      ],
+      [
+        0.0,
+        565.5896606445312,
+        391.17577362060547,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ]
+    ],
+    "P2": [
+      [
+        565.5896606445312,
+        0.0,
+        612.2412567138672,
+        -42.68562898731714
+      ],
+      [
+        0.0,
+        565.5896606445312,
+        391.17577362060547,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ]
+    ],
+    "Q": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        -612.2412567138672
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        -391.17577362060547
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        565.5896606445312
+      ],
+      [
+        0.0,
+        0.0,
+        13.250118929079871,
+        -0.0
+      ]
+    ],
+    "baseline_m": 0.07547102070195856
+  },
+  "depth_parameters": {
+    "producer": "stereo_depth defaults, StereoSGBM",
+    "num_disparities": 128,
+    "block_size": 5,
+    "min_valid_px": 400,
+    "valid_fraction": 0.5379658203125
+  },
+  "environment": {
+    "python": "3.14.0",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "numpy": "2.5.3",
+    "torch": "2.14.0+cpu",
+    "opencv": "5.0.0",
+    "trimesh": "5.1.0",
+    "device": "cpu",
+    "dtype": "float64",
+    "torch_threads": 1
+  },
+  "video_container_frame_counts": [
+    319,
+    319
+  ],
+  "control_script_sha256_lf": "0ea9c84aa1d83acd4f07e12c7e20e0e3f629523cd92b63472c2975b859d06d8d",
+  "registration_source_sha256_lf": "955d03b65630a7f65437307df878d24eea0808ce751079e66f18a71b05bcc069",
+  "stereo_source_sha256_lf": "97ab2c7dc1a871fca9555b2de10286f82697889c76c9885034892b283a966c93",
+  "annotation_sha256": "08f7656c9c16af343c7a0a26f2054737a8ac61b8b8173023b9c3129cf80d1206",
+  "input_manifest_sha256": "d2942efb1bb2ae5f8c810ca4092f92aa2db5a55d6292153d7364bc86518e1bc6",
+  "outputs": [
+    {
+      "path": "frame0_pan_only_control.png",
+      "sha256": "05e15267b03603849b86375b60e498b9f9c3014f12e491d3f1f4f89ab4a12d11"
+    },
+    {
+      "path": "frame0_table_inclusive_control.png",
+      "sha256": "ef0e7eba04f47fe3a7048c320e5d5b3e56ba4389a9ce7a63a783e4d7f4626f54"
+    },
+    {
+      "path": "manual_pan_mask.png",
+      "sha256": "6c6b0021d55a291de0d42c1ed1dfac729f62eeb976cd467cb473dc4a057144fc"
+    },
+    {
+      "path": "manual_table_mask.png",
+      "sha256": "8586866bb0036be014773c3790677efcec17d711f1ee1f3a0f2328c165ca9603"
+    }
+  ],
+  "results": {
+    "table_inclusive": {
+      "mask_pixels": 154754,
+      "valid_depth_pixels": 122084,
+      "filtered_cloud_points_before_cap": 14468,
+      "registration_cloud_points": 1600,
+      "cloud_extent_m": [
+        0.45056870146188654,
+        0.36030382701359887,
+        0.388733834028244
+      ],
+      "scale": 1.0,
+      "rotation_matrix": [
+        [
+          -0.06754293932845287,
+          -0.9156565964991679,
+          0.39624607081261226
+        ],
+        [
+          -0.6373411351820245,
+          0.3451565079952223,
+          0.6889580991565685
+        ],
+        [
+          -0.7676159383127485,
+          -0.20600966549194855,
+          -0.6068984997280301
+        ]
+      ],
+      "translation_m": [
+        0.07209794645194996,
+        0.12012206834994285,
+        0.5459297817909928
+      ],
+      "residual_m": 0.0405513600937211,
+      "passes_current_native_residual_gate_50mm": true,
+      "rendered_vs_pan_only_iou": 0.16358115801459117,
+      "rendered_vs_input_mask_iou": 0.10490197345464415,
+      "seconds": 1.590465100016445
+    },
+    "pan_only": {
+      "mask_pixels": 11358,
+      "valid_depth_pixels": 10028,
+      "filtered_cloud_points_before_cap": 1895,
+      "registration_cloud_points": 1600,
+      "cloud_extent_m": [
+        0.14754182662011567,
+        0.13134232096403614,
+        0.13923534750938416
+      ],
+      "scale": 1.0,
+      "rotation_matrix": [
+        [
+          -0.1071497144667232,
+          -0.986235348135821,
+          -0.1259316353309331
+        ],
+        [
+          -0.751552699331735,
+          -0.0025799259837413465,
+          0.6596680105243128
+        ],
+        [
+          -0.650912804311671,
+          0.16532749943473402,
+          -0.7409313997353468
+        ]
+      ],
+      "translation_m": [
+        0.017596650427239,
+        0.07467346549736482,
+        0.5695724271962116
+      ],
+      "residual_m": 0.008121385094652217,
+      "passes_current_native_residual_gate_50mm": true,
+      "rendered_vs_pan_only_iou": 0.6617469665791528,
+      "rendered_vs_input_mask_iou": 0.6617469665791528,
+      "seconds": 1.756696299999021
+    }
+  },
+  "limits": [
+    "One real RGB frame; masks manually outlined for observation controls, not model-generated.",
+    "SGBM depth has no independent depth truth.",
+    "Bounded CPU cloud/cad samples, not a native GPU or episode benchmark.",
+    "No original team-run input masks/depth/poses or generator available.",
+    "No world camera trajectory or official pose accuracy measured."
+  ]
+}

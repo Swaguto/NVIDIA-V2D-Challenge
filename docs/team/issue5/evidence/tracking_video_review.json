@@ -1,0 +1,43 @@
+{
+  "sha256": "ccd46524af5db070d108f3d612a6a89dcc9d1127f69f2008b09f7eb9c9885964",
+  "frames": 319,
+  "fps": 20.0,
+  "size": [
+    1280,
+    440
+  ],
+  "duration_s": 15.95,
+  "source_filename": "pan_cad_diagnostic.mp4",
+  "source_commit": null,
+  "source_command": null,
+  "displayed_episode": 39,
+  "sampled_video_frame_ids": [
+    0,
+    39,
+    79,
+    119,
+    159,
+    199,
+    239,
+    318
+  ],
+  "sampled_displayed_iou": [
+    0.15,
+    0.16,
+    0.21,
+    0.16,
+    0.17,
+    0.17,
+    0.15,
+    0.13
+  ],
+  "observations": [
+    "Green outline labeled as mask surrounds tabletop, rather than isolated dustpan.",
+    "Yellow CAD is displaced from actual dustpan."
+  ],
+  "limits": [
+    "Displayed IoU read from captions; metric definition and original inputs unknown.",
+    "Generating script/commit, detector outputs, mask/depth/pose artifacts unavailable.",
+    "No rerun of this tracking video; root cause and fix effectiveness not confirmed."
+  ]
+}

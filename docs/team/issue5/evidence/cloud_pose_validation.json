@@ -1,0 +1,146 @@
+{
+  "date": "2026-10-04",
+  "baseline_git_head": "bb977cff32ec6cd8bdcb338e153fb9a67787ab39",
+  "gt_use": "none during inference; separate evaluator after frozen predictions",
+  "source_sha256_lf": {
+    "scripts/track3/register_poses.py": "fe47a2268c4386119be6b44d461c7eed69d71ec5831ab8e3d89fdbef37292f53",
+    "scripts/track3/pose_support.py": "c95c8926d2b786714e3718b400f12db2962116ee2924377ac53dd94a545544f0",
+    "scripts/eval/probe_issue5_cloud_filter.py": "ed64c884cf29baa630f21ffe9fce096ce03942f2d38238178649545e9b42eecb",
+    "scripts/eval/probe_issue5_pose_candidates.py": "c11d663fba526154bcdd1c2885c5aacf0fe34bb9ed0b2b663d9c87de4b8c68e8",
+    "scripts/eval/render_issue5_pot_control.py": "52b7474409a17a9b6e2e0aac11a5344ae7f5f4a993a15ce83c40ed5757eadf21",
+    "scripts/eval/evaluate_issue5_pot_relative.py": "a0215aa032a4d54933101cc0579aea83954311dd7e8ff184780260373a439ff9"
+  },
+  "evidence_sha256": {
+    "pot_local_density_observations.json": "4100723e30ffc76d2714bbb8db9e37710dd7dea6adee0d8a7eb13006e13b450b",
+    "pot_local_density_relative.json": "f227eb19f0a74b6b2eb5866b64388770b5f2c078706450a0144f44cba7ab5043",
+    "pot_pose_support_observations.json": "fcc56c2fa06e4b455f75ecf05f3f943e9ca155a570fc7599540b5f3f9b647370",
+    "pot_pose_support_relative.json": "85d9afde4fad42a3c38560a2f02ffc4c6b6eeba94137e3ec88a2a1465056e28f",
+    "pot_pose_support_render.json": "ffb0fc3bab98527d04ff6c017c01c766f6701f5ba13e0dd32d595d9634a37fc9",
+    "pot_pose_support_preview.jpg": "a04cbb76b119d4584f78c5c1fa68d6f63dbb41c39dad35a2381fb990cfe3feb5",
+    "pan_density_registration.json": "2bddac386cc73815bdbe888c9b5675b0af5fa084a8b0d61792c71baa1d69a7cc",
+    "pan_density_overlays.json": "fa486b18b2048d0affe6b15be0d7c65c96d58ce944c543500eb83ef3e1d98ecd",
+    "pan_density_preview.jpg": "1cd265704dd351a9c923b18924b45dc4ebf6f421b3777ce08d921116da1fe514",
+    "tests-pose-support.xml": "4282532b9c785ff539ebb23fb3b84273c490ee8a48bafaab8a254d964ae220e4",
+    "pan_density_poses.json": "f121f32c8c3a3e210ef9749cd27dccb104a23e2d28c9e2538630d2f5735117ba"
+  },
+  "pot_candidate_replay": [
+    {
+      "frame_index": 0,
+      "native_three_seed_pose_exact": true,
+      "lid_unchanged": true,
+      "candidates": 25
+    },
+    {
+      "frame_index": 49,
+      "native_three_seed_pose_exact": true,
+      "lid_unchanged": true,
+      "candidates": 25
+    },
+    {
+      "frame_index": 98,
+      "native_three_seed_pose_exact": true,
+      "lid_unchanged": true,
+      "candidates": 25
+    },
+    {
+      "frame_index": 147,
+      "native_three_seed_pose_exact": true,
+      "lid_unchanged": true,
+      "candidates": 25
+    },
+    {
+      "frame_index": 195,
+      "native_three_seed_pose_exact": true,
+      "lid_unchanged": true,
+      "candidates": 25
+    },
+    {
+      "frame_index": 244,
+      "native_three_seed_pose_exact": true,
+      "lid_unchanged": true,
+      "candidates": 25
+    },
+    {
+      "frame_index": 293,
+      "native_three_seed_pose_exact": true,
+      "lid_unchanged": true,
+      "candidates": 25
+    },
+    {
+      "frame_index": 342,
+      "native_three_seed_pose_exact": true,
+      "lid_unchanged": true,
+      "candidates": 25
+    }
+  ],
+  "pan_regressions": {
+    "portable-native-poses": {
+      "frames": 319,
+      "input_errors": [],
+      "median_residual_mm": 6.225206423550844,
+      "max_residual_mm": 14.042298309504986,
+      "increments_over_90deg": 0,
+      "max_increment_deg": 15.58064309815061,
+      "p95_increment_deg": 8.104267381657065,
+      "registration_report_sha256": "4244fbf0c5ffe2a0b634c98fb02a46e84079f7d253a5ff9d5c395af5e44b7c4b"
+    },
+    "local-density-poses": {
+      "frames": 319,
+      "input_errors": [],
+      "median_residual_mm": 6.2440866604447365,
+      "max_residual_mm": 15.336740761995316,
+      "increments_over_90deg": 0,
+      "max_increment_deg": 14.2204597200428,
+      "p95_increment_deg": 7.663457236351915,
+      "registration_report_sha256": "2bddac386cc73815bdbe888c9b5675b0af5fa084a8b0d61792c71baa1d69a7cc"
+    },
+    "radial-replay-after-filter": {
+      "frames": 319,
+      "input_errors": [],
+      "median_residual_mm": 6.225206423550844,
+      "max_residual_mm": 14.042298309504986,
+      "increments_over_90deg": 0,
+      "max_increment_deg": 15.58064309815061,
+      "p95_increment_deg": 8.104267381657065,
+      "registration_report_sha256": "558b314e86dfb08082a30366ade46f1a87bc540f6bba2bad9da279374a557cf5"
+    }
+  },
+  "radial_replay_byte_identical_poses": 319,
+  "tests": {
+    "passed": 150,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "existing_output_rejection_exit_code": 2,
+  "reviewed_overlays": {
+    "pot": [
+      0,
+      49,
+      98,
+      147,
+      195,
+      244,
+      293,
+      342
+    ],
+    "pan": [
+      0,
+      39,
+      79,
+      119,
+      159,
+      199,
+      239,
+      318
+    ]
+  },
+  "limits": [
+    "Eight episode-2 development samples, no full episode/holdout/world accuracy.",
+    "Candidate diagnostic refits pot only, preserves all 25 hypotheses and frozen lid.",
+    "Masks/depth are not independent observation truth.",
+    "Automatic acquisition and canonical rotation remain unresolved.",
+    "No episode-0 or right-camera candidate experiment; no independent C(t).",
+    "No FoundationPose inference, all-20 acceptance, robot training or policy submission."
+  ]
+}
