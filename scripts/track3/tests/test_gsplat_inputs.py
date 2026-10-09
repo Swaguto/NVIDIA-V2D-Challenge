@@ -139,6 +139,30 @@ def test_assemble(tmp_path):
     assert (out / "hands/right/masks/000001.png").exists()
 
 
+@pytest.mark.parametrize("field,value", [
+    ("status", "absent"), ("status", None), ("status", "unknown"),
+    ("gt_use", "absent"), ("gt_use", None), ("gt_use", "ground_truth_assisted"),
+])
+def test_object_initialization_requires_explicit_observation_provenance(tmp_path, field, value):
+    _, results, _, _, cams, objs_world = build_tree(tmp_path)
+    observed, _ = gi.object_pose_dirs(results, 2, "white_pot")
+    path = observed / "000000.json"
+    row = json.loads(path.read_text())
+    if value == "absent":
+        row.pop(field)
+    else:
+        row[field] = value
+    path.write_text(json.dumps(row))
+    poses, provenance = gi.object_camera_poses(results, 2, "white_pot", [0, 2], cams)
+    assert provenance == {0: "inferred:world_hold", 2: "observed"}
+    assert np.allclose(poses[0], cams[0] @ objs_world[0])
+    # Without independent inferred geometry, the frame remains absent.
+    _, inferred = gi.object_pose_dirs(results, 2, "white_pot")
+    (inferred / "000000.json").unlink()
+    poses, provenance = gi.object_camera_poses(results, 2, "white_pot", [0, 2], cams)
+    assert 0 not in poses and 0 not in provenance
+
+
 def test_assemble_refuses_non_empty_output(tmp_path):
     data, results, bundle, _, _, _ = build_tree(tmp_path)
     out = tmp_path / "out"

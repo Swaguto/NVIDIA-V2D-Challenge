@@ -6,6 +6,7 @@ on:
     paths:
       - 'scripts/track3/**'
       - 'reconstruction/modules/v2d_gsplat_refinement/**'
+      - 'reconstruction/modules/v2d_droid_slam/**'
       - 'docs/team/issue7/**'
       - '.github/workflows/track3_refinement_cpu.yml'
   push:
@@ -13,6 +14,7 @@ on:
     paths:
       - 'scripts/track3/**'
       - 'reconstruction/modules/v2d_gsplat_refinement/**'
+      - 'reconstruction/modules/v2d_droid_slam/**'
       - 'docs/team/issue7/**'
       - '.github/workflows/track3_refinement_cpu.yml'
   workflow_dispatch:

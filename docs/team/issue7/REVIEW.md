@@ -2,7 +2,8 @@
 
 The accepted 343-frame episode 2 experiment is documented in [RESULTS.md](RESULTS.md)
 and [REPRODUCE.md](REPRODUCE.md). The reviewed baseline is PR 34 commit
-`6a2e24b0e09a8361d589be4d542e410a9d331e30`; the PR remains draft and unmerged.
+`6a2e24b0e09a8361d589be4d542e410a9d331e30`. Later review repairs are documented
+below; current readiness and checks are tracked on GitHub.
 
 This follow-up fixes all four reported blockers and both additional review
 concerns:
@@ -59,3 +60,29 @@ The episode 2 original and staged source locks were reverified for the Issue 8
 handoff: 4,673/4,673 original and 2,961/2,961 staged files match. The scene SHA256
 remains `3e3f51aa85c60f0d68384de4896e2f6c8ca0fc1cf3891d83d77c023676a9bc6a`.
 The local Issue 8 checkout is separate from this branch.
+
+## Finalization review — October 9, 2026
+
+The four original blockers and both additional concerns were pushed in
+`145fc7b`; its published refinement, documentation and hygiene checks passed.
+The final review also repairs null object/frame provenance in the coverage
+report. Coverage and scoring now share one conservative status classifier.
+The input adapter requires explicit `observed` and `gt_use: none` tags for an
+observed object initialization; missing metadata uses the documented inferred
+fallback or leaves the frame absent. Five additional regression cases failed
+before these repairs. The expanded suite has 102 controls; the seven Bash
+launcher controls require Linux. CI also triggers on DROID-SLAM source changes.
+
+All 686 accepted episode provenance classifications are unchanged, and all
+628 observed object records meet the stricter metadata contract. The frozen
+scene hash and finite arrays remain unchanged. These software repairs introduce
+no new GPU quality result. `RESULTS.json` retains its timestamped experiment
+assessment, including its historical draft and source-hash statements.
+
+Both PR branches combine cleanly with the reviewed main commit `3d26acb`.
+Their combined CPU suites are checked from an isolated source snapshot. Current
+test receipts and frozen-evidence compatibility checks are in
+`runs/pr-finalization-review/` relative to the parent workspace. Recommend merge
+of PR #34 once all checks on its final head pass. Issue 6's all-20 quality gate
+remains a separate, unmet requirement and does not prevent issue 7's documented
+one-episode milestone from being assessed on its own evidence.

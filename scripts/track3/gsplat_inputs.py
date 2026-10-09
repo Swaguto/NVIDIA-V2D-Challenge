@@ -165,7 +165,8 @@ def object_camera_poses(
 ) -> tuple[dict[int, np.ndarray], dict[int, str]]:
     """camera_from_object for every frame that has an observed or inferred pose.
 
-    Observed FoundationPose poses are used as-is. Other frames compose the
+    FoundationPose poses explicitly marked observed and GT-free are used as-is.
+    Other frames compose the
     gap-filled world pose with the stereo-odometry camera:
     ``camera_from_object = camera_from_world @ world_from_object``.
     """
@@ -176,7 +177,7 @@ def object_camera_poses(
         obs = observed_dir / f"{f:06d}.json"
         if obs.is_file():
             record = read_json(obs)
-            if record.get("status", "observed") == "observed" and record.get("gt_use", "none") == "none":
+            if record.get("status") == "observed" and record.get("gt_use") == "none":
                 poses[f] = pose_record_to_matrix(record)
                 provenance[f] = "observed"
                 continue

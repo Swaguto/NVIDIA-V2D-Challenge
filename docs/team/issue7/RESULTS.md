@@ -3,9 +3,11 @@
 The final candidate is **trial 4**, completed October 9, 2026. It satisfies
 issue 7's one-episode requirements: real metric SLAM initialization, joint
 refinement, a browser-verified 3D viewer, and written jitter/drift/contact
-precision measurements. Draft [PR #34](https://github.com/Swaguto/NVIDIA-V2D-Challenge/pull/34)
+precision measurements. [PR #34](https://github.com/Swaguto/NVIDIA-V2D-Challenge/pull/34)
 is ready for review and issue closure on merge. Issue 7 remains open; no merge
 or issue closure has been performed. This supersedes the older odometry pilot.
+Current software checks and later repairs are in [REVIEW.md](REVIEW.md);
+`RESULTS.json` retains the timestamped experiment assessment.
 
 Baseline: Thanosan's `2e8efa668c9485fbd99f961ff88284a905f2b021`, with repairs on
 `Evc-r/issue7-refinement-validation`. All six live team-document tabs were
