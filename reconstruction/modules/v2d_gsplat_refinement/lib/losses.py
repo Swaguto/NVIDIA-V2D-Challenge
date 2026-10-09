@@ -325,6 +325,7 @@ def depth_loss(
     are excluded from the loss.
     """
     valid = union_mask * torch.isfinite(target_depth).float()
+    target_depth = torch.where(torch.isfinite(target_depth), target_depth, torch.zeros_like(target_depth))
     diff = (rendered_depth - target_depth) * valid
     abs_diff = diff.abs()
     quad = 0.5 * diff * diff
@@ -354,7 +355,11 @@ def depth_gradient_loss(
     ``union_mask`` and a finite-target check gate both endpoints of each
     difference so we never compare across an invalid pixel.
     """
-    valid = union_mask * torch.isfinite(target_depth).float()
+    finite = torch.isfinite(target_depth)
+    valid = union_mask * finite.float()
+    # Masking multiplies by zero, which cannot remove inf - inf = NaN, so
+    # replace unknown target pixels (e.g. stereo holes) before differencing.
+    target_depth = torch.where(finite, target_depth, torch.ones_like(target_depth))
     if log_space:
         d_r = torch.log(rendered_depth.clamp_min(eps))
         d_t = torch.log(target_depth.clamp_min(eps))
@@ -378,7 +383,7 @@ def depth_gradient_loss(
     return (lx.sum() + ly.sum()) / n
 
 
-def temporal_smoothness(param: torch.Tensor) -> torch.Tensor:
+def temporal_smoothness(param: torch.Tensor, frame_indices=None) -> torch.Tensor:
     """Sum-squared first-difference of a (T, D) parameter tensor.
 
     Sum reduction (not mean) keeps per-frame-pair gradient magnitude
@@ -393,10 +398,49 @@ def temporal_smoothness(param: torch.Tensor) -> torch.Tensor:
     if param.shape[0] < 2:
         return param.new_zeros(())
     d = param[1:] - param[:-1]
+    if frame_indices is not None:
+        frames = torch.as_tensor(frame_indices, device=param.device)
+        d = d[frames[1:] - frames[:-1] == 1]
     return (d * d).sum()
 
 
-def quat_smoothness(q: torch.Tensor) -> torch.Tensor:
+def temporal_acceleration(param: torch.Tensor, frame_indices=None) -> torch.Tensor:
+    """Sum-squared second differences, retaining constant-velocity motion.
+
+    Only fully observed consecutive triplets contribute. Units are parameter
+    units per frame squared; report acceleration separately using episode FPS.
+    """
+    if param.shape[0] < 3:
+        return param.sum() * 0.0
+    d = param[2:] - 2.0 * param[1:-1] + param[:-2]
+    if frame_indices is not None:
+        frames = torch.as_tensor(frame_indices, device=param.device)
+        adjacent = frames[1:] - frames[:-1] == 1
+        d = d[adjacent[1:] & adjacent[:-1]]
+    return d.square().sum()
+
+
+def quat_acceleration(q: torch.Tensor, frame_indices=None) -> torch.Tensor:
+    """Penalize changes of relative rotations without slowing a constant turn."""
+    if q.shape[0] < 3:
+        return q.sum() * 0.0
+    q = q / q.norm(dim=-1, keepdim=True).clamp_min(1e-8)
+    w0, v0 = q[:-1, ..., :1], q[:-1, ..., 1:]
+    w1, v1 = q[1:, ..., :1], q[1:, ..., 1:]
+    relative = torch.cat([
+        w0 * w1 + (v0 * v1).sum(dim=-1, keepdim=True),
+        w0 * v1 - w1 * v0 + torch.linalg.cross(v0, v1),
+    ], dim=-1)
+    dot = (relative[1:] * relative[:-1]).sum(dim=-1, keepdim=True)
+    d = torch.where(dot < 0, -relative[1:], relative[1:]) - relative[:-1]
+    if frame_indices is not None:
+        frames = torch.as_tensor(frame_indices, device=q.device)
+        adjacent = frames[1:] - frames[:-1] == 1
+        d = d[adjacent[1:] & adjacent[:-1]]
+    return d.square().sum()
+
+
+def quat_smoothness(q: torch.Tensor, frame_indices=None) -> torch.Tensor:
     """Sum-squared first-difference of unit quaternions with sign alignment.
 
     Same semantics as ``rotation_smoothness`` but takes quats directly
@@ -413,10 +457,13 @@ def quat_smoothness(q: torch.Tensor) -> torch.Tensor:
     dot = (q[1:] * q[:-1]).sum(dim=-1, keepdim=True)
     q_aligned = torch.where(dot < 0, -q[1:], q[1:])
     d = q_aligned - q[:-1]
+    if frame_indices is not None:
+        frames = torch.as_tensor(frame_indices, device=q.device)
+        d = d[frames[1:] - frames[:-1] == 1]
     return (d * d).sum()
 
 
-def rotation_smoothness(axis_angle: torch.Tensor) -> torch.Tensor:
+def rotation_smoothness(axis_angle: torch.Tensor, frame_indices=None) -> torch.Tensor:
     """Sum-squared first-difference of axis-angle rotations, measured in
     quaternion space with double-cover sign alignment.
 
@@ -444,11 +491,7 @@ def rotation_smoothness(axis_angle: torch.Tensor) -> torch.Tensor:
     w = torch.cos(half)
     xyz = axis_angle / angle * torch.sin(half)
     q = torch.cat([w, xyz], dim=-1)                             # (T, ..., 4)
-
-    dot = (q[1:] * q[:-1]).sum(dim=-1, keepdim=True)
-    q_aligned = torch.where(dot < 0, -q[1:], q[1:])
-    d = q_aligned - q[:-1]
-    return (d * d).sum()
+    return quat_smoothness(q, frame_indices)
 
 
 def balanced_photometric_loss(

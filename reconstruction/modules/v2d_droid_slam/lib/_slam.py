@@ -225,7 +225,7 @@ def run_droid_slam(
     backend_nms: int = 3,
     upsample: bool = False,
     pointcloud_min_views: int = 2,
-) -> None:
+) -> dict:
     """Run DROID-SLAM over a frame iterator and write outputs.
 
     The frame iterator is invoked twice: once for tracking, then again for
@@ -293,9 +293,15 @@ def run_droid_slam(
             )
             yield (f.frame_idx, image_t, intr_t)
 
+    frontend_initialized = bool(droid.frontend.is_initialized)
     traj_est = droid.terminate(replay())  # (N_frames, 7) camera-to-world [tx,ty,tz,qx,qy,qz,qw]
+    if (traj_est.shape != (len(ordered_indices), 7) or not np.isfinite(traj_est).all()
+            or np.any(np.linalg.norm(traj_est[:, 3:], axis=1) < 1e-8)):
+        raise RuntimeError("DROID-SLAM returned an incomplete or invalid trajectory")
 
     scale = _solve_global_scale(droid, frames_by_idx, upsample)
+    if not np.isfinite(scale) or scale <= 0:
+        raise RuntimeError("DROID-SLAM scale must be finite and positive")
     if scale != 1.0:
         print(f"[droid-slam] applying global scale {scale:.6f} from reference depth")
 
@@ -348,3 +354,30 @@ def run_droid_slam(
     if pointcloud_path is not None:
         _write_pointcloud_ply(droid, scale, pointcloud_path,
                               min_views=pointcloud_min_views)
+    # Compare the optimized map to metric stereo measurements on the exact
+    # pixel grid sampled by upstream DepthVideo. This checks scale consistency;
+    # it is not independent physical ground truth or a camera accuracy score.
+    depth_checks = []
+    video = droid.video
+    for kf in range(int(video.counter.value)):
+        frame_idx = int(video.tstamp[kf].item())
+        frame = frames_by_idx[frame_idx]
+        if frame.prior_depth is None:
+            continue
+        fxfycxcy = np.array([frame.intrinsics.fx, frame.intrinsics.fy,
+                             frame.intrinsics.cx, frame.intrinsics.cy], dtype=np.float32)
+        _, _, sensor = _resize_for_droid(frame.image_bgr, fxfycxcy, image_size, frame.prior_depth)
+        sensor = sensor.numpy()[3::8, 3::8]
+        disp = video.disps[kf].detach().cpu().numpy()
+        valid = np.isfinite(sensor) & (sensor > 0) & np.isfinite(disp) & (disp > 0)
+        if np.any(valid):
+            mapped = scale / disp[valid]
+            depth_checks.append({"frame": frame_idx, "pixels": int(valid.sum()),
+                                 "median_map_to_stereo_ratio": float(np.median(mapped / sensor[valid])),
+                                 "median_abs_error_cm": float(np.median(np.abs(mapped - sensor[valid])) * 100)})
+    return {"frames": ordered_indices, "keyframes": int(droid.video.counter.value),
+            "frontend_initialized": frontend_initialized,
+            "global_scale": float(scale), "direction": "camera_to_world",
+            "global_bundle_adjustment_passes": [7, 12],
+            "metric_depth_consistency": depth_checks,
+            "metric_depth_prior_frames": sum(f.prior_depth is not None for f in frames_by_idx.values())}
