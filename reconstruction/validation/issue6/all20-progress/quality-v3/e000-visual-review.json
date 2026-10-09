@@ -281,6 +281,7 @@
   "image_change_extremes": {
     "episode": 0,
     "selection": "Largest whole-image changes; inspection candidates, not an accuracy classifier",
+    "boundary_note": "The source video has 373 frames (0-372). The image-change selector clamps frame+1 to the last decoded frame, so candidate 372 is [371,372,372], containing two distinct frames. The recorded sample is preserved; no additional frame review is claimed.",
     "consecutive_frame_ids": [
       [
         243,

@@ -23,7 +23,8 @@ from pathlib import Path
 import pyarrow.parquet as pq
 episode=int(sys.argv[1]); root=Path(f'/workspace/cad-final/e{episode:03d}/poses/e{episode:03d}')
 names=json.loads(pq.ParquetFile(f'/workspace/track3/public/data/chunk-000/episode_{episode:06d}.parquet').schema_arrow.metadata[b'objects'])
-assert all((root/f'{name}_fp_report.json').is_file() for name in names)
+if not all((root/f'{name}_fp_report.json').is_file() for name in names):
+    raise RuntimeError('Required CAD receipts are missing')
 PY
   do
     cad_pid=$(cat /workspace/pr32-evidence/remaining-cad.pid)
@@ -40,7 +41,8 @@ PY
   /opt/conda/bin/python - "$root/fit_receipt.json" <<'PY'
 import json,sys
 receipt=json.load(open(sys.argv[1]))
-assert receipt['fixed_shape_exactly_preserved'] and receipt['root_iterations']==50 and receipt['smooth_iterations']==300
+if not (receipt['fixed_shape_exactly_preserved'] and receipt['root_iterations']==50 and receipt['smooth_iterations']==300):
+    raise RuntimeError('Expected a verified fixed-shape native fit')
 PY
   /workspace/hand-runtime/bin/python -u "$helpers/convert_and_validate.py" --episode "$episode" > "/workspace/pr32-evidence/$item-final-pipeline.log" 2>&1
   /workspace/hand-runtime/bin/python -u "$helpers/probe_dynhamr_geometry.py" --episode "$episode" --all-frames --converted-records "$root/converted"
@@ -50,7 +52,7 @@ PY
   /workspace/hand-runtime/bin/python -u "$helpers/review_motion_extremes.py" --episode "$episode"
   /workspace/hand-runtime/bin/python -u "$helpers/render_combined_overlay.py" --episode "$episode"
   /workspace/hand-runtime/bin/python -u "$helpers/audit_completed_contacts.py" --root "$V2D_ISSUE6_RUN_ROOT" --episodes "$episode" --direct-run-root --require-complete --output "$V2D_ISSUE6_REVIEW_ROOT/$item/contact-artifact-audit.json"
-  /opt/conda/bin/python /workspace/pr32-evidence/collect_all20_progress.py
+  /opt/conda/bin/python "$helpers/collect_all20_progress.py"
   echo "Final native episode $episode completed; visual acceptance still pending"
 done
 /workspace/hand-runtime/bin/python -u "$helpers/audit_completed_contacts.py" --root "$V2D_ISSUE6_RUN_ROOT" --episodes "$episodes" --direct-run-root --require-complete --output "$V2D_ISSUE6_REVIEW_ROOT/subset-$episodes-contact-audit.json"

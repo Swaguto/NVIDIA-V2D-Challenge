@@ -2,7 +2,8 @@
   "verified_at": "2026-10-07T08:15:36.671942+00:00",
   "detections_complete": 20,
   "accepted": 20,
-  "current": "20 verified fixed-shape hand fits; 20 final six-stage reconstructions. Final acceptance requires reviewed videos. Active episode reviews: waiting for prepared reviews.",
+  "current": "Historical baseline: 20 verified fixed-shape hand fits, 20 six-stage reconstructions and 20 completed reviews under the original protocol. Reopened all-20 quality acceptance is separate and remains pending.",
+  "review_note": "Clarified October 9, 2026. The accepted count and verified_at remain the original October 7 snapshot; they do not certify the later QUALITY_ACCEPTANCE.md criteria.",
   "episodes": [
     {
       "episode": 0,

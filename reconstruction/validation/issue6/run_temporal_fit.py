@@ -7,8 +7,8 @@ from pathlib import Path
 import subprocess
 import sys
 import time
-import numpy as np
 from issue6.backend import final_dynhamr_result
+from fit_validation import verify_fit
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--episode', type=int, required=True)
@@ -30,11 +30,7 @@ subprocess.run(command, cwd='/workspace/Dyn-HaMR/dyn-hamr', check=True)
 final = final_dynhamr_result(root / 'fit')
 initial, = (root / 'fit/init').glob('*world_results.npz')
 fixed_shape = os.environ.get('V2D_OPT_HAND_SHAPE', '1') == '0'
-with np.load(initial, allow_pickle=False) as initial_data, np.load(final, allow_pickle=False) as final_data:
-    for key in ('trans', 'root_orient', 'pose_body', 'betas', 'cam_R', 'cam_t'):
-        assert np.isfinite(final_data[key]).all(), f'Nonfinite final fit: {key}'
-    if fixed_shape:
-        assert np.array_equal(initial_data['betas'], final_data['betas']), 'Fixed shape changed during fit'
+verify_fit(initial, final, fixed_shape)
 receipt = {'episode': args.episode, 'command': command, 'elapsed_s': time.time()-started,
            'dynhamr_revision': 'fa9cd7412c205fd15ee4139c8caacf79bf6167e6',
            'root_iterations': 50, 'smooth_iterations': 300,

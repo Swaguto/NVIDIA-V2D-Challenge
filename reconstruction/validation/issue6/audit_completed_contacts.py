@@ -6,6 +6,11 @@ import math
 from pathlib import Path
 import argparse
 
+def check(condition):
+    if not condition:
+        raise ValueError("Contact artifact integrity check failed")
+
+
 parser = argparse.ArgumentParser()
 parser.add_argument('--root', type=Path, default=Path(__file__).parent / 'completion-review')
 parser.add_argument('--episodes', default='2,13,22', help='comma-separated required episode IDs')
@@ -28,14 +33,14 @@ for episode in map(int,args.episodes.split(',')):
     lock_source = run / 'inputs.lock.json'
     manifest = json.loads(lock_source.read_text())['manifest']
     maximum = manifest.get('settings', {}).get('bridge_frames', 15)
-    assert type(maximum) is int and 0 <= maximum <= 15
-    assert type(settings['bridge_frames']) is int
-    assert manifest.get('settings', {}).get('contact_threshold_m', .02) == .02
-    assert settings['threshold_m'] == .02 and settings['bridge_frames'] == maximum
-    assert sorted(set(r['frame_id'] for r in rows)) == [f['id'] for f in report['frame_axis']]
-    assert [f['id'] for f in report['frame_axis']] == [f['id'] for f in manifest['frames']]
+    check(type(maximum) is int and 0 <= maximum <= 15)
+    check(type(settings['bridge_frames']) is int)
+    check(manifest.get('settings', {}).get('contact_threshold_m', .02) == .02)
+    check(settings['threshold_m'] == .02 and settings['bridge_frames'] == maximum)
+    check(sorted(set(r['frame_id'] for r in rows)) == [f['id'] for f in report['frame_axis']])
+    check([f['id'] for f in report['frame_axis']] == [f['id'] for f in manifest['frames']])
     times = {f['id']:f['timestamp_s'] for f in report['frame_axis']}
-    assert times == {f['id']:f['timestamp_s'] for f in manifest['frames']}
+    check(times == {f['id']:f['timestamp_s'] for f in manifest['frames']})
     # A file can contain the whole time axis while silently omitting a hand,
     # fingertip, or object. Require one observation (including explicit unknowns)
     # for every manifest-declared combination.
@@ -47,32 +52,32 @@ for episode in map(int,args.episodes.split(',')):
         for obj in manifest['objects']
     }
     actual = [(r['frame_id'], r['hand'], r['fingertip'], r['object_id']) for r in rows]
-    assert len(actual) == len(expected) and set(actual) == expected
+    check(len(actual) == len(expected) and set(actual) == expected)
     groups = defaultdict(list)
     valid = raw = bridged = unknown = 0
     for row in rows:
-        assert type(row['valid']) is bool and type(row['bridged']) is bool
-        assert all(row[key] == 'predicted' for key in ('hand_provenance','object_provenance','camera_provenance'))
-        assert math.isfinite(row['timestamp_s'])
-        assert row['timestamp_s'] == times[row['frame_id']]
+        check(type(row['valid']) is bool and type(row['bridged']) is bool)
+        check(all(row[key] == 'predicted' for key in ('hand_provenance','object_provenance','camera_provenance')))
+        check(math.isfinite(row['timestamp_s']))
+        check(row['timestamp_s'] == times[row['frame_id']])
         groups[(row['hand'], row['fingertip'], row['object_id'])].append(row)
         if row['valid']:
-            assert type(row['raw_contact']) is bool and type(row['window_contact']) is bool
-            assert not row['bridged'] or row['raw_contact'] is False
+            check(type(row['raw_contact']) is bool and type(row['window_contact']) is bool)
+            check(not row['bridged'] or row['raw_contact'] is False)
             valid += 1
             distance = row['surface_distance_m']
-            assert math.isfinite(distance) and distance >= 0
-            assert row['raw_contact'] == (distance < .02)
-            assert row['window_contact'] == (row['raw_contact'] or row['bridged'])
+            check(math.isfinite(distance) and distance >= 0)
+            check(row['raw_contact'] == (distance < .02))
+            check(row['window_contact'] == (row['raw_contact'] or row['bridged']))
             raw += int(row['raw_contact'])
             bridged += int(row['bridged'])
         else:
             unknown += 1
-            assert row['raw_contact'] is None and row['window_contact'] is None
-            assert not row['bridged'] and row['reason']
+            check(row['raw_contact'] is None and row['window_contact'] is None)
+            check(not row['bridged'] and row['reason'])
     for group in groups.values():
         group.sort(key=lambda r:r['frame_id'])
-        assert len({r['frame_id'] for r in group}) == len(group)
+        check(len({r['frame_id'] for r in group}) == len(group))
         for index, row in enumerate(group):
             if not row['bridged']:
                 continue
@@ -82,13 +87,13 @@ for episode in map(int,args.episodes.split(',')):
             right = index + 1
             while right < len(group) and group[right]['bridged']:
                 right += 1
-            assert left >= 0 and right < len(group)
-            assert group[left]['raw_contact'] and group[right]['raw_contact']
-            assert right-left-1 <= maximum
+            check(left >= 0 and right < len(group))
+            check(group[left]['raw_contact'] and group[right]['raw_contact'])
+            check(right-left-1 <= maximum)
             window = group[left:right+1]
-            assert all(r['valid'] and r['hand_track_id'] == row['hand_track_id'] for r in window)
-            assert [r['frame_id'] for r in window] == list(range(window[0]['frame_id'],window[-1]['frame_id']+1))
-    assert (valid, unknown, raw, bridged) == tuple(report[k] for k in ('contact_valid_count','contact_unknown_count','raw_contact_count','bridged_count'))
+            check(all(r['valid'] and r['hand_track_id'] == row['hand_track_id'] for r in window))
+            check([r['frame_id'] for r in window] == list(range(window[0]['frame_id'],window[-1]['frame_id']+1)))
+    check((valid, unknown, raw, bridged) == tuple(report[k] for k in ('contact_valid_count','contact_unknown_count','raw_contact_count','bridged_count')))
     audits.append({'episode':episode,'status':'passed','rows':len(rows),'valid':valid,
                    'unknown':unknown,'raw_contacts':raw,'bridged':bridged,
                    'bridge_frames':maximum,

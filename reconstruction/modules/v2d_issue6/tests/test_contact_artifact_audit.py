@@ -7,6 +7,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import pytest
+
 AUDIT = Path(__file__).resolve().parents[3] / "validation/issue6/audit_completed_contacts.py"
 
 
@@ -59,10 +61,11 @@ def write_run(tmp_path, maximum):
     return run, rows, report
 
 
-def audit(tmp_path):
+def audit(tmp_path, optimize=False):
     return subprocess.run(
         [
             sys.executable,
+            *(["-O"] if optimize else []),
             str(AUDIT),
             "--root",
             str(tmp_path),
@@ -74,6 +77,28 @@ def audit(tmp_path):
         capture_output=True,
         text=True,
     )
+
+
+@pytest.mark.parametrize("corruption", [None, "provenance", "missing_tip", "bridge"])
+def test_optimized_audit_retains_integrity_checks(tmp_path, corruption):
+    run, rows, report = write_run(tmp_path, 0)
+    if corruption == "provenance":
+        rows[0]["hand_provenance"] = "ground_truth_assisted"
+    elif corruption == "missing_tip":
+        rows = [row for row in rows if not (row["hand"] == "left" and row["fingertip"] == "little")]
+        report["contact_valid_count"] = len(rows)
+    elif corruption == "bridge":
+        row = next(
+            row for row in rows if row["hand"] == "right" and row["fingertip"] == "thumb" and row["frame_id"] == 1
+        )
+        row.update(bridged=True, window_contact=True)
+        report["bridged_count"] = 1
+    (run / "contacts/contacts.json").write_text(json.dumps(rows))
+    (run / "report/report.json").write_text(json.dumps(report))
+    result = audit(tmp_path, optimize=True)
+    assert (result.returncode == 0) == (corruption is None), result.stderr
+    if corruption is not None:
+        assert not (tmp_path / "contact-artifact-audit.json").exists()
 
 
 class ContactArtifactAuditTests(unittest.TestCase):
