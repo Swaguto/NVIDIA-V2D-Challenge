@@ -1,5 +1,10 @@
 # Reproduce issues 6, 7 and 8
 
+For the improved e012 hand-coverage profile, use the separate
+[e012 reproduction guide](E012_COVERAGE.md). It identifies the required private
+extension, exact frame-level checks, numerical tolerances and current release
+status. The older issue packs below do not contain that improved e012 result.
+
 The team bundles are in [Google Drive](https://drive.google.com/drive/folders/1aie0RV1jJ_XxF5ddJbGVRpJskdi4IMmA).
 Sign in with the account listed on the shared project document. The nine named
 teammates have read access; the folder is restricted. Download the four archives

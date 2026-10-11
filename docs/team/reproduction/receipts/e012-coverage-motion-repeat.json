@@ -1,0 +1,28 @@
+{
+  "status": "motion_matches",
+  "metrics": {
+    "hand_joint_position_m": 4.492462745980004e-05,
+    "hand_vertex_position_m": 4.522226993668575e-05,
+    "robot_root_position_m": 4.084046325730579e-05,
+    "robot_root_rotation_rad": 5.9833771672319985e-05,
+    "robot_finger_angle_rad": 2.2655823378375795e-05
+  },
+  "tolerances": {
+    "hand_joint_position_m": 0.0001,
+    "hand_vertex_position_m": 0.0001,
+    "robot_root_position_m": 0.0001,
+    "robot_root_rotation_rad": 0.001,
+    "robot_finger_angle_rad": 0.001
+  },
+  "files": {
+    "reference": {
+      "bundle/episode.npz": "3974686d5eabe99958799577edd6a25932439f1e37017dda5c5fef63cee2d021",
+      "retarget/retarget.npz": "4dea322561aea4bbfde939c64375c97dd2df9ab77adba8e355841325c52155e6"
+    },
+    "candidate": {
+      "bundle/episode.npz": "b546152496ce61b3751c2ced99fce5155c714628c0c26d9ef2a40d9183c75d43",
+      "retarget/retarget.npz": "9a2c3b983918840e57490f57c89918a269f91df6544c3a11ee839a263d14aa09"
+    }
+  },
+  "scope": "numerical reproduction, not physical accuracy; fixed limits declared before comparison"
+}
