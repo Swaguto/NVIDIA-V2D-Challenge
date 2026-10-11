@@ -3,6 +3,8 @@
 The candidate is frozen in `automatic-hand-method-freeze-v1.json`, after clean
 development runs on episodes 12 and 22. Held-out evaluation is running. It has
 not fixed flickering across all episodes or passed pose-accuracy acceptance.
+Enlarged development review found visible fingertip errors among consistency
+passes. This frozen candidate is not approved for generating contact targets.
 The freeze also pins `automatic-hand-runtime-lock.json` and
 `automatic-hand-input-lock.json`; preserve their exact bytes.
 
@@ -91,6 +93,12 @@ in `issue6-full-runs/all20-final-v3/eNNN/depth/000000.npy`. Depth must share the
 color image pixel grid. PNG depth from the older replay kit is not this input
 format. This experiment reuses existing calibrated stereo outputs; it does not
 claim a fresh stereo reconstruction or clean video-to-simulation reproduction.
+To regenerate upstream inputs, follow the rectified stereo-left adapter and
+depth-stage contract in
+[`v2d_issue6/README.md`](../../../reconstruction/modules/v2d_issue6/README.md).
+Use full episodes and the original calibration/timestamps, then compare the
+resulting image/depth/validity files to the checked-in input lock. A mismatch is
+a different input experiment, even when the source video filename is the same.
 
 Set paths for your machine, then from the repository root run:
 
@@ -168,3 +176,9 @@ threshold. Input inventories must also match. Use
 `check_automatic_hand_export.py --quality "$REPEAT/e012/quality" --mano-assets
 "$MANO_ASSETS" --out "$EXPORT_CHECK"` to verify native-record conversion with the
 existing reconstruction renderer.
+
+For enlarged accuracy-review crops, run `audit_automatic_hand_crops.py` with the
+same `--source`, `--quality`, `--proposals`, and a new `--out` directory. It records
+its deterministic frame selection. Inspect fingertips and handedness against the
+source, including numerically accepted fits. Record visible mismatches separately
+from unobservable fingers; a consistency pass must not overrule a visible error.

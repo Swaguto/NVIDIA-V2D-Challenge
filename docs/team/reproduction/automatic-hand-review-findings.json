@@ -1,0 +1,29 @@
+{
+  "method_freeze_sha256": "81d13102c669e271a8c4e0cc107e50f9e8887eeb8c325cbda8f4b1410690a758",
+  "reviewer": "assistant_visual_review",
+  "scope": "Qualitative source-image review, not annotated 3D ground truth. These findings do not modify inference or add frame-specific exclusions.",
+  "production_contact_target_approval": false,
+  "findings": [
+    {
+      "episode": 12,
+      "frame": 22,
+      "side": "left",
+      "consistency_pass": true,
+      "finding": "Projected fingertips extend beyond the visible source fingers; numerical consistency does not establish correct finger placement."
+    },
+    {
+      "episode": 12,
+      "frame": 148,
+      "side": "left",
+      "consistency_pass": true,
+      "finding": "Visible fingertip/outline mismatch despite a passing silhouette/depth score."
+    },
+    {
+      "episode": 12,
+      "frame": 151,
+      "side": "left",
+      "consistency_pass": true,
+      "finding": "The mesh covers only part of the visible finger silhouette; passing partial overlap is insufficient for contact-target acceptance."
+    }
+  ]
+}

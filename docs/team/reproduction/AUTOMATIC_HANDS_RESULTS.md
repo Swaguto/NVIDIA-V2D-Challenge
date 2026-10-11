@@ -72,6 +72,20 @@ and optical flow can reject inconsistencies but cannot certify contact accuracy.
 In particular, depth translation is fitted using stereo, so its residual is an
 in-sample consistency measure, not an independent accuracy measurement.
 
+Enlarged, automatically selected crops reveal false acceptance by the consistency
+checks: e012 left frames **22 and 148** have visible fingertip/outline mismatch
+despite passing. Left frame 151 covers only part of the visible finger silhouette
+while also passing. These are visual accuracy failures for contact-target use;
+the counts above must not be described as accurate recovered-hand counts. The
+frozen candidate is **not approved for production contact or motion targets**.
+This finding is recorded without changing the frozen thresholds or adding
+episode-specific exclusions. Stronger independent finger/keypoint evidence is
+needed before a future candidate can be accepted.
+
+The crop review selects regular 30-frame samples, both sides of support changes,
+and the five lowest accepted precision/recall and highest depth-residual cases
+per side. It is a reproducible risk-focused sample, not exhaustive annotation.
+
 ## Validation status
 
 Twenty automated controls pass, including missing depth, wrong depth,
