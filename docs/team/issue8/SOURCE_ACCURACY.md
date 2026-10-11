@@ -108,7 +108,7 @@ neither nearest face is an added closure. Local face-normal signs are not a
 global solid classification for these nonwatertight meshes. Actual material
 interiors and contact geometry remain uncertain.
 
-Two isolated MANO repair experiments retained cameras, object poses, shape,
+Four isolated MANO repair experiments retained cameras, object poses, shape,
 scale, source records and all support masks. They optimized both hands over
 every supported timestamp, using no grasp annotations, reference trajectories,
 display holds, frame selections or crops. They used the explicit derived voxel
@@ -120,14 +120,88 @@ anchors and smoothing of changes over adjacent supported frames.
 | Original frozen hands | 203 / 113 | 9.55 / 6.66 mm | 0 / 0 px |
 | 8 mm translation, 2 degree root, 8 degree finger bounds | 135 / 48 | 9.01 / 6.04 mm | 19.13 / 15.31 px |
 | 12 mm translation, 6 degree root, 25 degree finger bounds | 120 / 36 | 8.89 / 5.99 mm | 34.77 / 22.21 px |
+| Fixed initial self-visible vertex ordering and stereo targets | 232 / 18 | 9.31 / 3.79 mm | 95.78 / 29.01 px |
+| Refreshed opaque front triangles at source pixels | 174 / 43 | 9.04 / 6.06 mm | 41.55 / 26.68 px |
 
-Both repairs are **rejected**. Fewer collision witnesses are insufficient while
+All four repairs are **rejected**. Fewer collision witnesses are insufficient while
 substantial intrusion remains and projected geometry moves away from its
 original fit. The first repair's full-frame depth/mask check does not show an
 accuracy improvement. None of these objectives enters the baseline or replaces
 direct observations. Private receipts preserve the failed attempts and frozen
 experiment code; these are development diagnostics, not a released recovery
 method or untouched-episode validation result.
+
+The third experiment exposed a correspondence failure: keeping an initial
+vertex's depth target after articulation moves can pull that vertex toward a
+different part of the source hand. Its full 343-frame check reduces left mask
+precision to 84.51% and increases the stereo residual to 15.11 mm. It is not a
+recovery improvement.
+
+The fourth experiment refreshes front-triangle visibility every 25 iterations
+at calibrated source pixels, fits confidence-filtered stereo, and penalizes
+projected hand vertices outside the source hand mask. It uses a fixed four-pixel
+sampling stride and at most 1,024 pixels per supported frame, with no episode
+frame or crop choices. Independent ray/plane and nine finite-difference
+coordinate controls pass. Every visibility refresh agrees with the CPU raster
+depth within 1e-8 m. Its full-frame median mask precision is 95.57% / 96.55%, and
+stereo residual is 7.82 / 5.45 mm. The modest stereo improvement does not resolve
+the remaining material witnesses or establish contact accuracy. Neither fit was
+retargeted or promoted to Isaac Sim.
+
+An additional all-frame self-visibility check confirms that the original worst
+left and right material vertices are hidden behind their own reconstructed
+hand surfaces. Their positive source masks therefore do not identify those
+particular vertices. Visible source pixels can constrain front surfaces;
+hidden vertices remain uncertain. New fitted poses are inferred development
+geometry, and never become new direct observations merely because the original
+support mask is unchanged.
+
+## Additional object placement diagnosis
+
+The frozen input's missing object masks are still missing. A separate private
+development run produces **fresh estimated masks**, using the original recorded
+automatic Grounding DINO seeds, native SAM2 and all 343 exact source PNGs.
+It does not substitute these masks into the original source lock or claim
+byte-identical recovery. The checkpoint, model code, source images and runtime
+are recorded. The executed A40 run uses Torch 2.11.0+cu130 and a cache of eight
+normalized PNG tensors; both preceding incomplete local attempts are retained.
+
+All 686 new masks were byte-verified after transfer. The original source object
+pose statuses remain unchanged. A pot/lid overlap rule marks 61 pot masks
+ambiguous; the source check measures 282 observed pot poses with valid fresh
+masks and all 343 observed lid poses. It excludes source hand pixels from the
+object measurements and keeps inferred object timestamps separate.
+
+| Median over observed, mask-valid frames | Pot | Lid |
+|---|---:|---:|
+| Rendered visible pixels inside fresh object mask | 82.95% | 92.76% |
+| Fresh visible object mask covered by rendering | 96.06% | 97.54% |
+| Median absolute camera-depth residual | 12.92 mm | 6.54 mm |
+
+These are estimated-mask/stereo diagnostics, not object-pose ground truth. The
+source-only comparison at frame 200 shows that the fresh pot mask omits much of
+the handle. Its precision therefore cannot establish whole-object shape or
+handle-placement accuracy. Source masks, depth, object pose and contact geometry
+must be assessed together before attributing the remaining hand/material conflict
+to either hand tracking or object tracking. No object pose, scale or hand target
+is changed by this diagnosis.
+
+A separate rigid-pose proposal test uses the earlier conservative CAD diagnostic
+protocol: fixed scale/shape, at most 20 iterations, a 6 cm translation bound and
+a 10 degree rotation bound. Every fifth selected stereo point is withheld from
+the fit. This is a spatial split of the same estimated depth, not independent
+video validation. Grasp labels, contact scores and reference poses are unused.
+
+It fits 282 pot and 282 lid timestamps; 61 rows lack sufficient stereo support,
+and 61 have uncertain source pose/mask identity. **None of the 564 proposals meets
+the predeclared development-review conditions.** Median nearest-surface distances
+over fitted frames change from 5.59 to 4.99 mm for the pot and from 4.29 to 3.42 mm
+for the lid. Some proposals also reduce visible-mask recall substantially.
+Camera-axis depth residual and nearest-surface distance are different measurements;
+the former cannot be treated as an object translation error. These results do not
+support moving objects globally to make a collision diagnostic pass. All proposed
+poses are stored separately, remain inferred and unaccepted, and enter neither
+the baseline nor the Dex3 replay.
 
 The next physical repair must enforce observed hand/object depth ordering and
 address contact geometry and morphology while checking source placement and
