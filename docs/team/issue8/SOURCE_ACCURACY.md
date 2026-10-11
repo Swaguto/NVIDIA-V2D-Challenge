@@ -542,7 +542,7 @@ robot placement uncertainty, validate contact timing and continuous approach,
 hold, release and transition motion across the entire task, then verify a new
 Isaac replay before advancing to issue9.
 
-## Complete-frame generated motion: sampled geometry passes, acceptance pending
+## Earlier complete-frame proposal: sampled passes, interpolation rejected
 
 The follow-up creates an explicitly **inferred robot motion proposal** for all
 343 frames and all four development grasps. Original source hands, object poses,
@@ -597,3 +597,66 @@ reproduction is claimed. The complete commands, method sources, intermediate
 failures, outputs and hashes are frozen in a separate development checkpoint;
 these experiments have not been integrated into the production pipeline. The
 development task is not yet accepted, and issue9 remains deferred.
+
+## Transition and anatomical accuracy checks: method still rejected
+
+The preceding 1,372 passes apply to source-frame poses. Straight interpolation
+between them exposes four left/pot crossings of approximately 8.8–9.4 mm.
+Those sampled passes therefore do not certify a usable replay trajectory.
+
+An automatically generated opening corridor has 41 levels per hand. Every
+original robot triangle passes the 2 mm material limit at all 82 static levels,
+and adaptive swept bounds certify both complete corridors against their own
+objects at a reference scale. That proof does not cover the full moving scene,
+source affine/scale variation, the other object or the other hand.
+
+Scheduling the corridor over all four grasps retains all 343 source frames.
+Source observations, inferred source holds and separately inferred robot intent
+remain distinct. The first full-scene schedule still collides while blending
+back to the source-informed wrist prior. Translation repairs at generated knots
+clear the sampled poses, but checks at their intermediate times find crossings.
+Six automatic refinements retain every rejected result. The last proposal has
+two intermediate pot failures, up to about 9.1 mm, and a generated left-root
+speed of 253 m/s between closely spaced knots. **This method is rejected.**
+The next motion method must plan transitions as a sequence with speed constraints.
+The continuous checker independently refutes the final path at an intermediate
+time with an original-vertex depth lower bound of 9.13 mm. It stops after that
+counterexample; remaining intervals are untested, never counted as passes.
+The floating-hand URDF supplies no root speed limit; this measured spike is not
+made acceptable by passing its finger limits.
+
+The source-depth diagnostic now compares each of the nine qualified pixels with
+its own exact mesh ray and stereo depth. All three discrepancies persist.
+Median robot-front errors on these matched rays are approximately 22.4, 21.5
+and 14.3 mm ahead of stereo; the reconstructed human hand also disagrees.
+This rules out the earlier fractional-ray/neighbourhood-median comparison as a
+sufficient explanation. Estimated stereo and masks are not ground truth.
+
+Automatic source-placement experiments check every supported hand state.
+A bounded depth shift and then a bounded rigid adjustment use separate fixed
+pixel splits for fitting and checking, with depth-tail, semantic precision,
+recall and support guards. The final rigid diagnostic proposes adjustments on
+125 of 556 states. Its median validation-pixel depth error changes from
+10.66 to 9.86 mm on the left and 6.29 to 6.22 mm on the right. These are
+individual-hand, strict-neighbourhood measurements, distinct from the earlier
+visible whole-scene audit. All three flagged frames remain unadjusted under the
+guards. Temporal consistency and independent episode validation remain pending;
+these proposals do not replace source observations.
+
+A separate anatomical check preserves all original full-chain digit labels and
+actual stereo points, then permits a contact-region label only when the nearest
+bone is the distal segment. Left-thumb support falls from 218 points to 18
+across 12 frames, and its pooled centre changes by 50.3 mm. Right-thumb support
+remains 107 points across 51 frames. The left result fails the existing fitter's
+32-point minimum; that minimum is unchanged. Neither anatomical labels nor
+distal eligibility establish contact ground truth. Proximal thumb coverage must
+not be counted as observed distal contact support.
+
+All methods, parameters, commands, input hashes, output bytes, prototype metadata
+issues and terminal failures are retained in the development checkpoint. Original
+source masks remain exactly 272 left / 284 right supported states; no display
+holds or recovered human observations are added. Every robot target-validation
+bit remains false. Rigid projection changes inferred contact roots by at most
+44.4 nm; the original source transforms are unchanged. New methods have not been
+validated on another machine or untouched episodes. No new Isaac result or
+physical task success is claimed. Issue9 remains deferred.
