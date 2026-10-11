@@ -371,7 +371,12 @@ pose. The earlier right diagnostic has no detected nonadjacent surface
 intersection. This check does not certify volume containment or continuous motion.
 
 A new private fitter adds conservative convex-hull self-clearance constraints.
-Every original mesh vertex is verified inside its link hull. Independent box
+Its first containment control covered the geometry loaded by Coal, rather than
+every raw URDF mesh vertex. A later audit found omitted thumb vertices up to
+0.180 mm outside those hulls. The corrected diagnostic constructs hulls from
+every original vertex and builds the independent intersection audit from every
+original triangle. The earlier reports and failed controls retain their bytes.
+Independent box
 overlap/separation and finite-difference controls check the distance sign and all
 13 tangent coordinates on twelve configurations. Constraints saturate above
 5 mm; the required 0.5 mm clearance and its feasible set are unchanged. The raw
@@ -380,7 +385,7 @@ in the control report rather than presented as a passed raw derivative check.
 
 The fitter produces nineteen static candidates. All ten left candidates have
 zero detected nonadjacent triangle-surface intersections, but **none of the
-nineteen passes the complete intended-pad contact proxy**. Several candidates
+nineteen passes the earlier targeted-pad opposition proxy**. Several candidates
 still fail solver or geometric constraints. An additional audit computes exact
 vertex depths against exposed square faces of the same declared voxel-cell
 union, with exhaustive and analytic controls. It distinguishes actual depth in
@@ -391,3 +396,68 @@ These are reproducible diagnostic methods and preserved failures, not accepted
 motion targets. No new full trajectory or Isaac result is produced by this
 follow-up. Source placement, contact surfaces, complete timing, transitions and
 whole-scene collision checks remain required before physical-task acceptance.
+
+## Complete surface checks and actual stereo regions
+
+The next private diagnostic uses the actual stereo region points for inferred
+digit labels and enumerates both contact-side hypotheses. Human joints, object
+poses, camera matrices, scales and observation masks remain unchanged. Its 36
+static fits do not establish complete task success.
+
+A promising right-hand candidate places the robot root 15.76 mm from the
+reconstructed wrist at automatically selected source frame 61. It has no
+detected nonadjacent original-triangle intersection. A complete triangle check
+certifies the existing 2 mm material-depth limit against both scene objects at
+that frame. This is a bound for the declared, uncertain voxel-cell material;
+it does not establish zero intrusion, solid-volume clearance or physical
+object accuracy. Its largest tested interior witness is 1.09 mm.
+
+The selected left candidate fails with an 8.27 mm interior triangle witness at
+source frame 228. An earlier left candidate had all vertices below 2 mm but an
+interior triangle point at 2.26 mm. Vertex-only checks therefore cannot certify
+these poses. The complete surface check subdivides ambiguous triangles and
+refuses a pass whenever a region remains unresolved. It preserves the original
+source affine transforms and bounds distance using their singular values.
+
+The stricter intended-contact audit uses the exact closest point on every
+original distal triangle, rather than a sampled vertex. It requires every
+planned pad to remain within 2 mm of its target, close to the material and
+source region, and to face an opposing material surface. **None of the 36
+candidates passes the single-nearest-facet normal proxy.** That calculation
+returns the same material direction at the promising right pose's two points.
+At a voxel edge, however, one returned facet normal does not describe every
+nearby original square face. A separate audit enumerates every facet within
+the unchanged 2 mm distance, outward-plane tolerance and facing-angle limits.
+An analytic cube-corner control checks this distinction. Two right candidates
+pass this possible-contact-direction proxy, including the promising pose;
+one still fails its solver. No left candidate passes. The original failed
+nearest-facet reports remain preserved. These are different geometric proxies,
+and neither a successful solver nor one passing source frame makes a candidate
+an accepted motion target or proves force closure.
+
+An independent full-triangle distance control checks analytic face, edge and
+vertex cases, 72 exhaustive vendor-mesh queries and all 13 native tangent
+coordinates on two configurations per distal mesh. The exhaustive oracle runs
+in uniformly scaled millimetre coordinates because Trimesh's absolute tolerance
+misclassifies some small metre-scale triangles. The original discrepancy is
+retained; neither third-party code nor its tolerance is changed. Maximum oracle
+and squared-distance derivative errors are 5.21e-18 m and 2.18e-13 respectively.
+These controls validate a geometric calculation, not source hand accuracy.
+
+A further private fitter uses exact original-triangle target distances and
+automatically adds violating surface points as new collision constraints. It
+completes 40 static fits; six left and eleven right poses certify the target
+object's triangle-depth limit. Eight right solvers succeed, and no left solver
+succeeds. **None of these 40 passes the intended nearby-facet contact proxy.**
+The selected source pose from the earlier experiment therefore remains a
+diagnostic candidate, rather than being replaced by a lower-cost incorrect fit.
+
+A two-pad orientation experiment stops before fitting because its nearest-face
+normal derivative control fails. The failure is retained. Further contact
+optimization needs a consistent surface-feature representation; a changing
+triangle normal cannot be treated as a smooth orientation target.
+
+The source-camera overlays remain labelled unaccepted static diagnostics and
+do not render object occlusion. No whole trajectory, new Isaac replay or
+independent-machine reproduction is claimed. Complete contact timing, source
+placement and transitions still need validation before advancing to issue9.
