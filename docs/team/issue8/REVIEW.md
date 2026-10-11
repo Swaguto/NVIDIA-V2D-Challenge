@@ -1,8 +1,9 @@
-# Dex3 baseline integration review — October 11, 2026
+# Dex3 baseline integration review â€” October 11, 2026
 
 PR35 targets `main` after PR34 merged. The branch combines the merged refinement
-fixes and PR36 reproduction tools without changing the frozen e002 observations,
-trajectory or the historical 72/199/72 gate receipt. This is a software and
+fixes and PR36 reproduction tools without changing the frozen e002 observations
+or historical trajectory/gate archives. The initialization fix below creates a
+distinct current trajectory. This is a software and
 reproducibility review; issue8 remains open and independent team review is pending.
 
 ## Findings and repairs
@@ -189,3 +190,38 @@ hidden finger surfaces are not directly observable. Source geometry/contact
 alignment and material uncertainty must be resolved before another robot cost
 change can establish a physically credible reference. The original observations
 and every unknown grasp onset remain unchanged.
+
+The source-view diagnostic is now reviewable code:
+`robotic_grounding/scripts/retarget/track3_review_source.py`. It verifies locked
+RGB, metric stereo depth, validity and mask bytes, rasterizes original object
+and MANO triangles, and reports visible-surface ownership and depth residuals.
+It accepts relocated inputs using explicit root mappings and reviews all frames
+by default, with no episode-specific crop/frame choices or display holds.
+Missing object masks remain unknown. It never sets hand accuracy, contact-target
+or physical-task acceptance. See [SOURCE_ACCURACY.md](SOURCE_ACCURACY.md).
+
+The immutable staged e002 run reproduces every per-frame measurement from the
+private diagnostic exactly across all 343 frames. Median visible-hand mask
+precision is 96.07% / 97.22%, while median absolute stereo residual is 8.03 /
+6.54 mm. The two worst human-source collision witnesses lie 8.67 / 28.77 mm
+behind the front reconstructed surface. Their original CAD nearest faces are
+not added closures. Those observations do not resolve hidden contacts or prove
+the inferred material is correct. Independent triangle-ray checks match 512
+actual mesh queries within 5e-16 m; six new occlusion/perspective/path/identity controls
+pass on both Windows and Linux.
+
+Reconstructed occlusion is not proof of physical source occlusion. At the worst
+left source point, the source hand mask and RGB show a finger, but the front
+reconstructed surface belongs to the pot. This identifies a visible depth-ordering
+error that a future source fit must address. It does not identify the exact
+placement of an occluded finger vertex. Source/view depth ordering is a stronger
+next constraint than another blind robot-only repulsion weight.
+
+Two complete source-MANO contact repair trials retain source masks, cameras,
+objects, hand shape and scale, and use no grasp annotations in optimization.
+The tighter bounds reduce human-source timestamps over 2 mm from 203/113 to
+135/48, but leave 9.01/6.04 mm lower witnesses. The more permissive bounds leave
+8.89/5.99 mm with 120/36 timestamps, and move projected vertices by up to
+34.77/22.21 pixels. Both are rejected. The tighter trial's full-frame mask/depth
+check does not establish better source accuracy. No MANO repair objective or
+new targets enter PR35. These trials are not untouched-episode validation.

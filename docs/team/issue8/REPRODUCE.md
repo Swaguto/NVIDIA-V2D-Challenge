@@ -10,6 +10,11 @@ no physics manipulation or
 trained-policy success is claimed. See [RESULTS.md](RESULTS.md) for the review
 findings, hashes, and remaining integration gates.
 
+Before accepting contact targets, run the locked RGB/mask/stereo comparison in
+[SOURCE_ACCURACY.md](SOURCE_ACCURACY.md). It is a CPU diagnostic with pinned
+dependencies and explicit path relocation. Its acceptance flags remain false;
+source visibility and pose accuracy require separate evidence.
+
 ## Export and validate
 
 From `robotic_grounding/`, use a Python environment with NumPy and SciPy. Supply
