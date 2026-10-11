@@ -461,3 +461,83 @@ The source-camera overlays remain labelled unaccepted static diagnostics and
 do not render object occlusion. No whole trajectory, new Isaac replay or
 independent-machine reproduction is claimed. Complete contact timing, source
 placement and transitions still need validation before advancing to issue9.
+
+## Fixed contact features and complete source-frame diagnostics
+
+A subsequent development experiment fixes one original contact triangle per
+planned pad and seed. The triangle index stays fixed during fitting, and its
+point-to-triangle distance and rotated normal use verified derivatives. The
+first fixed-feature run produces 40 fits but zero independently passing contact
+proxies. That rejected result is retained.
+
+The next run selects initially facing original triangles and enumerates every
+reliably supported inferred source index, middle, ring and pinky region as a
+possible **robot index** contact partner. It keeps the source thumb region and
+source-derived morphology axis. It does not change human observations or assert
+a literal correspondence between human and robot fingers. The complete run
+produces 80 left and 20 right fits, plus two insufficient-support records. One
+left and two right solvers succeed; independent contact and original-mesh self
+checks leave **one left and one right static candidate**. Every candidate and
+failure remains in the diagnostic record.
+
+| Static diagnostic | Left pot | Right lid |
+|---|---:|---:|
+| Planned thumb/index target distances | 1.15 / 1.00 mm | 0.40 / 0.56 mm |
+| Robot root to source wrist at automatic diagnostic frame | 62.51 mm | 21.81 mm |
+| Original robot triangles checked against each scene object | 123,440 | 123,396 |
+| Largest tested interior material witness at that frame | 0.77 mm | 0.93 mm |
+
+The unchanged automatic source frames are 228 and 61, chosen by qualified source
+support count with earliest ties. Both candidates pass the complete 2 mm surface
+limit against both declared scene objects there, with no unresolved triangles or
+detected nonadjacent original-mesh surface intersections. This still does not
+establish zero penetration, outward solid topology, physical object geometry,
+force closure, source hand accuracy or a complete motion target. The earlier
+right candidate remains a separate diagnostic; the new right orientation differs
+substantially and is not silently promoted over it.
+
+The timing follow-up uses Euclidean medoids of actual stereo points, preserving
+local-basis and length-unit invariance. Patch stability alone adds no frames.
+Adding current-frame qualified stereo proximity as a separate **inferred
+continuity cue** identifies seven more source-supported core frames:
+
+| Source-labelled grasp | Predicted core / all core frames | Predicted core / source-supported core frames |
+|---|---:|---:|
+| Left pot lift/lower | 173 / 185 | 173 / 174 |
+| Right lid remove/place | 59 / 62 | 59 / 61 |
+| Right lid regrasp/replace | 69 / 72 | 69 / 72 |
+| Left pot regrasp/release | 59 / 62 | 59 / 60 |
+
+The labels remain validation-only, read after inference. Seven supported core
+frames and fourteen source-unsupported core frames remain unresolved. Missing
+observations and source-frame gaps are not bridged; no hand pose is filled.
+All 30 timing output arrays agree between Windows and native Linux on the same
+computer: discrete states and provenance exactly, floating values within
+1.34e-15 under the declared 1e-10 absolute tolerance. Independent-machine
+validation remains pending.
+
+The source-placement diagnostic checks all 343 frames per selected static
+candidate. During inferred holds, both planned pads are within 20 mm of the
+current qualified stereo region on 117 of 205 measured left frames and 80 of 80
+right frames. Another 27 left and 50 right hold frames have no current region
+measurement. These counts do not prove the other left frames are misplaced:
+qualified visible pixels can omit an occluded contact. Unmeasured points never
+become accuracy passes or source observations.
+
+A separate depth-order check requires all nine finite, valid pixels in a 3x3
+neighbourhood and at most 10 mm spread, then compares the inferred contact point
+with median source depth. It preserves every source frame and verifies 1,140
+source-file hashes. During inferred holds, three left-thumb points lie more than
+10 mm ahead of the measured surface; no right contact does. Original-triangle
+ray diagnostics include all three failures automatically. The robot contact
+disagrees by 12–21 mm and the original reconstructed hand front by about
+10–16 mm. That source disagreement also needs assessment; it is not repaired by
+changing visibility or declaring an occluded point correct.
+
+The fixed method sources, hashes, actual outputs, failed controls, commands and
+runtime distinctions are preserved in the development checkpoint. These private
+experiments are not the public production pipeline. No complete trajectory or
+new Isaac result is produced here. The remaining work is to resolve source and
+robot placement uncertainty, validate contact timing and continuous approach,
+hold, release and transition motion across the entire task, then verify a new
+Isaac replay before advancing to issue9.
