@@ -1,0 +1,75 @@
+{
+  "schema": "v2d.automatic-hand-method-freeze.v1",
+  "frozen_at_utc": "2026-10-11T02:26:33.392038+00:00",
+  "method_files": {
+    "automatic_hands.py": "fc77a576406aac6cc4dcd08534a2ddec1ad9f44ad98d85f335f63bd0bb7f177b",
+    "wearer_selection.py": "232ca7c9afae24d705d9029baf6f18e2a232f273c0338d16cf0873f212e7b377",
+    "automatic_hand_quality.py": "3c46186276be3048055b0b37695c106177960cfb9e49d795a410d59d7faedceb",
+    "run_automatic_hand_suite.py": "1bc9fe50a3d2592dcea0a6ebbb26df88a156c598fd264cde46f6d75b7defa0e3",
+    "automatic_hands.json": "82b5f28fe17c8fdaf4d00b0f1fb1aa8a0c694a5c2eee7ea2a8bdd191eddbeed1"
+  },
+  "models": {
+    "detector_sha256": "5ef3df44e42d2db52d4ffe91f83a22ce9925e2acc9abebf453f2c5d22e380033",
+    "hamer_checkpoint_sha256": "e5cc06f294d88a92dee24e603480aab04de532b49f0e08200804ee7d90e16f53",
+    "sam_checkpoint_sha256": "2647878d5dfa5098f2f8649825738a9345572bae2d4350a2468587ece47dd318",
+    "mano_right_sha256": "45d60aa3b27ef9107a7afd4e00808f307fd91111e1cfa35afd5c4a62de264767",
+    "hamer_config_sha256": "0e5eeb82752e47dfd01db8e13ccc4c5eba9bf83f53da8285523b8d3e87247aa3",
+    "mano_mean_params_sha256": "efc0ec58e4a5cef78f3abfb4e8f91623b8950be9eff8b8e0dbb0d036ebc63988",
+    "hamer_source_commit": "2a5b8ee852d87fdb56d65df7fb0e473c0d4f7648"
+  },
+  "development_episodes": [
+    12,
+    22
+  ],
+  "holdout_episodes": [
+    0,
+    11,
+    23,
+    31,
+    39
+  ],
+  "evidence": [
+    {
+      "episode": 12,
+      "proposal_receipt_sha256": "034e1709485972c607c5d272aa9786217741cc5f690c587f61de4eea427463da",
+      "quality_report_sha256": "214fb380509a6bbcdbcf010bcb69182629bddc851c1d49c798fbd37b80b59b59"
+    },
+    {
+      "episode": 22,
+      "proposal_receipt_sha256": "36df6033ea3c6c66b93518c71e032fc33e648b12cdafffda676e5d21b4e1f063",
+      "quality_report_sha256": "8633bc1a787ed6f91a517615e7f2a4075eb5b6fd26a32cee5165557c17e9937c"
+    }
+  ],
+  "runtime_inventory_sha256": "1d0db85f212f2015c974b8341a42006bed93f91b95751c1e4604fc8303ef2a02",
+  "input_inventory_sha256": "3983723daf46a52005a7342c1e7d11f658e00de00b5a21798e617d5520b52cc7",
+  "development_runtimes": [
+    {
+      "python": "3.11.17 (main, Oct  6 2026, 13:34:32) [GCC 15.3.0]",
+      "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU",
+      "packages": {
+        "torch": "2.9.1+cu128",
+        "numpy": "1.26.4",
+        "ultralytics": "8.1.34",
+        "smplx": "0.1.28",
+        "pytorch-lightning": "2.6.6",
+        "timm": "1.0.30",
+        "opencv-python": "4.11.0.86"
+      }
+    },
+    {
+      "python": "3.11.17 (main, Oct  6 2026, 13:34:32) [GCC 15.3.0]",
+      "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU",
+      "packages": {
+        "torch": "2.9.1+cu128",
+        "numpy": "1.26.4",
+        "ultralytics": "8.1.34",
+        "smplx": "0.1.28",
+        "pytorch-lightning": "2.6.6",
+        "timm": "1.0.30",
+        "opencv-python": "4.11.0.86"
+      }
+    }
+  ],
+  "quality_accepted": false,
+  "scope": "frozen candidate for evaluation, not accepted accuracy or generalization"
+}

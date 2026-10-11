@@ -1,0 +1,1147 @@
+{
+  "python": "3.11.17 (main, Oct  6 2026, 13:34:32) [GCC 15.3.0]",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+  "packages": {
+    "dill": {
+      "version": "0.3.8",
+      "source": null
+    },
+    "pytz": {
+      "version": "2025.2",
+      "source": null
+    },
+    "torchgeometry": {
+      "version": "0.1.2",
+      "source": null
+    },
+    "six": {
+      "version": "1.17.0",
+      "source": null
+    },
+    "scikit-image": {
+      "version": "0.24.0",
+      "source": null
+    },
+    "lightning-utilities": {
+      "version": "0.15.2",
+      "source": null
+    },
+    "timm": {
+      "version": "1.0.30",
+      "source": null
+    },
+    "yacs": {
+      "version": "0.1.8",
+      "source": null
+    },
+    "pyparsing": {
+      "version": "3.2.5",
+      "source": null
+    },
+    "loguru": {
+      "version": "0.7.3",
+      "source": null
+    },
+    "iniconfig": {
+      "version": "2.1.0",
+      "source": null
+    },
+    "safetensors": {
+      "version": "0.6.2",
+      "source": null
+    },
+    "pluggy": {
+      "version": "1.6.0",
+      "source": null
+    },
+    "python-dotenv": {
+      "version": "1.1.1",
+      "source": null
+    },
+    "mdurl": {
+      "version": "0.1.2",
+      "source": null
+    },
+    "pytorch-lightning": {
+      "version": "2.6.6",
+      "source": null
+    },
+    "ultralytics": {
+      "version": "8.1.34",
+      "source": null
+    },
+    "lazy_loader": {
+      "version": "0.4",
+      "source": null
+    },
+    "pytest": {
+      "version": "8.4.2",
+      "source": null
+    },
+    "seaborn": {
+      "version": "0.13.2",
+      "source": null
+    },
+    "matplotlib": {
+      "version": "3.8.4",
+      "source": null
+    },
+    "rich": {
+      "version": "14.1.0",
+      "source": null
+    },
+    "pyrootutils": {
+      "version": "1.0.4",
+      "source": null
+    },
+    "python-dateutil": {
+      "version": "2.9.0.post0",
+      "source": null
+    },
+    "markdown-it-py": {
+      "version": "4.0.0",
+      "source": null
+    },
+    "regex": {
+      "version": "2025.9.18",
+      "source": null
+    },
+    "huggingface-hub": {
+      "version": "0.35.3",
+      "source": null
+    },
+    "torchmetrics": {
+      "version": "0.11.4",
+      "source": null
+    },
+    "cycler": {
+      "version": "0.12.1",
+      "source": null
+    },
+    "kiwisolver": {
+      "version": "1.4.9",
+      "source": null
+    },
+    "tzdata": {
+      "version": "2025.2",
+      "source": null
+    },
+    "webdataset": {
+      "version": "1.0.2",
+      "source": null
+    },
+    "Pygments": {
+      "version": "2.19.2",
+      "source": null
+    },
+    "psutil": {
+      "version": "7.0.0",
+      "source": null
+    },
+    "thop": {
+      "version": "0.1.1-2209072238",
+      "source": null
+    },
+    "fonttools": {
+      "version": "4.60.1",
+      "source": null
+    },
+    "braceexpand": {
+      "version": "0.1.7",
+      "source": null
+    },
+    "pandas": {
+      "version": "2.2.3",
+      "source": null
+    },
+    "tifffile": {
+      "version": "2025.6.11",
+      "source": null
+    },
+    "smplx": {
+      "version": "0.1.28",
+      "source": null
+    },
+    "contourpy": {
+      "version": "1.3.2",
+      "source": null
+    },
+    "ninja": {
+      "version": "1.13.2",
+      "source": null
+    },
+    "gsplat": {
+      "version": "1.4.0",
+      "source": null
+    },
+    "roma": {
+      "version": "1.6.1",
+      "source": null
+    },
+    "jaxtyping": {
+      "version": "0.3.11",
+      "source": null
+    },
+    "pyarrow": {
+      "version": "25.0.1",
+      "source": null
+    },
+    "propcache": {
+      "version": "0.5.4",
+      "source": null
+    },
+    "lazy-loader": {
+      "version": "0.6",
+      "source": null
+    },
+    "platformdirs": {
+      "version": "4.12.3",
+      "source": null
+    },
+    "nvidia-cufile-cu12": {
+      "version": "1.13.1.3",
+      "source": null
+    },
+    "omegaconf": {
+      "version": "2.3.0",
+      "source": null
+    },
+    "h11": {
+      "version": "0.16.0",
+      "source": null
+    },
+    "setuptools": {
+      "version": "80.10.2",
+      "source": null
+    },
+    "portalocker": {
+      "version": "3.2.0",
+      "source": null
+    },
+    "pyglet": {
+      "version": "2.1.16",
+      "source": null
+    },
+    "einops": {
+      "version": "0.8.2",
+      "source": null
+    },
+    "tqdm": {
+      "version": "4.70.1",
+      "source": null
+    },
+    "Flask": {
+      "version": "3.1.3",
+      "source": null
+    },
+    "pillow": {
+      "version": "12.3.0",
+      "source": null
+    },
+    "nvidia-cudnn-cu12": {
+      "version": "9.10.2.21",
+      "source": null
+    },
+    "protobuf": {
+      "version": "7.36.2",
+      "source": null
+    },
+    "pip": {
+      "version": "26.2.1",
+      "source": {
+        "dir_info": {},
+        "url": "file:///home/conda/feedstock_root/build_artifacts/pip_1785914405025/work"
+      }
+    },
+    "importlib_metadata": {
+      "version": "9.0.1",
+      "source": null
+    },
+    "screeninfo": {
+      "version": "0.8.1",
+      "source": null
+    },
+    "nbformat": {
+      "version": "5.11.1",
+      "source": null
+    },
+    "pyrender": {
+      "version": "0.1.45",
+      "source": null
+    },
+    "MarkupSafe": {
+      "version": "3.0.3",
+      "source": null
+    },
+    "Markdown": {
+      "version": "3.11",
+      "source": null
+    },
+    "websockets": {
+      "version": "15.0.1",
+      "source": null
+    },
+    "narwhals": {
+      "version": "2.26.0",
+      "source": null
+    },
+    "torchvision": {
+      "version": "0.24.1+cu128",
+      "source": null
+    },
+    "nvidia-ml-py": {
+      "version": "13.615.71",
+      "source": null
+    },
+    "pure_eval": {
+      "version": "0.2.4",
+      "source": null
+    },
+    "filelock": {
+      "version": "3.32.3",
+      "source": null
+    },
+    "PySocks": {
+      "version": "1.7.1",
+      "source": null
+    },
+    "joblib": {
+      "version": "1.6.0",
+      "source": null
+    },
+    "tokenizers": {
+      "version": "0.21.4",
+      "source": null
+    },
+    "annotated-types": {
+      "version": "0.8.0",
+      "source": null
+    },
+    "decord": {
+      "version": "0.6.0",
+      "source": null
+    },
+    "networkx": {
+      "version": "3.6.1",
+      "source": null
+    },
+    "httpx": {
+      "version": "0.28.1",
+      "source": null
+    },
+    "pyquaternion": {
+      "version": "0.9.9",
+      "source": null
+    },
+    "motmetrics": {
+      "version": "1.4.0",
+      "source": null
+    },
+    "iopath": {
+      "version": "0.1.10",
+      "source": null
+    },
+    "PyOpenGL": {
+      "version": "3.1.0",
+      "source": null
+    },
+    "tensorboard-data-server": {
+      "version": "0.7.2",
+      "source": null
+    },
+    "pexpect": {
+      "version": "4.9.0",
+      "source": null
+    },
+    "pydantic_core": {
+      "version": "2.46.5",
+      "source": null
+    },
+    "sympy": {
+      "version": "1.14.0",
+      "source": null
+    },
+    "fastjsonschema": {
+      "version": "2.22.2",
+      "source": null
+    },
+    "ipython": {
+      "version": "9.17.1",
+      "source": null
+    },
+    "packaging": {
+      "version": "26.3",
+      "source": {
+        "dir_info": {},
+        "url": "file:///home/conda/feedstock_root/build_artifacts/bld/rattler-build_packaging_1785888127/work"
+      }
+    },
+    "freetype-py": {
+      "version": "2.5.1",
+      "source": null
+    },
+    "jupyterlab_widgets": {
+      "version": "3.0.17",
+      "source": null
+    },
+    "click": {
+      "version": "8.5.0",
+      "source": null
+    },
+    "absl-py": {
+      "version": "2.5.0",
+      "source": null
+    },
+    "nvidia-cuda-nvrtc-cu12": {
+      "version": "12.8.93",
+      "source": null
+    },
+    "retrying": {
+      "version": "1.4.2",
+      "source": null
+    },
+    "jsonschema-specifications": {
+      "version": "2025.9.1",
+      "source": null
+    },
+    "antlr4-python3-runtime": {
+      "version": "4.9.3",
+      "source": null
+    },
+    "ipython_pygments_lexers": {
+      "version": "1.1.1",
+      "source": null
+    },
+    "blinker": {
+      "version": "1.9.0",
+      "source": null
+    },
+    "PyYAML": {
+      "version": "6.0.3",
+      "source": null
+    },
+    "parso": {
+      "version": "0.8.7",
+      "source": null
+    },
+    "requests": {
+      "version": "2.34.2",
+      "source": null
+    },
+    "comm": {
+      "version": "0.2.3",
+      "source": null
+    },
+    "imageio-ffmpeg": {
+      "version": "0.6.0",
+      "source": null
+    },
+    "grpcio": {
+      "version": "1.84.0",
+      "source": null
+    },
+    "triton": {
+      "version": "3.5.1",
+      "source": null
+    },
+    "jsonschema": {
+      "version": "4.26.0",
+      "source": null
+    },
+    "nvidia-cusolver-cu12": {
+      "version": "11.7.3.90",
+      "source": null
+    },
+    "chumpy": {
+      "version": "0.71",
+      "source": {
+        "url": "https://github.com/mattloper/chumpy.git",
+        "vcs_info": {
+          "commit_id": "580566eafc9ac68b2614b64d6f7aaa84eebb70da",
+          "requested_revision": "580566eafc9ac68b2614b64d6f7aaa84eebb70da",
+          "vcs": "git"
+        }
+      }
+    },
+    "itsdangerous": {
+      "version": "2.2.0",
+      "source": null
+    },
+    "numpy": {
+      "version": "1.26.4",
+      "source": null
+    },
+    "ruff": {
+      "version": "0.16.10",
+      "source": null
+    },
+    "hydra-core": {
+      "version": "1.3.7",
+      "source": null
+    },
+    "xmltodict": {
+      "version": "1.0.4",
+      "source": null
+    },
+    "typing_extensions": {
+      "version": "4.16.0",
+      "source": null
+    },
+    "msgspec": {
+      "version": "0.22.0",
+      "source": null
+    },
+    "shapely": {
+      "version": "2.1.2",
+      "source": null
+    },
+    "aiohttp": {
+      "version": "3.14.4",
+      "source": null
+    },
+    "aiosignal": {
+      "version": "1.4.0",
+      "source": null
+    },
+    "Werkzeug": {
+      "version": "3.1.9",
+      "source": null
+    },
+    "nvidia-cuda-runtime-cu12": {
+      "version": "12.8.90",
+      "source": null
+    },
+    "traitlets": {
+      "version": "5.16.1",
+      "source": null
+    },
+    "prompt_toolkit": {
+      "version": "3.0.53",
+      "source": null
+    },
+    "tensorboard": {
+      "version": "2.21.0",
+      "source": null
+    },
+    "ConfigArgParse": {
+      "version": "1.8.0",
+      "source": null
+    },
+    "idna": {
+      "version": "3.20",
+      "source": null
+    },
+    "nvidia-curand-cu12": {
+      "version": "10.3.9.90",
+      "source": null
+    },
+    "pycollada": {
+      "version": "0.9.3",
+      "source": null
+    },
+    "vhacdx": {
+      "version": "0.1.0",
+      "source": null
+    },
+    "wheel": {
+      "version": "0.48.0",
+      "source": null
+    },
+    "rerun-sdk": {
+      "version": "0.22.0",
+      "source": null
+    },
+    "jedi": {
+      "version": "0.20.0",
+      "source": null
+    },
+    "frozenlist": {
+      "version": "1.8.0",
+      "source": null
+    },
+    "rpds-py": {
+      "version": "2026.9.1",
+      "source": null
+    },
+    "plotly": {
+      "version": "7.1.0",
+      "source": null
+    },
+    "attrs": {
+      "version": "26.1.0",
+      "source": null
+    },
+    "httpcore": {
+      "version": "1.0.9",
+      "source": null
+    },
+    "nvidia-cublas-cu12": {
+      "version": "12.8.4.1",
+      "source": null
+    },
+    "calmsize": {
+      "version": "0.1.3",
+      "source": null
+    },
+    "beautifulsoup4": {
+      "version": "4.15.0",
+      "source": null
+    },
+    "jupyter_core": {
+      "version": "5.9.1",
+      "source": null
+    },
+    "transformers": {
+      "version": "4.48.3",
+      "source": null
+    },
+    "stack-data": {
+      "version": "0.6.3",
+      "source": null
+    },
+    "zipp": {
+      "version": "4.1.1",
+      "source": null
+    },
+    "xxhash": {
+      "version": "4.0.1",
+      "source": null
+    },
+    "charset-normalizer": {
+      "version": "3.5.2",
+      "source": null
+    },
+    "rtree": {
+      "version": "1.4.1",
+      "source": null
+    },
+    "gdown": {
+      "version": "6.4.1",
+      "source": null
+    },
+    "plyfile": {
+      "version": "1.1.3",
+      "source": null
+    },
+    "anyio": {
+      "version": "4.15.1",
+      "source": null
+    },
+    "yourdfpy": {
+      "version": "0.0.60",
+      "source": null
+    },
+    "ipywidgets": {
+      "version": "8.1.9",
+      "source": null
+    },
+    "nvidia-nccl-cu12": {
+      "version": "2.27.5",
+      "source": null
+    },
+    "pynvml": {
+      "version": "13.0.1",
+      "source": null
+    },
+    "SAM-2": {
+      "version": "1.0",
+      "source": {
+        "url": "https://github.com/facebookresearch/sam2.git",
+        "vcs_info": {
+          "commit_id": "2b90b9f5ceec907a1c18123530e92e794ad901a4",
+          "requested_revision": "2b90b9f5ceec907a1c18123530e92e794ad901a4",
+          "vcs": "git"
+        }
+      }
+    },
+    "nvidia-nvjitlink-cu12": {
+      "version": "12.8.93",
+      "source": null
+    },
+    "nvidia-cuda-cupti-cu12": {
+      "version": "12.8.90",
+      "source": null
+    },
+    "python-pycg": {
+      "version": "0.10.1",
+      "source": null
+    },
+    "nodeenv": {
+      "version": "1.11.0",
+      "source": null
+    },
+    "nvidia-cusparse-cu12": {
+      "version": "12.5.8.93",
+      "source": null
+    },
+    "executing": {
+      "version": "2.2.1",
+      "source": null
+    },
+    "ptyprocess": {
+      "version": "0.7.0",
+      "source": null
+    },
+    "matplotlib-inline": {
+      "version": "0.2.2",
+      "source": null
+    },
+    "typing-inspection": {
+      "version": "0.4.4",
+      "source": null
+    },
+    "nvidia-cufft-cu12": {
+      "version": "11.3.3.83",
+      "source": null
+    },
+    "janus": {
+      "version": "2.0.0",
+      "source": null
+    },
+    "open3d": {
+      "version": "0.20.0",
+      "source": null
+    },
+    "svg.path": {
+      "version": "7.1",
+      "source": null
+    },
+    "pydantic": {
+      "version": "2.13.5",
+      "source": null
+    },
+    "dash": {
+      "version": "4.4.1",
+      "source": null
+    },
+    "widgetsnbextension": {
+      "version": "4.0.16",
+      "source": null
+    },
+    "manotorch": {
+      "version": "0.0.2",
+      "source": {
+        "url": "https://github.com/lixiny/manotorch.git",
+        "vcs_info": {
+          "commit_id": "a2a70c591f91551078b7bb2af9b5d9f275b626e0",
+          "requested_revision": "a2a70c591f91551078b7bb2af9b5d9f275b626e0",
+          "vcs": "git"
+        }
+      }
+    },
+    "aiohappyeyeballs": {
+      "version": "2.7.1",
+      "source": null
+    },
+    "wcwidth": {
+      "version": "0.9.2",
+      "source": null
+    },
+    "OpenEXR": {
+      "version": "3.2.12",
+      "source": null
+    },
+    "Jinja2": {
+      "version": "3.1.6",
+      "source": null
+    },
+    "kornia_rs": {
+      "version": "0.2.0",
+      "source": null
+    },
+    "usd-core": {
+      "version": "26.8",
+      "source": null
+    },
+    "urllib3": {
+      "version": "2.8.0",
+      "source": null
+    },
+    "colorlog": {
+      "version": "6.12.0",
+      "source": null
+    },
+    "mpmath": {
+      "version": "1.3.0",
+      "source": null
+    },
+    "certifi": {
+      "version": "2026.7.22",
+      "source": null
+    },
+    "viser": {
+      "version": "1.0.1",
+      "source": null
+    },
+    "asttokens": {
+      "version": "3.0.2",
+      "source": null
+    },
+    "cloudpickle": {
+      "version": "3.1.2",
+      "source": null
+    },
+    "scipy": {
+      "version": "1.14.1",
+      "source": null
+    },
+    "nvidia-nvshmem-cu12": {
+      "version": "3.3.20",
+      "source": null
+    },
+    "torch": {
+      "version": "2.9.1+cu128",
+      "source": null
+    },
+    "fsspec": {
+      "version": "2026.7.0",
+      "source": null
+    },
+    "yarl": {
+      "version": "1.25.1",
+      "source": null
+    },
+    "opencv-python": {
+      "version": "4.11.0.86",
+      "source": null
+    },
+    "mapbox_earcut": {
+      "version": "2.1.0",
+      "source": null
+    },
+    "trimesh": {
+      "version": "4.12.2",
+      "source": null
+    },
+    "nvidia-nvtx-cu12": {
+      "version": "12.8.90",
+      "source": null
+    },
+    "nest-asyncio": {
+      "version": "1.6.0",
+      "source": null
+    },
+    "kornia": {
+      "version": "0.8.0",
+      "source": null
+    },
+    "soupsieve": {
+      "version": "2.10",
+      "source": null
+    },
+    "nvidia-cusparselt-cu12": {
+      "version": "0.7.1",
+      "source": null
+    },
+    "lxml": {
+      "version": "6.1.3",
+      "source": null
+    },
+    "manifold3d": {
+      "version": "3.5.4",
+      "source": null
+    },
+    "referencing": {
+      "version": "0.37.0",
+      "source": null
+    },
+    "multidict": {
+      "version": "6.9.1",
+      "source": null
+    },
+    "py-cpuinfo": {
+      "version": "9.0.0",
+      "source": null
+    },
+    "ImageIO": {
+      "version": "2.38.0",
+      "source": null
+    },
+    "embreex": {
+      "version": "4.4.0",
+      "source": null
+    }
+  },
+  "inference_source_files": {
+    "sam2": {
+      "__init__.py": "fd116e43c17587fce9d5cc7de043dd183b29e4af5c369bd09ca121ffb03755f0",
+      "automatic_mask_generator.py": "b888136cfcd40f04aedcfccf56516f778038414ba9ae2bd41b3725a04ca89cc3",
+      "benchmark.py": "eba42a58c402afb076df36a2ec83b4e184d766b0aa0d986a330b0f0ee25ed793",
+      "build_sam.py": "d962a9ebc5b65aa03a8d74159742b9993b8affb44b205ba78685db8d199dc3a7",
+      "configs/sam2/sam2_hiera_b+.yaml": "58ae5539466e1da4b856346427a29a8f3675a0c1132ec0b81bc3911ee1775ce9",
+      "configs/sam2/sam2_hiera_l.yaml": "32d7bf07be4e3717985f76052f740b90e4cfaf45588621b286de24962c2d2fd3",
+      "configs/sam2/sam2_hiera_s.yaml": "03d12a4ac21f82eb1e9d5c3c831983986b05812c861b5893a02bc3bdd9ecac4e",
+      "configs/sam2/sam2_hiera_t.yaml": "829706a768d641fa8644e194d1d69322af5d837b099e8731af1476227f7c5691",
+      "configs/sam2.1/sam2.1_hiera_b+.yaml": "ef47e14197a65c1fd542e1862270ee851c2b15e571b2c58ceb0329d15be33769",
+      "configs/sam2.1/sam2.1_hiera_l.yaml": "4c9983b04adddc5e4586c7809a4c21dd90975bccc5026aea3c22232783c18112",
+      "configs/sam2.1/sam2.1_hiera_s.yaml": "592306d059a2df49898fefcb939c11abc9dfc8fd962bc77c31d132e68cb4320a",
+      "configs/sam2.1/sam2.1_hiera_t.yaml": "9eb1c5e9db577925464492ccbbf6810731bcbbde31325fb8d297d78c3eb5d9dc",
+      "configs/sam2.1_training/sam2.1_hiera_b+_MOSE_finetune.yaml": "a3e2653cc96fbdde7a498da3d48e9db69d04baa9bfaab83ffde68a0022289361",
+      "modeling/__init__.py": "9f2c336d52111ef51bae5b4959d8941968e9e26638c681de5388c58d3080624d",
+      "modeling/backbones/__init__.py": "9f2c336d52111ef51bae5b4959d8941968e9e26638c681de5388c58d3080624d",
+      "modeling/backbones/hieradet.py": "e793e2a2545cf4e2dedcd0d0654e6cd6b118179d94d5a5eeffa29b7cb6b96fd0",
+      "modeling/backbones/image_encoder.py": "5920c2ad317cebad34a747f10426ece14303b59a813ae79c5e95dc6b5d171663",
+      "modeling/backbones/utils.py": "967625e0701b240c0169574845bc18e61e18a41c128198239363bc8b96fdc662",
+      "modeling/memory_attention.py": "4c82b71c2cd518011cdb4341c75f18e6b8b6de411de96e4aec424bfe9ed9a0be",
+      "modeling/memory_encoder.py": "2803cd030e6a067978f272cb35c24b0690b1e7eecb51fdbd224a74cab6f31e3f",
+      "modeling/position_encoding.py": "e19abfd3a2758755d9182cf0355bdfa28b6db61851e31546fefee9ca27f27ebf",
+      "modeling/sam/__init__.py": "9f2c336d52111ef51bae5b4959d8941968e9e26638c681de5388c58d3080624d",
+      "modeling/sam/mask_decoder.py": "b53d185daee38021270aa57f607281418b5544bfe549d91abd6dbcea48420432",
+      "modeling/sam/prompt_encoder.py": "4dd05bad47c1b0a16cc6f4c095b877433e7d96f80160dc06f4b7f9559b0c3b3b",
+      "modeling/sam/transformer.py": "47f32206d8286c0538ed789273e607214a3e41892d3c907a8e7a6cfdd4240ca0",
+      "modeling/sam2_base.py": "5ac8be9a6e9935d2f4ee6efa1edff87915aa7cdd7da1207e1be21af6462093f2",
+      "modeling/sam2_utils.py": "74175905345361fe8fd2bbf3aecd772552b5b1c68b6cf5081953230c8fd82c10",
+      "sam2_hiera_b+.yaml": "212887bd5b1d90c07a3439a911593ec6ec8a586cce0b12799f1ebec38bbe401d",
+      "sam2_hiera_l.yaml": "0e313563f8f467c382c81192a0e2aff4624dda2b23218f1a78df30ebe4b4eb1a",
+      "sam2_hiera_s.yaml": "6fff1ab952d4ff7bc4bf8bb480f6283bcf12a763057f5bb697b25151a20f7608",
+      "sam2_hiera_t.yaml": "4ba0a249a1da9a6cc4070d47894808f206f67249d0c6fda21c6280af692dd77e",
+      "sam2_image_predictor.py": "edd7281ec91bea1c5c9ee498b09c823b534fe31e36fc3dfbe7696e6d7a216bef",
+      "sam2_video_predictor.py": "1e2de167d91974e96de21b51237e20f1a30f9b37fae706c854974386b4800d50",
+      "sam2_video_predictor_legacy.py": "ec0992b44ac2bdc3db0f0693e94b15e3e813e30ab5f3f57f878857043161e1d4",
+      "utils/__init__.py": "9f2c336d52111ef51bae5b4959d8941968e9e26638c681de5388c58d3080624d",
+      "utils/amg.py": "15649a414e87d38b2863f8408b16be1e1c16b2c4f9faef154e108d81f194e438",
+      "utils/misc.py": "ff2d441d16cedd6cc50a4bcdcbff29a1cb4d46d40c1123c3a471f265bbed3b0e",
+      "utils/transforms.py": "c200d1931d501ea70cd73a84128dfa20f92b3f1f4e2d74760d032410fda0d0be"
+    },
+    "ultralytics": {
+      "__init__.py": "20c0faf9accbbc19f7b99709542a5543c1e652caa43a7998f88879b6ba4cd7a3",
+      "cfg/__init__.py": "e0315e41c466b0e51426d3f8f4c7b31e158a944e7699448723b6ca16094eab89",
+      "cfg/datasets/Argoverse.yaml": "1727ae253e421eaffd7788657c07f49296659db50c3b44bef94275c88a9c74a9",
+      "cfg/datasets/DOTAv1.5.yaml": "603b3214f23a17af8e4172c133784e5e8def00361113067398c41f24d7695b23",
+      "cfg/datasets/DOTAv1.yaml": "7712d49621ef24e5b8ab8bc946ee6a21856f35f8ef5d607b19587f16193ef9d3",
+      "cfg/datasets/GlobalWheat2020.yaml": "72b93c7d22f55d22d77bdce54d5f54431f78c23438f77dc22904ba6c11d1489c",
+      "cfg/datasets/ImageNet.yaml": "3f9b74af030d657da2bbba28064779c528bbe66eba71c0733b45e20400461a15",
+      "cfg/datasets/Objects365.yaml": "922895e0a2cc1f699c3cf46b83a7101b28276e24eb1f1c2d02003486deb0716e",
+      "cfg/datasets/SKU-110K.yaml": "81e46471c05197678a81f3584ce3d8c03f664dfaa4b5304688c2681373d91270",
+      "cfg/datasets/VOC.yaml": "dfe083a6322afece6991bb09f538eb608795db8ad81ae246bb8420eae92d1191",
+      "cfg/datasets/VisDrone.yaml": "35fadb8d59c4e3c13b4cf6f1b45eebb501ef5413b40dc84524512e1ab1b55515",
+      "cfg/datasets/african-wildlife.yaml": "bed1406850f6c19426b77cdef8b31439e51afbb406e7b2c0570b9acc26d139c5",
+      "cfg/datasets/brain-tumor.yaml": "a35ad7d7f8b0f7b1e3886f74e25e2ee36c75de3c87386bdf996133cf40693998",
+      "cfg/datasets/carparts-seg.yaml": "a6f4e2dc41f68fa52e1b42c7a1027b26342ffdc2683bc50a4973e9b544e797c5",
+      "cfg/datasets/coco-pose.yaml": "c3b1fe2767bcec6215fcf65d44382a1056bbe4e6d272904afe5f3953864cb0ca",
+      "cfg/datasets/coco.yaml": "c5b8a6f86716a6f17fbb0952b636cf8f15c58557cbd14fd635023df5be608dd6",
+      "cfg/datasets/coco128-seg.yaml": "eb04634f50ba7976e55f3cd2bc28d77d5498175da98d997b0ca5439056dd510d",
+      "cfg/datasets/coco128.yaml": "bcfada54c50abe1258d9d9e13dbb02cf000f10ec3527c3fa5b2aa4114572b106",
+      "cfg/datasets/coco8-pose.yaml": "304aec90633adc40fb6c950d3dde91bf99d33c747bec66aa077a604b327785e0",
+      "cfg/datasets/coco8-seg.yaml": "847d2c11bfd976d8f389583d3cd363759003b9821bbd82c3f7e07627bb3bae57",
+      "cfg/datasets/coco8.yaml": "c860cc4527a10c8b13d61dfa240f854d666bb4945eaed0f7b5fa012ec4b661d7",
+      "cfg/datasets/crack-seg.yaml": "6ac7666e6e145ec503a2f1efb0c65d85b01af7bbed7776cdef612a1237e73fed",
+      "cfg/datasets/dota8.yaml": "1e5c14e2da675020a7ec34015d844119b7c044d7002df0824499eac9c987a6b8",
+      "cfg/datasets/open-images-v7.yaml": "82c3742572d27508258a8d36e29e8d11e80d6d7d3a90950dba3d1b87da048be5",
+      "cfg/datasets/package-seg.yaml": "b7a8aef0cc2e94bc4b553d9075e397cf67dc09172ab9f1a928e5d48d383680c0",
+      "cfg/datasets/tiger-pose.yaml": "bf6a4e3ab8a34ea74503cda777626df9939628d425fea62012a4a0978774c56b",
+      "cfg/datasets/xView.yaml": "ae340f44d93efa395837dc1c553bb529ba2981922459786bfecd5491275c111b",
+      "cfg/default.yaml": "cc746d728685529e8b487445b4ecda8f51822e65472d2d7298d86721f7dc5863",
+      "cfg/models/rt-detr/rtdetr-l.yaml": "35bce2f77b40261070ebd8543419335da78c316c16ead59e02c74df329ebcae5",
+      "cfg/models/rt-detr/rtdetr-resnet101.yaml": "a349d6a0a7224febf2a42d9e4b9a8811635269cd0beafc0bb5b2bdb9c425b86e",
+      "cfg/models/rt-detr/rtdetr-resnet50.yaml": "adbeb85902beddafcf79b51ccba09ba6c92f942ef81fd337b4c22bdd1e6f1c35",
+      "cfg/models/rt-detr/rtdetr-x.yaml": "139bada8d2fba0dcedc8f2b24863e85444fc44851ea80a9c85d6ac96ee596f98",
+      "cfg/models/v3/yolov3-spp.yaml": "35f289781a438034b05e8edf48df26c90510ebc60b07dc51b6a7418069553c7b",
+      "cfg/models/v3/yolov3-tiny.yaml": "e669c618237e98d0efaaf3b3d80cc685fc04834d5ec7378734f4b7340de9a226",
+      "cfg/models/v3/yolov3.yaml": "fbde29e2d78f743b5da67cfbf6eeced6c0a157af644e2d35945c5c546a09f0c6",
+      "cfg/models/v5/yolov5-p6.yaml": "dac9822ae193f10dbade2d0898924d53c3abf975e6b8b31ff496a7066e138e21",
+      "cfg/models/v5/yolov5.yaml": "b1139057cb60bfa94b460c70043228f4c6b3ecd509818651fc8e0c6ccf4ed414",
+      "cfg/models/v6/yolov6.yaml": "49bd279a6b5daaa1c216e131c93f878a9d7464be26e776e16252a07b49051826",
+      "cfg/models/v8/yolov8-cls-resnet101.yaml": "b82ea49742efbe56fc6e820e47b05d02a6134bc62e707ffdd591b7a4e5884bb4",
+      "cfg/models/v8/yolov8-cls-resnet50.yaml": "16090d99c80b8c0414df8ba41f82cc23acdcd6968ef23ee3caaaf1fb7aa38bd0",
+      "cfg/models/v8/yolov8-cls.yaml": "fae37821a0871419b2275659d3d87677ccf771e5684965c3e3875b151b0179a0",
+      "cfg/models/v8/yolov8-ghost-p2.yaml": "6e7e431f0c19de603152f6b2c2aefaff824d81669b3053029c23684e92d20ca9",
+      "cfg/models/v8/yolov8-ghost-p6.yaml": "92a81b10a36e6bb5f01fde73b5e5ba2335da0238da580d258f3982008edbf04f",
+      "cfg/models/v8/yolov8-ghost.yaml": "5941ce235f1a035d648003430966c30f2de3b303653ff9c8929597d3d05f06e2",
+      "cfg/models/v8/yolov8-obb.yaml": "4efe490d94cb3ab7f2063de082ab1ef528630e933e9c8148c618ac7902b02440",
+      "cfg/models/v8/yolov8-p2.yaml": "b5f1e4915002d1f90273b01b8ac4f31a95d6dc57e4dbe2b9fb08d17926e6ec6c",
+      "cfg/models/v8/yolov8-p6.yaml": "f71549a3aa95bb14510c97c63664c83ea8c0be8266c5c7503a07b0b8d54e1c78",
+      "cfg/models/v8/yolov8-pose-p6.yaml": "cb3c48db46cc05da3a7f991de7755fb841e6fd0a84fd5deec00bc5244d136ebd",
+      "cfg/models/v8/yolov8-pose.yaml": "0c7a0977babb1f0f3d2415f98a6f8cdcd586f2681edd574f54d6f82b88d3cc84",
+      "cfg/models/v8/yolov8-rtdetr.yaml": "a1fba37fbecb5b7b2d5d2ebe95e54cfc4c5139689f27ce03e56a9186e8f25492",
+      "cfg/models/v8/yolov8-seg-p6.yaml": "39f30b30704e63a76de3f62c36e3c03463f033704f05fee2fd5ded40fc84c581",
+      "cfg/models/v8/yolov8-seg.yaml": "7cdf399bf6833021f8a13277cfe7edf7c3dd87a764d29661e280752c89e826b0",
+      "cfg/models/v8/yolov8-world.yaml": "4574e9fed822c7c75b9d51e9adaa7188ad9a6b1eccdaa21f9ae47e680bdee2c5",
+      "cfg/models/v8/yolov8-worldv2.yaml": "7ef195531be504e8cde8b52289a886b278cae592a3c18196c60909e3d84698c8",
+      "cfg/models/v8/yolov8.yaml": "56349efd5d869fd66926bc13b73d00ebfe88329e94bae80d891eda112851e6b7",
+      "cfg/models/v9/yolov9c.yaml": "6a50d37457656dc550ad9aa92ec33394e7ce00c710ae729764f0d213bd8950e8",
+      "cfg/models/v9/yolov9e.yaml": "9146565df558de328d9202368befef7c844482eef69c97bcb94ccfb8c5dac5ad",
+      "cfg/trackers/botsort.yaml": "62b3e68f5f29d54538d24247e4d45d2ffe12f1fee49e082493fab62989d5b9da",
+      "cfg/trackers/bytetrack.yaml": "42f1e6b6ec2e94ae17ea3dd3e5512ab429b4b1b59605456658f70270cdb4a9ed",
+      "data/__init__.py": "0378b49fed8c9cdcd2758aa133cc729c13b61c934a1925d684fbd1c8ed3fbb52",
+      "data/annotator.py": "7af5d0cc04557ab73485bf6897e9ff1abac77fe7655cee2508c316119a09d943",
+      "data/augment.py": "7caa9a58a93e104cbe8a6b4c0fc7c8ce63ef1f882de17ee81060c1594e687294",
+      "data/base.py": "feb6cab7aeba48a554a90b68332ce660c084138ac336bc8f33fbb0791a84e210",
+      "data/build.py": "92d6448bc449f7791874b581957ed1e07c753365eba4797cdf709d0ba1dabfd2",
+      "data/converter.py": "0c9e5a4a4ef0f9104aaabac0054a0e6a13ff2e071c9fbba3252995b9f3a4069b",
+      "data/dataset.py": "d1dd10f0e458903390c9a7a6b0902afe3bd97242bf40ba64cbf2b9d8a224ac2a",
+      "data/explorer/__init__.py": "f98de6d5979d7a939052ffca5bcdb3686c6f53f3d21dcbb051316a1bd06102be",
+      "data/explorer/explorer.py": "f62fd394e7c2f3b9b6fed2f8511e998d16ff4ff99934230b2183155ad0f8a646",
+      "data/explorer/gui/__init__.py": "987b49b8ae21c05f1cb95f951c373bb69eaee83d601f3d99ec923c82b9900d3b",
+      "data/explorer/gui/dash.py": "6b6b3ca09288f24aa7584708caa082cef232bccfee6667cc6b1ace7709a2abb9",
+      "data/explorer/utils.py": "6baba063cacaa4533c74845c5304728d191127ecd71307be36226be822d596eb",
+      "data/loaders.py": "ceb7f15d0e423055ca4d1fc550f937a0a1f05ebb8a9a85dfb89ab8074bdc4b20",
+      "data/split_dota.py": "d6ad85642d1213875e4695d449b2936d40235fd55e7a350814cd8304b17c09ca",
+      "data/utils.py": "e51f86452bf2cab676c8e9d3678badb9e9373521d802c8d6ff8694460324786f",
+      "engine/__init__.py": "987b49b8ae21c05f1cb95f951c373bb69eaee83d601f3d99ec923c82b9900d3b",
+      "engine/exporter.py": "a704d00a8f3c49de3536a60ac79269d797d2aa1160698dd9e607cb9bcbb32d1d",
+      "engine/model.py": "b9e987dfe093c0a4cc6db8899c8aad45e08dcbee5310af550fbdfbbf7548ab18",
+      "engine/predictor.py": "c1044a7561834cfe40e824b48130ba53744f0cc84fdd0904cd648f9ba7aa0a45",
+      "engine/results.py": "0f8c19f4eb2606b11058291f39e527fe86a05cbaaedd2c516589696240c32c7f",
+      "engine/trainer.py": "0b4e1c10df6ffa4bd1d9d2088e000df1d040c7c5d24c28654240f10317f04e55",
+      "engine/tuner.py": "cedb47ad092f5ee5154c1ee398ce19f391a022c436863a56f58acc71cad0e30a",
+      "engine/validator.py": "adc989486aec01f8feaf2424b6febe7ded21013ed9f022cd8545147f456c3d82",
+      "hub/__init__.py": "5388fed903ddc120e5c70e918056279c95cea08ccbb7091ee13918d80f2ae30b",
+      "hub/auth.py": "85cf7ba49d3539f23ca10eeec37b9b29b895083486c521891e8a3d5ba86bacdc",
+      "hub/session.py": "905c2e7c3218ed3795efd0dd11004a62b539f3cdd6c600aba49a13af54b942e1",
+      "hub/utils.py": "068a8dbe2ef22d41ab4cd544ba01402e12649a9a1b5bcee03156767730dc9119",
+      "models/__init__.py": "c6bce7d9d70b046e948f1965f0bb654c86e53daaf68233610308c0420eeef2c9",
+      "models/fastsam/__init__.py": "d1db7ae6367fe5bed0fa675737c312124827151034148c257a5fcb4b645a3a55",
+      "models/fastsam/model.py": "d9be0711c97bf7cc5b3d171e5c4613bb962805ef7324903805a5731f52803374",
+      "models/fastsam/predict.py": "d161d416ba8750dcb57133692cab0dd052aa2ca0afafb7c753aa69f75fd0560d",
+      "models/fastsam/prompt.py": "a57e2d59b58e9b1d3870da580b8099cc5e2a469c138c759d395ed8f10d3de7a3",
+      "models/fastsam/utils.py": "afe6f7eb659becfd990253b059c90f24ce872ef83e7850c3cf8c24034ca62ddd",
+      "models/fastsam/val.py": "20b2a6c3753c1589a642c3bdc24f7e6c9f4fca9fd9b6124cdfa6fad4bef9b376",
+      "models/nas/__init__.py": "77af964eb60b5ef6cfb39f1e6c0d3ee7cdce0e2f95cb35dcfade1a1880d02ba3",
+      "models/nas/model.py": "36bd581e3d184240484e9df15551a588471bae3a597a6b41b7472bcf587adeaa",
+      "models/nas/predict.py": "3bb7fdd8a13a862e4310d4d1cd788cb26faa2be9dd5683b506cdddba0a7c68b0",
+      "models/nas/val.py": "bb7e645535601b12bfadb1f2b54bc5078177fe7667e0c3efdcf6d92c55929a44",
+      "models/rtdetr/__init__.py": "01981ad42dea9464ed82902ea435b87688a3ab9699950785f1ee79fc33f651ab",
+      "models/rtdetr/model.py": "d95929a45d7fe7cd57990d1423b968f1f5fb32a84024f5d532bda3c8c1d7b5b9",
+      "models/rtdetr/predict.py": "f8d14102fff854851c5f270eef003c207e841d7ad5c8e8abfb93d991de3aab2a",
+      "models/rtdetr/train.py": "1dd482db1db6464b3aa8a348ec419aea758c64f862ffb55d42b6dc6b2c64d1e7",
+      "models/rtdetr/val.py": "e9b3611e5ffa25ba63b96e2795aa238c382685b50d272d09e50cfc157648f468",
+      "models/sam/__init__.py": "f40d62c9f3cdfe772aab74cc1317bffae3e80118c45f7a6ca07108d71306d951",
+      "models/sam/amg.py": "32c292452d9289e64afe7fa6d880a4d50a5c628825e66a1f72c55afb815762fa",
+      "models/sam/build.py": "8c9be5a116cfc07bd29d55b0337a44773a4ce4c7487041db45aa9093f4bd946f",
+      "models/sam/model.py": "c8b223074d1467a58391c4415ed526c26bbc81322c2b24dd2ac2c0c48d527a83",
+      "models/sam/modules/__init__.py": "987b49b8ae21c05f1cb95f951c373bb69eaee83d601f3d99ec923c82b9900d3b",
+      "models/sam/modules/decoders.py": "ecd5a704dba9c4662f1f44b537447a3411f175515152bae72fd12a030d3d2781",
+      "models/sam/modules/encoders.py": "a513591f3b76276c43fc3d01b6ef299380dc22d7ebe9d46bf6b7117f1a196615",
+      "models/sam/modules/sam.py": "cc2e25e2472b2100ff7a47338e5da5e9d81a001aaa8d1399c50f850dbfa2b6dd",
+      "models/sam/modules/tiny_encoder.py": "70f326403240dc190cd3217dec17462c79078a0fbc1cf1fb75888e85a662fd92",
+      "models/sam/modules/transformer.py": "fb06e82b880d28e24c3fc27c0023762682bec737b8d0d646ebde87b3175839bb",
+      "models/sam/predict.py": "0bc744ae931e7ccc10bd17894afc5131a4da95ae8e25b01c92b18ede6e74f242",
+      "models/utils/__init__.py": "987b49b8ae21c05f1cb95f951c373bb69eaee83d601f3d99ec923c82b9900d3b",
+      "models/utils/loss.py": "20ccdc9c3c309203bd17a183295c6b0dd55d8545ffeddf6e638b57f8082d4f48",
+      "models/utils/ops.py": "b27d6f77020ad8b682bf1beeb8fdf5630d875c4300990768eca0fd25587818ce",
+      "models/yolo/__init__.py": "da6c072012e0a6caeb5605cf262016190d6f2142047544ff7f281a71e89c2910",
+      "models/yolo/classify/__init__.py": "b7ee295079a023682385cfa5ddba8d11c12d283d5d3b8d270f855ce98db10faa",
+      "models/yolo/classify/predict.py": "c05638188956c5eee274c9dd130d519c323ade8e773137e21cacf4b367ce8c06",
+      "models/yolo/classify/train.py": "058fed1a2963d30d0e12076f03d1536befe521c76dd70f6538654511a8bdcb38",
+      "models/yolo/classify/val.py": "10ffe18d11315e0748e31a234cabe3fd878d75acff8b60a8533a2b979e6bd0e0",
+      "models/yolo/detect/__init__.py": "251f206495a7ef03016e1fb48ffd3bde7c495594cc1595564ce1b95a7be4eb0d",
+      "models/yolo/detect/predict.py": "fdaf6f1f70e628563a79eced153763de791fbbf30a1ba9fbcdbe6b44a1a3b3d2",
+      "models/yolo/detect/train.py": "cefc667af4a258dabcadd94661e33749990c09c161d2a15037d1e3c317068c9c",
+      "models/yolo/detect/val.py": "99cce774ef8ce43802e84e55828a6585d545f5426ba0a61421e843b51055293c",
+      "models/yolo/model.py": "f3c77e25fd8c05bf1d68b6b0b8cb5589e8258e27c8c1be02d33db4745bdb5154",
+      "models/yolo/obb/__init__.py": "b7159b3c62d8d7f33b67094b423af01a34c13a5b2ff4fdf2939644832b138a75",
+      "models/yolo/obb/predict.py": "a6b7c3ce1c2e547285e824709c554103e605239abb53b344430213187981d8ec",
+      "models/yolo/obb/train.py": "b56a45b5c6ac3305aad40ffd55d6c4839a48547c2e5b099e2ceca3f92e3fd6c6",
+      "models/yolo/obb/val.py": "5a697e968613e54cb8331e949b134eae65114f5dc320e064feb152b39e4d4cd8",
+      "models/yolo/pose/__init__.py": "386bf13772ea268b7687c197d5cb09d4a12bb079c32ac9b7dc27ba64153d2ebe",
+      "models/yolo/pose/predict.py": "8a5964e2ac99bf26dcfd7328f53293e78148922cf1f75318be21397393b00534",
+      "models/yolo/pose/train.py": "922f1b913f167c81634ca7f5a1f7910ea788aa693a03c6bb005a20ee733ea2d3",
+      "models/yolo/pose/val.py": "c3f5482b319c8ffd0244d39b3ea9343670ce7d137ec65d82eaec2914e9091f74",
+      "models/yolo/segment/__init__.py": "9926ca384f019c72fb3cbda708e546edd44cec223a8497b314f3f06458c49b2f",
+      "models/yolo/segment/predict.py": "c6d034659cae87d595a57ef36457407829169f1850df40031334ae77f1fa37b1",
+      "models/yolo/segment/train.py": "68e4290c8a6d65f29297d9856ba07edd6dd071c311966048341908f4af3edec4",
+      "models/yolo/segment/val.py": "9e3885e9159d752f87396c55be59393d7470e943a012dfc710e6553c5eebaee4",
+      "nn/__init__.py": "e013cb1d8f3dc4433f6a5e6e2b468e98582230be823061196decf13af4e3384b",
+      "nn/autobackend.py": "67db037210a102a27eb1242550dc281874c5c4545acb5fa2efa30d533d2a654f",
+      "nn/modules/__init__.py": "19adcc0e9c17e83788ed5487f23a2d8b9ba578fe26824406a256def112d9d93f",
+      "nn/modules/block.py": "9f48a5acadd58dda1cf7e3b0bd8fc1a7c1f0e4dd81307c20b7e8df1f80b3c454",
+      "nn/modules/conv.py": "9dd51834bd9ff432b8d72d6f55bb44bac301c97cbe2cc32c04a95c5a3450f59f",
+      "nn/modules/head.py": "2e89d5d9bed3acbc7ecca8474367c2a4a83b05f0beb5406d3e54b934d71f4ffc",
+      "nn/modules/transformer.py": "0310fdb944690a5f84aaf5dedc3886e895bea41cc1d7a1be01a84b759ef26b2a",
+      "nn/modules/utils.py": "efbf509e72a9f6ff23bf6e7511276e4d7274a25f0790838b6c6416c041908e15",
+      "nn/tasks.py": "93a725d47d615ad4172f13bfb390fa7dafc363217321e900322821de50f7ebf0",
+      "solutions/__init__.py": "987b49b8ae21c05f1cb95f951c373bb69eaee83d601f3d99ec923c82b9900d3b",
+      "solutions/ai_gym.py": "2ea3a0ed72b1b8394101716148b4002154ccc6c431a23ec1ba6887795ae32cc7",
+      "solutions/distance_calculation.py": "375401e6e0c6ffab29f230f9b92c29fcd4cf9b23f8502a899bd1b694dae0a6bf",
+      "solutions/heatmap.py": "9cea007179097756e1c3c48d6ea553c1e57020aae076b65e52132bbe434f85eb",
+      "solutions/object_counter.py": "1867ab3ef8d9dc1cdde77ad44d62b067e181f145fd0e55bf4648b53cc5305447",
+      "solutions/speed_estimation.py": "96f694f85f1fdd5e0a15528568d4bb8ac21d62d31216387fcc5f6097431a96cf",
+      "trackers/__init__.py": "8fbd88807d9d647400acc3cae18c1c57989e230f787d8be519d42307d70e40ac",
+      "trackers/basetrack.py": "faf0430fe43d96cc5f4cc2b6c3d92ea961ab61b44c99a0420846c61b2479de01",
+      "trackers/bot_sort.py": "dfd02f85855b4fb8b3177fbead7fdee8b8606f97334c0db7830e8082735c45db",
+      "trackers/byte_tracker.py": "cfacfa8eb863f167803f66b35999213146444fa83ff1732431f74da4983b8eeb",
+      "trackers/track.py": "6b292d3a98bb4a668e36c5aa61779bacb4255600c6b82f4636198206c0e72ed2",
+      "trackers/utils/__init__.py": "987b49b8ae21c05f1cb95f951c373bb69eaee83d601f3d99ec923c82b9900d3b",
+      "trackers/utils/gmc.py": "99746ab65b9ed6799053dd9338a347e3447a95815d52b2826086e23c7e8522ed",
+      "trackers/utils/kalman_filter.py": "24dd6c01c7c9672f1f4d9c5cf30de35099c64032ad8002fffe9e274d1e913362",
+      "trackers/utils/matching.py": "73fa6d8417eef6c59e31561ef9d49e71d59c43151ecbe9904f6c8c56c147dd54",
+      "utils/__init__.py": "48def0ca824ff33683cea5280c81d3c95dedaa9ac88024df4fbdfc9207b410f2",
+      "utils/autobatch.py": "ca06777f607222472e8c1f3d10d7139c65969c0430e4f6e0ea706e4a183ee6de",
+      "utils/benchmarks.py": "723fecced708fa1cdfbd15fcbf37d7a38c2641ed82b9051c0c704ef531c16dca",
+      "utils/callbacks/__init__.py": "62b5aa0b705555a4cba1be2208f47a237ea65312143a93c95bb07f2e34fbf10c",
+      "utils/callbacks/base.py": "b0e7b726fc81166470559f3f434deeec9c1378e3a6f42238b3df941219c6d310",
+      "utils/callbacks/clearml.py": "2bb6c37f9b52f312f829e14c9285432f690a9229777f8aa82b2f0a7d9903f39e",
+      "utils/callbacks/comet.py": "f662e03a9ac43658a9867c5f77c893c2d91d852e9e47b27bfaae1859a1cbd12a",
+      "utils/callbacks/dvc.py": "5880a532cbaf8628b2af046fe41b192f18ecc58349dd8f15abbccdd01b61b6ba",
+      "utils/callbacks/hub.py": "db179bc942fdda3dce6703262fcd2476f1eb322cea69aa9705ee6849725129d0",
+      "utils/callbacks/mlflow.py": "1b45a0a684c27ae6ca498d19a7823c8793db9da8c0a2353cddef386d01683032",
+      "utils/callbacks/neptune.py": "e59dee6b96014d44b9e851fc5502901b569a228f5f1fc184cb30b9abba788a94",
+      "utils/callbacks/raytune.py": "e8e80636e0b7e45dbd970f0397f77496e7b8fa2051e9daab055427211403c781",
+      "utils/callbacks/tensorboard.py": "8519968dba9d03844d68bb926739ee0dca4e056fbffbf19ad2ef81f1453eed92",
+      "utils/callbacks/wb.py": "e1023cd671ddce0c215c79664e24712eaba7be429a90b5d85211d3518d597870",
+      "utils/checks.py": "9f358d11f35c8baaca0bdc7d6585d13c9b4adafbef23b60a2991d138c512b1bd",
+      "utils/dist.py": "dc778d6d8da0a7bbd885cbd586caef4eb417a509a04fcb699a7cc0a5fdde4110",
+      "utils/downloads.py": "215bb006875a823ec63869f3cbcebc4c1ab84c2f0ed9df53955f78fd4ce2fca0",
+      "utils/errors.py": "1aa3ff2608ff9f4a5ac67f0e3219f70d30a0a0d901d968d47146aab3e33a4909",
+      "utils/files.py": "4d57d8d168b922c51ce1876c0f30b474083e8c03f97b162fc2a0775665e10cb6",
+      "utils/instance.py": "7cf0a5bcf3ed4e4f157975a246ff740eb164d63d654d429d609b6964a5030ed0",
+      "utils/loss.py": "a68e9f990cf3d49c5f1a9b5eea11e4c0e0bb102ca7b1c7aab606d458b5d57f1c",
+      "utils/metrics.py": "ffd671c0ad07ea99bf2ec657c82ded6350e6ff9ed818374fdec2923194ada94d",
+      "utils/ops.py": "1857bfb71f0c54a4f9eb17a56c0b908e2276f28869cc04690fa0731b2275c8c9",
+      "utils/patches.py": "4a032a78cb2ad8ae89a0124fd4da655cc97d0baacad0978950286306b24e9dea",
+      "utils/plotting.py": "61526f103a339b5be6fd87f7f632cf436e10b2dfdffe5cc49be35e0e330495f4",
+      "utils/tal.py": "c6e232af252369a6079073c6f46bc1c21d71c4dd87ab8cb78573adb8445e8706",
+      "utils/torch_utils.py": "d14bafef11118b06560700fcf4bdcccc66aa340971a16dbb6c62d2e729aa54c1",
+      "utils/triton.py": "820d5f8a7c67a3fb58d867bd3cc866bbb3c8f70be8159a2289c753e0186abf7c",
+      "utils/tuner.py": "6d013cd1fe29e8f29bd22b92bb8ad2ad7912e8b0c6194bc66f2281e769f25480"
+    },
+    "smplx": {
+      "__init__.py": "c45c111b7736fe9f00b6b6ec7d1ced44ccd0ad2838cc57012d80d8b7080a9786",
+      "body_models.py": "3de717b66a31368120570dedd45a42effc1ce7b93d780bd71ce6879c10eeff75",
+      "joint_names.py": "c62c19a75b730ca427563be659ecac5c1002b355b1f81ea388bc54dc0ef9dc43",
+      "lbs.py": "13e2bfc41be990763487b1c6ed4d01b24fae421d320da1592185bb7b8c725575",
+      "utils.py": "310cb0da8a5e886af1d8f69b163fe2440134acb318ab287a4f13c96c06c96b39",
+      "vertex_ids.py": "1fa22bcbdb89eec7640224b70140a1e9404baf078fa8667f9e0118026b4276be",
+      "vertex_joint_selector.py": "eb542d80acc31d50a258a7582203fe7bfdfeb95c082aaa155965f9a4cfdbf007"
+    },
+    "manotorch": {
+      "__init__.py": "5850fb7119d83c4db11da9403b5c54e0bce74d15bcd98ec8034b1f60b94144f0",
+      "anatomy_loss.py": "312d1f66d3f4e278acb79d4d0ecb8197e18fa034cd5d38e2f792f30725633a07",
+      "anchorlayer.py": "6556361a4d50cbe09b2ddbfe772c62df71df4184cb81c8cae4999f1c975aa529",
+      "axislayer.py": "af71a530c2c48744eafb2e8edcd17ed7ff1cb4d02301989b00ccbb6960be987c",
+      "manolayer.py": "798f7fee4be30506e58d0d165d55f361d4f20d3e94fb3336ee455bf61a5dab2c",
+      "upsamplelayer.py": "847c1d9eaa2b677e5694b1539479e8091be42eec2c9e5527829d9840a521812a",
+      "utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "utils/anchorutils.py": "74553ba394078264df75972139fb6d11230eb08109fed5b8dc41590639f7485f",
+      "utils/geometry.py": "0b1983cce8ffd0a9a6320b1f4ea23904a3f278a2facebfd3bd98b3bcfd85a595",
+      "utils/quatutils.py": "f0344aca6e655eca4e0fe94ca73281d11814aa0894f3b433d52a3181880afee0",
+      "utils/rodrigues.py": "02699b5d43405ee665844dc3b1fb36b5114a34a2b0732ac324c3c7d583ad8d02",
+      "utils/visutils.py": "696b5f1fe4cb1010abe03dff5a5d8a42c1a5c49717f8bee7f14b82a3ed1e8466"
+    },
+    "chumpy": {
+      "__init__.py": "4ef801a387cea77b17b5f17c50a9c91c9da7e3a5372f50fd0cc1a6a178845312",
+      "api_compatibility.py": "48ac1a8134b08150c9f5fe714f6dc9e64644d4ddfe003a497754976e89a197d1",
+      "ch.py": "bed64378b8308bda58b80125defc9a0287bfaca4416f5ae7b3f12f0bf4c7d4da",
+      "ch_ops.py": "97a417bbd4754c11dfce0fc70882cb0797cba0f6b66d8a07693ed03ca26f7fda",
+      "ch_random.py": "268fb73683846e2dc970e95debcc1263f90d292b4f244c4b1d89cb425b8dfe6a",
+      "extras.py": "3223697aafbd95a7ee68a893075eb37da67ad11e3221f0b7b58da2a732dd5dd9",
+      "linalg.py": "a4b3155a7e27415ad0b0ae5d5b2ad41be2cdaf453d2ba7c1a1cbfa57e5299fc4",
+      "logic.py": "830940e4038c641f77b029c8920b96fc386bed4f1c7b077b2610d7aaf4572e86",
+      "monitor.py": "7d5d279562dca5eb98fccdf9dcc8e85eb4d01e6cd5996c56182a1c58e32a2f68",
+      "np_tensordot.py": "7586debf15d6ac33d2207aa4e4494500e39c422503db31848971114ac9f59f22",
+      "optimization.py": "8a6a1d48dbf8087abc09b60abffe778b6d825041826fe504b83564b5f5645235",
+      "optimization_internal.py": "b83422087a0a16f39360f902f12305af0d79f5097020aaf23a7a5953d6bdcb36",
+      "optional_test_performance.py": "6359914aa0ef556e7674181708e916d3c8504bd5872a2a7a7666a10b5d3eef73",
+      "reordering.py": "52554fb92a73b7e2c89641d15165656a8c777a2692ea56210e3a2f1d4431d941",
+      "test_ch.py": "28a7836723da170ecf9a94ad238f090e9ebcac5d0ae620849994f9f162a6124d",
+      "test_inner_composition.py": "c3f7714640adfcd07b5537a170250ed5732d5caeb57feef272d4f16243c04bfa",
+      "test_linalg.py": "bde16412ab9996a64bafb03ac7da3d497a6fca0532c1349eb30ab7e6532489a5",
+      "test_optimization.py": "f1c1b9a18ad3a723123fafaa62677b41631bb697cda8dfd203045a5875c8140f",
+      "testing.py": "7e21f5ea4835ebc789afebbbbf945a666108f24c142992de4976d9031f2cb241",
+      "utils.py": "729eb982d6cf06584201b47092725fca2f38d43d132b22284abc0598712dc420",
+      "version.py": "a0f022c00c255734cbf83297d46a7519c1c08851020ddcf22194e9ea2279585c"
+    }
+  },
+  "clean_bootstrap_validated": false
+}

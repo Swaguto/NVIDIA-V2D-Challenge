@@ -29,3 +29,11 @@
 
 # The episode refinement entrypoint runs in Linux/WSL even from Windows checkouts.
 scripts/track3/refine_episode.sh text eol=lf
+
+# Match byte-hashed automatic-recovery sources on Windows and Linux checkouts.
+reconstruction/validation/issue6/automatic*.py text eol=lf
+reconstruction/validation/issue6/automatic_hands.json text eol=lf
+reconstruction/validation/issue6/run_automatic_hand_suite.py text eol=lf
+# The existing selector was tested with CRLF; preserve that frozen input exactly.
+reconstruction/validation/issue6/wearer_selection.py text eol=crlf
+docs/team/reproduction/automatic-hand*.json text eol=lf

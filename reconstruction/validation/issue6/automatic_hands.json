@@ -1,0 +1,21 @@
+{
+  "version": "development-v1",
+  "holdout_episodes": [0, 11, 23, 31, 39],
+  "detector_confidence": 0.5,
+  "nms_iou": 0.5,
+  "grid_overlap_fraction": 0.2,
+  "maximum_cross_side_box_iou": 0.5,
+  "search_crop_expansion": 1.8,
+  "maximum_search_gap_frames": 3,
+  "crop_rescale_factor": 2.0,
+  "minimum_stereo_pixels": 32,
+  "maximum_depth_residual_m": 0.02,
+  "occlusion_tolerance_m": 0.02,
+  "minimum_mesh_mask_precision": 0.65,
+  "minimum_mask_mesh_recall": 0.35,
+  "minimum_mask_score": 0.7,
+  "maximum_flow_roundtrip_px": 2.0,
+  "maximum_flow_pose_disagreement_px": 20.0,
+  "minimum_flow_points": 8,
+  "seed": 20261010
+}
