@@ -110,17 +110,53 @@ An independent audit of the output against the URDF confirms zero finger
 position-limit violations and zero finger-speed violations across the 262 left
 and 282 right adjacent supported frame pairs.
 
-| Error | Left median / p95 | Right median / p95 |
+| Archived solver task residual | Left median / p95 | Right median / p95 |
 |---|---|---|
-| Wrist position | 10.5 / 17.9 mm | 7.2 / 10.6 mm |
-| Three fingertip positions | 26.8 / 36.2 mm | 17.6 / 26.4 mm |
+| Wrist translation-log norm | 10.5 / 17.9 mm | 7.2 / 10.6 mm |
+| Three fingertip translation-log norms | 26.8 / 36.2 mm | 17.6 / 26.4 mm |
 | Wrist orientation | 7.8 / 9.5 degrees | 3.7 / 6.8 degrees |
 
-These are robot-to-frozen-reconstruction residuals, not independent hand truth.
-The left fingertip maximum is 52.1 mm at frame 261, during the released-hand
+The position figures are Pink SE(3) translation-log norms, not necessarily
+Euclidean site distances. These are robot-to-frozen-reconstruction residuals,
+not independent hand truth. The archived left fingertip translation-log maximum
+is 52.1 mm at frame 261, during the released-hand
 interval. It was inspected in the simulator; the three-finger closed pose is
 an imperfect match to the human free-hand pose. Do not treat
 joint feasibility as a penetration or manipulation success check.
+
+Measure actual world-space site distances separately with the same frozen inputs:
+
+```bash
+python scripts/retarget/track3_review_dex3_targets.py \
+  --bundle /private/episode2-bundle --retarget /private/new-retarget-run \
+  --out /private/new-target-review
+```
+
+This command has no episode, frame or crop choices. It verifies the source bundle,
+retarget payload and robot asset lock, requires identical support and direct
+observation masks, and refuses finite poses in gaps. Its report retains both the
+legacy task norms and Euclidean distances. For the current FK-synchronized e002
+baseline, median three-tip world distances are 17.45 mm left and 17.59 mm right;
+median wrist distances are 10.48 and 7.24 mm. It derives the 57 mm minimum
+long-finger tip separation from the locked URDF and reports the corresponding
+target reachability bound.
+
+For a regenerated review, compare `array_content_sha256` and the numeric
+measurements. This digest covers named arrays, shapes, dtypes and canonical
+little-endian contents. The NPZ file hash remains an integrity check for a
+transferred artifact; ZIP metadata can differ across operating systems even when
+all five output arrays are identical. The source, model and input-payload locks
+must still match exactly.
+
+The current e002 FK-synchronized baseline produces content digest
+`cd64161904abc832e16a3d04299da193c684fa2d94e89a40694cc27482a8f7ab`.
+All five arrays and every per-hand measurement match between the checked Windows
+and Linux runs on this machine. This is not an independent teammate-machine run.
+
+The tool reviews saved FK; it does not independently recompute FK, accept recovered
+hand accuracy or certify contact. Development mapping/collision overrides are
+refused and require their separate experimental audit. All original observations,
+inferred poses and display-only holds retain their existing provenance.
 
 The checkpoint audit is `runs/issue8-validation/current-checkpoint.json`.
 Bundle controls pass nine tests. Capsule controls pass six tests. Existing refinement controls pass 65 tests on

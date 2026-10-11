@@ -48,7 +48,7 @@ jobs:
       - name: Run Issue 8 bundle and collision controls
         if: success() || failure()
         run: |
-          python -m pytest robotic_grounding/tests/test_track3_bundle.py robotic_grounding/tests/test_track3_penetration.py robotic_grounding/tests/test_track3_collision_bounds.py robotic_grounding/tests/test_track3_collision_voxels.py robotic_grounding/tests/test_track3_model_lock.py robotic_grounding/tests/test_track3_source_review.py -q --strict-markers --junitxml=issue8-cpu.xml
+          python -m pytest robotic_grounding/tests/test_track3_bundle.py robotic_grounding/tests/test_track3_penetration.py robotic_grounding/tests/test_track3_collision_bounds.py robotic_grounding/tests/test_track3_collision_voxels.py robotic_grounding/tests/test_track3_model_lock.py robotic_grounding/tests/test_track3_source_review.py robotic_grounding/tests/test_track3_dex3_target_review.py -q --strict-markers --junitxml=issue8-cpu.xml
       - name: Preserve test results
         if: always()
         uses: actions/upload-artifact@v4

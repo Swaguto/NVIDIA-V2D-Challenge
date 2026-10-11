@@ -208,3 +208,81 @@ address contact geometry and morphology while checking source placement and
 timing together. Increasing visibility or further
 loosening a collision penalty cannot establish an accepted task. Issue9 and
 training remain deferred.
+
+## Dex3 mapping and error semantics
+
+An independent audit checks the mirrored left-palm convention and the source
+joint ordering against actual native robot FK. It confirms that the current
+targets are wrist, thumb tip, index tip and middle tip. The human MCP directions
+point along the expected robot forward axis, and the thumb is on the expected
+side. This diagnosis finds no additional global wrist flip or joint-name swap.
+
+The source and robot still have different morphology. Both Dex3 long fingers
+rotate about parallel palm-Z axes; their tip Z coordinates stay 57 mm apart,
+so their Euclidean tip distance is at least 57 mm for any root pose. Median
+source index-to-middle tip distances are only 33.60 mm left and 26.84 mm right.
+The triangle inequality therefore gives median lower bounds of 23.40 and
+30.16 mm on the **sum** of those two site errors, regardless of wrist placement.
+This is a kinematic limitation of the current targets, not proof that either
+reconstructed human finger is inaccurate.
+
+There is a separate objective/reporting issue: the current Pink FrameTask uses
+the SE(3) logarithm, so even with zero tip-orientation cost, its position objective
+can depend on the supplied, unused target rotation. Changing only that rotation
+changes the native QP Hessian and linear term. A development-only world-position
+task makes both invariant; central finite differences check all 13 tangent
+coordinates on each hand to less than 3.5e-11. This alternative does not infer or
+observe a fingertip rotation.
+
+Consequently, the archived left median tip translation-log norm of 26.76 mm
+must not be described as Euclidean position error. Independent saved-FK distances
+for the current baseline are 17.45 mm left and 17.59 mm right at the median.
+The read-only `track3_review_dex3_targets.py` command reproduces those measurements
+for any complete baseline episode, with hashes and explicit observation masks.
+It does not change the IK solver or the replay, and it refuses development target
+overrides. Twelve CPU controls check scene-translation invariance, scaled wrist
+offsets, changed robot axes/chains, provenance/gap rejection and portable numeric
+fingerprints that detect changed results.
+
+Three predeclared e002 alternatives isolate position-only tasks, an outer-finger
+mapping (human pinky to the second long robot finger), and both together. They
+process all 343 frames, preserve 272/284 supported hands and all direct-observation
+masks, and have zero finger position/velocity violations. No source hand, object,
+camera, shape or scale is edited; no grasp annotation or reference pose enters
+the optimization. Alternative robot targets remain inferred.
+
+| Development variant | Median world tip distance L/R | Worst material vertex witness L/R | Frames with vertex witness >2 mm L/R |
+|---|---:|---:|---:|
+| Current baseline | 17.45 / 17.59 mm | 10.88 / 7.02 mm | 238 / 133 |
+| Current mapping, position-only tasks | 18.57 / 17.59 mm | 10.91 / 7.03 mm | 238 / 133 |
+| Outer fingers, original FrameTask | 9.84 / 11.42 mm | 10.97 / 6.56 mm | 238 / 134 |
+| Outer fingers, position-only tasks | 10.59 / 11.48 mm | 10.96 / 6.56 mm | 238 / 134 |
+
+Distances for the outer-finger variants use their different declared source
+targets; these are not improvements in recovered human accuracy. Neither
+position-only variant passes the combined sampled-pad-opposition and whole-hand
+vertex check for any of the four source-labelled grasp intervals. Better fit
+to joint targets alone has not made this task physically credible.
+
+A fourth alternative adds the earlier bounded collision QP to the outer-finger,
+position-only targets without loosening its guards or changing geometry. All
+supported frames run 100 iterations. It reduces timestamps with vertex witnesses
+above 2 mm to 164 left and 33 right, but still witnesses 10.86 / 6.10 mm intrusion.
+Median wrist distances rise to about 20.5 / 10.1 mm; fingertip maxima reach
+119.36 / 83.97 mm. Partial sampled contact checks pass at 28, 19, 33 and 0
+timestamps in the four source-labelled intervals, respectively. These do not
+establish any complete task or continuous collision-free motion. **All four
+alternatives are rejected for physical acceptance and none replaces the baseline
+or current Isaac replay.**
+
+Independent native FK recomputation verifies 12,788 saved link poses for each of
+the four alternatives, with zero position difference and rotation differences
+below 2.1e-16 radians. This confirms the geometry being audited; it does not resolve
+the penetration or placement failures.
+
+The evidence calls for contact-aware retargeting that accounts for Dex3 morphology
+and source-supported contact regions, rather than forcing all robot sites onto
+human fingertips. Contact-region object geometry and source depth remain uncertain.
+Any proposed grasp or robot offset must be stored as inferred, checked against
+source placement and timing, and tested on untouched episodes after its method is
+frozen. Issue9 and training remain deferred.

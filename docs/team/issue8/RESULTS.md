@@ -31,11 +31,19 @@ The 71 left and 59 right missing observations remain NaN and are hidden in the
 simulator. No contact probabilities, forces or torques were invented. Both
 supplied object meshes are development CAD and remain submission-ineligible.
 
-| Robot-to-reconstruction error | Left median / p95 / max | Right median / p95 / max |
+| Archived solver task residual | Left median / p95 / max | Right median / p95 / max |
 |---|---|---|
-| Wrist position | 10.5 / 17.9 / 18.4 mm | 7.2 / 10.6 / 15.2 mm |
-| Three fingertips | 26.8 / 36.2 / 52.1 mm | 17.6 / 26.4 / 36.6 mm |
+| Wrist translation-log norm | 10.5 / 17.9 / 18.4 mm | 7.2 / 10.6 / 15.2 mm |
+| Three fingertip translation-log norms | 26.8 / 36.2 / 52.1 mm | 17.6 / 26.4 / 36.6 mm |
 | Wrist orientation | 7.8 / 9.5 / 14.0 degrees | 3.7 / 6.8 / 7.3 degrees |
+
+The position figures are norms of the translational part of Pink's SE(3) task
+error. They are not necessarily Euclidean site-to-target distances when unused
+tip rotations differ. They remain unchanged for artifact reproduction. The
+independent Euclidean audit of the current FK-synchronized baseline gives
+17.45 / 17.59 mm median fingertip distance, left/right. See the
+[mapping and error review](SOURCE_ACCURACY.md#dex3-mapping-and-error-semantics)
+for the distinction and rejected alternatives.
 
 These residuals compare the robot with frozen reconstructed observations;
 they are not independent real-hand ground truth. A dataset-specific mirrored
@@ -47,7 +55,7 @@ Independent URDF checks find zero finger position-limit violations and zero
 velocity-limit violations across 262 left and 282 right adjacent supported pairs.
 Median/p95 wrist speeds are 0.051/0.350 m/s left and 0.064/0.522 m/s right.
 Missing intervals reset the warm start and have no asserted continuity bridge.
-The largest left fingertip residual occurs at frame 261, while the left hand is
+The largest archived left fingertip translation-log residual occurs at frame 261, while the left hand is
 released; the closed three-finger pose does not faithfully reproduce the human's
 open free-hand posture there.
 
