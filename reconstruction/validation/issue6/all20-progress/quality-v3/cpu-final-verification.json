@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "environments": [
+    "Windows",
+    "actual Linux worker"
+  ],
+  "receipts": [
+    {
+      "path": "quality-v3-identity-final-tests.xml",
+      "tests": 105,
+      "sha256": "01f91b1771d13b4e089bb45d7743e8275eb4bf407ee9f5e64b0b76247ad7e78b"
+    },
+    {
+      "path": "pytest-final-native.xml",
+      "tests": 105,
+      "sha256": "be652d67820b60fe84f620966c8fba07114a3858179168e989fea94057fe7f17"
+    }
+  ]
+}

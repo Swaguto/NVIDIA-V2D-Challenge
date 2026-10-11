@@ -28,6 +28,7 @@ from robotic_grounding.retarget.track3_bundle import (  # noqa: E402
     validate_bundle,
     write_json,
 )  # noqa: E402
+from robotic_grounding.retarget.track3_model_lock import robot_asset_lock  # noqa: E402
 
 
 def distribution(values: np.ndarray) -> dict:
@@ -53,6 +54,11 @@ def retarget(
         raise FileExistsError(f"Use a fresh output directory: {out}")
     if scale <= 0 or not np.isfinite(scale):
         raise ValueError("MANO-to-robot scale must be positive")
+    if max_iter <= 0:
+        raise ValueError("IK iterations must be positive")
+    asset_lock = robot_asset_lock(
+        REPO / "source/robotic_grounding/robotic_grounding/assets"
+    )
     out.mkdir(parents=True)
     start = time.monotonic()
     data = np.load(root / "episode.npz", allow_pickle=False)
@@ -174,6 +180,7 @@ def retarget(
         "frame_indices": frames,
         "timestamps_s": times,
         "source_hand_valid": data["hand_valid"],
+        "source_hand_directly_observed": data["hand_directly_observed"],
         "robot_valid": valid,
         "robot_qpos": qpos,
         "task_position_errors_m": errors,
@@ -227,6 +234,7 @@ def retarget(
         "episode_bundle_manifest_sha256": validation["manifest_sha256"],
         "episode_bundle_payload_sha256": validation["payload_sha256"],
         "robot": "dual_floating_dex3",
+        "robot_assets": asset_lock,
         "hand_sides": list(SIDES),
         "joints": joint_contract,
         "solver": "CHORD HandKinematics / Pink differential IK / DAQP",
@@ -243,6 +251,19 @@ def retarget(
                 REPO
                 / "source/robotic_grounding/robotic_grounding/retarget/hand_kinematics.py"
             ),
+            **{
+                name: digest(
+                    REPO / "source/robotic_grounding/robotic_grounding/retarget" / name
+                )
+                for name in (
+                    "__init__.py",
+                    "params.py",
+                    "retarget_utils.py",
+                    "utils.py",
+                    "pinocchio_viser_visualizer.py",
+                    "track3_model_lock.py",
+                )
+            },
         },
         "runtime": {
             name: importlib.metadata.version(name)

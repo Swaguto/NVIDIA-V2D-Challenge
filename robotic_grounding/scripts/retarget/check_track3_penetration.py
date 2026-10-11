@@ -20,6 +20,7 @@ if __name__ == "__main__":
     parser.add_argument("--bundle", type=Path, required=True)
     parser.add_argument("--retarget", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--allow-unlocked-legacy-model", action="store_true")
     parser.add_argument(
         "--assets",
         type=Path,
@@ -28,7 +29,13 @@ if __name__ == "__main__":
     args = parser.parse_args()
     print(
         json.dumps(
-            check_penetrations(args.bundle, args.retarget, args.assets, args.out),
+            check_penetrations(
+                args.bundle,
+                args.retarget,
+                args.assets,
+                args.out,
+                allow_unlocked_legacy_model=args.allow_unlocked_legacy_model,
+            ),
             indent=2,
         )
     )

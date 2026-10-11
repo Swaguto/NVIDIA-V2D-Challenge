@@ -22,6 +22,7 @@ from numpy.typing import ArrayLike
 from scipy.spatial.transform import Rotation
 
 from .track3_bundle import SIDES, digest, validate_bundle, write_json
+from .track3_model_lock import verify_robot_assets
 
 
 def segment_distance(
@@ -305,6 +306,7 @@ def check_penetrations(  # noqa: PLR0917 - Preserve the existing gate entry-poin
     threshold_m: float = 0.02,
     concavity_limit: float = 3.0,
     spacing_m: float = 0.002,
+    allow_unlocked_legacy_model: bool = False,
 ) -> dict[str, Any]:
     """Validate input hashes and audit mesh-derived capsule proxy penetration."""
     if out.exists():
@@ -318,6 +320,7 @@ def check_penetrations(  # noqa: PLR0917 - Preserve the existing gate entry-poin
         raise ValueError("Invalid gate parameters")
     verified = validate_bundle(bundle)
     contract = json.loads((retarget / "manifest.json").read_text())
+    assets_verified = verify_robot_assets(contract, assets, allow_unlocked_legacy_model)
     if (
         contract["episode_bundle_manifest_sha256"] != verified["manifest_sha256"]
         or contract["episode_bundle_payload_sha256"] != verified["payload_sha256"]
@@ -460,6 +463,8 @@ def check_penetrations(  # noqa: PLR0917 - Preserve the existing gate entry-poin
         fully_checked_pass=fully_checked & ~rejected,
     )
     report = {
+        "robot_asset_lock_verified": assets_verified,
+        "unlocked_legacy_diagnostic": not assets_verified,
         "status": (
             "rejected"
             if rejected.any()
@@ -490,6 +495,8 @@ def check_penetrations(  # noqa: PLR0917 - Preserve the existing gate entry-poin
     }
     manifest = {
         "schema": "v2d.track3.dex3.capsule_gate.v1",
+        "robot_asset_lock_verified": assets_verified,
+        "unlocked_legacy_diagnostic": not assets_verified,
         "bundle_manifest_sha256": verified["manifest_sha256"],
         "retarget_payload_sha256": contract["payload"]["sha256"],
         "retarget_manifest_sha256": digest(retarget / "manifest.json"),

@@ -1,0 +1,507 @@
+{
+  "verified_at": "2026-10-07T04:49:36.086829+00:00",
+  "detections_complete": 20,
+  "accepted": 12,
+  "current": "16 verified fixed-shape hand fits; 12 final six-stage reconstructions. Final acceptance requires reviewed videos.",
+  "episodes": [
+    {
+      "episode": 0,
+      "calibrated_inputs": true,
+      "wearer_detections": true,
+      "hand_predictions": true,
+      "fit": true,
+      "stages": {
+        "validate": true,
+        "hands": true,
+        "depth": true,
+        "align": true,
+        "contacts": true,
+        "report": true
+      },
+      "contact_audit": true,
+      "stage_integrity": true,
+      "all_frame_geometry": true,
+      "accepted": true,
+      "local_review_ready": false
+    },
+    {
+      "episode": 2,
+      "calibrated_inputs": true,
+      "wearer_detections": true,
+      "hand_predictions": true,
+      "fit": true,
+      "stages": {
+        "validate": true,
+        "hands": true,
+        "depth": true,
+        "align": true,
+        "contacts": true,
+        "report": true
+      },
+      "contact_audit": true,
+      "stage_integrity": true,
+      "all_frame_geometry": true,
+      "accepted": true,
+      "local_review_ready": true
+    },
+    {
+      "episode": 11,
+      "calibrated_inputs": true,
+      "wearer_detections": true,
+      "hand_predictions": true,
+      "fit": true,
+      "stages": {
+        "validate": true,
+        "hands": true,
+        "depth": true,
+        "align": true,
+        "contacts": true,
+        "report": true
+      },
+      "contact_audit": true,
+      "stage_integrity": true,
+      "all_frame_geometry": true,
+      "accepted": true,
+      "local_review_ready": true
+    },
+    {
+      "episode": 12,
+      "calibrated_inputs": true,
+      "wearer_detections": true,
+      "hand_predictions": true,
+      "fit": true,
+      "stages": {
+        "validate": true,
+        "hands": true,
+        "depth": true,
+        "align": true,
+        "contacts": true,
+        "report": true
+      },
+      "contact_audit": true,
+      "stage_integrity": true,
+      "all_frame_geometry": true,
+      "accepted": true,
+      "local_review_ready": false
+    },
+    {
+      "episode": 13,
+      "calibrated_inputs": true,
+      "wearer_detections": true,
+      "hand_predictions": true,
+      "fit": true,
+      "stages": {
+        "validate": true,
+        "hands": true,
+        "depth": true,
+        "align": true,
+        "contacts": true,
+        "report": true
+      },
+      "contact_audit": true,
+      "stage_integrity": true,
+      "all_frame_geometry": true,
+      "accepted": true,
+      "local_review_ready": true
+    },
+    {
+      "episode": 18,
+      "calibrated_inputs": true,
+      "wearer_detections": true,
+      "hand_predictions": true,
+      "fit": true,
+      "stages": {
+        "validate": true,
+        "hands": true,
+        "depth": true,
+        "align": true,
+        "contacts": true,
+        "report": true
+      },
+      "contact_audit": true,
+      "stage_integrity": true,
+      "all_frame_geometry": true,
+      "accepted": true,
+      "local_review_ready": true
+    },
+    {
+      "episode": 21,
+      "calibrated_inputs": true,
+      "wearer_detections": true,
+      "hand_predictions": true,
+      "fit": true,
+      "stages": {
+        "validate": true,
+        "hands": true,
+        "depth": true,
+        "align": true,
+        "contacts": true,
+        "report": true
+      },
+      "contact_audit": true,
+      "stage_integrity": true,
+      "all_frame_geometry": true,
+      "accepted": true,
+      "local_review_ready": true
+    },
+    {
+      "episode": 22,
+      "calibrated_inputs": true,
+      "wearer_detections": true,
+      "hand_predictions": true,
+      "fit": true,
+      "stages": {
+        "validate": true,
+        "hands": true,
+        "depth": true,
+        "align": true,
+        "contacts": true,
+        "report": true
+      },
+      "contact_audit": true,
+      "stage_integrity": true,
+      "all_frame_geometry": true,
+      "accepted": true,
+      "local_review_ready": false
+    },
+    {
+      "episode": 23,
+      "calibrated_inputs": true,
+      "wearer_detections": true,
+      "hand_predictions": true,
+      "fit": true,
+      "stages": {
+        "validate": true,
+        "hands": true,
+        "depth": true,
+        "align": true,
+        "contacts": true,
+        "report": true
+      },
+      "contact_audit": true,
+      "stage_integrity": true,
+      "all_frame_geometry": true,
+      "accepted": true,
+      "local_review_ready": true
+    },
+    {
+      "episode": 24,
+      "calibrated_inputs": true,
+      "wearer_detections": true,
+      "hand_predictions": true,
+      "fit": true,
+      "stages": {
+        "validate": true,
+        "hands": true,
+        "depth": true,
+        "align": true,
+        "contacts": true,
+        "report": true
+      },
+      "contact_audit": true,
+      "stage_integrity": true,
+      "all_frame_geometry": true,
+      "accepted": true,
+      "local_review_ready": true
+    },
+    {
+      "episode": 26,
+      "calibrated_inputs": true,
+      "wearer_detections": true,
+      "hand_predictions": true,
+      "fit": true,
+      "stages": {
+        "validate": true,
+        "hands": true,
+        "depth": true,
+        "align": true,
+        "contacts": true,
+        "report": true
+      },
+      "contact_audit": true,
+      "stage_integrity": true,
+      "all_frame_geometry": true,
+      "accepted": true,
+      "local_review_ready": true
+    },
+    {
+      "episode": 27,
+      "calibrated_inputs": true,
+      "wearer_detections": true,
+      "hand_predictions": true,
+      "fit": true,
+      "stages": {
+        "validate": false,
+        "hands": false,
+        "depth": false,
+        "align": false,
+        "contacts": false,
+        "report": false
+      },
+      "contact_audit": false,
+      "stage_integrity": false,
+      "all_frame_geometry": false,
+      "accepted": false,
+      "local_review_ready": false
+    },
+    {
+      "episode": 31,
+      "calibrated_inputs": true,
+      "wearer_detections": true,
+      "hand_predictions": true,
+      "fit": false,
+      "stages": {
+        "validate": false,
+        "hands": false,
+        "depth": false,
+        "align": false,
+        "contacts": false,
+        "report": false
+      },
+      "contact_audit": false,
+      "stage_integrity": false,
+      "all_frame_geometry": false,
+      "accepted": false,
+      "local_review_ready": false
+    },
+    {
+      "episode": 39,
+      "calibrated_inputs": true,
+      "wearer_detections": true,
+      "hand_predictions": true,
+      "fit": true,
+      "stages": {
+        "validate": true,
+        "hands": true,
+        "depth": true,
+        "align": true,
+        "contacts": true,
+        "report": true
+      },
+      "contact_audit": true,
+      "stage_integrity": true,
+      "all_frame_geometry": true,
+      "accepted": true,
+      "local_review_ready": true
+    },
+    {
+      "episode": 40,
+      "calibrated_inputs": true,
+      "wearer_detections": true,
+      "hand_predictions": false,
+      "fit": false,
+      "stages": {
+        "validate": false,
+        "hands": false,
+        "depth": false,
+        "align": false,
+        "contacts": false,
+        "report": false
+      },
+      "contact_audit": false,
+      "stage_integrity": false,
+      "all_frame_geometry": false,
+      "accepted": false,
+      "local_review_ready": false
+    },
+    {
+      "episode": 41,
+      "calibrated_inputs": true,
+      "wearer_detections": true,
+      "hand_predictions": true,
+      "fit": true,
+      "stages": {
+        "validate": false,
+        "hands": false,
+        "depth": false,
+        "align": false,
+        "contacts": false,
+        "report": false
+      },
+      "contact_audit": false,
+      "stage_integrity": false,
+      "all_frame_geometry": false,
+      "accepted": false,
+      "local_review_ready": false
+    },
+    {
+      "episode": 42,
+      "calibrated_inputs": true,
+      "wearer_detections": true,
+      "hand_predictions": true,
+      "fit": false,
+      "stages": {
+        "validate": false,
+        "hands": false,
+        "depth": false,
+        "align": false,
+        "contacts": false,
+        "report": false
+      },
+      "contact_audit": false,
+      "stage_integrity": false,
+      "all_frame_geometry": false,
+      "accepted": false,
+      "local_review_ready": false
+    },
+    {
+      "episode": 43,
+      "calibrated_inputs": true,
+      "wearer_detections": true,
+      "hand_predictions": true,
+      "fit": true,
+      "stages": {
+        "validate": false,
+        "hands": false,
+        "depth": false,
+        "align": false,
+        "contacts": false,
+        "report": false
+      },
+      "contact_audit": false,
+      "stage_integrity": false,
+      "all_frame_geometry": false,
+      "accepted": false,
+      "local_review_ready": false
+    },
+    {
+      "episode": 44,
+      "calibrated_inputs": true,
+      "wearer_detections": true,
+      "hand_predictions": true,
+      "fit": true,
+      "stages": {
+        "validate": false,
+        "hands": false,
+        "depth": false,
+        "align": false,
+        "contacts": false,
+        "report": false
+      },
+      "contact_audit": false,
+      "stage_integrity": false,
+      "all_frame_geometry": false,
+      "accepted": false,
+      "local_review_ready": false
+    },
+    {
+      "episode": 45,
+      "calibrated_inputs": true,
+      "wearer_detections": true,
+      "hand_predictions": true,
+      "fit": false,
+      "stages": {
+        "validate": false,
+        "hands": false,
+        "depth": false,
+        "align": false,
+        "contacts": false,
+        "report": false
+      },
+      "contact_audit": false,
+      "stage_integrity": false,
+      "all_frame_geometry": false,
+      "accepted": false,
+      "local_review_ready": false
+    }
+  ],
+  "scope": "Partial final all20 pass; not issue6 completion",
+  "prepared_at": "2026-10-07T04:50:12.072297+00:00",
+  "validated_base_commit": "620ec548953d7ccd76890066512f6b364482e14d",
+  "execution_source": "Base plus preserved repairs; exact implementation hashes live in each locked private checkpoint",
+  "final_checkpoint_backups": [
+    {
+      "episode": 0,
+      "sha256": "ac74c1e3939b1c41c898fc00e7ff71020d103b229ab626e9883143d524d52483",
+      "bytes": 1782444043
+    },
+    {
+      "episode": 2,
+      "sha256": "20b2cdc621f78c9ef4bff3734bc3c722ccba5c6529199dfcc8b21260eb1d8df5",
+      "bytes": 1633803533
+    },
+    {
+      "episode": 11,
+      "sha256": "debb841a0b9832ba9bf55f50f0f5501ceb86dd6f2ee0832c9769a1ee756b40e6",
+      "bytes": 668351557
+    },
+    {
+      "episode": 12,
+      "sha256": "27d7808f84b657354eaaea520373cc11b7fc0700b9fdb1469a1279e16c66be9d",
+      "bytes": 891778803
+    },
+    {
+      "episode": 13,
+      "sha256": "0c95370cb47e271f02d69e1465a30dfb2952c103ada61864f41b231e4a27146d",
+      "bytes": 911643028
+    },
+    {
+      "episode": 18,
+      "sha256": "cb480cae3ddd79bd1b27a9d1e3b0363ebf6b51f435b9f7783615f1443d78b4b1",
+      "bytes": 1703184778
+    },
+    {
+      "episode": 21,
+      "sha256": "e5c826b713f383d8c864c81e0e52d60a1a963734db1b693e02da1134e8def2a8",
+      "bytes": 879936495
+    },
+    {
+      "episode": 22,
+      "sha256": "eb204ed9b9dbbca3324272fb67c897353fd3975a8dca55df45229a1d351365b1",
+      "bytes": 891353606
+    },
+    {
+      "episode": 23,
+      "sha256": "16e1565baadc06a7617f6fa97ff7a12f4ba8a58cdbfce77a1b504747fefa38bc",
+      "bytes": 1569227983
+    },
+    {
+      "episode": 24,
+      "sha256": "93d1e4fc568dce055dca7b65f566708dcc3baa3ddd031150347fe8fc91a5c30e",
+      "bytes": 1320026075
+    },
+    {
+      "episode": 26,
+      "sha256": "d641e53a67a023b0a97f13c090df52a6b813c8e159e8023028b8ac0f9740431b",
+      "bytes": 750570010
+    },
+    {
+      "episode": 39,
+      "sha256": "cb9320e7e196c09d6db818de70894bad39a10e6422ae2a95e721e1aaa221b58d",
+      "bytes": 1437248585
+    }
+  ],
+  "current_cpu_tests": {
+    "passed": 91,
+    "skipped": 0,
+    "scope": "CPU contracts, synthetic geometry and actual invalid-camera regression, not native acceptance"
+  },
+  "final_acceptance_required_episodes": [
+    0,
+    2,
+    11,
+    12,
+    13,
+    18,
+    21,
+    22,
+    23,
+    24,
+    26,
+    27,
+    31,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45
+  ],
+  "limitations": [
+    "No independent per-frame hand/contact accuracy or robot-training success claimed",
+    "Sampled visual assessment and full video playback accompany full geometry/contact integrity checks",
+    "Final all20 audits, every episode review and every verified private backup remain required",
+    "Licensed MANO, public weights, raw footage, videos and complete private checkpoints are not distributed in Git"
+  ]
+}

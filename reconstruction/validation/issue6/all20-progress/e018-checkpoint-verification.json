@@ -1,0 +1,64 @@
+{
+  "episode": 18,
+  "status": "complete_private_checkpoint_verified",
+  "archive_bytes": 1703184778,
+  "archive_sha256": "cb480cae3ddd79bd1b27a9d1e3b0363ebf6b51f435b9f7783615f1443d78b4b1",
+  "compressed_stream_fully_read": true,
+  "member_hashes_verified": 12913,
+  "uncompressed_bytes": 4603062001,
+  "stages_verified": {
+    "validate": 1,
+    "hands": 1383,
+    "depth": 354,
+    "align": 2418,
+    "contacts": 3,
+    "report": 358
+  },
+  "implementation_files_verified": 12,
+  "archived_locked_inputs_verified": 3855,
+  "external_dependencies_verified": [
+    {
+      "remote_path": "/workspace/hamer-weights/_DATA/hamer_ckpts/checkpoints/hamer.ckpt",
+      "bytes": 2689536166,
+      "sha256": "e5cc06f294d88a92dee24e603480aab04de532b49f0e08200804ee7d90e16f53"
+    },
+    {
+      "remote_path": "/workspace/mano/models/LICENSE.txt",
+      "bytes": 4330,
+      "sha256": "75fc4da03259504ce9a4ed2418ab98dd59647add7ff95e7691c4d55fb0e3cf63"
+    },
+    {
+      "remote_path": "/workspace/mano/models/MANO_LEFT.pkl",
+      "bytes": 3821391,
+      "sha256": "c4022f7083f2ca7c78b2b3d595abbab52debd32b09d372b16923a801f0ea6a30"
+    },
+    {
+      "remote_path": "/workspace/mano/models/MANO_RIGHT.pkl",
+      "bytes": 3821356,
+      "sha256": "45d60aa3b27ef9107a7afd4e00808f307fd91111e1cfa35afd5c4a62de264767"
+    },
+    {
+      "remote_path": "/workspace/pr32-models/detector.pt",
+      "bytes": 53582271,
+      "sha256": "5ef3df44e42d2db52d4ffe91f83a22ce9925e2acc9abebf453f2c5d22e380033"
+    },
+    {
+      "remote_path": "/workspace/pr32-models/sam2.1_hiera_large.pt",
+      "bytes": 898083611,
+      "sha256": "2647878d5dfa5098f2f8649825738a9345572bae2d4350a2468587ece47dd318"
+    },
+    {
+      "remote_path": "/workspace/track3/public/mesh/mini_dust_pan/mini_dust_pan.glb",
+      "bytes": 8492620,
+      "sha256": "6358b4f913fd8164a797b9375948cd09d47c5e60abcef0843fe43af5109737e3"
+    },
+    {
+      "remote_path": "/workspace/track3/public/mesh/mini_sweeper/mini_sweeper_visual.glb",
+      "bytes": 8378616,
+      "sha256": "5aa3af228ce53d0fc2e8252391aeb09930535d66f7af9129ff2dd6edf55bb216"
+    }
+  ],
+  "locked_input_supplement_verified": null,
+  "configuration_sha256": "8324ef1c2eb573159a86763dbcca2b73f03e1ab03a1b174310321a60a56679cb",
+  "visual_receipt_sha256": "8e49664b7fcf7f624627729b8b9b757e9e0c4073599314f3dda585bf29c916fe"
+}

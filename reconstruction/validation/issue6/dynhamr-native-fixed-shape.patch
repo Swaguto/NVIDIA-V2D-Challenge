@@ -1,0 +1,61 @@
+diff --git a/dyn-hamr/optim/base_scene.py b/dyn-hamr/optim/base_scene.py
+index 185baef..f358294 100644
+--- a/dyn-hamr/optim/base_scene.py
++++ b/dyn-hamr/optim/base_scene.py
+@@ -15,7 +15,7 @@ from util.tensor import move_to, detach_all
+ 
+ # from .helpers import estimate_initial_trans
+ from .params import CameraParams
+-import mano
++# Unused optional mano import omitted
+ 
+ J_HAND = len(MANO_JOINTS) - 1  # no root
+ 
+diff --git a/dyn-hamr/optim/losses.py b/dyn-hamr/optim/losses.py
+index 5e07631..669cdb3 100644
+--- a/dyn-hamr/optim/losses.py
++++ b/dyn-hamr/optim/losses.py
+@@ -370,7 +370,7 @@ class RootLoss(StageLoss):
+         self.joints2d_loss = Joints2DLoss(ignore_op_joints, joints2d_sigma)
+         self.points3d_loss = Points3DLoss(use_chamfer, robust_loss, robust_tuning_const)
+         self.inter_penetration_loss = GeneralContactLoss(faces)
+-        self.bio_loss = BMCLoss(lambda_bl=1, lambda_rb=1, lambda_a=1)
++        self.bio_loss = BMCLoss(lambda_bl=1, lambda_rb=1, lambda_a=1) if loss_weights["bio"] > 0 else None
+ 
+     def forward(self, observed_data, pred_data, valid_mask=None):
+         """
+diff --git a/dyn-hamr/optim/optimizers.py b/dyn-hamr/optim/optimizers.py
+index a524d71..a73212c 100644
+--- a/dyn-hamr/optim/optimizers.py
++++ b/dyn-hamr/optim/optimizers.py
+@@ -436,6 +436,9 @@ class SmoothOptimizer(StageOptimizer):
+         **kwargs,
+     ):
+         param_names = ["trans", "root_orient", "betas", "latent_pose"]
++        import os
++        if os.environ.get("V2D_OPT_HAND_SHAPE", "1") == "0":
++            param_names.remove("betas")
+         if model.opt_scale:
+             param_names += ["world_scale"]
+         if model.opt_cams:
+diff --git a/dyn-hamr/run_opt.py b/dyn-hamr/run_opt.py
+index 8362b5c..46cf7f2 100644
+--- a/dyn-hamr/run_opt.py
++++ b/dyn-hamr/run_opt.py
+@@ -48,10 +48,13 @@ sys.path.append('src/human_body_prior')
+ sys.path.append('HMP/')
+ # print(sys.path)
+ # print(torch.cuda.memory_summary())
+-from HMP.fitting import run_prior
++# Native compatibility: optional HMP disabled
++# from HMP.fitting import run_prior
+ 
+-from human_body_prior.tools.model_loader import load_model
+-from human_body_prior.models.vposer_model import VPoser
++# Native compatibility: optional HMP disabled
++# from human_body_prior.tools.model_loader import load_model
++# Native compatibility: optional HMP disabled
++# from human_body_prior.models.vposer_model import VPoser
+ 
+ def set_seed(seed=42):
+     """

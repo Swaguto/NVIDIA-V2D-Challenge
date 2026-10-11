@@ -1,0 +1,233 @@
+{
+  "episode": 22,
+  "status": "failed_visible_grasp_metrics",
+  "configuration_sha256": "c615c91f2279963e319cecf6c9d135c926b28490266e2e3db7bcc4f214926840",
+  "source_annotation_sha256": "00a116ca6cf1dd48a939371420dd0fd3faac937e14f1bca9260e329ffc60fa81",
+  "contacts_sha256": "a87227348b28813c1939a5940e682d4012ba2add61cafe9d0278c7b1275dd368",
+  "private_metrics_receipt_sha256": "ad0e6dc0c37031ac98e9de918eb47aaeadad0271d1bdebb8773e2ae2ebff2878",
+  "source_frames_sequentially_reviewed": 189,
+  "source_event_and_border_closeup_sheets_reviewed": 8,
+  "normal_speed_review_completed": false,
+  "quality_acceptance": false,
+  "complete_grasp_visible_metrics": [
+    {
+      "grasp_id": "left_cup_lift_hold_place",
+      "hand": "left",
+      "object_id": "blue_cup",
+      "full_source_extent_frames": 139,
+      "eligible_visible_or_ambiguous_frames": 139,
+      "source_confirmed_not_visible_frames": 0,
+      "supported_frames": 139,
+      "raw_contact_frames": 137,
+      "usable_fraction": 1.0,
+      "raw_contact_fraction": 0.9856115107913669,
+      "longest_unsupported_visible_gap": null,
+      "status": "metrics_passed_requires_geometry_and_event_review",
+      "quality_acceptance": false
+    },
+    {
+      "grasp_id": "right_pitcher_lift_tilt_place",
+      "hand": "right",
+      "object_id": "water_pitcher",
+      "full_source_extent_frames": 120,
+      "eligible_visible_or_ambiguous_frames": 96,
+      "source_confirmed_not_visible_frames": 24,
+      "supported_frames": 39,
+      "raw_contact_frames": 25,
+      "usable_fraction": 0.40625,
+      "raw_contact_fraction": 0.2604166666666667,
+      "longest_unsupported_visible_gap": {
+        "start_frame": 82,
+        "end_frame": 104,
+        "frames": 23,
+        "seconds": 1.135571002960205
+      },
+      "status": "failed_metrics",
+      "quality_acceptance": false
+    }
+  ],
+  "hidden_hold_exclusions": [
+    {
+      "hand": "right",
+      "object_id": "water_pitcher",
+      "start_frame": 58,
+      "end_frame": 81,
+      "reason": "All full source frames and original-pixel rightmost320px crops58-81 show the pitcher/handle reaching beyond the right/top image boundary with no identifiable wearer-hand pixels. Hand geometry/contact remain unknown. This is not a release label."
+    }
+  ],
+  "visibility_boundary_frames_conservatively_included": [
+    56,
+    57,
+    82,
+    83
+  ],
+  "continuous_visible_segments": [
+    {
+      "interval_id": "left_cup_full_visible_hold",
+      "hand": "left",
+      "object_id": "blue_cup",
+      "start_frame": 7,
+      "end_frame": 145,
+      "eligible_frames": 139,
+      "supported_frames": 139,
+      "raw_contact_frames": 137,
+      "usable_fraction": 1.0,
+      "raw_contact_fraction": 0.9856115107913669,
+      "longest_unsupported_gap": null,
+      "status": "metrics_passed_requires_geometry_and_event_review",
+      "failure_causes": {
+        "interval_id": "left_cup_full_visible_hold",
+        "unsupported_frames": 0,
+        "primary_causes": {},
+        "missing_direct_observation_frames": [],
+        "direct_observation_alignment_failure_frames": []
+      }
+    },
+    {
+      "interval_id": "right_pitcher_before_invisibility",
+      "hand": "right",
+      "object_id": "water_pitcher",
+      "start_frame": 26,
+      "end_frame": 57,
+      "eligible_frames": 32,
+      "supported_frames": 16,
+      "raw_contact_frames": 14,
+      "usable_fraction": 0.5,
+      "raw_contact_fraction": 0.4375,
+      "longest_unsupported_gap": {
+        "start_frame": 45,
+        "end_frame": 57,
+        "frames": 13,
+        "seconds": 0.6418442726135254
+      },
+      "status": "failed_metrics",
+      "failure_causes": {
+        "interval_id": "right_pitcher_before_invisibility",
+        "unsupported_frames": 16,
+        "primary_causes": {
+          "no_direct_wearer_observation": 16
+        },
+        "missing_direct_observation_frames": [
+          39,
+          40,
+          41,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57
+        ],
+        "direct_observation_alignment_failure_frames": []
+      }
+    },
+    {
+      "interval_id": "right_pitcher_after_reentry",
+      "hand": "right",
+      "object_id": "water_pitcher",
+      "start_frame": 82,
+      "end_frame": 145,
+      "eligible_frames": 64,
+      "supported_frames": 23,
+      "raw_contact_frames": 11,
+      "usable_fraction": 0.359375,
+      "raw_contact_fraction": 0.171875,
+      "longest_unsupported_gap": {
+        "start_frame": 82,
+        "end_frame": 104,
+        "frames": 23,
+        "seconds": 1.135571002960205
+      },
+      "status": "failed_metrics",
+      "failure_causes": {
+        "interval_id": "right_pitcher_after_reentry",
+        "unsupported_frames": 41,
+        "primary_causes": {
+          "no_direct_wearer_observation": 41
+        },
+        "missing_direct_observation_frames": [
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          108,
+          110,
+          111,
+          114,
+          124,
+          125,
+          126,
+          127,
+          128,
+          129,
+          130,
+          131,
+          132,
+          133,
+          135,
+          137,
+          138,
+          139
+        ],
+        "direct_observation_alignment_failure_frames": []
+      }
+    }
+  ],
+  "separated_source_event_checks": [
+    {
+      "hand": "left",
+      "object_id": "blue_cup",
+      "start_frame": 147,
+      "end_frame": 188,
+      "source_observation": "Hand is visibly separated from its previously held object.",
+      "raw_contact_frames": [],
+      "window_contact_frames": [],
+      "bridged_frames": []
+    },
+    {
+      "hand": "right",
+      "object_id": "water_pitcher",
+      "start_frame": 147,
+      "end_frame": 188,
+      "source_observation": "Hand is visibly separated from its previously held object.",
+      "raw_contact_frames": [],
+      "window_contact_frames": [],
+      "bridged_frames": []
+    }
+  ],
+  "source_confirmed_not_visible_right_hand_audit": {
+    "start_frame": 58,
+    "end_frame": 81,
+    "rows": 120,
+    "supported_frames": [],
+    "raw_contact_frames": [],
+    "bridged_frames": []
+  },
+  "scope": "The left cup grasp passes numerical coverage after automatic mask repair. The visible right pitcher grasp still fails, with 57 unsupported frames caused by missing direct wearer observations. Only source-confirmed invisible frames are excluded. Complete geometry/event review remains required; this is not contact ground truth."
+}

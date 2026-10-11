@@ -1,0 +1,414 @@
+{
+  "source_sha256": "3fbbe6f4d4e2e596c6de075ae12df6bdf32ca14b53753db7fb590793723d8cb7",
+  "scope": "Frozen prediction diagnostics; one-object RPE is identically zero and not a pose-quality score",
+  "episodes": [
+    {
+      "episode": 0,
+      "frames": 373,
+      "objects": [
+        "white_pot",
+        "white_pot_lid"
+      ],
+      "diagnostic_metrics": {
+        "add_auc": 0.738941018766756,
+        "spider_sr": 1.0,
+        "maniptrans_sr": 0.0,
+        "rpe_cm": 0.8648424936910306,
+        "mppe_cm": 2.9233376658856973
+      },
+      "raw_observed_coverage": {
+        "white_pot": 0.6729222520107239,
+        "white_pot_lid": 1.0
+      },
+      "reference_visible_coverage": 1.0,
+      "score_sha256": "6d96aeac4ae090ba0b33f08d2675f2cc46d8e9aa675b476f2307c8c7dc0c3500"
+    },
+    {
+      "episode": 2,
+      "frames": 343,
+      "objects": [
+        "white_pot",
+        "white_pot_lid"
+      ],
+      "diagnostic_metrics": {
+        "add_auc": 0.8599672011661808,
+        "spider_sr": 1.0,
+        "maniptrans_sr": 1.0,
+        "rpe_cm": 0.8142539136716899,
+        "mppe_cm": 2.011721417439245
+      },
+      "raw_observed_coverage": {
+        "white_pot": 0.8309037900874635,
+        "white_pot_lid": 1.0
+      },
+      "reference_visible_coverage": 1.0,
+      "score_sha256": "7aea8f178845697aade8ccd045630b1fb0cf4ac3b6e6150bd40358bc6a92a4eb"
+    },
+    {
+      "episode": 11,
+      "frames": 137,
+      "objects": [
+        "beige_cup",
+        "blue_cup"
+      ],
+      "diagnostic_metrics": {
+        "add_auc": 0.6886405109489051,
+        "spider_sr": 1.0,
+        "maniptrans_sr": 0.0,
+        "rpe_cm": 2.377328371804912,
+        "mppe_cm": 3.3623341184376763
+      },
+      "raw_observed_coverage": {
+        "beige_cup": 1.0,
+        "blue_cup": 1.0
+      },
+      "reference_visible_coverage": 1.0,
+      "score_sha256": "6ca5cd272576939928c998ae2ea762fd908d1cf880be911ae94f1efbae98262b"
+    },
+    {
+      "episode": 12,
+      "frames": 181,
+      "objects": [
+        "blue_cup",
+        "plastic_dish_rack"
+      ],
+      "diagnostic_metrics": {
+        "add_auc": 0.8454765193370166,
+        "spider_sr": 1.0,
+        "maniptrans_sr": 1.0,
+        "rpe_cm": 2.3838497002119365,
+        "mppe_cm": 2.071603937862131
+      },
+      "raw_observed_coverage": {
+        "blue_cup": 1.0,
+        "plastic_dish_rack": 1.0
+      },
+      "reference_visible_coverage": 1.0,
+      "score_sha256": "ec93ac74e42b53df0d987c5f078484f455b3944666eacf8c93238169cd9cb6b1",
+      "score_source": "Matched continuous-CAD episode12 baseline; final CAD input tree links these same observed poses"
+    },
+    {
+      "episode": 13,
+      "frames": 190,
+      "objects": [
+        "blue_cup",
+        "plastic_dish_rack"
+      ],
+      "diagnostic_metrics": {
+        "add_auc": 0.9274671052631579,
+        "spider_sr": 1.0,
+        "maniptrans_sr": 1.0,
+        "rpe_cm": 1.3077909776301788,
+        "mppe_cm": 1.3599272087257497
+      },
+      "raw_observed_coverage": {
+        "blue_cup": 1.0,
+        "plastic_dish_rack": 1.0
+      },
+      "reference_visible_coverage": 1.0,
+      "score_sha256": "f4c0eed9f508c9545bc263ecde218ba63f413b90080d9be07863e391255dd6c9"
+    },
+    {
+      "episode": 18,
+      "frames": 353,
+      "objects": [
+        "mini_dust_pan",
+        "mini_sweeper"
+      ],
+      "diagnostic_metrics": {
+        "add_auc": 0.7740793201133145,
+        "spider_sr": 1.0,
+        "maniptrans_sr": 1.0,
+        "rpe_cm": 0.7289366385296374,
+        "mppe_cm": 2.817670073787585
+      },
+      "raw_observed_coverage": {
+        "mini_dust_pan": 1.0,
+        "mini_sweeper": 1.0
+      },
+      "reference_visible_coverage": 1.0,
+      "score_sha256": "a4635e5bcb1cb4e22f806761fcb286f2e9bf15a715340a05edb3379db4a0d514"
+    },
+    {
+      "episode": 21,
+      "frames": 186,
+      "objects": [
+        "blue_cup",
+        "water_pitcher"
+      ],
+      "diagnostic_metrics": {
+        "add_auc": 0.7143817204301075,
+        "spider_sr": 1.0,
+        "maniptrans_sr": 0.0,
+        "rpe_cm": 2.383077413123052,
+        "mppe_cm": 3.071815276775945
+      },
+      "raw_observed_coverage": {
+        "blue_cup": 1.0,
+        "water_pitcher": 1.0
+      },
+      "reference_visible_coverage": 1.0,
+      "score_sha256": "cfa44e1a9a516a5607708e4a93d422d0651e626f131696d97d7a65dcd2c6e9f9"
+    },
+    {
+      "episode": 22,
+      "frames": 189,
+      "objects": [
+        "blue_cup",
+        "water_pitcher"
+      ],
+      "diagnostic_metrics": {
+        "add_auc": 0.8774801587301587,
+        "spider_sr": 1.0,
+        "maniptrans_sr": 1.0,
+        "rpe_cm": 2.3634356144988864,
+        "mppe_cm": 2.0127068179059857
+      },
+      "raw_observed_coverage": {
+        "blue_cup": 1.0,
+        "water_pitcher": 1.0
+      },
+      "reference_visible_coverage": 1.0,
+      "score_sha256": "298b91774e3cecb0ee815b75c49f42340bd03766c283c3929a08a8525baffe7b"
+    },
+    {
+      "episode": 23,
+      "frames": 325,
+      "objects": [
+        "wooden_piece_1",
+        "wooden_piece_2"
+      ],
+      "diagnostic_metrics": {
+        "add_auc": 0.7886538461538461,
+        "spider_sr": 1.0,
+        "maniptrans_sr": 1.0,
+        "rpe_cm": 0.5584385456208659,
+        "mppe_cm": 2.5890879284994925
+      },
+      "raw_observed_coverage": {
+        "wooden_piece_1": 1.0,
+        "wooden_piece_2": 1.0
+      },
+      "reference_visible_coverage": 1.0,
+      "score_sha256": "cb908ecbb7a13c55a5edded4ac42c6101b1c65175c3553e5ec3e3e0791260ef2"
+    },
+    {
+      "episode": 24,
+      "frames": 275,
+      "objects": [
+        "wooden_piece_1",
+        "wooden_piece_2"
+      ],
+      "diagnostic_metrics": {
+        "add_auc": 0.5814772727272728,
+        "spider_sr": 1.0,
+        "maniptrans_sr": 0.0,
+        "rpe_cm": 0.8133044209704111,
+        "mppe_cm": 4.283615534909091
+      },
+      "raw_observed_coverage": {
+        "wooden_piece_1": 1.0,
+        "wooden_piece_2": 1.0
+      },
+      "reference_visible_coverage": 1.0,
+      "score_sha256": "9dbe459bd7b38fac05c01fd2eec4bab2cefd89b44712cac0288086740ee33669"
+    },
+    {
+      "episode": 26,
+      "frames": 158,
+      "objects": [
+        "plastic_dish_rack",
+        "white_pot"
+      ],
+      "diagnostic_metrics": {
+        "add_auc": 0.9501582278481012,
+        "spider_sr": 1.0,
+        "maniptrans_sr": 1.0,
+        "rpe_cm": 1.5884241557057632,
+        "mppe_cm": 1.1129573999931193
+      },
+      "raw_observed_coverage": {
+        "plastic_dish_rack": 1.0,
+        "white_pot": 1.0
+      },
+      "reference_visible_coverage": 1.0,
+      "score_sha256": "2dea85c2796970eae29f854ee08af2c3e93f6093841581a851d76f79ba9b6091"
+    },
+    {
+      "episode": 27,
+      "frames": 246,
+      "objects": [
+        "plastic_dish_rack",
+        "white_pot"
+      ],
+      "diagnostic_metrics": {
+        "add_auc": 0.8883384146341463,
+        "spider_sr": 1.0,
+        "maniptrans_sr": 1.0,
+        "rpe_cm": 1.2849259997358922,
+        "mppe_cm": 1.7831121368573024
+      },
+      "raw_observed_coverage": {
+        "plastic_dish_rack": 1.0,
+        "white_pot": 1.0
+      },
+      "reference_visible_coverage": 1.0,
+      "score_sha256": "8bc25cd54a1a473c0ba7c84a379ead5c99af1e1d27021c74e3907cd07c156fe2"
+    },
+    {
+      "episode": 31,
+      "frames": 290,
+      "objects": [
+        "mini_sweeper",
+        "plastic_dish_rack"
+      ],
+      "diagnostic_metrics": {
+        "add_auc": 0.7466594827586207,
+        "spider_sr": 1.0,
+        "maniptrans_sr": 0.0,
+        "rpe_cm": 1.3546201061197558,
+        "mppe_cm": 2.604474648106154
+      },
+      "raw_observed_coverage": {
+        "mini_sweeper": 1.0,
+        "plastic_dish_rack": 1.0
+      },
+      "reference_visible_coverage": 1.0,
+      "score_sha256": "d5e9451b80e4f92555369807820a3581f25f97a9e33954de75867a15c56cfe7f"
+    },
+    {
+      "episode": 39,
+      "frames": 319,
+      "objects": [
+        "mini_dust_pan"
+      ],
+      "diagnostic_metrics": {
+        "add_auc": 0.5668103448275862,
+        "spider_sr": 1.0,
+        "maniptrans_sr": 0.0,
+        "rpe_cm": 0.0,
+        "mppe_cm": 4.366723841260924
+      },
+      "raw_observed_coverage": {
+        "mini_dust_pan": 1.0
+      },
+      "reference_visible_coverage": 1.0,
+      "score_sha256": "df28cb5102677da71cb773965901947f97612af2bcbf9c208fe966268b453dff"
+    },
+    {
+      "episode": 40,
+      "frames": 260,
+      "objects": [
+        "mini_dust_pan"
+      ],
+      "diagnostic_metrics": {
+        "add_auc": 0.8524038461538461,
+        "spider_sr": 1.0,
+        "maniptrans_sr": 1.0,
+        "rpe_cm": 0.0,
+        "mppe_cm": 2.127658709963156
+      },
+      "raw_observed_coverage": {
+        "mini_dust_pan": 1.0
+      },
+      "reference_visible_coverage": 1.0,
+      "score_sha256": "e7294b1c2a86db8985b932f388e03e5f01db0958377750db9c99ea316e293363"
+    },
+    {
+      "episode": 41,
+      "frames": 299,
+      "objects": [
+        "white_pot"
+      ],
+      "diagnostic_metrics": {
+        "add_auc": 0.6787207357859532,
+        "spider_sr": 1.0,
+        "maniptrans_sr": 0.0,
+        "rpe_cm": 0.0,
+        "mppe_cm": 3.5316660132438864
+      },
+      "raw_observed_coverage": {
+        "white_pot": 1.0
+      },
+      "reference_visible_coverage": 1.0,
+      "score_sha256": "3a93b928ed00571ad79814d03fbe01a4c2dd1291b07638d2ac12c452541ee13e"
+    },
+    {
+      "episode": 42,
+      "frames": 257,
+      "objects": [
+        "white_pot"
+      ],
+      "diagnostic_metrics": {
+        "add_auc": 0.5566634241245136,
+        "spider_sr": 1.0,
+        "maniptrans_sr": 0.0,
+        "rpe_cm": 0.0,
+        "mppe_cm": 4.4198210932834705
+      },
+      "raw_observed_coverage": {
+        "white_pot": 1.0
+      },
+      "reference_visible_coverage": 1.0,
+      "score_sha256": "78c8f78539b5c6b3256882ec124787fca7c9085f680f448b50903a21e24b7967"
+    },
+    {
+      "episode": 43,
+      "frames": 326,
+      "objects": [
+        "white_pot"
+      ],
+      "diagnostic_metrics": {
+        "add_auc": 0.7910276073619632,
+        "spider_sr": 1.0,
+        "maniptrans_sr": 1.0,
+        "rpe_cm": 0.0,
+        "mppe_cm": 2.6179266814683992
+      },
+      "raw_observed_coverage": {
+        "white_pot": 1.0
+      },
+      "reference_visible_coverage": 1.0,
+      "score_sha256": "f6ba78063d2dd22255636273e993530d5bf2b45ed4089d3b78109f4e3e34d2e2"
+    },
+    {
+      "episode": 44,
+      "frames": 249,
+      "objects": [
+        "white_pot"
+      ],
+      "diagnostic_metrics": {
+        "add_auc": 0.6982931726907631,
+        "spider_sr": 1.0,
+        "maniptrans_sr": 0.0,
+        "rpe_cm": 0.0,
+        "mppe_cm": 3.27864421853415
+      },
+      "raw_observed_coverage": {
+        "white_pot": 1.0
+      },
+      "reference_visible_coverage": 1.0,
+      "score_sha256": "a0050aa33be333878168871b170c9e2bebea551ff1195f860ab445d3877bf6ef"
+    },
+    {
+      "episode": 45,
+      "frames": 290,
+      "objects": [
+        "white_pot"
+      ],
+      "diagnostic_metrics": {
+        "add_auc": 0.7252155172413793,
+        "spider_sr": 1.0,
+        "maniptrans_sr": 0.0,
+        "rpe_cm": 0.0,
+        "mppe_cm": 3.0871996584295083
+      },
+      "raw_observed_coverage": {
+        "white_pot": 1.0
+      },
+      "reference_visible_coverage": 1.0,
+      "score_sha256": "e981b3e4505303a4099e55e5fb71b9b2882bce3704ec3c27a4fd4e4e92d7b73a"
+    }
+  ],
+  "score_reports_available": 20
+}

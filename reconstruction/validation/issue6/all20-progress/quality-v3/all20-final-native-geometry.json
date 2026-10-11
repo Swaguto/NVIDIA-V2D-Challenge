@@ -1,0 +1,154 @@
+{
+  "completed_at": "2026-10-07T07:15:57.576705+00:00",
+  "status": "all20_precise_native_geometry_passed",
+  "probe_source_sha256": "1b6e95b111d44f401cdd477b7f8ce06495a886636ec6e9a54657eb88b6efaba1",
+  "native_reference_dtype": "float64",
+  "actual_worker_dtype": "float32",
+  "unchanged_tolerance_m": 1e-05,
+  "purpose": "Independent native geometry convention audit; not ground-truth accuracy or visual acceptance",
+  "episodes": [
+    {
+      "episode": 0,
+      "configuration_sha256": "6896d47c61923b45abf486f9de5ad0751de01a92ea75069cbe2ae0fe0d187dca",
+      "geometry_checks": 564,
+      "maximum_vertex_error_m": 7.591685830434354e-08,
+      "receipt_sha256": "185d2dcb77f1ab1ba4a4dc8774795c73dda67efae637eae469f2875ef0ba428b"
+    },
+    {
+      "episode": 2,
+      "configuration_sha256": "5b024a2555301de97936e5d41809b72de4ba7d21981d1e1acf9fbc0a712686c2",
+      "geometry_checks": 676,
+      "maximum_vertex_error_m": 1.0904112083976477e-07,
+      "receipt_sha256": "d0ecd55d4f2be5eb1bbb1f9e09b0f0e56edb4cab2374fc315c4d87c280540ba1"
+    },
+    {
+      "episode": 11,
+      "configuration_sha256": "1b77cb7eacadcdf2c5b683259c527f915340cb7cea1710343dcbbb19ceaad361",
+      "geometry_checks": 274,
+      "maximum_vertex_error_m": 7.66823051573399e-08,
+      "receipt_sha256": "8a79329f337c14a31ad4262df87c9ab0f7e9c5acfa2c57f74dbee11dec78845c"
+    },
+    {
+      "episode": 12,
+      "configuration_sha256": "44c116d2a31be7b878812f4472d031fd67af189ebc9c5fdf26a6c89082af9477",
+      "geometry_checks": 362,
+      "maximum_vertex_error_m": 9.38292960025702e-08,
+      "receipt_sha256": "c51ce07257a74cadb87ebcd4f1ef866ff54d2cf6c4a9142b6d372b8bff81a6d3"
+    },
+    {
+      "episode": 13,
+      "configuration_sha256": "af84e051ae887cf6b7bf621cd6fc4f9b4e369f495f1cbded2c6b19a76e504d03",
+      "geometry_checks": 380,
+      "maximum_vertex_error_m": 7.88011311560051e-08,
+      "receipt_sha256": "7b1aaff8fc87b41174c2cc12f0228c3bcaf953adff876312959bab3ccfa7d18e"
+    },
+    {
+      "episode": 18,
+      "configuration_sha256": "279cfdf17ecf93dda1d0998bfdc51f52838b7c90d54465daf2705df5abf90fac",
+      "geometry_checks": 706,
+      "maximum_vertex_error_m": 1.0975807194894569e-07,
+      "receipt_sha256": "b6e779dca0af250178e974b706469e52ee2438b05f246e59078673badc32401b"
+    },
+    {
+      "episode": 21,
+      "configuration_sha256": "9efe0e72a034d2fceb424d15ca41cff3f048aa154b5a0ec9c3b39009d10edeee",
+      "geometry_checks": 372,
+      "maximum_vertex_error_m": 9.794637877227765e-08,
+      "receipt_sha256": "c1cf1ae616aea1ffee12693c46ad023c5890ed6122f53bb52f8c776950b3c1d1"
+    },
+    {
+      "episode": 22,
+      "configuration_sha256": "28fe7c26df8d160f545332d20e1820fa9bfd410225cd2319ed0e1b315ea83dcc",
+      "geometry_checks": 378,
+      "maximum_vertex_error_m": 8.690836726143258e-08,
+      "receipt_sha256": "d65e06c96cf98e9fdac01a384212f7de28c3cae2e8cb5380445986150580ed09"
+    },
+    {
+      "episode": 23,
+      "configuration_sha256": "1d5d433d0991c1d2555363912ff96c7eab29a7174f295f00412c317e454b870a",
+      "geometry_checks": 650,
+      "maximum_vertex_error_m": 6.841138955026503e-08,
+      "receipt_sha256": "324752d5cc53cd6c0fd009c0fc3b882f04e246a41a9a1b76315d85bac1a24bd5"
+    },
+    {
+      "episode": 24,
+      "configuration_sha256": "2d8dbd48f471b3a366731d63500e1407ec1e7f2dc494450cfa16d2e6bcf48046",
+      "geometry_checks": 550,
+      "maximum_vertex_error_m": 9.001552866503857e-08,
+      "receipt_sha256": "f1b3928120aee759156e79083ee4b3cd5572cadc699d9d1091d181e79b3e1ba4"
+    },
+    {
+      "episode": 26,
+      "configuration_sha256": "98f4de3e3a62f6485063d1d69b05cbe35054ac53a68710bc48468a7aa8e7006d",
+      "geometry_checks": 316,
+      "maximum_vertex_error_m": 9.961073532035032e-08,
+      "receipt_sha256": "0dded5461ca5b3e3c5bd877a3f6939aca905dd921aa50ff026f0b36db4db1b3e"
+    },
+    {
+      "episode": 27,
+      "configuration_sha256": "7129bd391bcfa9e475ec89c3733ed1a53ceeb65db81c9370747a60e99c27488f",
+      "geometry_checks": 492,
+      "maximum_vertex_error_m": 9.37051002772439e-08,
+      "receipt_sha256": "85f82bd37bd6b05e47956069d8909565e3ab25f41aa25a0b63c03bfa3b5741f4"
+    },
+    {
+      "episode": 31,
+      "configuration_sha256": "ddbb72e8056c0fab6bdbe19644936cb49f860cca454e1433fa05f31ffb3a1b47",
+      "geometry_checks": 580,
+      "maximum_vertex_error_m": 1.0614177333883074e-07,
+      "receipt_sha256": "b33cd374affc9080825407b9af227973a6a2af8ee470ba60e5e012abb9998d18"
+    },
+    {
+      "episode": 39,
+      "configuration_sha256": "359579413358788eab1c864946a61b71b204c370acbbbe9381f43ddb608128aa",
+      "geometry_checks": 638,
+      "maximum_vertex_error_m": 1.1508915290816156e-07,
+      "receipt_sha256": "8929e0dde4d3e310281937e98a229263cc71f8c7b7e0bd8b3cf941e2b3d71849"
+    },
+    {
+      "episode": 40,
+      "configuration_sha256": "35f65c9180e89438c6bfcc23bbf710a23780ad13c46398418a6f940f41a79323",
+      "geometry_checks": 520,
+      "maximum_vertex_error_m": 9.985382167176183e-08,
+      "receipt_sha256": "9a8d4c0d4ee91ffdb4a2bdb0cbac0f7b15f558f32b3c8c497f10cfd847fcbf26"
+    },
+    {
+      "episode": 41,
+      "configuration_sha256": "92f88e82f92774bb3fcb6ddf0e2427ca8789829eef472732f23185dac22b46f7",
+      "geometry_checks": 598,
+      "maximum_vertex_error_m": 8.757709985420481e-08,
+      "receipt_sha256": "391ab7819287d9fb13d4180ba032524280ea91e0aa258970290bf4d3d3da101e"
+    },
+    {
+      "episode": 42,
+      "configuration_sha256": "d9b03383c01583b4c3e5c68ceac29c7980a989dda12113c59d44c0d3adff6918",
+      "geometry_checks": 514,
+      "maximum_vertex_error_m": 8.344655126700366e-08,
+      "receipt_sha256": "d8bffad6125017e7614def8b8c568939aef327f3dfac7783f2f2f59582f2d9ba",
+      "previous_configuration_sha256": "7d0ff6b01ec639effac3f72235484e1d8f86a22a60c574206098c8ce058e6acd",
+      "provenance": "Fresh post-repair geometry check; raw converted records and fixed fit retained"
+    },
+    {
+      "episode": 43,
+      "configuration_sha256": "7f6c783c9b075dd9a28e30c42f005e1f5850d4b5e25db7901925ae45c37e6a20",
+      "geometry_checks": 652,
+      "maximum_vertex_error_m": 1.1346176617871044e-07,
+      "receipt_sha256": "3b365c085e5a5d8229d8c5a0e7a2760070164a2f3a2a52d6bce0944e35e50de3"
+    },
+    {
+      "episode": 44,
+      "configuration_sha256": "856fe8b564a8744206a830845735bd9249bd9384ca9486b361f054158c7f6b59",
+      "geometry_checks": 498,
+      "maximum_vertex_error_m": 1.0281190630841909e-07,
+      "receipt_sha256": "b74197db3b7f7137f706498746c705e30d040bf1e945737ad51ce45d3ee350e0"
+    },
+    {
+      "episode": 45,
+      "configuration_sha256": "5442e3c037b6f9ea945e1632fd2aa58a9be0a83e314d32b588d193076c31d65d",
+      "geometry_checks": 580,
+      "maximum_vertex_error_m": 6.005865532881201e-08,
+      "receipt_sha256": "ff6822c3750e5b9223c4cc2f6b457292306496ffd5c0958cbcccf4ce8372df5b"
+    }
+  ],
+  "current_configurations_bound_at": "2026-10-07T08:16:21.458457+00:00"
+}

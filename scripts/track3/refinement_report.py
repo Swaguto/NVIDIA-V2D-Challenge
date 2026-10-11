@@ -324,6 +324,18 @@ def world_state(scene: dict, state: str) -> dict:
     return out
 
 
+def observation_status(provenance: dict | None, name: str, frame: int) -> str:
+    """Only explicit string labels establish observed or inferred provenance."""
+    records = (provenance or {}).get(name)
+    label = records.get(str(int(frame))) if isinstance(records, dict) else None
+    if isinstance(label, str):
+        if label.startswith("observed"):
+            return "observed"
+        if label.startswith("inferred"):
+            return "inferred"
+    return "unknown"
+
+
 def evaluate(
     scene: dict,
     contacts: list[dict] | None,
@@ -428,9 +440,9 @@ def evaluate(
                 reviewed = report.setdefault("source_reviewed_drift", {}).setdefault(name, {})
                 reviewed[s] = rest_segment_drift(o2w, surfaces[i][2], source_rest[name], frames, min_rest_len)
         if provenance is not None:
-            labels = [provenance.get(name, {}).get(str(int(f)), "unknown") for f in frames]
-            observed = np.array([label.startswith("observed") for label in labels])
-            inferred = np.array([label.startswith("inferred") for label in labels])
+            labels = [observation_status(provenance, name, f) for f in frames]
+            observed = np.array([label == "observed" for label in labels])
+            inferred = np.array([label == "inferred" for label in labels])
             report.setdefault("object_coverage", {})[name] = {
                 "observed_initialization": int(observed.sum()),
                 "inferred_initialization": int(inferred.sum()),
@@ -521,9 +533,7 @@ def export_scoring_layout(scene: dict, out: Path, episode: int, provenance: dict
             d.mkdir(parents=True, exist_ok=True)
             for t, f in enumerate(scene["frame_indices"]):
                 M = orthonormalize(st["objects"][i]["o2w"][t])
-                status = "observed"
-                if provenance is not None and not str(provenance.get(name, {}).get(str(int(f)), "observed")).startswith("observed"):
-                    status = "inferred"
+                status = observation_status(provenance, name, f)
                 (d / f"{int(f):06d}.json").write_text(json.dumps({
                     "episode": episode, "frame_index": int(f),
                     "rotation": _quat_wxyz(M[:3, :3]), "translation": M[:3, 3].tolist(), "scale": [1.0, 1.0, 1.0],
@@ -935,7 +945,7 @@ def main() -> None:
     input_manifest = json.loads(args.inputs.read_text(encoding="utf-8")) if args.inputs else None
     if input_manifest is not None and input_manifest.get("episode") != args.episode:
         raise ValueError("Input provenance is for a different episode")
-    provenance = input_manifest["object_provenance"] if input_manifest else None
+    provenance = input_manifest.get("object_provenance", {}) if input_manifest else None
     contact_truth = json.loads(args.contact_truth.read_text(encoding="utf-8")) if args.contact_truth else None
     report = evaluate(scene, contacts, args.rest_clearance, args.min_rest_len, args.penetration_m,
                       args.surface_samples, rest_annotations, provenance, contact_truth,

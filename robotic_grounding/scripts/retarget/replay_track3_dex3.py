@@ -31,12 +31,16 @@ from robotic_grounding.retarget.track3_bundle import (  # noqa: E402
     validate_bundle,
     write_json,
 )  # noqa: E402
+from robotic_grounding.retarget.track3_model_lock import (  # noqa: E402
+    verify_robot_assets,
+)
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--bundle", type=Path, required=True)
 parser.add_argument("--retarget", type=Path, required=True)
 parser.add_argument("--gate", type=Path, required=True)
 parser.add_argument("--out", type=Path, required=True)
+parser.add_argument("--allow-unlocked-legacy-model", action="store_true")
 parser.add_argument("--width", type=int, default=640)
 parser.add_argument("--height", type=int, default=480)
 AppLauncher.add_app_launcher_args(parser)
@@ -47,6 +51,11 @@ if not args.enable_cameras:
     parser.error("--enable_cameras is required for real renderer evidence")
 verified = validate_bundle(args.bundle)
 contract = json.loads((args.retarget / "manifest.json").read_text())
+assets_verified = verify_robot_assets(
+    contract,
+    REPO / "source/robotic_grounding/robotic_grounding/assets",
+    args.allow_unlocked_legacy_model,
+)
 gate_manifest = json.loads((args.gate / "manifest.json").read_text())
 if (
     contract["episode_bundle_manifest_sha256"] != verified["manifest_sha256"]
@@ -536,6 +545,8 @@ def main() -> None:
         )
     report = {
         "status": "complete kinematic renderer replay; full visual acceptance pending",
+        "robot_asset_lock_verified": assets_verified,
+        "unlocked_legacy_diagnostic": not assets_verified,
         "source_frames": len(frames),
         "decoded_video_frames": decoded_frames,
         "fps": encoded_fps,

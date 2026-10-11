@@ -1,0 +1,64 @@
+{
+  "episode": 11,
+  "status": "complete_private_checkpoint_verified",
+  "archive_bytes": 593393491,
+  "archive_sha256": "ce7ef944ad061a84b0396c16893286d41f60a499f94c4cbc277418bd2f3721ed",
+  "compressed_stream_fully_read": true,
+  "member_hashes_verified": 4855,
+  "uncompressed_bytes": 1739802420,
+  "stages_verified": {
+    "validate": 1,
+    "hands": 538,
+    "depth": 138,
+    "align": 544,
+    "contacts": 3,
+    "report": 142
+  },
+  "implementation_files_verified": 12,
+  "archived_locked_inputs_verified": 1498,
+  "external_dependencies_verified": [
+    {
+      "remote_path": "/workspace/hamer-weights/_DATA/hamer_ckpts/checkpoints/hamer.ckpt",
+      "bytes": 2689536166,
+      "sha256": "e5cc06f294d88a92dee24e603480aab04de532b49f0e08200804ee7d90e16f53"
+    },
+    {
+      "remote_path": "/workspace/mano/models/LICENSE.txt",
+      "bytes": 4330,
+      "sha256": "75fc4da03259504ce9a4ed2418ab98dd59647add7ff95e7691c4d55fb0e3cf63"
+    },
+    {
+      "remote_path": "/workspace/mano/models/MANO_LEFT.pkl",
+      "bytes": 3821391,
+      "sha256": "c4022f7083f2ca7c78b2b3d595abbab52debd32b09d372b16923a801f0ea6a30"
+    },
+    {
+      "remote_path": "/workspace/mano/models/MANO_RIGHT.pkl",
+      "bytes": 3821356,
+      "sha256": "45d60aa3b27ef9107a7afd4e00808f307fd91111e1cfa35afd5c4a62de264767"
+    },
+    {
+      "remote_path": "/workspace/pr32-models/detector.pt",
+      "bytes": 53582271,
+      "sha256": "5ef3df44e42d2db52d4ffe91f83a22ce9925e2acc9abebf453f2c5d22e380033"
+    },
+    {
+      "remote_path": "/workspace/pr32-models/sam2.1_hiera_large.pt",
+      "bytes": 898083611,
+      "sha256": "2647878d5dfa5098f2f8649825738a9345572bae2d4350a2468587ece47dd318"
+    },
+    {
+      "remote_path": "/workspace/track3/public/mesh/beige_cup/beige_cup.glb",
+      "bytes": 8238412,
+      "sha256": "63666c81013009d0c396163a34207efbc5fcf77bd3325dcfa68161017d2ddc50"
+    },
+    {
+      "remote_path": "/workspace/track3/public/mesh/blue_cup/blue_cup.glb",
+      "bytes": 8175052,
+      "sha256": "c8d97225b932cecfd9ec9e8a844df9ffe71c1944ce10580d7ea333c8f0c4ae4c"
+    }
+  ],
+  "locked_input_supplement_verified": null,
+  "configuration_sha256": "1b77cb7eacadcdf2c5b683259c527f915340cb7cea1710343dcbbb19ceaad361",
+  "visual_receipt_sha256": "4c494963fb3f94b6ec4340aa989b463eddc26e3aefc72ec4152ec453b6ef21c9"
+}

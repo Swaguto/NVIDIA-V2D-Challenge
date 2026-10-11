@@ -33,6 +33,23 @@ provenance and the proposed Issue 12 producer/consumer interface.
 
 ## Retarget with CHORD
 
+The October 11 integration revision binds new IK outputs to both Dex3 URDFs
+and every referenced visual/collision mesh using portable SHA256 records.
+Collision checks and playback refuse a different asset set before running.
+New trajectories also retain `source_hand_directly_observed` separately from
+`source_hand_valid` and `robot_valid`; none of these means pose accuracy is accepted.
+The merged refinement and reproduction tools are available in the same checkout.
+Record `git rev-parse HEAD`, the manifest hashes and the installed environment
+lock for each new result. Historical archives and their expected masks stay frozen.
+
+The older archived retarget outputs have no IK asset lock. To inspect those
+outputs with current gate/replay code, explicitly add
+`--allow-unlocked-legacy-model`. Receipts then record
+`robot_asset_lock_verified: false` and `unlocked_legacy_diagnostic: true`.
+This mode cannot establish that the robot model matches the original IK model.
+For a new baseline, rerun IK and use the default checks. The frozen archive
+measurement-reproduction command uses its own original source and needs no flag.
+
 Retrieve the Dex3 hand STL assets **and** their collision OBJ assets through Git
 LFS. An unretrieved collision mesh prevents the native Pinocchio model loading.
 

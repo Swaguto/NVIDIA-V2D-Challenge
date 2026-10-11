@@ -1,0 +1,17 @@
+{
+  "episode": 27,
+  "status": "corrected_native_reference_passed_visual_acceptance_pending",
+  "checks": 492,
+  "unchanged_tolerance_m": 1e-05,
+  "old_float32_reference_maximum_error_m": 1.4896729150512578e-05,
+  "float64_native_reference_float32_worker_maximum_error_m": 9.37051002772439e-08,
+  "corrected_probe_receipt_sha256": "85f82bd37bd6b05e47956069d8909565e3ab25f41aa25a0b63c03bfa3b5741f4",
+  "failed_probe_receipt_sha256": "ef746cc2a7495f3806c33fa2d39f18d12395a017739ef0ac554348768d9b3da3",
+  "executed_probe_source_sha256": "1b6e95b111d44f401cdd477b7f8ce06495a886636ec6e9a54657eb88b6efaba1",
+  "public_probe_source_sha256": "9f5029391dd71e1ae86e66c2b712254cf0f31d1616a9bba1224f71eea1280ac5",
+  "execution_path_adaptation": "Native root uses existing container scratch; public replay defaults to workspace",
+  "fits_CAD_wearer_contact_settings_and_twelve_locked_implementation_files_unchanged": true,
+  "failed_evidence_preserved": true,
+  "uniform_all20_precise_reference_audit": "queued",
+  "limits": "Native geometry convention consistency, not independent per-frame accuracy or visual acceptance"
+}

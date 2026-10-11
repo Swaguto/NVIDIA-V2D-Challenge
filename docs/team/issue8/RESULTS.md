@@ -9,8 +9,11 @@ pilot with a documented derived collision model. **72 source frames pass the
 open.** Passes concern this model at sampled timestamps, not physical ground
 truth, continuous motion or successful manipulation.
 
-The source revision is `6a2e24b0e09a8361d589be4d542e410a9d331e30`.
-The implementation branch is `Evc-r/issue8-episode2-pilot`, based on PR 34.
+The frozen refinement input revision is `6a2e24b0e09a8361d589be4d542e410a9d331e30`.
+The implementation branch is `Evc-r/issue8-episode2-pilot`. PR35 was retargeted
+to `main` on October 11 after PR34 merged; the branch integrates the merged
+refinement fixes and reproduction tools. See [REVIEW.md](REVIEW.md) for the
+integration review and the separate assessment of the newer recovery branch.
 This draft includes source, tests, documentation and CPU CI. Private episode
 data, derived geometry arrays, videos and archives remain outside Git. Team
 review and merge remain the integration gate.

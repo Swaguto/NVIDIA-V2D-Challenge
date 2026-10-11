@@ -1,0 +1,24 @@
+{
+  "status": "reproduced",
+  "issue": 7,
+  "archive_sha256": "686f31a8a5f571a83672b95b80c36e462940d2c12d15295e1f401ab525fb0168",
+  "python": "3.11.17 (main, Oct  6 2026, 13:34:32) [GCC 15.3.0]",
+  "source_sha256": {
+    "scripts/reproduce/checkpoint.py": "c99b0aa9976187e9f686c332ae4224850d062d45975e14f75fde6a932d5772e6",
+    "scripts/reproduce/requirements-cpu.txt": "27b71d86cb7dd00059770c752d47fdf27cfde07252cc2caf260c53df6de0dfd9",
+    "scripts/track3/refinement_report.py": "1f2836b07c4352973646b148459c1dc47cc11af9a12156921a5886e56b950172",
+    "scripts/track3/contact_validation.py": "ac6318d83d391247257e4b9d7404899e5338ff741d479e384dc1eaa1525b5d44"
+  },
+  "packages": {
+    "numpy": "1.26.4",
+    "scipy": "1.15.3",
+    "Pillow": "11.3.0",
+    "trimesh": "4.5.1",
+    "rtree": "1.3.0"
+  },
+  "absolute_float_tolerance": 1e-08,
+  "frames": 343,
+  "camera_initial_jitter_mm": 0.4809198709547093,
+  "camera_refined_jitter_mm": 0.20234134418580074,
+  "scope": "CPU metrics from frozen GPU scene; official reference scoring excluded"
+}

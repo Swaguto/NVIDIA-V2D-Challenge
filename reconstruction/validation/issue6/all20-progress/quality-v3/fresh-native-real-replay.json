@@ -1,0 +1,140 @@
+{
+  "status": "passed",
+  "completed_at": "2026-10-07T08:07:49.153372+00:00",
+  "scope": "Consolidated installer in isolated native directories, imports and bounded real-data replay",
+  "runtime_root": "/tmp/issue6-fresh-runtime",
+  "source_base_head": "a5147e48b2c1038f44222bbddf7c1c3ca87d153a",
+  "source_overlay_sha256": {
+    "recover_native_runtime.sh": "2c6c4a7ce8acc580762ac08d4767083732e0de40bc8c6e6656c0bcc9cba90496",
+    "dynhamr-native-fixed-shape.patch": "399b1e0db96d335c639bbd728b87948902b3f722f7e2067bfc31d472847a2a4b",
+    "probe_fresh_hamer.py": "8017c13d5e0728195330ec5a530f87589c4acc441ef7605c2269f2159187e7b3",
+    "vipe_stereo_cameras.py": "014229c00c8c96ac676d2b1a97c399201a367b3f623f2861b0f7ab674ef058bf",
+    "fresh_runtime_geometry_probe.py": "e382aaf1d936a311a091a9f6472e905f8b1ba81f41d2493f9b6b0a38b6254d7a",
+    "native_identity_guard.py": "4ff740ae228bfd9fc9d024497faec7b9b5be1601e5b3d52a8319a40854e7de3f"
+  },
+  "upstream_repositories": {
+    "hamer": {
+      "commit": "3a01849f4148352e9260b69bf28b65d1671a4905"
+    },
+    "Dyn-HaMR": {
+      "commit": "fa9cd7412c205fd15ee4139c8caacf79bf6167e6"
+    },
+    "Dyn-HaMR/third-party/hamer": {
+      "commit": "2a5b8ee852d87fdb56d65df7fb0e473c0d4f7648"
+    },
+    "ViPE": {
+      "commit": "fdc79359ec6d063c86b9d203ca3d7054a9636823"
+    }
+  },
+  "hamer": {
+    "status": "passed",
+    "scope": "Real HaMeR inference smoke replay; not all20 refitting or independent quality accuracy",
+    "episode": 12,
+    "completed_at": "2026-10-07T08:02:56.044216+00:00",
+    "runtime_root": "/tmp/issue6-fresh-runtime",
+    "torch_version": "2.5.1+cu124",
+    "upstream_revision": "2a5b8ee852d87fdb56d65df7fb0e473c0d4f7648",
+    "upstream_run_sha256": "29ac975f5976749d33f1d9f4e458774edab0bfa133e51daf4c7a26426e134389",
+    "probe_sha256": "8017c13d5e0728195330ec5a530f87589c4acc441ef7605c2269f2159187e7b3",
+    "saved_detections_sha256": "541cf87df8e24f4c8c1f08737469143c8210a3b903d97a7b29f4b5203cf05158",
+    "checks": [
+      {
+        "original_frame_id": 0,
+        "hands": 2,
+        "source_image_sha256": "215ad0afa9275b3fe8c8cca1b4d83767768bd8db397a9e535449d141b1d145b8",
+        "camera_shape": [
+          2,
+          3
+        ],
+        "camera_finite": true
+      },
+      {
+        "original_frame_id": 93,
+        "hands": 2,
+        "source_image_sha256": "bf043005e07dc0a356a01a4432387e0218414f7a6724604f90d4434be15138aa",
+        "camera_shape": [
+          2,
+          3
+        ],
+        "camera_finite": true
+      }
+    ],
+    "model_inputs": [
+      {
+        "path": "/workspace/hamer-weights/_DATA/hamer_ckpts/checkpoints/hamer.ckpt",
+        "bytes": 2689536166,
+        "sha256": "e5cc06f294d88a92dee24e603480aab04de532b49f0e08200804ee7d90e16f53"
+      },
+      {
+        "path": "/workspace/hamer-weights/_DATA/hamer_ckpts/model_config.yaml",
+        "bytes": 2072,
+        "sha256": "0e5eeb82752e47dfd01db8e13ccc4c5eba9bf83f53da8285523b8d3e87247aa3"
+      },
+      {
+        "path": "/workspace/hamer-weights/_DATA/data/mano/MANO_RIGHT.pkl",
+        "bytes": 3821356,
+        "sha256": "45d60aa3b27ef9107a7afd4e00808f307fd91111e1cfa35afd5c4a62de264767"
+      }
+    ],
+    "output_sha256": "eb20d11d7645b27699c3d58f7339062b921034770bb499cab53fdd062b059a31"
+  },
+  "vipe": {
+    "episode": 12,
+    "frames": 181,
+    "elapsed_s": 41.08497357368469,
+    "method": "ViPE SLAM with known rectified intrinsics and its measured-depth interface",
+    "depth_source": "calibrated left/right stereo disparity",
+    "gt_object_poses_used": false,
+    "dynamic_masks": "observed CAD masks plus enhanced-tracker hand boxes",
+    "vipe_revision": "fdc79359ec6d063c86b9d203ca3d7054a9636823",
+    "torch_version": "2.5.1+cu124",
+    "cuda_version": "12.4"
+  },
+  "vipe_droid_checkpoint": {
+    "bytes": 16061701,
+    "sha256": "46476ef64cde45a97504910d6f3de2eef7b398ec1c6e4e668815c29076024526"
+  },
+  "geometry": {
+    "checks": 362,
+    "maximum_vertex_error_m": 9.38292960025702e-08,
+    "tolerance_m": 1e-05,
+    "receipt_sha256": "fd733c1d02441851ca81a04ffabe4bcfaf9d6cfc39d2f5a02db84e58a72e6718"
+  },
+  "output_sha256": {
+    "hand-runtime-packages.txt": "480da31ed29448f35db8352d8fbee522e71efec1117909b6c340a71454cb0fdb",
+    "vipe-runtime-packages.txt": "ad9d0060b9cd1227eb8e37bca5ce555bf2b1b8ba98d5a7fef177834489329c1e",
+    "native-runtime-source.sha256": "af12b06d8e1fc2e9e827ef598a2afc0925c56a18883e71a2175f876306737e3e",
+    "real-replay/e012-native-geometry.json": "fd733c1d02441851ca81a04ffabe4bcfaf9d6cfc39d2f5a02db84e58a72e6718",
+    "real-replay/e012-vipe/cameras.npz": "a9f6fc45e61003d08b65e4ce219fc250905eeffdc5972ceae09428883513bc8f",
+    "real-replay/e012-vipe/vipe_c2w.npz": "250f0f211e83e5244f94be5410822d4f73e60b01d4ca1cb92d4121f28a68808d",
+    "real-replay/e012-vipe/receipt.json": "9e28ca45ff7f02b4dd8f142fccc6cec38bdc80caa8f7888025229c893a92cdfa",
+    "real-replay/e012-hamer/predictions.pkl": "eb20d11d7645b27699c3d58f7339062b921034770bb499cab53fdd062b059a31",
+    "real-replay/e012-hamer-fixed/predictions.pkl": "eb20d11d7645b27699c3d58f7339062b921034770bb499cab53fdd062b059a31",
+    "real-replay/e012-hamer-fixed/receipt.json": "92e2a4abdeae3ff960fbced0ab2ca1080619f027bd602aa2f59d94681463dc0f",
+    "real-replay/e012-hamer-final/predictions.pkl": "eb20d11d7645b27699c3d58f7339062b921034770bb499cab53fdd062b059a31",
+    "real-replay/e012-hamer-final/receipt.json": "da17cc79bc6b42cd8bf60cafd1424cfda35d8cbbaadc852d65b8a12b41a1d2fc",
+    "real-replay/e012-vipe-final/cameras.npz": "904d69ea57eba217eb90eb53236fb6c1ad7adeb6e3e7ce6cca5585d0fbca3752",
+    "real-replay/e012-vipe-final/vipe_c2w.npz": "590a03775ad9e1cf2b26e8fe28521ea7f1a19f9e2e3b8c77140d17632bc2a0c4",
+    "real-replay/e012-vipe-final/receipt.json": "7e66ccf4fbd44a221810b8f633182fdc7831e6c5d33dc856fc0a59dc1807f745"
+  },
+  "preserved_log_sha256": {
+    "fresh-runtime-replay.log": "57ead8ea36f5ec28bf90d83cb54cdb218a4c166081c62fef1b23b914550d8ba2",
+    "fresh-runtime-replay-dependency-failure.log": "83549ef5fb8a00166e0dc15049ce62df540e115fc9de1695881bfd9cc0375d24",
+    "fresh-runtime-replay-source-stub-failure.log": "9d6eb411dabc85693d7ab38b3c1cf64ff66cf2b667d9ba46e716c50bf54d11d8",
+    "fresh-runtime-replay-line-ending-failure.log": "603b5926f0c04b0e108a2bdc8aeacad64c34c4bdb69999fc7684419aea76459a",
+    "fresh-runtime-replay-vipe-loader-failure.log": "3192a55ea36291748471775afe32f94c558a240297fce740262a43f04d154956",
+    "fresh-runtime-real-geometry.log": "71a70e1f3bf5416632e4a74ecf8c5c41dfd66c70a3b02b963131d3c471e5ffdd",
+    "fresh-runtime-real-vipe.log": "78f312f06ef7350d69e856efe951da8e727da707c729d0e8ffa1a6ce2278172e",
+    "fresh-runtime-real-hamer.log": "1892b8e6eec3a63801c8284a1070be6a8cb80abef873e6d4b187c8ea6e7b58fa",
+    "fresh-runtime-real-hamer-mano-inventory-failure.log": "1892b8e6eec3a63801c8284a1070be6a8cb80abef873e6d4b187c8ea6e7b58fa",
+    "fresh-runtime-real-hamer-fixed.log": "1aab89ae1f7d67c2b2191d381778f00b810463f9af9b65f45e5287e48c408e9b",
+    "fresh-runtime-real-hamer-final.log": "d66946468a0ea636b0557d7661eb4d824cd0e01a6dfaf64e83f111ec064dc9a3",
+    "fresh-runtime-real-vipe-final.log": "1a87b259681baa00306b88a6f2a415fd15300d6ba6f44280f8537759dd3496dd"
+  },
+  "limitations": [
+    "Uses the pinned CUDA image and system torch through isolated venvs; not a Docker-host replay",
+    "Real HaMeR replay covers two frames/four hands, ViPE181 frames and native MANO362 checks",
+    "Does not refit all20 episodes from zero or establish independent geometry/contact accuracy",
+    "Earlier dependency, source-stub, patch-line-ending, extension-loader and probe-inventory failures remain preserved"
+  ]
+}

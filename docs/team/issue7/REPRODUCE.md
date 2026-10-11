@@ -1,5 +1,11 @@
 # Reproducing and reviewing the issue-7 pilot
 
+For a teammate starting from a clean checkout, use the
+[team reproduction guide](../reproduction/README.md). Its shared Drive pack and
+portable CPU command regenerate every non-official field of the frozen trial4
+quality report without this laptop's paths, private runtime helpers or CUDA.
+The detailed fresh-experiment instructions below retain the GPU/source distinction.
+
 Read [RESULTS.md](RESULTS.md) and [RESULTS.json](RESULTS.json) first. The frozen
 experiment used native WSL CUDA execution; the Docker CLI forwarding test does
 not validate an existing image. Rebuild `v2d_gsplat_refinement` with the updated
@@ -8,8 +14,9 @@ experiment and preserve previous runs.
 
 ## Existing laptop evidence
 
-Parent workspace:
-`C:/Users/evanc/OneDrive/Desktop/Nvidia V2D`.
+Parent workspace: the directory containing the source worktree and private
+`runs/` evidence directory. Evidence paths below and in `RESULTS.json` are
+relative to this workspace unless explicitly identified as native runtime paths.
 Source worktree: `issue7-refinement`, branch
 `Evc-r/issue7-refinement-validation`.
 
@@ -58,8 +65,11 @@ orbit/zoom/reset and looping. The saved MP4 is self-contained.
 
 The current candidate is trial4, using initialized SLAM trial2 cameras. Original
 odometry trials1/2/3 and rejected SLAM trial1 remain historical. The optimizer
-source hashes exactly match the executed run; only the final report/viewer
-display code changed later. Current viewer repairs retain the full pot/lid CAD
+source hashes in the frozen receipt match the executed run. The report/viewer
+display code changed later, and the current source also contains the subsequent
+CPU-tested frame-gap and launcher/provenance repairs described in `REVIEW.md`.
+Those repairs have not been rerun on the GPU. Current viewer repairs retain the
+full pot/lid CAD
 meshes (97,803/99,231 faces) and preserve original scene/metric hashes.
 `trial4/slam-initialization-verification.json` checks all343 source poses and
 unchanged camera-relative object/hand geometry. SLAM source/model/build pins,
@@ -103,7 +113,7 @@ initialized, retained eight keyframes, performed local BA and global passes of
 1.24 GB. Its eight keyframe median map-versus-stereo depth errors were
 0.04–0.43 mm. This is agreement with the sensor prior, not independent physical
 ground truth or a camera accuracy score. Exact private source, runtime, input,
-model and output hashes are in `runs/issue7-validation/slam-trial4/`.
+model and output hashes are in `runs/issue7-validation/slam-trial2/`.
 
 `gsplat_inputs.py --slam-camera-dir /path/to/new-slam-run/camera_c2w
 --require-slam` stages these poses. Gap-filled objects are first converted from
@@ -129,8 +139,10 @@ EPISODE=2 DATA=/path/to/public RESULTS=/path/to/reconstruction-results \
   bash scripts/track3/refine_episode.sh
 ```
 
-The launcher now requires declared independent SLAM inputs by default, including
-when reusing cached inputs. `RUN_SLAM=1 DROID_WEIGHTS=... DROID_REPO=...` runs the
+The launcher reserves a new, previously nonexistent `OUT` before any stage and
+requires declared independent SLAM inputs by default. After a failed or partial
+run, choose a new `OUT`; cached inputs and SLAM outputs are never silently reused.
+`RUN_SLAM=1 DROID_WEIGHTS=... DROID_REPO=...` runs the
 local stage first; `SLAM_PYTHON` selects its runtime. `REQUIRE_SLAM=0` explicitly
 permits an odometry diagnostic. Camera acceleration weights default to 1e6;
 all pose/shape bounds remain initialization-relative engineering priors.
@@ -152,13 +164,17 @@ coverage and regressions. A low training loss or low jitter alone is insufficien
 From the source worktree on this laptop:
 
 ```powershell
-..\.venv\Scripts\python.exe -m pytest scripts/track3/tests/test_gsplat_inputs.py scripts/track3/tests/test_refinement_report.py scripts/track3/tests/test_refinement_losses.py scripts/track3/tests/test_refinement_constraints.py scripts/track3/tests/test_refinement_docker.py scripts/track3/tests/test_contact_validation.py scripts/track3/tests/test_refinement_depth.py scripts/track3/tests/test_refinement_render_features.py -q
+..\.venv\Scripts\python.exe -m pytest scripts/track3/tests -q --strict-markers
 ```
 
-The 65-test suite includes actual CLI parsing/forwarding with a stub container;
+The original 65-test suite includes actual CLI parsing/forwarding with a stub container;
 it does not launch Docker. Targeted lint excludes inherited unrelated style
 warnings in existing optimizer modules. Those modules receive syntax checks and
 the loss/constraint behavior tests, together with separate actual GPU evidence.
+The expanded suite is run by `.github/workflows/track3_refinement_cpu.yml`.
+Run `python -m pytest scripts/track3/tests -q --strict-markers` on Linux to include
+the Bash launcher controls; those controls are skipped on Windows. Current
+validation and the distinction from the frozen GPU run are recorded in `REVIEW.md`.
 
 ## Independent contact reference
 

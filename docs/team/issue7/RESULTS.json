@@ -821,47 +821,47 @@
       "scope": "Stationary appearance on the tabletop, not independent 3D position or contact truth",
       "source_sheets": [
         {
-          "path": "C:\\Users\\evanc\\OneDrive\\Desktop\\Nvidia V2D\\runs\\pr32-validation\\all20-review\\quality-repair\\e002-source-review\\source-000108-000119.jpg",
+          "path": "runs/pr32-validation/all20-review/quality-repair/e002-source-review/source-000108-000119.jpg",
           "sha256": "ad1d2fc8d348d72db704ca50d0818ffc16e0e050cc96bc014c5ddbed98e3fa44"
         },
         {
-          "path": "C:\\Users\\evanc\\OneDrive\\Desktop\\Nvidia V2D\\runs\\pr32-validation\\all20-review\\quality-repair\\e002-source-review\\source-000120-000131.jpg",
+          "path": "runs/pr32-validation/all20-review/quality-repair/e002-source-review/source-000120-000131.jpg",
           "sha256": "eb7c07dc42d66b8de4fa9169a4021b020f554cd134a3179cbf6622def2ed5886"
         },
         {
-          "path": "C:\\Users\\evanc\\OneDrive\\Desktop\\Nvidia V2D\\runs\\pr32-validation\\all20-review\\quality-repair\\e002-source-review\\source-000132-000143.jpg",
+          "path": "runs/pr32-validation/all20-review/quality-repair/e002-source-review/source-000132-000143.jpg",
           "sha256": "75e74f561d60dcc17dddd97766b84ba54187db32af8b2f02508e254947d3cc6c"
         },
         {
-          "path": "C:\\Users\\evanc\\OneDrive\\Desktop\\Nvidia V2D\\runs\\pr32-validation\\all20-review\\quality-repair\\e002-source-review\\source-000144-000155.jpg",
+          "path": "runs/pr32-validation/all20-review/quality-repair/e002-source-review/source-000144-000155.jpg",
           "sha256": "8ceb97374c4d76c01a0899b59668263c12db19d1ad365d51a9a2348e262c1b3e"
         },
         {
-          "path": "C:\\Users\\evanc\\OneDrive\\Desktop\\Nvidia V2D\\runs\\pr32-validation\\all20-review\\quality-repair\\e002-source-review\\source-000156-000167.jpg",
+          "path": "runs/pr32-validation/all20-review/quality-repair/e002-source-review/source-000156-000167.jpg",
           "sha256": "52599799856a8526446eb0fc64cca3d73b4a0bce6be6d0b43f2a61619caa4c9f"
         },
         {
-          "path": "C:\\Users\\evanc\\OneDrive\\Desktop\\Nvidia V2D\\runs\\pr32-validation\\all20-review\\quality-repair\\e002-source-review\\source-000168-000179.jpg",
+          "path": "runs/pr32-validation/all20-review/quality-repair/e002-source-review/source-000168-000179.jpg",
           "sha256": "c44d26e8438d9c82c3426417e4814877da032ea7710f5aa7db17c5ea421c61ac"
         },
         {
-          "path": "C:\\Users\\evanc\\OneDrive\\Desktop\\Nvidia V2D\\runs\\pr32-validation\\all20-review\\quality-repair\\e002-source-review\\source-000180-000191.jpg",
+          "path": "runs/pr32-validation/all20-review/quality-repair/e002-source-review/source-000180-000191.jpg",
           "sha256": "85eb532824f8143bb15626004af1adf7d34bf9df40c36ebb347676f47e404033"
         },
         {
-          "path": "C:\\Users\\evanc\\OneDrive\\Desktop\\Nvidia V2D\\runs\\pr32-validation\\all20-review\\quality-repair\\e002-source-review\\source-000192-000203.jpg",
+          "path": "runs/pr32-validation/all20-review/quality-repair/e002-source-review/source-000192-000203.jpg",
           "sha256": "c8a58e82c2c2108f2ac75494363ad4232ebf1e5b6076477ba71e4519e201580b"
         },
         {
-          "path": "C:\\Users\\evanc\\OneDrive\\Desktop\\Nvidia V2D\\runs\\pr32-validation\\all20-review\\quality-repair\\e002-source-review\\source-000204-000215.jpg",
+          "path": "runs/pr32-validation/all20-review/quality-repair/e002-source-review/source-000204-000215.jpg",
           "sha256": "889cdc736341d724f63dea191d26d88d3618980c33e4064942a7b2d8c2e88f80"
         },
         {
-          "path": "C:\\Users\\evanc\\OneDrive\\Desktop\\Nvidia V2D\\runs\\pr32-validation\\all20-review\\quality-repair\\e002-source-review\\source-000216-000227.jpg",
+          "path": "runs/pr32-validation/all20-review/quality-repair/e002-source-review/source-000216-000227.jpg",
           "sha256": "e218049cd14e8819b14cb61a438df7f2c126a06c4769f5af0bd0fddd567c9f22"
         },
         {
-          "path": "C:\\Users\\evanc\\OneDrive\\Desktop\\Nvidia V2D\\runs\\pr32-validation\\all20-review\\quality-repair\\e002-source-review\\source-000228-000239.jpg",
+          "path": "runs/pr32-validation/all20-review/quality-repair/e002-source-review/source-000228-000239.jpg",
           "sha256": "ace4a921d0b8377ec6d39f17247daf9623dc9ea42b64ed799d4f6dc4f85f473e"
         }
       ],

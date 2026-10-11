@@ -3,9 +3,11 @@
 The final candidate is **trial 4**, completed October 9, 2026. It satisfies
 issue 7's one-episode requirements: real metric SLAM initialization, joint
 refinement, a browser-verified 3D viewer, and written jitter/drift/contact
-precision measurements. Draft [PR #34](https://github.com/Swaguto/NVIDIA-V2D-Challenge/pull/34)
+precision measurements. [PR #34](https://github.com/Swaguto/NVIDIA-V2D-Challenge/pull/34)
 is ready for review and issue closure on merge. Issue 7 remains open; no merge
 or issue closure has been performed. This supersedes the older odometry pilot.
+Current software checks and later repairs are in [REVIEW.md](REVIEW.md);
+`RESULTS.json` retains the timestamped experiment assessment.
 
 Baseline: Thanosan's `2e8efa668c9485fbd99f961ff88284a905f2b021`, with repairs on
 `Evc-r/issue7-refinement-validation`. All six live team-document tabs were
@@ -41,9 +43,11 @@ acceptance criteria.
 Scene SHA-256:
 `3e3f51aa85c60f0d68384de4896e2f6c8ca0fc1cf3891d83d77c023676a9bc6a`.
 The exact configuration, source hashes, complete numerical measurements and
-requirement assessment are in [RESULTS.json](RESULTS.json). Every current
-optimizer source hash matches the actual executed GPU run. The report's later
-viewer-only fix leaves scene bytes and measurements unchanged.
+requirement assessment are in [RESULTS.json](RESULTS.json). The frozen optimizer
+source hashes identify the actual executed GPU run. The report's later viewer-only
+fix leaves scene bytes and measurements unchanged. Subsequent frame-gap and
+launcher/provenance fixes in the current source are CPU-tested separately; see
+[REVIEW.md](REVIEW.md). They have not been rerun on the GPU.
 
 ## Real metric SLAM and numerical repairs
 
@@ -169,7 +173,7 @@ targeted lint scope.
 ## Reproduction and preserved history
 
 Use [REPRODUCE.md](REPRODUCE.md). Current private evidence is under
-`C:/Users/evanc/OneDrive/Desktop/Nvidia V2D/runs/issue7-validation/trial4`;
+`runs/issue7-validation/trial4` relative to the parent workspace;
 complete native outputs are `/var/tmp/v2d-issue7-e002/trial4`. SLAM evidence
 is separately preserved in `slam-trial2`. Review server:
 `http://127.0.0.1:8138/`, with the full comparison MP4 available for download.

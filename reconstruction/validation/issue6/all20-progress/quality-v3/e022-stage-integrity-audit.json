@@ -1,0 +1,40 @@
+{
+  "verified_at": "2026-10-07T06:18:45.158521+00:00",
+  "inputs_rehashed": false,
+  "episodes": [
+    {
+      "episode": 22,
+      "status": "passed",
+      "config_sha256": "28fe7c26df8d160f545332d20e1820fa9bfd410225cd2319ed0e1b315ea83dcc",
+      "stages": {
+        "validate": {
+          "files": 1,
+          "receipt_sha256": "58a104288fb0fba9e56b69415d0cf243aeacf985801e9eb60cb48b32f7aaaffd"
+        },
+        "hands": {
+          "files": 663,
+          "receipt_sha256": "d6814f367abcaaf8d7d1a70a8009bef573599ce643d47a98e5a7433e716ea9fc"
+        },
+        "depth": {
+          "files": 190,
+          "receipt_sha256": "79bedfd87eb486d9c3104b45b52bc23740ce8b05aceaa82e24deaadebfb38c6f"
+        },
+        "align": {
+          "files": 669,
+          "receipt_sha256": "945a3cee253c9702e7d9b9e3ea99ff8b3429e320130593a65bddecc63af3ea07"
+        },
+        "contacts": {
+          "files": 3,
+          "receipt_sha256": "b7f949a64c8fa671eab3c62cdeaffc36e01af3ee5f0cc929da99c8a2e0a81663"
+        },
+        "report": {
+          "files": 194,
+          "receipt_sha256": "fc65ba8eff0f0becf55bfdf797e97dbd45c7ae72ff7ddc3082080fc7b3cabebb"
+        }
+      },
+      "implementation_files": 12,
+      "verified_inputs": 0
+    }
+  ],
+  "scope": "Content integrity and completed stages; not visual acceptance or contact accuracy"
+}
