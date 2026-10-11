@@ -360,7 +360,10 @@ class HandKinematics:
             tasks = [*tasks, *self.relative_frame_tasks.values()]
 
         # 3. Solve the IK tasks
-        self.configuration.q = self.robot.q0.copy() if qpos is None else qpos.copy()
+        # Pink caches FK and Jacobians in configuration.data. Assigning q
+        # alone leaves those caches at the preceding pose on a cold start or
+        # observation-gap reset, so the first QP would use inconsistent data.
+        self.configuration.update(self.robot.q0 if qpos is None else qpos)
 
         frame_tasks_pos_error = {
             task_name: float(np.inf) for task_name in self.frame_tasks.keys()

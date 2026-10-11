@@ -38,6 +38,27 @@ A new native LF run reproduces all 11 locked trajectory arrays exactly, and the
 32 Windows model/bundle/collision controls pass again. Older archives retain
 their original bytes and locks; they are not relabelled as this new revision.
 
+A subsequent initialization review found a real solver defect: assigning
+`Configuration.q` alone leaves Pink's cached FK and Jacobians at the preceding
+pose. Cold starts and observation-gap resets therefore supplied inconsistent
+kinematics to the first QP. The pinned-runtime probe shows roughly 0.45 m stale
+root-position error on each first supported e002 hand. `HandKinematics.compute`
+now calls `configuration.update(initial)` before solving. Two native regression
+controls compare every FK frame and Jacobian with independent recomputation on
+cold/custom/default resets; both fail before the fix and pass after it.
+
+The synchronized full e002 run preserves all source geometry, masks, limits and
+272/284 supported hands. Relative to the preceding LF reference, maximum wrist
+change is 0.035 mm left / 0.107 mm right, and maximum finger-angle change is
+0.00467 / 0.01221 rad. Nine left and one right iteration counts change. This
+revision intentionally does not claim equality with the old trajectory; its
+new payload SHA256 is
+`ca011c10673425ad25cc5badc445fe953905bbb84585ea5a3cbcb2d6fe9def09`.
+An isolated synchronization-only diagnostic reproduces all its motion arrays.
+Joint/velocity violations remain zero, and the corrected vertex audit still
+has 10.88 / 7.02 mm worst lower witnesses. The initialization fix does not
+repair the grasp. Earlier byte-exact results remain bound to their archives.
+
 The combined final checkout passed 149 CPU controls. Five new asset-change,
 LFS, legacy and portable-path controls passed with the 27 prior bundle/collision
 controls. Validation receipts are retained in the goal evidence directory.

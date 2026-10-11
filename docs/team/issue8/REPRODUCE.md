@@ -57,6 +57,18 @@ same LF source/URDF hashes. Its 11 trajectory arrays match the preceding locked
 run exactly. Archived locked runs must keep their own recorded source/assets;
 do not mix a newly checked-out URDF with an older byte lock or edit its receipt.
 
+The later initialization fix explicitly refreshes Pink FK/Jacobians before the
+first QP on each source fit. It changes a few trajectory values and iteration
+counts, while keeping the observations and constraints fixed. Its reference
+payload is `ca011c10673425ad25cc5badc445fe953905bbb84585ea5a3cbcb2d6fe9def09`;
+it must not be compared with the preceding LF run as if they used one solver
+revision. In the native IK environment, verify the initialization regression:
+
+```bash
+PYTHONPATH=source/robotic_grounding python -m pytest \
+  tests/test_hand_initialization.py -q
+```
+
 The older archived retarget outputs have no IK asset lock. To inspect those
 outputs with current gate/replay code, explicitly add
 `--allow-unlocked-legacy-model`. Receipts then record
