@@ -338,3 +338,56 @@ source-backed approach and release timing, source placement, transitions,
 self-collision and full-sequence scene checks before a new Isaac replay. The
 original baseline replay, hand observation provenance and issue9 deferral remain
 unchanged.
+
+## Contact timing and self-collision follow-up
+
+An automatic development diagnostic combines the strict source regions with
+short windows of hand motion relative to each observed object. It requires source
+support and proximity evidence; two stationary bodies alone cannot establish a
+grasp. Its inferred batch segments preserve missing observations and source-frame
+gaps. No grasp annotation, reference pose or display hold enters inference.
+
+The method runs on all 343 frames before comparison with the pre-existing
+source-video annotations. These coarse visible-grasp labels are validation data,
+not tactile ground truth. The complete source denominators remain visible:
+
+| Source-labelled grasp | Predicted core / all core frames | Predicted core / source-supported core frames |
+|---|---:|---:|
+| Left pot lift/lower |166 / 185|166 / 174|
+| Right lid remove/place |59 / 62|59 / 61|
+| Right lid regrasp/replace |69 / 72|69 / 72|
+| Left pot regrasp/release |59 / 62|59 / 60|
+
+No hypothesis falls outside a labelled grasp interval; two fall in ambiguous
+right-hand boundary frames. Fourteen source-supported core frames are missed,
+and another fourteen lack the required original observations. Strong source
+proximity sometimes remains despite estimated wrist motion. The thresholds are
+not adjusted to these labels, and complete contact timing remains unaccepted.
+
+An independent Coal/Pinocchio audit now checks all 21 nonadjacent collision-mesh
+pairs on each hand. Only directly joint-adjacent pairs are excluded. It detects
+thumb–palm surface intersections in the earlier left diagnostic and rejects that
+pose. The earlier right diagnostic has no detected nonadjacent surface
+intersection. This check does not certify volume containment or continuous motion.
+
+A new private fitter adds conservative convex-hull self-clearance constraints.
+Every original mesh vertex is verified inside its link hull. Independent box
+overlap/separation and finite-difference controls check the distance sign and all
+13 tangent coordinates on twelve configurations. Constraints saturate above
+5 mm; the required 0.5 mm clearance and its feasible set are unchanged. The raw
+distance derivative discrepancy at a far, inactive neutral feature is retained
+in the control report rather than presented as a passed raw derivative check.
+
+The fitter produces nineteen static candidates. All ten left candidates have
+zero detected nonadjacent triangle-surface intersections, but **none of the
+nineteen passes the complete intended-pad contact proxy**. Several candidates
+still fail solver or geometric constraints. An additional audit computes exact
+vertex depths against exposed square faces of the same declared voxel-cell
+union, with exhaustive and analytic controls. It distinguishes actual depth in
+that model from the earlier conservative upper bounds; it is not a new physical
+object model or a complete robot-surface certificate.
+
+These are reproducible diagnostic methods and preserved failures, not accepted
+motion targets. No new full trajectory or Isaac result is produced by this
+follow-up. Source placement, contact surfaces, complete timing, transitions and
+whole-scene collision checks remain required before physical-task acceptance.
