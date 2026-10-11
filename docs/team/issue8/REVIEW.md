@@ -50,7 +50,7 @@ observed motion, eliminate reacquisition jumps or validate finger placement.
 Review found that the verifier checked arrays and hashes but did not enforce
 its accuracy/training flags or support-count metadata. A separate repair on
 that branch rejects accuracy/contact/training acceptance claims and counts that
-contradict the source masks. All14 reproduction/presentation controls pass,
+contradict the source masks. All 14 reproduction/presentation controls pass,
 including explicit metadata tampering cases. This repair is kept separate from
 PR35; frozen inference settings and the original evidence packs are unchanged.
 
@@ -73,10 +73,21 @@ retaining the same robot meshes, trajectory, object material grids and 2 cm
 threshold. It gives 271/271 supported two-hand frames below the derived-model
 bound, with maximum 18.384 mm; 72 frames remain unsupported. The historical
 72-frame receipt is unchanged. The finer enclosure covers 737,636 source
-vertices, 246,836 faces and 2,336 cell corners. Independent full-axis verification
-is required before promoting this diagnostic. Inferred object closures/material
+vertices, 246,836 faces and 2,336 cell corners. Independent verification checked
+162,304 full-axis bounds and all material depth witnesses; maximum independent
+upper-bound discrepancy is 5.56e-17 m. Inferred object closures/material
 remain model assumptions, not physical ground truth; between-frame collision
 and dynamic grasp stability remain unverified.
+
+A development-only position-cost experiment selects source thumb/index/middle
+tips within 5 mm of observed CAD and increases their position cost from 1 to 3.
+It retains source geometry, missing masks and joint/velocity constraints. First
+left-grasp closest-tip median improves to 5.32 mm, but the thumb stays about
+30 mm from CAD and two-tip proximity is rare. Right-hand regrasp two-tip
+proximity below 5 mm decreases from 60.26% to 55.13%. This candidate is not
+promoted: nearest-tip improvement alone does not prove opposing contacts or
+safe geometry. Contact-pad surfaces, source-video alignment and penetration
+still require review. Historical frozen receipts remain unchanged.
 
 Next work is contact-aware retargeting checked against the original video and
 object geometry, followed by a new audited simulator replay. Issue9 and policy
