@@ -29,10 +29,3 @@
 
 # The episode refinement entrypoint runs in Linux/WSL even from Windows checkouts.
 scripts/track3/refine_episode.sh text eol=lf
-
-# IK/model receipts hash bytes. Check out the same source and URDF bytes on
-# Windows and Linux; line-ending conversion must not invalidate model locks.
-robotic_grounding/scripts/retarget/*.py text eol=lf
-robotic_grounding/source/robotic_grounding/robotic_grounding/__init__.py text eol=lf
-robotic_grounding/source/robotic_grounding/robotic_grounding/retarget/*.py text eol=lf
-robotic_grounding/source/robotic_grounding/robotic_grounding/assets/urdfs/g1/dex3_*.urdf text eol=lf
