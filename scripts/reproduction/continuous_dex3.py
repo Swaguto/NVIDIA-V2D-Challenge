@@ -76,10 +76,14 @@ def verify(retarget: Path, presentation: Path):
     manifest = json.loads((presentation / 'manifest.json').read_text())
     if manifest['schema'] != 'v2d.dex3.presentation.hold.v1':
         raise ValueError('Unknown presentation schema')
+    if manifest.get('contact_or_training_targets') is not False or manifest.get('pose_accuracy_accepted') is not False or manifest.get('observed_targets_unchanged') is not True:
+        raise ValueError('Presentation holds cannot claim pose accuracy, contact or training acceptance')
     if manifest['retarget_manifest_sha256'] != digest(retarget / 'manifest.json') or manifest['retarget_payload_sha256'] != digest(retarget / 'retarget.npz') or manifest['payload_sha256'] != digest(presentation / 'presentation.npz'):
         raise ValueError('Presentation provenance mismatch')
     with np.load(retarget / 'retarget.npz', allow_pickle=False) as source, np.load(presentation / 'presentation.npz', allow_pickle=False) as display:
         valid = source['robot_valid']; rows = hold_rows(valid)
+        if manifest.get('source_frames') != len(valid) or manifest.get('observed_counts') != valid.sum(axis=0).tolist() or manifest.get('held_counts') != (~valid).sum(axis=0).tolist():
+            raise ValueError('Presentation support counts differ from source observations')
         expected = dict(frame_indices=source['frame_indices'], source_robot_valid=valid,
                         display_valid=np.ones_like(valid), held=~valid, pose_source_rows=rows,
                         pose_source_frames=source['frame_indices'][rows],

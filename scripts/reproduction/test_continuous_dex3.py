@@ -45,6 +45,13 @@ class ContinuityTests(unittest.TestCase):
             display, _ = verify(source, root/'presentation')
             np.testing.assert_array_equal(display['robot_qpos'][valid], q[valid])
             np.testing.assert_array_equal(display['source_robot_valid'], valid)
+            manifest_path = root/'presentation/manifest.json'
+            original = json.loads(manifest_path.read_text())
+            for key, false_claim in [('contact_or_training_targets', True), ('pose_accuracy_accepted', True), ('observed_targets_unchanged', False), ('observed_counts', [3, 3]), ('held_counts', [0, 0])]:
+                manifest_path.write_text(json.dumps({**original, key: false_claim}))
+                with self.assertRaises(ValueError):
+                    verify(source, root/'presentation')
+            manifest_path.write_text(json.dumps(original))
             display['robot_qpos'][0, 0, 0] += 1
             np.savez_compressed(root/'presentation/presentation.npz', **display)
             # Even an updated payload hash cannot disguise changed provenance.
