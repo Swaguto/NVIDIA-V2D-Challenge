@@ -27,7 +27,9 @@ try:
             if not ok:color=(255,190,30)
             mask=np.zeros(image.shape[:2],np.uint8)
             polygons=np.rint(np.clip(uv[faces],-5000,5000)).astype(np.int32)
-            cv2.fillPoly(mask,polygons,255)
+            # Union faces; a single fillPoly call applies even/odd filling and
+            # can cancel overlapping front/back triangles into visual holes.
+            for polygon in polygons:cv2.fillConvexPoly(mask,polygon,255)
             overlay[mask>0]=(0.65*overlay[mask>0]+0.35*np.array(color)).astype(np.uint8)
             for point in points:
                 if np.isfinite(point).all():cv2.circle(overlay,tuple(np.rint(point).astype(int)),3,color,-1)

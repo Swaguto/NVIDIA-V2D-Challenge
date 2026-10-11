@@ -5,6 +5,46 @@
   "production_contact_target_approval": false,
   "findings": [
     {
+      "episode": 39,
+      "frame": 120,
+      "side": "left",
+      "consistency_pass": true,
+      "finding": "Held-out example: projected fingers extend farther and in a different spread than the visible curled fingers. The consistency pass does not establish the source finger pose.",
+      "evidence": "audit-frozen-e039/audit-004.jpg"
+    },
+    {
+      "episode": 31,
+      "frame": 247,
+      "side": "right",
+      "consistency_pass": true,
+      "finding": "Held-out example: a projected outer finger extends away from the visible hand outline during the grasp. The image does not support that extension despite the consistency pass; hidden finger contact remains unobservable.",
+      "evidence": "audit-frozen-e031/audit-005.jpg"
+    },
+    {
+      "episode": 23,
+      "frame": 30,
+      "side": "left",
+      "consistency_pass": true,
+      "finding": "Held-out example: projected extended fingertips run above the visible fingertips while the silhouette/depth tests pass. High mask recall does not establish correct finger length or placement.",
+      "evidence": "audit-frozen-e023/audit-000.jpg"
+    },
+    {
+      "episode": 11,
+      "frame": 112,
+      "side": "right",
+      "consistency_pass": true,
+      "finding": "Held-out example: projected open-hand fingertips overshoot the visible fingertips despite passing. Blur limits exact annotation, but the outline mismatch is visible.",
+      "evidence": "audit-frozen-e011/audit-007.jpg"
+    },
+    {
+      "episode": 0,
+      "frame": 36,
+      "side": "left",
+      "consistency_pass": true,
+      "finding": "Held-out example: the projected curled fingers extend visibly beyond the source finger outline despite passing. This is a visible shape/placement failure, not a measured 3D error.",
+      "evidence": "audit-frozen-e000/audit-000.jpg"
+    },
+    {
       "episode": 12,
       "frame": 22,
       "side": "left",

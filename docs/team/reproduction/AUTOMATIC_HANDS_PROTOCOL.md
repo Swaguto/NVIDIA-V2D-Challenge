@@ -182,3 +182,39 @@ same `--source`, `--quality`, `--proposals`, and a new `--out` directory. It rec
 its deterministic frame selection. Inspect fingertips and handedness against the
 source, including numerically accepted fits. Record visible mismatches separately
 from unobservable fingers; a consistency pass must not overrule a visible error.
+
+## Interrupted evaluations
+
+Preserve failed receipts and logs. A CUDA failure is an infrastructure failure,
+not an accuracy rejection. Do not change thresholds or remove troublesome frames
+to get a run to complete. The simplest portable recovery is a fresh output
+directory with the same inputs, runtime and freeze. Keep the interrupted output
+separate and label the successful rerun explicitly.
+
+For this recorded evaluation, all detection stages and the first four fitting
+stages completed before a CUDA error in e039. Recovery retained those completed
+stages, archived the interrupted e039 proposal directory, restored its original
+detection receipt and detections into a new proposal directory, and restarted
+the entire e039 fitting stage. It then ran the e012 repeat and all quality
+checks. The frozen functions and per-episode seeds were unchanged. The original
+failure receipt and a separate recovery log remain part of the evidence.
+
+Do not interpret `quality/accepted` as production approval: it means only that
+the recorded consistency checks passed. This candidate has known visible finger
+placement failures and must not replace approved contact or motion targets.
+
+## Reproduction-check controls
+
+Run the checker tests with third-party pytest plugin autoload disabled in the
+recorded research environment. Unrelated installed plugin entry points can
+otherwise require packages outside this experiment's runtime:
+
+```bash
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest \
+  reconstruction/modules/v2d_issue6/tests/test_automatic_reproduction.py -q
+```
+
+The five controls cover an identical rerun, dropped support, a 2 cm displacement,
+a missing geometry file amid otherwise matching files, and non-finite geometry.
+The latter four must fail the reproduction check. These controls validate the
+checker, not the accuracy of any real hand estimate.

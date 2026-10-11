@@ -18,17 +18,22 @@ evidence=[json.loads((r/'quality/frame-evidence.json').read_text()) for r in roo
 support=[{(row['frame'],s):item['accepted_by_consistency_proxies'] for row in rows for s,item in row['hands'].items()} for rows in evidence]
 frame_ids_match=[r['frame'] for r in evidence[0]]==[r['frame'] for r in evidence[1]]
 keys=set(support[0])|set(support[1]);mismatches=[{'frame':f,'side':s} for f,s in sorted(keys) if support[0].get((f,s))!=support[1].get((f,s))]
-geometry=[]
+geometry=[];missing_geometry=[];invalid_geometry=[]
 for frame,side in sorted(keys):
     paths=[r/'quality/geometry'/side/f'{frame:06d}.npz' for r in roots]
-    if not all(path.exists() for path in paths):continue
+    if not all(path.exists() for path in paths):
+        missing_geometry.append({'frame':frame,'side':side});continue
     with np.load(paths[0],allow_pickle=False) as ref,np.load(paths[1],allow_pickle=False) as cand:
+        fields=('vertices','joints','raw_vertices','raw_joints')
+        if any(ref[k].shape!=cand[k].shape or not np.isfinite(ref[k]).all() or not np.isfinite(cand[k]).all() for k in fields):
+            invalid_geometry.append({'frame':frame,'side':side});continue
         geometry.append({'frame':frame,'side':side,**{key:float(np.linalg.norm(ref[key]-cand[key],axis=1).max())
             for key in ('vertices','joints','raw_vertices','raw_joints')}})
 maximum=max((r[k] for r in geometry for k in ('vertices','joints','raw_vertices','raw_joints')),default=None)
-passed=profile_matches and frame_ids_match and not mismatches and maximum is not None and maximum<=1e-4
+passed=profile_matches and frame_ids_match and not mismatches and not missing_geometry and not invalid_geometry and maximum is not None and maximum<=1e-4
 result={'scope':'Same input inventory is separately required. Numerical reproducibility is not source-pose accuracy.',
         'profile_matches':profile_matches,'frame_ids_match':frame_ids_match,'support_mismatches':mismatches,
+        'missing_geometry':missing_geometry,'invalid_geometry':invalid_geometry,
         'maximum_geometry_difference_m':maximum,'tolerance_m':1e-4,'passed':passed,
         'reference_receipt_sha256':sha(a.reference/'proposals/receipt.json'),
         'candidate_receipt_sha256':sha(a.candidate/'proposals/receipt.json'),'geometry':geometry}

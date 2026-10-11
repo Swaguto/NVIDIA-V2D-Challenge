@@ -1,0 +1,11 @@
+episode,side,frames,baseline_depth_supported,new_consistency_supported,newly_supported_frames,lost_baseline_frames,common_compared_frames,baseline_common_consistent,new_common_consistent,new_support_transitions,new_longest_unsupported_frames,baseline_support_transitions,baseline_longest_unsupported_frames,maximum_camera_conversion_error_px
+0,left,373,231,188,41,84,231,228,147,38,81,12,89,21.586602380273355
+0,right,373,124,250,140,14,122,114,110,30,83,30,84,34.42510104078758
+11,left,137,133,125,4,12,127,122,121,15,3,6,2,22.3432373298575
+11,right,137,122,73,7,56,71,69,67,14,51,20,3,33.67350577407023
+23,left,325,316,275,6,47,313,310,269,54,8,16,2,18.74026351490428
+23,right,325,99,276,188,11,99,88,88,52,12,20,65,30.691823924801266
+31,left,290,196,288,94,2,196,196,194,4,1,48,25,28.371995467715692
+31,right,290,133,54,41,120,14,14,13,20,219,6,63,42.838585291731675
+39,left,319,318,291,1,28,318,310,291,18,11,1,1,20.30408471772058
+39,right,319,113,222,128,19,112,99,94,44,40,32,82,30.17826790044305

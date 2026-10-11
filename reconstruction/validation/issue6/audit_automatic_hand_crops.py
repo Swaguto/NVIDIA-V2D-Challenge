@@ -39,7 +39,8 @@ for side in ('left','right'):
         lo=np.floor(np.maximum(0,center-size)).astype(int);hi=np.ceil(np.minimum([c['width'],c['height']],center+size)).astype(int)
         image=cv2.cvtColor(cv2.imread(str(a.source/'color'/f'{frame:06d}.png')),cv2.COLOR_BGR2RGB)
         overlay=image.copy();silhouette=np.zeros(image.shape[:2],np.uint8)
-        cv2.fillPoly(silhouette,np.rint(np.clip(uv[faces],-5000,5000)).astype(np.int32),255)
+        for polygon in np.rint(np.clip(uv[faces],-5000,5000)).astype(np.int32):
+            cv2.fillConvexPoly(silhouette,polygon,255)
         ok=item['accepted_by_consistency_proxies'];color=(60,140,255) if side=='left' else (255,70,70)
         if not ok:color=(255,190,30)
         overlay[silhouette>0]=(.75*overlay[silhouette>0]+.25*np.array(color)).astype(np.uint8)
