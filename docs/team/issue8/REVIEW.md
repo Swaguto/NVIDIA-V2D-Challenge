@@ -58,6 +58,11 @@ An isolated synchronization-only diagnostic reproduces all its motion arrays.
 Joint/velocity violations remain zero, and the corrected vertex audit still
 has 10.88 / 7.02 mm worst lower witnesses. The initialization fix does not
 repair the grasp. Earlier byte-exact results remain bound to their archives.
+The synchronized trajectory was also actually rendered in the pinned A40
+source-camera simulator. All 343 frames and 556 supported states pass the
+independent decoded-video/state audit; maximum link error is 1.26e-7 m.
+Its source/recovered-hand/Sim video retains the UNACCEPTED label and original
+missing observations. This is a new result, not a relabelled earlier render.
 
 The combined final checkout passed 149 CPU controls. Five new asset-change,
 LFS, legacy and portable-path controls passed with the 27 prior bundle/collision
@@ -164,3 +169,23 @@ independent-machine rendering or physical manipulation validation.
 Next work is contact-aware retargeting checked against the original video and
 object geometry, followed by a new audited simulator replay. Issue9 and policy
 training are outside this goal until one development reference passes review.
+
+Further isolated development trials confirm that repulsion alone is inadequate.
+Strict local material inequalities fail feasibility. Adding explicit slack
+reduces penetrating timestamps but allows a 541 mm right-wrist source residual;
+it is rejected. Adding source-wrist guards and initialization synchronization
+prevents that escape, but still witnesses 9.69 / 5.38 mm intrusion (164 left /
+36 right timestamps above 2 mm), with left three-tip residuals reaching 149 mm.
+It is also rejected. None of these collision objectives is in the baseline code.
+
+Source accuracy is now checked separately: all recovered-human mesh vertices
+are queried against the same declared material (865,136 queries). Source lower
+witnesses reach 9.55 mm left at frame161 and 6.66 mm right at frame93; 203 / 113
+supported timestamps exceed 2 mm. This shows a source-hand/object-model
+inconsistency already exists before retargeting. It does not distinguish
+inaccurate reconstruction from incorrect inferred CAD material or provide
+physical ground truth. Source-camera sheets90-95 and156-161 were inspected;
+hidden finger surfaces are not directly observable. Source geometry/contact
+alignment and material uncertainty must be resolved before another robot cost
+change can establish a physically credible reference. The original observations
+and every unknown grasp onset remain unchanged.
