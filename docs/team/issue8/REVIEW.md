@@ -26,6 +26,14 @@ NaN masks, qpos, FK, errors and iteration counts. The extra direct-observation
 mask matches the exported source. Finger position/velocity violations remain 0.
 This checks numerical reproduction, not anatomical accuracy or manipulation.
 
+Final checkout review found that Windows CRLF conversion changed the hashed
+Python and URDF bytes relative to Linux Git checkouts. `.gitattributes` now pins
+LF for the retarget sources and Dex3 URDFs. All 43 affected working files match
+their existing Git blobs; no Python statements or parsed robot geometry change.
+A new native LF run reproduces all 11 locked trajectory arrays exactly, and the
+32 Windows model/bundle/collision controls pass again. Older archives retain
+their original bytes and locks; they are not relabelled as this new revision.
+
 The combined final checkout passed 149 CPU controls. Five new asset-change,
 LFS, legacy and portable-path controls passed with the 27 prior bundle/collision
 controls. Validation receipts are retained in the goal evidence directory.
@@ -88,6 +96,33 @@ proximity below 5 mm decreases from 60.26% to 55.13%. This candidate is not
 promoted: nearest-tip improvement alone does not prove opposing contacts or
 safe geometry. Contact-pad surfaces, source-video alignment and penetration
 still require review. Historical frozen receipts remain unchanged.
+
+A full collision-mesh vertex audit queries 68,630,152 vertex/object pairs at
+supported timestamps. Under the documented inferred material, baseline depth
+lower witnesses reach 11.11 mm left / 6.52 mm right, at frames 184 / 55. This is
+evidence of intrusion under that model, not physical ground truth or a complete
+surface certificate. The 2 cm bound can pass while these defects remain.
+
+A second development candidate adds sampled material repulsion to the existing
+QP. Finite-difference point Jacobians agree within 8.1e-9. It retains every
+source support mask and satisfies joint/velocity limits, but still has 11.00 mm
+left / 6.65 mm right lower witnesses. Left median wrist residual rises from
+10.48 to 22.11 mm and orientation from 7.84 to 18.20 degrees. It is rejected;
+moving the hand away or improving one proximity count is not task acceptance.
+
+A separate actual Sim 6.0.0.1 / Lab 3.0.0 beta2 A40 source-camera diagnostic
+renders all 343 frames. Independent state/decoded-video checks pass: maximum
+link error is 9.11e-8 m. Moving camera USD readback matches the reconstructed
+camera within 1.03e-9 m / 4.04e-7 rad; output intrinsics match exactly. This
+pinned renderer ignores aperture offsets, so a declared automatic overscan and
+bilinear principal-point translation supplies the source view. The first failed
+camera-audit attempt is retained separately. Source RGB, recovered-observation
+wireframes and actual Sim form a complete comparison video; all 343 source RGB
+hashes are verified. Spot review includes frames 55 and 184. Whole-video pose
+accuracy acceptance is pending. No display holds, collision resolution, dynamics
+or training are used. This diagnostic's archived source/model bytes predate the
+LF checkout fix; numerical IK arrays are identical, but its receipts remain
+bound to that original private source package.
 
 Next work is contact-aware retargeting checked against the original video and
 object geometry, followed by a new audited simulator replay. Issue9 and policy

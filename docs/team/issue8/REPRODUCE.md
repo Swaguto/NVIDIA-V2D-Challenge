@@ -42,6 +42,14 @@ The merged refinement and reproduction tools are available in the same checkout.
 Record `git rev-parse HEAD`, the manifest hashes and the installed environment
 lock for each new result. Historical archives and their expected masks stay frozen.
 
+Git checkout rules now pin LF bytes for the retarget Python sources and both
+Dex3 URDFs. This matters even though CRLF and LF XML describe identical geometry:
+receipts deliberately verify bytes. Use a fresh checkout of this revision for
+a new reference run; the native Linux repeat and Windows asset checks use the
+same LF source/URDF hashes. Its 11 trajectory arrays match the preceding locked
+run exactly. Archived locked runs must keep their own recorded source/assets;
+do not mix a newly checked-out URDF with an older byte lock or edit its receipt.
+
 The older archived retarget outputs have no IK asset lock. To inspect those
 outputs with current gate/replay code, explicitly add
 `--allow-unlocked-legacy-model`. Receipts then record
