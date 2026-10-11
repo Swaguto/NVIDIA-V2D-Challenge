@@ -1,4 +1,4 @@
-# Dex3 baseline integration review â€” October 11, 2026
+# Dex3 baseline integration review — October 11, 2026
 
 PR35 targets `main` after PR34 merged. The branch combines the merged refinement
 fixes and PR36 reproduction tools without changing the frozen e002 observations
@@ -208,7 +208,10 @@ behind the front reconstructed surface. Their original CAD nearest faces are
 not added closures. Those observations do not resolve hidden contacts or prove
 the inferred material is correct. Independent triangle-ray checks match 512
 actual mesh queries within 5e-16 m; six new occlusion/perspective/path/identity controls
-pass on both Windows and Linux.
+pass on both Windows and Linux. The current scoped suite passes 140 Linux
+refinement/bundle/source-review controls and 15 archival controls; 38
+bundle/collision/model/source-review controls pass on Windows. Four actual
+source-frame measurements match exactly between Windows and native Linux.
 
 Reconstructed occlusion is not proof of physical source occlusion. At the worst
 left source point, the source hand mask and RGB show a finger, but the front
