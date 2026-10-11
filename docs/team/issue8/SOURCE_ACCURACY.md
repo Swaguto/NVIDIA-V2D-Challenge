@@ -286,3 +286,55 @@ human fingertips. Contact-region object geometry and source depth remain uncerta
 Any proposed grasp or robot offset must be stored as inferred, checked against
 source placement and timing, and tested on untouched episodes after its method is
 frozen. Issue9 and training remain deferred.
+
+## Source-supported regions and static grasp feasibility
+
+A new private diagnostic processes every source frame with the original direct
+hand observations and observed object poses. It uses actual stereo samples in
+exclusive hand masks, requiring all nine pixels in a 3 by 3 square to have valid
+depth and consistent semantics, at most 10 mm local depth spread, and at most
+10 mm disagreement with the visible reconstructed front surface. Samples must
+be within 5 mm of a point on the original CAD surface, unambiguous between the
+objects, and within the declared material-depth limit. All qualifying points are
+retained; there are no selected optimization frames or crops. These are potential
+contact regions, **not observed tactile contacts**.
+
+This neighborhood check also found that an earlier private stereo-fit cache used
+SciPy's default cross-shaped erosion, not a square. Corner-invalidity controls
+demonstrate the difference. The stricter square filter rejects an additional
+2,561 left and 4,590 right sampled pixels in this diagnostic. Earlier rejected
+fit artifacts retain their original bytes. The published generic source review
+uses individual valid pixels and never claims square-neighborhood confidence;
+its measurements and the baseline trajectory are unchanged.
+
+The region pass finds 4,244 left/pot points across 207 frames and 195 right/lid
+points across 80 frames. The right side has at most five qualifying points in any
+frame, so this pass does not establish complete contact timing. Anatomical labels
+from the original joint chains remain inferred, and ambiguous labels stay
+unknown. No human pose, camera, object pose, scale, support or display hold changes.
+
+Separate experimental robot grasp templates test geometric feasibility near
+these regions. They are static inferred Dex3 configurations, with explicitly
+recorded robot root offsets; they do not repair human tracking. Two different
+variants supply a left pot-handle and right lid-handle diagnostic with opposed
+pad proximity. At automatically selected maximum-support source frames, an
+independent check of every robot mesh vertex against both scene objects gives
+maximum material penetration upper bounds of 1.70 mm left and 1.65 mm right.
+These checks concern declared development geometry, not physical ground truth or
+complete surface/volume collision. Source-camera ghost overlays are labelled
+as static diagnostics, not Isaac Sim output.
+
+The selected robot roots differ from the source human wrists by 69.1 mm left and
+46.7 mm right at those diagnostic frames. Such morphology offsets require their
+own source-placement justification. The left diagnostic also fails the solver's
+0.5 mm sampled-clearance requirement; it is not an accepted solution. All 13
+template records reproduce exactly in a second native run after protocol-text
+corrections, including poses, metrics, iteration counts and failure statuses.
+That is a same-machine repeat, not independent team validation.
+
+**No complete task is accepted.** The two variants are not combined into a
+trajectory or promoted to the baseline. A single frozen method still needs
+source-backed approach and release timing, source placement, transitions,
+self-collision and full-sequence scene checks before a new Isaac replay. The
+original baseline replay, hand observation provenance and issue9 deferral remain
+unchanged.
