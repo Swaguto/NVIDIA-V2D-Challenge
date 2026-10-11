@@ -536,8 +536,64 @@ changing visibility or declaring an occluded point correct.
 
 The fixed method sources, hashes, actual outputs, failed controls, commands and
 runtime distinctions are preserved in the development checkpoint. These private
-experiments are not the public production pipeline. No complete trajectory or
-new Isaac result is produced here. The remaining work is to resolve source and
+experiments are not the public production pipeline. At that checkpoint, no
+complete trajectory or new Isaac result had been produced. The remaining work is to resolve source and
 robot placement uncertainty, validate contact timing and continuous approach,
 hold, release and transition motion across the entire task, then verify a new
 Isaac replay before advancing to issue9.
+
+## Complete-frame generated motion: sampled geometry passes, acceptance pending
+
+The follow-up creates an explicitly **inferred robot motion proposal** for all
+343 frames and all four development grasps. Original source hands, object poses,
+camera matrices, scales and observation masks remain unchanged. Every robot
+motion-target validation bit remains false. No source hand is filled or converted
+into a display hold.
+
+The first proposal exposes failures missed by static grasp checks: up to 9.53 mm
+pot and 6.49 mm lid vertex penetration, plus nonadjacent hand self-intersections.
+The next proposal uses original URDF neutral fingers outside generated contact
+intent, with smooth approach/release and geometric retreat. That removes sampled
+self-intersections but still penetrates the objects. Both rejected versions are
+retained.
+
+A translation-only repair preserves every generated contact anchor exactly and
+checks every original robot triangle against both declared closed voxel materials.
+Five left transitions remain failed with local initialization. Deterministic
+geometry-only restarts, selected automatically from those failures, clear them
+with at most 16.64 mm additional root translation. No episode-specific frame or
+crop list, source annotation or ground truth selects a repair.
+
+| Final generated-motion check | Actual result |
+|---|---:|
+| Original-surface checks on 373 generated contact-intent states, against both objects | 746 / 746 pass |
+| Original-surface checks on 313 generated noncontact states, against both objects | 626 / 626 pass |
+| Total sampled hand/object surface checks across all 343 frames | 1,372 / 1,372 pass |
+| Sampled nonadjacent self- or cross-hand surface intersections | 0 |
+| URDF finger position or source-frame velocity violations | 0 |
+| Maximum generated root speed, left / right | 1.10 / 0.84 m/s |
+
+The surface limit remains **2 mm**, with unresolved triangles refusing a pass.
+These are certificates for the declared development material, not proof of zero
+intrusion or physical object geometry. Root speeds are measured; no root speed
+limit is declared by the floating-hand URDF.
+
+The robot has 243 left and 130 right generated contact-intent frames. Eleven
+additional left frames are separately labelled bounded robot-intent continuity;
+they do not change the original 232 left / 130 right source-inferred hold states
+or the 272 left / 284 right directly supported source hand observations. Exact
+array comparisons verify those distinctions and every unchanged contact anchor.
+
+The complete neutral-to-grasp finger path also has a conservative continuous
+self-separation certificate. Original-vertex hull containment, URDF point-motion
+bounds and adaptive interval checks cover all 21 nonadjacent pairs per hand;
+only directly joint-adjacent pairs are excluded. This does **not** certify
+continuous clearance against the objects or the other hand.
+
+Continuous object/cross-hand clearance, environment support, contact timing and
+source accuracy still need validation. The three source-depth disagreements
+described above remain unresolved. No new Isaac run or independent-machine
+reproduction is claimed. The complete commands, method sources, intermediate
+failures, outputs and hashes are frozen in a separate development checkpoint;
+these experiments have not been integrated into the production pipeline. The
+development task is not yet accepted, and issue9 remains deferred.
