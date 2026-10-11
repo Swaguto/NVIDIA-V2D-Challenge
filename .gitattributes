@@ -37,3 +37,15 @@ reconstruction/validation/issue6/run_automatic_hand_suite.py text eol=lf
 # The existing selector was tested with CRLF; preserve that frozen input exactly.
 reconstruction/validation/issue6/wearer_selection.py text eol=crlf
 docs/team/reproduction/automatic-hand*.json text eol=lf
+
+# Preserve executable replay/audit helper hashes across Windows/Linux checkouts.
+scripts/reproduction/stage_automatic_hands.py text eol=lf
+scripts/reproduction/continuous_dex3.py text eol=lf
+scripts/reproduction/replay_continuous_dex3_sim6.py text eol=lf
+scripts/reproduction/audit_continuous_replay.py text eol=lf
+scripts/reproduction/compare_dex3_payloads.py text eol=lf
+scripts/reproduction/compare_renderer_outputs.py text eol=lf
+scripts/reproduction/make_continuous_review.py text eol=lf
+scripts/reproduction/test_continuous_dex3.py text eol=lf
+scripts/reproduction/rebuild_motion.py text eol=lf
+docs/team/reproduction/continuous-dex3*.json text eol=lf

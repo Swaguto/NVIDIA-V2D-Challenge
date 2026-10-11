@@ -11,6 +11,8 @@ def main(args):
     if out.exists():raise FileExistsError(out)
     receipt=json.loads((trial/'run-receipt.json').read_text())
     if receipt['status']!='completed':raise ValueError('Refinement is incomplete')
+    with (trial/'scene.npz').open('rb') as f:scene_digest=hashlib.file_digest(f,'sha256').hexdigest()
+    if scene_digest!=receipt['scene_sha256']:raise ValueError('Refined scene differs from its completion receipt')
     inputs_root=args.inputs.resolve() if args.inputs else kit/'perception-checkpoint'
     expected_lock=receipt.get('experimental_input_lock_sha256')
     if expected_lock:
