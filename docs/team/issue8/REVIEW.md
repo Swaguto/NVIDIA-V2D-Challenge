@@ -25,6 +25,10 @@ Windows checks reproduce all 10 previous trajectory arrays exactly, including
 NaN masks, qpos, FK, errors and iteration counts. The extra direct-observation
 mask matches the exported source. Finger position/velocity violations remain 0.
 This checks numerical reproduction, not anatomical accuracy or manipulation.
+Base qpos uses XYZW quaternions; per-link FK poses use WXYZ, as returned by
+`HandKinematics.compute`. Consumers must not assume these two arrays use the
+same rotation order. Native Pinocchio verifies all 12,788 supported FK poses:
+zero position error and maximum rotation difference 2.01e-16 radians.
 
 Final checkout review found that Windows CRLF conversion changed the hashed
 Python and URDF bytes relative to Linux Git checkouts. `.gitattributes` now pins
@@ -71,10 +75,12 @@ hand plus observed-object coverage is 93.12%, 92.65%, 100%, 94.03%. Reconstructe
 human raw proximity fractions are 92.59%, 91.18%, 94.87%, 94.03%, respectively.
 These calculations use no temporal bridge or display hold.
 
-The first left pot grasp exposes a retargeting defect: the closest robot tip
-is a median 12.54 mm from the surface versus 1.75 mm for the reconstructed human.
-The loose 2 cm proximity criterion cannot establish an actual grasp. Contact
-placement must improve before the task is accepted as physically credible.
+The first left pot grasp has a closest robot tip-site median distance of
+12.54 mm from the surface versus 1.75 mm for the reconstructed human. Tip sites
+are not complete contact pads: a proximal segment can contact the handle while
+its tip does not. These distances alone cannot establish absence of grasp.
+The loose 2 cm proximity criterion cannot establish a credible grasp either;
+pad placement, opposition and penetration require separate checks.
 
 A separate development diagnostic reduces hand enclosure radii from 12 mm to 6 mm,
 retaining the same robot meshes, trajectory, object material grids and 2 cm
@@ -97,16 +103,22 @@ promoted: nearest-tip improvement alone does not prove opposing contacts or
 safe geometry. Contact-pad surfaces, source-video alignment and penetration
 still require review. Historical frozen receipts remain unchanged.
 
-A full collision-mesh vertex audit queries 68,630,152 vertex/object pairs at
-supported timestamps. Under the documented inferred material, baseline depth
-lower witnesses reach 11.11 mm left / 6.52 mm right, at frames 184 / 55. This is
-evidence of intrusion under that model, not physical ground truth or a complete
-surface certificate. The 2 cm bound can pass while these defects remain.
+A corrected full collision-mesh vertex audit queries 68,630,152 vertex/object
+pairs at supported timestamps. Under the documented inferred material,
+baseline depth lower witnesses reach 10.88 mm left / 7.02 mm right, at frames
+54 / 303. There are 238 left and 133 right supported timestamps above 2 mm.
+Version 1 of this additional development audit incorrectly interpreted FK
+WXYZ rotations as XYZW; its numbers and worst-frame claims are invalid. Version
+2 corrects that conversion and retains the original reports without relabelling
+them. The pipeline's capsule/material gate already used WXYZ correctly and its
+historical and independent enclosure receipts are unchanged. These vertex
+witnesses concern the declared derived material, not physical ground truth or
+a complete surface certificate. The 2 cm bound can pass while defects remain.
 
 A second development candidate adds sampled material repulsion to the existing
 QP. Finite-difference point Jacobians agree within 8.1e-9. It retains every
-source support mask and satisfies joint/velocity limits, but still has 11.00 mm
-left / 6.65 mm right lower witnesses. Left median wrist residual rises from
+source support mask and satisfies joint/velocity limits, but the corrected
+vertex audit still has 6.95 mm left / 6.55 mm right lower witnesses. Left median wrist residual rises from
 10.48 to 22.11 mm and orientation from 7.84 to 18.20 degrees. It is rejected;
 moving the hand away or improving one proximity count is not task acceptance.
 
@@ -122,7 +134,11 @@ hashes are verified. Spot review includes frames 55 and 184. Whole-video pose
 accuracy acceptance is pending. No display holds, collision resolution, dynamics
 or training are used. This diagnostic's archived source/model bytes predate the
 LF checkout fix; numerical IK arrays are identical, but its receipts remain
-bound to that original private source package.
+bound to that original private source package. A second actual Sim run uses
+the canonical LF source/assets. Its independent 343-frame state and video audit
+also passes. Every raw PNG pixel array and shared simulator readback array is
+identical across the two runs on this same A40 and pinned runtime. This is not
+independent-machine rendering or physical manipulation validation.
 
 Next work is contact-aware retargeting checked against the original video and
 object geometry, followed by a new audited simulator replay. Issue9 and policy

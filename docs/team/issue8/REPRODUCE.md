@@ -42,6 +42,13 @@ The merged refinement and reproduction tools are available in the same checkout.
 Record `git rev-parse HEAD`, the manifest hashes and the installed environment
 lock for each new result. Historical archives and their expected masks stay frozen.
 
+Rotation order is array-specific. `robot_qpos[..., 3:7]` is XYZW;
+`robot_left_frame_poses[..., 3:7]` and `robot_right_frame_poses[..., 3:7]`
+are WXYZ. For per-link geometry in SciPy, use
+`Rotation.from_quat(link_pose[3:], scalar_first=True)`.
+The collision gate already follows this convention. Interchanging these
+orders rotates collision geometry incorrectly even if FK positions agree.
+
 Git checkout rules now pin LF bytes for the retarget Python sources and both
 Dex3 URDFs. This matters even though CRLF and LF XML describe identical geometry:
 receipts deliberately verify bytes. Use a fresh checkout of this revision for
