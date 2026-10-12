@@ -1,5 +1,11 @@
 # Reproduce issues 6, 7 and 8
 
+For the October 12 Dex3 motion replay, start with
+[the frozen replay instructions](DEX3_MOTION_REPLAY_BASELINE.md).
+They cover the completed 343-frame Isaac replay, exact procedural regeneration,
+observed/inferred provenance, and remaining physical-target qualifications.
+The older measurements below retain their original scope and acceptance state.
+
 The team bundles are in [Google Drive](https://drive.google.com/drive/folders/1aie0RV1jJ_XxF5ddJbGVRpJskdi4IMmA).
 Sign in with the account listed on the shared project document. The nine named
 teammates have read access; the folder is restricted. Download the four archives
