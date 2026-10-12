@@ -59,7 +59,9 @@ the archive preserves the exact source bytes used by existing hash locks.
 - Contact proxy coverage is 375/381 labeled core hand-frames. Gaps are left 46,
   272, 332, 333 and right 46, 309; all are grasp boundaries. The proxy measures
   two nearby, facing original pad faces, not force or grasp stability. The left
-  thumb proximal pad remains a qualification; do not call it distal-tip contact.
+  human source thumb has limited distal anatomical support. The checked robot
+  faces are on the Dex3 distal thumb (`thumb_2`) and index (`index_1`) meshes;
+  robot pad geometry does not establish observed human fingertip contact.
 - The retained quality runner reproduces all 3,966 geometry arrays and 661 mask
   images from its earlier measured run exactly. It exports 653 verified native
   records (321 left, 332 right), still unaccepted as physical targets. See PR #37
@@ -229,8 +231,8 @@ but do not resolve hidden pad contact, the 8–10 mm support discrepancy, or
 millimetre accuracy of recovered wrists.
 
 The reproducible replay and its display checks are complete. Physical-target
-approval remains withheld: resolve the six contact-boundary gaps and proximal
-thumb qualification, establish support/placement accuracy within declared
+approval remains withheld: resolve the six contact-boundary gaps and human
+thumb-source qualification, establish support/placement accuracy within declared
 tolerances, and check the path between source frames before treating this as a
 physically approved demonstration. Human PR review is also still pending.
 Do not advance the Issue #9 gate on the basis of flicker removal alone.
