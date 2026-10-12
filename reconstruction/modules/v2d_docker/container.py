@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 import os
 import subprocess
+import sys
 from pathlib import Path
 
 
@@ -18,6 +19,24 @@ def _base_dir(path: str) -> str:
             break
         clean.append(part)
     return str(Path(*clean)) if clean else str(Path(path).parent)
+
+
+def _extra_arg_flags(extra_args: dict[str, object] | None) -> list[str]:
+    """
+    Convert an extra_args mapping into CLI flags.
+
+    None or False → omit entirely; True → bare flag (--arg_name);
+    anything else → --arg_name str(value).
+    """
+    flags: list[str] = []
+    for arg_name, value in (extra_args or {}).items():
+        if value is None or value is False:
+            continue
+        elif value is True:
+            flags.append(f"--{arg_name}")
+        else:
+            flags += [f"--{arg_name}", str(value)]
+    return flags
 
 
 def run_in_container(
@@ -55,10 +74,27 @@ def run_in_container(
     for path in outputs.values():
         os.makedirs(_base_dir(path), exist_ok=True)
 
+    file_args = {**inputs, **outputs}
+
+    # Host mode (V2D_HOST_MODE=1): run the module directly in the calling
+    # Python environment, skipping Docker. Used on hosts where a container
+    # runtime is unavailable (e.g. unprivileged cloud pods); requires the
+    # module's lib/ dependencies to be installed on the host.
+    if os.environ.get("V2D_HOST_MODE") == "1":
+        cmd = [sys.executable, "-m", module]
+        for arg_name, path in file_args.items():
+            cmd += [f"--{arg_name}", path]
+        cmd += _extra_arg_flags(extra_args)
+        run_env = dict(os.environ)
+        if env:
+            run_env.update(env)
+        subprocess.run(cmd, check=True, env=run_env)
+        return
+
     # Map each unique host directory to a container mount point.
     # First arg to reference a directory claims the mount name.
     dir_to_mount: dict[str, str] = {}
-    for arg_name, path in {**inputs, **outputs}.items():
+    for arg_name, path in file_args.items():
         host_dir = _base_dir(path)
         if host_dir not in dir_to_mount:
             dir_to_mount[host_dir] = f"/data/{arg_name}"
@@ -85,19 +121,12 @@ def run_in_container(
 
     cmd += [image, "python", "-m", module]
 
-    for arg_name, path in {**inputs, **outputs}.items():
+    for arg_name, path in file_args.items():
         host_dir = _base_dir(path)
         rel = os.path.relpath(path, host_dir)
         container_path = f"{dir_to_mount[host_dir]}/{rel}"
         cmd += [f"--{arg_name}", container_path]
 
-    if extra_args:
-        for arg_name, value in extra_args.items():
-            if value is None or value is False:
-                pass
-            elif value is True:
-                cmd += [f"--{arg_name}"]
-            else:
-                cmd += [f"--{arg_name}", str(value)]
+    cmd += _extra_arg_flags(extra_args)
 
     subprocess.run(cmd, check=True)
