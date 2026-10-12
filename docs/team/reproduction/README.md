@@ -157,3 +157,7 @@ If an archive check fails, download the exact catalogued filename again. If a
 measurement comparison fails, preserve the new output and logs with the error;
 do not loosen thresholds or overwrite the frozen result. Use the pinned packages
 and Python 3.11. Teammates can attach the generated JSON receipt when reporting results.
+# Retained hand quality
+
+See [the retained-scale development protocol](RETAINED_HAND_QUALITY.md) for
+geometry-preserving exports, current-image recovery checks and their limits.

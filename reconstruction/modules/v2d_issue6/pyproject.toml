@@ -10,7 +10,7 @@ requires-python = ">=3.10"
 dependencies = ["numpy>=1.24", "Pillow>=10", "trimesh>=4,<6"]
 
 [project.optional-dependencies]
-test = ["pytest>=8"]
+test = ["pytest>=8", "opencv-python-headless==4.11.0.86"]
 lint = ["ruff==0.16.9"]
 track3 = ["opencv-python-headless>=4.8", "pyarrow>=15"]
 
