@@ -91,13 +91,22 @@ development data is not embedded in this repository's method snapshot.
 
 First verify the case and method bytes (Python 3.11.8+; Windows or Linux):
 
-Clone the repository and check out `Evc-r/dex3-motion-replay-baseline` before
+Clone the repository and check out tag `dex3-development-replay-20261012` before
 running these commands. Download the case and fitted-input archives listed in
 [artifacts.json](dex3-motion-replay/artifacts.json). Keep the archives compressed;
 the runners verify and extract them. The frozen derived inputs are assets of a
 private repository prerelease, available to people with repository access. The
 separate project Drive folder retains its existing permissions. Fresh upstream
 inference still requires authorized access to the original data and models.
+
+```sh
+git clone https://github.com/Swaguto/NVIDIA-V2D-Challenge.git
+cd NVIDIA-V2D-Challenge
+git checkout --detach dex3-development-replay-20261012
+```
+
+[Open the private prerelease](https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/tag/dex3-development-replay-20261012)
+to download the two archives and the actual Isaac/comparison videos.
 
 ```sh
 python scripts/reproduction/reproduce_frozen_dex3_replay.py \
