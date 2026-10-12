@@ -1,0 +1,21 @@
+{
+  "github_method_files": {
+    "automatic_hands.py": "37cea698f5d8e9380adcaa6e8fc8c6d95cb860484a319518f63af4843fb263f0",
+    "wearer_selection.py": "232ca7c9afae24d705d9029baf6f18e2a232f273c0338d16cf0873f212e7b377",
+    "automatic_hand_quality.py": "5c88aec083b59d8deed2f71f73f95981cb40d51cc75b90cea419f320d3a05a6a",
+    "hand_quality_support.py": "a1425bc7d27a5657f8f9a7b39fa2408bf3840b92e2d739b500f8d3873c7f7ee7",
+    "prepare_retained_hand_quality_inputs.py": "b5e2922c6b59553569fe62660cc9cb5b60576dc55ad87eee8b02f593220341f7",
+    "run_retained_hand_quality.py": "ed67c2855d8dcf3d8cc0a16dee364ef3081011ed5286838d57aa47346be33683",
+    "run_automatic_hand_suite.py": "1bc9fe50a3d2592dcea0a6ebbb26df88a156c598fd264cde46f6d75b7defa0e3",
+    "automatic_hands.json": "82b5f28fe17c8fdaf4d00b0f1fb1aa8a0c694a5c2eee7ea2a8bdd191eddbeed1"
+  },
+  "terminal_receipt_sha256": "065112b32c876f03e7e95f9923f8a147c8a1039760cea9869845d8ae25a2787b",
+  "geometry_array_comparisons": 3966,
+  "maximum_geometry_array_difference": 0.0,
+  "matching_mask_pngs": 661,
+  "verified_exports": 653,
+  "maximum_native_export_error_m": 1.8489534375776273e-08,
+  "full_upstream_inference_reproduced": false,
+  "quality_accepted": false,
+  "physical_task_accepted": false
+}

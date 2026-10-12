@@ -119,8 +119,25 @@ and new geometry. Among baseline-valid frames, the left pass count changes from
 pass count remains 284/284; its median residual changes from 5.167 mm to 5.218 mm.
 The geometry/baseline comparison agrees on Windows/Linux within `1.2e-16`.
 This verifies those calculations, not complete source reconstruction or contact
-accuracy. The integrated GitHub runner must be rerun and compared before its
-own results are claimed.
+accuracy. The integrated GitHub runner completed on October 12 using source
+commit `fcb5ad8a811743a6ed62229bdca29f5a8c49b60b`: 321 left / 332 right passing
+proposals and 653 geometry-verified exports. All 3,966 saved geometry arrays
+match the previous measured run exactly; all 661 detector-mask PNGs match by
+SHA-256. The maximum independently rematerialized native export error is
+`1.8489534375776273e-8` metres. This reruns SAM and the quality checker from
+retained estimates; it does not rerun upstream detector/MANO inference.
+
+The full 175-test issue6 suite passes on the native inference environment;
+32 recovery/geometry controls pass on Windows (NumPy 1.26.4) and native Linux
+(NumPy 2.2.6). The 14 reproduction controls also pass on Windows. These are
+local results; the cross-platform CI matrix must still report its own results.
+The compact measured receipt is in `evidence/retained-hand-quality-e002.json`.
+
+Use a Git checkout with the repository's `.gitattributes` applied. Several
+method files use LF, while the existing frozen `wearer_selection.py` uses CRLF.
+ZIP/archive downloads or editors that rewrite line endings can change method
+byte hashes even without a logic change. A hash mismatch must be investigated;
+do not edit a receipt to make it pass.
 
 Do not overwrite existing observation flags from these counts. Original and
 retained source shapes can differ; a 16.033 mm change from one existing left-hand
