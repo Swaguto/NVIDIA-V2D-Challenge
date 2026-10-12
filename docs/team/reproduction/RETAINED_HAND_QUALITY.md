@@ -139,6 +139,12 @@ ZIP/archive downloads or editors that rewrite line endings can change method
 byte hashes even without a logic change. A hash mismatch must be investigated;
 do not edit a receipt to make it pass.
 
+On Windows, clone into a short workspace path and enable Git long-path support
+for that clone (`git -c core.longpaths=true clone <repository-url> C:/v2d`).
+The repository contains long existing asset paths. The CI workflow enables
+long-path support before checkout; a checkout failure is not a failed hand
+control and must not be reported as a completed test run.
+
 Do not overwrite existing observation flags from these counts. Original and
 retained source shapes can differ; a 16.033 mm change from one existing left-hand
 estimate is not proof of improved 3D accuracy. Image and depth checks can reject

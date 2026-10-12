@@ -28,6 +28,9 @@ jobs:
         python: ['3.11', '3.12']
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Enable Git long paths on Windows before checkout
+        if: runner.os == 'Windows'
+        run: git config --system core.longpaths true
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
