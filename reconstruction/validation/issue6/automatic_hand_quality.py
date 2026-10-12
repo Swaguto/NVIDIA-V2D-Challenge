@@ -11,6 +11,7 @@ from pathlib import Path
 import cv2
 import numpy as np
 from automatic_hands import method_hash, sha, write
+from hand_quality_support import DetectorBoundedPredictor, export_native_record
 
 
 def classify(mask,rendered,depth,mask_score,policy):
@@ -70,6 +71,7 @@ def run(args,predictor=None):
         shutil.copy2(src,out/'source'/name)
     if predictor is None:
         predictor=SAM2ImagePredictor(build_sam2('configs/sam2.1/sam2.1_hiera_l.yaml',str(args.sam_checkpoint),device='cuda'))
+    predictor=DetectorBoundedPredictor(predictor)
     renderer=pyrender.OffscreenRenderer(c['width'],c['height'])
     camera=pyrender.IntrinsicsCamera(c['fx'],c['fy'],c['cx'],c['cy'])
     faces=np.load(args.proposals/'faces.npy',allow_pickle=False)
@@ -135,13 +137,8 @@ def run(args,predictor=None):
                         'source_image_sha256':row['source_image_sha256'],'quality_accepted':False}
                 native_record=args.proposals/'records'/('3' if side=='right' else '2')/f'{frame:06d}.json'
                 if accepted and native_record.exists():
-                    aligned=json.loads(native_record.read_text())
-                    aligned.update(cam_t=(np.asarray(aligned['camera']['pred_cam_t_full'])+offset).tolist(),
-                                   hand_scale=1.0,intrinsics=c,
-                                   diagnostics={'metric_valid':True,'n_pixels':measurement['stereo_pixels'],
-                                                'median_abs_residual_m':measurement['median_depth_residual_m'],
-                                                'maximum_residual_m':policy['maximum_depth_residual_m']},
-                                   automatic_consistency=record)
+                    aligned=export_native_record(json.loads(native_record.read_text()),
+                                                 offset,c,measurement,record,policy)
                     write(out/'accepted/records'/str(aligned['track_id'])/f'{frame:06d}.json',aligned)
                     accepted_mask=out/'accepted/masks'/side/f'{frame:06d}.png'
                     accepted_mask.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(maskpath,accepted_mask)
@@ -164,6 +161,7 @@ def run(args,predictor=None):
         for present in mask:
             run=0 if present else run+1;longest=max(longest,run)
         summary.setdefault('longest_unsupported_run_frames',{})[side]=longest
+    write(out/'detector-mask-evidence.json',predictor.calls)
     write(out/'frame-evidence.json',frames); write(out/'summary.json',summary)
     print(json.dumps(summary),flush=True)
 

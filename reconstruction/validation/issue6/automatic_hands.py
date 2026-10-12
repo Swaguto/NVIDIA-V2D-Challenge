@@ -31,6 +31,9 @@ def write(path, data):
 def method_hash(config):
     return {p.name:sha(p) for p in [Path(__file__),Path(__file__).with_name('wearer_selection.py'),
                                   Path(__file__).with_name('automatic_hand_quality.py'),
+                                  Path(__file__).with_name('hand_quality_support.py'),
+                                  Path(__file__).with_name('prepare_retained_hand_quality_inputs.py'),
+                                  Path(__file__).with_name('run_retained_hand_quality.py'),
                                   Path(__file__).with_name('run_automatic_hand_suite.py'),config]}
 
 

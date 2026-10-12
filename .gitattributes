@@ -34,6 +34,9 @@ scripts/track3/refine_episode.sh text eol=lf
 reconstruction/validation/issue6/automatic*.py text eol=lf
 reconstruction/validation/issue6/automatic_hands.json text eol=lf
 reconstruction/validation/issue6/run_automatic_hand_suite.py text eol=lf
+reconstruction/validation/issue6/hand_quality_support.py text eol=lf
+reconstruction/validation/issue6/prepare_retained_hand_quality_inputs.py text eol=lf
+reconstruction/validation/issue6/run_retained_hand_quality.py text eol=lf
 # The existing selector was tested with CRLF; preserve that frozen input exactly.
 reconstruction/validation/issue6/wearer_selection.py text eol=crlf
 docs/team/reproduction/automatic-hand*.json text eol=lf
