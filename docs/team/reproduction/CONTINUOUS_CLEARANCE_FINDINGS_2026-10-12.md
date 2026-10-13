@@ -1,5 +1,11 @@
 # Between-sample Dex3 clearance findings
 
+The corrected combined candidate now passes the complete modeled continuous
+check and has a new audited Isaac replay. See [the October 13 result and exact
+reproduction instructions](CORRECTED_DEX3_REPLAY_2026-10-13.md). The original
+counterexamples and release below remain preserved; physical-target approval
+is still withheld.
+
 This development check follows the frozen October 12 replay. It changes neither
 the release tag nor the published videos. The saved replay is reproducible and
 its display review is complete; its physical-target gate remains unapproved.

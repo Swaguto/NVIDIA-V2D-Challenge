@@ -1,0 +1,18 @@
+{
+  "files_sha256": {
+    "expected-report-1.json": "63c4be79358bcb998e63e4b83c67801434f376b7c53727a5f24fbf8e64e01543",
+    "expected-report-2.json": "3416695d5c2da7325883c800f1129cf2b9870834092335889d7cd519964a95a3",
+    "locked-gated-replay-motion-v2/replay-knots.npz": "f3765d65d4de9f6b6893e53caacad8fec95c2eaa7a8b923cc5a84824eabfa12b",
+    "locked-gated-replay-motion-v2/report.json": "b9e3140026c9ecc0ae78fcb071966f7698d02a3bf2bc3da5ad59cd47581636b2",
+    "locked-gated-replay-motion-v2/robot-motion-proposal.npz": "3541cc177e14ebae927c8026d7693dd89e96b0438503db0bc68010a975688ef4",
+    "material/manifest.json": "21819a8b65470202596a74997059f43f5e0925aaf21809802b1877ce1ea61b6c",
+    "material/object_0.npz": "3bee2d508e7f9a1499343296c39f1070a613c0bf90e6cdccbe433f8cef8ff6fa",
+    "material/object_1.npz": "d4f9296232622a31deee1b179997f7692e4597890d7072c529c75b93e26da5ad",
+    "profile-1.json": "275ad084d3d9ed13f9c49c6339db60ec87c3ebcd667390b5a79692af2af26615",
+    "profile-2.json": "f35cfb2f87661af94527b4da8a1c3d2bb8644615f7e2b58ab98ff14bff9f9b61"
+  },
+  "archive_sha256": "ae9d5326a9a283117be99a4c1ccc656ded9dfc3e47f94309a34e3511fc318f5d",
+  "bytes": 3048619,
+  "scope": "Measured methods and fitted correction profiles; upstream reconstruction and geometric search are not rerun",
+  "case_file_manifest_sha256": "87b027f05ca58259fa355a635ce6c1fed90a90a64ffcc84b9a2bed46d50880c0"
+}

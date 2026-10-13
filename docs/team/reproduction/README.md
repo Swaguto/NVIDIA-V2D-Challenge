@@ -1,8 +1,9 @@
 # Reproduce issues 6, 7 and 8
 
-For the October 12 Dex3 motion replay, start with
-[the frozen replay instructions](DEX3_MOTION_REPLAY_BASELINE.md).
-They cover the completed 343-frame Isaac replay, exact procedural regeneration,
+For the corrected October 13 Dex3 motion replay, start with
+[the current replay instructions](CORRECTED_DEX3_REPLAY_2026-10-13.md).
+They cover the completed 343-frame Isaac replay, complete modeled continuous
+check, exact fitted-profile regeneration,
 observed/inferred provenance, and remaining physical-target qualifications.
 The older measurements below retain their original scope and acceptance state.
 

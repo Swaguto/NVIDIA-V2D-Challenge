@@ -1,5 +1,9 @@
 # Dex3 development replay: frozen method and verification
 
+The October 12 replay below is preserved as historical evidence. For the
+corrected motion, complete continuous geometry check and new Isaac replay,
+use [the October 13 reproduction instructions](CORRECTED_DEX3_REPLAY_2026-10-13.md).
+
 This records the e002 development replay over PR #35, separately from the
 retained hand-quality recovery review in PR #37. PR #35 targets `main`; neither
 draft has human approval. This is a motion replay, not trained grasping.

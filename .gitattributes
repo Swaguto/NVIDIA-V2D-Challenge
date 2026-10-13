@@ -33,5 +33,9 @@ scripts/track3/refine_episode.sh text eol=lf
 # The clearance fixture verifies this method's exact bytes on Windows and Linux.
 scripts/reproduction/_frozen_material_boundary_v1.py text eol=lf
 scripts/reproduction/verify_dex3_clearance_counterexample.py text eol=lf
+scripts/reproduction/reproduce_corrected_dex3_motion.py text eol=lf
+scripts/reproduction/verify_corrected_dex3_certificate.py text eol=lf
+# Preserve the actual measured receipt bytes and their recorded SHA256 values.
+docs/team/reproduction/dex3-motion-replay/corrected-*.json -text whitespace=cr-at-eol
 # These small numerical test fixtures are stored directly with the review code.
 docs/team/reproduction/dex3-motion-replay/continuous-counterexample*.npz -filter -diff -merge -text

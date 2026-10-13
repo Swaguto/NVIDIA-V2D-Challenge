@@ -1,0 +1,19 @@
+{
+  "schema": "v2d.corrected-continuous-certificate-verification.v1",
+  "verifier_sha256": "c5b4f2a8488903de18d10f41ffcdb7619ec52659d642571a6d947ffbaf0d6357",
+  "continuous_report_sha256": "9384c8f5e715caa286a36296d34b806f9517035ae886d98eca8f71030e8719f7",
+  "all_segment_intervals_exactly_covered": true,
+  "segments": 3588,
+  "certified_subintervals": 7306,
+  "complete_surface_material_records": 233792,
+  "complete_surface_margin_records": 132907,
+  "complete_swept_AABB_separation_records": 45375,
+  "other_declared_complete_surface_records": 55510,
+  "other_complete_forms_verified_by_frozen_report_hash_not_new_geometry": true,
+  "maximum_stored_depth_upper_m": 0.001999990496590006,
+  "material_limit_m": 0.002,
+  "new_geometric_certification_run": false,
+  "true_object_penetration_guaranteed": false,
+  "source_accuracy_accepted": false,
+  "physical_task_accepted": false
+}
