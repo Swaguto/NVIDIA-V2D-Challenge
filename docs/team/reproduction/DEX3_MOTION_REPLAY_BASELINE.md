@@ -52,6 +52,11 @@ the archive preserves the exact source bytes used by existing hash locks.
   uncertainty band; this is not a true-object penetration guarantee.
 - The 3,566-time geometry screen has zero object or cross-hand failures. This
   is a finite screen, not a continuous-path certificate.
+  A subsequent between-sample check finds a right-thumb/lid counterexample
+  against the declared 2 mm material limit in both the procedural parent and
+  the explicit interpolation. See [the reproducible finding and bounded repair
+  candidate](CONTINUOUS_CLEARANCE_FINDINGS_2026-10-12.md). The frozen replay is
+  retained; physical-target approval remains withheld.
 - Source-frame joint positions and finger speeds pass their declared limits;
   there are no source-frame self/cross-hand mesh intersections. Root velocity
   bounds were not declared (maximum root speed 1.494 m/s, angular speed

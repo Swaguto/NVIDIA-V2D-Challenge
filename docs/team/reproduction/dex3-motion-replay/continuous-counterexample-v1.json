@@ -1,0 +1,102 @@
+{
+  "diagnostic_report_sha256": "9f5a82f24a995f8b67966d02595ea0557d4a4325e531f86b64005fd354e118e9",
+  "motion_report_sha256": "b9e3140026c9ecc0ae78fcb071966f7698d02a3bf2bc3da5ad59cd47581636b2",
+  "original_mesh_sha256": "0890fb1133c0d003728c0b529cae5e80cf153faa30ca6e159dcc2d0f4f58b6ba",
+  "material_payload_sha256": "d4f9296232622a31deee1b179997f7692e4597890d7072c529c75b93e26da5ad",
+  "side": "right",
+  "object": 1,
+  "link": "right_hand_thumb_2_link",
+  "time_s": 11.3703125,
+  "qpos_inferred": [
+    0.3308750578881588,
+    0.22887876091222265,
+    0.39721661409549325,
+    0.6978145150487748,
+    -0.45156494610067094,
+    -0.050220277846581174,
+    0.5537345264053468,
+    1.8364942802086133e-16,
+    2.0420881335537498e-16,
+    5.561235966337905e-18,
+    1.5345302892358135e-16,
+    -1.2973286872626484e-16,
+    -4.900398055607723e-18,
+    -1.8421962162595423e-16
+  ],
+  "original_triangle_index": 89,
+  "original_triangle_object_local_m": [
+    [
+      0.004059111804316704,
+      0.0422662990771318,
+      -0.07854577810974214
+    ],
+    [
+      0.0034770919692957837,
+      0.04333829422339609,
+      -0.07915170315847674
+    ],
+    [
+      0.0036401807170539226,
+      0.0471529464407122,
+      -0.08188272561023024
+    ]
+  ],
+  "witness_object_local_m": [
+    0.0037254614968888038,
+    0.04425251324708002,
+    -0.07986006895948304
+  ],
+  "witness_barycentric_coordinates": [
+    0.3333333333333357,
+    0.3333333333333316,
+    0.33333333333333265
+  ],
+  "point_triangle_residual_m": 1.3904866443919908e-17,
+  "source_object_affine_matrix": [
+    [
+      -0.07437735602695454,
+      0.9773341439690829,
+      0.19820725513178994
+    ],
+    [
+      -0.7048754688386832,
+      0.08907381702171906,
+      -0.7037162041207866
+    ],
+    [
+      -0.705420939012708,
+      -0.19205192950022887,
+      0.6822737089804195
+    ]
+  ],
+  "source_object_translation_m": [
+    0.25262593463646954,
+    0.16625740033037972,
+    0.5668388067774079
+  ],
+  "nearest_reference_boundary_face": 75955,
+  "independent_depth_lower_m": 0.002169149631216985,
+  "world_depth_limit_m": 0.002,
+  "declared_material_counterexample": true,
+  "physical_object_geometry_ground_truth": false,
+  "physical_task_accepted": false,
+  "independent_boundary_method_sha256": "8d574d9a3a1e9fe89858596aef38936d6f58bcb743046a33d701beebbdb685c6",
+  "material_subset_sha256": "8cf027f6cca0d85b175a0649d605485d00b8592f2885b6bde94b8f3547741d02",
+  "material_subset_filename": "continuous-counterexample-material-subset-v1.npz",
+  "original_material_subset_index_low": [
+    9,
+    133,
+    10
+  ],
+  "original_material_subset_index_high_exclusive": [
+    26,
+    150,
+    27
+  ],
+  "automatic_material_subset_radius_cells": 8,
+  "subset_depth_is_conservative_for_full_declared_union": true,
+  "subset_depth_lower_m": 0.0021691496312169828,
+  "subset_contains_only_original_declared_material_cells": true,
+  "subset_not_physical_ground_truth": true,
+  "original_material_filename": "continuous-counterexample-material-v1.npz"
+}

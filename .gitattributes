@@ -29,3 +29,9 @@
 
 # The episode refinement entrypoint runs in Linux/WSL even from Windows checkouts.
 scripts/track3/refine_episode.sh text eol=lf
+
+# The clearance fixture verifies this method's exact bytes on Windows and Linux.
+scripts/reproduction/_frozen_material_boundary_v1.py text eol=lf
+scripts/reproduction/verify_dex3_clearance_counterexample.py text eol=lf
+# These small numerical test fixtures are stored directly with the review code.
+docs/team/reproduction/dex3-motion-replay/continuous-counterexample*.npz -filter -diff -merge -text
