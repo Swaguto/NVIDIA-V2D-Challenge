@@ -39,3 +39,7 @@ scripts/reproduction/verify_corrected_dex3_certificate.py text eol=lf
 docs/team/reproduction/dex3-motion-replay/corrected-*.json -text whitespace=cr-at-eol
 # These small numerical test fixtures are stored directly with the review code.
 docs/team/reproduction/dex3-motion-replay/continuous-counterexample*.npz -filter -diff -merge -text
+# These measured audit entrypoints are bound by raw hashes in the audit archive.
+scripts/reproduction/audit_frozen_dex3_original_contacts.py -text whitespace=cr-at-eol
+scripts/reproduction/audit_frozen_dex3_original_mesh_intersections.py -text whitespace=cr-at-eol
+scripts/reproduction/audit_frozen_dex3_support_plane.py -text whitespace=cr-at-eol
