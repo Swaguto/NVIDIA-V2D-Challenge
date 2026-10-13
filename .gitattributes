@@ -43,3 +43,6 @@ docs/team/reproduction/dex3-motion-replay/continuous-counterexample*.npz -filter
 scripts/reproduction/audit_frozen_dex3_original_contacts.py -text whitespace=cr-at-eol
 scripts/reproduction/audit_frozen_dex3_original_mesh_intersections.py -text whitespace=cr-at-eol
 scripts/reproduction/audit_frozen_dex3_support_plane.py -text whitespace=cr-at-eol
+scripts/reproduction/reproduce_CAD_dex3_motion.py -text whitespace=cr-at-eol
+scripts/reproduction/verify_CAD_dex3_certificate.py -text whitespace=cr-at-eol
+docs/team/reproduction/dex3-motion-replay/CAD-*.json -text whitespace=cr-at-eol

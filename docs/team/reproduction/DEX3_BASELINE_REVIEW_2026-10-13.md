@@ -1,5 +1,9 @@
 # Dex3 baseline and recovery review
 
+The newer original-CAD development replay and its exact saved-fit reproduction
+are documented in [the current CAD method](ORIGINAL_CAD_DEX3_REPLAY_2026-10-13.md).
+The corrected replay measurements below describe the preserved earlier result.
+
 This refresh reads the exact GitHub diffs at the heads below and preserves the
 separate review boundaries. It is a technical review, not a human approval,
 merge or acceptance of reconstructed poses as training targets.

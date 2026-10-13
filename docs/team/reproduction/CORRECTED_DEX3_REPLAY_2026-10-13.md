@@ -1,5 +1,8 @@
 # Corrected Dex3 development replay and reproduction
 
+Historical result: [the newer original-CAD replay](ORIGINAL_CAD_DEX3_REPLAY_2026-10-13.md)
+supersedes this document's current-result status. This release remains immutable.
+
 The e002 replay is complete: 343 actual Isaac Sim frames, no artificial mesh
 on/off flicker observed in the chronological frame review, and a complete
 continuous check against the declared object material and original hand meshes.
