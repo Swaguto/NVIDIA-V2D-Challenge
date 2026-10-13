@@ -1,11 +1,13 @@
 # Reproduce issues 6, 7 and 8
 
-For the corrected October 13 Dex3 motion replay, start with
-[the current replay instructions](CORRECTED_DEX3_REPLAY_2026-10-13.md).
-They cover the completed 343-frame Isaac replay, complete modeled continuous
-check, exact fitted-profile regeneration,
-observed/inferred provenance, and remaining physical-target qualifications.
-The older measurements below retain their original scope and acceptance state.
+For the latest October 13 Dex3 development replay, start with
+[the support-aware replay instructions](SUPPORT_AWARE_DEX3_REPLAY_2026-10-13.md).
+They cover all 343 new Isaac frames, complete CAD/support and material/self/cross
+checks, exact 15-stage fitted-input reconstruction, preserved observation/hold
+provenance and the remaining source/physical accuracy limits. There is one active
+CAD reproduction entry point. The
+[original CAD replay](ORIGINAL_CAD_DEX3_REPLAY_2026-10-13.md) remains immutable;
+older measurements below retain their original scope and acceptance state.
 
 The team bundles are in [Google Drive](https://drive.google.com/drive/folders/1aie0RV1jJ_XxF5ddJbGVRpJskdi4IMmA).
 Sign in with the account listed on the shared project document. The nine named

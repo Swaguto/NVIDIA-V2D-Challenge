@@ -4,6 +4,18 @@ The newer original-CAD development replay and its exact saved-fit reproduction
 are documented in [the current CAD method](ORIGINAL_CAD_DEX3_REPLAY_2026-10-13.md).
 The corrected replay measurements below describe the preserved earlier result.
 
+The [support-aware development method](SUPPORT_AWARE_DEX3_REPLAY_2026-10-13.md)
+now passes complete original-CAD/estimated-sheet and material/self/cross checks.
+All 15 saved-fit stages reproduce byte exactly. The active change extends the
+existing CAD reproducer, reuses its shared hash/extraction/runtime checks and
+preserves its legacy command. No second support-reproduction entry point is
+installed; versioned methods remain in immutable evidence archives. Changed
+inputs, incorrect manifest hashes and escaping input paths are refused.
+Its new Isaac run completes all 343 frames and passes independent A40/Windows
+state, camera and video audits. All actual frames were inspected for artificial
+on/off flicker. This technical self-review does not imply human approval;
+source accuracy and physical motion-target acceptance remain withheld.
+
 This refresh reads the exact GitHub diffs at the heads below and preserves the
 separate review boundaries. It is a technical review, not a human approval,
 merge or acceptance of reconstructed poses as training targets.

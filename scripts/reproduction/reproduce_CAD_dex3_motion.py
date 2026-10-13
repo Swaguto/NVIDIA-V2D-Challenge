@@ -17,6 +17,109 @@ from pathlib import Path
 from reproduce_frozen_dex3_replay import digest, restore_methods
 
 
+def contained(root, relative):
+    path = (root / relative).resolve()
+    if not path.is_relative_to(root.resolve()):
+        raise ValueError("Kit path leaves its declared root")
+    return path
+
+
+def verify_geometry_runtime(expected_runtime):
+    if sys.platform != "linux" or platform.python_version() != "3.11.17":
+        raise RuntimeError("Use the recorded Linux Python 3.11.17 runtime")
+    for name, expected in expected_runtime.items():
+        if importlib.metadata.version(name) != expected:
+            raise RuntimeError("Recorded geometry package mismatch: " + name)
+    for name in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS"):
+        os.environ[name] = "1"
+
+
+def reproduce_method_kit(kit, manifest_sha256, out, check_only=False):
+    """Execute a locked reconstruction recipe using the existing CAD runner.
+
+    Original producer reports are frozen input metadata. Each new stage gets
+    its own receipt, and generated motion must match before metadata is carried
+    forward. This does not repeat inference, optimization or geometry proofs.
+    """
+    kit, output = kit.resolve(), out.resolve()
+    manifest_path = kit / "manifest.json"
+    if digest(manifest_path) != manifest_sha256:
+        raise ValueError("Method-kit manifest hash mismatch")
+    manifest = json.loads(manifest_path.read_text())
+    if manifest.get("runner_source_sha256", digest(Path(__file__))) != digest(
+        Path(__file__)
+    ):
+        raise ValueError("Use the runner revision frozen with this method kit")
+    for name, expected in manifest["files_sha256"].items():
+        path = contained(kit, name)
+        if not path.is_file() or digest(path) != expected:
+            raise ValueError("Changed or missing input: " + name)
+    if not manifest["saved_fit_reconstruction_only"]:
+        raise ValueError("The kit must declare its fitted-input boundary")
+    if check_only:
+        print("All method-kit input hashes verified; reconstruction was not run.")
+        return
+    verify_geometry_runtime(manifest["core_runtime_versions"])
+    output.mkdir(parents=True)
+    receipts = []
+    for stage in manifest["stages"]:
+        directory = contained(output, stage["name"])
+        if directory.exists():
+            raise FileExistsError(str(directory))
+        values = {"kit": str(kit), "out": str(output), "stage": str(directory)}
+        script = contained(kit, stage["script"])
+        subprocess.run(
+            [
+                sys.executable,
+                str(script),
+                *(value.format_map(values) for value in stage["arguments"]),
+            ],
+            check=True,
+        )
+        for name, expected in stage["expected_output_sha256"].items():
+            path = contained(directory, name)
+            if not path.is_file() or digest(path) != expected:
+                raise ValueError("Output mismatch: " + stage["name"] + "/" + name)
+        reference = stage.get("original_producer_report")
+        if reference:
+            shutil.copyfile(contained(kit, reference), directory / "report.json")
+        receipts.append(
+            {
+                "stage": stage["name"],
+                "script_sha256": digest(script),
+                "verified_outputs": stage["expected_output_sha256"],
+                "original_producer_report_from_frozen_input": reference,
+                "original_producer_report_sha256": digest(contained(kit, reference))
+                if reference
+                else None,
+                "optimization_repeated": False,
+                "geometry_rechecked": False,
+            }
+        )
+        print(json.dumps({"stage": stage["name"], "byte_exact": True}), flush=True)
+    result = {
+        "schema": "v2d.support-fitted-motion-reconstruction.v1",
+        "runner_sha256": digest(Path(__file__)),
+        "method_kit_manifest_sha256": digest(manifest_path),
+        "stages": receipts,
+        "final_case": manifest["final_case"],
+        "all_recorded_motion_bytes_exact": True,
+        "saved_fit_reconstruction_only": True,
+        "raw_video_inference_repeated": False,
+        "optimization_repeated": False,
+        "geometry_recomputed": False,
+        "new_simulator_run": False,
+        "source_accuracy_accepted": False,
+        "physical_task_accepted": False,
+    }
+    (output / "reproduction-receipt.json").write_text(
+        json.dumps(result, indent=2) + "\n"
+    )
+    print(
+        json.dumps({"stages": len(receipts), "all_recorded_motion_bytes_exact": True})
+    )
+
+
 def restore_case(key, case, kit, out, generated=None):
     """Rehydrate shared immutable files by verified content, preserving metadata."""
     manifest_path = kit / "expected" / key / "file-manifest.json"
@@ -55,14 +158,32 @@ def run(python, methods, name, arguments):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--case", type=Path, required=True)
-    parser.add_argument("--fitted-archive", type=Path, required=True)
-    parser.add_argument("--CAD-archive", dest="cad_archive", type=Path, required=True)
+    inputs = parser.add_mutually_exclusive_group(required=True)
+    inputs.add_argument("--case", type=Path)
+    inputs.add_argument("--method-kit", type=Path)
+    parser.add_argument("--method-manifest-sha256")
+    parser.add_argument("--fitted-archive", type=Path)
+    parser.add_argument("--CAD-archive", dest="cad_archive", type=Path)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--check-only", action="store_true")
     args = parser.parse_args()
     if args.out.exists():
         raise FileExistsError("Use a fresh output directory")
+    if args.method_kit:
+        if not args.method_manifest_sha256 or args.fitted_archive or args.cad_archive:
+            parser.error(
+                "--method-kit requires its manifest hash and no legacy archives"
+            )
+        reproduce_method_kit(
+            args.method_kit, args.method_manifest_sha256, args.out, args.check_only
+        )
+        return
+    if (
+        args.fitted_archive is None
+        or args.cad_archive is None
+        or args.method_manifest_sha256
+    ):
+        parser.error("--case requires both frozen archives and no method-kit hash")
     snapshot = (
         Path(__file__).resolve().parents[2]
         / "docs/team/reproduction/dex3-motion-replay"
@@ -101,15 +222,7 @@ def main():
         "daqp": "0.10.3",
         "trimesh": "4.12.2",
     }
-    if sys.platform != "linux" or platform.python_version() != "3.11.17":
-        raise RuntimeError(
-            "Regeneration requires the recorded Linux Python 3.11.17 runtime"
-        )
-    for name, expected in expected_runtime.items():
-        if importlib.metadata.version(name) != expected:
-            raise RuntimeError("Recorded geometry package mismatch: " + name)
-    for name in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS"):
-        os.environ[name] = "1"
+    verify_geometry_runtime(expected_runtime)
     kit, inputs = out / "kit", out / "inputs"
     methods = kit / "methods"
     cases, generated = out / "cases", out / "generated"
