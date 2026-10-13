@@ -270,3 +270,9 @@ command. Do not relax limits, edit expected hashes or turn missing observations
 into tracked hands. PR #35 targets `main`; PR #37 remains a separate recovery
 review; PR #38 publishes this development work. Human review/merge remains
 outstanding. See [the baseline review](DEX3_BASELINE_REVIEW_2026-10-13.md).
+
+The later [grasp and support diagnostics](CAD_GRASP_SUPPORT_DIAGNOSTICS_2026-10-13.md)
+record the separate, unfinished plane-constrained candidate and rejected source
+matching shortcuts. They do not replace this immutable replay or its acceptance
+limits. In particular, no later development video is claimed until a new Isaac
+run is bound to the changed trajectory.
