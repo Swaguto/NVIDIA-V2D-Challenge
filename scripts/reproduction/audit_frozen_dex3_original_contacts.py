@@ -3,6 +3,8 @@
 This unsigned surface diagnostic does not infer a solid from nonwatertight CAD,
 rerun a fit, change source observations, or approve a physical motion target.
 Source-only annotations enter validation only after geometric measurements.
+Use --cad-candidates to bind the selected pad faces to the final CAD grasp fit;
+without it the preserved legacy mode measures the earlier template faces.
 Use the pinned Linux geometry environment documented for the corrected replay.
 """
 
@@ -80,6 +82,11 @@ def main():
     for name in ("case", "methods", "fitted-inputs", "annotation", "out"):
         parser.add_argument("--" + name, type=Path, required=True)
     parser.add_argument("--case-manifest-sha256", required=True)
+    parser.add_argument(
+        "--cad-candidates",
+        type=Path,
+        help="Final CAD candidate report bound by the case; audits its selected faces",
+    )
     args = parser.parse_args()
     assert not args.out.exists()
     started = time.monotonic()
@@ -112,6 +119,29 @@ def main():
     bundle = read(args.case / "bundle/manifest.json")
     data = load(args.case / "bundle/episode.npz")
     motion = load(args.case / "proposal/robot-motion-proposal.npz")
+    cad_trials = {}
+    if args.cad_candidates is not None:
+        if sha(args.cad_candidates) != report.get("CAD_candidate_report_sha256"):
+            raise ValueError("CAD candidate report does not belong to this motion")
+        cad_report = read(args.cad_candidates)
+        if (
+            not cad_report.get("terminal")
+            or cad_report.get("atlas_sha256") != report["atlas_sha256"]
+        ):
+            raise ValueError("Incomplete or mismatched final CAD candidate report")
+        for trial in cad_report["trials"]:
+            prefix = trial["prefix"]
+            if prefix in cad_trials or not trial.get(
+                "candidate_static_geometry_passed"
+            ):
+                raise ValueError("Ambiguous or refused final CAD grasp")
+            faces = trial["rounds"][-1]["selected_original_hand_faces"]
+            targets = {target["finger"]: target for target in trial["targets"]}
+            if set(faces) != {"thumb", "index"} or set(targets) != set(faces):
+                raise ValueError(
+                    "Final CAD grasp needs both declared pad faces and targets"
+                )
+            cad_trials[prefix] = trial
     assert (
         sha(args.case / "proposal/robot-motion-proposal.npz")
         == report["payload_sha256"]
@@ -152,6 +182,32 @@ def main():
         assert len(candidates) == 1 and candidates[0]["success"]
         candidate = candidates[0]
         assert {p["finger"] for p in candidate["pads"]} == {"thumb", "index"}
+        if args.cad_candidates is not None:
+            trial = cad_trials[spec["prefix"]]
+            if (
+                trial["side"] != side
+                or trial["object"] != oi
+                or trial["parent_seed"] != scenes[0]["seed"]
+                or trial["parent_template_report_sha256"] != sha(template_path)
+            ):
+                raise ValueError(
+                    "Final CAD grasp is not bound to this template and phase"
+                )
+            candidate = {
+                **candidate,
+                "pads": [
+                    {
+                        **pad,
+                        "original_mesh_triangle_index": trial["rounds"][-1][
+                            "selected_original_hand_faces"
+                        ][pad["finger"]],
+                        "current_CAD_target": next(
+                            t for t in trial["targets"] if t["finger"] == pad["finger"]
+                        ),
+                    }
+                    for pad in candidate["pads"]
+                ],
+            }
         key = (("left", "right").index(side), pi)
         assert key not in phases
         phases[key] = (oi, spec["prefix"], candidate)
@@ -165,8 +221,15 @@ def main():
                     p["finger"]: p["original_mesh_triangle_index"]
                     for p in candidate["pads"]
                 },
+                "pad_selection_basis": "final_CAD_fit"
+                if args.cad_candidates is not None
+                else "original_template",
             }
         )
+    if args.cad_candidates is not None and set(cad_trials) != {
+        b["prefix"] for b in bindings
+    }:
+        raise ValueError("Final CAD report and motion grasp roster differ")
     hands = []
     for side in ("left", "right"):
         kin = setup_dex3_kinematics(side=side, max_iter=1)
@@ -225,6 +288,10 @@ def main():
                 finger = intended["finger"]
                 name, vertices, faces, mesh_sha = pads[finger]
                 fixed_id = int(intended["original_mesh_triangle_index"])
+                if not 0 <= fixed_id < len(faces):
+                    raise ValueError(
+                        "Selected pad triangle lies outside its locked mesh"
+                    )
                 tf = kin.configuration.get_transform_frame_to_world(name)
                 triangle = vertices[faces[fixed_id]] @ tf.rotation.T + tf.translation
                 distance, points, face1, face2 = surface_distance(
@@ -273,6 +340,50 @@ def main():
                         <= 0.002 + 1e-12,
                     }
                 )
+                if args.cad_candidates is not None:
+                    target_id = int(intended["current_CAD_target"]["CAD_triangle"])
+                    if not 0 <= target_id < len(object_faces):
+                        raise ValueError(
+                            "Selected target triangle lies outside its locked CAD"
+                        )
+                    target_triangle = world[object_faces[target_id]]
+                    target_distance, target_points, _, _ = surface_distance(
+                        model(triangle, single_face),
+                        model(target_triangle, single_face),
+                        model,
+                    )
+                    target_projection = closest_triangle_points(
+                        np.asarray([triangle, target_triangle]), target_points
+                    )
+                    target_residual = np.linalg.norm(
+                        target_projection - target_points, axis=1
+                    )
+                    target_verified = target_distance > 1e-12 and bool(
+                        (target_residual <= 1e-8).all()
+                    )
+                    if target_distance > 1e-12 and not target_verified:
+                        raise ValueError(
+                            "Selected CAD contact witness failed independent projection"
+                        )
+                    target_normal = np.cross(
+                        target_triangle[1] - target_triangle[0],
+                        target_triangle[2] - target_triangle[0],
+                    )
+                    target_normal /= np.linalg.norm(target_normal)
+                    hand_normal = normals[0] / norms[0]
+                    target_dot = float(hand_normal @ target_normal)
+                    measurements[-1]["current_CAD_target_witness"] = {
+                        "original_CAD_triangle": target_id,
+                        "unsigned_triangle_gap_m": target_distance,
+                        "points_world_m": target_points.tolist(),
+                        "independent_projection_residual_m": target_residual.tolist(),
+                        "positive_gap_witness_verified": target_verified,
+                        "target_normal_world": target_normal.tolist(),
+                        "hand_target_normal_dot": target_dot,
+                        "within2mm_and_opposed": target_verified
+                        and target_distance <= 0.002 + 1e-12
+                        and target_dot <= -0.5 + 1e-7,
+                    }
             records.append(
                 {
                     "source_frame": int(frame),
@@ -290,6 +401,14 @@ def main():
                     ),
                 }
             )
+            if args.cad_candidates is not None:
+                witnesses = [m["current_CAD_target_witness"] for m in measurements]
+                pair_dot = float(np.dot(*(w["target_normal_world"] for w in witnesses)))
+                records[-1]["current_CAD_target_normal_pair_dot"] = pair_dot
+                records[-1]["both_current_CAD_target_faces_within2mm_and_opposed"] = (
+                    all(w["within2mm_and_opposed"] for w in witnesses)
+                    and pair_dot <= -0.5 + 1e-7
+                )
         if (row + 1) % 40 == 0 or row + 1 == len(data["frame_indices"]):
             print(
                 json.dumps(
@@ -327,6 +446,15 @@ def main():
                 "original_CAD_2mm_gap_failed_core_frames": failed,
             }
         )
+        if args.cad_candidates is not None:
+            validations[-1]["current_CAD_target_witness_failed_core_frames"] = [
+                f
+                for f in frames
+                if (f, label["hand"], oi) not in by_key
+                or not by_key[(f, label["hand"], oi)][
+                    "both_current_CAD_target_faces_within2mm_and_opposed"
+                ]
+            ]
     summary = []
     for prefix in sorted({r["prefix"] for r in records}):
         selected = [
@@ -359,11 +487,25 @@ def main():
                 },
             }
         )
+        if args.cad_candidates is not None:
+            summary[-1][
+                "both_current_CAD_target_faces_within2mm_and_opposed_frames"
+            ] = sum(
+                r["both_current_CAD_target_faces_within2mm_and_opposed"]
+                for r in selected
+            )
     output = {
         "schema": "v2d.original-CAD-selected-pad-gaps.v1",
         "source_sha256": sha(Path(__file__)),
         "case_manifest_sha256": args.case_manifest_sha256,
         "motion_payload_sha256": report["payload_sha256"],
+        "hand_geometry_scope": "locked URDF collision meshes, not visual meshes",
+        "pad_selection_basis": "final_CAD_fit"
+        if args.cad_candidates is not None
+        else "original_template",
+        "CAD_candidate_report_sha256": sha(args.cad_candidates)
+        if args.cad_candidates is not None
+        else None,
         "original_BVH_builder_sha256": sha(
             args.methods / "audit_static_hold_scene_vertices_v1.py"
         ),

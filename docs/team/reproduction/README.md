@@ -24,6 +24,10 @@ uses organizer MoCap with locked public inputs through the existing evaluation
 tool. It includes measured relative-pose errors, Linux/Windows agreement,
 reference repetition diagnostics and a rejected default smoother experiment.
 
+The [final-fit contact audit](FUNCTIONAL_DEX3_CONTACT_AUDIT_2026-10-13.md)
+binds the contact checker to the actual CAD fit, confirms 377 closed states
+and identifies six missed source-labeled grasp states without changing motion.
+
 The team bundles are in [Google Drive](https://drive.google.com/drive/folders/1aie0RV1jJ_XxF5ddJbGVRpJskdi4IMmA).
 Sign in with the account listed on the shared project document. The nine named
 teammates have read access; the folder is restricted. Download the four archives

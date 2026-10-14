@@ -28,6 +28,15 @@ The largest 62.936 mm discrepancy overlaps exact repeated reference poses and
 needs source/timing diagnosis. All reference rows remain included. Hand/support
 measurements and physical acceptance are unchanged.
 
+The [current final-fit contact audit](FUNCTIONAL_DEX3_CONTACT_AUDIT_2026-10-13.md)
+now measures the actual CAD-selected finger faces. All 377 closed states have
+two opposing pad witnesses within 2 mm; the same six of 381 source-labeled
+grasp states are missed. Those six are false negatives, not unsupported source
+labels. Four have no recovered hand pose; left 272 and right 309 have observed
+poses but lack the inferred robot contact. The table below's older wording
+"unsupported" concerns the robot proxy, not uncertainty in those positive
+source grasp labels. No robot motion or acceptance flag changes.
+
 ## Requirement-by-requirement result
 
 | Goal requirement | Evidence | Disposition |
