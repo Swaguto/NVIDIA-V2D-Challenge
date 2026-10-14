@@ -9,6 +9,11 @@ CAD reproduction entry point. The
 [original CAD replay](ORIGINAL_CAD_DEX3_REPLAY_2026-10-13.md) remains immutable;
 older measurements below retain their original scope and acceptance state.
 
+The [physical-acceptance audit](DEX3_PHYSICAL_ACCEPTANCE_AUDIT_2026-10-13.md)
+records the later complete 343-frame source comparison inspection, remaining
+posture/support/contact uncertainty and requirement-by-requirement goal status.
+It does not change the frozen experiment or approve physical motion targets.
+
 The team bundles are in [Google Drive](https://drive.google.com/drive/folders/1aie0RV1jJ_XxF5ddJbGVRpJskdi4IMmA).
 Sign in with the account listed on the shared project document. The nine named
 teammates have read access; the folder is restricted. Download the four archives
