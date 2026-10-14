@@ -1,5 +1,14 @@
 # Dex3 static load diagnostic — October 14, 2026
 
+**Later collider readback qualification:** the historical runs below used
+`convexHull` object colliders, although the importer was configured for
+`Convex Decomposition`. The committed measurements record that actual setting.
+The importer request alone did not establish the intended collision geometry.
+These results remain reproducible evidence for the convex-hull setup and must
+not be presented as a test of the intended decomposed pot/lid physics. The
+immutable diagnostic tag is preserved. A supported-task run with verified
+convex decomposition is still required.
+
 **The test runs reproducibly; it does not demonstrate a successful manipulation task.**
 Four automatically selected e002 grasp starts fail an unsupported, one-second
 hold test under the stated assumptions. Both gravity/contact controls pass.
@@ -76,8 +85,9 @@ the SDK exits with status zero. No pass result approves motion targets.
    hashes containing platform line endings or absolute paths can differ;
    those are not physical state differences.
 3. Reuse the frozen Dex3 importer and project object physics preset. Adapt the
-   renamed Sim6 collision-import parameter to **Convex Decomposition**, and
-   use the Lab3 PhysX configuration. After removing importer instances,
+   renamed Sim6 collision-import parameter to request **Convex Decomposition**;
+   the recorded resulting approximation was **Convex Hull**. Use the Lab3 PhysX
+   configuration. After removing importer instances,
    reapply and read back zero contact/rest margins on every collider. Earlier
    attempts that omitted this step are superseded.
 4. Fix the wrists, initialize fingers once, and apply bounded position drives:
