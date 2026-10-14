@@ -1,0 +1,724 @@
+{
+  "source_sha256": "661ee992b0201a7801de638f27c45eb9f9ee37264b50a8798908093157e7620a",
+  "bundle_manifest_sha256": "c6284bb75b9d4cc38d35e625ad52d35e28da1b2cc89723291f25d64462df76df",
+  "input_lock_sha256": "1c85ea4a6a64c5bd0a38fcce0cd72975fac76f8e39e7a0df700b7d13787d0fac",
+  "github_fitter_source_sha256": "c00ae561b0ecac0ca6cfa69528bc66ce867f68d2852ea578b5e3331d09606943",
+  "github_fitter_function_ast_sha256": "79dd7d9a6dffe65cdc62b5a78c4da0e15027c5f268cf3e8952d51fcde341ceba",
+  "github_review_raster_source_sha256": "c58000461675af1406378ef4868e5fc0ec225fd94f22f446970b6c3bc3e04d41",
+  "payload_sha256": "ee65e4534d5306818ee88342615c78eb65b17d5f7bef762c654f4f36d796f28a",
+  "plane_world": [
+    -0.08110366191798302,
+    -0.7281997207352349,
+    -0.6805493095614893,
+    0.5344128076699514
+  ],
+  "sample_source_frames": [
+    0,
+    14,
+    29,
+    44,
+    59,
+    74,
+    89,
+    104,
+    118,
+    133,
+    148,
+    163,
+    178,
+    193,
+    208,
+    223,
+    237,
+    252,
+    267,
+    282,
+    297,
+    312,
+    327,
+    342
+  ],
+  "training_source_frames": [
+    0,
+    29,
+    59,
+    89,
+    118,
+    148,
+    178,
+    208,
+    237,
+    267,
+    297,
+    327
+  ],
+  "validation_source_frames": [
+    14,
+    44,
+    74,
+    104,
+    133,
+    163,
+    193,
+    223,
+    252,
+    282,
+    312,
+    342
+  ],
+  "protocol": {
+    "uniform_sample_frames": 24,
+    "training_and_validation_alternate_sample_frames": true,
+    "pixel_stride": 8,
+    "qualified_all9_pixel_neighborhood": true,
+    "maximum_depth_spread_m": 0.01,
+    "object_mask_dilation_on_stride_grid": 3,
+    "background_maximum_distance_from_object_center_m": 0.45,
+    "training_voxel_pitch_m": 0.01,
+    "ransac_inlier_threshold_m": 0.005,
+    "ransac_iterations": 1000,
+    "ransac_rng_seed_from_original_code": 42,
+    "normal_angle_limit_degrees": 90.0,
+    "no_Z_up_assumption": true
+  },
+  "fitting_voxel_points": 2745,
+  "fitting_voxel_inliers": 1409,
+  "per_source_sample": [
+    {
+      "frame": 0,
+      "training_frame": true,
+      "qualified_background_points": 910,
+      "plane_inliers_at5mm": 708,
+      "near_plane_points_at20mm": 861,
+      "near_plane_absolute_residual_median_m": 0.0023053041871239355,
+      "near_plane_absolute_residual_p95_m": 0.008632852676247249
+    },
+    {
+      "frame": 14,
+      "training_frame": false,
+      "qualified_background_points": 905,
+      "plane_inliers_at5mm": 676,
+      "near_plane_points_at20mm": 872,
+      "near_plane_absolute_residual_median_m": 0.002668289092215559,
+      "near_plane_absolute_residual_p95_m": 0.009381686998034603
+    },
+    {
+      "frame": 29,
+      "training_frame": true,
+      "qualified_background_points": 995,
+      "plane_inliers_at5mm": 722,
+      "near_plane_points_at20mm": 889,
+      "near_plane_absolute_residual_median_m": 0.0026003396521449007,
+      "near_plane_absolute_residual_p95_m": 0.007779675816262732
+    },
+    {
+      "frame": 44,
+      "training_frame": false,
+      "qualified_background_points": 501,
+      "plane_inliers_at5mm": 365,
+      "near_plane_points_at20mm": 469,
+      "near_plane_absolute_residual_median_m": 0.002904038750764615,
+      "near_plane_absolute_residual_p95_m": 0.00884870540694227
+    },
+    {
+      "frame": 59,
+      "training_frame": true,
+      "qualified_background_points": 540,
+      "plane_inliers_at5mm": 356,
+      "near_plane_points_at20mm": 498,
+      "near_plane_absolute_residual_median_m": 0.0033348441415383956,
+      "near_plane_absolute_residual_p95_m": 0.010609156644585614
+    },
+    {
+      "frame": 74,
+      "training_frame": false,
+      "qualified_background_points": 953,
+      "plane_inliers_at5mm": 621,
+      "near_plane_points_at20mm": 846,
+      "near_plane_absolute_residual_median_m": 0.002857207296515729,
+      "near_plane_absolute_residual_p95_m": 0.009320362003187171
+    },
+    {
+      "frame": 89,
+      "training_frame": true,
+      "qualified_background_points": 866,
+      "plane_inliers_at5mm": 661,
+      "near_plane_points_at20mm": 785,
+      "near_plane_absolute_residual_median_m": 0.0022861814951752324,
+      "near_plane_absolute_residual_p95_m": 0.007656591201126467
+    },
+    {
+      "frame": 104,
+      "training_frame": false,
+      "qualified_background_points": 820,
+      "plane_inliers_at5mm": 613,
+      "near_plane_points_at20mm": 759,
+      "near_plane_absolute_residual_median_m": 0.002602334593494793,
+      "near_plane_absolute_residual_p95_m": 0.007728735316748353
+    },
+    {
+      "frame": 118,
+      "training_frame": true,
+      "qualified_background_points": 1025,
+      "plane_inliers_at5mm": 740,
+      "near_plane_points_at20mm": 952,
+      "near_plane_absolute_residual_median_m": 0.002760318825619945,
+      "near_plane_absolute_residual_p95_m": 0.00838403221621181
+    },
+    {
+      "frame": 133,
+      "training_frame": false,
+      "qualified_background_points": 1059,
+      "plane_inliers_at5mm": 661,
+      "near_plane_points_at20mm": 967,
+      "near_plane_absolute_residual_median_m": 0.0035725878543787504,
+      "near_plane_absolute_residual_p95_m": 0.009683341822128988
+    },
+    {
+      "frame": 148,
+      "training_frame": true,
+      "qualified_background_points": 1062,
+      "plane_inliers_at5mm": 829,
+      "near_plane_points_at20mm": 995,
+      "near_plane_absolute_residual_median_m": 0.0025543245447142704,
+      "near_plane_absolute_residual_p95_m": 0.0077654986582697755
+    },
+    {
+      "frame": 163,
+      "training_frame": false,
+      "qualified_background_points": 1125,
+      "plane_inliers_at5mm": 794,
+      "near_plane_points_at20mm": 1060,
+      "near_plane_absolute_residual_median_m": 0.0026495009786004498,
+      "near_plane_absolute_residual_p95_m": 0.00976704250812244
+    },
+    {
+      "frame": 178,
+      "training_frame": true,
+      "qualified_background_points": 1197,
+      "plane_inliers_at5mm": 917,
+      "near_plane_points_at20mm": 1112,
+      "near_plane_absolute_residual_median_m": 0.002314104502856962,
+      "near_plane_absolute_residual_p95_m": 0.00858558656250702
+    },
+    {
+      "frame": 193,
+      "training_frame": false,
+      "qualified_background_points": 1043,
+      "plane_inliers_at5mm": 787,
+      "near_plane_points_at20mm": 961,
+      "near_plane_absolute_residual_median_m": 0.0025980414222345205,
+      "near_plane_absolute_residual_p95_m": 0.008028653861044455
+    },
+    {
+      "frame": 208,
+      "training_frame": true,
+      "qualified_background_points": 1106,
+      "plane_inliers_at5mm": 782,
+      "near_plane_points_at20mm": 1038,
+      "near_plane_absolute_residual_median_m": 0.0030757134128398533,
+      "near_plane_absolute_residual_p95_m": 0.008192171113353724
+    },
+    {
+      "frame": 223,
+      "training_frame": false,
+      "qualified_background_points": 1105,
+      "plane_inliers_at5mm": 803,
+      "near_plane_points_at20mm": 1032,
+      "near_plane_absolute_residual_median_m": 0.002961427403188166,
+      "near_plane_absolute_residual_p95_m": 0.00772306691101805
+    },
+    {
+      "frame": 237,
+      "training_frame": true,
+      "qualified_background_points": 1376,
+      "plane_inliers_at5mm": 844,
+      "near_plane_points_at20mm": 1129,
+      "near_plane_absolute_residual_median_m": 0.0028748204171867853,
+      "near_plane_absolute_residual_p95_m": 0.01024773573212229
+    },
+    {
+      "frame": 252,
+      "training_frame": false,
+      "qualified_background_points": 1138,
+      "plane_inliers_at5mm": 776,
+      "near_plane_points_at20mm": 1002,
+      "near_plane_absolute_residual_median_m": 0.00267018353032783,
+      "near_plane_absolute_residual_p95_m": 0.009626794915020529
+    },
+    {
+      "frame": 267,
+      "training_frame": true,
+      "qualified_background_points": 754,
+      "plane_inliers_at5mm": 519,
+      "near_plane_points_at20mm": 655,
+      "near_plane_absolute_residual_median_m": 0.0025965711227153854,
+      "near_plane_absolute_residual_p95_m": 0.009008208514959313
+    },
+    {
+      "frame": 282,
+      "training_frame": false,
+      "qualified_background_points": 710,
+      "plane_inliers_at5mm": 468,
+      "near_plane_points_at20mm": 636,
+      "near_plane_absolute_residual_median_m": 0.0031617453836702003,
+      "near_plane_absolute_residual_p95_m": 0.008854242291207404
+    },
+    {
+      "frame": 297,
+      "training_frame": true,
+      "qualified_background_points": 755,
+      "plane_inliers_at5mm": 541,
+      "near_plane_points_at20mm": 690,
+      "near_plane_absolute_residual_median_m": 0.002910939712210958,
+      "near_plane_absolute_residual_p95_m": 0.008602071902256106
+    },
+    {
+      "frame": 312,
+      "training_frame": false,
+      "qualified_background_points": 790,
+      "plane_inliers_at5mm": 582,
+      "near_plane_points_at20mm": 752,
+      "near_plane_absolute_residual_median_m": 0.0028388857151377955,
+      "near_plane_absolute_residual_p95_m": 0.009054579945683613
+    },
+    {
+      "frame": 327,
+      "training_frame": true,
+      "qualified_background_points": 1248,
+      "plane_inliers_at5mm": 978,
+      "near_plane_points_at20mm": 1152,
+      "near_plane_absolute_residual_median_m": 0.002376545397167029,
+      "near_plane_absolute_residual_p95_m": 0.007455043905053534
+    },
+    {
+      "frame": 342,
+      "training_frame": false,
+      "qualified_background_points": 1253,
+      "plane_inliers_at5mm": 894,
+      "near_plane_points_at20mm": 1132,
+      "near_plane_absolute_residual_median_m": 0.0026563254829414795,
+      "near_plane_absolute_residual_p95_m": 0.0083306137168625
+    }
+  ],
+  "source_files_verified": {
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-runs/all20-final-v3/e002/depth/000000.npy": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-runs\\all20-final-v3\\e002\\depth\\000000.npy",
+      "sha256": "e986583b8b457b8996d08a79e893edd73afd6b2fb02832da5a66dfd4b538476e"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/valid/000000.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\valid\\000000.png",
+      "sha256": "ed9657b354a675a5c7775bdde7c44cfe60177a3fc00bdfef81912287d92a197a"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/left/000000.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\left\\masks\\000000.png",
+      "sha256": "c2553ac24d3bde46abfe82ca9e9a9da1b5a6d73ba60a2b8293af227a012a27e9"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/right/000000.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\right\\masks\\000000.png",
+      "sha256": "c2553ac24d3bde46abfe82ca9e9a9da1b5a6d73ba60a2b8293af227a012a27e9"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-runs/all20-final-v3/e002/depth/000014.npy": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-runs\\all20-final-v3\\e002\\depth\\000014.npy",
+      "sha256": "2516e3649fdf4763dae78cb429bb5590d82919a116d81a3e3627de8292f0ff1d"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/valid/000014.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\valid\\000014.png",
+      "sha256": "41b12d8eb559f7b3e7081943f86a5adf79ddacf09c79c885577486e459d25fca"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/left/000014.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\left\\masks\\000014.png",
+      "sha256": "ce518ffbd222d988d672507d3aae199ae53ebf3f9b43144bd51904e4d761201f"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/right/000014.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\right\\masks\\000014.png",
+      "sha256": "112c79adca0fec7acbf5ef46fea45fae8280074151b8868744246ac3255ed02b"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-runs/all20-final-v3/e002/depth/000029.npy": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-runs\\all20-final-v3\\e002\\depth\\000029.npy",
+      "sha256": "652e924583b7d14a3099bf865904a4be0a95299f4b19c40fec9d156947e95734"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/valid/000029.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\valid\\000029.png",
+      "sha256": "fbcef7f88c74f1ba2208933f04f55d7669591df71d4def5e3ebfe8194f0ed4e4"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/left/000029.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\left\\masks\\000029.png",
+      "sha256": "5362678705c96f89484b571f034808f07c13ed602131672afcb3f2bc31bbc451"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/right/000029.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\right\\masks\\000029.png",
+      "sha256": "b4226f58d27917c0b9c187c67eeceb71ebe48044ac0edf224b82d2a04b8aed60"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-runs/all20-final-v3/e002/depth/000044.npy": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-runs\\all20-final-v3\\e002\\depth\\000044.npy",
+      "sha256": "933b4f83838a44f5b1004bf804c2e389236feaa9c93de02c0103c2d4684535f2"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/valid/000044.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\valid\\000044.png",
+      "sha256": "4d39d5571f8ccc76d431cde44b968f5c63dcbf6ce616b6489ad9288dd964fd6b"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/left/000044.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\left\\masks\\000044.png",
+      "sha256": "baa605d5690080cd259927fec6900ec7425431bf096da91fb244d8d33574fea9"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/right/000044.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\right\\masks\\000044.png",
+      "sha256": "bf17dbaaea9ea754a4b525dac71c1718acecc73270a495260b265d48fd0e7368"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-runs/all20-final-v3/e002/depth/000059.npy": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-runs\\all20-final-v3\\e002\\depth\\000059.npy",
+      "sha256": "67bd4738bcf3b800dba9294b651b7387670d151a36842b99b5ec2eeccf8b4929"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/valid/000059.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\valid\\000059.png",
+      "sha256": "fe0b878a1102b2790eb3e58c237f9425c56fb6950b16669007eb1322965b564a"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/left/000059.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\left\\masks\\000059.png",
+      "sha256": "e166b6a2315f99a364bd74e17a5b8338bab275d03e3d76040105461ae3bf7b0c"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/right/000059.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\right\\masks\\000059.png",
+      "sha256": "891bd63f2dfb8459a851935b0d37372d0a713fae21e0fedfa2542958f679829b"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-runs/all20-final-v3/e002/depth/000074.npy": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-runs\\all20-final-v3\\e002\\depth\\000074.npy",
+      "sha256": "507ea03b3236c3eebf42cafee72b5b5ca5c442ca70a308a01b25444cc4bc047e"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/valid/000074.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\valid\\000074.png",
+      "sha256": "7f39866e35560f7958159cc1a2f0be935b7f201fe282847ac49805d31573dfe0"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/left/000074.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\left\\masks\\000074.png",
+      "sha256": "473c16b5704a3a22d786c03ce0eccf88faee7cd6ef5e7eae5dbc73440458b632"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/right/000074.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\right\\masks\\000074.png",
+      "sha256": "8a3e56d77a9d03b23fff1d3ae9c3ef8af55ae069bd9b72db0ff1eaffce2aa77e"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-runs/all20-final-v3/e002/depth/000089.npy": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-runs\\all20-final-v3\\e002\\depth\\000089.npy",
+      "sha256": "0305bf2fca106602e4ebd8d8c045d7311eb800830415994fa2d8df934fb449ca"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/valid/000089.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\valid\\000089.png",
+      "sha256": "ba1dc35d3fe09aa3b1b8fda773f58113807e973bdc9bd0f20edca5dfd4b09c4c"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/left/000089.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\left\\masks\\000089.png",
+      "sha256": "2f0ea63ceccd7723a476cf1d8cb9b5c5d5206b08f6ae0d45609c7bee87c0b7b8"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/right/000089.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\right\\masks\\000089.png",
+      "sha256": "1c696f934dede2811321cab1bda229348d8cfe0b623c336c606092660501a64e"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-runs/all20-final-v3/e002/depth/000104.npy": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-runs\\all20-final-v3\\e002\\depth\\000104.npy",
+      "sha256": "c388b63b3701d3d06f4d1eaa30a25bc02685cfd12cace7bf361e7c79c50d2103"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/valid/000104.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\valid\\000104.png",
+      "sha256": "d66240b13a1e7ae3fc3648b23e631c2dba16c034a992a9eda2d1f9236fcdd912"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/left/000104.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\left\\masks\\000104.png",
+      "sha256": "d495d96bf03f918192c5785efc51a66c3dd8dfb8c84d0ee953efd0e4962b1caa"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/right/000104.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\right\\masks\\000104.png",
+      "sha256": "88ede99eb150a93f89a7b524300cc7a7aa52949bd8300d304ad95de68bec25a5"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-runs/all20-final-v3/e002/depth/000118.npy": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-runs\\all20-final-v3\\e002\\depth\\000118.npy",
+      "sha256": "5a18b42c150cbb0b860221477d9ba9447833c907a15bdf6799cbbf3c4d01463a"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/valid/000118.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\valid\\000118.png",
+      "sha256": "195098907bc28273feb3ba79a907a97ae516e960d696d88e0d531fd3ef127c57"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/left/000118.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\left\\masks\\000118.png",
+      "sha256": "20a1788a337a7f6aa33f04ce09cd2adc4268f87164140a28d8d768e7edaf872f"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/right/000118.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\right\\masks\\000118.png",
+      "sha256": "556886a086f78a438e67e70f42520c79e5e0642e2107e44908697bc1b98dd813"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-runs/all20-final-v3/e002/depth/000133.npy": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-runs\\all20-final-v3\\e002\\depth\\000133.npy",
+      "sha256": "370e5a1b61da8356f0c7e733cd581bdc113cbb302254d692b30743cf8e7db6a6"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/valid/000133.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\valid\\000133.png",
+      "sha256": "e33e9b939972e2ee3a864283682c542e2ea19726920da6219f687ba94e4e2f53"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/left/000133.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\left\\masks\\000133.png",
+      "sha256": "1234f510ef1dc3fd8c35a379561e150123cf43ee0d9c5217b15d3453e6b5ab63"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/right/000133.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\right\\masks\\000133.png",
+      "sha256": "a10b9361a0fc4c35cedd09c38b71b71132f982952ee3b4578091c6f578b4c58d"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-runs/all20-final-v3/e002/depth/000148.npy": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-runs\\all20-final-v3\\e002\\depth\\000148.npy",
+      "sha256": "1e76e607aa71d35e532859f96b0e6498ab7ff6ed372eff5975548b6641ef348a"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/valid/000148.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\valid\\000148.png",
+      "sha256": "909c4cbf857993a14731714134aaf1eb01f1996479aabdbb6fdd39d59b41bf50"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/left/000148.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\left\\masks\\000148.png",
+      "sha256": "66d315d13339814a5b89f4783a5e8ae40f41b1e943e3a75c1d13c0008b81ff8e"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/right/000148.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\right\\masks\\000148.png",
+      "sha256": "e40f246d8a68c69182c6485886695aa5583643a800d76b39f9c04f406aeb2e6b"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-runs/all20-final-v3/e002/depth/000163.npy": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-runs\\all20-final-v3\\e002\\depth\\000163.npy",
+      "sha256": "f4c4373550d71e9a1ad4f3fbe3492acc9a81cb9940e22839e6ea92ae18bd2ae0"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/valid/000163.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\valid\\000163.png",
+      "sha256": "e1e95d9a8e066fe46ace4a7bc7c2d629cd2cb93cb28120da5cc8d72e3f999ec3"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/left/000163.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\left\\masks\\000163.png",
+      "sha256": "4a97ab5eb2fa4f4c21984702820ccc27b1dda52e6053a3e1a4070e4ed4dde727"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/right/000163.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\right\\masks\\000163.png",
+      "sha256": "e3bed4e9e9ca71dab58a41e1089321de0f9b378c1aa045a9a7696b5e43208204"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-runs/all20-final-v3/e002/depth/000178.npy": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-runs\\all20-final-v3\\e002\\depth\\000178.npy",
+      "sha256": "9fd611b5e93b5a1b19823866902cebc4b0f4309c2b48d554d24a713e9739d9c4"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/valid/000178.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\valid\\000178.png",
+      "sha256": "118d6f07cb1291b2124390eb46d02705d69fde1960dae609c94174d565c64371"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/left/000178.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\left\\masks\\000178.png",
+      "sha256": "abe10295409c5b00372aedfff91f77cf1399db0c3be1f2012bf9473bf8a3ac5a"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/right/000178.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\right\\masks\\000178.png",
+      "sha256": "1f180232d9b5429818cd71b78d067a886e85eef75602697dde0d20056e14ff17"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-runs/all20-final-v3/e002/depth/000193.npy": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-runs\\all20-final-v3\\e002\\depth\\000193.npy",
+      "sha256": "57d4fc5e2537330705b67b4d35c2c654f3c7f8ece50ae463b6c1f3b940a33a01"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/valid/000193.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\valid\\000193.png",
+      "sha256": "c8678d596ae2ec0d41488921339237e2b3d44823a74b1d8786b38bf14522ccad"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/left/000193.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\left\\masks\\000193.png",
+      "sha256": "5cad7e2cf153ac0e923e55153eb4524b507ff560a3994936976c325d96303d89"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/right/000193.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\right\\masks\\000193.png",
+      "sha256": "49e48183581d19c6b660e5f75002be6315db1300c031cdaf572484cee9741668"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-runs/all20-final-v3/e002/depth/000208.npy": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-runs\\all20-final-v3\\e002\\depth\\000208.npy",
+      "sha256": "ccae327b992ae92291cf00260362419418f0034339aef4e04014180ded883582"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/valid/000208.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\valid\\000208.png",
+      "sha256": "265f69201aa31b256911715d1aca83c36ad25f473c6b284bf8d5226b7e98c348"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/left/000208.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\left\\masks\\000208.png",
+      "sha256": "1cb7f3a389b3db3c30b5e73bccf50714e44805e3e4bf76c1a0bf250302d726ad"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/right/000208.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\right\\masks\\000208.png",
+      "sha256": "5ee33a31866247255c6dee34b6a3ee1e4eafb35837ab4218160f8242b62808eb"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-runs/all20-final-v3/e002/depth/000223.npy": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-runs\\all20-final-v3\\e002\\depth\\000223.npy",
+      "sha256": "ba8abe0f0f1600592a4715746dea19859cdfa8eadf4e00e22220e9cb06524157"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/valid/000223.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\valid\\000223.png",
+      "sha256": "555abab18eaa513b42790ca7d9885c287c8e804cfd7b258ce81f51579307060c"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/left/000223.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\left\\masks\\000223.png",
+      "sha256": "eb2d024658f2dcafff3dd88bbf771f59b00cd87c6346d9cf34132169c9b1f173"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/right/000223.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\right\\masks\\000223.png",
+      "sha256": "d78a264cf2c67eb8d00ed8e1bd82111d75797521b8fafda0e05d19dae046f4ec"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-runs/all20-final-v3/e002/depth/000237.npy": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-runs\\all20-final-v3\\e002\\depth\\000237.npy",
+      "sha256": "d1270899d54969d2db7bc716c775b67a70b1dd4cd9eac20331e924b83f66de56"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/valid/000237.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\valid\\000237.png",
+      "sha256": "dfa569614f68e66e34144d6990f73591aefa1763225a3c25dd5ecd6c44216f59"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/left/000237.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\left\\masks\\000237.png",
+      "sha256": "c2553ac24d3bde46abfe82ca9e9a9da1b5a6d73ba60a2b8293af227a012a27e9"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/right/000237.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\right\\masks\\000237.png",
+      "sha256": "4393a4c0c2cd094ad7d7050e839421a249c6556d2acd232462afd7799f44ce69"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-runs/all20-final-v3/e002/depth/000252.npy": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-runs\\all20-final-v3\\e002\\depth\\000252.npy",
+      "sha256": "cf9ed5d80176e183d0aedfa6541b3bfbc280aa3d3cfcb4c2068a13c905d4354d"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/valid/000252.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\valid\\000252.png",
+      "sha256": "0cc7a078040c6c93fe3cbe458ce7cf0f96609bf4f341b111cf37a0e0e792855a"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/left/000252.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\left\\masks\\000252.png",
+      "sha256": "1cdda84b320de2ce1e9a352e90ccaab1f11795c5aa8d092812c665ba601b0434"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/right/000252.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\right\\masks\\000252.png",
+      "sha256": "4ef45520b5bfadb7972340d671f88638e0769102cdcbd8dfeecdc0493dbb237e"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-runs/all20-final-v3/e002/depth/000267.npy": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-runs\\all20-final-v3\\e002\\depth\\000267.npy",
+      "sha256": "57c8a980a2e409574024f14abe11906586560b80943b408f898fc5c38bce9ef8"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/valid/000267.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\valid\\000267.png",
+      "sha256": "7985868be67a3cb285d6384f2d4f4fa2b3291b897b93cfd4bd5b19aa3c14c731"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/left/000267.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\left\\masks\\000267.png",
+      "sha256": "f826be1d2cfba3d4e97b1a3f56dca9de71215133be4b418d9085efec6a2f92ee"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/right/000267.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\right\\masks\\000267.png",
+      "sha256": "53ab125a13a23adb7a3ead1456b149bbac9073d48a990ba9777889025a57fb8b"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-runs/all20-final-v3/e002/depth/000282.npy": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-runs\\all20-final-v3\\e002\\depth\\000282.npy",
+      "sha256": "59a59b402914b586796f2380c2551e1f0f86830f4271c30779a840c93c0ffab1"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/valid/000282.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\valid\\000282.png",
+      "sha256": "2710fca32e947af2c1a1f91d3a3f962e4ace4128fa7e2f37b7915f4e1b4b958c"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/left/000282.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\left\\masks\\000282.png",
+      "sha256": "37bfac0ac8851a67e6fd2e725387fdeeccde43c02a9e761fd48d034a0fae59af"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/right/000282.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\right\\masks\\000282.png",
+      "sha256": "6989c5893df0971a42c1ffbcee0ebb4416797d234f4a1b122b9d43dbd06175b1"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-runs/all20-final-v3/e002/depth/000297.npy": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-runs\\all20-final-v3\\e002\\depth\\000297.npy",
+      "sha256": "c72fa79e1a25267c5198ead4790442a1a48fd3c90af26010a267ff60781d70b8"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/valid/000297.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\valid\\000297.png",
+      "sha256": "484645d7d1ad02ab486b3e864c6ed03a9fc80efbd5a8a3f58f04fae49a83eb37"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/left/000297.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\left\\masks\\000297.png",
+      "sha256": "3bdabfca10d05e72bd407e6a69064bf7fb7b0735909cc2cbaef4c88b26793c73"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/right/000297.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\right\\masks\\000297.png",
+      "sha256": "3b4a32764b64aed2a3fd4a38b0c34594771cc8861425141c85fefa41703fe4c7"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-runs/all20-final-v3/e002/depth/000312.npy": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-runs\\all20-final-v3\\e002\\depth\\000312.npy",
+      "sha256": "f83addc924191cf3918bacb483526e2e23c94b3720e56fbb68c8f01094cb7e43"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/valid/000312.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\valid\\000312.png",
+      "sha256": "3455babdcd2b654cf8fa459bac6b4fad4f1c875e66ef1d6a9045b6e8389a3238"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/left/000312.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\left\\masks\\000312.png",
+      "sha256": "e9c0c23205984152e6dcf8f3a9e109464bd6144c7b074908e730bfb968ebd50d"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/right/000312.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\right\\masks\\000312.png",
+      "sha256": "6f2f04271e8006c3b160cee700131c84bf3245ff61006cf3357692c6c99f15b1"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-runs/all20-final-v3/e002/depth/000327.npy": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-runs\\all20-final-v3\\e002\\depth\\000327.npy",
+      "sha256": "d15e3f9656baf6f4a331d5288e22195608a5d51abcc182decb6e3926fa5cd946"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/valid/000327.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\valid\\000327.png",
+      "sha256": "6a0cea70ec5ab20e87415062b3bf67fefcee932661b981f2e04a9158775537be"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/left/000327.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\left\\masks\\000327.png",
+      "sha256": "8da7ceefe510f85cfd595cf0ccb1f520d5ef5f335a8d566761ea4b89ae4da51c"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/right/000327.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\right\\masks\\000327.png",
+      "sha256": "d6a44ff1bdf1ef7e8b3a1916f5239fa18afe48902eff75023270b646b1e42f97"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-runs/all20-final-v3/e002/depth/000342.npy": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-runs\\all20-final-v3\\e002\\depth\\000342.npy",
+      "sha256": "792e3779f2d7694e155854ab7d6cf87a963ee1d5284cbd24c88ee8ac08dc6206"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/valid/000342.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\valid\\000342.png",
+      "sha256": "f6015c29e66d469d70570b97e66633f6ad2e283291f8a55647e3021ebb81715c"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/left/000342.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\left\\masks\\000342.png",
+      "sha256": "33ebf0d353675a10ba3bf8ed06dc9d044d96369c54c77c936bffd025bdfd6289"
+    },
+    "/var/tmp/v2d-issue7-e002/source/reconstruction/runs/e002/hands/masks/right/000342.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue7-e002\\inputs-slam1\\hands\\right\\masks\\000342.png",
+      "sha256": "51e970d0467c209ce382f1713a9caaa5842a55450b1d66c8f9ec6cb2126b85b6"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/color/000000.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\color\\000000.png",
+      "sha256": "db39ab8a3a0eece51d77d7b3aefee93e115ba8425e3e5e8a54d8104f642308d0"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/color/000327.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\color\\000327.png",
+      "sha256": "fcf2f0ea28fe2c7efc74f0ad720a4dc42e226367389e274433273f2c804a8c6a"
+    },
+    "/var/tmp/v2d-issue6-quality-fast/episodes/e002/issue6-full-inputs/e002/color/000342.png": {
+      "local": "\\\\wsl.localhost\\Ubuntu\\var\\tmp\\v2d-issue6-quality-fast\\episodes\\e002\\issue6-full-inputs\\e002\\color\\000342.png",
+      "sha256": "c2b5f203985006f98ac508064f932af4308fdc8e91b5bc4941cf1cbd3a81c2d4"
+    }
+  },
+  "per_object_plane_diagnostic": [
+    {
+      "name": "white_pot",
+      "minimum_original_vertex_signed_distance_m": -0.010404695202712255,
+      "minimum_frame": 63,
+      "median_original_vertex_minimum_signed_distance_m": -0.002242824019270895
+    },
+    {
+      "name": "white_pot_lid",
+      "minimum_original_vertex_signed_distance_m": -0.008788092190077035,
+      "minimum_frame": 233,
+      "median_original_vertex_minimum_signed_distance_m": 0.019674203362499476
+    }
+  ],
+  "synthetic_horizontal_plane_with_outliers_control_passed": true,
+  "source_observations_modified": false,
+  "plane_semantic_identity_unconfirmed": true,
+  "plane_is_estimated_stereo_not_ground_truth": true,
+  "infinite_plane_is_not_a_complete_environment": true,
+  "robot_clearance_checked": false,
+  "physical_task_accepted": false,
+  "elapsed_seconds": 13.73499999998603
+}

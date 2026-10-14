@@ -1,0 +1,10 @@
+{
+  "schema": "v2d.regenerated-fitted-motion.v1",
+  "all_payload_arrays_identical": true,
+  "array_count": 22,
+  "regenerated_payload_sha256": "3541cc177e14ebae927c8026d7693dd89e96b0438503db0bc68010a975688ef4",
+  "frozen_payload_sha256": "3541cc177e14ebae927c8026d7693dd89e96b0438503db0bc68010a975688ef4",
+  "fitted_archive_sha256": "3daaa90efd1487f42019a14b5d783c9580e2b3b5103bf55b3c5b63b7ace21fe0",
+  "upstream_reconstruction_or_fit_search_rerun": false,
+  "physical_task_accepted": false
+}

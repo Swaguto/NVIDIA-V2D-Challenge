@@ -1,0 +1,19 @@
+{
+  "schema": "v2d.corrected-fitted-motion-reproduction.v1",
+  "generator_sha256": "ef5db041d2d80fa777c9c56b8adea0921af0c495a54bb661e7330acbf01cf932",
+  "runtime": {
+    "platform": "linux",
+    "python": "3.11.17",
+    "numpy": "2.2.6"
+  },
+  "all_payload_arrays_identical": true,
+  "array_count": 23,
+  "regenerated_payload_sha256": "91e41d5f44eef43f910b18ab8d24f64c9d4b8ad2b938ede7ec7af46a65bbab19",
+  "regenerated_knots_sha256": "2b60a5671f7a32f5f2db4954c8aaa822fae3112c7f9c786904c876e450baf6c3",
+  "maximum_extra_source_root_correction_m": 0.002292395676083448,
+  "all_original_observation_arrays_unchanged": true,
+  "full_upstream_reconstruction_or_fit_search_rerun": false,
+  "new_continuous_check_complete": false,
+  "new_simulator_run": false,
+  "physical_task_accepted": false
+}

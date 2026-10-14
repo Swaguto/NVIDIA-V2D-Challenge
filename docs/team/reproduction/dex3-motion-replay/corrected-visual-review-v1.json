@@ -1,0 +1,34 @@
+{
+  "schema": "v2d.corrected-replay-visual-review.v1",
+  "recorded_at_utc": "2026-10-13T03:58:49.069611+00:00",
+  "reviewer": "Codex visual inspection",
+  "scope": "All 343 saved Isaac frames in chronological order, viewed as ten contact sheets",
+  "all_source_frames_inspected": true,
+  "observed_artificial_mesh_on_off_flicker": false,
+  "camera_edge_cropping_and_object_occlusion_present": true,
+  "raw_frames_do_not_replace_full_resolution_contact_accuracy_review": true,
+  "minimum_color_pixels_by_side": {
+    "left": 1026,
+    "right": 2604
+  },
+  "independent_windows_audit_sha256": "de0827bcebaaa674ae5768878d162f581977eb7b596dbb588f8d14a0912ae3be",
+  "simulator_complete_sha256": "31b271efbf1ea8735e2fadbcf070cfb3fb18240502442f566e75045cbd7d63d7",
+  "actual_isaac_video_sha256": "444ed76ce7c09f9e309824793d5be6abe09c4a5e3d8b5537840f6dfa40d934e3",
+  "contact_sheets_sha256": {
+    "page-01.png": "4dbe8b1c3224ddbfb34cf3f86eb699de37c6d8c0c54de22717f88d4f24611382",
+    "page-02.png": "28b78413bb04a5536877d6ba493bd070717853ba14e368184599f7ca1145520a",
+    "page-03.png": "9243a73b951790981a1a16bccfd0a9a93602d58a30bf2233230e55816912353a",
+    "page-04.png": "dd4c0bb5741e082a43eafea13b4050403897c1bf53d3ee32f17d08dacb44085f",
+    "page-05.png": "aa233628680a6f3c6c4fd36511f9f0d1a68bd9c643addb2e3018b05c0974e3da",
+    "page-06.png": "0e3111e11e3626af42a5857978c2ca8276ea2a869d9227de293cbe69eb522b7a",
+    "page-07.png": "af3b00b23e3b22280c0565a19a92232fc86aecfa2bf678be140930396001438a",
+    "page-08.png": "38c69b2ed7cecaabc578e76f6ab59e773d2a180a1cd0dc3911f229c633da58da",
+    "page-09.png": "c04ea80c253f04374dd67f120d879b7a1e9855a008d89f2f2dd746c397444129",
+    "page-10.png": "6fe612d7536a6f6c4416d3d0d8b25442b4b6aa9793e047058043f458259e90c9"
+  },
+  "display_holds_used": false,
+  "poses_remain_inferred": true,
+  "source_hand_accuracy_accepted": false,
+  "physical_task_accepted": false,
+  "all_episodes_tested": false
+}

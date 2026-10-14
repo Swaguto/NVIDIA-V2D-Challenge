@@ -1,0 +1,82 @@
+{
+  "schema": "v2d.private-support-development-replay-assets.v1",
+  "repository": "Swaguto/NVIDIA-V2D-Challenge",
+  "repository_private": true,
+  "tag": "dex3-support-replay-20261013",
+  "release_url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/tag/dex3-support-replay-20261013",
+  "physical_task_accepted": false,
+  "assets": {
+    "support_replay_inputs": {
+      "name": "CAD-support-dex3-simulator-inputs-v2.tar.gz",
+      "bytes": 83764720,
+      "sha256": "759b6e9fa642b47ec24306969688cc1ce15ead4cb0b80e4f8d086b727b93c680",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-support-replay-20261013/CAD-support-dex3-simulator-inputs-v2.tar.gz",
+      "github_asset_id": 638575645,
+      "github_digest": "sha256:759b6e9fa642b47ec24306969688cc1ce15ead4cb0b80e4f8d086b727b93c680"
+    },
+    "support_fitted_methods": {
+      "name": "CAD-support-fitted-inputs-and-methods-v3.tar.gz",
+      "bytes": 109868963,
+      "sha256": "b238cb32ea136e123b6ecec0a922c833ccc7fe097746b05abd4553815a2878d7",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-support-replay-20261013/CAD-support-fitted-inputs-and-methods-v3.tar.gz",
+      "github_asset_id": 638576670,
+      "github_digest": "sha256:b238cb32ea136e123b6ecec0a922c833ccc7fe097746b05abd4553815a2878d7"
+    },
+    "support_method_archive_registry": {
+      "name": "archive-registry.json",
+      "bytes": 230953,
+      "sha256": "8525226ab754d82b9c67c94469322d46f821eb5db4151796418df6660ae78307",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-support-replay-20261013/archive-registry.json",
+      "github_asset_id": 638578028,
+      "github_digest": "sha256:8525226ab754d82b9c67c94469322d46f821eb5db4151796418df6660ae78307"
+    },
+    "actual_isaac_replay": {
+      "name": "replay.mp4",
+      "bytes": 7517797,
+      "sha256": "8f5e765c4c1616f5505b02ee1a680fbcd01d0ff2f6e24970981333126aae95b7",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-support-replay-20261013/replay.mp4",
+      "github_asset_id": 638605409,
+      "github_digest": "sha256:8f5e765c4c1616f5505b02ee1a680fbcd01d0ff2f6e24970981333126aae95b7"
+    },
+    "source_observations_isaac_comparison": {
+      "name": "source-observations-dex3.mp4",
+      "bytes": 49919792,
+      "sha256": "33c1fa81eecdf4bb5bf1fef2d8b557c99220ddea9fae56050d3d1731ee845aaf",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-support-replay-20261013/source-observations-dex3.mp4",
+      "github_asset_id": 638605483,
+      "github_digest": "sha256:33c1fa81eecdf4bb5bf1fef2d8b557c99220ddea9fae56050d3d1731ee845aaf"
+    },
+    "support_simulator_evidence": {
+      "name": "CAD-support-simulator-evidence-v1.tar.gz",
+      "bytes": 65183762,
+      "sha256": "3ffeae8330db60fa0bfb94450aee9d9fd7d8bc2a23db4b5f787fec06f88d121f",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-support-replay-20261013/CAD-support-simulator-evidence-v1.tar.gz",
+      "github_asset_id": 638606265,
+      "github_digest": "sha256:3ffeae8330db60fa0bfb94450aee9d9fd7d8bc2a23db4b5f787fec06f88d121f"
+    },
+    "support_simulator_evidence_registry": {
+      "name": "support-simulator-evidence-registry-v1.json",
+      "bytes": 40608,
+      "sha256": "fdcc45e3f8c472172708bfc38ad4ebec9eec00b34050a23a6674fe38cc620ba2",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-support-replay-20261013/support-simulator-evidence-registry-v1.json",
+      "github_asset_id": 638607216,
+      "github_digest": "sha256:fdcc45e3f8c472172708bfc38ad4ebec9eec00b34050a23a6674fe38cc620ba2"
+    },
+    "source_visual_evidence": {
+      "name": "support-source-visual-evidence-v1.tar.gz",
+      "bytes": 35848497,
+      "sha256": "9533cf2835fc16747b0297304e95376f3ab82319dbe00a1c404efa461eaf6afe",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-support-replay-20261013/support-source-visual-evidence-v1.tar.gz",
+      "github_asset_id": 638607248,
+      "github_digest": "sha256:9533cf2835fc16747b0297304e95376f3ab82319dbe00a1c404efa461eaf6afe"
+    },
+    "source_visual_evidence_registry": {
+      "name": "support-source-visual-evidence-registry-v1.json",
+      "bytes": 14230,
+      "sha256": "a374638028c5b1894ec7d9d51e7ed42788c4608aee43cf04619073c6a361648c",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-support-replay-20261013/support-source-visual-evidence-registry-v1.json",
+      "github_asset_id": 638607789,
+      "github_digest": "sha256:a374638028c5b1894ec7d9d51e7ed42788c4608aee43cf04619073c6a361648c"
+    }
+  }
+}

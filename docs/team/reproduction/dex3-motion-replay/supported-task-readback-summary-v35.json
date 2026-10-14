@@ -1,0 +1,92 @@
+{
+  "schema": "v2d.supported-task-readback-audit.v1",
+  "states_sha256": "8d170d0fb415c7491d2d4160f7775514b191d4200c0f449ed907f8e4b630c1f7",
+  "video_sha256": "e20b57df37b098b4bd6f01c3cc10d0932db332197665c4c504bf27606091a927",
+  "source_frames": 343,
+  "object_records": 6842,
+  "hand_records": 6842,
+  "control_records": 202,
+  "all_recorded_source_observation_and_display_flags_match": true,
+  "all_686_input_target_approvals_false": true,
+  "objects": [
+    {
+      "object": 0,
+      "observed_position_error_median_p90_max_m": [
+        93.73114120638422,
+        1162.2136707699153,
+        1604.308456449098
+      ],
+      "final_position_error_m": 1776.999939150012
+    },
+    {
+      "object": 1,
+      "observed_position_error_median_p90_max_m": [
+        29.866583751202896,
+        1214.4859911917117,
+        1763.322867068073
+      ],
+      "final_position_error_m": 1763.322867068073
+    }
+  ],
+  "hands": [
+    {
+      "side": "left",
+      "wrist_target_error_median_p90_max_m": [
+        0.8348854137052422,
+        1.0617292114116061,
+        3.496980761023095
+      ],
+      "wrist_rotation_error_median_p90_max_deg": [
+        114.74600321908363,
+        150.01305373682666,
+        179.9463167719123
+      ],
+      "maximum_reported_solver_penetration_m": 0.012805089354515076
+    },
+    {
+      "side": "right",
+      "wrist_target_error_median_p90_max_m": [
+        0.8640778703994327,
+        1.041458960024825,
+        1.174291436669756
+      ],
+      "wrist_rotation_error_median_p90_max_deg": [
+        113.69543203136551,
+        150.80015030874262,
+        179.71713287263822
+      ],
+      "maximum_reported_solver_penetration_m": 0.0
+    }
+  ],
+  "source_grasp_comparison": [
+    {
+      "interval": "left_pot_handle_stabilize_lift_lower",
+      "source_definite_core_frames": 185,
+      "physical_contact_frames": [],
+      "contact_is_not_force_closure_or_a_grasp": true
+    },
+    {
+      "interval": "right_lid_remove_place",
+      "source_definite_core_frames": 62,
+      "physical_contact_frames": [],
+      "contact_is_not_force_closure_or_a_grasp": true
+    },
+    {
+      "interval": "right_lid_regrasp_replace",
+      "source_definite_core_frames": 72,
+      "physical_contact_frames": [],
+      "contact_is_not_force_closure_or_a_grasp": true
+    },
+    {
+      "interval": "left_pot_handle_regrasp_stabilize_release",
+      "source_definite_core_frames": 62,
+      "physical_contact_frames": [],
+      "contact_is_not_force_closure_or_a_grasp": true
+    }
+  ],
+  "scope": "Actual physics readback against inferred frozen targets and frame-indexed independent source labels; not independent human-finger ground truth, complete penetration certification or official metric parity",
+  "physical_task_accepted": false,
+  "official_score_claimed": false,
+  "source_color_files_verified": 343,
+  "comparison_video_sha256": "59738fa5ef2af14f1ca707624e1af7a1ced61c8293df62d345c947ca3baed42b"
+}

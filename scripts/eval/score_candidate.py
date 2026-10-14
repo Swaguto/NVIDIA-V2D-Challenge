@@ -27,19 +27,19 @@ import argparse
 import json
 import os
 import sys
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Sequence
 
 import numpy as np
 import pyarrow.parquet as pq
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from chord_metrics import (  # noqa: E402
+from chord_metrics import (
     TrackingThresholds,
     compute_object_tracking_metrics,
 )
-from reference_loader import (  # noqa: E402
+from reference_loader import (
     PROXY_EPISODES,
     batch_vertices_for,
     load_reference,
@@ -52,14 +52,15 @@ _CHORD_THRESHOLDS = {"wrist_position_m": None, "object_position_m": None}
 
 
 def _rmsd_finite(achieved: np.ndarray) -> float:
-    return float(np.linalg.norm(achieved[..., :3]) / np.sqrt(max(1, achieved.size // 7)))
+    return float(
+        np.linalg.norm(achieved[..., :3]) / np.sqrt(max(1, achieved.size // 7))
+    )
 
 
 def load_candidate_parquet(path: Path, ref_names: Sequence[str]) -> np.ndarray:
     """Reconstruction candidate: same schema as GT reference -> ``(T, B, 7)`` xyzw."""
     pf = pq.ParquetFile(path)
     table = pf.read()
-    meta = pf.schema_arrow.metadata
     objects = table.column("observation.objects").to_pylist()
     steps = len(objects)
     bodies = len(ref_names)
@@ -93,8 +94,11 @@ def rigid_align(
     """
     achieved = np.asarray(achieved, dtype=np.float64)
     T, B, _ = reference.shape
-    world_count = achieved.shape[1]
-    mask = np.tile(visible.any(axis=-1), (B, 1)).T if visible.ndim == 2 else np.ones((T, B), bool)
+    mask = (
+        np.tile(visible.any(axis=-1), (B, 1)).T
+        if visible.ndim == 2
+        else np.ones((T, B), bool)
+    )
     idx = np.where(mask[:, 0])[0]
     if idx.size == 0:
         return achieved
@@ -125,7 +129,9 @@ def score_episode(
     world_chunk: int = 8,
 ) -> dict:
     ref = load_reference(episode_index, reference_base_dir)
-    clouds = load_vertex_clouds(ref.object_names, reference_base_dir, num_points=500, seed=0)
+    clouds = load_vertex_clouds(
+        ref.object_names, reference_base_dir, num_points=500, seed=0
+    )
     vertices = batch_vertices_for(ref, clouds)
     body_object_ids = np.arange(ref.bodies, dtype=np.int64)
     body_names = list(ref.object_names)
@@ -139,13 +145,17 @@ def score_episode(
     achieved = achieved[: ref.steps]
 
     # Single trailing comparison per body => tracking_error = per-frame object errors.
-    pos_err = np.linalg.norm(achieved[..., :3] - ref.pose_xyzw[:, None, ..., :3], axis=-1)  # (T,W,B)
+    pos_err = np.linalg.norm(
+        achieved[..., :3] - ref.pose_xyzw[:, None, ..., :3], axis=-1
+    )  # (T,W,B)
     achieved_q = achieved[..., 3:] / np.clip(
         np.linalg.norm(achieved[..., 3:], axis=-1, keepdims=True), 1e-12, None
     )
     ref_q = ref.pose_xyzw[..., 3:]
     dot = np.clip(np.abs((achieved_q * ref_q[:, None]).sum(axis=-1)), 0.0, 1.0)
-    rot_err = 2.0 * np.arctan2(np.sqrt(np.maximum(0.0, 1.0 - dot * dot)), dot)  # (T,W,B)
+    rot_err = 2.0 * np.arctan2(
+        np.sqrt(np.maximum(0.0, 1.0 - dot * dot)), dot
+    )  # (T,W,B)
     object_pos_err = np.max(pos_err, axis=-1, keepdims=True)  # (T,W,1)
     object_rot_err = np.max(rot_err, axis=-1, keepdims=True)
     tracking_error = np.concatenate(
@@ -195,21 +205,96 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--candidate",
         required=True,
-        help="Parquet (reconstruction, schema observation.objects) or .npy rollout.",
+        help="Parquet/.npy rollout, or frozen bundle directory for --mode relative.",
     )
     parser.add_argument(
         "--episodes",
         default=",".join(map(str, PROXY_EPISODES)),
         help="Comma list or single episode index to score against (default: proxy set).",
     )
-    parser.add_argument("--mode", choices=["auto", "reconstruction", "rollout"], default="auto")
+    parser.add_argument(
+        "--mode",
+        choices=["auto", "reconstruction", "rollout", "relative"],
+        default="auto",
+    )
+    parser.add_argument(
+        "--reference-lock",
+        type=Path,
+        help="Required immutable dataset input lock for relative diagnostics.",
+    )
+    parser.add_argument(
+        "--pose-proposal",
+        type=Path,
+        help="Optional separate object_world/frame_indices NPZ for relative diagnostics.",
+    )
+    parser.add_argument(
+        "--fetch-reference",
+        action="store_true",
+        help="Relative mode: restore locked organizer inputs into a fresh --data root.",
+    )
     parser.add_argument(
         "--data", default=os.path.expanduser("~/v2d_track3/data/hf/track_3/public")
     )
-    parser.add_argument("--align-rigid", action="store_true", help="Umeyama-align candidate to GT first.")
-    parser.add_argument("--episode-pattern", action="store_true", help="Treat --candidate as a style pattern w/ {:06d} placeholder")
+    parser.add_argument(
+        "--align-rigid",
+        action="store_true",
+        help="Umeyama-align candidate to GT first.",
+    )
+    parser.add_argument(
+        "--episode-pattern",
+        action="store_true",
+        help="Treat --candidate as a style pattern w/ {:06d} placeholder",
+    )
     parser.add_argument("--json", default=None, help="Write JSON report here.")
     args = parser.parse_args(argv)
+
+    if args.mode == "relative":
+        if (
+            args.align_rigid
+            or args.episode_pattern
+            or not args.reference_lock
+            or not args.json
+        ):
+            parser.error(
+                "relative mode needs --reference-lock and fresh --json; alignment/pattern are incompatible"
+            )
+        output = Path(args.json)
+        if output.exists():
+            raise FileExistsError("Preserve prior evidence; choose a fresh --json path")
+        from relative_object_accuracy import audit, digest, fetch_reference
+
+        if args.fetch_reference:
+            fetch_reference(Path(args.data), args.reference_lock)
+
+        report = audit(
+            Path(args.candidate),
+            Path(args.data),
+            args.reference_lock,
+            args.pose_proposal,
+        )
+        report["evaluation_entrypoint_sha256"] = digest(Path(__file__))
+        output.write_text(
+            json.dumps(report, indent=2, allow_nan=False) + "\n", encoding="utf-8"
+        )
+        print(
+            json.dumps(
+                {
+                    "episode": report["episode"],
+                    "pairs": [
+                        {"objects": pair["objects"], "summaries": pair["summaries"]}
+                        for pair in report["pairs"]
+                    ],
+                    "reference_freshness": report["reference_freshness"],
+                    "physical_task_accepted": False,
+                },
+                indent=2,
+            )
+        )
+        return 0
+    if args.reference_lock or args.pose_proposal or args.fetch_reference:
+        parser.error(
+            "--reference-lock/--pose-proposal/--fetch-reference require --mode relative"
+        )
 
     episodes = [int(e.strip()) for e in args.episodes.split(",") if e.strip()]
     suffix = Path(args.candidate).suffix.lower()
@@ -225,12 +310,18 @@ def main(argv: list[str] | None = None) -> int:
         if not candidate_path.exists():
             raise FileNotFoundError(candidate_path)
 
-        if mode == "reconstruction" or (mode == "auto" and suffix in (".parquet", ".pq")):
-            candidate = load_candidate_parquet(candidate_path, ref.object_names)[:, None, :, :]
+        if mode == "reconstruction" or (
+            mode == "auto" and suffix in (".parquet", ".pq")
+        ):
+            candidate = load_candidate_parquet(candidate_path, ref.object_names)[
+                :, None, :, :
+            ]
         elif mode == "rollout" or (mode == "auto" and suffix == ".npy"):
             candidate = candidate_npy(candidate_path, ref.steps)
         else:
-            raise ValueError(f"cannot infer candidate mode for suffix {suffix!r}; use --mode")
+            raise ValueError(
+                f"cannot infer candidate mode for suffix {suffix!r}; use --mode"
+            )
 
         if args.align_rigid:
             candidate = rigid_align(candidate, ref.pose_xyzw, ref.visible)
@@ -244,14 +335,20 @@ def main(argv: list[str] | None = None) -> int:
     mppe = float(np.mean([r["mppe_cm"] for r in results]))
     mean_add = float(np.mean([r["mean_add_m"] for r in results]))
 
-    print(f"\nTrack 3 proxy scorecard  ({len(results)} episode(s), worlds={results[0]['worlds']})")
-    print(f"{'ep':>3}  {'objects':28s} {'steps':>5}  {'ADD-AUC':>7} {'SP-SR':>6} {'MP-SR':>6} {'MPPE_cm':>7} {'ADD_m':>6}")
+    print(
+        f"\nTrack 3 proxy scorecard  ({len(results)} episode(s), worlds={results[0]['worlds']})"
+    )
+    print(
+        f"{'ep':>3}  {'objects':28s} {'steps':>5}  {'ADD-AUC':>7} {'SP-SR':>6} {'MP-SR':>6} {'MPPE_cm':>7} {'ADD_m':>6}"
+    )
     for r in results:
         print(
             f"{r['episode_index']:>3}  {','.join(r['objects']):28s} {r['steps']:>5}  "
             f"{r['add_auc']:>7.3f} {r['sp_sr']:>6.3f} {r['mp_sr']:>6.3f} {r['mppe_cm']:>7.3f} {r['mean_add_m']:>6.3f}"
         )
-    print(f"\nMEAN  ADD-AUC={auc:.3f}  SP-SR={sp:.3f}  MP-SR={mp:.3f}  MPPE={mppe:.2f} cm  meanADD={mean_add:.3f} m")
+    print(
+        f"\nMEAN  ADD-AUC={auc:.3f}  SP-SR={sp:.3f}  MP-SR={mp:.3f}  MPPE={mppe:.2f} cm  meanADD={mean_add:.3f} m"
+    )
 
     report = {
         "metrics": {

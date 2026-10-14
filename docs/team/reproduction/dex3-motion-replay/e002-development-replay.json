@@ -1,0 +1,125 @@
+{
+  "schema": "v2d.e002.development-replay-evidence.v1",
+  "recorded_at_utc": "2026-10-12T20:08:10.628267+00:00",
+  "episode": 2,
+  "trajectory_payload_sha256": "3541cc177e14ebae927c8026d7693dd89e96b0438503db0bc68010a975688ef4",
+  "all_22_trajectory_arrays_and_npz_bytes_reproduced_from_fitted_inputs": true,
+  "source_frames": 343,
+  "inferred_simulator_hand_states": 686,
+  "original_source_masks_unchanged": true,
+  "closed_grasp_anchors_unchanged": 377,
+  "full_source_time_material_checks_passed": 1372,
+  "finite_geometry_probe_times": 3566,
+  "finite_object_failures": 0,
+  "finite_cross_hand_failures": 0,
+  "contact_label_validation": [
+    {
+      "grasp_id": "left_pot_handle_stabilize_lift_lower",
+      "definite_core_frames": 185,
+      "missing_contact_proxy_core_frames": [
+        46
+      ],
+      "core_frames_not_sampled": []
+    },
+    {
+      "grasp_id": "right_lid_remove_place",
+      "definite_core_frames": 62,
+      "missing_contact_proxy_core_frames": [
+        46
+      ],
+      "core_frames_not_sampled": []
+    },
+    {
+      "grasp_id": "right_lid_regrasp_replace",
+      "definite_core_frames": 72,
+      "missing_contact_proxy_core_frames": [
+        309
+      ],
+      "core_frames_not_sampled": []
+    },
+    {
+      "grasp_id": "left_pot_handle_regrasp_stabilize_release",
+      "definite_core_frames": 62,
+      "missing_contact_proxy_core_frames": [
+        272,
+        332,
+        333
+      ],
+      "core_frames_not_sampled": []
+    }
+  ],
+  "contact_proxy_core_coverage": [
+    375,
+    381
+  ],
+  "actual_isaac_sim_version": "6.0.0.1",
+  "actual_simulator_audit_passed": true,
+  "independent_state_errors": {
+    "root_position_m": 8.777273772367108e-08,
+    "joint_angle_rad": 5.8529631585813036e-08,
+    "root_rotation_rad": 2.709467251695413e-07,
+    "renderer_usd_link_position_error_m": 1.1193137259574634e-07,
+    "renderer_physics_link_position_error_m": 1.1193137261917744e-07
+  },
+  "independent_camera_errors": {
+    "position_m": 1.028008822896129e-09,
+    "rotation_rad": 4.032240876637845e-07,
+    "intrinsics_px": 0.0
+  },
+  "visibility_color_indicators": [
+    {
+      "side": "left",
+      "minimum_color_pixels": 1026,
+      "below20_color_pixel_source_frames": [],
+      "isolated_below20_color_pixel_source_frames": []
+    },
+    {
+      "side": "right",
+      "minimum_color_pixels": 2605,
+      "below20_color_pixel_source_frames": [],
+      "isolated_below20_color_pixel_source_frames": []
+    }
+  ],
+  "all_rendered_frames_visually_reviewed": true,
+  "artificial_on_off_model_flicker_observed": false,
+  "video_sha256": "0739cdf66e1ec530df58de4f7c7058ef2bb39edaad333f3919ae51a46e42e0ea",
+  "simulator_readback_sha256": "8082ad03cba6086980188f76af5ce1430454c0efe3b43d5fc690e9ea375cc59e",
+  "source_surface_receipt_sha256": "aa4c03146c4d60a4655b28ee6a5da20583c1f4ac184024c47cd566e96b8f5db6",
+  "finite_probe_receipt_sha256": "7f6033f11126df1e28a8032e27e3a71aa615598c637253a97c55be433b2e6f6d",
+  "contact_receipt_sha256": "a38df749d91aa622bf6ff36d3f6be016b37a31fb796d025ac006b90b6ae6e74f",
+  "gpu_worker_confirmed_stopped": true,
+  "gravity_and_collision_resolution_enabled": false,
+  "physical_task_accepted": false,
+  "continuous_clearance_certified": false,
+  "full_upstream_reconstruction_or_fit_search_independently_rerun": false,
+  "untouched_public_or_private_evaluation_generalization_measured": false,
+  "source_comparison_review": {
+    "frames_inspected": [
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      270,
+      271,
+      272,
+      273,
+      274,
+      275,
+      309,
+      330,
+      331,
+      332,
+      333,
+      334,
+      335,
+      342
+    ],
+    "all_343_source_images_hash_verified": true,
+    "source_comparison_video_sha256": "55e9f7ff9ad5aa9052a792282a4e2db62c4500c97472fc2631b0e7bf46ee65d9",
+    "all_source_comparison_frames_manually_reviewed": false,
+    "hidden_contact_and_source_accuracy_accepted": false,
+    "original_observation_gaps_preserved": true
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "schema": "v2d.e002.corrected-development-replay-evidence.v1",
+  "recorded_at_utc": "2026-10-13T04:16:39.300568+00:00",
+  "episode": 2,
+  "source_frames": 343,
+  "closed_grasp_anchors_unchanged": 377,
+  "original_observation_object_orientation_and_finger_arrays_unchanged": true,
+  "motion_payload_sha256": "91e41d5f44eef43f910b18ab8d24f64c9d4b8ad2b938ede7ec7af46a65bbab19",
+  "replay_knots_sha256": "2b60a5671f7a32f5f2db4954c8aaa822fae3112c7f9c786904c876e450baf6c3",
+  "inferred_free_source_hand_states_changed": 14,
+  "maximum_extra_source_root_correction_m": 0.002292395676083448,
+  "complete_declared_model_continuous_certificate": {
+    "schema": "v2d.corrected-continuous-certificate-verification.v1",
+    "verifier_sha256": "c5b4f2a8488903de18d10f41ffcdb7619ec52659d642571a6d947ffbaf0d6357",
+    "continuous_report_sha256": "9384c8f5e715caa286a36296d34b806f9517035ae886d98eca8f71030e8719f7",
+    "all_segment_intervals_exactly_covered": true,
+    "segments": 3588,
+    "certified_subintervals": 7306,
+    "complete_surface_material_records": 233792,
+    "complete_surface_margin_records": 132907,
+    "complete_swept_AABB_separation_records": 45375,
+    "other_declared_complete_surface_records": 55510,
+    "other_complete_forms_verified_by_frozen_report_hash_not_new_geometry": true,
+    "maximum_stored_depth_upper_m": 0.001999990496590006,
+    "material_limit_m": 0.002,
+    "new_geometric_certification_run": false,
+    "true_object_penetration_guaranteed": false,
+    "source_accuracy_accepted": false,
+    "physical_task_accepted": false
+  },
+  "actual_isaac_sim_version": "6.0.0.1",
+  "isaac_lab_commit": "28a37cecdd433c22d9eabd6a5954add9f13a8951",
+  "simulator_rendered_and_decoded_frames": 343,
+  "all_178_simulator_runtime_pins_checked": true,
+  "inferred_simulator_hand_states": 686,
+  "independent_state_errors": {
+    "root_position_m": 8.777273772367108e-08,
+    "joint_angle_rad": 5.8529631585813036e-08,
+    "root_rotation_rad": 2.709467251695413e-07,
+    "renderer_usd_link_position_error_m": 1.1193137259574634e-07,
+    "renderer_physics_link_position_error_m": 1.1193137261917744e-07
+  },
+  "independent_camera_errors": {
+    "position_m": 1.028008822896129e-09,
+    "rotation_rad": 4.032240876620415e-07,
+    "intrinsics_px": 0.0
+  },
+  "minimum_review_color_pixels": {
+    "left": 1026,
+    "right": 2604
+  },
+  "all_rendered_frames_visually_reviewed": true,
+  "observed_artificial_mesh_on_off_flicker": false,
+  "source_contact_proxy_core_coverage_unchanged": [
+    375,
+    381
+  ],
+  "unsupported_contact_boundaries": {
+    "left": [
+      46,
+      272,
+      332,
+      333
+    ],
+    "right": [
+      46,
+      309
+    ]
+  },
+  "source_object_median_depth_residual_m": {
+    "pot": 0.012923,
+    "lid": 0.006538
+  },
+  "source_support_plane_disagreement_m": [
+    0.008,
+    0.01
+  ],
+  "exact_fitted_profile_motion_regeneration": {
+    "schema": "v2d.corrected-fitted-motion-reproduction.v1",
+    "generator_sha256": "ef5db041d2d80fa777c9c56b8adea0921af0c495a54bb661e7330acbf01cf932",
+    "runtime": {
+      "platform": "linux",
+      "python": "3.11.17",
+      "numpy": "2.2.6"
+    },
+    "all_payload_arrays_identical": true,
+    "array_count": 23,
+    "regenerated_payload_sha256": "91e41d5f44eef43f910b18ab8d24f64c9d4b8ad2b938ede7ec7af46a65bbab19",
+    "regenerated_knots_sha256": "2b60a5671f7a32f5f2db4954c8aaa822fae3112c7f9c786904c876e450baf6c3",
+    "maximum_extra_source_root_correction_m": 0.002292395676083448,
+    "all_original_observation_arrays_unchanged": true,
+    "full_upstream_reconstruction_or_fit_search_rerun": false,
+    "new_continuous_check_complete": false,
+    "new_simulator_run": false,
+    "physical_task_accepted": false
+  },
+  "windows_numpy_scipy_only_motion_regeneration": "refused: pink dependency missing; not the pinned geometry runtime",
+  "windows_frozen_input_verification_passed": true,
+  "windows_and_linux_stored_certificate_verification_agree": true,
+  "display_holds_used": false,
+  "source_hands_or_robot_poses_promoted_to_validated_targets": false,
+  "all_robot_motion_target_validation_flags_false": true,
+  "kinematic_replay_with_gravity_and_collision_resolution_disabled": true,
+  "true_object_penetration_guaranteed": false,
+  "table_environment_checked": false,
+  "full_upstream_inference_or_geometric_fit_search_reproduced": false,
+  "untouched_public_or_private_episode_generalization_measured": false,
+  "source_hand_accuracy_accepted": false,
+  "physical_task_accepted": false,
+  "human_pr_approval_recorded": false,
+  "issue9_or_training_ready": false,
+  "receipt_files_sha256": {
+    "corrected-motion-reproduction-linux-v1.json": "df1ad24296fb9ffa72bd6849a12c0a95e9e98e31413b14871ad61388c4fce386",
+    "corrected-independent-windows-audit-v1.json": "de0827bcebaaa674ae5768878d162f581977eb7b596dbb588f8d14a0912ae3be",
+    "corrected-visual-review-v1.json": "ce1460c35c8d3176e270e039004a1982a1f3382842e896fb6667a31aa5f2172d",
+    "corrected-continuous-coverage-verification-v1.json": "1a9f4b3a9ab44d823f877f0f64207e31742e6426513950f967d9f9134fd906da",
+    "corrected-certificate-verification-v1.json": "94a2e65a6f2357d617213b582944d0f915e30539541e55b356a9ec45c7e6aab7"
+  }
+}

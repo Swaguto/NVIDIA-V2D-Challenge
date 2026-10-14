@@ -1,0 +1,1397 @@
+{
+  "automatic_scene_context_cuts_sha256": "4ba507bf58e9a7e3607814a55ce24f71457ee0ccc8bfb2e558a79811c7023422",
+  "initial_candidate_report_sha256": "9f2cb11f46d2dd04d155527b3528a12e46151456c2b24fb6744408e10c81da47",
+  "source_sha256": "d6cd92f06f9d67ff1f73aaabaaacfd821eb9ea0bb0ac4c10e170a0b254002397",
+  "source_plane_report_sha256": "38a6bf97df7def496bed7773e265c894e77da6bb5521d3077bf43330cbd3166f",
+  "reference_CAD_candidate_report_sha256": "9f2cb11f46d2dd04d155527b3528a12e46151456c2b24fb6744408e10c81da47",
+  "estimated_plane_closed_grasp_margin_m": 0.0005,
+  "plane_semantic_identity_or_true_uncertainty_certified": false,
+  "new_source_accuracy_or_replay_acceptance": false,
+  "right_hand_automatic_diverse_pair_rank": 3,
+  "pair_diversity_grid_m": 0.001,
+  "pair_diversity_normal_grid": 0.05,
+  "parent_motion_payload_sha256": "1ac9fa5dbfcd778d2d62728c8cf3bf7e21110909f04b186f49034766b6f4026b",
+  "atlas_sha256": "a4a48614fb6fbd47d028d2f166f5071c359c91c7c5bb92c794a9364e05c10598",
+  "material_manifest_sha256": "21819a8b65470202596a74997059f43f5e0925aaf21809802b1877ce1ea61b6c",
+  "root_translation_delta_limit_m": 0.008,
+  "root_rotation_delta_limit_rad": 0.2,
+  "finger_delta_limit_rad": 0.25,
+  "feasibility_initialization": "bounded least squares before hard SLSQP; all geometric/contact/depth gates unchanged",
+  "target_distance_limit_m": 0.00125,
+  "actual_declared_CAD_triangle_gap_limit_m": 0.002,
+  "optimization_CAD_gap_search_limit_m": 0.0018,
+  "actual_declared_CAD_triangle_minimum_gap_m": 0.0003,
+  "CAD_surface_target_outward_offset_m": 0.0015,
+  "source_target_search_radius_m": 0.01,
+  "robot_CAD_normal_dot_limit": -0.5,
+  "CAD_target_pair_normal_opposition_limit": -0.5,
+  "self_clearance_limit_m": 0.0005,
+  "full_material_depth_limit_m": 0.002,
+  "max_feature_rounds": 8,
+  "original_CAD_witness_outward_margin_m": 0.0003,
+  "material_witness_depth_margin_m": 0.0016,
+  "source_observations_object_poses_or_labels_changed": false,
+  "source_labels_read": false,
+  "physical_task_accepted": false,
+  "trials": [
+    {
+      "closed_source_frames_checked": 184,
+      "closed_source_estimated_plane_checks": [
+        {
+          "link_index": 0,
+          "source_frame": 81,
+          "signed_estimated_plane_distance_m": 0.0005000000000336263
+        },
+        {
+          "link_index": 1,
+          "source_frame": 81,
+          "signed_estimated_plane_distance_m": 0.03607489827512788
+        },
+        {
+          "link_index": 2,
+          "source_frame": 81,
+          "signed_estimated_plane_distance_m": 0.059524417101030444
+        },
+        {
+          "link_index": 3,
+          "source_frame": 81,
+          "signed_estimated_plane_distance_m": 0.0084326876659334
+        },
+        {
+          "link_index": 4,
+          "source_frame": 60,
+          "signed_estimated_plane_distance_m": 0.031044103790456502
+        },
+        {
+          "link_index": 5,
+          "source_frame": 85,
+          "signed_estimated_plane_distance_m": 0.02511574062770098
+        },
+        {
+          "link_index": 6,
+          "source_frame": 85,
+          "signed_estimated_plane_distance_m": 0.06296181666211818
+        },
+        {
+          "link_index": 7,
+          "source_frame": 85,
+          "signed_estimated_plane_distance_m": 0.0839470213505292
+        }
+      ],
+      "all_original_vertices_above_declared_estimated_plane_margin": true,
+      "plane_feature_witnesses": 5,
+      "prefix": "left-object0-grasp0",
+      "side": "left",
+      "object": 0,
+      "parent_seed": "partnerindex-assignment1-seed2",
+      "parent_template_report_sha256": "3b846ab8349ba0e0ed73d08e49c05a1baf498fe529daa76d2cf41c8aee8c22fd",
+      "qpos_object_frame_inferred": [
+        -0.04804028567403617,
+        0.05672309757730008,
+        0.17377678680766218,
+        -0.6359013077003344,
+        0.647413264276166,
+        -0.08157475234094766,
+        0.4121057532779629,
+        -0.606697405623688,
+        -1.74532925,
+        -0.6037939521761413,
+        -1.5885571264611897,
+        1.04719755,
+        -0.3047981516936664,
+        0.8050691327944159
+      ],
+      "delta_parameters": [
+        0.24998890545302402,
+        -1.4189024105764958,
+        -0.9171189020641102,
+        -0.13443371209438001,
+        0.09970882415228172,
+        0.0950143168757453,
+        0.02178028298064901,
+        -0.05995147750351437,
+        -6.980199113628924e-09,
+        -7.005721634637937e-09,
+        2.4274697034951492e-15,
+        0.24202441862335725,
+        0.07681476110524957
+      ],
+      "translation_delta_m": 0.0017078892189227822,
+      "rotation_delta_rad": 0.1924629651976448,
+      "maximum_finger_delta_rad": 0.24202441862335725,
+      "rounds": [
+        {
+          "round": 0,
+          "solver_success": false,
+          "message": "Positive directional derivative for linesearch",
+          "minimum_constraint": -0.25303104433623946,
+          "target_gap_m": [
+            0.0009489712939629734,
+            0.0015030310443362395
+          ],
+          "normal_dots": [
+            -0.5651021037303057,
+            -0.9694787622535903
+          ],
+          "actual_declared_CAD_triangle_gaps_m": [
+            0.0018181596844175794,
+            0.001892537847360001
+          ],
+          "selected_original_hand_faces": {
+            "thumb": 244,
+            "index": 12344
+          },
+          "original_CAD_witnesses_added": 0,
+          "material_certificate_status": "certified for declared material only",
+          "material_witnesses_total": 0
+        },
+        {
+          "round": 1,
+          "solver_success": false,
+          "message": "Positive directional derivative for linesearch",
+          "minimum_constraint": -9.641849274284048e-07,
+          "target_gap_m": [
+            0.0007104510129448074,
+            0.00061355034424701
+          ],
+          "normal_dots": [
+            -0.5783870905093884,
+            -0.9923255591257701
+          ],
+          "actual_declared_CAD_triangle_gaps_m": [
+            0.0018000009641849274,
+            0.001800000354189864
+          ],
+          "selected_original_hand_faces": {
+            "thumb": 244,
+            "index": 13108
+          },
+          "original_CAD_witnesses_added": 0,
+          "material_certificate_status": "certified for declared material only",
+          "material_witnesses_total": 0
+        },
+        {
+          "round": 2,
+          "solver_success": false,
+          "message": "Iteration limit reached",
+          "minimum_constraint": -4.27697747443917e-07,
+          "target_gap_m": [
+            0.0005342074700561589,
+            0.00020549725186217837
+          ],
+          "normal_dots": [
+            -0.5814918940186817,
+            -0.8477321296796809
+          ],
+          "actual_declared_CAD_triangle_gaps_m": [
+            0.001646162977497053,
+            0.0016253785584190497
+          ],
+          "selected_original_hand_faces": {
+            "thumb": 244,
+            "index": 13492
+          },
+          "original_CAD_witnesses_added": 0,
+          "material_certificate_status": "certified for declared material only",
+          "material_witnesses_total": 0
+        },
+        {
+          "round": 3,
+          "solver_success": false,
+          "message": "Iteration limit reached",
+          "minimum_constraint": -5.248341943334123e-07,
+          "target_gap_m": [
+            0.00037220315058718914,
+            0.00011951616177697041
+          ],
+          "normal_dots": [
+            -0.5732292695175014,
+            -0.9952321251640104
+          ],
+          "actual_declared_CAD_triangle_gaps_m": [
+            0.0014903465308747893,
+            0.0015676193313617713
+          ],
+          "selected_original_hand_faces": {
+            "thumb": 244,
+            "index": 13460
+          },
+          "original_CAD_witnesses_added": 0,
+          "material_certificate_status": "certified for declared material only",
+          "material_witnesses_total": 0
+        },
+        {
+          "round": 4,
+          "solver_success": true,
+          "message": "Optimization terminated successfully",
+          "minimum_constraint": -1.2317036279796412e-11,
+          "target_gap_m": [
+            9.419077214543505e-05,
+            7.074962750058555e-05
+          ],
+          "normal_dots": [
+            -0.5408039813378902,
+            -0.9500556183931717
+          ],
+          "actual_declared_CAD_triangle_gaps_m": [
+            0.0012074410623912574,
+            0.0015338006519138442
+          ],
+          "selected_original_hand_faces": {
+            "thumb": 81,
+            "index": 13482
+          },
+          "original_CAD_witnesses_added": 0,
+          "material_certificate_status": "certified for declared material only",
+          "material_witnesses_total": 0
+        },
+        {
+          "round": 5,
+          "solver_success": true,
+          "message": "Optimization terminated successfully",
+          "minimum_constraint": -1.2859288286981574e-11,
+          "target_gap_m": [
+            1.0473194329256936e-05,
+            3.4190313850785725e-06
+          ],
+          "normal_dots": [
+            -0.5276310330980781,
+            -0.8655208579347916
+          ],
+          "actual_declared_CAD_triangle_gaps_m": [
+            0.0011584685439881939,
+            0.0015008345231675992
+          ],
+          "selected_original_hand_faces": {
+            "thumb": 81,
+            "index": 13838
+          },
+          "original_CAD_witnesses_added": 0,
+          "material_certificate_status": "certified for declared material only",
+          "material_witnesses_total": 0
+        }
+      ],
+      "targets": [
+        {
+          "finger": "thumb",
+          "CAD_triangle": 46477,
+          "surface_point": [
+            0.01364168583283,
+            0.019757061187196865,
+            0.19185562596354558
+          ],
+          "normal": [
+            0.15743432270172228,
+            0.985489661147106,
+            0.0634394341684423
+          ],
+          "target": [
+            0.013877837316882583,
+            0.021235295678917524,
+            0.19195078511479824
+          ],
+          "original_target_to_CAD_surface_gap_m": 0.0022759651719157416
+        },
+        {
+          "finger": "index",
+          "CAD_triangle": 59540,
+          "surface_point": [
+            0.020301563030482025,
+            -0.011121722956052545,
+            0.14871673866640103
+          ],
+          "normal": [
+            0.6017499689849062,
+            -0.7866966123808108,
+            0.13786012801104156
+          ],
+          "target": [
+            0.021204187983959386,
+            -0.01230176787462376,
+            0.1489235288584176
+          ],
+          "original_target_to_CAD_surface_gap_m": 0.002548109604599215
+        }
+      ],
+      "original_CAD_intersecting_links": [],
+      "CAD_target_pair_normal_dot": -0.6717995106424108,
+      "full_original_surface_material_certificate": {
+        "status": "certified for declared material only",
+        "triangle_material_limit_certified": true,
+        "original_triangles": 123440,
+        "maximum_signed_depth_witness_m": 0.0017307715948173873,
+        "witness": {
+          "original_triangle_index": 123088,
+          "subdivision_depth": 6,
+          "point_object_local_m": [
+            0.013734923120529256,
+            0.018947509320348273,
+            0.21181545814137678
+          ],
+          "signed_material_depth_lower_m": 0.0017307715948173873,
+          "signed_material_depth_upper_m": 0.0017307715948173873
+        },
+        "remaining_subtriangles": 0,
+        "queries": 136067,
+        "history": [
+          {
+            "depth": 0,
+            "subtriangles": 123440,
+            "certified_subtriangles": 123240,
+            "exact_boundary_queries": 226,
+            "remaining_subtriangles": 200,
+            "maximum_depth_upper_plus_radius_m": 0.026285400235508953,
+            "maximum_centre_depth_m": 0.0013072632713316042
+          },
+          {
+            "depth": 1,
+            "subtriangles": 800,
+            "certified_subtriangles": 496,
+            "exact_boundary_queries": 321,
+            "remaining_subtriangles": 304,
+            "maximum_depth_upper_plus_radius_m": 0.01486988887809197,
+            "maximum_centre_depth_m": 0.0012222367083160217
+          },
+          {
+            "depth": 2,
+            "subtriangles": 1216,
+            "certified_subtriangles": 661,
+            "exact_boundary_queries": 605,
+            "remaining_subtriangles": 555,
+            "maximum_depth_upper_plus_radius_m": 0.007862610298127966,
+            "maximum_centre_depth_m": 0.0015164909142449672
+          },
+          {
+            "depth": 3,
+            "subtriangles": 2220,
+            "certified_subtriangles": 1565,
+            "exact_boundary_queries": 823,
+            "remaining_subtriangles": 655,
+            "maximum_depth_upper_plus_radius_m": 0.004504603587140488,
+            "maximum_centre_depth_m": 0.0015164909142449644
+          },
+          {
+            "depth": 4,
+            "subtriangles": 2620,
+            "certified_subtriangles": 1987,
+            "exact_boundary_queries": 641,
+            "remaining_subtriangles": 633,
+            "maximum_depth_upper_plus_radius_m": 0.0028029829161106564,
+            "maximum_centre_depth_m": 0.001687076278693589
+          },
+          {
+            "depth": 5,
+            "subtriangles": 2532,
+            "certified_subtriangles": 2426,
+            "exact_boundary_queries": 170,
+            "remaining_subtriangles": 106,
+            "maximum_depth_upper_plus_radius_m": 0.0022347899401913836,
+            "maximum_centre_depth_m": 0.0017214088336726175
+          },
+          {
+            "depth": 6,
+            "subtriangles": 424,
+            "certified_subtriangles": 423,
+            "exact_boundary_queries": 25,
+            "remaining_subtriangles": 1,
+            "maximum_depth_upper_plus_radius_m": 0.0020046284255662984,
+            "maximum_centre_depth_m": 0.0017307715948173873
+          },
+          {
+            "depth": 7,
+            "subtriangles": 4,
+            "certified_subtriangles": 4,
+            "exact_boundary_queries": 0,
+            "remaining_subtriangles": 0,
+            "maximum_depth_upper_plus_radius_m": 0.0019361436632955114,
+            "maximum_centre_depth_m": 0.0010945806326583972
+          }
+        ]
+      },
+      "solver_success_is_not_used_as_geometric_acceptance": true,
+      "numerical_constraint_tolerance_unchanged": 1e-07,
+      "independent_hardware_and_search_budget_passed": true,
+      "candidate_static_geometry_passed": true,
+      "source_accuracy_accepted": false,
+      "complete_motion_certified": false,
+      "new_simulator_run": false,
+      "physical_task_accepted": false,
+      "reused_unchanged_phase_from_report_sha256": "9d4d65e973fb0cf1a64d0373eba303cafd49585a358205176b51dede80948d6d",
+      "producer_independent_search_budget_passed": true,
+      "independent_original_budget_checks": {
+        "original_8mm_translation_budget": true,
+        "original_rotation_budget": true,
+        "original_finger_delta_budget": true,
+        "finger_position_limits": true,
+        "quaternion_unit_length": true,
+        "original_geometry_and_estimated_plane_checks": true
+      },
+      "fitted_parent_report_sha256": "9d4d65e973fb0cf1a64d0373eba303cafd49585a358205176b51dede80948d6d",
+      "parameters_or_geometry_changed_by_assembly": false
+    },
+    {
+      "closed_source_frames_checked": 59,
+      "closed_source_estimated_plane_checks": [
+        {
+          "link_index": 0,
+          "source_frame": 309,
+          "signed_estimated_plane_distance_m": 0.05982843857045293
+        },
+        {
+          "link_index": 1,
+          "source_frame": 309,
+          "signed_estimated_plane_distance_m": 0.0632830685008894
+        },
+        {
+          "link_index": 2,
+          "source_frame": 309,
+          "signed_estimated_plane_distance_m": 0.06964505110350928
+        },
+        {
+          "link_index": 3,
+          "source_frame": 285,
+          "signed_estimated_plane_distance_m": 0.02973182562240959
+        },
+        {
+          "link_index": 4,
+          "source_frame": 285,
+          "signed_estimated_plane_distance_m": 0.036213916834247815
+        },
+        {
+          "link_index": 5,
+          "source_frame": 285,
+          "signed_estimated_plane_distance_m": 0.11613152970554742
+        },
+        {
+          "link_index": 6,
+          "source_frame": 285,
+          "signed_estimated_plane_distance_m": 0.12135627053473397
+        },
+        {
+          "link_index": 7,
+          "source_frame": 285,
+          "signed_estimated_plane_distance_m": 0.09111861719886971
+        }
+      ],
+      "all_original_vertices_above_declared_estimated_plane_margin": true,
+      "plane_feature_witnesses": 0,
+      "prefix": "left-object0-grasp1",
+      "side": "left",
+      "object": 0,
+      "parent_seed": "partnerindex-assignment-1-seed0",
+      "parent_template_report_sha256": "9b39445e4b805e1193c0fd2d945d0636e20920d76af42b06abbc778dca469afc",
+      "qpos_object_frame_inferred": [
+        0.06652716107703806,
+        0.041354327261397636,
+        0.21420794034584836,
+        0.054828357366710205,
+        0.926766183470913,
+        0.28439020215446587,
+        0.23920807954951803,
+        -1.4636492549874636,
+        -1.4809122762330704,
+        -1.0957776702017508,
+        -1.0773843640151544,
+        0.2643234819294212,
+        -0.4257339738121814,
+        1.7121348448689606
+      ],
+      "delta_parameters": [
+        -0.6043108574713529,
+        -0.5519367341046836,
+        -0.3192993926246268,
+        0.0008268347039604911,
+        0.029934858195968205,
+        0.007063289354809141,
+        -0.008096497126104036,
+        0.006017837066877272,
+        -7.501789722982478e-09,
+        -7.50178972149425e-09,
+        -0.05281999872455735,
+        0.031478058015940606,
+        -0.03319440513052455
+      ],
+      "translation_delta_m": 0.0008785088918402371,
+      "rotation_delta_rad": 0.030767993879194634,
+      "maximum_finger_delta_rad": 0.05281999872455735,
+      "rounds": [
+        {
+          "round": 0,
+          "solver_success": true,
+          "message": "Optimization terminated successfully",
+          "minimum_constraint": 1.0368719337988663e-08,
+          "target_gap_m": [
+            1.182365137290467e-06,
+            1.1766256394160474e-06
+          ],
+          "normal_dots": [
+            -0.6291444211679273,
+            -0.7214484393792966
+          ],
+          "actual_declared_CAD_triangle_gaps_m": [
+            0.0013019427217160191,
+            0.0014482260369411881
+          ],
+          "selected_original_hand_faces": {
+            "thumb": 109,
+            "index": 22908
+          },
+          "original_CAD_witnesses_added": 0,
+          "material_certificate_status": "certified for declared material only",
+          "material_witnesses_total": 0
+        }
+      ],
+      "targets": [
+        {
+          "finger": "thumb",
+          "CAD_triangle": 59546,
+          "surface_point": [
+            0.020082319155335426,
+            -0.011053668335080147,
+            0.15102016925811768
+          ],
+          "normal": [
+            0.6780771807876453,
+            -0.7292943319158872,
+            0.09132970125013459
+          ],
+          "target": [
+            0.021099434926516895,
+            -0.012147609832953977,
+            0.1511571638099929
+          ],
+          "original_target_to_CAD_surface_gap_m": 0.003078284357081577
+        },
+        {
+          "finger": "index",
+          "CAD_triangle": 33460,
+          "surface_point": [
+            0.018763097003102303,
+            0.01799100823700428,
+            0.1466667354106903
+          ],
+          "normal": [
+            0.296125240216693,
+            0.9433334230639774,
+            -0.14977281140782822
+          ],
+          "target": [
+            0.01920728486342734,
+            0.019406008371600246,
+            0.14644207619357857
+          ],
+          "original_target_to_CAD_surface_gap_m": 0.003079661954932314
+        }
+      ],
+      "original_CAD_intersecting_links": [],
+      "CAD_target_pair_normal_dot": -0.5008506566224407,
+      "full_original_surface_material_certificate": {
+        "status": "certified for declared material only",
+        "triangle_material_limit_certified": true,
+        "original_triangles": 123440,
+        "maximum_signed_depth_witness_m": 0.0017358441225368009,
+        "witness": {
+          "original_triangle_index": 8373,
+          "subdivision_depth": 3,
+          "point_object_local_m": [
+            0.011015148269885887,
+            0.020600906114612186,
+            0.21514852152037597
+          ],
+          "signed_material_depth_lower_m": 0.0017358441225368009,
+          "signed_material_depth_upper_m": 0.0017358441225368009
+        },
+        "remaining_subtriangles": 0,
+        "queries": 127074,
+        "history": [
+          {
+            "depth": 0,
+            "subtriangles": 123440,
+            "certified_subtriangles": 123140,
+            "exact_boundary_queries": 344,
+            "remaining_subtriangles": 300,
+            "maximum_depth_upper_plus_radius_m": 0.013957756113120594,
+            "maximum_centre_depth_m": 0.0015499597314374768
+          },
+          {
+            "depth": 1,
+            "subtriangles": 1200,
+            "certified_subtriangles": 975,
+            "exact_boundary_queries": 271,
+            "remaining_subtriangles": 225,
+            "maximum_depth_upper_plus_radius_m": 0.006166162275129018,
+            "maximum_centre_depth_m": 0.0016557973596099057
+          },
+          {
+            "depth": 2,
+            "subtriangles": 900,
+            "certified_subtriangles": 759,
+            "exact_boundary_queries": 175,
+            "remaining_subtriangles": 141,
+            "maximum_depth_upper_plus_radius_m": 0.003026684832119948,
+            "maximum_centre_depth_m": 0.0016943350896378062
+          },
+          {
+            "depth": 3,
+            "subtriangles": 564,
+            "certified_subtriangles": 534,
+            "exact_boundary_queries": 59,
+            "remaining_subtriangles": 30,
+            "maximum_depth_upper_plus_radius_m": 0.00220662420736761,
+            "maximum_centre_depth_m": 0.0017358441225368009
+          },
+          {
+            "depth": 4,
+            "subtriangles": 120,
+            "certified_subtriangles": 120,
+            "exact_boundary_queries": 1,
+            "remaining_subtriangles": 0,
+            "maximum_depth_upper_plus_radius_m": 0.0019986448501900012,
+            "maximum_centre_depth_m": 0.0014507338369353492
+          }
+        ]
+      },
+      "solver_success_is_not_used_as_geometric_acceptance": true,
+      "numerical_constraint_tolerance_unchanged": 1e-07,
+      "independent_hardware_and_search_budget_passed": true,
+      "candidate_static_geometry_passed": true,
+      "source_accuracy_accepted": false,
+      "complete_motion_certified": false,
+      "new_simulator_run": false,
+      "physical_task_accepted": false,
+      "reused_unchanged_phase_from_report_sha256": "9d4d65e973fb0cf1a64d0373eba303cafd49585a358205176b51dede80948d6d",
+      "producer_independent_search_budget_passed": true,
+      "independent_original_budget_checks": {
+        "original_8mm_translation_budget": true,
+        "original_rotation_budget": true,
+        "original_finger_delta_budget": true,
+        "finger_position_limits": true,
+        "quaternion_unit_length": true,
+        "original_geometry_and_estimated_plane_checks": true
+      },
+      "fitted_parent_report_sha256": "9d4d65e973fb0cf1a64d0373eba303cafd49585a358205176b51dede80948d6d",
+      "parameters_or_geometry_changed_by_assembly": false
+    },
+    {
+      "closed_source_frames_checked": 61,
+      "closed_source_estimated_plane_checks": [
+        {
+          "link_index": 0,
+          "source_frame": 98,
+          "signed_estimated_plane_distance_m": 0.023076723694330652
+        },
+        {
+          "link_index": 1,
+          "source_frame": 107,
+          "signed_estimated_plane_distance_m": 0.061691248734850455
+        },
+        {
+          "link_index": 2,
+          "source_frame": 107,
+          "signed_estimated_plane_distance_m": 0.03679513969880933
+        },
+        {
+          "link_index": 3,
+          "source_frame": 107,
+          "signed_estimated_plane_distance_m": 0.03993864119427429
+        },
+        {
+          "link_index": 4,
+          "source_frame": 107,
+          "signed_estimated_plane_distance_m": 0.04272718742268325
+        },
+        {
+          "link_index": 5,
+          "source_frame": 107,
+          "signed_estimated_plane_distance_m": 0.02884923600170085
+        },
+        {
+          "link_index": 6,
+          "source_frame": 107,
+          "signed_estimated_plane_distance_m": 0.0005000000024281532
+        },
+        {
+          "link_index": 7,
+          "source_frame": 107,
+          "signed_estimated_plane_distance_m": 0.003318548264397582
+        }
+      ],
+      "all_original_vertices_above_declared_estimated_plane_margin": true,
+      "plane_feature_witnesses": 2,
+      "prefix": "right-object1-grasp0",
+      "side": "right",
+      "object": 1,
+      "parent_seed": "partnerindex-assignment-1-seed0",
+      "parent_template_report_sha256": "b022629a1838002843a2fb181c8b9f1aec5ea1e342521e970a8fa15a91812e4b",
+      "qpos_object_frame_inferred": [
+        0.048253784419754774,
+        0.026546759708833523,
+        -0.12049561163654819,
+        0.6381896240471648,
+        -0.10164462778100869,
+        0.5810009339668932,
+        0.49479317712696524,
+        0.9258729789879576,
+        1.5420000746194293,
+        0.03518515138223366,
+        0.9708754464612106,
+        -0.6538049436219685,
+        -0.13215817445567024,
+        -1.2070304985022604
+      ],
+      "delta_parameters": [
+        0.3703577630532836,
+        -7.85881007554619,
+        -1.449806678596716,
+        0.0030489547308937474,
+        -0.06545242218133122,
+        -0.10246600945394242,
+        -0.23605079309658233,
+        0.24999999999990935,
+        3.565026513723604e-09,
+        -9.706460376015738e-09,
+        0.16699643767417716,
+        -0.10115405396997681,
+        -0.041499192696609837
+      ],
+      "translation_delta_m": 0.008000000005091486,
+      "rotation_delta_rad": 0.12162482800715352,
+      "maximum_finger_delta_rad": 0.24999999999990935,
+      "rounds": [
+        {
+          "round": 0,
+          "solver_success": false,
+          "message": "Positive directional derivative for linesearch",
+          "minimum_constraint": -1.6202934456383683e-06,
+          "target_gap_m": [
+            0.0009992154514191836,
+            0.00020609210387745485
+          ],
+          "normal_dots": [
+            -0.945937837668994,
+            -0.6288445362623841
+          ],
+          "actual_declared_CAD_triangle_gaps_m": [
+            0.0017999999863788994,
+            0.0015661620622123959
+          ],
+          "selected_original_hand_faces": {
+            "thumb": 278,
+            "index": 27307
+          },
+          "original_CAD_witnesses_added": 4,
+          "material_certificate_status": "failed: explicit material-depth witness",
+          "material_witnesses_total": 1
+        },
+        {
+          "round": 1,
+          "solver_success": false,
+          "message": "Positive directional derivative for linesearch",
+          "minimum_constraint": -1.2340508823149854e-08,
+          "target_gap_m": [
+            0.0010655541762043471,
+            0.00012568880013920475
+          ],
+          "normal_dots": [
+            -0.9592444679647262,
+            -0.7141279639506418
+          ],
+          "actual_declared_CAD_triangle_gaps_m": [
+            0.0018000000123405088,
+            0.0008503976156684311
+          ],
+          "selected_original_hand_faces": {
+            "thumb": 278,
+            "index": 28091
+          },
+          "original_CAD_witnesses_added": 4,
+          "material_certificate_status": "failed: explicit material-depth witness",
+          "material_witnesses_total": 2
+        },
+        {
+          "round": 2,
+          "solver_success": false,
+          "message": "Positive directional derivative for linesearch",
+          "minimum_constraint": -1.7961772303884405e-07,
+          "target_gap_m": [
+            0.0012401111317021487,
+            5.796439487635485e-05
+          ],
+          "normal_dots": [
+            -0.9204642216721222,
+            -0.651876004560158
+          ],
+          "actual_declared_CAD_triangle_gaps_m": [
+            0.0017999998130510712,
+            0.001024433182364618
+          ],
+          "selected_original_hand_faces": {
+            "thumb": 278,
+            "index": 28095
+          },
+          "original_CAD_witnesses_added": 0,
+          "material_certificate_status": "certified for declared material only",
+          "material_witnesses_total": 2
+        },
+        {
+          "round": 3,
+          "solver_success": false,
+          "message": "Positive directional derivative for linesearch",
+          "minimum_constraint": -1.0932195491746011e-07,
+          "target_gap_m": [
+            0.0012400066242982152,
+            5.804224048550132e-05
+          ],
+          "normal_dots": [
+            -0.9204673404457837,
+            -0.5519300296140612
+          ],
+          "actual_declared_CAD_triangle_gaps_m": [
+            0.0017999998901020767,
+            0.001473888401681502
+          ],
+          "selected_original_hand_faces": {
+            "thumb": 278,
+            "index": 27308
+          },
+          "original_CAD_witnesses_added": 0,
+          "material_certificate_status": "certified for declared material only",
+          "material_witnesses_total": 2
+        },
+        {
+          "round": 4,
+          "solver_success": false,
+          "message": "Positive directional derivative for linesearch",
+          "minimum_constraint": -1.9200959897568148e-07,
+          "target_gap_m": [
+            0.00124000778892196,
+            5.801605893652915e-05
+          ],
+          "normal_dots": [
+            -0.9204672724529761,
+            -0.5519295740040226
+          ],
+          "actual_declared_CAD_triangle_gaps_m": [
+            0.001799999789887966,
+            0.0014738515855354818
+          ],
+          "selected_original_hand_faces": {
+            "thumb": 278,
+            "index": 27308
+          },
+          "original_CAD_witnesses_added": 0,
+          "material_certificate_status": "certified for declared material only",
+          "material_witnesses_total": 2
+        },
+        {
+          "round": 5,
+          "solver_success": false,
+          "message": "Positive directional derivative for linesearch",
+          "minimum_constraint": -3.653804343528577e-07,
+          "target_gap_m": [
+            0.0012400062116579183,
+            5.802190052719073e-05
+          ],
+          "normal_dots": [
+            -0.9204680517279784,
+            -0.5519375064203467
+          ],
+          "actual_declared_CAD_triangle_gaps_m": [
+            0.001799999901890824,
+            0.0014738518654958334
+          ],
+          "selected_original_hand_faces": {
+            "thumb": 278,
+            "index": 27308
+          },
+          "original_CAD_witnesses_added": 0,
+          "material_certificate_status": "certified for declared material only",
+          "material_witnesses_total": 2
+        },
+        {
+          "round": 6,
+          "solver_success": false,
+          "message": "Positive directional derivative for linesearch",
+          "minimum_constraint": -8.907781630373979e-09,
+          "target_gap_m": [
+            0.0012400081460640293,
+            5.801477396910372e-05
+          ],
+          "normal_dots": [
+            -0.9204672159282828,
+            -0.5519289994331896
+          ],
+          "actual_declared_CAD_triangle_gaps_m": [
+            0.001799999989972868,
+            0.0014738499820279977
+          ],
+          "selected_original_hand_faces": {
+            "thumb": 278,
+            "index": 27308
+          },
+          "original_CAD_witnesses_added": 0,
+          "material_certificate_status": "certified for declared material only",
+          "material_witnesses_total": 2
+        }
+      ],
+      "targets": [
+        {
+          "finger": "thumb",
+          "CAD_triangle": 35562,
+          "surface_point": [
+            0.027176421422965634,
+            0.003922499677346078,
+            -0.018013525995435965
+          ],
+          "normal": [
+            -0.871936666520238,
+            -0.4887587201832431,
+            -0.029006258331840864
+          ],
+          "target": [
+            0.025868516423185276,
+            0.003189361597071213,
+            -0.018057035382933725
+          ],
+          "original_target_to_CAD_surface_gap_m": 0.0028845053182412787
+        },
+        {
+          "finger": "index",
+          "CAD_triangle": 76588,
+          "surface_point": [
+            0.03303766617043631,
+            0.008638162494313024,
+            -0.02335077500440932
+          ],
+          "normal": [
+            0.8103446572606207,
+            -0.3077025638609184,
+            -0.4986588700129426
+          ],
+          "target": [
+            0.03425318315632724,
+            0.008176608648521646,
+            -0.024098763309428735
+          ],
+          "original_target_to_CAD_surface_gap_m": 0.003042085168002785
+        }
+      ],
+      "original_CAD_intersecting_links": [],
+      "CAD_target_pair_normal_dot": -0.5417126798714861,
+      "full_original_surface_material_certificate": {
+        "status": "certified for declared material only",
+        "triangle_material_limit_certified": true,
+        "original_triangles": 123396,
+        "maximum_signed_depth_witness_m": 0.0017078362167828017,
+        "witness": {
+          "original_triangle_index": 123365,
+          "subdivision_depth": 5,
+          "point_object_local_m": [
+            0.028288078007717942,
+            0.00620783614084913,
+            -0.02392853401549541
+          ],
+          "signed_material_depth_lower_m": 0.0017078362167828017,
+          "signed_material_depth_upper_m": 0.0017078362167828017
+        },
+        "remaining_subtriangles": 0,
+        "queries": 135377,
+        "history": [
+          {
+            "depth": 0,
+            "subtriangles": 123396,
+            "certified_subtriangles": 123233,
+            "exact_boundary_queries": 182,
+            "remaining_subtriangles": 163,
+            "maximum_depth_upper_plus_radius_m": 0.026283597981431053,
+            "maximum_centre_depth_m": 0.0014600220467393267
+          },
+          {
+            "depth": 1,
+            "subtriangles": 652,
+            "certified_subtriangles": 326,
+            "exact_boundary_queries": 348,
+            "remaining_subtriangles": 326,
+            "maximum_depth_upper_plus_radius_m": 0.012577565502659108,
+            "maximum_centre_depth_m": 0.001522301394782326
+          },
+          {
+            "depth": 2,
+            "subtriangles": 1304,
+            "certified_subtriangles": 760,
+            "exact_boundary_queries": 598,
+            "remaining_subtriangles": 544,
+            "maximum_depth_upper_plus_radius_m": 0.0057776617071877215,
+            "maximum_centre_depth_m": 0.0015534410688038255
+          },
+          {
+            "depth": 3,
+            "subtriangles": 2176,
+            "certified_subtriangles": 1563,
+            "exact_boundary_queries": 708,
+            "remaining_subtriangles": 613,
+            "maximum_depth_upper_plus_radius_m": 0.003771143740486078,
+            "maximum_centre_depth_m": 0.0016803061682504378
+          },
+          {
+            "depth": 4,
+            "subtriangles": 2452,
+            "certified_subtriangles": 1931,
+            "exact_boundary_queries": 566,
+            "remaining_subtriangles": 521,
+            "maximum_depth_upper_plus_radius_m": 0.0027495974025706724,
+            "maximum_centre_depth_m": 0.0017041786164528506
+          },
+          {
+            "depth": 5,
+            "subtriangles": 2084,
+            "certified_subtriangles": 1928,
+            "exact_boundary_queries": 224,
+            "remaining_subtriangles": 156,
+            "maximum_depth_upper_plus_radius_m": 0.0022305456098417097,
+            "maximum_centre_depth_m": 0.0017078362167828017
+          },
+          {
+            "depth": 6,
+            "subtriangles": 624,
+            "certified_subtriangles": 624,
+            "exact_boundary_queries": 63,
+            "remaining_subtriangles": 0,
+            "maximum_depth_upper_plus_radius_m": 0.0019932453177412992,
+            "maximum_centre_depth_m": 0.0015927064885120383
+          }
+        ]
+      },
+      "solver_success_is_not_used_as_geometric_acceptance": true,
+      "numerical_constraint_tolerance_unchanged": 1e-07,
+      "independent_hardware_and_search_budget_passed": true,
+      "candidate_static_geometry_passed": true,
+      "source_accuracy_accepted": false,
+      "complete_motion_certified": false,
+      "new_simulator_run": false,
+      "physical_task_accepted": false,
+      "reused_unchanged_phase_from_report_sha256": "9d4d65e973fb0cf1a64d0373eba303cafd49585a358205176b51dede80948d6d",
+      "producer_independent_search_budget_passed": true,
+      "independent_original_budget_checks": {
+        "original_8mm_translation_budget": true,
+        "original_rotation_budget": true,
+        "original_finger_delta_budget": true,
+        "finger_position_limits": true,
+        "quaternion_unit_length": true,
+        "original_geometry_and_estimated_plane_checks": true
+      },
+      "fitted_parent_report_sha256": "9d4d65e973fb0cf1a64d0373eba303cafd49585a358205176b51dede80948d6d",
+      "parameters_or_geometry_changed_by_assembly": false
+    },
+    {
+      "closed_source_frames_checked": 73,
+      "closed_source_estimated_plane_checks": [
+        {
+          "link_index": 0,
+          "source_frame": 237,
+          "signed_estimated_plane_distance_m": 0.02417029910270401
+        },
+        {
+          "link_index": 1,
+          "source_frame": 237,
+          "signed_estimated_plane_distance_m": 0.06340340244024159
+        },
+        {
+          "link_index": 2,
+          "source_frame": 237,
+          "signed_estimated_plane_distance_m": 0.03750775112143479
+        },
+        {
+          "link_index": 3,
+          "source_frame": 237,
+          "signed_estimated_plane_distance_m": 0.04324267797762814
+        },
+        {
+          "link_index": 4,
+          "source_frame": 237,
+          "signed_estimated_plane_distance_m": 0.04726443764050865
+        },
+        {
+          "link_index": 5,
+          "source_frame": 237,
+          "signed_estimated_plane_distance_m": 0.02984434589478176
+        },
+        {
+          "link_index": 6,
+          "source_frame": 237,
+          "signed_estimated_plane_distance_m": 0.0005000000631258756
+        },
+        {
+          "link_index": 7,
+          "source_frame": 237,
+          "signed_estimated_plane_distance_m": 0.003118553703560963
+        }
+      ],
+      "all_original_vertices_above_declared_estimated_plane_margin": true,
+      "plane_feature_witnesses": 1,
+      "prefix": "right-object1-grasp1",
+      "side": "right",
+      "object": 1,
+      "parent_seed": "partnerindex-assignment-1-seed0",
+      "parent_template_report_sha256": "b022629a1838002843a2fb181c8b9f1aec5ea1e342521e970a8fa15a91812e4b",
+      "qpos_object_frame_inferred": [
+        0.047594559619849035,
+        0.026546244119869736,
+        -0.1205112055241455,
+        0.6418314257727059,
+        -0.10935989797826087,
+        0.5710700246466096,
+        0.49997185976300784,
+        0.9277751347855906,
+        1.542000068110306,
+        0.03518514723924319,
+        0.9708754555897071,
+        -0.6428325458490441,
+        -0.10989707326578071,
+        -1.2420733188960882
+      ],
+      "delta_parameters": [
+        -0.2888670368524535,
+        -7.859325664509974,
+        -1.4654005661940217,
+        0.009673000682513986,
+        -0.05477324819076607,
+        -0.1276788093664948,
+        -0.2341486372989493,
+        0.24999999349078622,
+        -5.779639518125723e-10,
+        -5.779638830262393e-10,
+        0.17796883544710154,
+        -0.07889295278008727,
+        -0.07654201309043761
+      ],
+      "translation_delta_m": 0.0079999901803194,
+      "rotation_delta_rad": 0.1392679217221859,
+      "maximum_finger_delta_rad": 0.24999999349078622,
+      "rounds": [
+        {
+          "round": 0,
+          "solver_success": false,
+          "message": "Positive directional derivative for linesearch",
+          "minimum_constraint": -2.851926248492731e-07,
+          "target_gap_m": [
+            0.0009000955532936438,
+            3.528166110482048e-05
+          ],
+          "normal_dots": [
+            -0.9342761285312191,
+            -0.5581634283979107
+          ],
+          "actual_declared_CAD_triangle_gaps_m": [
+            0.0017999999975797704,
+            0.0014194137798382556
+          ],
+          "selected_original_hand_faces": {
+            "thumb": 278,
+            "index": 27905
+          },
+          "original_CAD_witnesses_added": 4,
+          "material_certificate_status": "failed: explicit material-depth witness",
+          "material_witnesses_total": 1
+        },
+        {
+          "round": 1,
+          "solver_success": false,
+          "message": "Positive directional derivative for linesearch",
+          "minimum_constraint": -8.762250994220899e-08,
+          "target_gap_m": [
+            0.0010517245836192373,
+            3.684774668536186e-05
+          ],
+          "normal_dots": [
+            -0.920137176393608,
+            -0.5755900146959834
+          ],
+          "actual_declared_CAD_triangle_gaps_m": [
+            0.0017999999120915672,
+            0.0013790744902523666
+          ],
+          "selected_original_hand_faces": {
+            "thumb": 278,
+            "index": 27867
+          },
+          "original_CAD_witnesses_added": 0,
+          "material_certificate_status": "certified for declared material only",
+          "material_witnesses_total": 1
+        }
+      ],
+      "targets": [
+        {
+          "finger": "thumb",
+          "CAD_triangle": 35562,
+          "surface_point": [
+            0.027176421422965634,
+            0.003922499677346078,
+            -0.018013525995435965
+          ],
+          "normal": [
+            -0.871936666520238,
+            -0.4887587201832431,
+            -0.029006258331840864
+          ],
+          "target": [
+            0.025868516423185276,
+            0.003189361597071213,
+            -0.018057035382933725
+          ],
+          "original_target_to_CAD_surface_gap_m": 0.0028845053182412787
+        },
+        {
+          "finger": "index",
+          "CAD_triangle": 76588,
+          "surface_point": [
+            0.03303766617043631,
+            0.008638162494313024,
+            -0.02335077500440932
+          ],
+          "normal": [
+            0.8103446572606207,
+            -0.3077025638609184,
+            -0.4986588700129426
+          ],
+          "target": [
+            0.03425318315632724,
+            0.008176608648521646,
+            -0.024098763309428735
+          ],
+          "original_target_to_CAD_surface_gap_m": 0.003042085168002785
+        }
+      ],
+      "original_CAD_intersecting_links": [],
+      "CAD_target_pair_normal_dot": -0.5417126798714861,
+      "full_original_surface_material_certificate": {
+        "status": "certified for declared material only",
+        "triangle_material_limit_certified": true,
+        "original_triangles": 123396,
+        "maximum_signed_depth_witness_m": 0.0017496094603366818,
+        "witness": {
+          "original_triangle_index": 123365,
+          "subdivision_depth": 6,
+          "point_object_local_m": [
+            0.027242580907527503,
+            0.007265640988934751,
+            -0.025926809970933284
+          ],
+          "signed_material_depth_lower_m": 0.0017496094603366818,
+          "signed_material_depth_upper_m": 0.0017496094603366818
+        },
+        "remaining_subtriangles": 0,
+        "queries": 135988,
+        "history": [
+          {
+            "depth": 0,
+            "subtriangles": 123396,
+            "certified_subtriangles": 123224,
+            "exact_boundary_queries": 187,
+            "remaining_subtriangles": 172,
+            "maximum_depth_upper_plus_radius_m": 0.026258578282163842,
+            "maximum_centre_depth_m": 0.0015632162624955315
+          },
+          {
+            "depth": 1,
+            "subtriangles": 688,
+            "certified_subtriangles": 353,
+            "exact_boundary_queries": 363,
+            "remaining_subtriangles": 335,
+            "maximum_depth_upper_plus_radius_m": 0.012674747790623435,
+            "maximum_centre_depth_m": 0.0016155285007952392
+          },
+          {
+            "depth": 2,
+            "subtriangles": 1340,
+            "certified_subtriangles": 782,
+            "exact_boundary_queries": 614,
+            "remaining_subtriangles": 558,
+            "maximum_depth_upper_plus_radius_m": 0.005922080240559779,
+            "maximum_centre_depth_m": 0.0016234558933373134
+          },
+          {
+            "depth": 3,
+            "subtriangles": 2232,
+            "certified_subtriangles": 1622,
+            "exact_boundary_queries": 743,
+            "remaining_subtriangles": 610,
+            "maximum_depth_upper_plus_radius_m": 0.0037534521340849953,
+            "maximum_centre_depth_m": 0.0016626145618493572
+          },
+          {
+            "depth": 4,
+            "subtriangles": 2440,
+            "certified_subtriangles": 1874,
+            "exact_boundary_queries": 591,
+            "remaining_subtriangles": 566,
+            "maximum_depth_upper_plus_radius_m": 0.002708033347967175,
+            "maximum_centre_depth_m": 0.0016626145618493565
+          },
+          {
+            "depth": 5,
+            "subtriangles": 2264,
+            "certified_subtriangles": 2078,
+            "exact_boundary_queries": 253,
+            "remaining_subtriangles": 186,
+            "maximum_depth_upper_plus_radius_m": 0.0021970971123376143,
+            "maximum_centre_depth_m": 0.0016743877192787083
+          },
+          {
+            "depth": 6,
+            "subtriangles": 744,
+            "certified_subtriangles": 742,
+            "exact_boundary_queries": 125,
+            "remaining_subtriangles": 2,
+            "maximum_depth_upper_plus_radius_m": 0.0020109641568661347,
+            "maximum_centre_depth_m": 0.0017496094603366818
+          },
+          {
+            "depth": 7,
+            "subtriangles": 8,
+            "certified_subtriangles": 8,
+            "exact_boundary_queries": 0,
+            "remaining_subtriangles": 0,
+            "maximum_depth_upper_plus_radius_m": 0.0019529716819687507,
+            "maximum_centre_depth_m": 0.0011296714220399154
+          }
+        ]
+      },
+      "solver_success_is_not_used_as_geometric_acceptance": true,
+      "numerical_constraint_tolerance_unchanged": 1e-07,
+      "independent_hardware_and_search_budget_passed": true,
+      "candidate_static_geometry_passed": true,
+      "source_accuracy_accepted": false,
+      "complete_motion_certified": false,
+      "new_simulator_run": false,
+      "physical_task_accepted": false,
+      "producer_independent_search_budget_passed": false,
+      "independent_original_budget_checks": {
+        "original_8mm_translation_budget": true,
+        "original_rotation_budget": true,
+        "original_finger_delta_budget": true,
+        "finger_position_limits": true,
+        "quaternion_unit_length": true,
+        "original_geometry_and_estimated_plane_checks": true
+      },
+      "fitted_parent_report_sha256": "dc74975e34c6c07e17b8f789936f5af9fdc8e95da8a0e5139c8b2155b6550bdd",
+      "parameters_or_geometry_changed_by_assembly": false
+    }
+  ],
+  "terminal": true,
+  "elapsed_seconds": null,
+  "schema": "v2d.plane-constrained-CAD-grasp-candidates.v3",
+  "phase_fit_report_sha256": [
+    "9d4d65e973fb0cf1a64d0373eba303cafd49585a358205176b51dede80948d6d",
+    "dc74975e34c6c07e17b8f789936f5af9fdc8e95da8a0e5139c8b2155b6550bdd"
+  ],
+  "local_search_radii_m": [
+    0.008,
+    0.00799999
+  ],
+  "unchanged_acceptance_translation_budget_m": 0.008,
+  "reused_phase_proofs_bound_to_same_case_plane_atlas_and_material": true,
+  "all_original_budget_checks_passed": true,
+  "full_motion_or_source_accuracy_accepted": false,
+  "new_simulator_run": false
+}

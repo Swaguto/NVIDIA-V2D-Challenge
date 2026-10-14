@@ -1,5 +1,39 @@
 # Reproduce issues 6, 7 and 8
 
+The latest [Track 3 scoring scope](SCORING_SCOPE_2026-10-13.md) defers cosmetic
+hand geometry work and qualifies the earlier clearance proofs: they cover
+collision meshes, not every rendered hand surface. The current official kit
+scores object policy trajectories and reconstructed object meshes.
+
+For the latest October 13 Dex3 development replay, start with
+[the support-aware replay instructions](SUPPORT_AWARE_DEX3_REPLAY_2026-10-13.md).
+They cover all 343 new Isaac frames, complete CAD/support and material/self/cross
+checks, exact 15-stage fitted-input reconstruction, preserved observation/hold
+provenance and the remaining source/physical accuracy limits. There is one active
+CAD reproduction entry point. The
+[original CAD replay](ORIGINAL_CAD_DEX3_REPLAY_2026-10-13.md) remains immutable;
+older measurements below retain their original scope and acceptance state.
+
+The [physical-acceptance audit](DEX3_PHYSICAL_ACCEPTANCE_AUDIT_2026-10-13.md)
+records the later complete 343-frame source comparison inspection, remaining
+posture/support/contact uncertainty and requirement-by-requirement goal status.
+It does not change the frozen experiment or approve physical motion targets.
+
+The later [public-object accuracy check](PUBLIC_OBJECT_ACCURACY_2026-10-13.md)
+uses organizer MoCap with locked public inputs through the existing evaluation
+tool. It includes measured relative-pose errors, Linux/Windows agreement,
+reference repetition diagnostics and a rejected default smoother experiment.
+
+The [final-fit contact audit](FUNCTIONAL_DEX3_CONTACT_AUDIT_2026-10-13.md)
+binds the contact checker to the actual CAD fit, confirms 377 closed states
+and identifies six missed source-labeled grasp states without changing motion.
+
+The later [static physical load diagnostic](STATIC_DEX3_LOAD_DIAGNOSTIC_2026-10-14.md)
+adds a mode to the existing simulator wrapper. Gravity/contact controls and
+independent initial-link checks pass; two runs repeat exactly. Four unsupported
+grasp starts fail under the documented assumptions, so this does not approve
+physical targets, complete the task, or establish a challenge score.
+
 The team bundles are in [Google Drive](https://drive.google.com/drive/folders/1aie0RV1jJ_XxF5ddJbGVRpJskdi4IMmA).
 Sign in with the account listed on the shared project document. The nine named
 teammates have read access; the folder is restricted. Download the four archives

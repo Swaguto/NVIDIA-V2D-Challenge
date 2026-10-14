@@ -1,0 +1,2548 @@
+{
+  "schema": "v2d.public-object-relative-accuracy.v1",
+  "episode": 2,
+  "organizer_revision": "5f68335f3acc802033d1e80728c1633197521de8",
+  "reference_lock_sha256": "bb0f79741a5be1cc3e05a53b84ebc4b9fd2257732a8644e72d54c9a5a6f60dab",
+  "reference_inputs_verified": {
+    "data/chunk-000/episode_000002.parquet": "a1cd007e34edbdaa51138c168312ad4f0bb6e60ed65b52e72d253d6f949ae00b",
+    "meta/info.json": "37d81af0bf3554ffb65cbb36967c3a3b5709a9b037ac0e2fde19ed5e3c2e204c",
+    "mesh/white_pot/white_pot.glb": "2627b01350864cc7f52540cb1ccfb9d67544e245d7061d8e313ecfd9d3eb5151",
+    "mesh/white_pot_lid/white_pot_lid.glb": "672a2965dd785fc958db39a2ce94a6df215f58dfdfafedf7dd193ffc6d83b363"
+  },
+  "reference_loader_sha256": "28831d84b273bbbab7c6e81e89d17970d66349004c432f92e3359f98b291534d",
+  "audit_source_sha256": "1606cf74f6d4997573a2f95323578953aeb2ebf7b0cbb0a4ace0d814a16b763d",
+  "bundle_manifest_sha256": "c6284bb75b9d4cc38d35e625ad52d35e28da1b2cc89723291f25d64462df76df",
+  "bundle_payload_sha256": "4de1b9507e42ed66e4341b93cc38563885fc2eda43db72935a546967671b6277",
+  "proposal_sha256": null,
+  "runtime_versions": {
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "trimesh": "4.12.2"
+  },
+  "source_frames": 343,
+  "frame_indices_exact": true,
+  "canonical_scan_frames": [
+    {
+      "object": "white_pot",
+      "all_unique_scan_vertices_exact": true,
+      "unique_vertices": 49227
+    },
+    {
+      "object": "white_pot_lid",
+      "all_unique_scan_vertices_exact": true,
+      "unique_vertices": 49738
+    }
+  ],
+  "declared_affine_projection_and_scale_residuals": [
+    {
+      "object": "white_pot",
+      "maximum_rotation_projection_frobenius_residual": 3.6696190538356826e-07,
+      "maximum_geometry_shift_bound_m": 8.930432215947803e-08,
+      "maximum_recorded_scale_deviation_from_one": 2.1877499190026128e-07
+    },
+    {
+      "object": "white_pot_lid",
+      "maximum_rotation_projection_frobenius_residual": 2.2307401934923139e-07,
+      "maximum_geometry_shift_bound_m": 2.1553027806930913e-08,
+      "maximum_recorded_scale_deviation_from_one": 2.0565233627145574e-07
+    }
+  ],
+  "controls": {
+    "common_rigid_world_transform_cancels": true,
+    "known_fifteen_mm_translation_recovers_fifteen_mm": true,
+    "known_ten_degree_rotation_recovers_ten_degree": true
+  },
+  "pairs": [
+    {
+      "objects": [
+        "white_pot",
+        "white_pot_lid"
+      ],
+      "summaries": {
+        "all_visible_GT": {
+          "relative_scan_origin_translation_error_m": {
+            "count": 343,
+            "median": 0.006597678393207208,
+            "p90": 0.01306278582755858,
+            "maximum": 0.06293631628340557
+          },
+          "relative_scan_orientation_error_deg": {
+            "count": 343,
+            "median": 3.7464806576203347,
+            "p90": 6.469842269226374,
+            "maximum": 8.253217697233575
+          },
+          "inter_scan_origin_distance_error_m": {
+            "count": 343,
+            "median": 0.0033946183275039288,
+            "p90": 0.00717191688432608,
+            "maximum": 0.046025853909522685
+          }
+        },
+        "both_reconstruction_objects_observed": {
+          "relative_scan_origin_translation_error_m": {
+            "count": 285,
+            "median": 0.00677412033062687,
+            "p90": 0.013826543919956403,
+            "maximum": 0.06293631628340557
+          },
+          "relative_scan_orientation_error_deg": {
+            "count": 285,
+            "median": 3.5817727656278273,
+            "p90": 4.737146357551499,
+            "maximum": 8.253217697233575
+          },
+          "inter_scan_origin_distance_error_m": {
+            "count": 285,
+            "median": 0.0038467383174398823,
+            "p90": 0.008300110475436407,
+            "maximum": 0.046025853909522685
+          }
+        }
+      },
+      "records": [
+        {
+          "source_frame": 0,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.005719459703009854,
+          "relative_scan_orientation_error_deg": 6.554615104673294,
+          "inter_scan_origin_distance_error_m": 0.002555097430432522
+        },
+        {
+          "source_frame": 1,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.006323444177292702,
+          "relative_scan_orientation_error_deg": 6.647610547636022,
+          "inter_scan_origin_distance_error_m": 0.0026930167089478374
+        },
+        {
+          "source_frame": 2,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.006694246437364862,
+          "relative_scan_orientation_error_deg": 6.817740414427083,
+          "inter_scan_origin_distance_error_m": 0.002952108245677522
+        },
+        {
+          "source_frame": 3,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.006960184589192254,
+          "relative_scan_orientation_error_deg": 6.535300336848024,
+          "inter_scan_origin_distance_error_m": 0.0029869827076766803
+        },
+        {
+          "source_frame": 4,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.007231036192819558,
+          "relative_scan_orientation_error_deg": 6.38436917201454,
+          "inter_scan_origin_distance_error_m": 0.0031826278844189412
+        },
+        {
+          "source_frame": 5,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.007264402078625732,
+          "relative_scan_orientation_error_deg": 6.5932625212340294,
+          "inter_scan_origin_distance_error_m": 0.0031929075047655853
+        },
+        {
+          "source_frame": 6,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.007144653124572144,
+          "relative_scan_orientation_error_deg": 6.43127925095266,
+          "inter_scan_origin_distance_error_m": 0.003177376207471057
+        },
+        {
+          "source_frame": 7,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.006780692952411344,
+          "relative_scan_orientation_error_deg": 6.137882722584298,
+          "inter_scan_origin_distance_error_m": 0.002840793024637467
+        },
+        {
+          "source_frame": 8,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.006958703938994474,
+          "relative_scan_orientation_error_deg": 6.285676133883855,
+          "inter_scan_origin_distance_error_m": 0.0029748389261395683
+        },
+        {
+          "source_frame": 9,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.006899125586143353,
+          "relative_scan_orientation_error_deg": 6.419560494348735,
+          "inter_scan_origin_distance_error_m": 0.003063067086040712
+        },
+        {
+          "source_frame": 10,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.006608923666564382,
+          "relative_scan_orientation_error_deg": 6.387377795574067,
+          "inter_scan_origin_distance_error_m": 0.003012741486575987
+        },
+        {
+          "source_frame": 11,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.007004398020553201,
+          "relative_scan_orientation_error_deg": 6.448603209007098,
+          "inter_scan_origin_distance_error_m": 0.0034168675804141097
+        },
+        {
+          "source_frame": 12,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.006786356948299662,
+          "relative_scan_orientation_error_deg": 6.359214694092351,
+          "inter_scan_origin_distance_error_m": 0.003123358118174338
+        },
+        {
+          "source_frame": 13,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.005962055144934511,
+          "relative_scan_orientation_error_deg": 6.415120386053407,
+          "inter_scan_origin_distance_error_m": 0.002672887613806421
+        },
+        {
+          "source_frame": 14,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.00667017975619853,
+          "relative_scan_orientation_error_deg": 6.8362661079259075,
+          "inter_scan_origin_distance_error_m": 0.003176359972248334
+        },
+        {
+          "source_frame": 15,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.006856425586568075,
+          "relative_scan_orientation_error_deg": 6.417662715225541,
+          "inter_scan_origin_distance_error_m": 0.003079956225064344
+        },
+        {
+          "source_frame": 16,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.007127527600815638,
+          "relative_scan_orientation_error_deg": 6.565677966124765,
+          "inter_scan_origin_distance_error_m": 0.0033876517332388847
+        },
+        {
+          "source_frame": 17,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.007165582512211889,
+          "relative_scan_orientation_error_deg": 6.632648025081757,
+          "inter_scan_origin_distance_error_m": 0.0034828271334417862
+        },
+        {
+          "source_frame": 18,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.007102198079775842,
+          "relative_scan_orientation_error_deg": 6.553701824596684,
+          "inter_scan_origin_distance_error_m": 0.0033605871340385562
+        },
+        {
+          "source_frame": 19,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.006905132826143337,
+          "relative_scan_orientation_error_deg": 6.4751520342811935,
+          "inter_scan_origin_distance_error_m": 0.0031191199783670506
+        },
+        {
+          "source_frame": 20,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.006855727542515473,
+          "relative_scan_orientation_error_deg": 6.526378509569653,
+          "inter_scan_origin_distance_error_m": 0.0031493039774525763
+        },
+        {
+          "source_frame": 21,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.006242626896953094,
+          "relative_scan_orientation_error_deg": 6.374467937160552,
+          "inter_scan_origin_distance_error_m": 0.002750098060011856
+        },
+        {
+          "source_frame": 22,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.006597678393207208,
+          "relative_scan_orientation_error_deg": 6.485944148479239,
+          "inter_scan_origin_distance_error_m": 0.0028832511331699576
+        },
+        {
+          "source_frame": 23,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.006585442535092453,
+          "relative_scan_orientation_error_deg": 6.435360177505696,
+          "inter_scan_origin_distance_error_m": 0.0028447754565952693
+        },
+        {
+          "source_frame": 24,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.006484215377413975,
+          "relative_scan_orientation_error_deg": 6.609625433225688,
+          "inter_scan_origin_distance_error_m": 0.0030170066276875712
+        },
+        {
+          "source_frame": 25,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.006666848607130752,
+          "relative_scan_orientation_error_deg": 6.276306344215635,
+          "inter_scan_origin_distance_error_m": 0.0029198765218824904
+        },
+        {
+          "source_frame": 26,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.006215177381053633,
+          "relative_scan_orientation_error_deg": 5.8848704006704455,
+          "inter_scan_origin_distance_error_m": 0.002997502021852984
+        },
+        {
+          "source_frame": 27,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.006466108674086681,
+          "relative_scan_orientation_error_deg": 6.376210109676146,
+          "inter_scan_origin_distance_error_m": 0.0030522973838422174
+        },
+        {
+          "source_frame": 28,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.006741228156807648,
+          "relative_scan_orientation_error_deg": 6.396159953055419,
+          "inter_scan_origin_distance_error_m": 0.0031768575111423628
+        },
+        {
+          "source_frame": 29,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.006253281384795474,
+          "relative_scan_orientation_error_deg": 6.396068711622875,
+          "inter_scan_origin_distance_error_m": 0.0028887889845411463
+        },
+        {
+          "source_frame": 30,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.005708411541603212,
+          "relative_scan_orientation_error_deg": 6.5006512519785895,
+          "inter_scan_origin_distance_error_m": 0.00257027513998484
+        },
+        {
+          "source_frame": 31,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.006369659202848586,
+          "relative_scan_orientation_error_deg": 6.437884750768736,
+          "inter_scan_origin_distance_error_m": 0.002829748683134424
+        },
+        {
+          "source_frame": 32,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.006091123451319384,
+          "relative_scan_orientation_error_deg": 6.515338870178458,
+          "inter_scan_origin_distance_error_m": 0.002861955157799821
+        },
+        {
+          "source_frame": 33,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.00634243458327278,
+          "relative_scan_orientation_error_deg": 6.581463015195273,
+          "inter_scan_origin_distance_error_m": 0.002944709360015861
+        },
+        {
+          "source_frame": 34,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.0061875927122037495,
+          "relative_scan_orientation_error_deg": 6.623104904162916,
+          "inter_scan_origin_distance_error_m": 0.0031284215321559436
+        },
+        {
+          "source_frame": 35,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.006334820833187459,
+          "relative_scan_orientation_error_deg": 6.57113748782944,
+          "inter_scan_origin_distance_error_m": 0.0032665737181496526
+        },
+        {
+          "source_frame": 36,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.005676430213611283,
+          "relative_scan_orientation_error_deg": 6.567336598220661,
+          "inter_scan_origin_distance_error_m": 0.002978738553496625
+        },
+        {
+          "source_frame": 37,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.004856058982409972,
+          "relative_scan_orientation_error_deg": 6.4018298689522535,
+          "inter_scan_origin_distance_error_m": 0.0023475421138184904
+        },
+        {
+          "source_frame": 38,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.005196182183552839,
+          "relative_scan_orientation_error_deg": 6.641777012928452,
+          "inter_scan_origin_distance_error_m": 0.002558550617280289
+        },
+        {
+          "source_frame": 39,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.005671802751027554,
+          "relative_scan_orientation_error_deg": 6.870144492935551,
+          "inter_scan_origin_distance_error_m": 0.00296254299615608
+        },
+        {
+          "source_frame": 40,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.005413349875171591,
+          "relative_scan_orientation_error_deg": 7.2625232887668565,
+          "inter_scan_origin_distance_error_m": 0.0030459781844898517
+        },
+        {
+          "source_frame": 41,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.005638000218849353,
+          "relative_scan_orientation_error_deg": 7.644488508119905,
+          "inter_scan_origin_distance_error_m": 0.003364912095983892
+        },
+        {
+          "source_frame": 42,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.005459365418078863,
+          "relative_scan_orientation_error_deg": 8.19738571276008,
+          "inter_scan_origin_distance_error_m": 0.0034242970274146814
+        },
+        {
+          "source_frame": 43,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.0050703766548177605,
+          "relative_scan_orientation_error_deg": 8.088622925479152,
+          "inter_scan_origin_distance_error_m": 0.003007396779839827
+        },
+        {
+          "source_frame": 44,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.004597732453689313,
+          "relative_scan_orientation_error_deg": 8.19834858216389,
+          "inter_scan_origin_distance_error_m": 0.0028220327241321452
+        },
+        {
+          "source_frame": 45,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.004168042287618197,
+          "relative_scan_orientation_error_deg": 7.8469927108699595,
+          "inter_scan_origin_distance_error_m": 0.0025180354845065964
+        },
+        {
+          "source_frame": 46,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.003967855883940816,
+          "relative_scan_orientation_error_deg": 8.022461922760701,
+          "inter_scan_origin_distance_error_m": 0.002322904827216435
+        },
+        {
+          "source_frame": 47,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.006411666731886457,
+          "relative_scan_orientation_error_deg": 8.253217697233575,
+          "inter_scan_origin_distance_error_m": 0.002446441288435852
+        },
+        {
+          "source_frame": 48,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0054399185862470684,
+          "relative_scan_orientation_error_deg": 7.1553049706926695,
+          "inter_scan_origin_distance_error_m": 0.0010866198452549672
+        },
+        {
+          "source_frame": 49,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005378204742320481,
+          "relative_scan_orientation_error_deg": 6.512811916734085,
+          "inter_scan_origin_distance_error_m": 0.0012973838995800693
+        },
+        {
+          "source_frame": 50,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.004164715233752488,
+          "relative_scan_orientation_error_deg": 4.727909996681227,
+          "inter_scan_origin_distance_error_m": 0.0005488629459143995
+        },
+        {
+          "source_frame": 51,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0028267702029290773,
+          "relative_scan_orientation_error_deg": 4.425692168565928,
+          "inter_scan_origin_distance_error_m": 0.0002003069698779114
+        },
+        {
+          "source_frame": 52,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.001691231763466492,
+          "relative_scan_orientation_error_deg": 4.490395595509462,
+          "inter_scan_origin_distance_error_m": 0.00013742663508284347
+        },
+        {
+          "source_frame": 53,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0018213701022384951,
+          "relative_scan_orientation_error_deg": 4.927410771937766,
+          "inter_scan_origin_distance_error_m": 0.00028391920701733436
+        },
+        {
+          "source_frame": 54,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.001764022033300225,
+          "relative_scan_orientation_error_deg": 4.548493623408284,
+          "inter_scan_origin_distance_error_m": 3.269641192360506e-05
+        },
+        {
+          "source_frame": 55,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0019512437842236186,
+          "relative_scan_orientation_error_deg": 4.053543573282861,
+          "inter_scan_origin_distance_error_m": 0.0008700342317078252
+        },
+        {
+          "source_frame": 56,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0015200622400844011,
+          "relative_scan_orientation_error_deg": 3.741843976515923,
+          "inter_scan_origin_distance_error_m": 9.308125487562935e-05
+        },
+        {
+          "source_frame": 57,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0038199817856917105,
+          "relative_scan_orientation_error_deg": 2.9273230004007855,
+          "inter_scan_origin_distance_error_m": 0.002831018041735578
+        },
+        {
+          "source_frame": 58,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0020815397980958874,
+          "relative_scan_orientation_error_deg": 2.851336398022222,
+          "inter_scan_origin_distance_error_m": 0.002065478534929187
+        },
+        {
+          "source_frame": 59,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.008581893493807965,
+          "relative_scan_orientation_error_deg": 4.0283133157822615,
+          "inter_scan_origin_distance_error_m": 0.007169404552429204
+        },
+        {
+          "source_frame": 60,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0078941593941521,
+          "relative_scan_orientation_error_deg": 3.18783284043,
+          "inter_scan_origin_distance_error_m": 0.005365253750482843
+        },
+        {
+          "source_frame": 61,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.010743417773078561,
+          "relative_scan_orientation_error_deg": 1.7042182026255666,
+          "inter_scan_origin_distance_error_m": 0.009525147495296163
+        },
+        {
+          "source_frame": 62,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0018746893192581042,
+          "relative_scan_orientation_error_deg": 3.629225286896654,
+          "inter_scan_origin_distance_error_m": 0.0013076703867497402
+        },
+        {
+          "source_frame": 63,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.012295030505162974,
+          "relative_scan_orientation_error_deg": 4.211297936331481,
+          "inter_scan_origin_distance_error_m": 0.00459076537228606
+        },
+        {
+          "source_frame": 64,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.00492534051785902,
+          "relative_scan_orientation_error_deg": 4.19163051972595,
+          "inter_scan_origin_distance_error_m": 0.001982020049051264
+        },
+        {
+          "source_frame": 65,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0158076976234649,
+          "relative_scan_orientation_error_deg": 2.8243204261695944,
+          "inter_scan_origin_distance_error_m": 0.008905364203136312
+        },
+        {
+          "source_frame": 66,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.004433801447453404,
+          "relative_scan_orientation_error_deg": 1.9160363426099105,
+          "inter_scan_origin_distance_error_m": 0.003050510127649675
+        },
+        {
+          "source_frame": 67,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.014816652051000023,
+          "relative_scan_orientation_error_deg": 2.5761423793132194,
+          "inter_scan_origin_distance_error_m": 0.009966087227908954
+        },
+        {
+          "source_frame": 68,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.003751919575073816,
+          "relative_scan_orientation_error_deg": 2.6675211937686503,
+          "inter_scan_origin_distance_error_m": 0.002673844957342214
+        },
+        {
+          "source_frame": 69,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.013174104053243988,
+          "relative_scan_orientation_error_deg": 2.439380479550569,
+          "inter_scan_origin_distance_error_m": 0.008335744996358418
+        },
+        {
+          "source_frame": 70,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.00521742271901577,
+          "relative_scan_orientation_error_deg": 1.1323880801096655,
+          "inter_scan_origin_distance_error_m": 0.00268234084099947
+        },
+        {
+          "source_frame": 71,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.010457207476878583,
+          "relative_scan_orientation_error_deg": 3.995785384783217,
+          "inter_scan_origin_distance_error_m": 0.006152780083277687
+        },
+        {
+          "source_frame": 72,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.002507432571285751,
+          "relative_scan_orientation_error_deg": 3.9197578619601634,
+          "inter_scan_origin_distance_error_m": 0.0003623292020775437
+        },
+        {
+          "source_frame": 73,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.004426058609480145,
+          "relative_scan_orientation_error_deg": 4.362383401375343,
+          "inter_scan_origin_distance_error_m": 0.001075529992257851
+        },
+        {
+          "source_frame": 74,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0019286603050912372,
+          "relative_scan_orientation_error_deg": 3.684626195482386,
+          "inter_scan_origin_distance_error_m": 0.0015334110089313402
+        },
+        {
+          "source_frame": 75,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005363732203593684,
+          "relative_scan_orientation_error_deg": 3.6032276307004034,
+          "inter_scan_origin_distance_error_m": 0.0019895930962357533
+        },
+        {
+          "source_frame": 76,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.003172895778981041,
+          "relative_scan_orientation_error_deg": 4.174667671327936,
+          "inter_scan_origin_distance_error_m": 0.0030347339222699943
+        },
+        {
+          "source_frame": 77,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.003228248362802601,
+          "relative_scan_orientation_error_deg": 3.902085178326796,
+          "inter_scan_origin_distance_error_m": 0.0031734064788102034
+        },
+        {
+          "source_frame": 78,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005193151862091681,
+          "relative_scan_orientation_error_deg": 3.7884429332608365,
+          "inter_scan_origin_distance_error_m": 0.0034086676039961628
+        },
+        {
+          "source_frame": 79,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005607376625454472,
+          "relative_scan_orientation_error_deg": 3.7999648139213873,
+          "inter_scan_origin_distance_error_m": 0.0045017978533134495
+        },
+        {
+          "source_frame": 80,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.006932833789230978,
+          "relative_scan_orientation_error_deg": 3.365722027195532,
+          "inter_scan_origin_distance_error_m": 0.0033865401229469794
+        },
+        {
+          "source_frame": 81,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005948964739932148,
+          "relative_scan_orientation_error_deg": 3.671285355147617,
+          "inter_scan_origin_distance_error_m": 0.0030049769624324596
+        },
+        {
+          "source_frame": 82,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.007363277677657199,
+          "relative_scan_orientation_error_deg": 3.9829383701998857,
+          "inter_scan_origin_distance_error_m": 0.003066578630378125
+        },
+        {
+          "source_frame": 83,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.00705247248198684,
+          "relative_scan_orientation_error_deg": 3.8370821591232853,
+          "inter_scan_origin_distance_error_m": 0.002593758149275316
+        },
+        {
+          "source_frame": 84,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.008052969309481227,
+          "relative_scan_orientation_error_deg": 6.111658645223407,
+          "inter_scan_origin_distance_error_m": 0.0026111168411980246
+        },
+        {
+          "source_frame": 85,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.007669025938316679,
+          "relative_scan_orientation_error_deg": 5.441039535809183,
+          "inter_scan_origin_distance_error_m": 0.003414238909716427
+        },
+        {
+          "source_frame": 86,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.006403481464811396,
+          "relative_scan_orientation_error_deg": 5.4371716973675905,
+          "inter_scan_origin_distance_error_m": 0.003479809720724425
+        },
+        {
+          "source_frame": 87,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005637461295431857,
+          "relative_scan_orientation_error_deg": 5.157159115950408,
+          "inter_scan_origin_distance_error_m": 0.0032365389236880815
+        },
+        {
+          "source_frame": 88,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005007949328867182,
+          "relative_scan_orientation_error_deg": 5.092230917791806,
+          "inter_scan_origin_distance_error_m": 0.003056600660354847
+        },
+        {
+          "source_frame": 89,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.004613619266390523,
+          "relative_scan_orientation_error_deg": 4.637975017453565,
+          "inter_scan_origin_distance_error_m": 0.0037166128681120347
+        },
+        {
+          "source_frame": 90,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0044586845909017035,
+          "relative_scan_orientation_error_deg": 4.931114384103705,
+          "inter_scan_origin_distance_error_m": 0.003360596688817108
+        },
+        {
+          "source_frame": 91,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005186836958153101,
+          "relative_scan_orientation_error_deg": 4.900197042067186,
+          "inter_scan_origin_distance_error_m": 0.004038137907447198
+        },
+        {
+          "source_frame": 92,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0062391111427982735,
+          "relative_scan_orientation_error_deg": 5.055941057843305,
+          "inter_scan_origin_distance_error_m": 0.003516663346241622
+        },
+        {
+          "source_frame": 93,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0047285766319060465,
+          "relative_scan_orientation_error_deg": 5.6956720376617325,
+          "inter_scan_origin_distance_error_m": 0.0036753576847850244
+        },
+        {
+          "source_frame": 94,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.006971709529583429,
+          "relative_scan_orientation_error_deg": 4.039339000511227,
+          "inter_scan_origin_distance_error_m": 0.004516114805269977
+        },
+        {
+          "source_frame": 95,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.007242208337858762,
+          "relative_scan_orientation_error_deg": 4.298130664151026,
+          "inter_scan_origin_distance_error_m": 0.0039682086513894155
+        },
+        {
+          "source_frame": 96,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.00660176036575645,
+          "relative_scan_orientation_error_deg": 3.904717996005678,
+          "inter_scan_origin_distance_error_m": 0.004225032785870664
+        },
+        {
+          "source_frame": 97,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.006608704477510666,
+          "relative_scan_orientation_error_deg": 3.9781131159228575,
+          "inter_scan_origin_distance_error_m": 0.003582800501379685
+        },
+        {
+          "source_frame": 98,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.007561624806687058,
+          "relative_scan_orientation_error_deg": 4.351303758579403,
+          "inter_scan_origin_distance_error_m": 0.0039992455001105764
+        },
+        {
+          "source_frame": 99,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.006183709560298861,
+          "relative_scan_orientation_error_deg": 3.902585235984472,
+          "inter_scan_origin_distance_error_m": 0.0038764560380113167
+        },
+        {
+          "source_frame": 100,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005860243410067446,
+          "relative_scan_orientation_error_deg": 3.777833761580042,
+          "inter_scan_origin_distance_error_m": 0.003936296395904648
+        },
+        {
+          "source_frame": 101,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005900081617077711,
+          "relative_scan_orientation_error_deg": 3.6942913079976876,
+          "inter_scan_origin_distance_error_m": 0.003686383921128522
+        },
+        {
+          "source_frame": 102,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0056143902860107215,
+          "relative_scan_orientation_error_deg": 3.5594591376094855,
+          "inter_scan_origin_distance_error_m": 0.0036003925975907625
+        },
+        {
+          "source_frame": 103,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.00585761966370464,
+          "relative_scan_orientation_error_deg": 3.612982938789494,
+          "inter_scan_origin_distance_error_m": 0.003202608936921203
+        },
+        {
+          "source_frame": 104,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005170889477377375,
+          "relative_scan_orientation_error_deg": 3.6526340278315055,
+          "inter_scan_origin_distance_error_m": 0.0035640969215833818
+        },
+        {
+          "source_frame": 105,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.006102345472758789,
+          "relative_scan_orientation_error_deg": 4.046324328671461,
+          "inter_scan_origin_distance_error_m": 0.0034227316071173963
+        },
+        {
+          "source_frame": 106,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.006516987943162655,
+          "relative_scan_orientation_error_deg": 4.102877589026527,
+          "inter_scan_origin_distance_error_m": 0.0032464373170758287
+        },
+        {
+          "source_frame": 107,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.006595111852671071,
+          "relative_scan_orientation_error_deg": 4.182922951248478,
+          "inter_scan_origin_distance_error_m": 0.0036034592819255695
+        },
+        {
+          "source_frame": 108,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0072405984402540745,
+          "relative_scan_orientation_error_deg": 5.002139255824388,
+          "inter_scan_origin_distance_error_m": 0.0037697099839832937
+        },
+        {
+          "source_frame": 109,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.007428229035683752,
+          "relative_scan_orientation_error_deg": 5.169748266832949,
+          "inter_scan_origin_distance_error_m": 0.0034984493850925003
+        },
+        {
+          "source_frame": 110,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.006147821362169392,
+          "relative_scan_orientation_error_deg": 4.467584457839714,
+          "inter_scan_origin_distance_error_m": 0.0037645939604857015
+        },
+        {
+          "source_frame": 111,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.007462136968467652,
+          "relative_scan_orientation_error_deg": 4.168184455461753,
+          "inter_scan_origin_distance_error_m": 0.0036812678256048503
+        },
+        {
+          "source_frame": 112,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.007677743603188418,
+          "relative_scan_orientation_error_deg": 4.3091366771276265,
+          "inter_scan_origin_distance_error_m": 0.003118458057931428
+        },
+        {
+          "source_frame": 113,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.008313342155969777,
+          "relative_scan_orientation_error_deg": 4.055339543854846,
+          "inter_scan_origin_distance_error_m": 0.002901418572327369
+        },
+        {
+          "source_frame": 114,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.00718389437403241,
+          "relative_scan_orientation_error_deg": 3.0433260312306314,
+          "inter_scan_origin_distance_error_m": 0.00026682598732824525
+        },
+        {
+          "source_frame": 115,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005661132943990436,
+          "relative_scan_orientation_error_deg": 3.5217409908461503,
+          "inter_scan_origin_distance_error_m": 0.0016430306107163561
+        },
+        {
+          "source_frame": 116,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.006836783674900751,
+          "relative_scan_orientation_error_deg": 4.039880994566774,
+          "inter_scan_origin_distance_error_m": 0.002042379641400416
+        },
+        {
+          "source_frame": 117,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.009453934255737395,
+          "relative_scan_orientation_error_deg": 4.242352886525144,
+          "inter_scan_origin_distance_error_m": 0.001816676141811191
+        },
+        {
+          "source_frame": 118,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.008837792146727905,
+          "relative_scan_orientation_error_deg": 4.373295923165203,
+          "inter_scan_origin_distance_error_m": 9.379859107205846e-06
+        },
+        {
+          "source_frame": 119,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0053130376735554515,
+          "relative_scan_orientation_error_deg": 3.311459081207159,
+          "inter_scan_origin_distance_error_m": 0.0023686936746769582
+        },
+        {
+          "source_frame": 120,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005936589527951867,
+          "relative_scan_orientation_error_deg": 2.6119779550116338,
+          "inter_scan_origin_distance_error_m": 0.002264158946917505
+        },
+        {
+          "source_frame": 121,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.007203355259219696,
+          "relative_scan_orientation_error_deg": 3.0836480795735537,
+          "inter_scan_origin_distance_error_m": 0.005079101004704767
+        },
+        {
+          "source_frame": 122,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.00917080878758046,
+          "relative_scan_orientation_error_deg": 3.258284671861957,
+          "inter_scan_origin_distance_error_m": 0.008333740372885423
+        },
+        {
+          "source_frame": 123,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.007268958731665013,
+          "relative_scan_orientation_error_deg": 3.4239301925805643,
+          "inter_scan_origin_distance_error_m": 0.007056426557880524
+        },
+        {
+          "source_frame": 124,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.018038231948009235,
+          "relative_scan_orientation_error_deg": 4.840564186615231,
+          "inter_scan_origin_distance_error_m": 0.011161763871997243
+        },
+        {
+          "source_frame": 125,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.007654031880980733,
+          "relative_scan_orientation_error_deg": 4.6111830446356645,
+          "inter_scan_origin_distance_error_m": 0.006509644672277604
+        },
+        {
+          "source_frame": 126,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.01213102779105241,
+          "relative_scan_orientation_error_deg": 4.699449378901938,
+          "inter_scan_origin_distance_error_m": 0.0033946183275039288
+        },
+        {
+          "source_frame": 127,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.009045520617123796,
+          "relative_scan_orientation_error_deg": 5.467025596260008,
+          "inter_scan_origin_distance_error_m": 0.00010788432852198993
+        },
+        {
+          "source_frame": 128,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005895982622591587,
+          "relative_scan_orientation_error_deg": 5.0496524148850135,
+          "inter_scan_origin_distance_error_m": 0.0034021055329131467
+        },
+        {
+          "source_frame": 129,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.004969218833650201,
+          "relative_scan_orientation_error_deg": 4.44133486728631,
+          "inter_scan_origin_distance_error_m": 0.0014995437100746578
+        },
+        {
+          "source_frame": 130,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005090347984592278,
+          "relative_scan_orientation_error_deg": 4.743303931465013,
+          "inter_scan_origin_distance_error_m": 0.001730586958624658
+        },
+        {
+          "source_frame": 131,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.013028152741562594,
+          "relative_scan_orientation_error_deg": 3.655749241634693,
+          "inter_scan_origin_distance_error_m": 0.0012284175893859106
+        },
+        {
+          "source_frame": 132,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.006704065453204249,
+          "relative_scan_orientation_error_deg": 4.128059359137785,
+          "inter_scan_origin_distance_error_m": 0.00439352474281135
+        },
+        {
+          "source_frame": 133,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.019169391347946745,
+          "relative_scan_orientation_error_deg": 3.4089057068991453,
+          "inter_scan_origin_distance_error_m": 0.005407703949092235
+        },
+        {
+          "source_frame": 134,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.010679273396007095,
+          "relative_scan_orientation_error_deg": 3.0894048339606726,
+          "inter_scan_origin_distance_error_m": 0.006199720975101686
+        },
+        {
+          "source_frame": 135,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.015279382711744371,
+          "relative_scan_orientation_error_deg": 2.469605841264676,
+          "inter_scan_origin_distance_error_m": 0.01176599060009681
+        },
+        {
+          "source_frame": 136,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.008005750858035452,
+          "relative_scan_orientation_error_deg": 2.4594912959720094,
+          "inter_scan_origin_distance_error_m": 0.006287020659733855
+        },
+        {
+          "source_frame": 137,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.013355263258827181,
+          "relative_scan_orientation_error_deg": 3.7527227355457713,
+          "inter_scan_origin_distance_error_m": 0.012063243753882485
+        },
+        {
+          "source_frame": 138,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.009213004651721679,
+          "relative_scan_orientation_error_deg": 4.309286692037532,
+          "inter_scan_origin_distance_error_m": 0.007476626145467763
+        },
+        {
+          "source_frame": 139,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.009826338800704026,
+          "relative_scan_orientation_error_deg": 4.191504747133552,
+          "inter_scan_origin_distance_error_m": 0.006226703382945453
+        },
+        {
+          "source_frame": 140,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0035898277040741504,
+          "relative_scan_orientation_error_deg": 4.956829867210698,
+          "inter_scan_origin_distance_error_m": 0.003284531405912866
+        },
+        {
+          "source_frame": 141,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.011062508532427575,
+          "relative_scan_orientation_error_deg": 4.151551474619355,
+          "inter_scan_origin_distance_error_m": 0.004502380706211728
+        },
+        {
+          "source_frame": 142,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0055887687710448304,
+          "relative_scan_orientation_error_deg": 3.8928473588011996,
+          "inter_scan_origin_distance_error_m": 0.002377278219122536
+        },
+        {
+          "source_frame": 143,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.013942834262953051,
+          "relative_scan_orientation_error_deg": 3.7791324790566927,
+          "inter_scan_origin_distance_error_m": 0.009391706529138455
+        },
+        {
+          "source_frame": 144,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.007369151822152407,
+          "relative_scan_orientation_error_deg": 3.740640587375793,
+          "inter_scan_origin_distance_error_m": 0.0026470713076078844
+        },
+        {
+          "source_frame": 145,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.01334154018235346,
+          "relative_scan_orientation_error_deg": 1.5570010037665343,
+          "inter_scan_origin_distance_error_m": 0.00930746132794863
+        },
+        {
+          "source_frame": 146,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0017875080648104716,
+          "relative_scan_orientation_error_deg": 2.499015876445558,
+          "inter_scan_origin_distance_error_m": 0.0008692169967370877
+        },
+        {
+          "source_frame": 147,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.01628158431034447,
+          "relative_scan_orientation_error_deg": 2.770549121866283,
+          "inter_scan_origin_distance_error_m": 0.002548346305570881
+        },
+        {
+          "source_frame": 148,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.013803859307090011,
+          "relative_scan_orientation_error_deg": 3.316703988380435,
+          "inter_scan_origin_distance_error_m": 0.0013680492364736008
+        },
+        {
+          "source_frame": 149,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.02080840159912462,
+          "relative_scan_orientation_error_deg": 3.5110847431777072,
+          "inter_scan_origin_distance_error_m": 0.005197588455361446
+        },
+        {
+          "source_frame": 150,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.014487704373211608,
+          "relative_scan_orientation_error_deg": 3.51192902238401,
+          "inter_scan_origin_distance_error_m": 0.004968766977546779
+        },
+        {
+          "source_frame": 151,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.019985987230856917,
+          "relative_scan_orientation_error_deg": 3.694390112600962,
+          "inter_scan_origin_distance_error_m": 0.01182709611174848
+        },
+        {
+          "source_frame": 152,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0153630853149329,
+          "relative_scan_orientation_error_deg": 4.219573984028472,
+          "inter_scan_origin_distance_error_m": 0.008668809726203042
+        },
+        {
+          "source_frame": 153,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.019176026253994123,
+          "relative_scan_orientation_error_deg": 4.5489879598869765,
+          "inter_scan_origin_distance_error_m": 0.015192985619301713
+        },
+        {
+          "source_frame": 154,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.010749435814094035,
+          "relative_scan_orientation_error_deg": 3.86029674930682,
+          "inter_scan_origin_distance_error_m": 0.009372112198076765
+        },
+        {
+          "source_frame": 155,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.011649071361762678,
+          "relative_scan_orientation_error_deg": 4.265589709387125,
+          "inter_scan_origin_distance_error_m": 0.008249665629262881
+        },
+        {
+          "source_frame": 156,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.00613224834306158,
+          "relative_scan_orientation_error_deg": 4.251056944112849,
+          "inter_scan_origin_distance_error_m": 0.003560938990515017
+        },
+        {
+          "source_frame": 157,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.00788137204794809,
+          "relative_scan_orientation_error_deg": 3.6179983223072827,
+          "inter_scan_origin_distance_error_m": 0.0017116752318080963
+        },
+        {
+          "source_frame": 158,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.02036973921593126,
+          "relative_scan_orientation_error_deg": 3.5828875939276625,
+          "inter_scan_origin_distance_error_m": 0.005943417389801087
+        },
+        {
+          "source_frame": 159,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0395542177026529,
+          "relative_scan_orientation_error_deg": 4.9924344274259145,
+          "inter_scan_origin_distance_error_m": 0.020718660966735913
+        },
+        {
+          "source_frame": 160,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.05645162944226589,
+          "relative_scan_orientation_error_deg": 6.662307328529351,
+          "inter_scan_origin_distance_error_m": 0.03510805215158819
+        },
+        {
+          "source_frame": 161,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.06293631628340557,
+          "relative_scan_orientation_error_deg": 7.934401055935263,
+          "inter_scan_origin_distance_error_m": 0.046025853909522685
+        },
+        {
+          "source_frame": 162,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.011460938050808087,
+          "relative_scan_orientation_error_deg": 2.9533701702688178,
+          "inter_scan_origin_distance_error_m": 0.0010802105888380042
+        },
+        {
+          "source_frame": 163,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.02020348811884189,
+          "relative_scan_orientation_error_deg": 3.7706438391571333,
+          "inter_scan_origin_distance_error_m": 0.0031136412623508636
+        },
+        {
+          "source_frame": 164,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.014776776262691487,
+          "relative_scan_orientation_error_deg": 3.4910751001039717,
+          "inter_scan_origin_distance_error_m": 0.00023608748166947802
+        },
+        {
+          "source_frame": 165,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.017705161738144664,
+          "relative_scan_orientation_error_deg": 2.826413212544276,
+          "inter_scan_origin_distance_error_m": 0.0015124214244581213
+        },
+        {
+          "source_frame": 166,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.014799848115350425,
+          "relative_scan_orientation_error_deg": 2.453013971299732,
+          "inter_scan_origin_distance_error_m": 0.004182853347511062
+        },
+        {
+          "source_frame": 167,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.01957075262816283,
+          "relative_scan_orientation_error_deg": 2.6809111683678997,
+          "inter_scan_origin_distance_error_m": 0.010585899090206352
+        },
+        {
+          "source_frame": 168,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.013942343962635082,
+          "relative_scan_orientation_error_deg": 2.8041146625378737,
+          "inter_scan_origin_distance_error_m": 0.007265126538867295
+        },
+        {
+          "source_frame": 169,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.017651243564142275,
+          "relative_scan_orientation_error_deg": 3.7070319521802584,
+          "inter_scan_origin_distance_error_m": 0.014645221928928864
+        },
+        {
+          "source_frame": 170,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.011824999241987526,
+          "relative_scan_orientation_error_deg": 3.256671550861749,
+          "inter_scan_origin_distance_error_m": 0.010590581438257918
+        },
+        {
+          "source_frame": 171,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.009900936082919642,
+          "relative_scan_orientation_error_deg": 3.6584118248462256,
+          "inter_scan_origin_distance_error_m": 0.007172544967300298
+        },
+        {
+          "source_frame": 172,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.007780902209022008,
+          "relative_scan_orientation_error_deg": 4.188863624429755,
+          "inter_scan_origin_distance_error_m": 0.007151915532478403
+        },
+        {
+          "source_frame": 173,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005975538757912957,
+          "relative_scan_orientation_error_deg": 4.628613618828334,
+          "inter_scan_origin_distance_error_m": 0.005310545568959879
+        },
+        {
+          "source_frame": 174,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.006608359973734766,
+          "relative_scan_orientation_error_deg": 4.484210288983598,
+          "inter_scan_origin_distance_error_m": 0.0034237761499582575
+        },
+        {
+          "source_frame": 175,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.008397762958556642,
+          "relative_scan_orientation_error_deg": 4.141573969250949,
+          "inter_scan_origin_distance_error_m": 0.0035844514440486197
+        },
+        {
+          "source_frame": 176,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.002110635551010214,
+          "relative_scan_orientation_error_deg": 4.159970292937528,
+          "inter_scan_origin_distance_error_m": 0.0008724142378189192
+        },
+        {
+          "source_frame": 177,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.010908523618325278,
+          "relative_scan_orientation_error_deg": 4.249821732648887,
+          "inter_scan_origin_distance_error_m": 0.005391466855883542
+        },
+        {
+          "source_frame": 178,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.009647462238154863,
+          "relative_scan_orientation_error_deg": 4.541568267943433,
+          "inter_scan_origin_distance_error_m": 0.00043027736783862736
+        },
+        {
+          "source_frame": 179,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.007746175568410211,
+          "relative_scan_orientation_error_deg": 4.37444712503818,
+          "inter_scan_origin_distance_error_m": 0.0012024261271911807
+        },
+        {
+          "source_frame": 180,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.011146336487483418,
+          "relative_scan_orientation_error_deg": 3.8974903791351307,
+          "inter_scan_origin_distance_error_m": 0.0001925773124843433
+        },
+        {
+          "source_frame": 181,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.009974087256621402,
+          "relative_scan_orientation_error_deg": 3.474722372910568,
+          "inter_scan_origin_distance_error_m": 0.002915595809711402
+        },
+        {
+          "source_frame": 182,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.010525019965473772,
+          "relative_scan_orientation_error_deg": 2.245485255979316,
+          "inter_scan_origin_distance_error_m": 0.004529309235791035
+        },
+        {
+          "source_frame": 183,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.008144787754395918,
+          "relative_scan_orientation_error_deg": 2.6108412011759916,
+          "inter_scan_origin_distance_error_m": 0.004280831426325515
+        },
+        {
+          "source_frame": 184,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.011395922626523496,
+          "relative_scan_orientation_error_deg": 2.61753134144942,
+          "inter_scan_origin_distance_error_m": 0.00917802901909448
+        },
+        {
+          "source_frame": 185,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.013230337210816744,
+          "relative_scan_orientation_error_deg": 3.175840236344422,
+          "inter_scan_origin_distance_error_m": 0.0024721638342182772
+        },
+        {
+          "source_frame": 186,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.01659996604175437,
+          "relative_scan_orientation_error_deg": 3.121974786005848,
+          "inter_scan_origin_distance_error_m": 0.01008501132364803
+        },
+        {
+          "source_frame": 187,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0105307375543693,
+          "relative_scan_orientation_error_deg": 3.2804802433756155,
+          "inter_scan_origin_distance_error_m": 0.007602165128692828
+        },
+        {
+          "source_frame": 188,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.010921127701620605,
+          "relative_scan_orientation_error_deg": 3.5448209064450777,
+          "inter_scan_origin_distance_error_m": 0.00915061811170842
+        },
+        {
+          "source_frame": 189,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.011388231567231316,
+          "relative_scan_orientation_error_deg": 3.6846100507973016,
+          "inter_scan_origin_distance_error_m": 0.008803716560804309
+        },
+        {
+          "source_frame": 190,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.009825869918393734,
+          "relative_scan_orientation_error_deg": 2.836765127124646,
+          "inter_scan_origin_distance_error_m": 0.008872789842634177
+        },
+        {
+          "source_frame": 191,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.007804117196768609,
+          "relative_scan_orientation_error_deg": 2.8311262849674765,
+          "inter_scan_origin_distance_error_m": 0.0057008357447622116
+        },
+        {
+          "source_frame": 192,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005614855622010795,
+          "relative_scan_orientation_error_deg": 2.849010525324114,
+          "inter_scan_origin_distance_error_m": 0.005068130784019631
+        },
+        {
+          "source_frame": 193,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.00677412033062687,
+          "relative_scan_orientation_error_deg": 3.5350281400128605,
+          "inter_scan_origin_distance_error_m": 0.005804095862364134
+        },
+        {
+          "source_frame": 194,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005999444386413556,
+          "relative_scan_orientation_error_deg": 3.1848099515916646,
+          "inter_scan_origin_distance_error_m": 0.005580358527870588
+        },
+        {
+          "source_frame": 195,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005803439916524956,
+          "relative_scan_orientation_error_deg": 2.2777669147626596,
+          "inter_scan_origin_distance_error_m": 0.005047335335415903
+        },
+        {
+          "source_frame": 196,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.006589015627494418,
+          "relative_scan_orientation_error_deg": 1.9833427107175798,
+          "inter_scan_origin_distance_error_m": 0.005253949724844276
+        },
+        {
+          "source_frame": 197,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0061522741078968764,
+          "relative_scan_orientation_error_deg": 2.7702438086058767,
+          "inter_scan_origin_distance_error_m": 0.005282253899076439
+        },
+        {
+          "source_frame": 198,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.008840552127304169,
+          "relative_scan_orientation_error_deg": 2.862354466815263,
+          "inter_scan_origin_distance_error_m": 0.005369049852363639
+        },
+        {
+          "source_frame": 199,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.007847910000950866,
+          "relative_scan_orientation_error_deg": 3.3107822547449404,
+          "inter_scan_origin_distance_error_m": 0.006027489635732297
+        },
+        {
+          "source_frame": 200,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.006922832750492347,
+          "relative_scan_orientation_error_deg": 2.6722890425833072,
+          "inter_scan_origin_distance_error_m": 0.005086211349922765
+        },
+        {
+          "source_frame": 201,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0066478056983455165,
+          "relative_scan_orientation_error_deg": 2.8179003514167733,
+          "inter_scan_origin_distance_error_m": 0.00581209899208146
+        },
+        {
+          "source_frame": 202,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.007948115835769735,
+          "relative_scan_orientation_error_deg": 2.9798500006156394,
+          "inter_scan_origin_distance_error_m": 0.005763441472432129
+        },
+        {
+          "source_frame": 203,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0071315471529021035,
+          "relative_scan_orientation_error_deg": 2.89297369500526,
+          "inter_scan_origin_distance_error_m": 0.0054234987351949315
+        },
+        {
+          "source_frame": 204,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.00861369935381645,
+          "relative_scan_orientation_error_deg": 3.364235474836044,
+          "inter_scan_origin_distance_error_m": 0.006030796640322078
+        },
+        {
+          "source_frame": 205,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.007815184458862687,
+          "relative_scan_orientation_error_deg": 3.5817727656278273,
+          "inter_scan_origin_distance_error_m": 0.006291334202603471
+        },
+        {
+          "source_frame": 206,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.009077739397145816,
+          "relative_scan_orientation_error_deg": 3.3717746887461293,
+          "inter_scan_origin_distance_error_m": 0.006954883698840453
+        },
+        {
+          "source_frame": 207,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0084767142502205,
+          "relative_scan_orientation_error_deg": 3.257184857875675,
+          "inter_scan_origin_distance_error_m": 0.005961184355783022
+        },
+        {
+          "source_frame": 208,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.009660119127179484,
+          "relative_scan_orientation_error_deg": 3.3669863850687882,
+          "inter_scan_origin_distance_error_m": 0.006013108551565227
+        },
+        {
+          "source_frame": 209,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.00969800143124516,
+          "relative_scan_orientation_error_deg": 3.312759144177011,
+          "inter_scan_origin_distance_error_m": 0.006152549319571932
+        },
+        {
+          "source_frame": 210,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.009439162416734596,
+          "relative_scan_orientation_error_deg": 3.3547878045852144,
+          "inter_scan_origin_distance_error_m": 0.005726527749562005
+        },
+        {
+          "source_frame": 211,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.010057548765073063,
+          "relative_scan_orientation_error_deg": 3.3478261687211153,
+          "inter_scan_origin_distance_error_m": 0.005770953615893526
+        },
+        {
+          "source_frame": 212,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0084865295133207,
+          "relative_scan_orientation_error_deg": 2.957186084941457,
+          "inter_scan_origin_distance_error_m": 0.005724672811854958
+        },
+        {
+          "source_frame": 213,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.00708320957052345,
+          "relative_scan_orientation_error_deg": 2.570683689178469,
+          "inter_scan_origin_distance_error_m": 0.005701167033464738
+        },
+        {
+          "source_frame": 214,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.009881878465187538,
+          "relative_scan_orientation_error_deg": 3.0429112393102016,
+          "inter_scan_origin_distance_error_m": 0.005480825886373997
+        },
+        {
+          "source_frame": 215,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.00805860172781657,
+          "relative_scan_orientation_error_deg": 2.960349385177445,
+          "inter_scan_origin_distance_error_m": 0.005624148484978109
+        },
+        {
+          "source_frame": 216,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.008037122914157618,
+          "relative_scan_orientation_error_deg": 2.854735034223489,
+          "inter_scan_origin_distance_error_m": 0.0056587203816630405
+        },
+        {
+          "source_frame": 217,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.009187838301135487,
+          "relative_scan_orientation_error_deg": 2.9441935006176085,
+          "inter_scan_origin_distance_error_m": 0.005341520028532942
+        },
+        {
+          "source_frame": 218,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.009618654058437705,
+          "relative_scan_orientation_error_deg": 3.15540991120134,
+          "inter_scan_origin_distance_error_m": 0.005897591221935616
+        },
+        {
+          "source_frame": 219,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.009946300518989159,
+          "relative_scan_orientation_error_deg": 3.4045818162977683,
+          "inter_scan_origin_distance_error_m": 0.005753544744467709
+        },
+        {
+          "source_frame": 220,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.010345044053702348,
+          "relative_scan_orientation_error_deg": 3.6815677088648924,
+          "inter_scan_origin_distance_error_m": 0.005697216868081945
+        },
+        {
+          "source_frame": 221,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.011593615104180645,
+          "relative_scan_orientation_error_deg": 3.8876181015298,
+          "inter_scan_origin_distance_error_m": 0.005405482974335296
+        },
+        {
+          "source_frame": 222,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.010860593393071863,
+          "relative_scan_orientation_error_deg": 3.7602497372475785,
+          "inter_scan_origin_distance_error_m": 0.0064127453709974525
+        },
+        {
+          "source_frame": 223,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.01020432838721725,
+          "relative_scan_orientation_error_deg": 3.667828694508603,
+          "inter_scan_origin_distance_error_m": 0.004573310083763105
+        },
+        {
+          "source_frame": 224,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.009998581941656417,
+          "relative_scan_orientation_error_deg": 3.8052634121521858,
+          "inter_scan_origin_distance_error_m": 0.0054611135940333955
+        },
+        {
+          "source_frame": 225,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.010304910432806602,
+          "relative_scan_orientation_error_deg": 3.7464806576203347,
+          "inter_scan_origin_distance_error_m": 0.005293188020016992
+        },
+        {
+          "source_frame": 226,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.010311553545441872,
+          "relative_scan_orientation_error_deg": 3.620088376291123,
+          "inter_scan_origin_distance_error_m": 0.0050357010155759885
+        },
+        {
+          "source_frame": 227,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.008245700146455487,
+          "relative_scan_orientation_error_deg": 3.413933849320795,
+          "inter_scan_origin_distance_error_m": 0.004974795899248874
+        },
+        {
+          "source_frame": 228,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0051342156610695916,
+          "relative_scan_orientation_error_deg": 2.9591558462434318,
+          "inter_scan_origin_distance_error_m": 0.0020745849975136177
+        },
+        {
+          "source_frame": 229,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0025316581619581,
+          "relative_scan_orientation_error_deg": 2.8466548490551067,
+          "inter_scan_origin_distance_error_m": 0.002022105020770548
+        },
+        {
+          "source_frame": 230,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.004136343806335493,
+          "relative_scan_orientation_error_deg": 2.9311141281372737,
+          "inter_scan_origin_distance_error_m": 0.002602176915896093
+        },
+        {
+          "source_frame": 231,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005561263323063851,
+          "relative_scan_orientation_error_deg": 3.022895687243406,
+          "inter_scan_origin_distance_error_m": 0.004956050358533914
+        },
+        {
+          "source_frame": 232,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.006085667562007841,
+          "relative_scan_orientation_error_deg": 3.4398287543239494,
+          "inter_scan_origin_distance_error_m": 0.00513555600663862
+        },
+        {
+          "source_frame": 233,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005001531549791882,
+          "relative_scan_orientation_error_deg": 3.810438721833412,
+          "inter_scan_origin_distance_error_m": 0.004762621001673961
+        },
+        {
+          "source_frame": 234,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005309733621050753,
+          "relative_scan_orientation_error_deg": 3.039662246970946,
+          "inter_scan_origin_distance_error_m": 0.004496865043141229
+        },
+        {
+          "source_frame": 235,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.00544460775906016,
+          "relative_scan_orientation_error_deg": 2.9759518940248317,
+          "inter_scan_origin_distance_error_m": 0.004384619143581958
+        },
+        {
+          "source_frame": 236,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005915492163560805,
+          "relative_scan_orientation_error_deg": 3.0828562400731,
+          "inter_scan_origin_distance_error_m": 0.004249068826242375
+        },
+        {
+          "source_frame": 237,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.006266716653514106,
+          "relative_scan_orientation_error_deg": 3.0390980122945668,
+          "inter_scan_origin_distance_error_m": 0.004095852478171735
+        },
+        {
+          "source_frame": 238,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0060400794928478965,
+          "relative_scan_orientation_error_deg": 3.0606983282352176,
+          "inter_scan_origin_distance_error_m": 0.003929891608094094
+        },
+        {
+          "source_frame": 239,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005697452169464624,
+          "relative_scan_orientation_error_deg": 2.893083349560105,
+          "inter_scan_origin_distance_error_m": 0.0039481492344982105
+        },
+        {
+          "source_frame": 240,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005215870941302206,
+          "relative_scan_orientation_error_deg": 2.6660789755561547,
+          "inter_scan_origin_distance_error_m": 0.004001320883827708
+        },
+        {
+          "source_frame": 241,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0052075450549200234,
+          "relative_scan_orientation_error_deg": 2.947853111593661,
+          "inter_scan_origin_distance_error_m": 0.003902642222058661
+        },
+        {
+          "source_frame": 242,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005144365713027026,
+          "relative_scan_orientation_error_deg": 2.3211619012011178,
+          "inter_scan_origin_distance_error_m": 0.0037596240465269104
+        },
+        {
+          "source_frame": 243,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005630436425108047,
+          "relative_scan_orientation_error_deg": 1.7646332631492347,
+          "inter_scan_origin_distance_error_m": 0.003547579044654303
+        },
+        {
+          "source_frame": 244,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.00513473304288947,
+          "relative_scan_orientation_error_deg": 2.0779267059360227,
+          "inter_scan_origin_distance_error_m": 0.003317631292847456
+        },
+        {
+          "source_frame": 245,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005329199148053045,
+          "relative_scan_orientation_error_deg": 2.2041753656332443,
+          "inter_scan_origin_distance_error_m": 0.0033321231242366967
+        },
+        {
+          "source_frame": 246,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005151310884328769,
+          "relative_scan_orientation_error_deg": 2.329060930201249,
+          "inter_scan_origin_distance_error_m": 0.0032904326293007324
+        },
+        {
+          "source_frame": 247,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005063921549326347,
+          "relative_scan_orientation_error_deg": 2.212313346652591,
+          "inter_scan_origin_distance_error_m": 0.0034858471882046604
+        },
+        {
+          "source_frame": 248,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005088006425155902,
+          "relative_scan_orientation_error_deg": 3.011788967007988,
+          "inter_scan_origin_distance_error_m": 0.0028966187656986886
+        },
+        {
+          "source_frame": 249,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.00580435521604298,
+          "relative_scan_orientation_error_deg": 2.9794659241495465,
+          "inter_scan_origin_distance_error_m": 0.00325597269000516
+        },
+        {
+          "source_frame": 250,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.012727008028139242,
+          "relative_scan_orientation_error_deg": 2.999916605418229,
+          "inter_scan_origin_distance_error_m": 0.00585026920670062
+        },
+        {
+          "source_frame": 251,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.008649725077839577,
+          "relative_scan_orientation_error_deg": 3.0553125757965915,
+          "inter_scan_origin_distance_error_m": 0.004129447601298908
+        },
+        {
+          "source_frame": 252,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.018198064372893785,
+          "relative_scan_orientation_error_deg": 3.174860465667528,
+          "inter_scan_origin_distance_error_m": 0.006868159908686777
+        },
+        {
+          "source_frame": 253,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.010893511041871995,
+          "relative_scan_orientation_error_deg": 3.450848338876033,
+          "inter_scan_origin_distance_error_m": 0.004842548239074318
+        },
+        {
+          "source_frame": 254,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.009204089328244715,
+          "relative_scan_orientation_error_deg": 4.338349876795329,
+          "inter_scan_origin_distance_error_m": 0.002763357439409808
+        },
+        {
+          "source_frame": 255,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.013071444099057576,
+          "relative_scan_orientation_error_deg": 2.4559495964728106,
+          "inter_scan_origin_distance_error_m": 0.0048188200467950415
+        },
+        {
+          "source_frame": 256,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.01026242412450988,
+          "relative_scan_orientation_error_deg": 4.474137225640335,
+          "inter_scan_origin_distance_error_m": 0.007147598251200787
+        },
+        {
+          "source_frame": 257,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.00969041131214077,
+          "relative_scan_orientation_error_deg": 1.9928086903137168,
+          "inter_scan_origin_distance_error_m": 0.0059673342651956895
+        },
+        {
+          "source_frame": 258,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.01570236304153096,
+          "relative_scan_orientation_error_deg": 4.532440515761865,
+          "inter_scan_origin_distance_error_m": 0.013154318894909756
+        },
+        {
+          "source_frame": 259,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.01038782287187727,
+          "relative_scan_orientation_error_deg": 3.4223926659079145,
+          "inter_scan_origin_distance_error_m": 0.00891382171588978
+        },
+        {
+          "source_frame": 260,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.016256849399961856,
+          "relative_scan_orientation_error_deg": 3.3736003569984803,
+          "inter_scan_origin_distance_error_m": 0.01435777390457521
+        },
+        {
+          "source_frame": 261,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.008600348904023869,
+          "relative_scan_orientation_error_deg": 2.3064994182107053,
+          "inter_scan_origin_distance_error_m": 0.007858646963577243
+        },
+        {
+          "source_frame": 262,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.014412523800566915,
+          "relative_scan_orientation_error_deg": 2.7563948451767857,
+          "inter_scan_origin_distance_error_m": 0.011391684673664387
+        },
+        {
+          "source_frame": 263,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.006051933271302517,
+          "relative_scan_orientation_error_deg": 1.9126816209787758,
+          "inter_scan_origin_distance_error_m": 0.004907803705680502
+        },
+        {
+          "source_frame": 264,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.013841666995200666,
+          "relative_scan_orientation_error_deg": 3.43941417150528,
+          "inter_scan_origin_distance_error_m": 0.007053102183957272
+        },
+        {
+          "source_frame": 265,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.006738379108168255,
+          "relative_scan_orientation_error_deg": 2.2298553832301766,
+          "inter_scan_origin_distance_error_m": 0.003593845524240191
+        },
+        {
+          "source_frame": 266,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.009403338952304746,
+          "relative_scan_orientation_error_deg": 2.2344644166976395,
+          "inter_scan_origin_distance_error_m": 0.006692361122228499
+        },
+        {
+          "source_frame": 267,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.00547718341640989,
+          "relative_scan_orientation_error_deg": 2.298966928468863,
+          "inter_scan_origin_distance_error_m": 0.004021217030407365
+        },
+        {
+          "source_frame": 268,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.008931378126159229,
+          "relative_scan_orientation_error_deg": 4.684356044775335,
+          "inter_scan_origin_distance_error_m": 0.006151593637880037
+        },
+        {
+          "source_frame": 269,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.008223021463996292,
+          "relative_scan_orientation_error_deg": 5.067950698555319,
+          "inter_scan_origin_distance_error_m": 0.0052456149140201885
+        },
+        {
+          "source_frame": 270,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.009905058056703777,
+          "relative_scan_orientation_error_deg": 6.398274173666724,
+          "inter_scan_origin_distance_error_m": 0.004288180170927858
+        },
+        {
+          "source_frame": 271,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.010227046488950097,
+          "relative_scan_orientation_error_deg": 6.8620829761739905,
+          "inter_scan_origin_distance_error_m": 0.00216009262029751
+        },
+        {
+          "source_frame": 272,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.011161831791435987,
+          "relative_scan_orientation_error_deg": 7.188316498167158,
+          "inter_scan_origin_distance_error_m": 0.0018160465367216133
+        },
+        {
+          "source_frame": 273,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.00590432686547137,
+          "relative_scan_orientation_error_deg": 5.45177538978221,
+          "inter_scan_origin_distance_error_m": 0.00038370344441736315
+        },
+        {
+          "source_frame": 274,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.004630500811772534,
+          "relative_scan_orientation_error_deg": 4.597953528224048,
+          "inter_scan_origin_distance_error_m": 0.0007992853932204669
+        },
+        {
+          "source_frame": 275,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0008388395823342705,
+          "relative_scan_orientation_error_deg": 1.5313861143459944,
+          "inter_scan_origin_distance_error_m": 0.00014399179929622252
+        },
+        {
+          "source_frame": 276,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.004069342620512287,
+          "relative_scan_orientation_error_deg": 4.3017695858431075,
+          "inter_scan_origin_distance_error_m": 0.0011243520159846254
+        },
+        {
+          "source_frame": 277,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.007740934342694379,
+          "relative_scan_orientation_error_deg": 3.344992741262633,
+          "inter_scan_origin_distance_error_m": 0.0010340312437462779
+        },
+        {
+          "source_frame": 278,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.004560278270394167,
+          "relative_scan_orientation_error_deg": 3.029201137058364,
+          "inter_scan_origin_distance_error_m": 0.0031495528872629436
+        },
+        {
+          "source_frame": 279,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.004175299111564056,
+          "relative_scan_orientation_error_deg": 2.3384306510256585,
+          "inter_scan_origin_distance_error_m": 0.0029493671439283914
+        },
+        {
+          "source_frame": 280,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.003419757425420255,
+          "relative_scan_orientation_error_deg": 2.023117266655993,
+          "inter_scan_origin_distance_error_m": 0.002416024952824919
+        },
+        {
+          "source_frame": 281,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.003176843615549266,
+          "relative_scan_orientation_error_deg": 2.1796910173676847,
+          "inter_scan_origin_distance_error_m": 0.002361685883040407
+        },
+        {
+          "source_frame": 282,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.003957582730502182,
+          "relative_scan_orientation_error_deg": 2.121063738362967,
+          "inter_scan_origin_distance_error_m": 0.0023687529797907364
+        },
+        {
+          "source_frame": 283,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0038564697130145918,
+          "relative_scan_orientation_error_deg": 2.3247563282693293,
+          "inter_scan_origin_distance_error_m": 0.0027578763096735986
+        },
+        {
+          "source_frame": 284,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0036624377628763738,
+          "relative_scan_orientation_error_deg": 1.83536549624163,
+          "inter_scan_origin_distance_error_m": 0.0025785724466817622
+        },
+        {
+          "source_frame": 285,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.003707441407481748,
+          "relative_scan_orientation_error_deg": 2.3183761662111713,
+          "inter_scan_origin_distance_error_m": 0.0025875241035811375
+        },
+        {
+          "source_frame": 286,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.00402871261491982,
+          "relative_scan_orientation_error_deg": 1.5740774226552696,
+          "inter_scan_origin_distance_error_m": 0.0026785819636816616
+        },
+        {
+          "source_frame": 287,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.004455563696527341,
+          "relative_scan_orientation_error_deg": 2.5129222170867624,
+          "inter_scan_origin_distance_error_m": 0.0032423021243275785
+        },
+        {
+          "source_frame": 288,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005186983273272525,
+          "relative_scan_orientation_error_deg": 3.071220416340491,
+          "inter_scan_origin_distance_error_m": 0.004335110633998669
+        },
+        {
+          "source_frame": 289,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005295683450750553,
+          "relative_scan_orientation_error_deg": 2.7071695954049213,
+          "inter_scan_origin_distance_error_m": 0.004203419256024861
+        },
+        {
+          "source_frame": 290,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.004911899222863485,
+          "relative_scan_orientation_error_deg": 2.892094751781514,
+          "inter_scan_origin_distance_error_m": 0.0038467383174398823
+        },
+        {
+          "source_frame": 291,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.003906689631627236,
+          "relative_scan_orientation_error_deg": 2.284167227796301,
+          "inter_scan_origin_distance_error_m": 0.00308937028758266
+        },
+        {
+          "source_frame": 292,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.004187587659840001,
+          "relative_scan_orientation_error_deg": 1.8144121253487364,
+          "inter_scan_origin_distance_error_m": 0.003530899070066415
+        },
+        {
+          "source_frame": 293,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.005533617052986178,
+          "relative_scan_orientation_error_deg": 2.984629528221046,
+          "inter_scan_origin_distance_error_m": 0.00455291941491541
+        },
+        {
+          "source_frame": 294,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.006258894976974592,
+          "relative_scan_orientation_error_deg": 2.549776971511037,
+          "inter_scan_origin_distance_error_m": 0.005256742404026141
+        },
+        {
+          "source_frame": 295,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.007798421758342181,
+          "relative_scan_orientation_error_deg": 3.296370755481428,
+          "inter_scan_origin_distance_error_m": 0.006367254996095424
+        },
+        {
+          "source_frame": 296,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.007947538025359926,
+          "relative_scan_orientation_error_deg": 2.926660686496124,
+          "inter_scan_origin_distance_error_m": 0.006421781165992069
+        },
+        {
+          "source_frame": 297,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.007843921530249614,
+          "relative_scan_orientation_error_deg": 2.8340412772048973,
+          "inter_scan_origin_distance_error_m": 0.006283329268820401
+        },
+        {
+          "source_frame": 298,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.00760273063397122,
+          "relative_scan_orientation_error_deg": 3.362891220926578,
+          "inter_scan_origin_distance_error_m": 0.0059918373123494795
+        },
+        {
+          "source_frame": 299,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.007501129533184249,
+          "relative_scan_orientation_error_deg": 1.960958843925209,
+          "inter_scan_origin_distance_error_m": 0.006154550023685514
+        },
+        {
+          "source_frame": 300,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.006662982149271752,
+          "relative_scan_orientation_error_deg": 2.133660937378262,
+          "inter_scan_origin_distance_error_m": 0.00552837558638012
+        },
+        {
+          "source_frame": 301,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.007049755400686623,
+          "relative_scan_orientation_error_deg": 2.4318872226709756,
+          "inter_scan_origin_distance_error_m": 0.005485467270416745
+        },
+        {
+          "source_frame": 302,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.007241864242375325,
+          "relative_scan_orientation_error_deg": 2.321671492592064,
+          "inter_scan_origin_distance_error_m": 0.005581212524764782
+        },
+        {
+          "source_frame": 303,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.006667851410895286,
+          "relative_scan_orientation_error_deg": 3.1346635168877297,
+          "inter_scan_origin_distance_error_m": 0.005233731347143673
+        },
+        {
+          "source_frame": 304,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.00590166876207027,
+          "relative_scan_orientation_error_deg": 3.8165374336233793,
+          "inter_scan_origin_distance_error_m": 0.0045493032493687455
+        },
+        {
+          "source_frame": 305,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.004789763758726987,
+          "relative_scan_orientation_error_deg": 4.424467369108533,
+          "inter_scan_origin_distance_error_m": 0.003967224888717924
+        },
+        {
+          "source_frame": 306,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.003645720765112659,
+          "relative_scan_orientation_error_deg": 5.610696044187055,
+          "inter_scan_origin_distance_error_m": 0.0030101514682224287
+        },
+        {
+          "source_frame": 307,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0023582139012807133,
+          "relative_scan_orientation_error_deg": 2.890325603576692,
+          "inter_scan_origin_distance_error_m": 0.0020779255815295203
+        },
+        {
+          "source_frame": 308,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0010851028079199674,
+          "relative_scan_orientation_error_deg": 3.369356986009227,
+          "inter_scan_origin_distance_error_m": 0.0010104164791178566
+        },
+        {
+          "source_frame": 309,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0017397570960446791,
+          "relative_scan_orientation_error_deg": 3.8561089694983,
+          "inter_scan_origin_distance_error_m": 0.0006423875541751514
+        },
+        {
+          "source_frame": 310,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0033708191555505552,
+          "relative_scan_orientation_error_deg": 4.324268384378698,
+          "inter_scan_origin_distance_error_m": 0.0018550163566849048
+        },
+        {
+          "source_frame": 311,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0021818102873193117,
+          "relative_scan_orientation_error_deg": 4.575219958193394,
+          "inter_scan_origin_distance_error_m": 0.00037225743693970054
+        },
+        {
+          "source_frame": 312,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.002221006643346862,
+          "relative_scan_orientation_error_deg": 4.574607708352586,
+          "inter_scan_origin_distance_error_m": 1.7670337828117055e-05
+        },
+        {
+          "source_frame": 313,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0026156305556504153,
+          "relative_scan_orientation_error_deg": 4.249930741527817,
+          "inter_scan_origin_distance_error_m": 0.0002849631465946176
+        },
+        {
+          "source_frame": 314,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.002710787415555602,
+          "relative_scan_orientation_error_deg": 4.567756911416222,
+          "inter_scan_origin_distance_error_m": 0.0008147399667183461
+        },
+        {
+          "source_frame": 315,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0029097931720595744,
+          "relative_scan_orientation_error_deg": 4.2453747630974075,
+          "inter_scan_origin_distance_error_m": 0.0011694206448710567
+        },
+        {
+          "source_frame": 316,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0032287111496099525,
+          "relative_scan_orientation_error_deg": 4.084512205149751,
+          "inter_scan_origin_distance_error_m": 0.00128847436533671
+        },
+        {
+          "source_frame": 317,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.003214176093935098,
+          "relative_scan_orientation_error_deg": 3.8781478107896925,
+          "inter_scan_origin_distance_error_m": 0.0015831510758849351
+        },
+        {
+          "source_frame": 318,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.003194284874578987,
+          "relative_scan_orientation_error_deg": 3.782919456027689,
+          "inter_scan_origin_distance_error_m": 0.0013961572386944274
+        },
+        {
+          "source_frame": 319,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.003377705292384695,
+          "relative_scan_orientation_error_deg": 3.7420087274864375,
+          "inter_scan_origin_distance_error_m": 0.0014978130696788258
+        },
+        {
+          "source_frame": 320,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.003381970812407256,
+          "relative_scan_orientation_error_deg": 3.903256145019283,
+          "inter_scan_origin_distance_error_m": 0.0013210308820613345
+        },
+        {
+          "source_frame": 321,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.003034026166155284,
+          "relative_scan_orientation_error_deg": 3.8590440108486,
+          "inter_scan_origin_distance_error_m": 0.0013812445155628808
+        },
+        {
+          "source_frame": 322,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0030773404768517226,
+          "relative_scan_orientation_error_deg": 3.906883916565605,
+          "inter_scan_origin_distance_error_m": 0.0015007771122481917
+        },
+        {
+          "source_frame": 323,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0034596889318075793,
+          "relative_scan_orientation_error_deg": 3.8811244805763745,
+          "inter_scan_origin_distance_error_m": 0.0020822534283943747
+        },
+        {
+          "source_frame": 324,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.00346422154495067,
+          "relative_scan_orientation_error_deg": 3.881893978506646,
+          "inter_scan_origin_distance_error_m": 0.0021066810501444155
+        },
+        {
+          "source_frame": 325,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.003107211690999052,
+          "relative_scan_orientation_error_deg": 3.9609759408295004,
+          "inter_scan_origin_distance_error_m": 0.001815581384736198
+        },
+        {
+          "source_frame": 326,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.002862613798892051,
+          "relative_scan_orientation_error_deg": 3.6756842462625956,
+          "inter_scan_origin_distance_error_m": 0.0015253905686604258
+        },
+        {
+          "source_frame": 327,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.002500475693873978,
+          "relative_scan_orientation_error_deg": 3.5779738386892537,
+          "inter_scan_origin_distance_error_m": 0.0009056515211014193
+        },
+        {
+          "source_frame": 328,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.0024635929229529794,
+          "relative_scan_orientation_error_deg": 3.3037174813893024,
+          "inter_scan_origin_distance_error_m": 0.0003925123869628136
+        },
+        {
+          "source_frame": 329,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.002267448282794727,
+          "relative_scan_orientation_error_deg": 3.699066766389771,
+          "inter_scan_origin_distance_error_m": 0.00015882913902177942
+        },
+        {
+          "source_frame": 330,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.002590279627192758,
+          "relative_scan_orientation_error_deg": 3.8709531448387495,
+          "inter_scan_origin_distance_error_m": 6.280251718733532e-06
+        },
+        {
+          "source_frame": 331,
+          "reconstruction_observed_both": true,
+          "relative_scan_origin_translation_error_m": 0.002742382129190789,
+          "relative_scan_orientation_error_deg": 3.963438936286374,
+          "inter_scan_origin_distance_error_m": 1.002595426477515e-05
+        },
+        {
+          "source_frame": 332,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.002773186682761358,
+          "relative_scan_orientation_error_deg": 3.633335373155229,
+          "inter_scan_origin_distance_error_m": 0.00019947281049053495
+        },
+        {
+          "source_frame": 333,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.003500585775842767,
+          "relative_scan_orientation_error_deg": 4.072244519755994,
+          "inter_scan_origin_distance_error_m": 0.0009819862325842824
+        },
+        {
+          "source_frame": 334,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.0033843033056996366,
+          "relative_scan_orientation_error_deg": 3.929386306816539,
+          "inter_scan_origin_distance_error_m": 0.0009551525848538675
+        },
+        {
+          "source_frame": 335,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.002718829388116883,
+          "relative_scan_orientation_error_deg": 3.7483718069355403,
+          "inter_scan_origin_distance_error_m": 0.00113221269644799
+        },
+        {
+          "source_frame": 336,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.002792373453877837,
+          "relative_scan_orientation_error_deg": 3.505888289498249,
+          "inter_scan_origin_distance_error_m": 0.0006595137609544249
+        },
+        {
+          "source_frame": 337,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.002980478554376656,
+          "relative_scan_orientation_error_deg": 3.517623200704214,
+          "inter_scan_origin_distance_error_m": 0.0002771988327197883
+        },
+        {
+          "source_frame": 338,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.0032850659003938673,
+          "relative_scan_orientation_error_deg": 3.5648721787585367,
+          "inter_scan_origin_distance_error_m": 0.00013240647000343359
+        },
+        {
+          "source_frame": 339,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.0034935284562614783,
+          "relative_scan_orientation_error_deg": 3.560670484088048,
+          "inter_scan_origin_distance_error_m": 0.0005010135429356632
+        },
+        {
+          "source_frame": 340,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.0026898634471721,
+          "relative_scan_orientation_error_deg": 3.6895419674267997,
+          "inter_scan_origin_distance_error_m": 0.0008067408114153796
+        },
+        {
+          "source_frame": 341,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.002576881094599229,
+          "relative_scan_orientation_error_deg": 3.793417165816412,
+          "inter_scan_origin_distance_error_m": 0.00023715765988983895
+        },
+        {
+          "source_frame": 342,
+          "reconstruction_observed_both": false,
+          "relative_scan_origin_translation_error_m": 0.002784046542818562,
+          "relative_scan_orientation_error_deg": 3.7878847718709245,
+          "inter_scan_origin_distance_error_m": 0.00054295555228797
+        }
+      ]
+    }
+  ],
+  "reference_freshness": {
+    "consecutive_exact_duplicate_all_object_pose_frames": 6,
+    "exact_duplicate_runs": [
+      {
+        "first_pose_frame": 157,
+        "identical_copy_frames": [
+          158,
+          159,
+          160
+        ]
+      },
+      {
+        "first_pose_frame": 254,
+        "identical_copy_frames": [
+          255
+        ]
+      },
+      {
+        "first_pose_frame": 256,
+        "identical_copy_frames": [
+          257
+        ]
+      },
+      {
+        "first_pose_frame": 276,
+        "identical_copy_frames": [
+          277
+        ]
+      }
+    ],
+    "capture_times_increase": true,
+    "rows_removed_or_repaired": false,
+    "repeated_values_prove_stale_tracking": false
+  },
+  "global_coordinate_alignment_estimated": false,
+  "GT_used_for_source_fitting": false,
+  "absolute_world_pose_or_official_score_measured": false,
+  "hand_or_table_accuracy_accepted": false,
+  "physical_task_accepted": false,
+  "evaluation_entrypoint_sha256": "25ecc39c2f86b682243b1c7f3e8bfb34e2b022d69e4622134bf604c5e4814097"
+}
