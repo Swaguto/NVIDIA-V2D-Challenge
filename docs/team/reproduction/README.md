@@ -1,5 +1,10 @@
 # Reproduce issues 6, 7 and 8
 
+The latest [Track 3 scoring scope](SCORING_SCOPE_2026-10-13.md) defers cosmetic
+hand geometry work and qualifies the earlier clearance proofs: they cover
+collision meshes, not every rendered hand surface. The current official kit
+scores object policy trajectories and reconstructed object meshes.
+
 For the latest October 13 Dex3 development replay, start with
 [the support-aware replay instructions](SUPPORT_AWARE_DEX3_REPLAY_2026-10-13.md).
 They cover all 343 new Isaac frames, complete CAD/support and material/self/cross

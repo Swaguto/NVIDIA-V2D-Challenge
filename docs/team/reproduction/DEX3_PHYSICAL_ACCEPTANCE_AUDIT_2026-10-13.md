@@ -1,5 +1,13 @@
 # Dex3 development task: completion and physical-accuracy audit
 
+**Later scope correction:** the hand clearance certificates below cover the
+URDF collision meshes, not every rendered visual triangle. The unchanged
+replay has visual-surface intersections missed by those collision meshes.
+Further cosmetic geometry work is deferred at the user's direction because
+Track 3 has no separate hand penetration or visibility score. See the
+[current scoring scope and certificate qualification](SCORING_SCOPE_2026-10-13.md).
+The earlier frozen evidence is retained; physical acceptance remains false.
+
 The frozen e002 reconstruction and actual Isaac replay are reproducible, but
 the requested physically credible development task is **not yet established**.
 This audit completes the source comparison inspection: all 343 chronological
