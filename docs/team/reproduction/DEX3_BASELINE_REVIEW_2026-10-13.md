@@ -1,5 +1,10 @@
 # Dex3 baseline and recovery review
 
+October 14 continuation: the [full supported task diagnostic](SUPPORTED_DEX3_TASK_DIAGNOSTIC_2026-10-14.md)
+records the Sim6/Lab3 compatibility self-review, actual cooked decomposition,
+complete physical failure and missing repeat/SDK closure. Human approval remains
+outstanding; the historical review boundaries below are preserved.
+
 The newer original-CAD development replay and its exact saved-fit reproduction
 are documented in [the current CAD method](ORIGINAL_CAD_DEX3_REPLAY_2026-10-13.md).
 The corrected replay measurements below describe the preserved earlier result.

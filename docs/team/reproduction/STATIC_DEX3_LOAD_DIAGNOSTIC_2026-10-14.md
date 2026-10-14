@@ -1,5 +1,10 @@
 # Dex3 static load diagnostic — October 14, 2026
 
+The later [full supported task diagnostic](SUPPORTED_DEX3_TASK_DIAGNOSTIC_2026-10-14.md)
+verifies actual cooked decomposition and completes the episode, but its wrists
+and objects fail to track. That newer result does not change the historical
+static measurements or their collider qualification below.
+
 **Later collider readback qualification:** the historical runs below used
 `convexHull` object colliders, although the importer was configured for
 `Convex Decomposition`. The committed measurements record that actual setting.

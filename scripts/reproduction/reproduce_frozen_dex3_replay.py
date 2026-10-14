@@ -65,14 +65,22 @@ def main():
     )
     parser.add_argument("--support-plane", type=Path)
     parser.add_argument("--support-plane-sha256")
+    parser.add_argument("--supported-task-check", action="store_true")
+    parser.add_argument("--task-motion-evaluator", type=Path)
     args = parser.parse_args()
+    if args.static_load_check and args.supported_task_check:
+        parser.error("Choose one physical diagnostic mode")
+    if args.supported_task_check and args.task_motion_evaluator is None:
+        parser.error(
+            "--supported-task-check requires the frozen --task-motion-evaluator"
+        )
     if (args.archive is None) == (args.verified_case is None):
         parser.error("Provide exactly one --archive or --verified-case")
     if args.archive is not None and args.sha256 is None:
         parser.error("--archive requires --sha256")
     if args.verified_case is not None and args.case_manifest_sha256 is None:
         parser.error("--verified-case requires --case-manifest-sha256")
-    if args.static_load_check and (
+    if (args.static_load_check or args.supported_task_check) and (
         args.support_plane is None or args.support_plane_sha256 is None
     ):
         parser.error("--static-load-check requires a hash-bound --support-plane report")
@@ -116,7 +124,7 @@ def main():
                 case,
             ]
         )
-    if args.static_load_check:
+    if args.static_load_check or args.supported_task_check:
         from _dex3_static_load import prepare
 
         prepared = prepare(
@@ -125,6 +133,9 @@ def main():
             args.support_plane.resolve(),
             args.support_plane_sha256,
             args.out.resolve() / "static-load-inputs",
+            task_motion=args.task_motion_evaluator.resolve()
+            if args.supported_task_check
+            else None,
         )
         print("Prepared source-derived static grasps: " + str(len(prepared["samples"])))
     if args.check_only:
@@ -155,7 +166,7 @@ def main():
         env=env,
     )
     replay = args.out.resolve() / "simulator"
-    if args.static_load_check:
+    if args.static_load_check or args.supported_task_check:
         physical_inputs = args.out.resolve() / "static-load-inputs"
         run(
             [

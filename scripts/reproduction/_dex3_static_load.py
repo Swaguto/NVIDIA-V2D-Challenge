@@ -64,7 +64,15 @@ def load_functions(path: Path, names: set[str], namespace: dict) -> tuple[dict, 
     return namespace, signature
 
 
-def prepare(case: Path, repo: Path, plane: Path, plane_sha: str, out: Path) -> dict:
+def prepare(
+    case: Path,
+    repo: Path,
+    plane: Path,
+    plane_sha: str,
+    out: Path,
+    *,
+    task_motion: Path | None = None,
+) -> dict:
     """Validate byte/coordinate contracts and build portable nominal load inputs."""
     import numpy as np
     import trimesh
@@ -167,6 +175,57 @@ def prepare(case: Path, repo: Path, plane: Path, plane_sha: str, out: Path) -> d
                 )
     if not samples:
         raise ValueError("No source-derived closed grasps to test")
+    if task_motion is not None:
+        producer = json.loads((case / "proposal/report.json").read_text())
+        if digest(task_motion) != producer["motion_module_sha256"]:
+            raise ValueError("Task evaluator differs from the frozen motion producer")
+        if len(bundle["objects"]) != 2:
+            raise ValueError(
+                "Coupled task adapter currently requires two complete source objects"
+            )
+        samples = [
+            next(sample for sample in samples if sample["side"] == side)
+            for side in ("left", "right")
+        ]
+        if len({sample["object"] for sample in samples}) != 2:
+            raise ValueError(
+                "Coupled task requires distinct automatically bound primary objects"
+            )
+        for si, sample in enumerate(samples):
+            oi = sample["object"]
+            q = motion["robot_qpos_inferred"][0, si]
+            object_pose = source[f"object_{oi}_world"][0]
+            scales = source[f"object_{oi}_scale"]
+            scale = float(np.median(scales))
+            if np.max(np.abs(scales / scale - 1)) > 1e-6:
+                raise ValueError(
+                    "Source shape scale is not rigid within the declared numerical tolerance"
+                )
+            sample.update(
+                prefix=f"{sample['side']}-object{oi}-task",
+                source_row=0,
+                source_frame=int(source["frame_indices"][0]),
+                source_hand_valid=bool(source["hand_valid"][0, si]),
+                object_scale_at_selected_frame=scale,
+                hand_position_stage_m=(stage_rotation @ q[:3]).tolist(),
+                hand_quaternion_stage_xyzw=(
+                    Rotation.from_matrix(stage_rotation) * Rotation.from_quat(q[3:7])
+                )
+                .as_quat()
+                .tolist(),
+                finger_target_rad=q[7:].tolist(),
+                object_position_stage_m=(stage_rotation @ object_pose[:3, 3]).tolist(),
+                object_quaternion_stage_xyzw=Rotation.from_matrix(
+                    stage_rotation @ object_pose[:3, :3]
+                )
+                .as_quat()
+                .tolist(),
+            )
+        (out / "motion-evaluator.py").write_bytes(task_motion.read_bytes())
+        sheet = case / "support/inferred-support-sheet.npz"
+        if "support/inferred-support-sheet.npz" not in files:
+            raise ValueError("Task requires the hash-bound source support sheet")
+        (out / "inferred-support-sheet.npz").write_bytes(sheet.read_bytes())
     object_files = {}
     for sample in samples:
         oi = sample["object"]
@@ -224,11 +283,27 @@ def prepare(case: Path, repo: Path, plane: Path, plane_sha: str, out: Path) -> d
         "nominal_object_mass_kg": 0.3,
         "nominal_object_inertia_diagonal_kg_m2": [0.001] * 3,
         "mass_and_inertia_are_existing_generator_defaults_not_measurements": True,
-        "fixed_wrists_are_a_fixture_not_whole_body_feasibility": True,
+        "fixed_wrists_are_a_fixture_not_whole_body_feasibility": task_motion is None,
         "source_observations_or_robot_motion_changed": False,
-        "per_frame_source_scale_preserved_for_each_static_fixture": True,
+        "per_frame_source_scale_preserved_for_each_static_fixture": task_motion is None,
+        "whole_body_feasibility_claimed": False,
         "physical_task_accepted": False,
+        "supported_task_mode": task_motion is not None,
     }
+    if task_motion is not None:
+        result.update(
+            motion_evaluator_sha256=digest(out / "motion-evaluator.py"),
+            support_sheet_sha256=digest(out / "inferred-support-sheet.npz"),
+            wrist_controller_source_sha256=digest(
+                repo
+                / "robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d/mdp/actions/action_track_residual.py"
+            ),
+            wrist_controller_cfg_source_sha256=digest(
+                repo
+                / "robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d/mdp/actions/actions_cfg.py"
+            ),
+            source_motion_speed=0.5,
+        )
     write(out / "manifest.json", result)
     return result
 
@@ -254,13 +329,14 @@ def execute(
     )
     from isaaclab.sensors import Camera, CameraCfg, ContactSensor, ContactSensorCfg
     from isaaclab_physx.physics import PhysxCfg
-    from pxr import Usd, UsdPhysics, UsdShade
+    from pxr import Gf, PhysxSchema, Usd, UsdGeom, UsdPhysics, UsdShade, Vt
     from scipy.spatial.transform import Rotation
 
     manifest = inputs / "manifest.json"
     if digest(manifest) != manifest_sha:
         raise ValueError("Prepared physical input manifest changed")
     prepared = json.loads(manifest.read_text())
+    task_mode = prepared.get("supported_task_mode", False)
     if digest(case / "file-manifest.json") != prepared["case_manifest_sha256"]:
         raise ValueError("Physical input and frozen case differ")
     for name, expected in json.loads((case / "file-manifest.json").read_text())[
@@ -374,6 +450,36 @@ def execute(
     light.func("/World/Light", light)
     hands, objects, sensors, cameras, provenance = [], [], [], [], []
 
+    if task_mode:
+        sheet_file = inputs / "inferred-support-sheet.npz"
+        if digest(sheet_file) != prepared["support_sheet_sha256"]:
+            raise ValueError("Task support sheet changed")
+        with np.load(sheet_file, allow_pickle=False) as sheet:
+            vertices = (
+                sheet["vertices_world_m"]
+                @ np.asarray(prepared["stage_rotation_from_inferred_support_normal"]).T
+            )
+            faces = sheet["faces"]
+        support = UsdGeom.Mesh.Define(sim.stage, "/World/TaskSupport")
+        support.CreatePointsAttr(
+            Vt.Vec3fArray([Gf.Vec3f(*point) for point in vertices])
+        )
+        support.CreateFaceVertexCountsAttr(Vt.IntArray([3] * len(faces)))
+        support.CreateFaceVertexIndicesAttr(
+            Vt.IntArray(faces.astype(np.int32).reshape(-1).tolist())
+        )
+        support.CreateSubdivisionSchemeAttr("none")
+        support.CreateDisplayColorAttr([Gf.Vec3f(0.35, 0.35, 0.35)])
+        UsdPhysics.CollisionAPI.Apply(support.GetPrim()).CreateCollisionEnabledAttr(
+            True
+        )
+        UsdPhysics.MeshCollisionAPI.Apply(support.GetPrim()).CreateApproximationAttr(
+            "none"
+        )
+        contact = PhysxSchema.PhysxCollisionAPI.Apply(support.GetPrim())
+        contact.CreateContactOffsetAttr(0.0)
+        contact.CreateRestOffsetAttr(0.0)
+
     def bind_material(prim_path, coefficient):
         material_path = prim_path + "/DiagnosticMaterial"
         cfg = sim_utils.RigidBodyMaterialCfg(
@@ -447,7 +553,7 @@ def execute(
             *, cfg, prim_root=prim_root, sample=sample, target=target, limits=limits
         ):
             cfg.prim_path = prim_root + "/Hand"
-            cfg.spawn.fix_base = True
+            cfg.spawn.fix_base = not task_mode
             cfg.spawn.activate_contact_sensors = True
             cfg.spawn.rigid_props.disable_gravity = False
             cfg.spawn.collision_props = sim_utils.CollisionPropertiesCfg(
@@ -512,34 +618,58 @@ def execute(
         cfg.init_state.rot = tuple(sample["object_quaternion_stage_xyzw"])
         obj = RigidObject(cfg)
         sim_utils.make_uninstanceable(cfg.prim_path)
+        # Native Sim6 conversion can ignore the requested importer approximation.
+        # Author the intended project preset on the composed collision meshes.
+        converted_meshes = 0
+        for prim in Usd.PrimRange(sim.stage.GetPrimAtPath(cfg.prim_path)):
+            if prim.HasAPI(UsdPhysics.CollisionAPI) and prim.GetTypeName() == "Mesh":
+                UsdPhysics.MeshCollisionAPI.Apply(prim).CreateApproximationAttr(
+                    "convexDecomposition"
+                )
+                PhysxSchema.PhysxConvexDecompositionCollisionAPI.Apply(prim)
+                converted_meshes += 1
+        if not converted_meshes:
+            raise ValueError("Object has no editable mesh collider")
         sim_utils.modify_collision_properties(cfg.prim_path, cfg.spawn.collision_props)
         object_material = bind_material(
             cfg.prim_path, float(sim_cfg.physics_material.dynamic_friction)
         )
+        if any(
+            collider["approximation"] != "convexDecomposition"
+            for collider in object_material["collider_readback"]
+        ):
+            raise ValueError(
+                "Actual object approximation differs from the intended decomposition"
+            )
         sensor = ContactSensor(
             ContactSensorCfg(
                 prim_path=cfg.prim_path + "/.*", update_period=0.0, history_length=1
             )
         )
         position = np.asarray(sample["object_position_stage_m"])
-        camera = Camera(
-            CameraCfg(
-                prim_path=prim_root + "/Camera",
-                update_period=0.0,
-                width=320,
-                height=320,
-                data_types=["rgb"],
-                spawn=sim_utils.PinholeCameraCfg(
-                    focal_length=24.0,
-                    horizontal_aperture=20.955,
-                    clipping_range=(0.01, 100.0),
-                ),
+        camera = (
+            None
+            if task_mode
+            else Camera(
+                CameraCfg(
+                    prim_path=prim_root + "/Camera",
+                    update_period=0.0,
+                    width=320,
+                    height=320,
+                    data_types=["rgb"],
+                    spawn=sim_utils.PinholeCameraCfg(
+                        focal_length=24.0,
+                        horizontal_aperture=20.955,
+                        clipping_range=(0.01, 100.0),
+                    ),
+                )
             )
         )
         hands.append(hand)
         objects.append(obj)
         sensors.append(sensor)
-        cameras.append((camera, position))
+        if camera is not None:
+            cameras.append((camera, position))
         provenance.append(
             {
                 "hand": hand_provenance,
@@ -551,6 +681,42 @@ def execute(
             }
         )
 
+    if task_mode:
+        with np.load(case / "bundle/episode.npz", allow_pickle=False) as source:
+            image_width, image_height = map(int, source["image_size"])
+            intrinsics = source["intrinsics"].copy()
+        margin_x = int(np.ceil(abs(float(intrinsics[0, 2]) - image_width / 2))) + 4
+        margin_y = int(np.ceil(abs(float(intrinsics[1, 2]) - image_height / 2))) + 4
+        canvas_width, canvas_height = (
+            image_width + 2 * margin_x,
+            image_height + 2 * margin_y,
+        )
+        task_camera = Camera(
+            CameraCfg(
+                prim_path="/World/ReviewCamera",
+                update_period=0.0,
+                width=canvas_width,
+                height=canvas_height,
+                data_types=["rgb"],
+                spawn=sim_utils.PinholeCameraCfg(
+                    focal_length=24.0,
+                    horizontal_aperture=24.0,
+                    clipping_range=(0.01, 100.0),
+                ),
+            )
+        )
+        cameras.append(
+            (
+                task_camera,
+                {
+                    "width": image_width,
+                    "height": image_height,
+                    "crop_x": canvas_width / 2 - float(intrinsics[0, 2]),
+                    "crop_y": canvas_height / 2 - float(intrinsics[1, 2]),
+                    "intrinsics": intrinsics.tolist(),
+                },
+            )
+        )
     # Two independent physics controls: unsupported free fall and a sphere on a local fixed platform.
     control_objects, control_sensors = [], []
     for index, x in enumerate((14.0, 16.0)):
@@ -583,8 +749,17 @@ def execute(
     platform_cfg.func(
         "/World/Control1/Platform", platform_cfg, translation=(16.0, 0.0, 0.0)
     )
+    if task_mode:
+        # Sim6's importer activates contact reporting only on the root body.
+        # Pair-wise finger measurements need reporting on every real hand body.
+        for asset in hands + objects:
+            for prim in Usd.PrimRange(sim.stage.GetPrimAtPath(asset.cfg.prim_path)):
+                if prim.HasAPI(UsdPhysics.RigidBodyAPI):
+                    PhysxSchema.PhysxContactReportAPI.Apply(prim).CreateThresholdAttr(
+                        0.0
+                    )
     sim.reset()
-    for camera, position in cameras:
+    for camera, position in [] if task_mode else cameras:
         camera.set_world_poses_from_view(
             torch.tensor(
                 (position + [0.0, -0.55, 0.35])[None],
@@ -598,7 +773,7 @@ def execute(
         values = dict(
             zip(sample["joint_names"], sample["finger_target_rad"], strict=True)
         )
-        if set(hand.joint_names) != set(values) or not hand.is_fixed_base:
+        if set(hand.joint_names) != set(values) or hand.is_fixed_base == task_mode:
             raise ValueError(
                 "Physical articulation topology differs from declared fixture"
             )
@@ -617,6 +792,23 @@ def execute(
         # One initialization only. No object state writes or external forces during load.
         obj.write_root_state_to_sim(obj.data.default_root_state.clone())
         obj.reset()
+    if task_mode:
+        run_supported_task(
+            case,
+            repo,
+            inputs,
+            out,
+            prepared,
+            sim,
+            hands,
+            objects,
+            sensors,
+            cameras,
+            control_objects,
+            control_sensors,
+            provenance,
+        )
+        return
     frames = []
     records = []
     control_records = []
@@ -825,6 +1017,555 @@ def execute(
     sim.stop()
     if not all((controls["free_fall_pass"], controls["supported_sphere_pass"])):
         raise RuntimeError("Physics controls failed; do not interpret grasp outcomes")
+
+
+def run_supported_task(
+    case,
+    repo,
+    inputs,
+    out,
+    prepared,
+    sim,
+    hands,
+    objects,
+    sensors,
+    cameras,
+    controls,
+    control_sensors,
+    provenance,
+):
+    """Execute the full locked motion through the existing wrist controller with zero policy residual."""
+    import importlib.util
+    import sys
+
+    import imageio.v2 as imageio
+    import isaaclab.sim as sim_utils
+    import numpy as np
+    import torch
+    from _dex3_collision_evidence import (
+        capture_cooked_colliders,
+        contact_separation_summary,
+    )
+    from PIL import Image, ImageDraw
+    from scipy.spatial.transform import Rotation
+
+    def load_module(name, path):
+        spec = importlib.util.spec_from_file_location(name, path)
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[name] = module
+        spec.loader.exec_module(module)
+        return module
+
+    def controller_tensor(value):
+        # Lab3 data proxies implement eager tensor operations, but TorchScript
+        # requires their explicit zero-copy Torch view at the call boundary.
+        import warp as wp
+
+        if hasattr(value, "torch"):
+            return value.torch
+        if isinstance(value, wp.array):
+            return wp.to_torch(value)
+        return value
+
+    evaluator_file = inputs / "motion-evaluator.py"
+    if digest(evaluator_file) != prepared["motion_evaluator_sha256"]:
+        raise ValueError("Task evaluator changed")
+    evaluator = load_module("_v2d_locked_task_motion", evaluator_file)
+    motion = evaluator.LockedReplayMotion(
+        case / "bundle",
+        None,
+        None,
+        None,
+        None,
+        case / "proposal",
+        source=case / "source/robotic_grounding",
+    )
+    controller_file = (
+        repo
+        / "robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d/mdp/actions/action_track_residual.py"
+    )
+    cfg_file = controller_file.with_name("actions_cfg.py")
+    if (
+        digest(controller_file) != prepared["wrist_controller_source_sha256"]
+        or digest(cfg_file) != prepared["wrist_controller_cfg_source_sha256"]
+    ):
+        raise ValueError("Existing tracking controller changed")
+    controller = load_module("_v2d_existing_task_controller", controller_file)
+    cfg_class = next(
+        node
+        for node in ast.parse(cfg_file.read_text()).body
+        if isinstance(node, ast.ClassDef)
+        and node.name == "JointResidualWithTrackingActionCfg"
+    )
+    keys = {
+        "tracking_controller_linear_stiffness",
+        "tracking_controller_linear_damping",
+        "tracking_controller_angular_stiffness",
+        "tracking_controller_angular_damping",
+        "max_force",
+        "max_torque",
+    }
+    gains = {
+        node.target.id: float(ast.literal_eval(node.value))
+        for node in cfg_class.body
+        if isinstance(node, ast.AnnAssign)
+        and isinstance(node.target, ast.Name)
+        and node.target.id in keys
+    }
+    if gains.keys() != keys:
+        raise ValueError("Expected project wrist-controller settings missing")
+    with np.load(
+        case / "proposal/robot-motion-proposal.npz", allow_pickle=False
+    ) as archive:
+        proposal = {name: archive[name].copy() for name in archive.files}
+    display = np.zeros_like(proposal["source_hand_valid"], dtype=bool)
+    for name, value in proposal.items():
+        if "display_only" in name and value.shape == display.shape:
+            display |= value.astype(bool)
+    source = motion.source
+    stage_rotation = Rotation.from_matrix(
+        np.asarray(prepared["stage_rotation_from_inferred_support_normal"])
+    )
+    camera, camera_cfg = cameras[0]
+    camera.set_intrinsic_matrices(
+        torch.tensor(
+            np.asarray(camera_cfg["intrinsics"])[None],
+            dtype=torch.float32,
+            device=sim.device,
+        )
+    )
+    sim.set_setting("/physics/updateToUsd", True)
+    joint_order, com_positions = [], []
+    for hand, sample in zip(hands, prepared["samples"], strict=True):
+        if (
+            hand.is_fixed_base
+            or hand.body_names[0] != sample["side"] + "_hand_palm_link"
+        ):
+            raise ValueError("Task wrist must be the floating original palm")
+        joint_order.append(
+            [sample["joint_names"].index(name) for name in hand.joint_names]
+        )
+        com_positions.append(
+            controller_tensor(hand.root_physx_view.get_coms())[:, 0, :3].to(sim.device)
+        )
+    from isaaclab_physx.physics import PhysxManager
+    from pxr import Usd, UsdPhysics
+
+    contact_views, contact_bindings = [], []
+    filters = [obj.root_physx_view.prim_paths[0] for obj in objects]
+    for hand in hands:
+        paths = [
+            path
+            for path in hand.root_physx_view.link_paths[0]
+            if any(
+                prim.HasAPI(UsdPhysics.CollisionAPI)
+                for prim in Usd.PrimRange(sim.stage.GetPrimAtPath(path))
+            )
+        ]
+        view = PhysxManager.get_physics_sim_view().create_rigid_contact_view(
+            paths,
+            filter_patterns=[filters] * len(paths),
+            max_contact_data_count=64 * len(paths),
+        )
+        if view.sensor_count != len(paths) or view.filter_count != len(objects):
+            raise ValueError(
+                "Actual physical contact-body bindings differ from the two-object task"
+            )
+        contact_views.append(view)
+        contact_bindings.append(
+            {"hand_body_paths": paths, "object_body_paths": filters}
+        )
+    for hand, sample, order in zip(
+        hands, prepared["samples"], joint_order, strict=True
+    ):
+        q = torch.tensor(
+            np.asarray(sample["finger_target_rad"])[order][None],
+            dtype=torch.float32,
+            device=sim.device,
+        )
+        hand.write_joint_state_to_sim(q, torch.zeros_like(q))
+        hand.set_joint_position_target(q)
+        hand.write_data_to_sim()
+        _ = hand.data.body_link_pose_w
+    for obj in objects + controls:
+        obj.write_root_state_to_sim(obj.data.default_root_state.clone())
+        obj.reset()
+    cooked_summary = capture_cooked_colliders(
+        sim.stage,
+        [
+            (f"hand-{side}", hand)
+            for side, hand in zip(("left", "right"), hands, strict=True)
+        ]
+        + [
+            (f"object-{sample['object']}", obj)
+            for sample, obj in zip(prepared["samples"], objects, strict=True)
+        ],
+        write,
+        out / "cooked-colliders.json",
+    )
+    print("Cooked collision representation captured", flush=True)
+    source_times = source["timestamps_s"]
+    speed = prepared["source_motion_speed"]
+    dt = sim.get_physics_dt()
+    steps = int(np.ceil((source_times[-1] - source_times[0]) / speed / dt))
+    rows, frames, hand_rows, controls_rows = [], [], [], []
+    collision_state = [None, None]
+    source_row = 0
+    writer = imageio.get_writer(
+        out / "supported-task.mp4",
+        fps=1 / float(np.median(np.diff(source_times))),
+        codec="libx264",
+        quality=8,
+        macro_block_size=1,
+    )
+    initial_links = []
+    for hand in hands:
+        initial_links.append(
+            {
+                name: pose.tolist()
+                for name, pose in zip(
+                    hand.body_names,
+                    hand.data.body_link_pose_w[0].cpu().numpy(),
+                    strict=True,
+                )
+            }
+        )
+    try:
+        for step in range(steps + 1):
+            timestamp = min(
+                float(source_times[0] + step * dt * speed), float(source_times[-1])
+            )
+            index = int(
+                np.clip(
+                    np.searchsorted(source_times, timestamp + 1e-10, side="right") - 1,
+                    0,
+                    len(source_times) - 1,
+                )
+            )
+            desired, _kinds, _details = motion.evaluate(timestamp)
+            for si, (hand, order) in enumerate(zip(hands, joint_order, strict=True)):
+                enabled = not bool(display[index, si])
+                if collision_state[si] != enabled:
+                    sim_utils.modify_collision_properties(
+                        hand.cfg.prim_path,
+                        sim_utils.CollisionPropertiesCfg(
+                            collision_enabled=enabled,
+                            contact_offset=0.0,
+                            rest_offset=0.0,
+                        ),
+                    )
+                    collision_state[si] = enabled
+                target_pose = np.r_[
+                    stage_rotation.apply(desired[si, :3]),
+                    (stage_rotation * Rotation.from_quat(desired[si, 3:7])).as_quat(),
+                ]
+                target = torch.tensor(
+                    target_pose[None], dtype=torch.float32, device=sim.device
+                )
+                finger_target = torch.tensor(
+                    desired[si, 7:][order][None], dtype=torch.float32, device=sim.device
+                )
+                force, torque, fingers = (
+                    controller._compute_wrist_wrench_and_finger_target(
+                        wrist_position=controller_tensor(hand.data.root_link_pos_w),
+                        wrist_wxyz=controller_tensor(hand.data.root_link_quat_w),
+                        wrist_link_vel_w=controller_tensor(
+                            hand.data.root_com_vel_w
+                        ).clone(),
+                        wrist_link_quat_w=controller_tensor(hand.data.root_link_quat_w),
+                        wrist_com_pos_b=com_positions[si],
+                        wrist_pose_target=target,
+                        finger_joint_target=finger_target,
+                        gravity_comp_e=controller_tensor(
+                            hand.root_physx_view.get_gravity_compensation_forces()
+                        ),
+                        joint_damping=controller_tensor(hand.data.joint_damping),
+                        joint_vel=controller_tensor(hand.data.joint_vel),
+                        joint_effort_limits=controller_tensor(
+                            hand.data.joint_effort_limits
+                        ),
+                        joint_stiffness=controller_tensor(hand.data.joint_stiffness),
+                        joint_pos=controller_tensor(hand.data.joint_pos),
+                        linear_stiffness=gains["tracking_controller_linear_stiffness"],
+                        linear_damping=gains["tracking_controller_linear_damping"],
+                        angular_stiffness=gains[
+                            "tracking_controller_angular_stiffness"
+                        ],
+                        angular_damping=gains["tracking_controller_angular_damping"],
+                        max_force=gains["max_force"],
+                        max_torque=gains["max_torque"],
+                    )
+                )
+                if not all(
+                    torch.isfinite(value).all() for value in (force, torque, fingers)
+                ):
+                    raise ValueError("Nonfinite task control")
+                hand.set_external_force_and_torque(
+                    forces=force[:, None, :],
+                    torques=torque[:, None, :],
+                    body_ids=[0],
+                    is_global=False,
+                )
+                hand.set_joint_position_target(fingers)
+                hand.write_data_to_sim()
+                hand_rows.append(
+                    {
+                        "step": step,
+                        "source_time_s": timestamp,
+                        "side": ("left", "right")[si],
+                        "display_only": not enabled,
+                        "source_hand_valid": bool(source["hand_valid"][index, si]),
+                        "source_directly_observed": bool(
+                            source["hand_directly_observed"][index, si]
+                        ),
+                        "target_root_pose_stage_xyzw": target_pose.tolist(),
+                        "actual_root_pose_stage_xyzw": hand.data.root_link_pose_w[0]
+                        .cpu()
+                        .numpy()
+                        .tolist(),
+                        "actual_fingers_rad": hand.data.joint_pos[0]
+                        .cpu()
+                        .numpy()
+                        .tolist(),
+                        "target_fingers_rad": finger_target[0].cpu().numpy().tolist(),
+                        "actual_body_link_poses_stage_xyzw": {
+                            name: pose.tolist()
+                            for name, pose in zip(
+                                hand.body_names,
+                                hand.data.body_link_pose_w[0].cpu().numpy(),
+                                strict=True,
+                            )
+                        }
+                        if step % 10 == 0 or step == steps
+                        else None,
+                        "finger_joint_names": hand.joint_names,
+                        "applied_wrist_force_local_N": force[0].cpu().numpy().tolist(),
+                        "applied_wrist_torque_local_Nm": torque[0]
+                        .cpu()
+                        .numpy()
+                        .tolist(),
+                        "object_normal_contact_force_N": contact_views[si]
+                        .get_contact_force_matrix(dt)
+                        .numpy()
+                        .sum(axis=0)
+                        .tolist(),
+                        "object_contact_force_magnitudes_N": np.linalg.norm(
+                            contact_views[si].get_contact_force_matrix(dt).numpy(),
+                            axis=-1,
+                        )
+                        .sum(axis=0)
+                        .tolist(),
+                        "solver_contacts": contact_separation_summary(
+                            contact_views[si], dt
+                        ),
+                    }
+                )
+            for obj, sample, sensor in zip(
+                objects, prepared["samples"], sensors, strict=True
+            ):
+                oi = sample["object"]
+                rotation, position, _scale = motion.object_pose(oi, timestamp)
+                reference = np.r_[
+                    stage_rotation.apply(position),
+                    (stage_rotation * Rotation.from_matrix(rotation)).as_quat(),
+                ]
+                actual = obj.data.root_link_pose_w[0].cpu().numpy()
+                if not np.isfinite(actual).all():
+                    raise ValueError("Nonfinite dynamic object state")
+                error = float(np.linalg.norm(actual[:3] - reference[:3]))
+                angle = float(
+                    (
+                        Rotation.from_quat(actual[3:])
+                        * Rotation.from_quat(reference[3:]).inv()
+                    ).magnitude()
+                )
+                rows.append(
+                    {
+                        "step": step,
+                        "source_time_s": timestamp,
+                        "object": oi,
+                        "source_object_observed": bool(
+                            source[f"object_{oi}_observed"][index]
+                        )
+                        if f"object_{oi}_observed" in source
+                        else bool(proposal["source_object_observed"][index, oi]),
+                        "actual_root_pose_stage_xyzw": actual.tolist(),
+                        "reference_root_pose_stage_xyzw": reference.tolist(),
+                        "position_error_m": error,
+                        "rotation_error_rad": angle,
+                        "normal_contact_force_stage_N": sensor.data.net_forces_w[0]
+                        .cpu()
+                        .numpy()
+                        .sum(axis=0)
+                        .tolist(),
+                    }
+                )
+            if step <= round(1 / dt):
+                for ci, (obj, sensor) in enumerate(
+                    zip(controls, control_sensors, strict=True)
+                ):
+                    controls_rows.append(
+                        {
+                            "step": step,
+                            "control": ci,
+                            "root_pose": obj.data.root_link_pose_w[0]
+                            .cpu()
+                            .numpy()
+                            .tolist(),
+                            "normal_contact_force": sensor.data.net_forces_w[0]
+                            .cpu()
+                            .numpy()
+                            .sum(axis=0)
+                            .tolist(),
+                        }
+                    )
+            if (
+                source_row < len(source_times)
+                and timestamp + 1e-10 >= source_times[source_row]
+            ):
+                matrix = source["camera_c2w"][source_row]
+                camera.set_world_poses(
+                    torch.tensor(
+                        stage_rotation.apply(matrix[:3, 3])[None],
+                        dtype=torch.float32,
+                        device=sim.device,
+                    ),
+                    torch.tensor(
+                        (
+                            stage_rotation * Rotation.from_matrix(matrix[:3, :3])
+                        ).as_quat()[None],
+                        dtype=torch.float32,
+                        device=sim.device,
+                    ),
+                    convention="ros",
+                )
+                sim.render()
+                camera.update(dt, force_recompute=True)
+                canvas = (
+                    camera.data.output["rgb"][0, :, :, :3]
+                    .cpu()
+                    .numpy()
+                    .astype(np.uint8)
+                )
+                rgb = Image.fromarray(canvas).transform(
+                    (camera_cfg["width"], camera_cfg["height"]),
+                    Image.Transform.AFFINE,
+                    (1, 0, camera_cfg["crop_x"], 0, 1, camera_cfg["crop_y"]),
+                    resample=Image.Resampling.BILINEAR,
+                )
+                draw = ImageDraw.Draw(rgb)
+                draw.rectangle((0, 0, camera_cfg["width"], 42), fill=(20, 20, 20))
+                draw.text(
+                    (10, 7),
+                    f"Dynamic objects; project wrist controller; source frame {int(source['frame_indices'][source_row])}; t={timestamp:.2f}s",
+                    fill=(255, 255, 255),
+                )
+                writer.append_data(np.asarray(rgb))
+                frames.append(
+                    {
+                        "source_frame": int(source["frame_indices"][source_row]),
+                        "source_time_s": timestamp,
+                        "sim_time_s": step * dt,
+                    }
+                )
+                if source_row % 20 == 0 or source_row == len(source_times) - 1:
+                    print(
+                        f"Physical source frame {source_row}/{len(source_times) - 1}; object errors {[row['position_error_m'] for row in rows[-2:]]}",
+                        flush=True,
+                    )
+                    rgb.save(
+                        out
+                        / f"source-frame-{int(source['frame_indices'][source_row]):06d}.png"
+                    )
+                source_row += 1
+            if step == steps:
+                break
+            sim.step(render=False)
+            for asset in hands + objects + controls:
+                asset.update(dt)
+            for sensor in sensors + control_sensors:
+                sensor.update(dt, force_recompute=True)
+    finally:
+        writer.close()
+    if len(frames) != len(source_times):
+        raise ValueError("Physical task did not cover all source frames")
+    freefall = [row for row in controls_rows if row["control"] == 0]
+    supported = [row for row in controls_rows if row["control"] == 1]
+    drop = freefall[0]["root_pose"][2] - freefall[-1]["root_pose"][2]
+    support_force = float(
+        np.mean([row["normal_contact_force"][2] for row in supported[-20:]])
+    )
+    controls_pass = (
+        4.8 <= drop <= 5.1
+        and abs(supported[-1]["root_pose"][2] - 0.05) < 0.005
+        and abs(support_force - 0.3 * 9.81) < 0.3
+    )
+    summaries = []
+    for oi in sorted({row["object"] for row in rows}):
+        observed = [
+            row for row in rows if row["object"] == oi and row["source_object_observed"]
+        ]
+        errors = np.asarray([row["position_error_m"] for row in observed])
+        angles = np.asarray([row["rotation_error_rad"] for row in observed])
+        summaries.append(
+            {
+                "object": oi,
+                "observed_measurements": len(observed),
+                "position_median_m": float(np.median(errors)),
+                "position_p90_m": float(np.quantile(errors, 0.9)),
+                "position_max_m": float(errors.max()),
+                "orientation_median_rad": float(np.median(angles)),
+                "orientation_p90_rad": float(np.quantile(angles, 0.9)),
+            }
+        )
+    write(
+        out / "states.json",
+        {
+            "objects": rows,
+            "hands": hand_rows,
+            "controls": controls_rows,
+            "rendered_source_frames": frames,
+        },
+    )
+    write(
+        out / "report.json",
+        {
+            "schema": "v2d.dex3-supported-task-result.v1",
+            "executor_source_sha256": digest(Path(__file__)),
+            "inputs_manifest_sha256": digest(inputs / "manifest.json"),
+            "controller_source_sha256": digest(controller_file),
+            "controller_gains": gains,
+            "collision_evidence_source_sha256": digest(
+                Path(__file__).with_name("_dex3_collision_evidence.py")
+            ),
+            "cooked_collider_summary": cooked_summary,
+            "physical_contact_bindings": contact_bindings,
+            "policy_residual": "zero; no policy loaded or trained",
+            "source_frames": len(frames),
+            "simulation_steps": steps,
+            "source_motion_knots": len(motion.breakpoints),
+            "source_motion_speed": speed,
+            "object_teleports_after_initialization": 0,
+            "external_object_forces": False,
+            "support_is_an_inferred_sheet_not_measured_table": True,
+            "initial_link_poses": initial_links,
+            "provenance": provenance,
+            "object_tracking": summaries,
+            "gravity_and_contact_controls_pass": bool(controls_pass),
+            "controls": {
+                "free_fall_drop_m": drop,
+                "supported_sphere_mean_force_N": support_force,
+            },
+            "state_sha256": digest(out / "states.json"),
+            "video_sha256": digest(out / "supported-task.mp4"),
+            "source_observation_and_target_approval_flags_changed": False,
+            "physical_task_accepted": False,
+            "official_evaluation_score_claimed": False,
+        },
+    )
+    sim.stop()
+    if not controls_pass:
+        raise ValueError("Task physics controls failed")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,46 @@
+{
+  "schema": "v2d.supported-task-evidence.v1",
+  "archive_sha256": "c9cad3911a1a29a35d1bfa1a2fab36a40a2e7e737b57040d4dcc4e89111232df",
+  "files_sha256": {
+    "states.json": "8d170d0fb415c7491d2d4160f7775514b191d4200c0f449ed907f8e4b630c1f7",
+    "cooked-colliders-v33.json": "ccade4842d337c6cb0f56b91c1f3ac7faf6cece0d5da07dbe0b8d4589185a4ea",
+    "runtime-check.json": "68024dcaf569645c45eba0a5700bed5a38762b6817e88695585a99c6cdbef828",
+    "independent-readback-audit.json": "4041142fcda7706fd46ab027c46d69747c22ccaee00d53a64f8fc8a428ded4ad",
+    "first-attempt-failure.log": "f753e1385ca45a831522a4ab969715867bdb6fec02e9776c9ccb8b4d8a5f9996",
+    "motion-evaluator.py": "0943563094b042d61995a69c8fcdbd9047937b2d66765c65965cb606558444b5"
+  },
+  "physical_task_accepted": false,
+  "clean_reproducibility_repeat_performed": false,
+  "original_worker_preserved": "tiwcn7kqpjt2zd",
+  "whole_task_run": "supported-task-v5",
+  "cooked_geometry_run": "supported-task-v3",
+  "complete_remote_SDK_report_and_failed_attempt_closure_recovered": false,
+  "experimental_v6_remote_result_recovered": false,
+  "raw_measurements": {
+    "path": "supported-task-measurements-v35.tar.gz",
+    "bytes": 3686016,
+    "sha256": "c9cad3911a1a29a35d1bfa1a2fab36a40a2e7e737b57040d4dcc4e89111232df"
+  },
+  "source_motion_evaluator": {
+    "path": "motion-evaluator.py",
+    "sha256": "0943563094b042d61995a69c8fcdbd9047937b2d66765c65965cb606558444b5"
+  },
+  "videos": {
+    "actual": {
+      "path": "supported-task-v35.mp4",
+      "bytes": 7539608,
+      "sha256": "e20b57df37b098b4bd6f01c3cc10d0932db332197665c4c504bf27606091a927"
+    },
+    "source_comparison": {
+      "path": "source-vs-dynamic-task-failure.mp4",
+      "bytes": 4206879,
+      "sha256": "59738fa5ef2af14f1ca707624e1af7a1ced61c8293df62d345c947ca3baed42b"
+    }
+  },
+  "unverified_experimental_executor": {
+    "local_preserved_path": "C:\\Users\\evanc\\OneDrive\\Desktop\\Nvidia V2D\\runs\\dex3-baseline-20261011\\supported-task-experimental-executor-v36.py",
+    "sha256": "1b93df68770501f3447bc22373ee97aef9f808bc4e2bb1742588e0e4bb2dcd44"
+  },
+  "current_executor_sha256": "25734a7d36bbfff9c05fd974070c533785da920fcfa70d18b29a070c4da33d07",
+  "exact_remote_v5_executor_digest_not_recovered": true
+}
