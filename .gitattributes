@@ -1,6 +1,10 @@
 # Universal LFS rules (used by 2+ packages). Package-specific path rules
 # live in each subproject's own .gitattributes.
 docs/team/reproduction/dex3-motion-replay/support-height-uncertainty-probe-v1.py -text
+docs/team/reproduction/dex3-motion-replay/support-existing-object-smoother-probe-v1.py -text
+scripts/eval/score_candidate.py -text whitespace=cr-at-eol
+scripts/eval/relative_object_accuracy.py -text whitespace=cr-at-eol
+scripts/eval/relative_object_accuracy.requirements.txt text eol=lf
 
 # 3D mesh formats
 *.obj filter=lfs diff=lfs merge=lfs -text

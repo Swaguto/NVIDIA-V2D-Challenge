@@ -1,0 +1,39 @@
+{
+  "schema": "v2d.public-reference-input-lock.v1",
+  "dataset": "nvidia/video_to_data_challenge",
+  "revision": "5f68335f3acc802033d1e80728c1633197521de8",
+  "license": "CC-BY-4.0",
+  "attribution": "NVIDIA, video_to_data_challenge Track 3 public object trajectories and scanned meshes",
+  "readme_url": "https://huggingface.co/datasets/nvidia/video_to_data_challenge/blob/5f68335f3acc802033d1e80728c1633197521de8/track_3/README.md",
+  "files": [
+    {
+      "source_url": "https://huggingface.co/datasets/nvidia/video_to_data_challenge/resolve/5f68335f3acc802033d1e80728c1633197521de8/track_3/public/data/chunk-000/episode_000002.parquet",
+      "relative_path": "data/chunk-000/episode_000002.parquet",
+      "bytes": 38502,
+      "sha256": "a1cd007e34edbdaa51138c168312ad4f0bb6e60ed65b52e72d253d6f949ae00b",
+      "server_LFS_hash_verified": true
+    },
+    {
+      "source_url": "https://huggingface.co/datasets/nvidia/video_to_data_challenge/resolve/5f68335f3acc802033d1e80728c1633197521de8/track_3/public/meta/info.json",
+      "relative_path": "meta/info.json",
+      "bytes": 4487,
+      "sha256": "37d81af0bf3554ffb65cbb36967c3a3b5709a9b037ac0e2fde19ed5e3c2e204c",
+      "server_LFS_hash_verified": false
+    },
+    {
+      "source_url": "https://huggingface.co/datasets/nvidia/video_to_data_challenge/resolve/5f68335f3acc802033d1e80728c1633197521de8/track_3/public/mesh/white_pot/white_pot.glb",
+      "relative_path": "mesh/white_pot/white_pot.glb",
+      "bytes": 8948208,
+      "sha256": "2627b01350864cc7f52540cb1ccfb9d67544e245d7061d8e313ecfd9d3eb5151",
+      "server_LFS_hash_verified": true
+    },
+    {
+      "source_url": "https://huggingface.co/datasets/nvidia/video_to_data_challenge/resolve/5f68335f3acc802033d1e80728c1633197521de8/track_3/public/mesh/white_pot_lid/white_pot_lid.glb",
+      "relative_path": "mesh/white_pot_lid/white_pot_lid.glb",
+      "bytes": 8262028,
+      "sha256": "672a2965dd785fc958db39a2ce94a6df215f58dfdfafedf7dd193ffc6d83b363",
+      "server_LFS_hash_verified": true
+    }
+  ],
+  "scope": "public e002 object reference only, never hand or support ground truth"
+}

@@ -14,6 +14,11 @@ records the later complete 343-frame source comparison inspection, remaining
 posture/support/contact uncertainty and requirement-by-requirement goal status.
 It does not change the frozen experiment or approve physical motion targets.
 
+The later [public-object accuracy check](PUBLIC_OBJECT_ACCURACY_2026-10-13.md)
+uses organizer MoCap with locked public inputs through the existing evaluation
+tool. It includes measured relative-pose errors, Linux/Windows agreement,
+reference repetition diagnostics and a rejected default smoother experiment.
+
 The team bundles are in [Google Drive](https://drive.google.com/drive/folders/1aie0RV1jJ_XxF5ddJbGVRpJskdi4IMmA).
 Sign in with the account listed on the shared project document. The nine named
 teammates have read access; the folder is restricted. Download the four archives

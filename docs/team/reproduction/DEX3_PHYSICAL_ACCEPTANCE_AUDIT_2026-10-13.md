@@ -12,6 +12,14 @@ proofs, videos and nine artifact hashes are unchanged. The new
 [complete source-review receipt](dex3-motion-replay/support-full-source-comparison-review-v2.json)
 records this later inspection separately from the original frozen review.
 
+The later [public object accuracy check](PUBLIC_OBJECT_ACCURACY_2026-10-13.md)
+supersedes the earlier claim that an independent object reference was unavailable.
+Organizer public MoCap allows a scan-frame relative-pose comparison: observed
+median translation error is 6.774 mm and orientation error 3.582 degrees.
+The largest 62.936 mm discrepancy overlaps exact repeated reference poses and
+needs source/timing diagnosis. All reference rows remain included. Hand/support
+measurements and physical acceptance are unchanged.
+
 ## Requirement-by-requirement result
 
 | Goal requirement | Evidence | Disposition |
@@ -22,7 +30,7 @@ records this later inspection separately from the original frozen review.
 | Reproduce the development reconstruction | [15-stage receipt](dex3-motion-replay/support-reconstruction-receipt-v3.json), locked kit/input hashes, actual fresh Linux execution and negative controls | Complete at the documented fitted-input boundary; raw inference/searches are not repeated |
 | Show actual Dex3 in Isaac without artificial hand on/off flicker | Published 343-frame Isaac video, readback, independent A40/Windows audits and all-frame visual inspection | Complete for this sequence; cropping, occlusion and posture changes are separate |
 | Check and fix hand placement against source | All 343 comparison rows inspected, prior full-resolution contact/free-motion diagnostics, bounded CAD fits and free-path repairs | Checks and model repairs complete; source hand/finger accuracy remains unproven and mixed |
-| Check object tracking against source | Held-out calibration guards rejected proposed alternatives; original object tracks retained. Source-depth median absolute residuals: pot 12.923 mm, lid 6.538 mm | Checked; no independently verified object pose or support height |
+| Check object tracking against source | Calibration/image guards retain original tracks. Later organizer MoCap relative check: observed median 6.774 mm / 3.582 degrees; all 343 records repeated on Linux and Windows. Largest discrepancy overlaps repeated reference values | Independently checked relative scan poses; absolute placement and support height remain unverified |
 | Check contact timing against source | Read-only source annotation supports 375/381 labeled core states; left 46,272,332,333 and right 46,309 remain unsupported | Checked; six states remain unaccepted, labels never drive fitting |
 | Check and fix penetration | All 3,955 segments pass original CAD/estimated-sheet and declared material/self/cross checks; 377 closed anchors retained. An 8 mm hypothetical sheet shift causes crossings at six of seven automatically selected witnesses | Complete for the original models; robustness to recorded support-height uncertainty fails at selected witnesses |
 | Provide reviewable methods and documentation | [Step-by-step guide](SUPPORT_AWARE_DEX3_REPLAY_2026-10-13.md), locked release inputs/methods/evidence, versioned receipts and PR #38 | Complete for fitted reconstruction/replay; no all-episode or private-evaluation guarantee |
@@ -124,9 +132,9 @@ not force-supported manipulation. Better visibility or another identical replay
 would not settle these issues.
 
 The unresolved acceptance condition is evidence for correct hand/object contact
-and physical clearance in one complete development task. New independently
-checkable geometry/pose observations, or a development recording that supplies
-those observations, would change the next action. Until then, preserve the
-refusals and uncertainty; do not relabel inferred poses as validated targets,
-adjust hashes, relax thresholds or call the full goal complete. Issue #9 remains
-deferred. Untouched public/private episode validation and scoring are not claimed.
+and physical clearance in one complete development task. The public object
+reference narrows the diagnosis; next work must improve source-supported hand
+placement/timing and clearance under support uncertainty. Preserve the refusals
+and uncertainty; do not relabel inferred poses as validated targets, alter frozen
+hashes, relax thresholds or call the full goal complete. Issue #9 remains deferred.
+Untouched public/private episode validation and scoring are not claimed.
