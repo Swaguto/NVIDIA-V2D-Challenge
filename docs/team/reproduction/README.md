@@ -28,6 +28,12 @@ The [final-fit contact audit](FUNCTIONAL_DEX3_CONTACT_AUDIT_2026-10-13.md)
 binds the contact checker to the actual CAD fit, confirms 377 closed states
 and identifies six missed source-labeled grasp states without changing motion.
 
+The later [static physical load diagnostic](STATIC_DEX3_LOAD_DIAGNOSTIC_2026-10-14.md)
+adds a mode to the existing simulator wrapper. Gravity/contact controls and
+independent initial-link checks pass; two runs repeat exactly. Four unsupported
+grasp starts fail under the documented assumptions, so this does not approve
+physical targets, complete the task, or establish a challenge score.
+
 The team bundles are in [Google Drive](https://drive.google.com/drive/folders/1aie0RV1jJ_XxF5ddJbGVRpJskdi4IMmA).
 Sign in with the account listed on the shared project document. The nine named
 teammates have read access; the folder is restricted. Download the four archives
