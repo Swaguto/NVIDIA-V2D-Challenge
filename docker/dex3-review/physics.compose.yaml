@@ -1,0 +1,20 @@
+# Overlay on compose.yaml. Uses the published runtime plus read-only candidate code.
+services:
+  physics:
+    extends:
+      file: compose.yaml
+      service: review
+    build: !reset null
+    entrypoint: [/opt/sim/bin/python, /code/scripts/dex3_physics/run_container.py]
+    command: [--help]
+    volumes:
+      - type: bind
+        source: ${V2D_CODE_DIR:?Set V2D_CODE_DIR to this repository checkout}
+        target: /code
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${V2D_PHYSICS_ARCHIVE:?Set V2D_PHYSICS_ARCHIVE to the verified support-input archive}
+        target: /physics-inputs/input-pack.tar.gz
+        read_only: true
+        bind: {create_host_path: false}

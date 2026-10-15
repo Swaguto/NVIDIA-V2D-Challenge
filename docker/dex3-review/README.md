@@ -164,6 +164,12 @@ timebase mismatch. A package refuses mixed input/retarget/simulator manifests.
 Existing outputs cause failure; inspect partial failures and choose another output
 rather than silently overwriting them. A completed package still needs visual review.
 
+To verify a teammate's frozen-target delivery against the preserved inputs and
+original readback tolerances, run `scripts/dex3_review/verify_reproduction.py`.
+The separate [physics validation stages](../../docs/team/dex3-isaac-review/PHYSICS_VALIDATION.md)
+use an explicit overlay and candidate source mount; the preview commands above
+remain kinematic.
+
 ## 5. Native continuity repair from the original cache
 
 The native image can check its 35 installed runtime pins without loading MANO weights:

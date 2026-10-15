@@ -72,12 +72,31 @@ def prepare(
     out: Path,
     *,
     task_motion: Path | None = None,
+    controller_mode: str = "project_pd",
+    free_space: bool = False,
+    source_duration_s: float | None = None,
+    physics_dt: float = 0.01,
 ) -> dict:
     """Validate byte/coordinate contracts and build portable nominal load inputs."""
     import numpy as np
     import trimesh
     from scipy.spatial.transform import Rotation
 
+    if controller_mode not in {"project_pd", "implicit_pd"}:
+        raise ValueError("Unknown wrist controller")
+    if not math.isfinite(physics_dt) or not 0 < physics_dt <= 0.01:
+        raise ValueError("Physics dt must be finite and in (0, 0.01]")
+    if source_duration_s is not None and (
+        not math.isfinite(source_duration_s) or source_duration_s < 0.5
+    ):
+        raise ValueError("Diagnostic source duration must be at least 0.5 seconds")
+    if task_motion is None and (
+        controller_mode != "project_pd"
+        or free_space
+        or source_duration_s is not None
+        or physics_dt != 0.01
+    ):
+        raise ValueError("Wrist diagnostic options require supported-task mode")
     if out.exists():
         raise FileExistsError("Use a fresh load-input directory")
     files = json.loads((case / "file-manifest.json").read_text())["files_sha256"]
@@ -303,6 +322,25 @@ def prepare(
                 / "robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d/mdp/actions/actions_cfg.py"
             ),
             source_motion_speed=0.5,
+            wrist_diagnostic={
+                "controller": controller_mode,
+                "free_space": free_space,
+                "source_duration_s": source_duration_s,
+                "physics_dt_s": physics_dt,
+                "initial_free_space_position_offset_world_m": [0.01, 0.0, 0.0]
+                if free_space
+                else [0.0, 0.0, 0.0],
+                "initial_free_space_rotation_offset_world_rotvec_rad": [
+                    0.08726646259971647,
+                    0.0,
+                    0.0,
+                ]
+                if free_space
+                else [0.0, 0.0, 0.0],
+                "candidate_controller_sha256": digest(
+                    Path(__file__).with_name("_dex3_wrist_control.py")
+                ),
+            },
         )
     write(out / "manifest.json", result)
     return result
@@ -436,7 +474,8 @@ def execute(
         namespace,
     )
     preset = namespace["RIGID_OBJECT_CFG"]
-    dt = 0.01  # Existing V2DHandEnvCfg simulation step.
+    diagnostic = prepared.get("wrist_diagnostic", {})
+    dt = diagnostic.get("physics_dt_s", 0.01)
     sim_cfg = sim_utils.SimulationCfg(
         dt=dt,
         device=device,
@@ -758,6 +797,12 @@ def execute(
                     PhysxSchema.PhysxContactReportAPI.Apply(prim).CreateThresholdAttr(
                         0.0
                     )
+    if diagnostic.get("free_space", False):
+        for hand in hands:
+            sim_utils.modify_collision_properties(
+                hand.cfg.prim_path,
+                sim_utils.CollisionPropertiesCfg(collision_enabled=False),
+            )
     sim.reset()
     for camera, position in [] if task_mode else cameras:
         camera.set_world_poses_from_view(
@@ -1048,6 +1093,16 @@ def run_supported_task(
     )
     from PIL import Image, ImageDraw
     from scipy.spatial.transform import Rotation
+    from _dex3_wrist_control import finger_position_target, implicit_root_wrench
+
+    diagnostic = prepared.get("wrist_diagnostic", {})
+    controller_mode = diagnostic.get("controller", "project_pd")
+    candidate_file = Path(__file__).with_name("_dex3_wrist_control.py")
+    if (
+        diagnostic
+        and digest(candidate_file) != diagnostic["candidate_controller_sha256"]
+    ):
+        raise ValueError("Experimental wrist controller changed after preparation")
 
     def load_module(name, path):
         spec = importlib.util.spec_from_file_location(name, path)
@@ -1178,6 +1233,35 @@ def run_supported_task(
     for hand, sample, order in zip(
         hands, prepared["samples"], joint_order, strict=True
     ):
+        # Kit startup may advance a floating hand before the controller exists.
+        # Reset each hand once to the declared initial root pose and zero velocity.
+        initial = controller_tensor(hand.data.default_root_state).clone()
+        initial[:, :3] = torch.tensor(
+            sample["hand_position_stage_m"], device=sim.device
+        )
+        initial[:, 3:7] = torch.tensor(
+            sample["hand_quaternion_stage_xyzw"], device=sim.device
+        )
+        if diagnostic.get("free_space", False):
+            initial[:, :3] += torch.tensor(
+                diagnostic["initial_free_space_position_offset_world_m"],
+                device=sim.device,
+            )
+            initial[:, 3:7] = torch.tensor(
+                (
+                    Rotation.from_rotvec(
+                        diagnostic[
+                            "initial_free_space_rotation_offset_world_rotvec_rad"
+                        ]
+                    )
+                    * Rotation.from_quat(sample["hand_quaternion_stage_xyzw"])
+                ).as_quat(),
+                dtype=torch.float32,
+                device=sim.device,
+            )
+        initial[:, 7:] = 0
+        hand.write_root_state_to_sim(initial)
+        hand.reset()
         q = torch.tensor(
             np.asarray(sample["finger_target_rad"])[order][None],
             dtype=torch.float32,
@@ -1205,6 +1289,11 @@ def run_supported_task(
     )
     print("Cooked collision representation captured", flush=True)
     source_times = source["timestamps_s"]
+    original_source_frames = len(source_times)
+    if diagnostic.get("source_duration_s") is not None:
+        source_times = source_times[
+            source_times <= source_times[0] + diagnostic["source_duration_s"] + 1e-10
+        ]
     speed = prepared["source_motion_speed"]
     dt = sim.get_physics_dt()
     steps = int(np.ceil((source_times[-1] - source_times[0]) / speed / dt))
@@ -1244,7 +1333,9 @@ def run_supported_task(
             )
             desired, _kinds, _details = motion.evaluate(timestamp)
             for si, (hand, order) in enumerate(zip(hands, joint_order, strict=True)):
-                enabled = not bool(display[index, si])
+                enabled = not diagnostic.get("free_space", False) and not bool(
+                    display[index, si]
+                )
                 if collision_state[si] != enabled:
                     sim_utils.modify_collision_properties(
                         hand.cfg.prim_path,
@@ -1265,27 +1356,65 @@ def run_supported_task(
                 finger_target = torch.tensor(
                     desired[si, 7:][order][None], dtype=torch.float32, device=sim.device
                 )
-                force, torque, fingers = (
-                    controller._compute_wrist_wrench_and_finger_target(
-                        wrist_position=controller_tensor(hand.data.root_link_pos_w),
-                        wrist_wxyz=controller_tensor(hand.data.root_link_quat_w),
-                        wrist_link_vel_w=controller_tensor(
-                            hand.data.root_com_vel_w
-                        ).clone(),
-                        wrist_link_quat_w=controller_tensor(hand.data.root_link_quat_w),
-                        wrist_com_pos_b=com_positions[si],
-                        wrist_pose_target=target,
-                        finger_joint_target=finger_target,
-                        gravity_comp_e=controller_tensor(
+                control_details = None
+                if controller_mode == "project_pd":
+                    force, torque, fingers = (
+                        controller._compute_wrist_wrench_and_finger_target(
+                            wrist_position=controller_tensor(hand.data.root_link_pos_w),
+                            wrist_wxyz=controller_tensor(hand.data.root_link_quat_w),
+                            wrist_link_vel_w=controller_tensor(
+                                hand.data.root_com_vel_w
+                            ).clone(),
+                            wrist_link_quat_w=controller_tensor(
+                                hand.data.root_link_quat_w
+                            ),
+                            wrist_com_pos_b=com_positions[si],
+                            wrist_pose_target=target,
+                            finger_joint_target=finger_target,
+                            gravity_comp_e=controller_tensor(
+                                hand.root_physx_view.get_gravity_compensation_forces()
+                            ),
+                            joint_damping=controller_tensor(hand.data.joint_damping),
+                            joint_vel=controller_tensor(hand.data.joint_vel),
+                            joint_effort_limits=controller_tensor(
+                                hand.data.joint_effort_limits
+                            ),
+                            joint_stiffness=controller_tensor(
+                                hand.data.joint_stiffness
+                            ),
+                            joint_pos=controller_tensor(hand.data.joint_pos),
+                            linear_stiffness=gains[
+                                "tracking_controller_linear_stiffness"
+                            ],
+                            linear_damping=gains["tracking_controller_linear_damping"],
+                            angular_stiffness=gains[
+                                "tracking_controller_angular_stiffness"
+                            ],
+                            angular_damping=gains[
+                                "tracking_controller_angular_damping"
+                            ],
+                            max_force=gains["max_force"],
+                            max_torque=gains["max_torque"],
+                        )
+                    )
+                    is_global = False
+                else:
+
+                    def cpu(value):
+                        return controller_tensor(value).detach().cpu().numpy()
+
+                    wrench, control_details = implicit_root_wrench(
+                        link_pose_xyzw=cpu(hand.data.root_link_pose_w)[0],
+                        target_link_pose_xyzw=target_pose,
+                        root_com_offset_b=cpu(com_positions[si])[0],
+                        root_com_velocity_w=cpu(hand.data.root_com_vel_w)[0],
+                        root_mass_matrix_w=cpu(
+                            hand.root_physx_view.get_generalized_mass_matrices()
+                        )[0, :6, :6],
+                        gravity_compensation_w=cpu(
                             hand.root_physx_view.get_gravity_compensation_forces()
-                        ),
-                        joint_damping=controller_tensor(hand.data.joint_damping),
-                        joint_vel=controller_tensor(hand.data.joint_vel),
-                        joint_effort_limits=controller_tensor(
-                            hand.data.joint_effort_limits
-                        ),
-                        joint_stiffness=controller_tensor(hand.data.joint_stiffness),
-                        joint_pos=controller_tensor(hand.data.joint_pos),
+                        )[0, :6],
+                        dt=dt,
                         linear_stiffness=gains["tracking_controller_linear_stiffness"],
                         linear_damping=gains["tracking_controller_linear_damping"],
                         angular_stiffness=gains[
@@ -1295,7 +1424,25 @@ def run_supported_task(
                         max_force=gains["max_force"],
                         max_torque=gains["max_torque"],
                     )
-                )
+                    force = torch.tensor(
+                        wrench[None, :3], dtype=torch.float32, device=sim.device
+                    )
+                    torque = torch.tensor(
+                        wrench[None, 3:], dtype=torch.float32, device=sim.device
+                    )
+                    fingers = torch.tensor(
+                        finger_position_target(
+                            cpu(finger_target),
+                            cpu(hand.data.joint_pos),
+                            cpu(hand.data.joint_vel),
+                            cpu(hand.data.joint_stiffness),
+                            cpu(hand.data.joint_damping),
+                            cpu(hand.data.joint_effort_limits),
+                        ),
+                        dtype=torch.float32,
+                        device=sim.device,
+                    )
+                    is_global = True
                 if not all(
                     torch.isfinite(value).all() for value in (force, torque, fingers)
                 ):
@@ -1304,7 +1451,7 @@ def run_supported_task(
                     forces=force[:, None, :],
                     torques=torque[:, None, :],
                     body_ids=[0],
-                    is_global=False,
+                    is_global=is_global,
                 )
                 hand.set_joint_position_target(fingers)
                 hand.write_data_to_sim()
@@ -1313,7 +1460,8 @@ def run_supported_task(
                         "step": step,
                         "source_time_s": timestamp,
                         "side": ("left", "right")[si],
-                        "display_only": not enabled,
+                        "display_only": bool(display[index, si]),
+                        "collisions_enabled": enabled,
                         "source_hand_valid": bool(source["hand_valid"][index, si]),
                         "source_directly_observed": bool(
                             source["hand_directly_observed"][index, si]
@@ -1339,11 +1487,25 @@ def run_supported_task(
                         if step % 10 == 0 or step == steps
                         else None,
                         "finger_joint_names": hand.joint_names,
-                        "applied_wrist_force_local_N": force[0].cpu().numpy().tolist(),
-                        "applied_wrist_torque_local_Nm": torque[0]
+                        "applied_wrist_force_world_N"
+                        if is_global
+                        else "applied_wrist_force_local_N": force[0]
                         .cpu()
                         .numpy()
                         .tolist(),
+                        "applied_wrist_torque_world_Nm"
+                        if is_global
+                        else "applied_wrist_torque_local_Nm": torque[0]
+                        .cpu()
+                        .numpy()
+                        .tolist(),
+                        "root_com_velocity_world": controller_tensor(
+                            hand.data.root_com_vel_w
+                        )[0]
+                        .cpu()
+                        .numpy()
+                        .tolist(),
+                        "controller_details": control_details,
                         "object_normal_contact_force_N": contact_views[si]
                         .get_contact_force_matrix(dt)
                         .numpy()
@@ -1457,7 +1619,7 @@ def run_supported_task(
                 draw.rectangle((0, 0, camera_cfg["width"], 42), fill=(20, 20, 20))
                 draw.text(
                     (10, 7),
-                    f"Dynamic objects; project wrist controller; source frame {int(source['frame_indices'][source_row])}; t={timestamp:.2f}s",
+                    f"{'FREE SPACE' if diagnostic.get('free_space') else 'Dynamic objects'}; {controller_mode}; source frame {int(source['frame_indices'][source_row])}; t={timestamp:.2f}s",
                     fill=(255, 255, 255),
                 )
                 writer.append_data(np.asarray(rgb))
@@ -1535,6 +1697,11 @@ def run_supported_task(
             "inputs_manifest_sha256": digest(inputs / "manifest.json"),
             "controller_source_sha256": digest(controller_file),
             "controller_gains": gains,
+            "wrist_diagnostic": diagnostic,
+            "full_source_frames": original_source_frames,
+            "complete_source_episode": len(frames) == original_source_frames,
+            "physics_dt_s": dt,
+            "initial_hand_root_reset_performed": True,
             "collision_evidence_source_sha256": digest(
                 Path(__file__).with_name("_dex3_collision_evidence.py")
             ),

@@ -67,6 +67,22 @@ def main():
     parser.add_argument("--support-plane-sha256")
     parser.add_argument("--supported-task-check", action="store_true")
     parser.add_argument("--task-motion-evaluator", type=Path)
+    parser.add_argument(
+        "--wrist-controller",
+        choices=["project_pd", "implicit_pd"],
+        default="project_pd",
+    )
+    parser.add_argument(
+        "--free-space",
+        action="store_true",
+        help="Disable hand collisions for controller isolation only",
+    )
+    parser.add_argument(
+        "--source-duration-s",
+        type=float,
+        help="Explicit partial diagnostic duration; never full-task acceptance",
+    )
+    parser.add_argument("--physics-dt", type=float, default=0.01)
     args = parser.parse_args()
     if args.static_load_check and args.supported_task_check:
         parser.error("Choose one physical diagnostic mode")
@@ -74,6 +90,13 @@ def main():
         parser.error(
             "--supported-task-check requires the frozen --task-motion-evaluator"
         )
+    if not args.supported_task_check and (
+        args.wrist_controller != "project_pd"
+        or args.free_space
+        or args.source_duration_s is not None
+        or args.physics_dt != 0.01
+    ):
+        parser.error("Wrist controller options require --supported-task-check")
     if (args.archive is None) == (args.verified_case is None):
         parser.error("Provide exactly one --archive or --verified-case")
     if args.archive is not None and args.sha256 is None:
@@ -136,6 +159,10 @@ def main():
             task_motion=args.task_motion_evaluator.resolve()
             if args.supported_task_check
             else None,
+            controller_mode=args.wrist_controller,
+            free_space=args.free_space,
+            source_duration_s=args.source_duration_s,
+            physics_dt=args.physics_dt,
         )
         print("Prepared source-derived static grasps: " + str(len(prepared["samples"])))
     if args.check_only:
