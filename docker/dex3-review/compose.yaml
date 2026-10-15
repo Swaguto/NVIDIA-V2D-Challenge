@@ -7,6 +7,8 @@ services:
       context: ../..
       dockerfile: docker/dex3-review/Dockerfile
       target: ik
+      args:
+        VCS_REF: ${V2D_CODE_COMMIT:-unknown}
     volumes:
       - type: bind
         source: ${V2D_DATA_DIR:?Set V2D_DATA_DIR to the extracted private pack}
@@ -61,6 +63,8 @@ services:
     build:
       context: ../..
       dockerfile: docker/dex3-review/Dockerfile.continuity
+      args:
+        VCS_REF: ${V2D_CODE_COMMIT:-unknown}
     deploy:
       resources:
         reservations:

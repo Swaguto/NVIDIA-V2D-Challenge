@@ -19,6 +19,9 @@ COPY reconstruction/validation/issue6 /opt/v2d/reconstruction/validation/issue6
 COPY scripts/dex3_review /opt/v2d/scripts/dex3_review
 COPY robotic_grounding/source/robotic_grounding/robotic_grounding /opt/v2d/robotic_grounding/source/robotic_grounding/robotic_grounding
 RUN python -c 'import numpy,scipy,torch,trimesh,pyrender; print("Continuity base imports passed")'
+ARG VCS_REF=unknown
+LABEL org.opencontainers.image.revision=$VCS_REF \
+    org.opencontainers.image.source="https://github.com/Swaguto/NVIDIA-V2D-Challenge"
 WORKDIR /opt/v2d
 # Exact MANO code/weights and native cache are explicit private mounts, never image layers.
 ENTRYPOINT ["python", "/opt/v2d/reconstruction/validation/issue6/repair_hand_continuity.py"]

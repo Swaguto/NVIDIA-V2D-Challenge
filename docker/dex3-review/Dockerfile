@@ -30,6 +30,9 @@ COPY robotic_grounding/scripts/retarget /opt/v2d/robotic_grounding/scripts/retar
 COPY scripts/dex3_review /opt/v2d/scripts/dex3_review
 ENV PYTHONPATH=/opt/v2d/robotic_grounding/source/robotic_grounding PATH=/opt/ik/bin:$PATH
 RUN /opt/ik/bin/python -c 'import pinocchio,pink,viser,torch; print("IK imports passed")'
+ARG VCS_REF=unknown
+LABEL org.opencontainers.image.revision=$VCS_REF \
+    org.opencontainers.image.source="https://github.com/Swaguto/NVIDIA-V2D-Challenge"
 ENTRYPOINT ["/usr/local/bin/python", "/opt/v2d/scripts/dex3_review/container.py"]
 CMD ["doctor", "--runtime", "ik"]
 
