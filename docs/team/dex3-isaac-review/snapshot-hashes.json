@@ -115,5 +115,6 @@
   "docs/team/dex3-isaac-review/receipts/e002/numerical-checks.json": "e810f1f6f288f635cf0e762bc069c83a1d6d88f8bb29bb6e9cf07807a51b8600",
   "docs/team/dex3-isaac-review/receipts/e002/delivery-hashes.json": "9131abda4cf693c0ec0fe3b8f99fdbe68371fe6568bcc8c7459f172e43e7bda5",
   "docs/team/dex3-isaac-review/receipts/e002/retarget-quality.json": "2185e40cc4fdb975be07a5aa387b344751b1b6bd92605f8f7cd95c2307c57c98",
-  "docs/team/dex3-isaac-review/receipts/e002/media-verification.json": "d05bd39832b8a610bcdaa5298e34481892c78fb0d764a94ee2e8d5f8a679bff9"
+  "docs/team/dex3-isaac-review/receipts/e002/media-verification.json": "d05bd39832b8a610bcdaa5298e34481892c78fb0d764a94ee2e8d5f8a679bff9",
+  "scripts/dex3_review/frozen/setup_sim6_original.py": "1db88a92e53714336b0abdc613110b9881751892abd477da6ce063e87e0e72ad"
 }

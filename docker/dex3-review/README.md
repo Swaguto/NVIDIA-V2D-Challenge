@@ -131,8 +131,12 @@ The small replay pack starts **after** human fitting. To rerun that fitting, als
 migrate the original `/workspace/hand-continuity-repair` workspace with its native
 input cache, licensed local assets, source-image mask/anchor observations and
 `runtime-additions`. Preserve absolute symlink targets by mounting the migrated
-workspace at the same container path. Keep the existing pod/volume until a verified
-copy and the new results have been checked. Exclude disposable installed virtual
+workspace at the same container path. The source audit found 3,336 symlinks and no external or broken targets in the
+scanned native input/runtime/ROI roots. This is a link audit, not proof that all
+episode inputs exist (e039 remains missing). Run
+`python3 scripts/dex3_review/audit_workspace_links.py --root YOUR_WORKSPACE`
+after transfer. Keep the existing pod/volume until a verified copy and the new
+results have been checked. Exclude disposable installed virtual
 environments from transfer if desired; preserve inputs, outputs, receipts and models.
 
 `continuity-runtime-sources-v2.tar.gz` and its committed hash inventory preserve

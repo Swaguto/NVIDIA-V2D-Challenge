@@ -1,0 +1,8 @@
+{
+  "scope": "Native inputs, runtime-additions and ROI recovery; installed virtual environments are excluded",
+  "workspace": "/workspace/hand-continuity-repair",
+  "symlinks_checked": 3336,
+  "external_or_broken_links": [],
+  "no_external_or_broken_links_in_scanned_roots": true,
+  "not_a_complete_input_audit": true
+}
