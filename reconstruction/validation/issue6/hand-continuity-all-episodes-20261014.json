@@ -1,0 +1,1179 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-14",
+  "code_base": "3db10766bf09bca10fe1b452afe5c78e1649c870",
+  "repair_commit": "c5b220752233505587371f11ce0c3b84254eeb09",
+  "available_episodes_processed": 19,
+  "unavailable": {
+    "e039": {
+      "source_frames": 319,
+      "reason": "Recovered cache missing depth, hands and saved temporal fit; original source pod unavailable; user confirms no backup"
+    }
+  },
+  "totals": {
+    "source_frames": 4927,
+    "baseline_hand_frames": 5739,
+    "repaired_hand_frames": 9202,
+    "baseline_internal_gaps": 295,
+    "repaired_internal_gaps": 5,
+    "stereo_supported_hand_frames": 5893
+  },
+  "episodes": {
+    "e000": {
+      "source_frames": 373,
+      "cohort": "general review runner",
+      "additional_fresh_image_recovery": false,
+      "hands": {
+        "left": {
+          "baseline_visual": {
+            "frames": 231,
+            "internal_gaps": 5
+          },
+          "repaired_visual": {
+            "frames": 278,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 236,
+          "unknown_intervals": [
+            [
+              0,
+              6
+            ],
+            [
+              285,
+              372
+            ]
+          ]
+        },
+        "right": {
+          "baseline_visual": {
+            "frames": 124,
+            "internal_gaps": 14
+          },
+          "repaired_visual": {
+            "frames": 281,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 124,
+          "unknown_intervals": [
+            [
+              0,
+              7
+            ],
+            [
+              289,
+              372
+            ]
+          ]
+        }
+      },
+      "receipt_sha256": "4a3222c46d20ba3fab0cabd3dd04e94eb8c7c29b45ef1eb97c3a306ecc58edf3",
+      "media": {
+        "baseline-cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "18.416007",
+          "nb_read_frames": "373",
+          "sha256": "b3f7e65a69b1ab8f4e9b6334293762e94e693acd0ef47951724cac3e1c6851eb"
+        },
+        "cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "18.416007",
+          "nb_read_frames": "373",
+          "sha256": "3ad4da635cee0ed8294b24bc689dda4f86d2150ed994cfd1e1d36d58536f2844"
+        },
+        "hand-tracking.mp4": {
+          "width": 1280,
+          "height": 828,
+          "avg_frame_rate": "15940/787",
+          "duration": "18.415997",
+          "nb_read_frames": "373",
+          "sha256": "a8dc902df0bf117d724cb5f4d9043dbe7ae8403f7a98eb100aee6a58206c3ac2"
+        }
+      },
+      "review_status": "Reviewed: sampled source overlays"
+    },
+    "e002": {
+      "source_frames": 343,
+      "cohort": "general review runner",
+      "additional_fresh_image_recovery": false,
+      "hands": {
+        "left": {
+          "baseline_visual": {
+            "frames": 272,
+            "internal_gaps": 9
+          },
+          "repaired_visual": {
+            "frames": 338,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 273,
+          "unknown_intervals": [
+            [
+              0,
+              4
+            ]
+          ]
+        },
+        "right": {
+          "baseline_visual": {
+            "frames": 283,
+            "internal_gaps": 2
+          },
+          "repaired_visual": {
+            "frames": 337,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 283,
+          "unknown_intervals": [
+            [
+              0,
+              5
+            ]
+          ]
+        }
+      },
+      "receipt_sha256": "0671091ea86518624b82e2e47a40dc3d25825f7f338d80f7bc4fb11e551d5f61",
+      "media": {
+        "baseline-cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "16.934827",
+          "nb_read_frames": "343",
+          "sha256": "c2fb84de348236d1062888e1ecdf71ec627984e273a6f6dcb64554042729f5d4"
+        },
+        "cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "16.934827",
+          "nb_read_frames": "343",
+          "sha256": "4c5d3daf3e5dbccf0b104da068ed8d980ef0f2395c981ec9733fc832004a1c68"
+        },
+        "hand-tracking.mp4": {
+          "width": 1280,
+          "height": 828,
+          "avg_frame_rate": "247627/12226",
+          "duration": "16.934817",
+          "nb_read_frames": "343",
+          "sha256": "0a55489677db4d6c681fe3e4f767a19ba1cd720804f8db3291708ea46e5e6a18"
+        }
+      },
+      "review_status": "Reviewed: sampled source overlays"
+    },
+    "e011": {
+      "source_frames": 137,
+      "cohort": "general review runner",
+      "additional_fresh_image_recovery": false,
+      "hands": {
+        "left": {
+          "baseline_visual": {
+            "frames": 133,
+            "internal_gaps": 3
+          },
+          "repaired_visual": {
+            "frames": 137,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 133,
+          "unknown_intervals": []
+        },
+        "right": {
+          "baseline_visual": {
+            "frames": 122,
+            "internal_gaps": 9
+          },
+          "repaired_visual": {
+            "frames": 134,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 122,
+          "unknown_intervals": [
+            [
+              0,
+              2
+            ]
+          ]
+        }
+      },
+      "receipt_sha256": "abef6345d059a402e6fb49caa628c1ddff84542428ed0cfdfa6776feaa6e0731",
+      "media": {
+        "baseline-cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "6.764056",
+          "nb_read_frames": "137",
+          "sha256": "7917a52e2884259ed8269bc2d0e07a8a45eb567e1d5eafe6ad962b994411ac1e"
+        },
+        "cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "6.764056",
+          "nb_read_frames": "137",
+          "sha256": "e49b0cec7181247f1bb4add0420ac52e802e1004ca1444ef102eeef7f8866eee"
+        },
+        "hand-tracking.mp4": {
+          "width": 1280,
+          "height": 828,
+          "avg_frame_rate": "25743/1271",
+          "duration": "6.764052",
+          "nb_read_frames": "137",
+          "sha256": "9356e26277d3120dccd8faeef9d20720186dd71777e317df0466dcdabcb36d24"
+        }
+      },
+      "review_status": "Reviewed: sampled source overlays"
+    },
+    "e012": {
+      "source_frames": 181,
+      "cohort": "previous two-episode validation",
+      "additional_fresh_image_recovery": false,
+      "hands": {
+        "left": {
+          "baseline_visual": {
+            "frames": 90,
+            "internal_gaps": 8
+          },
+          "repaired_visual": {
+            "frames": 181,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 87,
+          "unknown_intervals": []
+        },
+        "right": {
+          "baseline_visual": {
+            "frames": 116,
+            "internal_gaps": 11
+          },
+          "repaired_visual": {
+            "frames": 181,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 118,
+          "unknown_intervals": []
+        }
+      },
+      "receipt_sha256": "227953fa0fe82ad6fbd9d80f03070a4458ffe42fb6a5741c8b930e3014327e03"
+    },
+    "e013": {
+      "source_frames": 190,
+      "cohort": "general review runner",
+      "additional_fresh_image_recovery": false,
+      "hands": {
+        "left": {
+          "baseline_visual": {
+            "frames": 156,
+            "internal_gaps": 5
+          },
+          "repaired_visual": {
+            "frames": 190,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 157,
+          "unknown_intervals": []
+        },
+        "right": {
+          "baseline_visual": {
+            "frames": 58,
+            "internal_gaps": 6
+          },
+          "repaired_visual": {
+            "frames": 163,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 61,
+          "unknown_intervals": [
+            [
+              0,
+              26
+            ]
+          ]
+        }
+      },
+      "receipt_sha256": "e1c08798ecf342fe288f5d69557306bf1850c757ea2d1d8264b04270b1608013",
+      "media": {
+        "baseline-cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "9.380808",
+          "nb_read_frames": "190",
+          "sha256": "c6d5aed84c440f5c92ff9fdafe3eb2d37daec53fe17c5e72b8e69281b6bde681"
+        },
+        "cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "9.380808",
+          "nb_read_frames": "190",
+          "sha256": "ebb4dc850be3632e25bf5e6772594fdf8830b5037d8a0480bfb53ba782b31d2e"
+        },
+        "hand-tracking.mp4": {
+          "width": 1280,
+          "height": 828,
+          "avg_frame_rate": "765991/37819",
+          "duration": "9.380802",
+          "nb_read_frames": "190",
+          "sha256": "4d9950c53b0e26592648137747409891c1ce0f914d91288851ac65490b53dc40"
+        }
+      },
+      "review_status": "Reviewed: sampled source overlays"
+    },
+    "e018": {
+      "source_frames": 353,
+      "cohort": "general review runner",
+      "additional_fresh_image_recovery": false,
+      "hands": {
+        "left": {
+          "baseline_visual": {
+            "frames": 290,
+            "internal_gaps": 12
+          },
+          "repaired_visual": {
+            "frames": 353,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 290,
+          "unknown_intervals": []
+        },
+        "right": {
+          "baseline_visual": {
+            "frames": 104,
+            "internal_gaps": 18
+          },
+          "repaired_visual": {
+            "frames": 353,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 116,
+          "unknown_intervals": []
+        }
+      },
+      "receipt_sha256": "2b9cad4b383fe72f4e7fdbf36b60d3cde7362fbd79cb32a850f300fd44860ddc",
+      "media": {
+        "baseline-cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "17.428554",
+          "nb_read_frames": "353",
+          "sha256": "d1d7e8d75905471cc5e940f211e353e482ab9b2619b058b9edc305be25ef47f6"
+        },
+        "cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "17.428554",
+          "nb_read_frames": "353",
+          "sha256": "b5f0ea59c609e595582d6c1bc3cb36be622bad66adc963a909c3b55239acc5b2"
+        },
+        "hand-tracking.mp4": {
+          "width": 1280,
+          "height": 828,
+          "avg_frame_rate": "974649/48121",
+          "duration": "17.428544",
+          "nb_read_frames": "353",
+          "sha256": "8aeee930ec9b81dfa6a3bb67b90c0283d0d74818ae7da4e80e8a2adc27f2962f"
+        }
+      },
+      "review_status": "Reviewed: sampled source overlays"
+    },
+    "e021": {
+      "source_frames": 186,
+      "cohort": "general review runner",
+      "additional_fresh_image_recovery": false,
+      "hands": {
+        "left": {
+          "baseline_visual": {
+            "frames": 69,
+            "internal_gaps": 4
+          },
+          "repaired_visual": {
+            "frames": 186,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 64,
+          "unknown_intervals": []
+        },
+        "right": {
+          "baseline_visual": {
+            "frames": 42,
+            "internal_gaps": 6
+          },
+          "repaired_visual": {
+            "frames": 73,
+            "internal_gaps": 1
+          },
+          "revalidated_metric_frames": 43,
+          "unknown_intervals": [
+            [
+              46,
+              158
+            ]
+          ]
+        }
+      },
+      "receipt_sha256": "939fee617f32f787417ec9a2d09374ef9417e3f290030b2cb0dc1f97d5383470",
+      "media": {
+        "baseline-cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "9.183317",
+          "nb_read_frames": "186",
+          "sha256": "0f6a2710998cf9ade1ba7dd0ab32db7ecb038b8487372f87324e777f398631ec"
+        },
+        "cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "9.183317",
+          "nb_read_frames": "186",
+          "sha256": "a55dabb08b506dea79a40a471bc05aefe1e8f2ffeff58c4a99422a66eda3840f"
+        },
+        "hand-tracking.mp4": {
+          "width": 1280,
+          "height": 828,
+          "avg_frame_rate": "376423/18585",
+          "duration": "9.183312",
+          "nb_read_frames": "186",
+          "sha256": "fc991cdd15a5e7edbe30722122909fb58cecd70997e2766bb36e564ed0bfa4f0"
+        }
+      },
+      "review_status": "Reviewed: unknown interval retained; support mixed"
+    },
+    "e022": {
+      "source_frames": 189,
+      "cohort": "general review runner",
+      "additional_fresh_image_recovery": false,
+      "hands": {
+        "left": {
+          "baseline_visual": {
+            "frames": 89,
+            "internal_gaps": 6
+          },
+          "repaired_visual": {
+            "frames": 189,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 89,
+          "unknown_intervals": []
+        },
+        "right": {
+          "baseline_visual": {
+            "frames": 62,
+            "internal_gaps": 2
+          },
+          "repaired_visual": {
+            "frames": 122,
+            "internal_gaps": 1
+          },
+          "revalidated_metric_frames": 63,
+          "unknown_intervals": [
+            [
+              0,
+              12
+            ],
+            [
+              51,
+              104
+            ]
+          ]
+        }
+      },
+      "receipt_sha256": "6a7694d3cf054d861f39870f81117199c028e9d8ada21d9351e7c837f1393cc6",
+      "media": {
+        "baseline-cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "9.331435",
+          "nb_read_frames": "189",
+          "sha256": "7736f6e8fb23a80745785571505223635ee1d815a8731bcc6020c4bd9e469f7b"
+        },
+        "cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "9.331435",
+          "nb_read_frames": "189",
+          "sha256": "7b9d82e7b8e523c8e8874c9eba1b2e4162bd6d0eb9f1b638a602d8dfa05e4bac"
+        },
+        "hand-tracking.mp4": {
+          "width": 1280,
+          "height": 828,
+          "avg_frame_rate": "64955/3207",
+          "duration": "9.331429",
+          "nb_read_frames": "189",
+          "sha256": "6c588e8ddcb211ce9ba118b1821ec854072e39221ef4c65de5ef77eafae8e91d"
+        }
+      },
+      "review_status": "Reviewed: unknown intervals retained"
+    },
+    "e023": {
+      "source_frames": 325,
+      "cohort": "general review runner",
+      "additional_fresh_image_recovery": false,
+      "hands": {
+        "left": {
+          "baseline_visual": {
+            "frames": 316,
+            "internal_gaps": 8
+          },
+          "repaired_visual": {
+            "frames": 325,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 316,
+          "unknown_intervals": []
+        },
+        "right": {
+          "baseline_visual": {
+            "frames": 99,
+            "internal_gaps": 10
+          },
+          "repaired_visual": {
+            "frames": 325,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 97,
+          "unknown_intervals": []
+        }
+      },
+      "receipt_sha256": "ef11ed8b6a1b2d6932e99599d2e8a4075e6a335eb9161bcb87f3955d5ba8b259",
+      "media": {
+        "baseline-cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "16.046119",
+          "nb_read_frames": "325",
+          "sha256": "06a1687cbd904db9fb347eabd5501b65011b982679436859ae7aad1e81e3f385"
+        },
+        "cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "16.046119",
+          "nb_read_frames": "325",
+          "sha256": "e6a30f25d1c9834313de2a79ee9c3facc873fa89ea9c5990ad3e6ed517e860e9"
+        },
+        "hand-tracking.mp4": {
+          "width": 1280,
+          "height": 828,
+          "avg_frame_rate": "753798/37217",
+          "duration": "16.046109",
+          "nb_read_frames": "325",
+          "sha256": "a96af2996cf30d2748d94ec1b1f1aa41db999c61b8855e98f5cf04c9938176bc"
+        }
+      },
+      "review_status": "Reviewed: visual continuity improved"
+    },
+    "e024": {
+      "source_frames": 275,
+      "cohort": "general review runner",
+      "additional_fresh_image_recovery": false,
+      "hands": {
+        "left": {
+          "baseline_visual": {
+            "frames": 244,
+            "internal_gaps": 11
+          },
+          "repaired_visual": {
+            "frames": 275,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 244,
+          "unknown_intervals": []
+        },
+        "right": {
+          "baseline_visual": {
+            "frames": 233,
+            "internal_gaps": 4
+          },
+          "repaired_visual": {
+            "frames": 248,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 233,
+          "unknown_intervals": [
+            [
+              0,
+              26
+            ]
+          ]
+        }
+      },
+      "receipt_sha256": "1ea7db1ac35b67521d95c23fb5c5d514488e76a10a537d3d0fb526465cb86c36",
+      "media": {
+        "baseline-cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "13.577485",
+          "nb_read_frames": "275",
+          "sha256": "3f18727ec8deb72e8a4cc91578e7a7939d534a735cd2ab7a790c1784a24b89b4"
+        },
+        "cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "13.577485",
+          "nb_read_frames": "275",
+          "sha256": "859d07078d11bfcb0fb5deaae24440797a536866ace7297b8d9eee3e0a140ec1"
+        },
+        "hand-tracking.mp4": {
+          "width": 1280,
+          "height": 828,
+          "avg_frame_rate": "196141/9684",
+          "duration": "13.577477",
+          "nb_read_frames": "275",
+          "sha256": "959191f39bc1c17a3ce5275c8c7f8b414039ee2cf024b52637ffa7ec745ec410"
+        }
+      },
+      "review_status": "Reviewed: unknown intervals retained"
+    },
+    "e026": {
+      "source_frames": 158,
+      "cohort": "general review runner",
+      "additional_fresh_image_recovery": false,
+      "hands": {
+        "left": {
+          "baseline_visual": {
+            "frames": 36,
+            "internal_gaps": 2
+          },
+          "repaired_visual": {
+            "frames": 158,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 36,
+          "unknown_intervals": []
+        },
+        "right": {
+          "baseline_visual": {
+            "frames": 94,
+            "internal_gaps": 9
+          },
+          "repaired_visual": {
+            "frames": 158,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 93,
+          "unknown_intervals": []
+        }
+      },
+      "receipt_sha256": "8426f7e20b1c40433fb8a4ba852324b8d45a30505ed415ceb87da4c1bd69888a",
+      "media": {
+        "baseline-cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "7.800882",
+          "nb_read_frames": "158",
+          "sha256": "c836fd9934b72cf6c5c0b95772d9e35b56f8f6c146ddf10e5f16a7534ce41c10"
+        },
+        "cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "7.800882",
+          "nb_read_frames": "158",
+          "sha256": "3cda3b71199ab44707d847e5092bab9ab5f3c71940f7eb10e9d68b323634b526"
+        },
+        "hand-tracking.mp4": {
+          "width": 1280,
+          "height": 828,
+          "avg_frame_rate": "109109/5387",
+          "duration": "7.800878",
+          "nb_read_frames": "158",
+          "sha256": "83bf229617893d3f1748034f07c3a5233d175f0dbcaee320fead6b1e0547b8f7"
+        }
+      },
+      "review_status": "Reviewed: continuity improved; low stereo support"
+    },
+    "e027": {
+      "source_frames": 246,
+      "cohort": "general review runner",
+      "additional_fresh_image_recovery": false,
+      "hands": {
+        "left": {
+          "baseline_visual": {
+            "frames": 243,
+            "internal_gaps": 3
+          },
+          "repaired_visual": {
+            "frames": 246,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 243,
+          "unknown_intervals": []
+        },
+        "right": {
+          "baseline_visual": {
+            "frames": 116,
+            "internal_gaps": 4
+          },
+          "repaired_visual": {
+            "frames": 152,
+            "internal_gaps": 1
+          },
+          "revalidated_metric_frames": 116,
+          "unknown_intervals": [
+            [
+              62,
+              155
+            ]
+          ]
+        }
+      },
+      "receipt_sha256": "af7fed49e9c6644a1c4dacbc5d6335a185f30a47052116e469b479b3da6c5c7d",
+      "media": {
+        "baseline-cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "12.145678",
+          "nb_read_frames": "246",
+          "sha256": "0a6438c0c06f4b7959e679f90f328f18c054ef6179cd37537f6afba31bbdc4d8"
+        },
+        "cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "12.145678",
+          "nb_read_frames": "246",
+          "sha256": "c5ad5ba7f9c796a86161198e3998e4bf4dacf351fb228f0bb71d1dfbcec3a993"
+        },
+        "hand-tracking.mp4": {
+          "width": 1280,
+          "height": 828,
+          "avg_frame_rate": "879009/43399",
+          "duration": "12.145671",
+          "nb_read_frames": "246",
+          "sha256": "c0377ae74b739c2edd92de5760f745882b962b36a0e9a81e12d754abda8e64f7"
+        }
+      },
+      "review_status": "Reviewed: unknown intervals retained"
+    },
+    "e031": {
+      "source_frames": 290,
+      "cohort": "general review runner",
+      "additional_fresh_image_recovery": false,
+      "hands": {
+        "left": {
+          "baseline_visual": {
+            "frames": 196,
+            "internal_gaps": 24
+          },
+          "repaired_visual": {
+            "frames": 290,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 196,
+          "unknown_intervals": []
+        },
+        "right": {
+          "baseline_visual": {
+            "frames": 133,
+            "internal_gaps": 3
+          },
+          "repaired_visual": {
+            "frames": 290,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 134,
+          "unknown_intervals": []
+        }
+      },
+      "receipt_sha256": "6020fcbb7dba16dea644072575f19e526d72d9086b09ab9994e8a1029626cd3a",
+      "media": {
+        "baseline-cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "14.318075",
+          "nb_read_frames": "290",
+          "sha256": "c6a272ee22bc70a3840e5236484ed45cbe72d556727568d6c30e5c2545f57cbf"
+        },
+        "cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "14.318075",
+          "nb_read_frames": "290",
+          "sha256": "64d8b0bf1aafc653a636a1aefcf673e93cb6fe9ef4322bb52572ad335a187a21"
+        },
+        "hand-tracking.mp4": {
+          "width": 1280,
+          "height": 828,
+          "avg_frame_rate": "751327/37095",
+          "duration": "14.318067",
+          "nb_read_frames": "290",
+          "sha256": "f55ffbf6d5ccb4a51bf1c9d4e4c4e584402250f7122eefc1d8b84fa51c9f2649"
+        }
+      },
+      "review_status": "Reviewed: visual continuity improved"
+    },
+    "e040": {
+      "source_frames": 260,
+      "cohort": "previous two-episode validation",
+      "additional_fresh_image_recovery": false,
+      "hands": {
+        "left": {
+          "baseline_visual": {
+            "frames": 120,
+            "internal_gaps": 10
+          },
+          "repaired_visual": {
+            "frames": 260,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 167,
+          "unknown_intervals": []
+        },
+        "right": {
+          "baseline_visual": {
+            "frames": 76,
+            "internal_gaps": 9
+          },
+          "repaired_visual": {
+            "frames": 260,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 83,
+          "unknown_intervals": []
+        }
+      },
+      "receipt_sha256": "129f99673a0717499a169b778537047d404a6293b48220f4c0dde8017f22bcc0"
+    },
+    "e041": {
+      "source_frames": 299,
+      "cohort": "general review runner",
+      "additional_fresh_image_recovery": true,
+      "hands": {
+        "left": {
+          "baseline_visual": {
+            "frames": 82,
+            "internal_gaps": 4
+          },
+          "repaired_visual": {
+            "frames": 299,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 86,
+          "unknown_intervals": []
+        },
+        "right": {
+          "baseline_visual": {
+            "frames": 191,
+            "internal_gaps": 8
+          },
+          "repaired_visual": {
+            "frames": 299,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 198,
+          "unknown_intervals": []
+        }
+      },
+      "receipt_sha256": "2456813a46dc27d5002f63aec27e3abeed228a07e7f3c4608219259d030ba4bf",
+      "media": {
+        "baseline-cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "14.762429",
+          "nb_read_frames": "299",
+          "sha256": "2914f8da74221fc91959fe3734279150d78d02cdd39b7c0702b55f51edbee508"
+        },
+        "cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "14.762429",
+          "nb_read_frames": "299",
+          "sha256": "d99e2f385e76e7933136efe0583e9b6f8b2146bfca3aea604d5ecd443e5deab6"
+        },
+        "hand-tracking.mp4": {
+          "width": 1280,
+          "height": 828,
+          "avg_frame_rate": "923001/45571",
+          "duration": "14.762421",
+          "nb_read_frames": "299",
+          "sha256": "83c2a50342b4c6df3c9b0a39e20acd0759dd77b9161df6508e5e37ac3f6e511d"
+        }
+      },
+      "review_status": "Reviewed: source mask recovery; both hands continuous"
+    },
+    "e042": {
+      "source_frames": 257,
+      "cohort": "general review runner",
+      "additional_fresh_image_recovery": true,
+      "hands": {
+        "left": {
+          "baseline_visual": {
+            "frames": 212,
+            "internal_gaps": 9
+          },
+          "repaired_visual": {
+            "frames": 257,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 231,
+          "unknown_intervals": []
+        },
+        "right": {
+          "baseline_visual": {
+            "frames": 157,
+            "internal_gaps": 13
+          },
+          "repaired_visual": {
+            "frames": 257,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 205,
+          "unknown_intervals": []
+        }
+      },
+      "receipt_sha256": "9bf3ec90a91c8f55294810fdf86f76d376f0cc34e7012e09db21b808f6b84180",
+      "media": {
+        "baseline-cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "12.688777",
+          "nb_read_frames": "257",
+          "sha256": "87becd762f1582a0e18e14abc5e2a126686e5e0c0bc84d3f3a12fbe5bdee40ae"
+        },
+        "cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "12.688777",
+          "nb_read_frames": "257",
+          "sha256": "53eb6d5fdcc3793328c3afe8246775ebc1d72af75f455cd2162dbbbd173dbc6b"
+        },
+        "hand-tracking.mp4": {
+          "width": 1280,
+          "height": 828,
+          "avg_frame_rate": "971935/47987",
+          "duration": "12.688769",
+          "nb_read_frames": "257",
+          "sha256": "ff706b5ad1c457dcfdf5f612efa0d112a38db20e1a3d21960925459c2a914f0c"
+        }
+      },
+      "review_status": "Reviewed: mask recovery; articulation remains approximate"
+    },
+    "e043": {
+      "source_frames": 326,
+      "cohort": "general review runner",
+      "additional_fresh_image_recovery": false,
+      "hands": {
+        "left": {
+          "baseline_visual": {
+            "frames": 228,
+            "internal_gaps": 8
+          },
+          "repaired_visual": {
+            "frames": 325,
+            "internal_gaps": 1
+          },
+          "revalidated_metric_frames": 230,
+          "unknown_intervals": [
+            [
+              158,
+              158
+            ]
+          ]
+        },
+        "right": {
+          "baseline_visual": {
+            "frames": 53,
+            "internal_gaps": 12
+          },
+          "repaired_visual": {
+            "frames": 204,
+            "internal_gaps": 1
+          },
+          "revalidated_metric_frames": 48,
+          "unknown_intervals": [
+            [
+              129,
+              250
+            ]
+          ]
+        }
+      },
+      "receipt_sha256": "08e07d01614dd99cef7d5a2a12fe818861399d313fdf10b178e897c27ba0edb4",
+      "media": {
+        "baseline-cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "16.095491",
+          "nb_read_frames": "326",
+          "sha256": "02198084a79fe57c25dc9b92d8e0fed65ff7af77afecd736d20249d3879b28ca"
+        },
+        "cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "16.095491",
+          "nb_read_frames": "326",
+          "sha256": "87552beaf9ccf88525b0654000828433065b92cdc1fdb8d01d737afb65c038da"
+        },
+        "hand-tracking.mp4": {
+          "width": 1280,
+          "height": 828,
+          "avg_frame_rate": "546821/26998",
+          "duration": "16.095483",
+          "nb_read_frames": "326",
+          "sha256": "d0169b8fbad459829e06c2434652c5a92bf4f22139a75b15470d88f983c2579c"
+        }
+      },
+      "review_status": "Reviewed: unknown intervals retained"
+    },
+    "e044": {
+      "source_frames": 249,
+      "cohort": "general review runner",
+      "additional_fresh_image_recovery": false,
+      "hands": {
+        "left": {
+          "baseline_visual": {
+            "frames": 232,
+            "internal_gaps": 6
+          },
+          "repaired_visual": {
+            "frames": 249,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 238,
+          "unknown_intervals": []
+        },
+        "right": {
+          "baseline_visual": {
+            "frames": 171,
+            "internal_gaps": 6
+          },
+          "repaired_visual": {
+            "frames": 249,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 172,
+          "unknown_intervals": []
+        }
+      },
+      "receipt_sha256": "a647e02e6ad1725a1b12475dc41243645a06a624b1a4b41168d04b5ad44ea1c8",
+      "media": {
+        "baseline-cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "12.293796",
+          "nb_read_frames": "249",
+          "sha256": "b53fb64b87a18c726d7ab141123db3b2a7a9b36e4e2086a5de68b71f26b05af4"
+        },
+        "cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "12.293796",
+          "nb_read_frames": "249",
+          "sha256": "d89498858828305876b17b77e44a0582a1a0ce25dce59b0027bb8aedd8075e63"
+        },
+        "hand-tracking.mp4": {
+          "width": 1280,
+          "height": 828,
+          "avg_frame_rate": "621579/30689",
+          "duration": "12.293789",
+          "nb_read_frames": "249",
+          "sha256": "dc2d1142cf0bfbccd97c8f2e884e1c987cea1f2bb7346e0d76b1a8d618a7514a"
+        }
+      },
+      "review_status": "Reviewed: visual continuity improved"
+    },
+    "e045": {
+      "source_frames": 290,
+      "cohort": "general review runner",
+      "additional_fresh_image_recovery": false,
+      "hands": {
+        "left": {
+          "baseline_visual": {
+            "frames": 154,
+            "internal_gaps": 8
+          },
+          "repaired_visual": {
+            "frames": 290,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 155,
+          "unknown_intervals": []
+        },
+        "right": {
+          "baseline_visual": {
+            "frames": 112,
+            "internal_gaps": 4
+          },
+          "repaired_visual": {
+            "frames": 290,
+            "internal_gaps": 0
+          },
+          "revalidated_metric_frames": 113,
+          "unknown_intervals": []
+        }
+      },
+      "receipt_sha256": "764db4f57373a009d41cd82bf1cda51ed2f3046c0ed0348e8afb04f272397f19",
+      "media": {
+        "baseline-cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "14.318075",
+          "nb_read_frames": "290",
+          "sha256": "f9b42c80f7af05e445c621d5cb3ce0abad02d74555f03cf3690508cc6d9641bf"
+        },
+        "cad-temporal-hands.mp4": {
+          "width": 1280,
+          "height": 800,
+          "avg_frame_rate": "688397/33988",
+          "duration": "14.318075",
+          "nb_read_frames": "290",
+          "sha256": "0f17d6d870519e655845d6e064b30c4a465b3b3288edae6625ac0f08d9fd1370"
+        },
+        "hand-tracking.mp4": {
+          "width": 1280,
+          "height": 828,
+          "avg_frame_rate": "751327/37095",
+          "duration": "14.318067",
+          "nb_read_frames": "290",
+          "sha256": "0946e5af3f318d8b708f1a5b920f8fb916eb9566e590e4fc588d7477cf3bd5cb"
+        }
+      },
+      "review_status": "Reviewed: visual continuity improved"
+    }
+  },
+  "validation": {
+    "cpu_tests_passed": 151,
+    "optional_modules_skipped": 2,
+    "subtests_passed": 2,
+    "ci": "Python 3.10, Python 3.12 and reproduction passed at c5b2207",
+    "all_delivered_videos_full_decode": true,
+    "all_source_frame_counts_preserved": true,
+    "normal_rate_before_after_playback": "All 19 available pairs reached both ends without media errors"
+  },
+  "limits": [
+    "Display coverage includes labeled estimated poses, not independent ground-truth tracking accuracy.",
+    "Unknown source geometry remains unknown; long out-of-view or object-occluded intervals are retained.",
+    "e000 and e002 include source frames outside the saved native fit crop; e043 left frame 158 lacks a finite native pose.",
+    "Some hand-side stereo counts are below baseline; exact contact and finger articulation are not accepted.",
+    "e042 finger articulation remains approximate despite recovered visual coverage.",
+    "Original contact artifacts, calibrated cameras, shape and CAD are preserved."
+  ]
+}

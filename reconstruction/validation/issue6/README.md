@@ -498,3 +498,27 @@ the remaining gaps; the original observation and contact files were preserved.
 `full_hand_masks.py` now retains ungated SAM2 output in `visual_masks/` and exports
 separate observation-gated `masks/`. Atomic replacement prevents a pre-existing
 hardlink from clearing the preserved visual mask.
+
+### Wider evaluation, 2026-10-14
+
+The repair was executed on all 19 available episode caches (4,927 source frames).
+The 17 additional episodes use the general four-pass runner; e012/e040 retain
+the previously reviewed experiments. e041/e042 additionally use reviewed fresh
+source-image masks and landmarks. All before/after pairs were played at normal
+rate; all delivered media decoded and retained their source frame counts.
+
+Internal displayed-mesh gaps decreased from 295 to 5, counting explicitly labeled
+estimates. Available hand frames increased from 5,739 to 9,202 of 9,854 possible
+hand frames. Revalidated stereo-supported hand frames total 5,893; some hand-side
+counts decrease, so these results do not establish a uniform metric improvement.
+Remaining intervals, exact media hashes and per-episode counts are recorded in
+`hand-continuity-all-episodes-20261014.json`. e042 finger articulation remains
+approximate. The five remaining internal intervals include absent native geometry
+and long intervals with the hand out of view or hidden by the object.
+
+e039 is unavailable: its recovered cache lacks depth, hands and the saved
+sequence fit, its recorded source pod is unavailable, and the owner confirms
+there is no backup. It was not counted as a processed episode. Original inputs,
+contacts and superseded repair experiments are retained. Review media remains
+private on the pod and in the local gallery; no footage or model assets are
+included in this repository.
