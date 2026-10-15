@@ -447,3 +447,20 @@ residual thresholds. Improved visual coverage does not accept the separate
 contact-quality criteria above. The image landmarks are saved HaMeR predictions,
 so their reprojection error is an internal alignment check, not independent
 ground-truth accuracy. Keep both pass receipts and the rejected baselines.
+
+### Episode axes and missing native geometry
+
+Include `fit/track_info.json` with the checkpoint. Dyn-HaMR can crop source
+frames that have no tracked hand at either end. The repair validates that
+recorded interval and remaps native poses to the original source frame IDs;
+frames outside that interval remain unknown. Invalid native-camera records are
+also unknown. Image/stereo fitting runs on contiguous finite segments and never
+regularizes motion across missing geometry.
+
+The runner accepts any episode numbers with complete preserved inputs and
+writes a supported-pose baseline comparison beside the repaired videos. Its
+combined renderer reads source images from the executed manifest, so duplicate
+`align/frames` copies are unnecessary in relocated caches. An absent fit, stereo
+depth or hand mask is an input recovery problem; display continuity cannot
+replace those inputs. Broad evaluation must report unavailable episodes and
+remaining unknown frames explicitly.
