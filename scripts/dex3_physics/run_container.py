@@ -9,6 +9,8 @@ import os
 from pathlib import Path
 import subprocess
 import sys
+import shutil
+import time
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts/reproduction"))
@@ -119,7 +121,16 @@ def main():
             check=True,
             env=env,
         )
-    subprocess.run(command, check=True, env=env)
+    started = time.time()
+    try:
+        subprocess.run(command, check=True, env=env)
+    finally:
+        log_root = Path("/opt/sim/lib/python3.12/site-packages/isaacsim/kit/logs")
+        for log in log_root.rglob("*.log"):
+            if log.stat().st_mtime >= started:
+                target = out / "sdk-logs" / log.relative_to(log_root)
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(log, target)
     if not args.prepare_only:
         video = out / "run/simulator/supported-task.mp4"
         subprocess.run(

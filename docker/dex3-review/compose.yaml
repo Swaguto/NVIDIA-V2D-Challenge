@@ -55,6 +55,8 @@ services:
       - isaac-cache:/root/.cache
       - isaac-logs:/root/.nvidia-omniverse/logs
       - isaac-data:/root/.local/share/ov/data
+      - isaac-sdk-cache:/opt/sim/lib/python3.12/site-packages/isaacsim/kit/cache
+      - isaac-sdk-logs:/opt/sim/lib/python3.12/site-packages/isaacsim/kit/logs
     command: [doctor, --runtime, all, --gpu]
   continuity:
     profiles: [native-cache]
@@ -93,3 +95,5 @@ volumes:
   isaac-cache:
   isaac-logs:
   isaac-data:
+  isaac-sdk-cache:
+  isaac-sdk-logs:

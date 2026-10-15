@@ -64,6 +64,35 @@ def load_functions(path: Path, names: set[str], namespace: dict) -> tuple[dict, 
     return namespace, signature
 
 
+def object_tracking_summary(rows):
+    """Keep unobserved object error unavailable, including short diagnostic prefixes."""
+    import numpy as np
+
+    result = []
+    for oi in sorted({row["object"] for row in rows}):
+        observed = [
+            row for row in rows if row["object"] == oi and row["source_object_observed"]
+        ]
+        errors = np.asarray([row["position_error_m"] for row in observed])
+        angles = np.asarray([row["rotation_error_rad"] for row in observed])
+        result.append(
+            {
+                "object": oi,
+                "observed_measurements": len(observed),
+                "position_median_m": float(np.median(errors)) if observed else None,
+                "position_p90_m": float(np.quantile(errors, 0.9)) if observed else None,
+                "position_max_m": float(errors.max()) if observed else None,
+                "orientation_median_rad": float(np.median(angles))
+                if observed
+                else None,
+                "orientation_p90_rad": float(np.quantile(angles, 0.9))
+                if observed
+                else None,
+            }
+        )
+    return result
+
+
 def prepare(
     case: Path,
     repo: Path,
@@ -1648,7 +1677,19 @@ def run_supported_task(
             for sensor in sensors + control_sensors:
                 sensor.update(dt, force_recompute=True)
     finally:
-        writer.close()
+        try:
+            writer.close()
+        finally:
+            # Preserve partial/failed readback before summary or acceptance code.
+            write(
+                out / "states.json",
+                {
+                    "objects": rows,
+                    "hands": hand_rows,
+                    "controls": controls_rows,
+                    "rendered_source_frames": frames,
+                },
+            )
     if len(frames) != len(source_times):
         raise ValueError("Physical task did not cover all source frames")
     freefall = [row for row in controls_rows if row["control"] == 0]
@@ -1662,33 +1703,7 @@ def run_supported_task(
         and abs(supported[-1]["root_pose"][2] - 0.05) < 0.005
         and abs(support_force - 0.3 * 9.81) < 0.3
     )
-    summaries = []
-    for oi in sorted({row["object"] for row in rows}):
-        observed = [
-            row for row in rows if row["object"] == oi and row["source_object_observed"]
-        ]
-        errors = np.asarray([row["position_error_m"] for row in observed])
-        angles = np.asarray([row["rotation_error_rad"] for row in observed])
-        summaries.append(
-            {
-                "object": oi,
-                "observed_measurements": len(observed),
-                "position_median_m": float(np.median(errors)),
-                "position_p90_m": float(np.quantile(errors, 0.9)),
-                "position_max_m": float(errors.max()),
-                "orientation_median_rad": float(np.median(angles)),
-                "orientation_p90_rad": float(np.quantile(angles, 0.9)),
-            }
-        )
-    write(
-        out / "states.json",
-        {
-            "objects": rows,
-            "hands": hand_rows,
-            "controls": controls_rows,
-            "rendered_source_frames": frames,
-        },
-    )
+    summaries = object_tracking_summary(rows)
     write(
         out / "report.json",
         {
