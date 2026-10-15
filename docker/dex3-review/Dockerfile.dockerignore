@@ -18,3 +18,13 @@
 **/.env
 **/*.key
 **/*.pem
+# Inputs and licensed learned weights must remain explicit read-only mounts.
+**/*.mp4
+**/*.pkl
+**/*.pth
+**/*.pt
+**/*.ckpt
+**/*.npz
+**/*.npy
+**/*.parquet
+**/body_models/**

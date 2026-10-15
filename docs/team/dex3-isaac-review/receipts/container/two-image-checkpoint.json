@@ -1,0 +1,28 @@
+{
+  "code_commit": "d25ef6b7dbf864cff2d429ad2e5fd19bf8bff9cf",
+  "images": [
+    {
+      "tags": [
+        "v2d-dex3-ik:checkpoint",
+        "v2d-dex3-ik:d25ef6b7dbf8"
+      ],
+      "id": "sha256:e69af9e28dd23f587580e450fe870575cd900626b7354cf730cfa5f927ba7553",
+      "revision": "d25ef6b7dbf864cff2d429ad2e5fd19bf8bff9cf",
+      "os": "linux",
+      "architecture": "amd64"
+    },
+    {
+      "tags": [
+        "v2d-hand-continuity:checkpoint",
+        "v2d-hand-continuity:d25ef6b7dbf8"
+      ],
+      "id": "sha256:52fe4ac2ea49c8541ecdaa2613de16187d6b54b894451015116dd289a3d1633a",
+      "revision": "d25ef6b7dbf864cff2d429ad2e5fd19bf8bff9cf",
+      "os": "linux",
+      "architecture": "amd64"
+    }
+  ],
+  "isaac_image": "Building: official 5.9 GB SDK wheel transfer",
+  "gpu_container_render": "not run",
+  "brev_validation": "not run"
+}

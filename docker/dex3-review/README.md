@@ -200,6 +200,15 @@ sha256sum v2d-checkpoint.docker-image.tar
 docker image load -i v2d-checkpoint.docker-image.tar
 ```
 
+To create a compressed archive with checked image IDs and SHA256, install `zstd`
+on the host and use:
+
+```bash
+python3 scripts/dex3_review/save_images.py --out "$HOME/v2d-checkpoint.docker-image.tar.zst"
+# After private transfer and hash verification on Brev:
+zstd -dc "$HOME/v2d-checkpoint.docker-image.tar.zst" | docker image load
+```
+
 The Docker cache/log volumes and bind-mounted outputs survive container removal.
 Export data, outputs and image hashes before retiring the old machine. Physics
 validation belongs in new output directories and a new mode: these replay commands
