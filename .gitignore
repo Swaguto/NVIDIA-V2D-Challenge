@@ -39,3 +39,7 @@ v2d_diag_ep2/
 /dex3-outputs/
 *.docker-image.tar
 *.docker-image.tar.gz
+
+*.docker-image.tar.zst
+/downloads/dex3-review-private-inputs*
+/downloads/continuity-runtime-sources*
