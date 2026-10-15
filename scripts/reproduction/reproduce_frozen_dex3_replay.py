@@ -69,7 +69,7 @@ def main():
     parser.add_argument("--task-motion-evaluator", type=Path)
     parser.add_argument(
         "--wrist-controller",
-        choices=["project_pd", "implicit_pd", "implicit_pd_ff"],
+        choices=["project_pd", "implicit_pd", "implicit_pd_ff", "implicit_pid_ff"],
         default="project_pd",
     )
     parser.add_argument(

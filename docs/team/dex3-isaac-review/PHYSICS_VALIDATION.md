@@ -27,6 +27,12 @@ evidence for controller isolation, not proof of a unique cause.
   This addresses the moving-target lag measured in the first full-task run.
   Gains, force/torque caps and acceptance limits are unchanged. It supplies no
   external object forces and does not alter the reference trajectory.
+- Add separately selected `implicit_pid_ff` for the remaining contact-load error:
+  linear integral gain 50 N/(m·s), with each integral component capped at 10 N.
+  Updates that push farther into force saturation are frozen, and the state is
+  reset when the observation-derived collision mask changes. PD gains and the
+  total 60 N / 60 Nm component limits remain unchanged. This remains a controller
+  experiment; it cannot establish that the target grasp is physically feasible.
 - Initialize floating wrists once after Kit startup with zero velocity. Both
   comparison controllers use this initialization. No wrist pose is teleported
   during execution, and objects receive no motion playback or external forces.
@@ -35,6 +41,8 @@ evidence for controller isolation, not proof of a unique cause.
   collision masks and inferred support, without that diagnostic perturbation.
 - Record the candidate/executor hashes, root mass eigenvalues, velocities, wrench
   frame, saturation and source provenance. Failures remain visible in new outputs.
+  New runs also check and record every actual USD hand collider flag at each mask
+  transition; a requested mask without matching readback aborts execution.
 
 Controller-only limits, fixed before the GPU comparison, are p95 position error
 ≤2 cm, maximum ≤10 cm, p95 orientation error ≤10° and maximum ≤45°, for **each**
@@ -91,7 +99,8 @@ The two free-space tests cover the first two source seconds at the original
 unless the saved free-space gate still passes with the same candidate/executor
 bytes and selected controller mode. To compare the velocity-feedforward candidate,
 add `--candidate-controller implicit_pd_ff` to **both** candidate invocations in a
-fresh output root. Each stage verifies actual video decoding and frame count. The full task
+fresh output root. Use `implicit_pid_ff` for the bounded integral candidate.
+Each stage verifies actual video decoding and frame count. The full task
 also runs the independent source observation/contact audit before its wrist gate.
 Source annotations are evaluation inputs only; they do not fit the controller.
 

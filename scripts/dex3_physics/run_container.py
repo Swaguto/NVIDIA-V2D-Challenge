@@ -35,7 +35,7 @@ def main():
     parser.add_argument("--prepare-only", action="store_true")
     parser.add_argument(
         "--candidate-controller",
-        choices=["implicit_pd", "implicit_pd_ff"],
+        choices=["implicit_pd", "implicit_pd_ff", "implicit_pid_ff"],
         default="implicit_pd",
     )
     args = parser.parse_args()

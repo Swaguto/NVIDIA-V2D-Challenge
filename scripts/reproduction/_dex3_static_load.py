@@ -111,7 +111,12 @@ def prepare(
     import trimesh
     from scipy.spatial.transform import Rotation
 
-    if controller_mode not in {"project_pd", "implicit_pd", "implicit_pd_ff"}:
+    if controller_mode not in {
+        "project_pd",
+        "implicit_pd",
+        "implicit_pd_ff",
+        "implicit_pid_ff",
+    }:
         raise ValueError("Unknown wrist controller")
     if not math.isfinite(physics_dt) or not 0 < physics_dt <= 0.01:
         raise ValueError("Physics dt must be finite and in (0, 0.01]")
@@ -356,6 +361,14 @@ def prepare(
                 "free_space": free_space,
                 "source_duration_s": source_duration_s,
                 "physics_dt_s": physics_dt,
+                "linear_integral_gain_N_per_m_s": 50.0
+                if controller_mode == "implicit_pid_ff"
+                else 0.0,
+                "integral_force_component_cap_N": 10.0
+                if controller_mode == "implicit_pid_ff"
+                else 0.0,
+                "integral_reset_on_collision_mask_transition": controller_mode
+                == "implicit_pid_ff",
                 "initial_free_space_position_offset_world_m": [0.01, 0.0, 0.0]
                 if free_space
                 else [0.0, 0.0, 0.0],
@@ -1328,6 +1341,8 @@ def run_supported_task(
     steps = int(np.ceil((source_times[-1] - source_times[0]) / speed / dt))
     rows, frames, hand_rows, controls_rows = [], [], [], []
     collision_state = [None, None]
+    collision_transitions = []
+    integral_force = [np.zeros(3), np.zeros(3)]
     source_row = 0
     writer = imageio.get_writer(
         out / "supported-task.mp4",
@@ -1363,7 +1378,7 @@ def run_supported_task(
             desired, _kinds, _details = motion.evaluate(timestamp)
             desired_next = (
                 motion.evaluate(min(timestamp + dt * speed, float(source_times[-1])))[0]
-                if controller_mode == "implicit_pd_ff"
+                if controller_mode in {"implicit_pd_ff", "implicit_pid_ff"}
                 else None
             )
             for si, (hand, order) in enumerate(zip(hands, joint_order, strict=True)):
@@ -1371,6 +1386,7 @@ def run_supported_task(
                     display[index, si]
                 )
                 if collision_state[si] != enabled:
+                    integral_force[si] = np.zeros(3)
                     sim_utils.modify_collision_properties(
                         hand.cfg.prim_path,
                         sim_utils.CollisionPropertiesCfg(
@@ -1378,6 +1394,30 @@ def run_supported_task(
                             contact_offset=0.0,
                             rest_offset=0.0,
                         ),
+                    )
+                    readback = {
+                        str(prim.GetPath()): bool(
+                            UsdPhysics.CollisionAPI(prim)
+                            .GetCollisionEnabledAttr()
+                            .Get()
+                        )
+                        for prim in Usd.PrimRange(
+                            sim.stage.GetPrimAtPath(hand.cfg.prim_path)
+                        )
+                        if prim.HasAPI(UsdPhysics.CollisionAPI)
+                    }
+                    if not readback or any(
+                        value != enabled for value in readback.values()
+                    ):
+                        raise ValueError(
+                            "Actual hand collision flags differ from requested mask"
+                        )
+                    collision_transitions.append(
+                        {
+                            "step": step,
+                            "side": ("left", "right")[si],
+                            "usd_collision_enabled": readback,
+                        }
                     )
                     collision_state[si] = enabled
                 target_pose = np.r_[
@@ -1449,6 +1489,19 @@ def run_supported_task(
                         ]
                         if desired_next is not None
                         else None,
+                        integral_force_world=integral_force[si]
+                        if controller_mode == "implicit_pid_ff"
+                        else None,
+                        linear_integral_gain=diagnostic.get(
+                            "linear_integral_gain_N_per_m_s", 0.0
+                        )
+                        if controller_mode == "implicit_pid_ff"
+                        else 50.0,
+                        max_integral_force=diagnostic.get(
+                            "integral_force_component_cap_N", 0.0
+                        )
+                        if controller_mode == "implicit_pid_ff"
+                        else 10.0,
                         root_com_offset_b=cpu(com_positions[si])[0],
                         root_com_velocity_w=cpu(hand.data.root_com_vel_w)[0],
                         root_mass_matrix_w=cpu(
@@ -1466,6 +1519,9 @@ def run_supported_task(
                         angular_damping=gains["tracking_controller_angular_damping"],
                         max_force=gains["max_force"],
                         max_torque=gains["max_torque"],
+                    )
+                    integral_force[si] = np.array(
+                        control_details["integral_force_world_next_N"]
                     )
                     force = torch.tensor(
                         wrench[None, :3], dtype=torch.float32, device=sim.device
@@ -1702,6 +1758,7 @@ def run_supported_task(
                     "hands": hand_rows,
                     "controls": controls_rows,
                     "rendered_source_frames": frames,
+                    "hand_collision_state_readback": collision_transitions,
                 },
             )
     if len(frames) != len(source_times):
@@ -1727,6 +1784,7 @@ def run_supported_task(
             "controller_source_sha256": digest(controller_file),
             "controller_gains": gains,
             "wrist_diagnostic": diagnostic,
+            "hand_collision_state_readback_verified": bool(collision_transitions),
             "full_source_frames": original_source_frames,
             "complete_source_episode": len(frames) == original_source_frames,
             "physics_dt_s": dt,

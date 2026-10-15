@@ -21,6 +21,9 @@ def implicit_root_wrench(
     gravity_compensation_w,
     dt,
     target_link_pose_next_xyzw=None,
+    integral_force_world=None,
+    linear_integral_gain=50.0,
+    max_integral_force=10.0,
     linear_stiffness=50.0,
     linear_damping=10.0,
     angular_stiffness=12.0,
@@ -34,6 +37,8 @@ def implicit_root_wrench(
     (M + dt D + dt² K) a = K(e - dt v) - D v, then apply M a + gravity.
     An optional next reference uses its endpoint error and world-frame reference
     twist, so damping acts on velocity error during moving-target tracking.
+    An optional three-axis integral state adds bounded load compensation. Its
+    update uses current COM error; outward updates freeze at force saturation.
     The desired COM includes the rotated local root-body COM offset, so position
     error, velocity, mass matrix and applied wrench share the same point.
     Inputs are copied; simulator state is never mutated.
@@ -65,6 +70,8 @@ def implicit_root_wrench(
             angular_damping,
             max_force,
             max_torque,
+            linear_integral_gain,
+            max_integral_force,
         ]
     )
     if not np.isfinite(parameters).all() or np.any(parameters <= 0):
@@ -107,17 +114,48 @@ def implicit_root_wrench(
         ]
     stiffness = np.array([linear_stiffness] * 3 + [angular_stiffness] * 3)
     damping = np.array([linear_damping] * 3 + [angular_damping] * 3)
-    acceleration = np.linalg.solve(
-        mass + np.diag(dt * damping + dt**2 * stiffness),
-        stiffness * (error - dt * velocity) + damping * (reference_twist - velocity),
+    integral = np.zeros(3)
+    next_integral = integral.copy()
+    if integral_force_world is not None:
+        integral = np.asarray(integral_force_world, dtype=float)
+        if (
+            integral.shape != (3,)
+            or not np.isfinite(integral).all()
+            or np.any(np.abs(integral) > max_integral_force + 1e-10)
+        ):
+            raise ValueError(
+                "Integral force must be finite and within its declared cap"
+            )
+        next_integral = np.clip(
+            integral + dt * linear_integral_gain * position_error,
+            -max_integral_force,
+            max_integral_force,
+        )
+
+    def predict(integral_value):
+        acceleration = np.linalg.solve(
+            mass + np.diag(dt * damping + dt**2 * stiffness),
+            stiffness * (error - dt * velocity)
+            + damping * (reference_twist - velocity)
+            + np.r_[integral_value, np.zeros(3)],
+        )
+        return mass @ acceleration + gravity
+
+    requested = predict(next_integral)
+    frozen = (np.abs(requested[:3]) > max_force) & (
+        (next_integral - integral) * requested[:3] > 0
     )
-    requested = mass @ acceleration + gravity
+    if frozen.any():
+        next_integral[frozen] = integral[frozen]
+        requested = predict(next_integral)
     caps = np.array([max_force] * 3 + [max_torque] * 3)
     applied = np.clip(requested, -caps, caps)
     return applied, {
         "position_error_at_root_com_m": position_error.tolist(),
         "rotation_error_world_rad": rotation_error.tolist(),
         "reference_twist_world": reference_twist.tolist(),
+        "integral_force_world_next_N": next_integral.tolist(),
+        "integral_update_frozen_axes": frozen.tolist(),
         "root_mass_eigenvalues": np.linalg.eigvalsh(mass).tolist(),
         "requested_wrench_world": requested.tolist(),
         "saturated_components": (np.abs(requested) > caps).tolist(),

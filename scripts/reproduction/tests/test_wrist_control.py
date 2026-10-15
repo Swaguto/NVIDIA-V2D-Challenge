@@ -137,3 +137,42 @@ def test_stationary_next_reference_preserves_original_implicit_controller():
     expected = implicit_root_wrench(**data)[0]
     data["target_link_pose_next_xyzw"] = data["target_link_pose_xyzw"].copy()
     np.testing.assert_array_equal(implicit_root_wrench(**data)[0], expected)
+
+
+def test_bounded_integral_rejects_constant_external_load():
+    # A force-driven 0.5 kg body under a constant 3 N disturbance. Compare
+    # measured plant motion, independently integrated, with/without integral.
+    residuals = []
+    for enabled in (False, True):
+        data = inputs()
+        integral = np.zeros(3)
+        peak = 0.0
+        for _ in range(1500):
+            if enabled:
+                data["integral_force_world"] = integral
+            wrench, details = implicit_root_wrench(**data)
+            integral = np.array(details["integral_force_world_next_N"])
+            data["root_com_velocity_w"][0] += data["dt"] * (wrench[0] - 3.0) / 0.5
+            data["link_pose_xyzw"][0] += data["dt"] * data["root_com_velocity_w"][0]
+            peak = max(peak, abs(data["link_pose_xyzw"][0]))
+            assert np.abs(integral).max() <= 10.0
+            assert np.abs(wrench).max() <= 60.0
+        residuals.append(abs(data["link_pose_xyzw"][0]))
+        assert peak < 0.1
+    assert residuals[0] > 0.05
+    assert residuals[1] < 1e-5
+
+
+def test_force_saturation_prevents_outward_integral_windup():
+    data = inputs()
+    data["target_link_pose_xyzw"][0] = 10.0
+    integral = np.zeros(3)
+    for _ in range(100):
+        data["integral_force_world"] = integral
+        wrench, details = implicit_root_wrench(**data)
+        integral = np.array(details["integral_force_world_next_N"])
+        assert wrench[0] == 60.0
+        assert details["integral_update_frozen_axes"][0]
+    np.testing.assert_array_equal(integral, np.zeros(3))
+    data["target_link_pose_xyzw"][0] = 0.0
+    np.testing.assert_array_equal(implicit_root_wrench(**data)[0], np.zeros(6))
