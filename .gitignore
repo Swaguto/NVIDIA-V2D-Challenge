@@ -30,3 +30,12 @@ v2d_ep2_outputs_v2/
 v2d_ep2_outputs_v3/
 v2d_ep11_outputs/
 v2d_diag_ep2/
+
+# Local Docker migration assets and private configuration
+/docker/dex3-review/.env
+/docker/dex3-review/*.env
+/docker/dex3-review/images/
+/dex3-private-data/
+/dex3-outputs/
+*.docker-image.tar
+*.docker-image.tar.gz

@@ -1,0 +1,91 @@
+name: v2d-dex3-review
+services:
+  ik:
+    image: ${V2D_IK_IMAGE:-v2d-dex3-ik:checkpoint}
+    platform: linux/amd64
+    build:
+      context: ../..
+      dockerfile: docker/dex3-review/Dockerfile
+      target: ik
+    volumes:
+      - type: bind
+        source: ${V2D_DATA_DIR:?Set V2D_DATA_DIR to the extracted private pack}
+        target: /data
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${V2D_OUTPUT_DIR:?Set V2D_OUTPUT_DIR to a new output directory}
+        target: /outputs
+        bind: {create_host_path: false}
+    command: [doctor, --runtime, ik]
+  review:
+    image: ${V2D_IMAGE:-v2d-dex3-review:checkpoint}
+    platform: linux/amd64
+    build:
+      context: ../..
+      dockerfile: docker/dex3-review/Dockerfile
+      target: review
+      args:
+        VCS_REF: ${V2D_CODE_COMMIT:-unknown}
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    shm_size: 8gb
+    environment:
+      ACCEPT_EULA: ${ACCEPT_EULA:-N}
+      OMNI_KIT_ACCEPT_EULA: ${OMNI_KIT_ACCEPT_EULA:-NO}
+      OMNI_KIT_ALLOW_ROOT: '1'
+      XDG_CACHE_HOME: /root/.cache
+    volumes:
+      - type: bind
+        source: ${V2D_DATA_DIR:?Set V2D_DATA_DIR to the extracted private pack}
+        target: /data
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${V2D_OUTPUT_DIR:?Set V2D_OUTPUT_DIR to a new output directory}
+        target: /outputs
+        bind: {create_host_path: false}
+      - isaac-cache:/root/.cache
+      - isaac-logs:/root/.nvidia-omniverse/logs
+      - isaac-data:/root/.local/share/ov/data
+    command: [doctor, --runtime, all, --gpu]
+  continuity:
+    profiles: [native-cache]
+    image: ${V2D_CONTINUITY_IMAGE:-v2d-hand-continuity:checkpoint}
+    platform: linux/amd64
+    build:
+      context: ../..
+      dockerfile: docker/dex3-review/Dockerfile.continuity
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    shm_size: 8gb
+    volumes:
+      - type: bind
+        source: ${V2D_WORKSPACE_DIR:-/tmp/v2d-workspace-unconfigured}
+        target: /workspace/hand-continuity-repair
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${V2D_WORKSPACE_DIR:-/tmp/v2d-workspace-unconfigured}/runtime-additions
+        target: /runtime-additions
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${V2D_OUTPUT_DIR:?Set V2D_OUTPUT_DIR to a new output directory}
+        target: /outputs
+        bind: {create_host_path: false}
+    command: [--help]
+volumes:
+  isaac-cache:
+  isaac-logs:
+  isaac-data:

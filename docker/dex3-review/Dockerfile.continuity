@@ -1,0 +1,25 @@
+# syntax=docker/dockerfile:1.7
+FROM python:3.11.10-slim-bookworm@sha256:840e180ebcc6e5c8efab209c43f5e40fd2af98cb49db5c7103c90539c56bb30e
+ARG TARGETARCH
+RUN test "$TARGETARCH" = amd64
+ENV DEBIAN_FRONTEND=noninteractive PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PYTHONUNBUFFERED=1 OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 \
+    PYOPENGL_PLATFORM=egl NVIDIA_DRIVER_CAPABILITIES=all NVIDIA_VISIBLE_DEVICES=all \
+    PYTHONPATH=/runtime-additions:/opt/v2d/reconstruction/modules/v2d_issue6
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ffmpeg fonts-dejavu-core libgl1 libegl1 libglu1-mesa libopengl0 \
+    libglib2.0-0 libgomp1 libx11-6 libsm6 libxext6 \
+    && rm -rf /var/lib/apt/lists/*
+COPY docker/dex3-review/continuity-runtime-lock.txt /opt/locks/continuity-runtime-lock.txt
+RUN --mount=type=cache,target=/root/.cache/pip python -m pip install --no-deps \
+    --extra-index-url https://download.pytorch.org/whl/cu124 -r /opt/locks/continuity-runtime-lock.txt
+COPY reconstruction/modules/v2d_issue6 /opt/v2d/reconstruction/modules/v2d_issue6
+COPY reconstruction/modules/v2d_hamer/lib /opt/v2d/reconstruction/modules/v2d_hamer/lib
+COPY reconstruction/validation/issue6 /opt/v2d/reconstruction/validation/issue6
+COPY scripts/dex3_review /opt/v2d/scripts/dex3_review
+COPY robotic_grounding/source/robotic_grounding/robotic_grounding /opt/v2d/robotic_grounding/source/robotic_grounding/robotic_grounding
+RUN python -c 'import numpy,scipy,torch,trimesh,pyrender; print("Continuity base imports passed")'
+WORKDIR /opt/v2d
+# Exact MANO code/weights and native cache are explicit private mounts, never image layers.
+ENTRYPOINT ["python", "/opt/v2d/reconstruction/validation/issue6/repair_hand_continuity.py"]
+CMD ["--help"]

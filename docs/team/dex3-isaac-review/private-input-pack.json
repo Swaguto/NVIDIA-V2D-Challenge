@@ -1,0 +1,70 @@
+{
+  "archive": "dex3-review-private-inputs-v1.tar.gz",
+  "sha256": "efcac53c18efa1f611e31bb94f30ddf5d4d3d0186a29019a119f7f4a6ead0d10",
+  "bytes": 285400669,
+  "episodes": [
+    {
+      "episode": "e002",
+      "frames": 343,
+      "bundle_manifest_sha256": "cb9549257ae73e622e4e2cf408c2b37e414243fc8dd7283dda2a939aa179f496"
+    },
+    {
+      "episode": "e011",
+      "frames": 137,
+      "bundle_manifest_sha256": "09811107013a3f8581b66e404b5c12cd78f98a1177f7c8649fb9b0aaded9cec9"
+    },
+    {
+      "episode": "e012",
+      "frames": 181,
+      "bundle_manifest_sha256": "da56fce399933be0646a53ade736a661fb317655afda704e604aa9f4160afcd9"
+    },
+    {
+      "episode": "e013",
+      "frames": 190,
+      "bundle_manifest_sha256": "b94e75cb63e9e56557facd0210f14e942db688fc846b6d5972236792fd25605a"
+    },
+    {
+      "episode": "e018",
+      "frames": 353,
+      "bundle_manifest_sha256": "6804010aa200f3c23fdb6c7a822a5397b096b9d40abca8c185c7d2d1a8d20cf9"
+    },
+    {
+      "episode": "e021",
+      "frames": 186,
+      "bundle_manifest_sha256": "fa2a66ab5646d8618270eff213d4c0b8f6fab7a2a88a552f052c23fe4d4410ea"
+    },
+    {
+      "episode": "e023",
+      "frames": 325,
+      "bundle_manifest_sha256": "c2f0b53a17a9dc8bd0089207f4167e5cbf91303ad38e1ba3346c37a59072b985"
+    },
+    {
+      "episode": "e024",
+      "frames": 275,
+      "bundle_manifest_sha256": "e6b06534ddd4b78f2129dddd08516d9164c1408206d4328c8a924c25093d474d"
+    },
+    {
+      "episode": "e031",
+      "frames": 290,
+      "bundle_manifest_sha256": "18ec9d525b2bc0e025fb04f79926954e7988d7772035c64edfe6140db92867b4"
+    },
+    {
+      "episode": "e040",
+      "frames": 260,
+      "bundle_manifest_sha256": "744487e4c9329ce03e82417e025849d785dae27a7816a7492c37b31c8be5f297"
+    },
+    {
+      "episode": "e041",
+      "frames": 299,
+      "bundle_manifest_sha256": "f7e58b288d41dafbcd58961653d3e47cba488916daac4817cd0d63295f022987"
+    },
+    {
+      "episode": "e042",
+      "frames": 257,
+      "bundle_manifest_sha256": "8369f9dd1ad8ef28e137f27b677a5e3f0a36f11f2c5b960f9057ce8ca638ab56"
+    }
+  ],
+  "members": 11750,
+  "schema": "v2d.dex3.private-review-pack.v1",
+  "private": true
+}
