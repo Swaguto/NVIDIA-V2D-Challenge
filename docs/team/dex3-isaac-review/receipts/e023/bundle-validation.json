@@ -1,0 +1,25 @@
+{
+  "status": "validated",
+  "schema": "v2d.track3.episode.v1",
+  "frames": 325,
+  "hand_valid_frames": {
+    "left": 325,
+    "right": 325
+  },
+  "hand_unknown_frames": {
+    "left": 0,
+    "right": 0
+  },
+  "known_fingertip_contacts": 0,
+  "objects": [
+    "wooden_piece_1",
+    "wooden_piece_2"
+  ],
+  "source_files_verified": 1305,
+  "manifest_sha256": "c2f0b53a17a9dc8bd0089207f4167e5cbf91303ad38e1ba3346c37a59072b985",
+  "payload_sha256": "2dd574d1bb29e81777efcb445c19e5840b367fe1073d95a8d8122d413a6f6b86",
+  "source_metric_hand_frames": [
+    316,
+    97
+  ]
+}

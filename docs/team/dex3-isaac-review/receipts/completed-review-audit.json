@@ -1,0 +1,282 @@
+{
+  "episodes": [
+    {
+      "episode": "e002",
+      "frames": 343,
+      "visual_counts": [
+        338,
+        337
+      ],
+      "stereo_counts": [
+        273,
+        283
+      ],
+      "unknown_hand_maximum_assigned_color_pixels": [
+        0,
+        0
+      ],
+      "source_axis_and_masks_match": true,
+      "physical_task_accepted": false,
+      "root_error_m": 9.451745449197561e-08,
+      "joint_error_rad": 5.9564705390258155e-08,
+      "camera_position_error_m": 4.029663020206759e-09,
+      "camera_projection_error_px": 0.0,
+      "renderer_sha256": "83cfb67e3b88a65db092b6f677f7ec05b58ae8d53114034bc47efff30d2d3f37"
+    },
+    {
+      "episode": "e011",
+      "frames": 137,
+      "visual_counts": [
+        137,
+        134
+      ],
+      "stereo_counts": [
+        133,
+        122
+      ],
+      "unknown_hand_maximum_assigned_color_pixels": [
+        0,
+        0
+      ],
+      "source_axis_and_masks_match": true,
+      "physical_task_accepted": false,
+      "root_error_m": 7.522101064675076e-08,
+      "joint_error_rad": 5.941398284470267e-08,
+      "camera_position_error_m": 4.0829178878530566e-09,
+      "camera_projection_error_px": 0.0,
+      "renderer_sha256": "83cfb67e3b88a65db092b6f677f7ec05b58ae8d53114034bc47efff30d2d3f37"
+    },
+    {
+      "episode": "e012",
+      "frames": 181,
+      "visual_counts": [
+        181,
+        181
+      ],
+      "stereo_counts": [
+        87,
+        118
+      ],
+      "unknown_hand_maximum_assigned_color_pixels": [
+        0,
+        0
+      ],
+      "source_axis_and_masks_match": true,
+      "physical_task_accepted": false,
+      "root_error_m": 7.608914182190584e-08,
+      "joint_error_rad": 5.949188408571615e-08,
+      "camera_position_error_m": 4.007258081418463e-09,
+      "camera_projection_error_px": 0.0,
+      "renderer_sha256": "83cfb67e3b88a65db092b6f677f7ec05b58ae8d53114034bc47efff30d2d3f37"
+    },
+    {
+      "episode": "e013",
+      "frames": 190,
+      "visual_counts": [
+        190,
+        163
+      ],
+      "stereo_counts": [
+        157,
+        61
+      ],
+      "unknown_hand_maximum_assigned_color_pixels": [
+        0,
+        0
+      ],
+      "source_axis_and_masks_match": true,
+      "physical_task_accepted": false,
+      "root_error_m": 8.784802820100075e-08,
+      "joint_error_rad": 5.936006974849306e-08,
+      "camera_position_error_m": 4.2413072134434535e-09,
+      "camera_projection_error_px": 0.0,
+      "renderer_sha256": "83cfb67e3b88a65db092b6f677f7ec05b58ae8d53114034bc47efff30d2d3f37"
+    },
+    {
+      "episode": "e018",
+      "frames": 353,
+      "visual_counts": [
+        353,
+        353
+      ],
+      "stereo_counts": [
+        290,
+        116
+      ],
+      "unknown_hand_maximum_assigned_color_pixels": [
+        0,
+        0
+      ],
+      "source_axis_and_masks_match": true,
+      "physical_task_accepted": false,
+      "root_error_m": 9.111324005578705e-08,
+      "joint_error_rad": 5.9600917534652353e-08,
+      "camera_position_error_m": 6.068991989560973e-09,
+      "camera_projection_error_px": 0.0,
+      "renderer_sha256": "83cfb67e3b88a65db092b6f677f7ec05b58ae8d53114034bc47efff30d2d3f37"
+    },
+    {
+      "episode": "e021",
+      "frames": 186,
+      "visual_counts": [
+        186,
+        73
+      ],
+      "stereo_counts": [
+        64,
+        43
+      ],
+      "unknown_hand_maximum_assigned_color_pixels": [
+        0,
+        0
+      ],
+      "source_axis_and_masks_match": true,
+      "physical_task_accepted": false,
+      "root_error_m": 9.22864993432218e-08,
+      "joint_error_rad": 5.954471582469978e-08,
+      "camera_position_error_m": 4.7626683726014574e-09,
+      "camera_projection_error_px": 0.0,
+      "renderer_sha256": "83cfb67e3b88a65db092b6f677f7ec05b58ae8d53114034bc47efff30d2d3f37"
+    },
+    {
+      "episode": "e023",
+      "frames": 325,
+      "visual_counts": [
+        325,
+        325
+      ],
+      "stereo_counts": [
+        316,
+        97
+      ],
+      "unknown_hand_maximum_assigned_color_pixels": [
+        0,
+        0
+      ],
+      "source_axis_and_masks_match": true,
+      "physical_task_accepted": false,
+      "root_error_m": 9.124606672064867e-08,
+      "joint_error_rad": 5.955492277109897e-08,
+      "camera_position_error_m": 7.557733442928844e-09,
+      "camera_projection_error_px": 0.0,
+      "renderer_sha256": "83cfb67e3b88a65db092b6f677f7ec05b58ae8d53114034bc47efff30d2d3f37"
+    },
+    {
+      "episode": "e024",
+      "frames": 275,
+      "visual_counts": [
+        275,
+        248
+      ],
+      "stereo_counts": [
+        244,
+        233
+      ],
+      "unknown_hand_maximum_assigned_color_pixels": [
+        0,
+        0
+      ],
+      "source_axis_and_masks_match": true,
+      "physical_task_accepted": false,
+      "root_error_m": 9.460798567105065e-08,
+      "joint_error_rad": 5.957533066869303e-08,
+      "camera_position_error_m": 4.675391715832101e-09,
+      "camera_projection_error_px": 0.0,
+      "renderer_sha256": "83cfb67e3b88a65db092b6f677f7ec05b58ae8d53114034bc47efff30d2d3f37"
+    },
+    {
+      "episode": "e031",
+      "frames": 290,
+      "visual_counts": [
+        290,
+        290
+      ],
+      "stereo_counts": [
+        196,
+        134
+      ],
+      "unknown_hand_maximum_assigned_color_pixels": [
+        0,
+        0
+      ],
+      "source_axis_and_masks_match": true,
+      "physical_task_accepted": false,
+      "root_error_m": 9.28422169572932e-08,
+      "joint_error_rad": 5.954440984723419e-08,
+      "camera_position_error_m": 4.117187753205997e-09,
+      "camera_projection_error_px": 0.0,
+      "renderer_sha256": "83cfb67e3b88a65db092b6f677f7ec05b58ae8d53114034bc47efff30d2d3f37"
+    },
+    {
+      "episode": "e040",
+      "frames": 260,
+      "visual_counts": [
+        260,
+        260
+      ],
+      "stereo_counts": [
+        167,
+        83
+      ],
+      "unknown_hand_maximum_assigned_color_pixels": [
+        0,
+        0
+      ],
+      "source_axis_and_masks_match": true,
+      "physical_task_accepted": false,
+      "root_error_m": 8.908110323936837e-08,
+      "joint_error_rad": 5.9594541745866536e-08,
+      "camera_position_error_m": 3.949043143441707e-09,
+      "camera_projection_error_px": 0.0,
+      "renderer_sha256": "83cfb67e3b88a65db092b6f677f7ec05b58ae8d53114034bc47efff30d2d3f37"
+    },
+    {
+      "episode": "e041",
+      "frames": 299,
+      "visual_counts": [
+        299,
+        299
+      ],
+      "stereo_counts": [
+        86,
+        198
+      ],
+      "unknown_hand_maximum_assigned_color_pixels": [
+        0,
+        0
+      ],
+      "source_axis_and_masks_match": true,
+      "physical_task_accepted": false,
+      "root_error_m": 9.020092842631832e-08,
+      "joint_error_rad": 5.9512253125504344e-08,
+      "camera_position_error_m": 7.071264129326122e-09,
+      "camera_projection_error_px": 0.0,
+      "renderer_sha256": "83cfb67e3b88a65db092b6f677f7ec05b58ae8d53114034bc47efff30d2d3f37"
+    },
+    {
+      "episode": "e042",
+      "frames": 257,
+      "visual_counts": [
+        257,
+        257
+      ],
+      "stereo_counts": [
+        231,
+        205
+      ],
+      "unknown_hand_maximum_assigned_color_pixels": [
+        0,
+        0
+      ],
+      "source_axis_and_masks_match": true,
+      "physical_task_accepted": false,
+      "root_error_m": 9.459712399128581e-08,
+      "joint_error_rad": 5.959688142986863e-08,
+      "camera_position_error_m": 4.126733851191435e-09,
+      "camera_projection_error_px": 0.0,
+      "renderer_sha256": "83cfb67e3b88a65db092b6f677f7ec05b58ae8d53114034bc47efff30d2d3f37"
+    }
+  ],
+  "complete_count": 12,
+  "user_grasp_acceptance": false
+}

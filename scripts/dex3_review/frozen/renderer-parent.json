@@ -1,0 +1,10 @@
+{
+  "parent": "replay_generated_dex3_source_camera_sim6_v1.py",
+  "sha256": "2449bb6f692493fd174463806ba2d65e14943c603f0d4f25adaf89a3323eabc1",
+  "changes": [
+    "Use visual repair inputs with separate metric masks",
+    "Render source and fixed oblique cameras",
+    "Preserve missing inputs as hidden robots",
+    "Keep original FK/PhysX/USD/camera readback checks"
+  ]
+}

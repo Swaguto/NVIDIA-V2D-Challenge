@@ -1,0 +1,33 @@
+{
+  "episode": "e018",
+  "summary": "Full playback and sampled input/robot correspondence reviewed; grasp physics unvalidated.",
+  "sampled_source_frames": [
+    0,
+    50,
+    101,
+    151,
+    201,
+    251,
+    302,
+    352
+  ],
+  "checks": [
+    "Eight frame-aligned input/source/oblique samples inspected",
+    "Full normal-rate comparison playback reached its end without a media error",
+    "Frame counts and strictly increasing presentation timestamps verified",
+    "Simulator root/joint/link/camera and asset locks checked"
+  ],
+  "playback": {
+    "current": 17.428554,
+    "duration": 17.428554,
+    "ended": true,
+    "episode": "e018",
+    "error": null,
+    "rate": 1
+  },
+  "findings": [
+    "Sampled hand side identity and gross motion follow the supplied retargeting.",
+    "Finger/object fit remains approximate; physical grasp success is not accepted."
+  ],
+  "user_grasp_acceptance": false
+}

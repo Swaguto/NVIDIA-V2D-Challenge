@@ -1,0 +1,147 @@
+{
+  "status": "complete two-view Isaac kinematic review; physical acceptance not tested",
+  "robot_asset_lock_verified": true,
+  "display_holds_used": false,
+  "physical_task_accepted": false,
+  "unknown_native_camera_frames": 0,
+  "oblique_framing": "fixed camera around the complete observed CAD-motion bounds; source camera unchanged",
+  "oblique_unknown_camera_policy": "Explicit unavailable panel; no world-frame pose fabricated",
+  "camera_mode": "moving calibrated rectified source camera; original resolution after declared overscan crop",
+  "camera_pose_readback": "actual USD OpenGL camera converted to OpenCV; cached CameraData pose is not used",
+  "projection_workaround": "pinned RTX ignores aperture offsets; same-focal centered overscan then principal-point pixel translation/crop",
+  "overscan_width_height": [
+    1344,
+    826
+  ],
+  "raster_crop_x_y_px": [
+    59.75874328613281,
+    21.82422637939453
+  ],
+  "raster_resampling": "Pillow bilinear affine; no scene geometry/pose edits",
+  "maximum_camera_position_error_m": 4.117187753205997e-09,
+  "maximum_camera_rotation_error_rad": 3.7890055950438716e-07,
+  "maximum_camera_intrinsics_error_px": 0.0,
+  "episode": 31,
+  "source_frames": 290,
+  "decoded_video_frames": 290,
+  "fps": 20.25,
+  "bundle_manifest_sha256": "18ec9d525b2bc0e025fb04f79926954e7988d7772035c64edfe6140db92867b4",
+  "retarget_payload_sha256": "247f7a466db42c6a0077ab1466f4c9e07dce0e8703e48e310d3c7dd0398071f4",
+  "retarget_manifest_sha256": "1bef2efb9650fb14872f57a323079c25aa085e4439f68cca3ffa71db7cad7fc8",
+  "oblique_video_sha256": "23975e8cd3a25c014a7c698a1fd00c7bd0498ff312b5411e46a0af95b6695037",
+  "oblique_decoded_frames": 290,
+  "original_source_hand_valid_counts": [
+    196,
+    134
+  ],
+  "rendered_inferred_robot_state_counts": [
+    290,
+    290
+  ],
+  "source_metric_validity_controls_robot_display": false,
+  "source_visual_availability_controls_robot_display": true,
+  "all_displayed_robot_poses_are_inferred": true,
+  "source_hand_observation_masks_preserved": true,
+  "flicker_free_visual_result_verified": false,
+  "video_sha256": "0f0512fc542f7978379b55d78de943ee3a266ecd1103022dff2d38fcd2363c4b",
+  "collision_model_mode": "not tested in kinematic review",
+  "fully_checked_derived_model_accepted_frames": 0,
+  "readback_sha256": "f1a6a5496bf6f6900bb310b6b95a8fca954062b04dc302560fa1568eb752e675",
+  "source_sha256": "83cfb67e3b88a65db092b6f677f7ec05b58ae8d53114034bc47efff30d2d3f37",
+  "world_to_stage": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      -1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "world_to_stage_is_measured_gravity": false,
+  "hand_assets": {
+    "left": {
+      "urdf_sha256": "2e55003b8b5f50bbc81a14566a733c85faf2108c41f32cf8a2824992aeddf155",
+      "resolved_urdf_sha256": "a8ccf7f617f4345043f2716bde98cba1784ec0e09589814c15a3d99b91faaa09",
+      "meshes": {
+        "package://g1/left_hand_palm_link.STL": "23a486b75bd78a9bf03cec25d84d87f97f3dae038cf21a743b6d469b337e4004",
+        "package://g1/left_hand_thumb_0_link.STL": "a90c721661c0622685488a3c74d1e122c7da89242d3a1daef75edb83422d05e0",
+        "package://g1/collision/hands/left_hand_thumb_0_link.obj": "409feca6952f279b6e92758cbbdeff6f3b9b95c77bbe4118561c71fcdbf76d74",
+        "package://g1/left_hand_thumb_1_link.STL": "445c54a45bc13ce36001556f66bc0f49c83cb40321205ae4d676bb2874325684",
+        "package://g1/collision/hands/left_hand_thumb_1_link.obj": "fa5fbbc66ce92686856013c9fdeda65764f804014c39a1cc55fec9f76588ad59",
+        "package://g1/left_hand_thumb_2_link.STL": "3d8dbe5085acfc213d21aa8b0782e89cd79084e9678f3a85fc7b04a86b029db5",
+        "package://g1/collision/hands/left_hand_thumb_2_link.obj": "31f5cf5cd96c0e2662115e7dd5c7a523239c860fbb01909d6e3934d8c2037f28",
+        "package://g1/left_hand_middle_0_link.STL": "6b35f2f77211d5a366f0b9a4e47c4ee35e536731266f1a34e9efa12db579b892",
+        "package://g1/left_hand_middle_1_link.STL": "9e315ebc8a7a0cb98e033985b586b20d81cf8aa761181ae61ce56fcb14077a06",
+        "package://g1/left_hand_index_0_link.STL": "6b35f2f77211d5a366f0b9a4e47c4ee35e536731266f1a34e9efa12db579b892",
+        "package://g1/left_hand_index_1_link.STL": "9e315ebc8a7a0cb98e033985b586b20d81cf8aa761181ae61ce56fcb14077a06"
+      }
+    },
+    "right": {
+      "urdf_sha256": "a60b8c5ed8be4fe8a065f9ad8e854d6f46efd673261335bcde15481a32f2165f",
+      "resolved_urdf_sha256": "ace51afbfff0a15dba1426e4d3ce217068b40d4942c62c92f0618f0653802851",
+      "meshes": {
+        "package://g1/right_hand_palm_link.STL": "86c0b231cc44477d64a6493e5a427ba16617a00738112dd187c652675b086fb9",
+        "package://g1/right_hand_thumb_0_link.STL": "544298d0ea1088f5b276a10cc6a6a9e533efdd91594955fdc956c46211d07f83",
+        "package://g1/collision/hands/right_hand_thumb_0_link.obj": "a4f5fcea27a522b05ce0b9c9c3df9ccfe1528664c16c09385dd7801bb86de227",
+        "package://g1/right_hand_thumb_1_link.STL": "0a9a820da8dd10f298778b714f1364216e8a5976f4fd3a05689ea26327d44bf6",
+        "package://g1/collision/hands/right_hand_thumb_1_link.obj": "6a7e46596af6836bd02e1c2e107109d274e043d141eb6c100a518cfb3101f987",
+        "package://g1/right_hand_thumb_2_link.STL": "3f1bfb37668e8f61801c8d25f171fa1949e08666be86c67acad7e0079937cc45",
+        "package://g1/collision/hands/right_hand_thumb_2_link.obj": "0890fb1133c0d003728c0b529cae5e80cf153faa30ca6e159dcc2d0f4f58b6ba",
+        "package://g1/right_hand_middle_0_link.STL": "12ab4300c95e437e834f9aef772b3b431c671bf34338930b52ad11aef73bbd0d",
+        "package://g1/right_hand_middle_1_link.STL": "c9c34efce4563cacdcfd29fc838a982976d40f5442c71219811dcbbf3923a33d",
+        "package://g1/right_hand_index_0_link.STL": "12ab4300c95e437e834f9aef772b3b431c671bf34338930b52ad11aef73bbd0d",
+        "package://g1/right_hand_index_1_link.STL": "c9c34efce4563cacdcfd29fc838a982976d40f5442c71219811dcbbf3923a33d"
+      }
+    }
+  },
+  "maximum_root_position_error_m": 9.28422169572932e-08,
+  "maximum_joint_error_rad": 5.954440984723419e-08,
+  "maximum_root_orientation_error_rad": 3.262068830665209e-07,
+  "maximum_rendered_usd_link_position_error_m": 1.3587043178942437e-07,
+  "maximum_physics_link_position_error_m": 1.3587043179292047e-07,
+  "per_hand_maximum_review_color_pixels": [
+    36367,
+    45051
+  ],
+  "runtime": {
+    "isaaclab": "6.1.11",
+    "isaacsim": "6.0.0.1",
+    "torch": "2.11.0",
+    "numpy": "2.3.1",
+    "scipy": "1.17.0",
+    "imageio": "2.37.2",
+    "imageio-ffmpeg": "0.6.0"
+  },
+  "isaaclab_release": "3.0.0",
+  "isaaclab_release_file_sha256": "2985be8b28d3ade858e8d8fb4bc22f565b1bf6020dff982dce141f7721b9999c",
+  "simulation_device": "cpu",
+  "gravity_enabled": false,
+  "collision_resolution_enabled": false,
+  "render_transform_sync": "CPU PhysX link FK refreshed and explicitly written to USD; USD scene delegate",
+  "review_colors": {
+    "left": "blue",
+    "right": "orange",
+    "meaning": "side identity only; original material appearance not reconstructed"
+  },
+  "batch_shutdown": "supported SimulationApp.close(skip_cleanup=True) after synchronous artifact completion",
+  "learned_policy_rollout": false,
+  "visual_review": "pending",
+  "elapsed_seconds": 67.20797416288406
+}

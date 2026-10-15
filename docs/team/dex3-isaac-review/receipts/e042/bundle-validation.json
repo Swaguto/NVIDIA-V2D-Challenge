@@ -1,0 +1,24 @@
+{
+  "status": "validated",
+  "schema": "v2d.track3.episode.v1",
+  "frames": 257,
+  "hand_valid_frames": {
+    "left": 257,
+    "right": 257
+  },
+  "hand_unknown_frames": {
+    "left": 0,
+    "right": 0
+  },
+  "known_fingertip_contacts": 0,
+  "objects": [
+    "white_pot"
+  ],
+  "source_files_verified": 775,
+  "manifest_sha256": "8369f9dd1ad8ef28e137f27b677a5e3f0a36f11f2c5b960f9057ce8ca638ab56",
+  "payload_sha256": "17a6398a21e10fc0d40e8a983bcb946a7d6870cbc2bb84fb262cd3858e31fc82",
+  "source_metric_hand_frames": [
+    231,
+    205
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "maximum_root_error_m": 9.459712399128581e-08,
+  "maximum_joint_error_rad": 5.959688142986863e-08,
+  "maximum_usd_link_error_m": 1.352716068514122e-07,
+  "maximum_physics_link_error_m": 1.3527160674872122e-07,
+  "maximum_color_pixels": [
+    26052,
+    26955
+  ]
+}

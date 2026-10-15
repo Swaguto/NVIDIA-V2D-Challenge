@@ -1,0 +1,25 @@
+{
+  "status": "validated",
+  "schema": "v2d.track3.episode.v1",
+  "frames": 353,
+  "hand_valid_frames": {
+    "left": 353,
+    "right": 353
+  },
+  "hand_unknown_frames": {
+    "left": 0,
+    "right": 0
+  },
+  "known_fingertip_contacts": 0,
+  "objects": [
+    "mini_dust_pan",
+    "mini_sweeper"
+  ],
+  "source_files_verified": 1417,
+  "manifest_sha256": "6804010aa200f3c23fdb6c7a822a5397b096b9d40abca8c185c7d2d1a8d20cf9",
+  "payload_sha256": "92353bc50908a4a693974ee53ff643d01729c8f2c8bd78ac035a74f782639db4",
+  "source_metric_hand_frames": [
+    290,
+    116
+  ]
+}

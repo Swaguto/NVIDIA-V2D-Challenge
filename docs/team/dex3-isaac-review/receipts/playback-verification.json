@@ -1,0 +1,98 @@
+{
+  "e011": {
+    "episode": "e011",
+    "ended": true,
+    "current": 6.764056,
+    "duration": 6.764056,
+    "rate": 1,
+    "error": null
+  },
+  "e002": {
+    "episode": "e002",
+    "ended": true,
+    "current": 16.934827,
+    "duration": 16.934827,
+    "rate": 1,
+    "error": null
+  },
+  "e012": {
+    "episode": "e012",
+    "ended": true,
+    "current": 8.936454,
+    "duration": 8.936454,
+    "rate": 1,
+    "error": null
+  },
+  "e013": {
+    "current": 9.380808,
+    "duration": 9.380808,
+    "ended": true,
+    "episode": "e013",
+    "error": null,
+    "rate": 1
+  },
+  "e018": {
+    "current": 17.428554,
+    "duration": 17.428554,
+    "ended": true,
+    "episode": "e018",
+    "error": null,
+    "rate": 1
+  },
+  "e021": {
+    "current": 9.183317,
+    "duration": 9.183317,
+    "ended": true,
+    "episode": "e021",
+    "error": null,
+    "rate": 1
+  },
+  "e023": {
+    "current": 16.046119,
+    "duration": 16.046119,
+    "ended": true,
+    "episode": "e023",
+    "error": null,
+    "rate": 1
+  },
+  "e024": {
+    "current": 13.577485,
+    "duration": 13.577485,
+    "ended": true,
+    "episode": "e024",
+    "error": null,
+    "rate": 1
+  },
+  "e031": {
+    "current": 14.318075,
+    "duration": 14.318075,
+    "ended": true,
+    "episode": "e031",
+    "error": null,
+    "rate": 1
+  },
+  "e040": {
+    "current": 12.836895,
+    "duration": 12.836895,
+    "ended": true,
+    "episode": "e040",
+    "error": null,
+    "rate": 1
+  },
+  "e041": {
+    "current": 14.762429,
+    "duration": 14.762429,
+    "ended": true,
+    "episode": "e041",
+    "error": null,
+    "rate": 1
+  },
+  "e042": {
+    "current": 12.688777,
+    "duration": 12.688777,
+    "ended": true,
+    "episode": "e042",
+    "error": null,
+    "rate": 1
+  }
+}

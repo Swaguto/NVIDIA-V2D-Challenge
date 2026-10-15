@@ -1,0 +1,82 @@
+{
+  "status": "IK complete; penetration and simulation gates pending",
+  "frames_processed": 260,
+  "source_frames": 260,
+  "elapsed_seconds": 8.807743779849261,
+  "joint_position_limit_violations": 0,
+  "per_hand": {
+    "left": {
+      "source_supported_frames": 260,
+      "retargeted_frames": 260,
+      "wrist_position_error_mm": {
+        "count": 260,
+        "median": 7.694899929605253,
+        "p95": 19.57581301504942,
+        "max": 22.117248505804657
+      },
+      "three_tip_position_error_mm": {
+        "count": 780,
+        "median": 27.803295107072735,
+        "p95": 43.00469162321832,
+        "max": 56.19370982744055
+      },
+      "wrist_orientation_error_deg": {
+        "count": 260,
+        "median": 7.240493427292715,
+        "p95": 10.093095643669812,
+        "max": 12.499099137206914
+      },
+      "adjacent_supported_pairs": 259,
+      "wrist_speed_m_s": {
+        "count": 259,
+        "median": 0.0866677919178229,
+        "p95": 0.4009027627809285,
+        "max": 0.5545537253057535
+      },
+      "finger_speed_rad_s": {
+        "count": 1813,
+        "median": 0.24194740060269876,
+        "p95": 2.102703570176578,
+        "max": 11.999665276607118
+      },
+      "finger_velocity_limit_violating_pairs": 0
+    },
+    "right": {
+      "source_supported_frames": 260,
+      "retargeted_frames": 260,
+      "wrist_position_error_mm": {
+        "count": 260,
+        "median": 6.420560908773151,
+        "p95": 12.236237306991724,
+        "max": 14.563500519073743
+      },
+      "three_tip_position_error_mm": {
+        "count": 780,
+        "median": 18.902029546972763,
+        "p95": 29.82165826348163,
+        "max": 35.55778022242178
+      },
+      "wrist_orientation_error_deg": {
+        "count": 260,
+        "median": 2.511883847043114,
+        "p95": 6.123841134359291,
+        "max": 8.130112668455403
+      },
+      "adjacent_supported_pairs": 259,
+      "wrist_speed_m_s": {
+        "count": 259,
+        "median": 0.10054635984258851,
+        "p95": 0.4235550770805707,
+        "max": 0.529112604243651
+      },
+      "finger_speed_rad_s": {
+        "count": 1813,
+        "median": 0.26185428354403056,
+        "p95": 2.058361554364221,
+        "max": 8.418112008860113
+      },
+      "finger_velocity_limit_violating_pairs": 0
+    }
+  },
+  "warning": "Source-frame finger velocities are constrained and measured; gaps remain unknown, penetration and simulator review still required"
+}

@@ -1,0 +1,25 @@
+{
+  "status": "validated",
+  "schema": "v2d.track3.episode.v1",
+  "frames": 137,
+  "hand_valid_frames": {
+    "left": 137,
+    "right": 134
+  },
+  "hand_unknown_frames": {
+    "left": 0,
+    "right": 3
+  },
+  "known_fingertip_contacts": 0,
+  "objects": [
+    "beige_cup",
+    "blue_cup"
+  ],
+  "source_files_verified": 553,
+  "manifest_sha256": "09811107013a3f8581b66e404b5c12cd78f98a1177f7c8649fb9b0aaded9cec9",
+  "payload_sha256": "b16bd7f55817d1a7687054acb5b1c4e0cc448a86c1a604b6f5c68691964f35e5",
+  "source_metric_hand_frames": [
+    133,
+    122
+  ]
+}

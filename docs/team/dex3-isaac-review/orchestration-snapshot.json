@@ -1,0 +1,94 @@
+[
+  {
+    "path": "scripts/dex3_review/frozen/continuity-orchestration/all20-transfer/backup_review.py",
+    "sha256": "b932861dd616d4f33c6801d1729694d691b6a1f8125a6fe4516c4ae903e6e202"
+  },
+  {
+    "path": "scripts/dex3_review/frozen/continuity-orchestration/all20-transfer/controller.py",
+    "sha256": "4ebd32f16f7281683f5e746daf17d1208b5c61f93a4869e1b59c32e87ab52084"
+  },
+  {
+    "path": "scripts/dex3_review/frozen/continuity-orchestration/all20-transfer/finalize_backup.py",
+    "sha256": "e647e6555245277e831f983e65496f6ee0fc1fbe16c05fd63f48f7a9fef64ab9"
+  },
+  {
+    "path": "scripts/dex3_review/frozen/continuity-orchestration/all20-transfer/package.py",
+    "sha256": "b926c852d772f31657a1a165fb4db353c75639ccc1efcb47a11df88a73aacc83"
+  },
+  {
+    "path": "scripts/dex3_review/frozen/continuity-orchestration/all20-transfer/parallel.py",
+    "sha256": "bf797a9488b67f51e8e4a29a1a7566018778c2e951f87bfb1cc353612fec12df"
+  },
+  {
+    "path": "scripts/dex3_review/frozen/continuity-orchestration/all20-transfer/receiver.py",
+    "sha256": "f978efd10814cb9f6a2e8735abce4014d3b7668867a286b8252dbf07c2634f63"
+  },
+  {
+    "path": "scripts/dex3_review/frozen/continuity-orchestration/all20-transfer/retry.py",
+    "sha256": "09acecd63c537b1382c45d0a0e51a6ec91829b44171479fcdd6f0218f695fa9f"
+  },
+  {
+    "path": "scripts/dex3_review/frozen/continuity-orchestration/all20-transfer/verify_packages.py",
+    "sha256": "ba93bbc5cc090f2208f4e7af1881aec03976c555954d1bbe6d8f4ce637b6525d"
+  },
+  {
+    "path": "scripts/dex3_review/frozen/continuity-orchestration/all20-transfer/worker-c.py",
+    "sha256": "e585075a43e94a51e31411ac3cdaef38d35c5a933eae8a33c05704e3d7b6cc4c"
+  },
+  {
+    "path": "scripts/dex3_review/frozen/continuity-orchestration/all20-transfer/worker-d.py",
+    "sha256": "8be337b1404fe61c2b9a426fcf7ebe98f72fcbdfe706e87705544f1725c0f6b8"
+  },
+  {
+    "path": "scripts/dex3_review/frozen/continuity-orchestration/hamer-transfer/anchor_masks.py",
+    "sha256": "d231bd0fa97ff691010b9531513d59f04caa23334be29223cbfb2e5e62976b87"
+  },
+  {
+    "path": "scripts/dex3_review/frozen/continuity-orchestration/hamer-transfer/finish-package-e042.py",
+    "sha256": "07e60de337faa905384703d3b31be5c0ea265f5377a43f69a1e67fd43a183b3e"
+  },
+  {
+    "path": "scripts/dex3_review/frozen/continuity-orchestration/hamer-transfer/fresh_observations.py",
+    "sha256": "8cbc4c479416919ee0a58608ec6d17219fd17f989e8ffcf519cc0387c9eda68b"
+  },
+  {
+    "path": "scripts/dex3_review/frozen/continuity-orchestration/hamer-transfer/fresh_observations_v2.py",
+    "sha256": "b2fc45e0b6f7fecb5e1fe376fb97bcebd818e806eadc23b4a553894697639949"
+  },
+  {
+    "path": "scripts/dex3_review/frozen/continuity-orchestration/hamer-transfer/fresh_observations_v3.py",
+    "sha256": "4560cff7e75089dfb04363430b49fdb3921ecb8f33fb6ae050f7c09923610d58"
+  },
+  {
+    "path": "scripts/dex3_review/frozen/continuity-orchestration/hamer-transfer/load_hamer.py",
+    "sha256": "2a3a9121943dd194cf899b1e8e56137f243798b8c7d725430708cd1ffe765aff"
+  },
+  {
+    "path": "scripts/dex3_review/frozen/continuity-orchestration/hamer-transfer/package-e041-v2.py",
+    "sha256": "deee1605ffd8910618a67ece069cde2ea66106069d3203ee255b7204f13fca9e"
+  },
+  {
+    "path": "scripts/dex3_review/frozen/continuity-orchestration/hamer-transfer/probe_sam_video.py",
+    "sha256": "6ac827ba51d8b20583524c7910bf204cfee0b1844b127ee92067560c7314b006"
+  },
+  {
+    "path": "scripts/dex3_review/frozen/continuity-orchestration/hamer-transfer/probe_sam_video_v2.py",
+    "sha256": "e7cb7779714faf95e1c28c48e12d7ab0947d865dde364cd6c9d380d5b36919dd"
+  },
+  {
+    "path": "scripts/dex3_review/frozen/continuity-orchestration/hamer-transfer/probe_yolo.py",
+    "sha256": "9604cbcdfb133aeaacb16473fe89fc3e2c207ce5ccd6381246c264066031f93c"
+  },
+  {
+    "path": "scripts/dex3_review/frozen/continuity-orchestration/hamer-transfer/receiver.py",
+    "sha256": "600a34e5c12773a561c1648d9b82903b59acdaf07da6c1b8ebaeba73e3d07f98"
+  },
+  {
+    "path": "scripts/dex3_review/frozen/continuity-orchestration/hamer-transfer/retime-package-e041.py",
+    "sha256": "26395b9ee59465e97299b16504fd5032a7b5cb351bd17819fa9a5fc52409c743"
+  },
+  {
+    "path": "scripts/dex3_review/frozen/continuity-orchestration/repair_hand_continuity.py",
+    "sha256": "215219502301e3959d11ee55f2aa0ee0dd9d6793d5aa3e97faa24b124e36989f"
+  }
+]

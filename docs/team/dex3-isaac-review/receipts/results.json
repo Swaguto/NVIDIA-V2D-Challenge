@@ -1,0 +1,275 @@
+[
+  {
+    "episode": "e002",
+    "ready": true,
+    "objects": [
+      "white_pot",
+      "white_pot_lid"
+    ],
+    "frames": 343,
+    "duration": 16.934827,
+    "visual_counts": [
+      338,
+      337
+    ],
+    "metric_counts": [
+      273,
+      283
+    ],
+    "tip_p95_mm": [
+      40.355346106624744,
+      27.431464594374003
+    ],
+    "review_note": "Full playback and sampled input/robot correspondence reviewed; grasp physics unvalidated."
+  },
+  {
+    "episode": "e011",
+    "ready": true,
+    "objects": [
+      "beige_cup",
+      "blue_cup"
+    ],
+    "frames": 137,
+    "duration": 6.764056,
+    "visual_counts": [
+      137,
+      134
+    ],
+    "metric_counts": [
+      133,
+      122
+    ],
+    "tip_p95_mm": [
+      41.289624474349765,
+      33.04239534996442
+    ],
+    "review_note": "Full playback and sampled input/robot correspondence reviewed; grasp physics unvalidated."
+  },
+  {
+    "episode": "e012",
+    "ready": true,
+    "objects": [
+      "blue_cup",
+      "plastic_dish_rack"
+    ],
+    "frames": 181,
+    "duration": 8.936454,
+    "visual_counts": [
+      181,
+      181
+    ],
+    "metric_counts": [
+      87,
+      118
+    ],
+    "tip_p95_mm": [
+      42.960613545253224,
+      40.539866790552004
+    ],
+    "review_note": "Full playback and sampled input/robot correspondence reviewed; grasp physics unvalidated."
+  },
+  {
+    "episode": "e013",
+    "ready": true,
+    "objects": [
+      "blue_cup",
+      "plastic_dish_rack"
+    ],
+    "frames": 190,
+    "duration": 9.380808,
+    "visual_counts": [
+      190,
+      163
+    ],
+    "metric_counts": [
+      157,
+      61
+    ],
+    "tip_p95_mm": [
+      39.137165837128066,
+      35.76973089090773
+    ],
+    "review_note": "Full playback and sampled input/robot correspondence reviewed; grasp physics unvalidated."
+  },
+  {
+    "episode": "e018",
+    "ready": true,
+    "objects": [
+      "mini_dust_pan",
+      "mini_sweeper"
+    ],
+    "frames": 353,
+    "duration": 17.428554,
+    "visual_counts": [
+      353,
+      353
+    ],
+    "metric_counts": [
+      290,
+      116
+    ],
+    "tip_p95_mm": [
+      39.00676736461343,
+      49.22002548502853
+    ],
+    "review_note": "Full playback and sampled input/robot correspondence reviewed; grasp physics unvalidated."
+  },
+  {
+    "episode": "e021",
+    "ready": true,
+    "objects": [
+      "blue_cup",
+      "water_pitcher"
+    ],
+    "frames": 186,
+    "duration": 9.183317,
+    "visual_counts": [
+      186,
+      73
+    ],
+    "metric_counts": [
+      64,
+      43
+    ],
+    "tip_p95_mm": [
+      41.356900103392995,
+      35.11117918195201
+    ],
+    "review_note": "Full playback and sampled input/robot correspondence reviewed; grasp physics unvalidated."
+  },
+  {
+    "episode": "e023",
+    "ready": true,
+    "objects": [
+      "wooden_piece_1",
+      "wooden_piece_2"
+    ],
+    "frames": 325,
+    "duration": 16.046119,
+    "visual_counts": [
+      325,
+      325
+    ],
+    "metric_counts": [
+      316,
+      97
+    ],
+    "tip_p95_mm": [
+      40.731123696813704,
+      28.952799661113943
+    ],
+    "review_note": "Full playback and sampled input/robot correspondence reviewed; grasp physics unvalidated."
+  },
+  {
+    "episode": "e024",
+    "ready": true,
+    "objects": [
+      "wooden_piece_1",
+      "wooden_piece_2"
+    ],
+    "frames": 275,
+    "duration": 13.577485,
+    "visual_counts": [
+      275,
+      248
+    ],
+    "metric_counts": [
+      244,
+      233
+    ],
+    "tip_p95_mm": [
+      43.52619737109483,
+      31.61377000865825
+    ],
+    "review_note": "Full playback and sampled input/robot correspondence reviewed; grasp physics unvalidated."
+  },
+  {
+    "episode": "e031",
+    "ready": true,
+    "objects": [
+      "mini_sweeper",
+      "plastic_dish_rack"
+    ],
+    "frames": 290,
+    "duration": 14.318075,
+    "visual_counts": [
+      290,
+      290
+    ],
+    "metric_counts": [
+      196,
+      134
+    ],
+    "tip_p95_mm": [
+      36.948002758514704,
+      32.74429683172404
+    ],
+    "review_note": "Full playback and sampled input/robot correspondence reviewed; grasp physics unvalidated."
+  },
+  {
+    "episode": "e040",
+    "ready": true,
+    "objects": [
+      "mini_dust_pan"
+    ],
+    "frames": 260,
+    "duration": 12.836895,
+    "visual_counts": [
+      260,
+      260
+    ],
+    "metric_counts": [
+      167,
+      83
+    ],
+    "tip_p95_mm": [
+      43.00469162321832,
+      29.82165826348163
+    ],
+    "review_note": "Full playback and sampled input/robot correspondence reviewed; grasp physics unvalidated."
+  },
+  {
+    "episode": "e041",
+    "ready": true,
+    "objects": [
+      "white_pot"
+    ],
+    "frames": 299,
+    "duration": 14.762429,
+    "visual_counts": [
+      299,
+      299
+    ],
+    "metric_counts": [
+      86,
+      198
+    ],
+    "tip_p95_mm": [
+      38.524533751217085,
+      28.722675582982824
+    ],
+    "review_note": "Full playback and sampled input/robot correspondence reviewed; grasp physics unvalidated."
+  },
+  {
+    "episode": "e042",
+    "ready": true,
+    "objects": [
+      "white_pot"
+    ],
+    "frames": 257,
+    "duration": 12.688777,
+    "visual_counts": [
+      257,
+      257
+    ],
+    "metric_counts": [
+      231,
+      205
+    ],
+    "tip_p95_mm": [
+      44.18458697337975,
+      29.140853723383213
+    ],
+    "review_note": "Full playback and sampled input/robot correspondence reviewed; grasp physics unvalidated."
+  }
+]
