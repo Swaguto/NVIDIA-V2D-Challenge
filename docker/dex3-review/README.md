@@ -127,6 +127,14 @@ rather than silently overwriting them. A completed package still needs visual re
 
 ## 5. Native continuity repair from the original cache
 
+The native image can check its 35 installed runtime pins without loading MANO weights:
+
+```bash
+docker run --rm --platform linux/amd64 --entrypoint python \
+  v2d-hand-continuity:checkpoint scripts/dex3_review/check_runtime.py \
+  --runtime continuity --lock /opt/locks/continuity-runtime-lock.txt
+```
+
 The small replay pack starts **after** human fitting. To rerun that fitting, also
 migrate the original `/workspace/hand-continuity-repair` workspace with its native
 input cache, licensed local assets, source-image mask/anchor observations and
