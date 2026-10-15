@@ -1,0 +1,55 @@
+{
+  "schema": "v2d.public-object-audit-independent-repeat.v1",
+  "Windows_report_sha256": "11cb5b9c1b97c4fdaec18a8b46273ccd8f7c1f1723ea9ed7b131de8923093134",
+  "Linux_pinned_report_sha256": "a3f1a4a449895301ffae1884bb0162cd9d07c4c06f606dccf2d7f15214c46a02",
+  "actual_clean_HTTP_reference_download_completed": true,
+  "all_four_inputs_match_immutable_lock": true,
+  "Windows_runtime": {
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "trimesh": "5.1.0"
+  },
+  "Linux_pinned_runtime": {
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "trimesh": "4.12.2"
+  },
+  "all_343_numeric_records_agree_to_absolute_1e_minus_12": true,
+  "maximum_absolute_record_differences": {
+    "relative_scan_origin_translation_error_m": 5.906733435701028e-16,
+    "relative_scan_orientation_error_deg": 3.730349362740526e-14,
+    "inter_scan_origin_distance_error_m": 0.0
+  },
+  "controls": [
+    {
+      "control": "wrong_reference_bytes",
+      "refused": true,
+      "no_result_written": true,
+      "exit_code": 1,
+      "last_error": "ValueError: Reference input differs from lock: data\\chunk-000\\episode_000002.parquet"
+    },
+    {
+      "control": "escaping_reference_path",
+      "refused": true,
+      "no_result_written": true,
+      "exit_code": 1,
+      "last_error": "ValueError: Reference lock path escapes its root"
+    },
+    {
+      "control": "wrong_proposal_frame_indices",
+      "refused": true,
+      "no_result_written": true,
+      "exit_code": 1,
+      "last_error": "        26,  27,  28,  29,  30,  31,  32,  33,  34,  35,  36,  37,  38,..."
+    },
+    {
+      "control": "nonrigid_proposal",
+      "refused": true,
+      "no_result_written": true,
+      "exit_code": 1,
+      "last_error": "ValueError: Nonrigid pose/scale cannot be treated as the canonical scan frame"
+    }
+  ],
+  "source_or_reference_modified": false,
+  "physical_task_accepted": false
+}

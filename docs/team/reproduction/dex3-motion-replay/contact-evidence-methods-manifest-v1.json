@@ -1,0 +1,19 @@
+{
+  "schema": "v2d.contact-evidence-methods.v1",
+  "archive_sha256": "9b4bae236b618bae0dbc0beb1a22f1d4027d4c0d9a268ae8d7cf201004455c04",
+  "files_sha256": {
+    "quality_stereo_contact_regions_v2.py": "64cbce0275ef284193823622bad3edff5e46f9aa5c9a3c2b313124a824cab86b",
+    "filter_contact_mask_agreement_v1.py": "003b5c8c2ee3fb64305bd8476ce623eae7a4a6e4369a0389045fbefb0fc69448"
+  },
+  "raster_source_sha256": "c58000461675af1406378ef4868e5fc0ec225fd94f22f446970b6c3bc3e04d41",
+  "runtime": {
+    "python": "3.11.17",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "numba": "0.61.2",
+    "llvmlite": "0.44.0"
+  },
+  "source_observations_promoted": false,
+  "physical_task_accepted": false,
+  "separate_from_frozen_replay_archive": true
+}

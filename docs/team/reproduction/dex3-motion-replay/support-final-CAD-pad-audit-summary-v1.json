@@ -1,0 +1,311 @@
+{
+  "schema": "v2d.original-CAD-selected-pad-gaps.v1",
+  "source_sha256": "722e9c01aad56e01b636782da33e17eaa6dfed4ca382086c6bfa83a2d11746bb",
+  "case_manifest_sha256": "dfe06ac14d976e48ffc58ec07cad74f8d49573fc4a080bd6f57f79668ddf4ebb",
+  "motion_payload_sha256": "0f30f3d7baea4359160c7b243c05f3bda4bb28c3494999b2e975c960b3702bd8",
+  "hand_geometry_scope": "locked URDF collision meshes, not visual meshes",
+  "pad_selection_basis": "final_CAD_fit",
+  "CAD_candidate_report_sha256": "a208dc2aa9625b479244cc7afb5352f06bed84fa2ac3eb2085156d6270b18a0e",
+  "original_BVH_builder_sha256": "6bac99844bc9f2d8c5c9ce065befcb144077b4a25eb8efc6af0247cf2dc0634d",
+  "original_triangle_projection_module_sha256": "6555aa9cc2ab62f3965546e39349875d5a6572825d1c7efecba032b08676371d",
+  "atlas_sha256": "a4a48614fb6fbd47d028d2f166f5071c359c91c7c5bb92c794a9364e05c10598",
+  "annotation_sha256": "f4de747c96da804158b063b86d5683dd28c618ae5c24558cb4f8038399d4b8bf",
+  "controls": {
+    "3mm_original_triangle_gap_recovered": true,
+    "crossing_original_triangles_have_zero_unsigned_gap": true,
+    "unsigned_gap_alone_is_not_a_solid_penetration_test": true,
+    "zero_distance_fallback_points_not_used_as_contact_witnesses": true,
+    "triangle_interior_edge_vertex_analytic_controls": true,
+    "nearest_vertex_can_miss_exact_face_target": true,
+    "submillimetre_triangle_vertex_projection_verified": true
+  },
+  "phase_bindings": [
+    {
+      "prefix": "left-object0-grasp0",
+      "selected_seed": "partnerindex-assignment1-seed2",
+      "templates_report_sha256": "3b846ab8349ba0e0ed73d08e49c05a1baf498fe529daa76d2cf41c8aee8c22fd",
+      "scenes_report_sha256": "ce2fcb436da6e98f9b0fc25eff953744a9aca9c90f8f8b8e4afb7bcef7ccb7d5",
+      "original_pad_triangles": {
+        "thumb": 81,
+        "index": 13838
+      },
+      "pad_selection_basis": "final_CAD_fit"
+    },
+    {
+      "prefix": "left-object0-grasp1",
+      "selected_seed": "partnerindex-assignment-1-seed0",
+      "templates_report_sha256": "9b39445e4b805e1193c0fd2d945d0636e20920d76af42b06abbc778dca469afc",
+      "scenes_report_sha256": "6a1e716421a4a7081a85c176ea15021677803056bc9ab395b607f4625b62f4cf",
+      "original_pad_triangles": {
+        "thumb": 109,
+        "index": 22908
+      },
+      "pad_selection_basis": "final_CAD_fit"
+    },
+    {
+      "prefix": "right-object1-grasp0",
+      "selected_seed": "partnerindex-assignment-1-seed0",
+      "templates_report_sha256": "b022629a1838002843a2fb181c8b9f1aec5ea1e342521e970a8fa15a91812e4b",
+      "scenes_report_sha256": "2941912c9697e8fe54b22f63842dfa0433d3ece677044db4146294b55fcd1de5",
+      "original_pad_triangles": {
+        "thumb": 278,
+        "index": 27308
+      },
+      "pad_selection_basis": "final_CAD_fit"
+    },
+    {
+      "prefix": "right-object1-grasp1",
+      "selected_seed": "partnerindex-assignment-1-seed0",
+      "templates_report_sha256": "b022629a1838002843a2fb181c8b9f1aec5ea1e342521e970a8fa15a91812e4b",
+      "scenes_report_sha256": "2941912c9697e8fe54b22f63842dfa0433d3ece677044db4146294b55fcd1de5",
+      "original_pad_triangles": {
+        "thumb": 278,
+        "index": 27867
+      },
+      "pad_selection_basis": "final_CAD_fit"
+    }
+  ],
+  "summary": [
+    {
+      "prefix": "left-object0-grasp0",
+      "inferred_closed_hand_frames": 184,
+      "both_pad_faces_within2mm_frames": 184,
+      "pads": {
+        "thumb": {
+          "minimum_gap_m": 0.0008167806697176338,
+          "median_gap_m": 0.0008167894796022961,
+          "maximum_gap_m": 0.0008167997733802012
+        },
+        "index": {
+          "minimum_gap_m": 0.001500833513077029,
+          "median_gap_m": 0.0015008415657181578,
+          "maximum_gap_m": 0.0015008501080754127
+        }
+      },
+      "both_current_CAD_target_faces_within2mm_and_opposed_frames": 184
+    },
+    {
+      "prefix": "left-object0-grasp1",
+      "inferred_closed_hand_frames": 59,
+      "both_pad_faces_within2mm_frames": 59,
+      "pads": {
+        "thumb": {
+          "minimum_gap_m": 0.0012992830803541754,
+          "median_gap_m": 0.0012992871050178244,
+          "maximum_gap_m": 0.0012992911237622272
+        },
+        "index": {
+          "minimum_gap_m": 0.0009996999853766437,
+          "median_gap_m": 0.000999705256509058,
+          "maximum_gap_m": 0.0009997111907776993
+        }
+      },
+      "both_current_CAD_target_faces_within2mm_and_opposed_frames": 59
+    },
+    {
+      "prefix": "right-object1-grasp0",
+      "inferred_closed_hand_frames": 61,
+      "both_pad_faces_within2mm_frames": 61,
+      "pads": {
+        "thumb": {
+          "minimum_gap_m": 0.0017108271996459593,
+          "median_gap_m": 0.0017108311368430218,
+          "maximum_gap_m": 0.0017108344608104912
+        },
+        "index": {
+          "minimum_gap_m": 0.0014738345875725011,
+          "median_gap_m": 0.0014738458127175995,
+          "maximum_gap_m": 0.0014738569963574034
+        }
+      },
+      "both_current_CAD_target_faces_within2mm_and_opposed_frames": 61
+    },
+    {
+      "prefix": "right-object1-grasp1",
+      "inferred_closed_hand_frames": 73,
+      "both_pad_faces_within2mm_frames": 73,
+      "pads": {
+        "thumb": {
+          "minimum_gap_m": 0.001799995256715272,
+          "median_gap_m": 0.00180000177636181,
+          "maximum_gap_m": 0.0018000061740158027
+        },
+        "index": {
+          "minimum_gap_m": 0.0013743352427532088,
+          "median_gap_m": 0.0013743515903349758,
+          "maximum_gap_m": 0.0013743670614374563
+        }
+      },
+      "both_current_CAD_target_faces_within2mm_and_opposed_frames": 73
+    }
+  ],
+  "source_label_validation": [
+    {
+      "grasp_id": "left_pot_handle_stabilize_lift_lower",
+      "core_frames": 185,
+      "frames_without_grasp_phase": [],
+      "original_CAD_2mm_gap_failed_core_frames": [
+        46
+      ],
+      "current_CAD_target_witness_failed_core_frames": [
+        46
+      ]
+    },
+    {
+      "grasp_id": "right_lid_remove_place",
+      "core_frames": 62,
+      "frames_without_grasp_phase": [],
+      "original_CAD_2mm_gap_failed_core_frames": [
+        46
+      ],
+      "current_CAD_target_witness_failed_core_frames": [
+        46
+      ]
+    },
+    {
+      "grasp_id": "right_lid_regrasp_replace",
+      "core_frames": 72,
+      "frames_without_grasp_phase": [],
+      "original_CAD_2mm_gap_failed_core_frames": [
+        309
+      ],
+      "current_CAD_target_witness_failed_core_frames": [
+        309
+      ]
+    },
+    {
+      "grasp_id": "left_pot_handle_regrasp_stabilize_release",
+      "core_frames": 62,
+      "frames_without_grasp_phase": [],
+      "original_CAD_2mm_gap_failed_core_frames": [
+        272,
+        332,
+        333
+      ],
+      "current_CAD_target_witness_failed_core_frames": [
+        272,
+        332,
+        333
+      ]
+    }
+  ],
+  "all_source_frames_processed": 343,
+  "original_selected_pad_triangle_distance_checks": 878,
+  "contact_distance_limit_m": 0.002,
+  "continuous_contact_certified": false,
+  "source_labels_read_after_geometry": true,
+  "original_poses_masks_and_targets_modified": false,
+  "source_accuracy_accepted": false,
+  "physical_task_accepted": false,
+  "complete_report_file": "support-final-CAD-pad-audit-v1.json.gz",
+  "complete_report_bytes": 183963,
+  "complete_report_sha256": "7cfc39af997b12f1cd64647e8fc1e3f88f089d90570299f10d7f43bca6956f04",
+  "uncompressed_report_sha256": "cf8d55162303ec0fbe4b8f38332afea269aaa0941a1f3d6a70f0cd12b16a59ca",
+  "selected_pad_measurement_records": 439,
+  "closed_contact_states": 377,
+  "closed_contact_states_passing": 377,
+  "source_labeled_core_states": 381,
+  "source_labeled_core_states_passing": 375,
+  "missed_labeled_core_states": [
+    {
+      "grasp_id": "left_pot_handle_stabilize_lift_lower",
+      "source_frame": 46,
+      "side": "left",
+      "object": 0,
+      "source_hand_valid": false,
+      "inferred_closed_grasp_intent": false,
+      "current_CAD_target_gaps_m": {
+        "thumb": 0.0036981295405496568,
+        "index": 0.016576031388832166
+      },
+      "current_hand_target_normal_dots": {
+        "thumb": -0.34990320803519204,
+        "index": -0.5674280289536299
+      }
+    },
+    {
+      "grasp_id": "right_lid_remove_place",
+      "source_frame": 46,
+      "side": "right",
+      "object": 1,
+      "source_hand_valid": false,
+      "inferred_closed_grasp_intent": false,
+      "current_CAD_target_gaps_m": {
+        "thumb": 0.009431454550253323,
+        "index": 0.021478334560441705
+      },
+      "current_hand_target_normal_dots": {
+        "thumb": -0.9787478352527649,
+        "index": -0.7627904417526938
+      }
+    },
+    {
+      "grasp_id": "right_lid_regrasp_replace",
+      "source_frame": 309,
+      "side": "right",
+      "object": 1,
+      "source_hand_valid": true,
+      "inferred_closed_grasp_intent": false,
+      "current_CAD_target_gaps_m": {
+        "thumb": 0.02502197440284417,
+        "index": 0.04745567043704186
+      },
+      "current_hand_target_normal_dots": {
+        "thumb": -0.9154188730105479,
+        "index": -0.8539801648378778
+      }
+    },
+    {
+      "grasp_id": "left_pot_handle_regrasp_stabilize_release",
+      "source_frame": 272,
+      "side": "left",
+      "object": 0,
+      "source_hand_valid": true,
+      "inferred_closed_grasp_intent": false,
+      "current_CAD_target_gaps_m": {
+        "thumb": 0.019142250159036707,
+        "index": 0.020929446057378086
+      },
+      "current_hand_target_normal_dots": {
+        "thumb": -0.41974603622500734,
+        "index": -0.7832413981972131
+      }
+    },
+    {
+      "grasp_id": "left_pot_handle_regrasp_stabilize_release",
+      "source_frame": 332,
+      "side": "left",
+      "object": 0,
+      "source_hand_valid": false,
+      "inferred_closed_grasp_intent": false,
+      "current_CAD_target_gaps_m": {
+        "thumb": 0.02005407120792989,
+        "index": 0.03849531786067537
+      },
+      "current_hand_target_normal_dots": {
+        "thumb": -0.38156227420062483,
+        "index": -0.7475249955151471
+      }
+    },
+    {
+      "grasp_id": "left_pot_handle_regrasp_stabilize_release",
+      "source_frame": 333,
+      "side": "left",
+      "object": 0,
+      "source_hand_valid": false,
+      "inferred_closed_grasp_intent": false,
+      "current_CAD_target_gaps_m": {
+        "thumb": 0.037616772005152024,
+        "index": 0.07762431551851408
+      },
+      "current_hand_target_normal_dots": {
+        "thumb": -0.12458626038081794,
+        "index": -0.7790347510234032
+      }
+    }
+  ],
+  "missed_states_with_source_hand_observation": 2,
+  "missed_states_without_source_hand_observation": 4,
+  "normal_dot_numerical_tolerance_from_fitter": 1e-07,
+  "physics_force_manipulation_or_private_score_established": false
+}

@@ -1,0 +1,213 @@
+{
+  "schema": "v2d.contact-evidence-development-review.v1",
+  "episode": 2,
+  "source_frames": 343,
+  "per_hand_object_before_mask_agreement": {
+    "left": {
+      "white_pot": {
+        "candidate_points": 14991,
+        "frames_with_any_candidate": 222,
+        "frames_with_at_least8_points": 183,
+        "automatic_potential_contact_intervals": [
+          [
+            54,
+            65
+          ],
+          [
+            73,
+            125
+          ],
+          [
+            129,
+            139
+          ],
+          [
+            145,
+            213
+          ],
+          [
+            215,
+            224
+          ],
+          [
+            292,
+            294
+          ],
+          [
+            309,
+            311
+          ],
+          [
+            317,
+            329
+          ]
+        ]
+      },
+      "white_pot_lid": {
+        "candidate_points": 0,
+        "frames_with_any_candidate": 0,
+        "frames_with_at_least8_points": 0,
+        "automatic_potential_contact_intervals": []
+      }
+    },
+    "right": {
+      "white_pot": {
+        "candidate_points": 0,
+        "frames_with_any_candidate": 0,
+        "frames_with_at_least8_points": 0,
+        "automatic_potential_contact_intervals": []
+      },
+      "white_pot_lid": {
+        "candidate_points": 1615,
+        "frames_with_any_candidate": 116,
+        "frames_with_at_least8_points": 92,
+        "automatic_potential_contact_intervals": [
+          [
+            61,
+            63
+          ],
+          [
+            65,
+            106
+          ],
+          [
+            248,
+            251
+          ],
+          [
+            260,
+            266
+          ],
+          [
+            268,
+            279
+          ],
+          [
+            281,
+            285
+          ],
+          [
+            288,
+            291
+          ],
+          [
+            293,
+            295
+          ],
+          [
+            303,
+            305
+          ]
+        ]
+      }
+    }
+  },
+  "candidate_points_before_by_hand": [
+    14991,
+    1615
+  ],
+  "candidate_points_after_by_hand": [
+    14491,
+    664
+  ],
+  "candidate_points_removed": 1451,
+  "boundary_validation": [
+    {
+      "side": "left",
+      "source_frame": 46,
+      "original_hand_observed": false,
+      "parent_candidates_by_object": [
+        0,
+        0
+      ],
+      "mask_agreement_candidates_by_object": [
+        0,
+        0
+      ]
+    },
+    {
+      "side": "left",
+      "source_frame": 272,
+      "original_hand_observed": true,
+      "parent_candidates_by_object": [
+        4,
+        0
+      ],
+      "mask_agreement_candidates_by_object": [
+        4,
+        0
+      ]
+    },
+    {
+      "side": "left",
+      "source_frame": 332,
+      "original_hand_observed": false,
+      "parent_candidates_by_object": [
+        0,
+        0
+      ],
+      "mask_agreement_candidates_by_object": [
+        0,
+        0
+      ]
+    },
+    {
+      "side": "left",
+      "source_frame": 333,
+      "original_hand_observed": false,
+      "parent_candidates_by_object": [
+        0,
+        0
+      ],
+      "mask_agreement_candidates_by_object": [
+        0,
+        0
+      ]
+    },
+    {
+      "side": "right",
+      "source_frame": 46,
+      "original_hand_observed": false,
+      "parent_candidates_by_object": [
+        0,
+        0
+      ],
+      "mask_agreement_candidates_by_object": [
+        0,
+        0
+      ]
+    },
+    {
+      "side": "right",
+      "source_frame": 309,
+      "original_hand_observed": true,
+      "parent_candidates_by_object": [
+        0,
+        1
+      ],
+      "mask_agreement_candidates_by_object": [
+        0,
+        0
+      ]
+    }
+  ],
+  "report_sha256": {
+    "current_image": "b111039731c7bb00db09888611b839fcfc380e57fd7b15aa7749830e00be621b",
+    "mask_agreement": "7d3fb153fdb823f7c36317c82adca7f0d914c69489f87a564d5d532e64ab2999"
+  },
+  "visual_review": {
+    "automatically_selected_frames": [
+      178,
+      278
+    ],
+    "source_and_current_masks_inspected": true,
+    "original_left_mask_inspected": true,
+    "some_left_candidates_appear_on_visible_pot_handle": true,
+    "remaining_semantic_ownership_accepted": false
+  },
+  "contact_extension_justified": false,
+  "source_observations_promoted": false,
+  "physical_task_accepted": false,
+  "new_simulator_run": false,
+  "frozen_replay_trajectory_changed": false
+}

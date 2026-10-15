@@ -1,0 +1,190 @@
+{
+  "schema": "v2d.support-fitted-motion-reconstruction.v1",
+  "runner_sha256": "c01ab0b5bb6e5aa4ea7bb4a0db5147f9c7838b03dd91b394e526aeae6135f6d3",
+  "method_kit_manifest_sha256": "bec54ca77b60cdf6013c075b3e3be6265eab4ac644a04e75cf114276493fd61e",
+  "stages": [
+    {
+      "stage": "01-guided",
+      "script_sha256": "5df174c5c4b12e6f82956e1bf66edcb204f99e783782add37b225e23db97a1ad",
+      "verified_outputs": {
+        "robot-motion-proposal.npz": "f057b66e3b59ab38dfcaf189387d83fd0349c511ce213f9e66466e3618dd32db",
+        "replay-knots.npz": "d480a94bc7b2da880dcffe01e92b6615f2844ee5180f857380767570e0e7b518"
+      },
+      "original_producer_report_from_frozen_input": "references/01-guided-original-producer-report.json",
+      "original_producer_report_sha256": "fc0b6ef9333b49e182538cd82daa44fb17c847ceb2bf9632d37e8a08c997f93c",
+      "optimization_repeated": false,
+      "geometry_rechecked": false
+    },
+    {
+      "stage": "02-finalized",
+      "script_sha256": "41ce3ada01fc990ac8a3004207c5d13aeb16f5e1aa09f328988972e7821ba7aa",
+      "verified_outputs": {
+        "robot-motion-proposal.npz": "f057b66e3b59ab38dfcaf189387d83fd0349c511ce213f9e66466e3618dd32db",
+        "replay-knots.npz": "d480a94bc7b2da880dcffe01e92b6615f2844ee5180f857380767570e0e7b518"
+      },
+      "original_producer_report_from_frozen_input": "references/02-finalized-original-producer-report.json",
+      "original_producer_report_sha256": "f6b76d9d15c92e5824ebd8db686db5fe102cc17dd38e64b7a81304ed755ca355",
+      "optimization_repeated": false,
+      "geometry_rechecked": false
+    },
+    {
+      "stage": "03-case",
+      "script_sha256": "1c004e9e71b4f686a506aa262d33afac95fd575481271e8d60406c8fbc6488f7",
+      "verified_outputs": {
+        "file-manifest.json": "ea486809481be44761a417979ceca64f46f274f51cf8b16df6f5a95f28061637"
+      },
+      "original_producer_report_from_frozen_input": null,
+      "original_producer_report_sha256": null,
+      "optimization_repeated": false,
+      "geometry_rechecked": false
+    },
+    {
+      "stage": "04-micro1",
+      "script_sha256": "bcfab28039d2201adcf31dc62badfd47c1bda41d9cb9f03eee9d70045caf5b16",
+      "verified_outputs": {
+        "robot-motion-proposal.npz": "f057b66e3b59ab38dfcaf189387d83fd0349c511ce213f9e66466e3618dd32db",
+        "replay-knots.npz": "077b1e1411ad6430e6007dd36fcdd834b37fc5a6600dd9f44af819b144c68d60"
+      },
+      "original_producer_report_from_frozen_input": "references/04-micro1-original-producer-report.json",
+      "original_producer_report_sha256": "e42e9e152affeab6f13bc33509bb05dd4704283e7ebf2e36ac27d650b86352d4",
+      "optimization_repeated": false,
+      "geometry_rechecked": false
+    },
+    {
+      "stage": "05-case",
+      "script_sha256": "1c004e9e71b4f686a506aa262d33afac95fd575481271e8d60406c8fbc6488f7",
+      "verified_outputs": {
+        "file-manifest.json": "abf49e11994ab4b5f88103a06eab1dc09a5af31281b91b0874b310574464ff9f"
+      },
+      "original_producer_report_from_frozen_input": null,
+      "original_producer_report_sha256": null,
+      "optimization_repeated": false,
+      "geometry_rechecked": false
+    },
+    {
+      "stage": "06-prefix-pair",
+      "script_sha256": "ebaef978407c409c6956e768d5bb00a1b0507e4a4ced517cb995d68161378309",
+      "verified_outputs": {
+        "robot-motion-proposal.npz": "719227d69ee0c79758a291e9674a015ae8176a2f6f616f3a38551615b83ba8f5",
+        "replay-knots.npz": "03ab2d1735a6de378e6dddee7b9a76e80a88055fa28b17b827247a70b1bc45c2"
+      },
+      "original_producer_report_from_frozen_input": "references/06-prefix-pair-original-producer-report.json",
+      "original_producer_report_sha256": "523b9946cf7e891f4906767db3461520b075180902aa6e4a5fcf74bea61c11dd",
+      "optimization_repeated": false,
+      "geometry_rechecked": false
+    },
+    {
+      "stage": "07-finalized",
+      "script_sha256": "41ce3ada01fc990ac8a3004207c5d13aeb16f5e1aa09f328988972e7821ba7aa",
+      "verified_outputs": {
+        "robot-motion-proposal.npz": "719227d69ee0c79758a291e9674a015ae8176a2f6f616f3a38551615b83ba8f5",
+        "replay-knots.npz": "03ab2d1735a6de378e6dddee7b9a76e80a88055fa28b17b827247a70b1bc45c2"
+      },
+      "original_producer_report_from_frozen_input": "references/07-finalized-original-producer-report.json",
+      "original_producer_report_sha256": "751dc9b9c0b20618b4f1ced37fb8b5960ba6a63375cfc62713971bbf935660ee",
+      "optimization_repeated": false,
+      "geometry_rechecked": false
+    },
+    {
+      "stage": "08-case",
+      "script_sha256": "1c004e9e71b4f686a506aa262d33afac95fd575481271e8d60406c8fbc6488f7",
+      "verified_outputs": {
+        "file-manifest.json": "299ac1d3dbc2258828a9d4f4ba4f407546eecb2e3e03d13ae384c9bf276703e7"
+      },
+      "original_producer_report_from_frozen_input": null,
+      "original_producer_report_sha256": null,
+      "optimization_repeated": false,
+      "geometry_rechecked": false
+    },
+    {
+      "stage": "09-micro2",
+      "script_sha256": "bcfab28039d2201adcf31dc62badfd47c1bda41d9cb9f03eee9d70045caf5b16",
+      "verified_outputs": {
+        "robot-motion-proposal.npz": "719227d69ee0c79758a291e9674a015ae8176a2f6f616f3a38551615b83ba8f5",
+        "replay-knots.npz": "9f15e04033a022e6e2ead2a4d02c177875880a60a482e480e21974ea196e18ad"
+      },
+      "original_producer_report_from_frozen_input": "references/09-micro2-original-producer-report.json",
+      "original_producer_report_sha256": "6965dc926adf84c41021f26ceb5cfb61bb0d6aaf517cee5fdf86a42162ce32ff",
+      "optimization_repeated": false,
+      "geometry_rechecked": false
+    },
+    {
+      "stage": "10-case",
+      "script_sha256": "1c004e9e71b4f686a506aa262d33afac95fd575481271e8d60406c8fbc6488f7",
+      "verified_outputs": {
+        "file-manifest.json": "cd3aa73880907a645cc858c7ea033f997d1c1cbdd5cce778402de1cad0a677eb"
+      },
+      "original_producer_report_from_frozen_input": null,
+      "original_producer_report_sha256": null,
+      "optimization_repeated": false,
+      "geometry_rechecked": false
+    },
+    {
+      "stage": "11-guided-late",
+      "script_sha256": "5df174c5c4b12e6f82956e1bf66edcb204f99e783782add37b225e23db97a1ad",
+      "verified_outputs": {
+        "robot-motion-proposal.npz": "dbfcb7edc51b3af17cb18e874ec3f7d113ba627c242283b415a737811387a0c8",
+        "replay-knots.npz": "05c497f587bc9e98c110e1539dd36cf28d6f30615a4ad4807cd99d1c301e7c1b"
+      },
+      "original_producer_report_from_frozen_input": "references/11-guided-late-original-producer-report.json",
+      "original_producer_report_sha256": "8e02ab8905f6b6a8b27ed2dad53952c6cb525782c844bec827e71b4d8a070812",
+      "optimization_repeated": false,
+      "geometry_rechecked": false
+    },
+    {
+      "stage": "12-finalized",
+      "script_sha256": "4f0655fb24969f8f78f12df516c65eca1db7a571f3ff8c9dd4a99fde46449810",
+      "verified_outputs": {
+        "robot-motion-proposal.npz": "0f30f3d7baea4359160c7b243c05f3bda4bb28c3494999b2e975c960b3702bd8",
+        "replay-knots.npz": "05c497f587bc9e98c110e1539dd36cf28d6f30615a4ad4807cd99d1c301e7c1b"
+      },
+      "original_producer_report_from_frozen_input": "references/12-finalized-original-producer-report.json",
+      "original_producer_report_sha256": "31a19e638617ebf3017f2b3b46fd0f5aecec874bb8e6215e45483483dc237f14",
+      "optimization_repeated": false,
+      "geometry_rechecked": false
+    },
+    {
+      "stage": "13-case",
+      "script_sha256": "1c004e9e71b4f686a506aa262d33afac95fd575481271e8d60406c8fbc6488f7",
+      "verified_outputs": {
+        "file-manifest.json": "5c557974af5a1c62bbf00e3c7ed0d523228dc06f8ab359415fd1d13263d3d2df"
+      },
+      "original_producer_report_from_frozen_input": null,
+      "original_producer_report_sha256": null,
+      "optimization_repeated": false,
+      "geometry_rechecked": false
+    },
+    {
+      "stage": "14-micro3",
+      "script_sha256": "bcfab28039d2201adcf31dc62badfd47c1bda41d9cb9f03eee9d70045caf5b16",
+      "verified_outputs": {
+        "robot-motion-proposal.npz": "0f30f3d7baea4359160c7b243c05f3bda4bb28c3494999b2e975c960b3702bd8",
+        "replay-knots.npz": "783dd6e5afa0cad47f40489728d0c767fe757771c3c958f65a9c42acfe6cc3d4"
+      },
+      "original_producer_report_from_frozen_input": "references/14-micro3-original-producer-report.json",
+      "original_producer_report_sha256": "11bda1ddbf832160553f8974298492c11a44a4b0e89296c42b6f949ad1bf128c",
+      "optimization_repeated": false,
+      "geometry_rechecked": false
+    },
+    {
+      "stage": "15-case",
+      "script_sha256": "1c004e9e71b4f686a506aa262d33afac95fd575481271e8d60406c8fbc6488f7",
+      "verified_outputs": {
+        "file-manifest.json": "dfe06ac14d976e48ffc58ec07cad74f8d49573fc4a080bd6f57f79668ddf4ebb"
+      },
+      "original_producer_report_from_frozen_input": null,
+      "original_producer_report_sha256": null,
+      "optimization_repeated": false,
+      "geometry_rechecked": false
+    }
+  ],
+  "final_case": "15-case",
+  "all_recorded_motion_bytes_exact": true,
+  "saved_fit_reconstruction_only": true,
+  "raw_video_inference_repeated": false,
+  "optimization_repeated": false,
+  "geometry_recomputed": false,
+  "new_simulator_run": false,
+  "source_accuracy_accepted": false,
+  "physical_task_accepted": false
+}

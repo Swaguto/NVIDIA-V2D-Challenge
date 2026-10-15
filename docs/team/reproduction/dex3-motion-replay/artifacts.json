@@ -1,0 +1,44 @@
+{
+  "schema": "v2d.private-development-replay-assets.v1",
+  "recorded_at_utc": "2026-10-12T20:22:58.317023+00:00",
+  "repository": "Swaguto/NVIDIA-V2D-Challenge",
+  "repository_private": true,
+  "tag": "dex3-development-replay-20261012",
+  "release_url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/tag/dex3-development-replay-20261012",
+  "physical_task_accepted": false,
+  "assets": {
+    "frozen_replay_inputs": {
+      "name": "generated-dex3-simulator-inputs-v5.tar.gz",
+      "bytes": 50295014,
+      "sha256": "0acb47d1aa8fdcdabc3023f8564297ed7a996f4a4a9ea235c8507bda553bd50d",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-development-replay-20261012/generated-dex3-simulator-inputs-v5.tar.gz",
+      "github_asset_id": 634891049,
+      "github_digest": "sha256:0acb47d1aa8fdcdabc3023f8564297ed7a996f4a4a9ea235c8507bda553bd50d"
+    },
+    "fitted_motion_inputs": {
+      "name": "fitted-motion-inputs-v1.tar.gz",
+      "bytes": 39604363,
+      "sha256": "3daaa90efd1487f42019a14b5d783c9580e2b3b5103bf55b3c5b63b7ace21fe0",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-development-replay-20261012/fitted-motion-inputs-v1.tar.gz",
+      "github_asset_id": 634891264,
+      "github_digest": "sha256:3daaa90efd1487f42019a14b5d783c9580e2b3b5103bf55b3c5b63b7ace21fe0"
+    },
+    "source_observations_isaac_comparison": {
+      "name": "source-observations-dex3.mp4",
+      "bytes": 49126274,
+      "sha256": "55e9f7ff9ad5aa9052a792282a4e2db62c4500c97472fc2631b0e7bf46ee65d9",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-development-replay-20261012/source-observations-dex3.mp4",
+      "github_asset_id": 634891505,
+      "github_digest": "sha256:55e9f7ff9ad5aa9052a792282a4e2db62c4500c97472fc2631b0e7bf46ee65d9"
+    },
+    "actual_isaac_replay": {
+      "name": "replay.mp4",
+      "bytes": 6761888,
+      "sha256": "0739cdf66e1ec530df58de4f7c7058ef2bb39edaad333f3919ae51a46e42e0ea",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-development-replay-20261012/replay.mp4",
+      "github_asset_id": 634891817,
+      "github_digest": "sha256:0739cdf66e1ec530df58de4f7c7058ef2bb39edaad333f3919ae51a46e42e0ea"
+    }
+  },
+  "release_published": true
+}

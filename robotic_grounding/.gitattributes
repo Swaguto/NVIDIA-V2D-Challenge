@@ -47,3 +47,10 @@ source/robotic_grounding/robotic_grounding/assets/human_motion_data/taco/taco_lo
 source/robotic_grounding/robotic_grounding/assets/human_motion_data/taco/taco_processed/sequence_id=taco_empty__kettle__plate_20231031_060/**/*.parquet filter=lfs diff=lfs merge=lfs -text
 source/robotic_grounding/robotic_grounding/assets/human_motion_data/taco/reconstructed_stage/taco_empty__kettle__plate_20231031_060_support.usda filter=lfs diff=lfs merge=lfs -text
 *.pkg filter=lfs diff=lfs merge=lfs -text
+
+# IK/model receipts hash bytes. Keep identical source and URDF checkouts on
+# Windows and Linux; line-ending conversion must not invalidate model locks.
+scripts/retarget/*.py text eol=lf
+source/robotic_grounding/robotic_grounding/__init__.py text eol=lf
+source/robotic_grounding/robotic_grounding/retarget/*.py text eol=lf
+source/robotic_grounding/robotic_grounding/assets/urdfs/g1/dex3_*.urdf text eol=lf

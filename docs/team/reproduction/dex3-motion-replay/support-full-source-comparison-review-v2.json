@@ -1,0 +1,910 @@
+{
+  "schema": "v2d.support-Dex3-complete-source-comparison-review.v2",
+  "recorded_at_utc": "2026-10-14T00:15:24.547858+00:00",
+  "scope": "Qualitative inspection of every source/observation/actual-Isaac row in the frozen comparison sheets; not independent ground-truth measurement.",
+  "reviewer": "Codex technical self-review",
+  "episode": 2,
+  "frozen_reproduction_tag": "dex3-support-replay-20261013",
+  "frozen_reproduction_commit": "85cc0d01c8e93b20c620c354251e29290f43efd4",
+  "original_comparison_review_sha256": "abcd9d43fc6e94d6e8be3ce8b5da61d424f9a5ccd97e0dcac022ee54127cae51",
+  "comparison_video_sha256": "33c1fa81eecdf4bb5bf1fef2d8b557c99220ddea9fae56050d3d1731ee845aaf",
+  "simulator_complete_sha256": "e4dcd00133c11cdaa20e3446c353fef95e744604d053f88457f2da928c5a04dd",
+  "motion_payload_sha256": "0f30f3d7baea4359160c7b243c05f3bda4bb28c3494999b2e975c960b3702bd8",
+  "all_58_source_comparison_sheets_inspected": true,
+  "all_343_source_comparison_rows_inspected": true,
+  "source_comparison_pages": [
+    {
+      "path": "all-frames-00.jpg",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "sha256": "66748049c7ffb590a32ed2d973f20574859b4b49c2be01ed734f08cbf577f2d5"
+    },
+    {
+      "path": "all-frames-01.jpg",
+      "frames": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "sha256": "776e9e1dd963b94f0fab02919a5ac508d37dd1331f6e64bea947879ac33d590c"
+    },
+    {
+      "path": "all-frames-02.jpg",
+      "frames": [
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "sha256": "f82ffcef8c28cd6c42be540449d4d2c53c92b45199b1d8ddfbe0d62ae868385c"
+    },
+    {
+      "path": "all-frames-03.jpg",
+      "frames": [
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "sha256": "9bfb8e5f6bc36af8bc4e0c078b5464800b4c8dc06b2089062c1a4655e801197f"
+    },
+    {
+      "path": "all-frames-04.jpg",
+      "frames": [
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "sha256": "3672d638e7d167bc77cb2bff9540f07e393a7f131f7a9ebbca351bd074ffb8ba"
+    },
+    {
+      "path": "all-frames-05.jpg",
+      "frames": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "sha256": "47ed5d38b1ef6293a936a897cc00ed246e59f168c57ed932c7a47f1f62efb0fb"
+    },
+    {
+      "path": "all-frames-06.jpg",
+      "frames": [
+        36,
+        37,
+        38,
+        39,
+        40,
+        41
+      ],
+      "sha256": "304fea8e2bf2c624b869e8a90186c7b9ed21e1a28d318aba786ec1b44f3c7564"
+    },
+    {
+      "path": "all-frames-07.jpg",
+      "frames": [
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "sha256": "a20d89be90f971485ccd563ef78db4177be6647444ce8b03d74c7318215a9795"
+    },
+    {
+      "path": "all-frames-08.jpg",
+      "frames": [
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "sha256": "a11f962ec94acdd10f2995bec69373bff0622995edba63cab3b18e0e4cb8b266"
+    },
+    {
+      "path": "all-frames-09.jpg",
+      "frames": [
+        54,
+        55,
+        56,
+        57,
+        58,
+        59
+      ],
+      "sha256": "ee9f0e2074c8a02fb7bb454c213358784c5b05cb13764faf4c9e72eeedb2dfce"
+    },
+    {
+      "path": "all-frames-10.jpg",
+      "frames": [
+        60,
+        61,
+        62,
+        63,
+        64,
+        65
+      ],
+      "sha256": "f0d273833ea130c202cc0bbf814c83fdcf49424a85eb85aaf7432dda283a7806"
+    },
+    {
+      "path": "all-frames-11.jpg",
+      "frames": [
+        66,
+        67,
+        68,
+        69,
+        70,
+        71
+      ],
+      "sha256": "d20771196084fd064798fae6c6d51724fff25b0db369a517b14807aedce5caca"
+    },
+    {
+      "path": "all-frames-12.jpg",
+      "frames": [
+        72,
+        73,
+        74,
+        75,
+        76,
+        77
+      ],
+      "sha256": "e4df0f3d7527900395e8f596f6e625bbee92948965f1763a99ffbf9106f15030"
+    },
+    {
+      "path": "all-frames-13.jpg",
+      "frames": [
+        78,
+        79,
+        80,
+        81,
+        82,
+        83
+      ],
+      "sha256": "7c66b8927fe70313d4650c374268abdd363088323235093a3a6d89d657012afb"
+    },
+    {
+      "path": "all-frames-14.jpg",
+      "frames": [
+        84,
+        85,
+        86,
+        87,
+        88,
+        89
+      ],
+      "sha256": "f218e407d37b8df84a27c793216b2a625c5a2bbb032c1955c7818b66aa8a23e2"
+    },
+    {
+      "path": "all-frames-15.jpg",
+      "frames": [
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "sha256": "a9fda6525cf33df0a75cfc6d02e78335fe8d729301180bce00598742977387f9"
+    },
+    {
+      "path": "all-frames-16.jpg",
+      "frames": [
+        96,
+        97,
+        98,
+        99,
+        100,
+        101
+      ],
+      "sha256": "86bd8b24875ae64035862f18a9e0e6488eec2d7f88aa22df0eb611d2341ea78a"
+    },
+    {
+      "path": "all-frames-17.jpg",
+      "frames": [
+        102,
+        103,
+        104,
+        105,
+        106,
+        107
+      ],
+      "sha256": "a7633cc07518841a6262629d8f04019555d91846375fafdd3363ffef608dfbb9"
+    },
+    {
+      "path": "all-frames-18.jpg",
+      "frames": [
+        108,
+        109,
+        110,
+        111,
+        112,
+        113
+      ],
+      "sha256": "512617402168ad948190f01343e188820b75047c1106ebc1dc6c6fd41817c433"
+    },
+    {
+      "path": "all-frames-19.jpg",
+      "frames": [
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "sha256": "4585ef3d2ac513bab4a6822940c3f382edcf50c3cc06afbe4e0f0a733582189b"
+    },
+    {
+      "path": "all-frames-20.jpg",
+      "frames": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125
+      ],
+      "sha256": "39baa4c536a621c736d872eedd4bb1df39b901064d6123c8dda1820945f93b09"
+    },
+    {
+      "path": "all-frames-21.jpg",
+      "frames": [
+        126,
+        127,
+        128,
+        129,
+        130,
+        131
+      ],
+      "sha256": "887e9f410b795e91b44c71d713595aef606567385a6b619327b068c36f99b322"
+    },
+    {
+      "path": "all-frames-22.jpg",
+      "frames": [
+        132,
+        133,
+        134,
+        135,
+        136,
+        137
+      ],
+      "sha256": "2805a5a3e0240cef3d59f4d44b3eefd7d134c90e2470bd8c5417310e10f2f460"
+    },
+    {
+      "path": "all-frames-23.jpg",
+      "frames": [
+        138,
+        139,
+        140,
+        141,
+        142,
+        143
+      ],
+      "sha256": "e73d653c42d94622e3a8e60402997a9fc936d7544d5a6bb9808cf4ffd0de86ff"
+    },
+    {
+      "path": "all-frames-24.jpg",
+      "frames": [
+        144,
+        145,
+        146,
+        147,
+        148,
+        149
+      ],
+      "sha256": "441582a96415daca6b4f45f19d8ccb44b6827148a14cf7320d88e0256f6c1232"
+    },
+    {
+      "path": "all-frames-25.jpg",
+      "frames": [
+        150,
+        151,
+        152,
+        153,
+        154,
+        155
+      ],
+      "sha256": "6de75da0e017ae241f73fde0c17c2ce19443cba12d62cc6968673024f24022a1"
+    },
+    {
+      "path": "all-frames-26.jpg",
+      "frames": [
+        156,
+        157,
+        158,
+        159,
+        160,
+        161
+      ],
+      "sha256": "8f8e427f65b72f7312e7c321c704ec1a7141a61047b6fc28f19a23e9f09bd274"
+    },
+    {
+      "path": "all-frames-27.jpg",
+      "frames": [
+        162,
+        163,
+        164,
+        165,
+        166,
+        167
+      ],
+      "sha256": "9135b1ed417a1e0947403619d93c07c07e2b1768b063f1c247f7a193afc7ccdf"
+    },
+    {
+      "path": "all-frames-28.jpg",
+      "frames": [
+        168,
+        169,
+        170,
+        171,
+        172,
+        173
+      ],
+      "sha256": "2e58564fcaa5f09f076519c4f9a454dbef1820bf2c75204e31abe3702ee49e31"
+    },
+    {
+      "path": "all-frames-29.jpg",
+      "frames": [
+        174,
+        175,
+        176,
+        177,
+        178,
+        179
+      ],
+      "sha256": "f822d225f50bf469ead94feacb223c43b36cfe1cdffab393a8b0d3491ee20dd9"
+    },
+    {
+      "path": "all-frames-30.jpg",
+      "frames": [
+        180,
+        181,
+        182,
+        183,
+        184,
+        185
+      ],
+      "sha256": "e6137678d424cc6bb0b9f2d62b970c6087400a323387ae166c2d86aed4e4cdac"
+    },
+    {
+      "path": "all-frames-31.jpg",
+      "frames": [
+        186,
+        187,
+        188,
+        189,
+        190,
+        191
+      ],
+      "sha256": "d69274a7e1e7552c7d5168edc85a0fae7a5948ae461ffd007974be951dfd5886"
+    },
+    {
+      "path": "all-frames-32.jpg",
+      "frames": [
+        192,
+        193,
+        194,
+        195,
+        196,
+        197
+      ],
+      "sha256": "5e9dab2f602857c7e98ce72536803dadc8774db6bccf81ee88711bdcf3af4db4"
+    },
+    {
+      "path": "all-frames-33.jpg",
+      "frames": [
+        198,
+        199,
+        200,
+        201,
+        202,
+        203
+      ],
+      "sha256": "01a5fbfe1545da9cf29db6899dd8d091bfeddaf7e92e73770e3e5a45d402a68c"
+    },
+    {
+      "path": "all-frames-34.jpg",
+      "frames": [
+        204,
+        205,
+        206,
+        207,
+        208,
+        209
+      ],
+      "sha256": "b13ffcd51627ef4cc2a9465d5fa1bdd57842d37a589358c4e5a209c7a740a0ed"
+    },
+    {
+      "path": "all-frames-35.jpg",
+      "frames": [
+        210,
+        211,
+        212,
+        213,
+        214,
+        215
+      ],
+      "sha256": "8facc942aababdb7473db1eab2b7ff18fc7594615e991426e89dea9694b1e887"
+    },
+    {
+      "path": "all-frames-36.jpg",
+      "frames": [
+        216,
+        217,
+        218,
+        219,
+        220,
+        221
+      ],
+      "sha256": "8f202ae87ccaae96e6d268608b10559e646d61400d22f2c8f067f6698f615a7c"
+    },
+    {
+      "path": "all-frames-37.jpg",
+      "frames": [
+        222,
+        223,
+        224,
+        225,
+        226,
+        227
+      ],
+      "sha256": "2daca3f1583ea748e65ea728efcc8678258232f7615def547f7c7d7f99427014"
+    },
+    {
+      "path": "all-frames-38.jpg",
+      "frames": [
+        228,
+        229,
+        230,
+        231,
+        232,
+        233
+      ],
+      "sha256": "62fafb3f3ad20cec49166288d1732305711aa4e419797248b3ebffed6a1d7f77"
+    },
+    {
+      "path": "all-frames-39.jpg",
+      "frames": [
+        234,
+        235,
+        236,
+        237,
+        238,
+        239
+      ],
+      "sha256": "4244ff38f1e1cbf03dfdcf18bb8de6906cc2fde1ca14699390364f378d225edb"
+    },
+    {
+      "path": "all-frames-40.jpg",
+      "frames": [
+        240,
+        241,
+        242,
+        243,
+        244,
+        245
+      ],
+      "sha256": "a4caf22c65f49bec4718cbfacb3e6bed504806b64f53fef863d439ebaea5092f"
+    },
+    {
+      "path": "all-frames-41.jpg",
+      "frames": [
+        246,
+        247,
+        248,
+        249,
+        250,
+        251
+      ],
+      "sha256": "d7202e980e82ad9494daee3fc8edcbccb36e01b9ec6063e58773232719a3f1e2"
+    },
+    {
+      "path": "all-frames-42.jpg",
+      "frames": [
+        252,
+        253,
+        254,
+        255,
+        256,
+        257
+      ],
+      "sha256": "61fe5b8f9da44518a8e7dfcb8096a3734d0508a0911e8e4be859b009299e59b9"
+    },
+    {
+      "path": "all-frames-43.jpg",
+      "frames": [
+        258,
+        259,
+        260,
+        261,
+        262,
+        263
+      ],
+      "sha256": "79680704fc7c9b7cb664c6a65a444cb8ab2c1e42c4f6170c6deb95fb9d5f547f"
+    },
+    {
+      "path": "all-frames-44.jpg",
+      "frames": [
+        264,
+        265,
+        266,
+        267,
+        268,
+        269
+      ],
+      "sha256": "a2ea9879930ff586ecbfc9e7ede3aecbf7e3c5a7064d0f31fae59560d99cae7d"
+    },
+    {
+      "path": "all-frames-45.jpg",
+      "frames": [
+        270,
+        271,
+        272,
+        273,
+        274,
+        275
+      ],
+      "sha256": "2d70245f2eabfe628be0fc7daa25bbb9417b6c6a37471c3b3efe06d866006507"
+    },
+    {
+      "path": "all-frames-46.jpg",
+      "frames": [
+        276,
+        277,
+        278,
+        279,
+        280,
+        281
+      ],
+      "sha256": "fe5b512b33ec765f672e5329125bbd695a64a1e06b5870713056873ad2f3b0e2"
+    },
+    {
+      "path": "all-frames-47.jpg",
+      "frames": [
+        282,
+        283,
+        284,
+        285,
+        286,
+        287
+      ],
+      "sha256": "c32160df2a4d6a457adaef0b1c2fa936101b955a5f65112c73fa3c07cfb9b0b8"
+    },
+    {
+      "path": "all-frames-48.jpg",
+      "frames": [
+        288,
+        289,
+        290,
+        291,
+        292,
+        293
+      ],
+      "sha256": "22f554b667dea5ef48bfe063fc8043d61011e59e25af58648e3fbe7433accde9"
+    },
+    {
+      "path": "all-frames-49.jpg",
+      "frames": [
+        294,
+        295,
+        296,
+        297,
+        298,
+        299
+      ],
+      "sha256": "80eec105690aecd7a7c2483ac143d0387387d32ec6eae3c15725c1a4ffc91290"
+    },
+    {
+      "path": "all-frames-50.jpg",
+      "frames": [
+        300,
+        301,
+        302,
+        303,
+        304,
+        305
+      ],
+      "sha256": "08d6aa284a3150872d48dd2c83487ab70a1a1872c749ae6d94f46e33a03922af"
+    },
+    {
+      "path": "all-frames-51.jpg",
+      "frames": [
+        306,
+        307,
+        308,
+        309,
+        310,
+        311
+      ],
+      "sha256": "63982e43d17094ffa0f60018f06ed618f428b25ab4e118930173be7dbe9197dc"
+    },
+    {
+      "path": "all-frames-52.jpg",
+      "frames": [
+        312,
+        313,
+        314,
+        315,
+        316,
+        317
+      ],
+      "sha256": "f7c1ffc602f03cd44e30b228d53887bac573ae457f7c47637c5f7a1cb47e6121"
+    },
+    {
+      "path": "all-frames-53.jpg",
+      "frames": [
+        318,
+        319,
+        320,
+        321,
+        322,
+        323
+      ],
+      "sha256": "28080b601e87babcbd3e6c166311eff41aa569f7646760e2bfc7747c4425eda6"
+    },
+    {
+      "path": "all-frames-54.jpg",
+      "frames": [
+        324,
+        325,
+        326,
+        327,
+        328,
+        329
+      ],
+      "sha256": "20697c264f01ecc2ba6379b278172c97544b578d707e581935aa5f1fd98e570e"
+    },
+    {
+      "path": "all-frames-55.jpg",
+      "frames": [
+        330,
+        331,
+        332,
+        333,
+        334,
+        335
+      ],
+      "sha256": "86ddbdbbb85a8e2f6152a810c771377ba3f282a9694798f816caedd0c9754162"
+    },
+    {
+      "path": "all-frames-56.jpg",
+      "frames": [
+        336,
+        337,
+        338,
+        339,
+        340,
+        341
+      ],
+      "sha256": "c4e1a32a33a679ed8d4b7731766299fd3222de5bfa36eefb14f09b03dc8f9080"
+    },
+    {
+      "path": "all-frames-57.jpg",
+      "frames": [
+        342
+      ],
+      "sha256": "ab82b0d19ff8565be52a3cda3d26f88228e6f6c7cc4672f47eef5fec83c17b44"
+    }
+  ],
+  "source_valid_left_right": [
+    272,
+    284
+  ],
+  "opening_display_hold_frames_left_right": [
+    [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45
+    ],
+    [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45
+    ]
+  ],
+  "approved_robot_motion_targets_left_right": [
+    0,
+    0
+  ],
+  "selected_inference_kinds_left_right": {
+    "0": [
+      27,
+      27
+    ],
+    "45": [
+      27,
+      27
+    ],
+    "46": [
+      9,
+      12
+    ],
+    "47": [
+      2,
+      2
+    ],
+    "265": [
+      26,
+      2
+    ],
+    "266": [
+      26,
+      2
+    ],
+    "331": [
+      2,
+      26
+    ],
+    "332": [
+      15,
+      26
+    ],
+    "342": [
+      22,
+      22
+    ]
+  },
+  "findings": [
+    {
+      "frames": [
+        0,
+        46
+      ],
+      "observation": "Recovered observations are invalid. Both robot hands use explicit display-only prefix holds at0\u201345. Visible source approach is not reproduced by those held poses; frame46 also remains unobserved and inferred.",
+      "disposition": "Do not interpret opening display as measured hand placement or contact."
+    },
+    {
+      "frames": [
+        47,
+        107
+      ],
+      "observation": "Pot-handle and lid grasp, lid lift and transfer to the side broadly follow the visible source sequence. Human/Dex3 morphology and finger posture differ.",
+      "disposition": "Broad sequence agreement is not per-finger 3D accuracy, contact force or dynamic grasp evidence."
+    },
+    {
+      "frames": [
+        108,
+        227
+      ],
+      "observation": "Right release/withdrawal and left pot movement follow the broad sequence. The free right robot hand remains substantially more open than the visible human hand; camera-edge cropping and the missing right observation at122 remain.",
+      "disposition": "No approval of free-hand posture or unseen fingertips."
+    },
+    {
+      "frames": [
+        228,
+        269
+      ],
+      "observation": "Left release/withdrawal, right return and lid replacement follow the broad visible sequence. Left robot free posture differs; its rapid orientation change near267 is not proven accurate. Invalid left observations at237,265,266 have no recovered-hand overlay.",
+      "disposition": "Source-following interpretation is qualitative; missing observations remain missing."
+    },
+    {
+      "frames": [
+        270,
+        309
+      ],
+      "observation": "Left return to the handle and right lid placement are visible. Estimated recovered overlays align broadly but do not resolve hidden thumb placement or exact boundary contact.",
+      "disposition": "Existing unsupported boundary states remain unaccepted; no new timing labels are used for fitting."
+    },
+    {
+      "frames": [
+        310,
+        342
+      ],
+      "observation": "Final right and left release follow the broad sequence. Free fingers/posture differ from source; the right robot hand partly leaves the camera. Both source masks are invalid at332\u2013342 although parts of the human hands remain visible.",
+      "disposition": "Tail poses remain inferred and no accuracy is claimed for hidden/cropped parts."
+    }
+  ],
+  "no_artificial_observation_mask_on_off_flicker_observed": true,
+  "every_source_pixel_or_finger_independently_measured": false,
+  "source_accuracy_accepted": false,
+  "physical_task_accepted": false,
+  "experiment_source_motion_masks_or_proofs_modified": false,
+  "new_raw_video_reconstruction_or_optimizer_run": false,
+  "new_simulator_run": false,
+  "issue9_started": false
+}

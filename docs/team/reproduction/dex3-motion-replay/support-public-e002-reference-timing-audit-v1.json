@@ -1,0 +1,213 @@
+{
+  "schema": "v2d.public-reference-freshness-diagnostic.v1",
+  "parquet_sha256": "a1cd007e34edbdaa51138c168312ad4f0bb6e60ed65b52e72d253d6f949ae00b",
+  "source_sha256": "4d6ed70b6964b1401638dc15cce40eaa0f6c033424304d014f7c903c94dcddba",
+  "parquet_columns": [
+    "observation.objects",
+    "timestamp",
+    "capture_time",
+    "frame_index",
+    "episode_index",
+    "index",
+    "task_index"
+  ],
+  "consecutive_exact_duplicate_all_object_pose_frames": 6,
+  "exact_duplicate_runs": [
+    {
+      "first_pose_frame": 157,
+      "identical_copy_frames": [
+        158,
+        159,
+        160
+      ],
+      "visible_both": true
+    },
+    {
+      "first_pose_frame": 254,
+      "identical_copy_frames": [
+        255
+      ],
+      "visible_both": true
+    },
+    {
+      "first_pose_frame": 256,
+      "identical_copy_frames": [
+        257
+      ],
+      "visible_both": true
+    },
+    {
+      "first_pose_frame": 276,
+      "identical_copy_frames": [
+        277
+      ],
+      "visible_both": true
+    }
+  ],
+  "largest_disagreement_source_frame": 161,
+  "timing_context": [
+    {
+      "frame": 156,
+      "all_object_poses_exact_copy_of_previous": false,
+      "columns": {
+        "timestamp": 7.702132701873779,
+        "capture_time": 7.867798805236816,
+        "frame_index": 156,
+        "episode_index": 2,
+        "index": 864,
+        "task_index": 0
+      },
+      "metric": {
+        "source_frame": 156,
+        "GT_visible_both": true,
+        "reconstruction_observed_both": true,
+        "relative_translation_error_m": 0.0061322483430616085,
+        "relative_rotation_error_deg": 4.251056944112847,
+        "scan_origin_distance_error_m": 0.003560938990515017
+      }
+    },
+    {
+      "frame": 157,
+      "all_object_poses_exact_copy_of_previous": false,
+      "columns": {
+        "timestamp": 7.751505374908447,
+        "capture_time": 7.919264316558838,
+        "frame_index": 157,
+        "episode_index": 2,
+        "index": 865,
+        "task_index": 0
+      },
+      "metric": {
+        "source_frame": 157,
+        "GT_visible_both": true,
+        "reconstruction_observed_both": true,
+        "relative_translation_error_m": 0.007881372047948126,
+        "relative_rotation_error_deg": 3.617998322307262,
+        "scan_origin_distance_error_m": 0.0017116752318080963
+      }
+    },
+    {
+      "frame": 158,
+      "all_object_poses_exact_copy_of_previous": true,
+      "columns": {
+        "timestamp": 7.800878047943115,
+        "capture_time": 7.968270301818848,
+        "frame_index": 158,
+        "episode_index": 2,
+        "index": 866,
+        "task_index": 0
+      },
+      "metric": {
+        "source_frame": 158,
+        "GT_visible_both": true,
+        "reconstruction_observed_both": true,
+        "relative_translation_error_m": 0.020369739215931264,
+        "relative_rotation_error_deg": 3.582887593927655,
+        "scan_origin_distance_error_m": 0.005943417389801087
+      }
+    },
+    {
+      "frame": 159,
+      "all_object_poses_exact_copy_of_previous": true,
+      "columns": {
+        "timestamp": 7.850250720977783,
+        "capture_time": 8.018021583557129,
+        "frame_index": 159,
+        "episode_index": 2,
+        "index": 867,
+        "task_index": 0
+      },
+      "metric": {
+        "source_frame": 159,
+        "GT_visible_both": true,
+        "reconstruction_observed_both": true,
+        "relative_translation_error_m": 0.039554217702652966,
+        "relative_rotation_error_deg": 4.992434427425925,
+        "scan_origin_distance_error_m": 0.020718660966735913
+      }
+    },
+    {
+      "frame": 160,
+      "all_object_poses_exact_copy_of_previous": true,
+      "columns": {
+        "timestamp": 7.899623394012451,
+        "capture_time": 8.069730758666992,
+        "frame_index": 160,
+        "episode_index": 2,
+        "index": 868,
+        "task_index": 0
+      },
+      "metric": {
+        "source_frame": 160,
+        "GT_visible_both": true,
+        "reconstruction_observed_both": true,
+        "relative_translation_error_m": 0.05645162944226564,
+        "relative_rotation_error_deg": 6.662307328529355,
+        "scan_origin_distance_error_m": 0.03510805215158819
+      }
+    },
+    {
+      "frame": 161,
+      "all_object_poses_exact_copy_of_previous": false,
+      "columns": {
+        "timestamp": 7.948996067047119,
+        "capture_time": 8.118103981018066,
+        "frame_index": 161,
+        "episode_index": 2,
+        "index": 869,
+        "task_index": 0
+      },
+      "metric": {
+        "source_frame": 161,
+        "GT_visible_both": true,
+        "reconstruction_observed_both": true,
+        "relative_translation_error_m": 0.06293631628340549,
+        "relative_rotation_error_deg": 7.934401055935269,
+        "scan_origin_distance_error_m": 0.046025853909522685
+      }
+    },
+    {
+      "frame": 162,
+      "all_object_poses_exact_copy_of_previous": false,
+      "columns": {
+        "timestamp": 7.998368263244629,
+        "capture_time": 8.167304039001465,
+        "frame_index": 162,
+        "episode_index": 2,
+        "index": 870,
+        "task_index": 0
+      },
+      "metric": {
+        "source_frame": 162,
+        "GT_visible_both": true,
+        "reconstruction_observed_both": true,
+        "relative_translation_error_m": 0.011460938050808242,
+        "relative_rotation_error_deg": 2.953370170268809,
+        "scan_origin_distance_error_m": 0.0010802105888380042
+      }
+    },
+    {
+      "frame": 163,
+      "all_object_poses_exact_copy_of_previous": false,
+      "columns": {
+        "timestamp": 8.047740936279297,
+        "capture_time": 8.218657493591309,
+        "frame_index": 163,
+        "episode_index": 2,
+        "index": 871,
+        "task_index": 0
+      },
+      "metric": {
+        "source_frame": 163,
+        "GT_visible_both": true,
+        "reconstruction_observed_both": true,
+        "relative_translation_error_m": 0.020203488118841508,
+        "relative_rotation_error_deg": 3.770643839157123,
+        "scan_origin_distance_error_m": 0.0031136412623508636
+      }
+    }
+  ],
+  "diagnosis": "Exact repeated reference values are measured. Stale tracking or timing is a hypothesis, not established from equality alone. No reference rows are removed or repaired; all-visible error statistics remain authoritative for this diagnostic.",
+  "reference_or_reconstruction_modified": false,
+  "physical_task_accepted": false
+}

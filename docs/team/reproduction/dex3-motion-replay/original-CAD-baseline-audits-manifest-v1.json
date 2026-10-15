@@ -1,0 +1,20 @@
+{
+  "schema": "v2d.original-CAD-baseline-audits-archive.v1",
+  "archive": "original-CAD-baseline-audits-v1.tar.gz",
+  "archive_sha256": "46b15775c2b0c4b4e8b6bb84f118d1a7d0f16768ff42d3a8c514748570e2dccc",
+  "files_sha256": {
+    "evidence/corrected-original-CAD-pad-gaps-v3/report.json": "12ad6cca2d4bd7f5584a0d6cafdadf470a793540ca072d27b2e14a33e2c4a019",
+    "evidence/corrected-render-cad-source-audit-v1/report.json": "147f47d569cdc498df0e017f2aaa1c9ffd8444e961e1d4c677b2b8262c64e437",
+    "evidence/corrected-support-source-and-knots-v2/report.json": "4a32c99fc8636cbe525eb69d1cdf045fc30c99ce12a76b4903ef39fa7668e7e2",
+    "evidence/corrected-support-source-and-knots-v2/support-distances.npz": "57a6c30f7819a8a3f3b845e39e432d23862664e2c466272798ad4dc2b706536a",
+    "evidence/e002-source-grasp-annotation.json": "f4de747c96da804158b063b86d5683dd28c618ae5c24558cb4f8038399d4b8bf",
+    "evidence/source-support-plane-v1/report.json": "38a6bf97df7def496bed7773e265c894e77da6bb5521d3077bf43330cbd3166f",
+    "evidence/source-support-plane-v1/support-plane-hypothesis.npz": "ee65e4534d5306818ee88342615c78eb65b17d5f7bef762c654f4f36d796f28a",
+    "methods/audit_frozen_dex3_original_contacts.py": "ee48788829b616114e37a013ff5cef7379023aa08d1ae8590fc5e02001bf93e4",
+    "methods/audit_frozen_dex3_original_mesh_intersections.py": "a700864754e627682865ade3b99d1fba949ab19e9c08693c5ee7261692ab94f8",
+    "methods/audit_frozen_dex3_support_plane.py": "769433c6d03df3e253643c4547f81971d92f4e630755a4c30ab1697574e36aa4"
+  },
+  "measured_published_motion_payload_sha256": "91e41d5f44eef43f910b18ab8d24f64c9d4b8ad2b938ede7ec7af46a65bbab19",
+  "measured_published_case_manifest_sha256": "87b027f05ca58259fa355a635ce6c1fed90a90a64ffcc84b9a2bed46d50880c0",
+  "source_ground_truth_or_new_simulator_run_claimed": false
+}

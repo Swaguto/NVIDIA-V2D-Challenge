@@ -1,0 +1,46 @@
+{
+  "status": "passed declared input/state/camera/video audit; visual and physical acceptance pending",
+  "auditor_sha256": "ee199be70f45d7587f916b969fc940fb5870418d6e4929cf76e814ab2cab025c",
+  "original_verifier_math_reference_sha256": "46801dfc6ee42d729a12a06bbf1f93c5d42127b051bd9dcc48252ac9d86d6cfd",
+  "simulator_complete_report_sha256": "e4dcd00133c11cdaa20e3446c353fef95e744604d053f88457f2da928c5a04dd",
+  "source_frames": 343,
+  "decoded_video_frames": 343,
+  "explicit_inferred_robot_states": 686,
+  "source_hand_valid_counts": [
+    272,
+    284
+  ],
+  "original_source_masks_exact": true,
+  "all_robot_poses_inferred_and_targets_unaccepted": true,
+  "independently_recomputed_root_joint_errors": {
+    "root_position_m": 6.711140909697566e-08,
+    "joint_angle_rad": 5.7684564014337525e-08,
+    "root_rotation_rad": 2.997168648347989e-07,
+    "renderer_usd_link_position_error_m": 9.636246011325622e-08,
+    "renderer_physics_link_position_error_m": 9.636246021359348e-08
+  },
+  "independently_recomputed_camera_errors": {
+    "position_m": 1.028008822896129e-09,
+    "rotation_rad": 4.032240876620415e-07,
+    "intrinsics_px": 0.0
+  },
+  "independent_absolute_link_readback_available": false,
+  "renderer_aggregate_link_error_fields_checked": true,
+  "visibility_color_indicators": [
+    {
+      "side": "left",
+      "minimum_color_pixels": 9239,
+      "below20_color_pixel_source_frames": [],
+      "isolated_below20_color_pixel_source_frames": []
+    },
+    {
+      "side": "right",
+      "minimum_color_pixels": 3112,
+      "below20_color_pixel_source_frames": [],
+      "isolated_below20_color_pixel_source_frames": []
+    }
+  ],
+  "color_presence_is_not_segmentation_or_flicker_truth": true,
+  "flicker_free_visual_result_verified": false,
+  "physical_task_accepted": false
+}

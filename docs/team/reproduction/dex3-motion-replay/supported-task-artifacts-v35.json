@@ -1,0 +1,43 @@
+{
+  "schema": "v2d.supported-task-diagnostic-assets.v1",
+  "repository": "Swaguto/NVIDIA-V2D-Challenge",
+  "repository_private": true,
+  "tag": "dex3-supported-task-diagnostic-20261014",
+  "release_url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/tag/dex3-supported-task-diagnostic-20261014",
+  "physical_task_accepted": false,
+  "clean_reproducibility_repeat_performed": false,
+  "assets": {
+    "actual": {
+      "name": "supported-task-v35.mp4",
+      "bytes": 7539608,
+      "sha256": "e20b57df37b098b4bd6f01c3cc10d0932db332197665c4c504bf27606091a927",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-supported-task-diagnostic-20261014/supported-task-v35.mp4",
+      "github_asset_id": 641557990,
+      "github_digest": "sha256:e20b57df37b098b4bd6f01c3cc10d0932db332197665c4c504bf27606091a927"
+    },
+    "source_comparison": {
+      "name": "source-vs-dynamic-task-failure.mp4",
+      "bytes": 4206879,
+      "sha256": "59738fa5ef2af14f1ca707624e1af7a1ced61c8293df62d345c947ca3baed42b",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-supported-task-diagnostic-20261014/source-vs-dynamic-task-failure.mp4",
+      "github_asset_id": 641558405,
+      "github_digest": "sha256:59738fa5ef2af14f1ca707624e1af7a1ced61c8293df62d345c947ca3baed42b"
+    },
+    "measurements": {
+      "name": "supported-task-measurements-v35.tar.gz",
+      "bytes": 3686016,
+      "sha256": "c9cad3911a1a29a35d1bfa1a2fab36a40a2e7e737b57040d4dcc4e89111232df",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-supported-task-diagnostic-20261014/supported-task-measurements-v35.tar.gz",
+      "github_asset_id": 641558651,
+      "github_digest": "sha256:c9cad3911a1a29a35d1bfa1a2fab36a40a2e7e737b57040d4dcc4e89111232df"
+    },
+    "fixtures": {
+      "name": "supported-task-fixtures-v35.json",
+      "bytes": 2295,
+      "sha256": "26cea4e65b308266dc6962fa4214797f1ea466779d3f93d209f937f7cc56c2ec",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-supported-task-diagnostic-20261014/supported-task-fixtures-v35.json",
+      "github_asset_id": 641558969,
+      "github_digest": "sha256:26cea4e65b308266dc6962fa4214797f1ea466779d3f93d209f937f7cc56c2ec"
+    }
+  }
+}

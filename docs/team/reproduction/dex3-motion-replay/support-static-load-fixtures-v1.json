@@ -1,0 +1,12 @@
+{
+  "files_sha256": {
+    "support-static-load-measurements-v1.json.gz": "8f358f5bc736a698e457bec6f4ffef7df690314cc0a796bace73c0d0f46e00a9",
+    "support-static-load-repeat-v1.json": "073d65c057572e2271c6d88ebe0d255f8ce427d6224fdda2408c1687b3740aeb",
+    "support-static-load-initial-FK-v1.json": "18491681429d6a310f15c69c1b39e4d1ce115a7ece97577228e9d6c09c0d0cae",
+    "support-inferred-support-plane-report-v1.json": "38a6bf97df7def496bed7773e265c894e77da6bb5521d3077bf43330cbd3166f"
+  },
+  "source_executor_sha256": "be7f68b9fa751a9fd8cf81ded857d5cbc008cf16ba914d01532b9459906fa50a",
+  "evidence_archive_sha256": "54fa2378f1d380e0b3ec5dbc99777f8fc3b793ba7605ccc61a5fb937e29c2d9f",
+  "physics_success_claimed": false,
+  "all_source_motion_targets_remain_unaccepted": true
+}

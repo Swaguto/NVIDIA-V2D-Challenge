@@ -1,0 +1,97 @@
+{
+  "status": "passed",
+  "metadata_repair_arrays_equal": 14,
+  "metadata_repair_npz_bytes_equal": true,
+  "regions_payload_sha256": "bb60315578053f5c95df41a61f506f661549e29c8a3e43d386f60ebcf5d8700b",
+  "effective_protocol_sha256": "20755f3d713406c2a2ace6ce200d9a3742b81df113c757dfd207307ec4609ac2",
+  "source_sha256": "64cbce0275ef284193823622bad3edff5e46f9aa5c9a3c2b313124a824cab86b",
+  "mask_agreement_source_sha256": "003b5c8c2ee3fb64305bd8476ce623eae7a4a6e4369a0389045fbefb0fc69448",
+  "mask_agreement_payload_sha256": "17621c8f340c1e7d6ad1d20a0c0b4d96a49b587bfb1c6c768670c8cb1b04e98a",
+  "only_existing_parent_candidates_retained": true,
+  "candidate_indices_and_all_point_arrays_exact": true,
+  "all_original_observation_flags_unchanged": true,
+  "boundary_validation": [
+    {
+      "side": "left",
+      "source_frame": 46,
+      "original_hand_observed": false,
+      "parent_candidates_by_object": [
+        0,
+        0
+      ],
+      "mask_agreement_candidates_by_object": [
+        0,
+        0
+      ]
+    },
+    {
+      "side": "left",
+      "source_frame": 272,
+      "original_hand_observed": true,
+      "parent_candidates_by_object": [
+        4,
+        0
+      ],
+      "mask_agreement_candidates_by_object": [
+        4,
+        0
+      ]
+    },
+    {
+      "side": "left",
+      "source_frame": 332,
+      "original_hand_observed": false,
+      "parent_candidates_by_object": [
+        0,
+        0
+      ],
+      "mask_agreement_candidates_by_object": [
+        0,
+        0
+      ]
+    },
+    {
+      "side": "left",
+      "source_frame": 333,
+      "original_hand_observed": false,
+      "parent_candidates_by_object": [
+        0,
+        0
+      ],
+      "mask_agreement_candidates_by_object": [
+        0,
+        0
+      ]
+    },
+    {
+      "side": "right",
+      "source_frame": 46,
+      "original_hand_observed": false,
+      "parent_candidates_by_object": [
+        0,
+        0
+      ],
+      "mask_agreement_candidates_by_object": [
+        0,
+        0
+      ]
+    },
+    {
+      "side": "right",
+      "source_frame": 309,
+      "original_hand_observed": true,
+      "parent_candidates_by_object": [
+        0,
+        1
+      ],
+      "mask_agreement_candidates_by_object": [
+        0,
+        0
+      ]
+    }
+  ],
+  "current_hand_masks_can_include_visible_object_pixels": true,
+  "estimated_mask_agreement_is_semantic_ground_truth": false,
+  "physical_task_accepted": false,
+  "new_simulator_run": false
+}

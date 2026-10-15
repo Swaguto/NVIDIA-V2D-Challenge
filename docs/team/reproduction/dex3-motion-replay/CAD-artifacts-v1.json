@@ -1,0 +1,58 @@
+{
+  "schema": "v2d.private-original-CAD-replay-assets.v1",
+  "repository": "Swaguto/NVIDIA-V2D-Challenge",
+  "repository_private": true,
+  "tag": "dex3-cad-replay-20261013",
+  "release_url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/tag/dex3-cad-replay-20261013",
+  "physical_task_accepted": false,
+  "assets": {
+    "CAD_replay_inputs": {
+      "name": "CAD-dex3-simulator-inputs-v1.tar.gz",
+      "bytes": 79022532,
+      "sha256": "26466ebd7a7ae5eacb32f8410e2b1e418438ee443bcaaf8c4b56b1cbbbbd20e8",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-cad-replay-20261013/CAD-dex3-simulator-inputs-v1.tar.gz",
+      "github_asset_id": 636536585,
+      "github_digest": "sha256:26466ebd7a7ae5eacb32f8410e2b1e418438ee443bcaaf8c4b56b1cbbbbd20e8"
+    },
+    "CAD_fitted_methods": {
+      "name": "CAD-fitted-inputs-and-methods-v1.tar.gz",
+      "bytes": 15284489,
+      "sha256": "cac4fb8a6ca139787e8cd9e70b374a3554997dfaa2dd564d1958cdfe82d7e36d",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-cad-replay-20261013/CAD-fitted-inputs-and-methods-v1.tar.gz",
+      "github_asset_id": 636537369,
+      "github_digest": "sha256:cac4fb8a6ca139787e8cd9e70b374a3554997dfaa2dd564d1958cdfe82d7e36d"
+    },
+    "source_observations_isaac_comparison": {
+      "name": "source-observations-dex3.mp4",
+      "bytes": 48730800,
+      "sha256": "eb182c7e76f67e1cf251f69b880b7b7064f8d44d4dab052909f802e96c651f2e",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-cad-replay-20261013/source-observations-dex3.mp4",
+      "github_asset_id": 636537546,
+      "github_digest": "sha256:eb182c7e76f67e1cf251f69b880b7b7064f8d44d4dab052909f802e96c651f2e"
+    },
+    "actual_isaac_replay": {
+      "name": "replay.mp4",
+      "bytes": 6467620,
+      "sha256": "13696f3feb1b96af6e0548989a57c0dfbf0145d6a1ec5dc0f42ec2e2d81040b4",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-cad-replay-20261013/replay.mp4",
+      "github_asset_id": 636538210,
+      "github_digest": "sha256:13696f3feb1b96af6e0548989a57c0dfbf0145d6a1ec5dc0f42ec2e2d81040b4"
+    },
+    "CAD_simulator_evidence": {
+      "name": "CAD-simulator-evidence-v1.tar.gz",
+      "bytes": 59897341,
+      "sha256": "afe89966e4ef98920e146d638c682631a0e047c43d28b11fdaf2304fa5e4e575",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-cad-replay-20261013/CAD-simulator-evidence-v1.tar.gz",
+      "github_asset_id": 636538294,
+      "github_digest": "sha256:afe89966e4ef98920e146d638c682631a0e047c43d28b11fdaf2304fa5e4e575"
+    },
+    "fitted_motion_inputs": {
+      "name": "fitted-motion-inputs-v1.tar.gz",
+      "bytes": 39604363,
+      "sha256": "3daaa90efd1487f42019a14b5d783c9580e2b3b5103bf55b3c5b63b7ace21fe0",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-development-replay-20261012/fitted-motion-inputs-v1.tar.gz",
+      "github_asset_id": 634891264,
+      "github_digest": "sha256:3daaa90efd1487f42019a14b5d783c9580e2b3b5103bf55b3c5b63b7ace21fe0"
+    }
+  }
+}

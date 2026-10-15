@@ -1,0 +1,58 @@
+{
+  "schema": "v2d.private-corrected-replay-assets.v1",
+  "repository": "Swaguto/NVIDIA-V2D-Challenge",
+  "repository_private": true,
+  "tag": "dex3-corrected-replay-20261013",
+  "release_url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/tag/dex3-corrected-replay-20261013",
+  "physical_task_accepted": false,
+  "assets": {
+    "corrected_replay_inputs": {
+      "name": "generated-dex3-simulator-inputs-v6.tar.gz",
+      "bytes": 65772726,
+      "sha256": "25dcd06a5b141a6f6742be51669b4e5038ab6600f6228416c409baf8a59d1124",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-corrected-replay-20261013/generated-dex3-simulator-inputs-v6.tar.gz",
+      "github_asset_id": 635831434,
+      "github_digest": "sha256:25dcd06a5b141a6f6742be51669b4e5038ab6600f6228416c409baf8a59d1124"
+    },
+    "corrected_motion_inputs": {
+      "name": "corrected-motion-inputs-v1.tar.gz",
+      "bytes": 3048619,
+      "sha256": "ae9d5326a9a283117be99a4c1ccc656ded9dfc3e47f94309a34e3511fc318f5d",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-corrected-replay-20261013/corrected-motion-inputs-v1.tar.gz",
+      "github_asset_id": 635832202,
+      "github_digest": "sha256:ae9d5326a9a283117be99a4c1ccc656ded9dfc3e47f94309a34e3511fc318f5d"
+    },
+    "source_observations_isaac_comparison": {
+      "name": "source-observations-dex3.mp4",
+      "bytes": 49120365,
+      "sha256": "2dab037ac1a444e027eeff95cbee87776c5459d0078e6cecbda6c86c1c5853ed",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-corrected-replay-20261013/source-observations-dex3.mp4",
+      "github_asset_id": 635832241,
+      "github_digest": "sha256:2dab037ac1a444e027eeff95cbee87776c5459d0078e6cecbda6c86c1c5853ed"
+    },
+    "actual_isaac_replay": {
+      "name": "replay.mp4",
+      "bytes": 6762330,
+      "sha256": "444ed76ce7c09f9e309824793d5be6abe09c4a5e3d8b5537840f6dfa40d934e3",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-corrected-replay-20261013/replay.mp4",
+      "github_asset_id": 635833293,
+      "github_digest": "sha256:444ed76ce7c09f9e309824793d5be6abe09c4a5e3d8b5537840f6dfa40d934e3"
+    },
+    "corrected_simulator_evidence": {
+      "name": "corrected-simulator-evidence-v6.tar.gz",
+      "bytes": 61727135,
+      "sha256": "5079f3656d9b13437d24c20cff72f4d801e5f869e0c5497e70c89ea214968080",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-corrected-replay-20261013/corrected-simulator-evidence-v6.tar.gz",
+      "github_asset_id": 635833405,
+      "github_digest": "sha256:5079f3656d9b13437d24c20cff72f4d801e5f869e0c5497e70c89ea214968080"
+    },
+    "fitted_motion_inputs": {
+      "name": "fitted-motion-inputs-v1.tar.gz",
+      "bytes": 39604363,
+      "sha256": "3daaa90efd1487f42019a14b5d783c9580e2b3b5103bf55b3c5b63b7ace21fe0",
+      "url": "https://github.com/Swaguto/NVIDIA-V2D-Challenge/releases/download/dex3-development-replay-20261012/fitted-motion-inputs-v1.tar.gz",
+      "github_asset_id": 634891264,
+      "github_digest": "sha256:3daaa90efd1487f42019a14b5d783c9580e2b3b5103bf55b3c5b63b7ace21fe0"
+    }
+  }
+}
