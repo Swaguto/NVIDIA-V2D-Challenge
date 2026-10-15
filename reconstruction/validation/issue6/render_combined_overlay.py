@@ -168,7 +168,7 @@ try:
             )
         rgb, depth = renderer.render(scene)
         source = np.array(
-            Image.open(root / "align/frames" / f"{frame['id']:06d}.png").convert("RGB")
+            Image.open(source_frames[frame["id"]]["color"]).convert("RGB")
         )
         mask = depth > 0
         source[mask] = (0.45 * source[mask] + 0.55 * rgb[mask]).astype(np.uint8)
