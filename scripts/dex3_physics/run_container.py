@@ -33,6 +33,11 @@ def main():
         required=True,
     )
     parser.add_argument("--prepare-only", action="store_true")
+    parser.add_argument(
+        "--candidate-controller",
+        choices=["implicit_pd", "implicit_pd_ff"],
+        default="implicit_pd",
+    )
     args = parser.parse_args()
     out = Path("/outputs") / args.stage
     if out.exists():
@@ -52,7 +57,7 @@ def main():
             or gate["wrist_diagnostic"]["candidate_controller_sha256"]
             != digest(candidate_file)
             or gate["wrist_diagnostic"]["physics_dt_s"] != 0.01
-            or gate["wrist_diagnostic"]["controller"] != "implicit_pd"
+            or gate["wrist_diagnostic"]["controller"] != args.candidate_controller
             or not gate["wrist_diagnostic"]["free_space"]
         ):
             raise ValueError(
@@ -82,7 +87,7 @@ def main():
         "--support-plane-sha256",
         PLANE_SHA,
         "--wrist-controller",
-        "project_pd" if args.stage == "baseline-free" else "implicit_pd",
+        "project_pd" if args.stage == "baseline-free" else args.candidate_controller,
         "--physics-dt",
         "0.01",
     ]

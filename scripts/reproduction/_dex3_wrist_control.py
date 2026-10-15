@@ -20,6 +20,7 @@ def implicit_root_wrench(
     root_mass_matrix_w,
     gravity_compensation_w,
     dt,
+    target_link_pose_next_xyzw=None,
     linear_stiffness=50.0,
     linear_damping=10.0,
     angular_stiffness=12.0,
@@ -31,6 +32,8 @@ def implicit_root_wrench(
 
     For constant mass M and local rotation linearization, solve
     (M + dt D + dt² K) a = K(e - dt v) - D v, then apply M a + gravity.
+    An optional next reference uses its endpoint error and world-frame reference
+    twist, so damping acts on velocity error during moving-target tracking.
     The desired COM includes the rotated local root-body COM offset, so position
     error, velocity, mass matrix and applied wrench share the same point.
     Inputs are copied; simulator state is never mutated.
@@ -82,11 +85,31 @@ def implicit_root_wrench(
     )
     rotation_error = (target_rotation * current_rotation.inv()).as_rotvec()
     error = np.r_[position_error, rotation_error]
+    reference_twist = np.zeros(6)
+    if target_link_pose_next_xyzw is not None:
+        following = np.asarray(target_link_pose_next_xyzw, dtype=float)
+        if (
+            following.shape != (7,)
+            or not np.isfinite(following).all()
+            or abs(np.linalg.norm(following[3:]) - 1) > 1e-4
+        ):
+            raise ValueError("Next reference pose must be finite unit xyzw")
+        next_rotation = Rotation.from_quat(following[3:])
+        current_target_com = target[:3] + target_rotation.apply(offset)
+        next_target_com = following[:3] + next_rotation.apply(offset)
+        reference_twist = np.r_[
+            (next_target_com - current_target_com) / dt,
+            (next_rotation * target_rotation.inv()).as_rotvec() / dt,
+        ]
+        error = np.r_[
+            next_target_com - (pose[:3] + current_rotation.apply(offset)),
+            (next_rotation * current_rotation.inv()).as_rotvec(),
+        ]
     stiffness = np.array([linear_stiffness] * 3 + [angular_stiffness] * 3)
     damping = np.array([linear_damping] * 3 + [angular_damping] * 3)
     acceleration = np.linalg.solve(
         mass + np.diag(dt * damping + dt**2 * stiffness),
-        stiffness * (error - dt * velocity) - damping * velocity,
+        stiffness * (error - dt * velocity) + damping * (reference_twist - velocity),
     )
     requested = mass @ acceleration + gravity
     caps = np.array([max_force] * 3 + [max_torque] * 3)
@@ -94,6 +117,7 @@ def implicit_root_wrench(
     return applied, {
         "position_error_at_root_com_m": position_error.tolist(),
         "rotation_error_world_rad": rotation_error.tolist(),
+        "reference_twist_world": reference_twist.tolist(),
         "root_mass_eigenvalues": np.linalg.eigvalsh(mass).tolist(),
         "requested_wrench_world": requested.tolist(),
         "saturated_components": (np.abs(requested) > caps).tolist(),

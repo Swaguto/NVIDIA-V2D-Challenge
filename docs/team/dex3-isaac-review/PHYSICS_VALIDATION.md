@@ -22,6 +22,11 @@ evidence for controller isolation, not proof of a unique cause.
   world-frame root 6×6 mass block, root COM velocity and gravity compensation.
   Position error is also measured at the root COM, with explicit xyzw rotations.
   The mass block approximates locked fingers; this is not full inverse dynamics.
+- Add separately selected `implicit_pd_ff`: use the next reference pose to
+  predict the endpoint and damp velocity error against the reference twist.
+  This addresses the moving-target lag measured in the first full-task run.
+  Gains, force/torque caps and acceptance limits are unchanged. It supplies no
+  external object forces and does not alter the reference trajectory.
 - Initialize floating wrists once after Kit startup with zero velocity. Both
   comparison controllers use this initialization. No wrist pose is teleported
   during execution, and objects receive no motion playback or external forces.
@@ -84,7 +89,9 @@ docker compose --env-file docker/dex3-review/.env \
 The two free-space tests cover the first two source seconds at the original
 0.01 s physics timestep and 0.5 motion speed. Full-task execution is refused
 unless the saved free-space gate still passes with the same candidate/executor
-bytes. Each stage verifies actual video decoding and frame count. The full task
+bytes and selected controller mode. To compare the velocity-feedforward candidate,
+add `--candidate-controller implicit_pd_ff` to **both** candidate invocations in a
+fresh output root. Each stage verifies actual video decoding and frame count. The full task
 also runs the independent source observation/contact audit before its wrist gate.
 Source annotations are evaluation inputs only; they do not fit the controller.
 

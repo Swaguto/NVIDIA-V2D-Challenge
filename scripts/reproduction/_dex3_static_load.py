@@ -111,7 +111,7 @@ def prepare(
     import trimesh
     from scipy.spatial.transform import Rotation
 
-    if controller_mode not in {"project_pd", "implicit_pd"}:
+    if controller_mode not in {"project_pd", "implicit_pd", "implicit_pd_ff"}:
         raise ValueError("Unknown wrist controller")
     if not math.isfinite(physics_dt) or not 0 < physics_dt <= 0.01:
         raise ValueError("Physics dt must be finite and in (0, 0.01]")
@@ -1361,6 +1361,11 @@ def run_supported_task(
                 )
             )
             desired, _kinds, _details = motion.evaluate(timestamp)
+            desired_next = (
+                motion.evaluate(min(timestamp + dt * speed, float(source_times[-1])))[0]
+                if controller_mode == "implicit_pd_ff"
+                else None
+            )
             for si, (hand, order) in enumerate(zip(hands, joint_order, strict=True)):
                 enabled = not diagnostic.get("free_space", False) and not bool(
                     display[index, si]
@@ -1435,6 +1440,15 @@ def run_supported_task(
                     wrench, control_details = implicit_root_wrench(
                         link_pose_xyzw=cpu(hand.data.root_link_pose_w)[0],
                         target_link_pose_xyzw=target_pose,
+                        target_link_pose_next_xyzw=np.r_[
+                            stage_rotation.apply(desired_next[si, :3]),
+                            (
+                                stage_rotation
+                                * Rotation.from_quat(desired_next[si, 3:7])
+                            ).as_quat(),
+                        ]
+                        if desired_next is not None
+                        else None,
                         root_com_offset_b=cpu(com_positions[si])[0],
                         root_com_velocity_w=cpu(hand.data.root_com_vel_w)[0],
                         root_mass_matrix_w=cpu(

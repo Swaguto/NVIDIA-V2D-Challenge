@@ -112,3 +112,28 @@ def test_finger_clamp_respects_effort_in_independent_pd_equation():
     target = finger_position_target(np.array([5, -5]), q, v, stiffness, damping, limit)
     actual_torque = stiffness * (target - q) - damping * v
     np.testing.assert_allclose(actual_torque, [1, -2], atol=1e-12)
+
+
+def test_reference_velocity_does_not_brake_perfect_constant_speed_tracking():
+    data = inputs()
+    data["root_com_velocity_w"][:3] = [0.3, -0.2, 0.1]
+    data["root_com_velocity_w"][3:] = [0.2, -0.3, 0.4]
+    data["target_link_pose_next_xyzw"] = data["target_link_pose_xyzw"].copy()
+    data["target_link_pose_next_xyzw"][:3] += (
+        data["dt"] * data["root_com_velocity_w"][:3]
+    )
+    data["target_link_pose_next_xyzw"][3:] = Rotation.from_rotvec(
+        data["dt"] * data["root_com_velocity_w"][3:]
+    ).as_quat()
+    data["gravity_compensation_w"][2] = 4.905
+    np.testing.assert_allclose(
+        implicit_root_wrench(**data)[0], data["gravity_compensation_w"], atol=1e-12
+    )
+
+
+def test_stationary_next_reference_preserves_original_implicit_controller():
+    data = inputs()
+    data["target_link_pose_xyzw"][:3] = [0.01, -0.02, 0.01]
+    expected = implicit_root_wrench(**data)[0]
+    data["target_link_pose_next_xyzw"] = data["target_link_pose_xyzw"].copy()
+    np.testing.assert_array_equal(implicit_root_wrench(**data)[0], expected)
