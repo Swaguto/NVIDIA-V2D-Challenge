@@ -16,6 +16,7 @@ os.environ.setdefault("PYOPENGL_PLATFORM", "egl")
 import numpy as np
 import pyrender
 import trimesh
+from issue6.backend import dynhamr_frame_axis
 from issue6.continuity import (
     bridge_visibility,
     depth_occlusion,
@@ -124,12 +125,24 @@ def repair(
         rotations = np.array(data["cam_R"], float)
         camera_translations = np.array(data["cam_t"], float)
         handedness = np.array(data["is_right"])
+    fitted_axis = dynhamr_frame_axis(fits[0], frames)
+    fitted_source_indices = [frame_index[f["id"]] for f in fitted_axis]
+    camera_rotations = np.tile(np.eye(3), (len(handedness), len(frames), 1, 1))
+    camera_translations_full = np.zeros((len(handedness), len(frames), 3))
+    camera_rotations[:, fitted_source_indices] = rotations
+    camera_translations_full[:, fitted_source_indices] = camera_translations
     raw = {"left": {}, "right": {}}
     for p in sorted((prior_records or (temporal / "converted")).rglob("*.json")):
         r = read(p)
         if "mano" not in r or "frame_idx" not in r:
             continue
         side = "right" if r["is_right"] else "left"
+        if prior_records is None:
+            native_index = r["frame_idx"]
+            if not 0 <= native_index < len(fitted_axis):
+                raise ValueError("Native pose is outside the recorded fitted axis")
+            r["inference_frame_idx"] = native_index
+            r["frame_idx"] = fitted_axis[native_index]["id"]
         if r["frame_idx"] in raw[side]:
             raise ValueError("Ambiguous same-side native hand")
         raw[side][r["frame_idx"]] = r
@@ -244,9 +257,9 @@ def repair(
                 for i in range(len(handedness))
                 if bool(handedness[i].mean() > 0.5) == (side == "right")
             ]
-            R = rotations[h]
-            if len(R) != len(frames):
-                raise ValueError("Fitted camera axis differs from source")
+            # Outside the recorded crop there is no native geometry to repair.
+            # The neutral padding is never emitted as a hand pose.
+            R = camera_rotations[h]
             # Project tiny float32 rotation errors onto SO(3), like native conversion.
             u, _, vh = np.linalg.svd(R)
             R = u @ vh
@@ -358,7 +371,7 @@ def repair(
                     targets,
                     confidence,
                     R,
-                    camera_translations[h],
+                    camera_translations_full[h],
                     c,
                     side == "right",
                 )
@@ -455,6 +468,7 @@ def repair(
     receipt = {
         "episode": episode,
         "source_frames": len(frames),
+        "fitted_source_frame_ids": [f["id"] for f in fitted_axis],
         "hands": summaries,
         "unusable_prior": {str(k): v for k, v in failures.items()},
         "source_fit_sha256": hashlib.sha256(fits[0].read_bytes()).hexdigest(),

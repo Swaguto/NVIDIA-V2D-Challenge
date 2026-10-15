@@ -34,6 +34,10 @@ for episode in "$@"; do
         --episode "$episode" --run-root "$OUT/runs" --review-root "$OUT/videos" \
         --manifest "$OUT/runs/$label/manifest.json" --modules-dir "$modules" \
         --mano-assets-root "$mano" --hands-mode continuous
+    "$PY" "$REPO/reconstruction/validation/issue6/render_combined_overlay.py" \
+        --episode "$episode" --run-root "$INPUT_ROOT/issue6-quality-cache/episodes/$label/issue6-full-runs/all20-final-v3" \
+        --review-root "$OUT/baseline-videos" --manifest "$OUT/runs/$label/manifest.json" \
+        --modules-dir "$modules" --mano-assets-root "$mano" --hands-mode metric
     fps="$("$PY" -c 'import json,sys; f=json.load(open(sys.argv[1]))["frames"]; print((len(f)-1)/(f[-1]["timestamp_s"]-f[0]["timestamp_s"]))' "$OUT/runs/$label/manifest.json")"
     "$PY" "$modules/v2d_hamer/lib/render_hands_aligned_video.py" \
         --frames_dir "$OUT/runs/$label/align/frames" --aligned_dir "$OUT/runs/$label/visual-records" \
