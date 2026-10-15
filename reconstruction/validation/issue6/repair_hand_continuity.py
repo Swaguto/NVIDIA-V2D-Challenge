@@ -10,6 +10,7 @@ import hashlib
 import json
 import os
 from collections import Counter
+from functools import lru_cache
 from pathlib import Path
 
 os.environ.setdefault("PYOPENGL_PLATFORM", "egl")
@@ -153,13 +154,10 @@ def repair(
     failures = Counter()
     prior_count = Counter()
 
-    def measured_inputs(side, f):
-        fid = f["id"]
+    @lru_cache(maxsize=512)
+    def measured_surface(fid):
+        f = frames[frame_index[fid]]
         depth = np.load(original / "depth" / f"{fid:06d}.npy", allow_pickle=False)
-        p = original / "hands/masks" / side / f"{fid:06d}.png"
-        mask = (
-            np.asarray(Image.open(p)) > 0 if p.exists() else np.zeros_like(depth, bool)
-        )
         explicit = np.load(
             original / "align" / f"occlusion_{fid:06d}.npy", allow_pickle=False
         )
@@ -179,7 +177,25 @@ def repair(
         occ = depth_occlusion(explicit, cad_depth, depth)
         if not f["occlusion_known"]:
             occ[:] = True
-        return depth, mask, occ
+        depth.setflags(write=False)
+        occ.setflags(write=False)
+        return depth, occ
+
+    @lru_cache(maxsize=1024)
+    def measured_mask(side, fid):
+        p = original / "hands/masks" / side / f"{fid:06d}.png"
+        mask = (
+            np.asarray(Image.open(p)) > 0
+            if p.exists()
+            else np.zeros((c["height"], c["width"]), bool)
+        )
+        mask.setflags(write=False)
+        return mask
+
+    def measured_inputs(side, f):
+        fid = f["id"]
+        depth, occ = measured_surface(fid)
+        return depth, measured_mask(side, fid), occ
 
     try:
         # Observe depth shifts without altering the fitted prior or visibility.
