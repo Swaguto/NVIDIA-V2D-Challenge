@@ -20,6 +20,9 @@ Isaac Sim image remains the separate physics diagnostic runtime.
   triangles. Their original file hashes must match the pinned runtime before patching.
 - A checkpoint binds the private target/asset manifest. The installed extension is
   required for evaluation; an unmodified stock runtime cannot load this schema.
+- Collision hulls are frozen into the private pack and hash-checked before every
+  load. CoACD can generate different hulls across processes; an unbound cache is
+  refused during training/evaluation.
 
 These are development diagnostics. A learned checkpoint alone does not establish
 grasp acquisition, full-episode success, hidden-set performance, or submission acceptance.
@@ -65,16 +68,20 @@ python scripts/dex3_training/prepare_window.py \
   --static-inputs /private/static-load-inputs \
   --robot-assets /private/portable-inputs/robot-assets \
   --out /private/new-pilot
+python scripts/dex3_training/freeze_collision_cache.py \
+  --inputs /private/new-pilot --out /private/new-pilot-locked
 ```
 
-This preparation command can also run in the training image at
-`/opt/dex3-extension/prepare_window.py`, with the three inputs mounted read-only
-and the output directory mounted writable. It requires no GPU.
+Both preparation commands run in the training image under `/opt/dex3-extension/`,
+with inputs mounted read-only and the output parent mounted writable. Neither
+requires a GPU. Freezing uses the actual upstream scene builder and records every
+collision cache file it reads or creates. An optional `--seed-cache` reuses a
+previous verified run's geometry. The original source pack stays unchanged.
 
 ## Train and evaluate
 
 ```bash
-export DEX3_TRAINING_INPUTS=/private/new-pilot
+export DEX3_TRAINING_INPUTS=/private/new-pilot-locked
 export DEX3_TRAINING_OUTPUTS=/private/new-results
 mkdir -p "$DEX3_TRAINING_OUTPUTS"
 docker compose -f docker/dex3-training/compose.yaml run --rm pilot
@@ -83,6 +90,10 @@ docker compose -f docker/dex3-training/compose.yaml run --rm pilot
 The default pilot saves `model_0.safetensors` before learning, then checkpoints at
 25, 50, 75 and 100 iterations. Local outputs include every iteration's metrics,
 definitions, scene physics arrays and the resolved checkpoint configuration.
+Set `DEX3_TRAINING_IMAGE` to the verified registry digest to use the published
+image. `experiment=dex3_exploration` is a separate 1,000-iteration experiment with
+higher exploration and a simulation force penalty above 10 N per contact slot.
+Its force penalty uses simulated contacts and requires no human contact labels.
 
 Evaluate the initial and learned checkpoints with the same unmodified upstream
 evaluator entry point, inside the extension image:

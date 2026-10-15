@@ -25,6 +25,6 @@ ENV PATH="/opt/flash-env/bin:${PATH}" \
     PYTHONPATH=/opt/flash-chord/src:/opt/dex3-extension \
     NVIDIA_VISIBLE_DEVICES=all NVIDIA_DRIVER_CAPABILITIES=all \
     XLA_PYTHON_CLIENT_PREALLOCATE=false WANDB_MODE=disabled \
-    FLASH_CHORD_CACHE_DIR=/root/.cache/flash-chord
+    FLASH_CHORD_CACHE_DIR=/data/collision-cache
 ENTRYPOINT ["/opt/flash-env/bin/python"]
 CMD ["/opt/dex3-extension/train.py", "--config-dir", "/opt/dex3-extension/configs", "experiment=dex3_pilot"]

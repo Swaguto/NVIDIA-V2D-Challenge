@@ -5,7 +5,6 @@ import hashlib
 import io
 import json
 from pathlib import Path
-import shutil
 import subprocess
 import tarfile
 
@@ -64,15 +63,38 @@ def create(upstream, out):
             ["git", "-C", str(upstream), "show", f"{COMMIT}:LICENSE"]
         )
     )
-    shutil.copytree(
-        ROOT / "scripts/dex3_training",
-        out / "extension",
-        ignore=shutil.ignore_patterns("__pycache__", ".pytest_cache", "*.pyc"),
-    )
-    shutil.copyfile(ROOT / "docker/dex3-training/Dockerfile", out / "Dockerfile")
     source_commit = subprocess.check_output(
         ["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True
     ).strip()
+    prefix = "scripts/dex3_training/"
+    extension_archive = subprocess.check_output(
+        ["git", "-C", str(ROOT), "archive", source_commit, prefix]
+    )
+    with tarfile.open(fileobj=io.BytesIO(extension_archive)) as tar:
+        for member in tar:
+            if not member.isfile() or not member.name.startswith(prefix):
+                continue
+            name = Path(member.name.removeprefix(prefix))
+            if (
+                name.is_absolute()
+                or ".." in name.parts
+                or name.suffix not in {".py", ".yaml", ".yml"}
+            ):
+                raise ValueError("Unexpected extension source path/type")
+            dest = out / "extension" / name
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            dest.write_bytes(tar.extractfile(member).read())
+    (out / "Dockerfile").write_bytes(
+        subprocess.check_output(
+            [
+                "git",
+                "-C",
+                str(ROOT),
+                "show",
+                f"{source_commit}:docker/dex3-training/Dockerfile",
+            ]
+        )
+    )
     dirty = subprocess.check_output(
         [
             "git",

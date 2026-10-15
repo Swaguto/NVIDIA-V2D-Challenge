@@ -105,6 +105,12 @@ def apply_grasp_seeds(samples, proposal):
     ):
         raise ValueError("Need explicit unaccepted geometric grasp seeds")
     result = copy.deepcopy(samples)
+    translation_cap = float(proposal.get("wrist_translation_cap_m", 0.03))
+    rotation_cap = float(proposal.get("wrist_rotation_cap_rad", 0.5))
+    if not (0 < translation_cap <= 0.05 and 0 < rotation_cap <= 0.8):
+        raise ValueError(
+            "Experimental grasp seed wrist bounds exceed the permitted search"
+        )
     changed = []
     for record in proposal["results"]:
         candidate = record["candidate"]
@@ -156,8 +162,9 @@ def apply_grasp_seeds(samples, proposal):
             * Rotation.from_quat(sample["hand_quaternion_stage_xyzw"]).inv()
         ).magnitude()
         if (
-            np.max(np.abs(pos - sample["hand_position_stage_m"])) > 0.030001
-            or angle > 0.5
+            np.max(np.abs(pos - sample["hand_position_stage_m"]))
+            > translation_cap + 1e-6
+            or angle > rotation_cap
             or max(abs(new[n] - original[n]) for n in original) > 0.600001
             or candidate["pad_escape_direction_dot"] > -0.5
             or candidate["pad_escape_direction_dot"] < -1.000001

@@ -1,0 +1,21 @@
+# @package _global_
+defaults:
+  - dex3_pilot
+  - _self_
+
+sim:
+  nconmax: 512
+  njmax: 2048
+training:
+  max_iterations: 1000
+  save_interval: 250
+  network:
+    initial_noise_std: 1.0
+objective:
+  contact_force_l2:
+    enabled: true
+    weight: -0.0001
+    threshold: 10.0
+output_dir: /outputs/exploration
+logging:
+  run_name: unassisted-exploration

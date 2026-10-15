@@ -134,18 +134,18 @@ def search(run, urdfs, *, side="right", max_candidates=32):
         pairs = antipodal_pairs(points, normals, world_centers)
         candidates = []
         lower = np.r_[
-            [-0.03] * 3,
-            [-0.5] * 3,
+            [-0.05] * 3,
+            [-0.7] * 3,
             [
-                max(kin.limits[n][0] - q, -0.6)
+                max(kin.limits[n][0] + 0.08 - q, -0.6)
                 for n, q in zip(kin.names, source_q, strict=True)
             ],
         ]
         upper = np.r_[
-            [0.03] * 3,
-            [0.5] * 3,
+            [0.05] * 3,
+            [0.7] * 3,
             [
-                min(kin.limits[n][1] - q, 0.6)
+                min(kin.limits[n][1] - 0.08 - q, 0.6)
                 for n, q in zip(kin.names, source_q, strict=True)
             ],
         ]
@@ -165,7 +165,7 @@ def search(run, urdfs, *, side="right", max_candidates=32):
                 direction = fk[link][:3, :3].T @ -normals[index]
                 score = v @ direction
                 anchors.append(v[score > score.max() - 0.001].mean(0))
-            target = points[ids] - 0.0005 * normals[ids]
+            target = points[ids] - 0.00075 * normals[ids]
 
             def residual(x):
                 pose, q = decode(x)
@@ -176,10 +176,19 @@ def search(run, urdfs, *, side="right", max_candidates=32):
                         for n, p in zip(links, anchors, strict=True)
                     ]
                 )
+                # Bound the whole pad against each chosen contact tangent plane,
+                # rather than fitting a vertex while another pad edge penetrates.
+                plane_errors = []
+                for link, index in zip(links, ids, strict=True):
+                    vertices = np.concatenate(hand_shapes[link])
+                    world = vertices @ poses[link][:3, :3].T + poses[link][:3, 3]
+                    clearance = np.min((world - points[index]) @ normals[index])
+                    plane_errors.append(2.0 * (clearance + 0.00075) / 0.001)
                 return np.r_[
                     (actual - target).ravel() / 0.002,
-                    0.1 * x[:3] / 0.03,
-                    0.1 * x[3:6] / 0.5,
+                    plane_errors,
+                    0.1 * x[:3] / 0.05,
+                    0.1 * x[3:6] / 0.7,
                     0.04 * x[6:] / 0.6,
                 ]
 
@@ -192,6 +201,8 @@ def search(run, urdfs, *, side="right", max_candidates=32):
             if not fit.success or np.max(np.abs(residual(fit.x)[:6])) > 0.5:
                 continue
             pose, q = decode(fit.x)
+            if np.linalg.norm(fit.x[3:6]) > 0.8:
+                continue
             poses = kin.poses(pose, dict(zip(kin.names, q, strict=True)))
             depths, escapes = {}, {}
             for name, shapes in hand_shapes.items():
@@ -206,7 +217,7 @@ def search(run, urdfs, *, side="right", max_candidates=32):
             if (
                 dot > -0.5
                 or min(depths[n] for n in links) < 0
-                or max(depths.values()) > 0.003
+                or max(depths.values()) > 0.0015
             ):
                 continue
             candidates.append(
@@ -251,6 +262,11 @@ def search(run, urdfs, *, side="right", max_candidates=32):
         urdf_sha256=hashlib.sha256(
             (urdfs / f"dex3_{side}.urdf").read_bytes()
         ).hexdigest(),
+        joint_limit_margin_rad=0.08,
+        wrist_translation_cap_m=0.05,
+        wrist_rotation_cap_rad=0.8,
+        target_pad_preload_m=0.00075,
+        maximum_allowed_piece_penetration_lower_bound_m=0.0015,
         results=results,
         source_observations_changed=False,
         physical_task_accepted=False,
@@ -266,7 +282,9 @@ if __name__ == "__main__":
     parser.add_argument("--max-candidates", type=int, default=32)
     parser.add_argument("--side", choices=["left", "right"], default="right")
     args = parser.parse_args()
-    result = search(args.run, args.urdfs, max_candidates=args.max_candidates, side=args.side)
+    result = search(
+        args.run, args.urdfs, max_candidates=args.max_candidates, side=args.side
+    )
     with args.out.open("x") as stream:
         json.dump(result, stream, indent=2, allow_nan=False)
         stream.write("\n")

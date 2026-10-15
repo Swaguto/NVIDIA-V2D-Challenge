@@ -30,6 +30,9 @@ def check(path):
         raise AssertionError("Dex3 reference capability differs")
     result = dict(
         installed_dispatch_loads_dual_hand=True,
+        collision_cache_locked=bool(
+            json.loads((path.parent / "manifest.json").read_text())["collision_cache"]
+        ),
         unknown_contact_reward_rejected=must_reject(
             lambda: Dex3ObjectiveConfig(), "requires measured"
         ),

@@ -34,12 +34,14 @@ def probe(path):
     )
 
 
-def package(run: Path):
+def package(run: Path, preview_name="static-load-browser.mp4"):
     report = json.loads((run / "report.json").read_text())
     source = run / "static-load.mp4"
     if digest(source) != report["video_sha256"]:
         raise ValueError("Original static video differs from the simulator report")
-    output = run / "static-load-browser.mp4"
+    if Path(preview_name).name != preview_name or not preview_name.endswith(".mp4"):
+        raise ValueError("Preview name must be a local MP4 filename")
+    output = run / preview_name
     receipt_path = run / "browser-preview.json"
     if output.exists() or receipt_path.exists():
         raise FileExistsError("Preview already exists; preserve the previous delivery")
@@ -69,12 +71,16 @@ def package(run: Path):
     a, b = original["streams"][0], preview["streams"][0]
     first = [float(x["best_effort_timestamp_time"]) for x in original["frames"]]
     second = [float(x["best_effort_timestamp_time"]) for x in preview["frames"]]
+    duration = float(report["duration_s"])
+    expected_frames = round(duration * 20) + 1
     if (
         b["codec_name"] != "h264"
-        or int(a["nb_read_frames"]) != 21
+        or duration <= 0
+        or int(a["nb_read_frames"]) != expected_frames
         or any(a[key] != b[key] for key in ["width", "height", "nb_read_frames"])
-        or len(first) != 21
-        or len(second) != 21
+        or len(first) != expected_frames
+        or len(second) != expected_frames
+        or abs(first[-1] - duration) > 1e-9
         or any(abs(x - y) > 1e-9 for x, y in zip(first, second, strict=True))
         or any(y <= x for x, y in zip(second, second[1:]))
     ):
@@ -85,7 +91,7 @@ def package(run: Path):
         "schema": "v2d.static-browser-preview.v1",
         "original_video_sha256": digest(source),
         "preview_video_sha256": digest(output),
-        "frames": 21,
+        "frames": expected_frames,
         "codec": "h264",
         "frame_timestamps_preserved": True,
         "original_physics_video_preserved": True,
@@ -104,4 +110,6 @@ def package(run: Path):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run", type=Path, required=True)
-    print(json.dumps(package(parser.parse_args().run), indent=2))
+    parser.add_argument("--preview-name", default="static-load-browser.mp4")
+    args = parser.parse_args()
+    print(json.dumps(package(args.run, args.preview_name), indent=2))

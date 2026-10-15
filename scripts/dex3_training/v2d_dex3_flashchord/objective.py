@@ -9,7 +9,12 @@ from flash_chord.objectives.config import ObjectiveConfig
 class Dex3ObjectiveConfig(ObjectiveConfig):
     def __post_init__(self):
         super().__post_init__()
-        for name in ("contact_wrench_support", "missed_contact", "unintended_contact"):
+        for name in (
+            "contact_wrench_support",
+            "missed_contact",
+            "unintended_contact",
+            "force_closure",
+        ):
             term = getattr(self, name)
             if term.enabled or term.weight != 0:
                 raise ValueError(

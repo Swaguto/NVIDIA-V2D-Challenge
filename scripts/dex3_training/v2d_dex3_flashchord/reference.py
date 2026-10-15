@@ -6,16 +6,72 @@ arrays are API placeholders; Dex3ObjectiveConfig prohibits label-based rewards.
 
 import hashlib
 import json
+import os
 from pathlib import Path
 
 import numpy as np
+from v2d_dex3_flashchord import RUNTIME_COMMIT
 
 
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def load_dex3(path, *, control_fps=None, motion_speed=1.0, source_frame_playback=False):
+def bind_collision_cache(root, manifest, *, required=True):
+    cache = manifest.get("collision_cache")
+    if not cache:
+        if required:
+            raise ValueError(
+                "Frozen collision cache required; run freeze_collision_cache.py"
+            )
+        return
+    directory = (root / cache["directory"]).resolve()
+    if (
+        not directory.is_relative_to(root.resolve())
+        or directory == root.resolve()
+        or cache["runtime_commit"] != RUNTIME_COMMIT
+        or not cache["files"]
+    ):
+        raise ValueError("Invalid frozen collision cache contract")
+    declared = set()
+    for name in cache["files"]:
+        file = (root / name).resolve()
+        if (
+            not file.is_relative_to(directory)
+            or file.suffix != ".npz"
+            or name not in manifest["files"]
+            or sha(file) != manifest["files"][name]
+        ):
+            raise ValueError("Frozen collision cache hash/path mismatch")
+        declared.add(file)
+    if declared != {p.resolve() for p in directory.rglob("*.npz")}:
+        raise ValueError("Frozen collision cache contains undeclared geometry")
+    os.environ["FLASH_CHORD_CACHE_DIR"] = str(directory)
+
+
+def load_dex3(
+    path,
+    *,
+    control_fps=None,
+    motion_speed=1.0,
+    source_frame_playback=False,
+    require_frozen_collisions=True,
+):
+    path = Path(path).resolve()
+    root = path.parent
+    manifest = json.loads((root / "manifest.json").read_text())
+    if manifest["schema"] not in {
+        "v2d.dex3-training-window.v1",
+        "v2d.dex3-training-window.v2",
+    }:
+        raise ValueError("Unsupported Dex3 reference manifest")
+    for relative, expected in manifest["files"].items():
+        file = (root / relative).resolve()
+        if not file.is_relative_to(root) or sha(file) != expected:
+            raise ValueError(f"Reference asset checksum/path mismatch: {relative}")
+    if path.name not in manifest["files"] or sha(path) != manifest["files"][path.name]:
+        raise ValueError("Reference parquet is not declared")
+    bind_collision_cache(root, manifest, required=require_frozen_collisions)
     from flash_chord.data.mano_sharpa import ManoSharpaReference
     from flash_chord.data.reference import (
         ObjectAssetSpec,
@@ -24,17 +80,6 @@ def load_dex3(path, *, control_fps=None, motion_speed=1.0, source_frame_playback
     )
     import pyarrow.parquet as pq
 
-    path = Path(path).resolve()
-    root = path.parent
-    manifest = json.loads((root / "manifest.json").read_text())
-    if manifest["schema"] != "v2d.dex3-training-window.v1":
-        raise ValueError("Unsupported Dex3 reference manifest")
-    for relative, expected in manifest["files"].items():
-        file = (root / relative).resolve()
-        if not file.is_relative_to(root) or sha(file) != expected:
-            raise ValueError(f"Reference asset checksum/path mismatch: {relative}")
-    if path.name not in manifest["files"] or sha(path) != manifest["files"][path.name]:
-        raise ValueError("Reference parquet is not declared")
     row = pq.ParquetFile(path).read().to_pylist()[0]
     fps = float(row["fps"])
     if motion_speed != 1 or (control_fps is not None and control_fps != fps):

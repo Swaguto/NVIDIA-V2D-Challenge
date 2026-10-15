@@ -1,12 +1,12 @@
 services:
   pilot:
-    image: v2d-dex3-training:local
+    image: ${DEX3_TRAINING_IMAGE:-v2d-dex3-training:local}
     gpus: all
     shm_size: 8gb
     environment:
       WANDB_MODE: disabled
       XLA_PYTHON_CLIENT_PREALLOCATE: "false"
-      FLASH_CHORD_CACHE_DIR: /root/.cache/flash-chord
+      FLASH_CHORD_CACHE_DIR: /data/collision-cache
     volumes:
       - ${DEX3_TRAINING_INPUTS:?Set private pilot input directory}:/data:ro
       - ${DEX3_TRAINING_OUTPUTS:?Set fresh writable output directory}:/outputs

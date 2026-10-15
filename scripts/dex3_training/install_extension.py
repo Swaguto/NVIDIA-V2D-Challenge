@@ -1,4 +1,4 @@
-"""Apply two explicit dispatch hooks to the pinned upstream runtime; fail on drift."""
+"""Apply explicit data/support hooks to the pinned upstream runtime; fail on drift."""
 
 import argparse
 import hashlib
