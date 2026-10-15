@@ -1,0 +1,1308 @@
+{
+  "schema": "v2d.dex3-static-load-result.v1",
+  "cooked_collider_summary": [
+    {
+      "asset": "hand-0",
+      "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_2_link/left_hand_thumb_2_link_1/left_hand_thumb_2_link_1",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-0",
+      "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_1_link_1/left_hand_thumb_1_link_1",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-0",
+      "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_0_link_1/left_hand_thumb_0_link_1",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-0",
+      "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_1_link/left_hand_middle_1_link_1/left_hand_middle_1_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-0",
+      "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_0_link_1/left_hand_middle_0_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-0",
+      "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_1_link/left_hand_index_1_link_1/left_hand_middle_1_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-0",
+      "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_0_link_1/left_hand_middle_0_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-0",
+      "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_palm_link_1/left_hand_palm_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-1",
+      "prim": "/World/Fixture1/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_2_link/left_hand_thumb_2_link_1/left_hand_thumb_2_link_1",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-1",
+      "prim": "/World/Fixture1/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_1_link_1/left_hand_thumb_1_link_1",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-1",
+      "prim": "/World/Fixture1/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_0_link_1/left_hand_thumb_0_link_1",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-1",
+      "prim": "/World/Fixture1/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_1_link/left_hand_middle_1_link_1/left_hand_middle_1_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-1",
+      "prim": "/World/Fixture1/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_0_link_1/left_hand_middle_0_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-1",
+      "prim": "/World/Fixture1/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_1_link/left_hand_index_1_link_1/left_hand_middle_1_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-1",
+      "prim": "/World/Fixture1/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_0_link_1/left_hand_middle_0_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-1",
+      "prim": "/World/Fixture1/Hand/Geometry/left_hand_palm_link/left_hand_palm_link_1/left_hand_palm_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-2",
+      "prim": "/World/Fixture2/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_1_link/right_hand_thumb_2_link/right_hand_thumb_2_link_1/right_hand_thumb_2_link_1",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-2",
+      "prim": "/World/Fixture2/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_1_link/right_hand_thumb_1_link_1/right_hand_thumb_1_link_1",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-2",
+      "prim": "/World/Fixture2/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_0_link_1/right_hand_thumb_0_link_1",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-2",
+      "prim": "/World/Fixture2/Hand/Geometry/right_hand_palm_link/right_hand_middle_0_link/right_hand_middle_1_link/right_hand_middle_1_link_1/right_hand_middle_1_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-2",
+      "prim": "/World/Fixture2/Hand/Geometry/right_hand_palm_link/right_hand_middle_0_link/right_hand_middle_0_link_1/right_hand_middle_0_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-2",
+      "prim": "/World/Fixture2/Hand/Geometry/right_hand_palm_link/right_hand_index_0_link/right_hand_index_1_link/right_hand_index_1_link_1/right_hand_middle_1_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-2",
+      "prim": "/World/Fixture2/Hand/Geometry/right_hand_palm_link/right_hand_index_0_link/right_hand_index_0_link_1/right_hand_middle_0_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-2",
+      "prim": "/World/Fixture2/Hand/Geometry/right_hand_palm_link/right_hand_palm_link_1/right_hand_palm_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-3",
+      "prim": "/World/Fixture3/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_1_link/right_hand_thumb_2_link/right_hand_thumb_2_link_1/right_hand_thumb_2_link_1",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-3",
+      "prim": "/World/Fixture3/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_1_link/right_hand_thumb_1_link_1/right_hand_thumb_1_link_1",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-3",
+      "prim": "/World/Fixture3/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_0_link_1/right_hand_thumb_0_link_1",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-3",
+      "prim": "/World/Fixture3/Hand/Geometry/right_hand_palm_link/right_hand_middle_0_link/right_hand_middle_1_link/right_hand_middle_1_link_1/right_hand_middle_1_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-3",
+      "prim": "/World/Fixture3/Hand/Geometry/right_hand_palm_link/right_hand_middle_0_link/right_hand_middle_0_link_1/right_hand_middle_0_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-3",
+      "prim": "/World/Fixture3/Hand/Geometry/right_hand_palm_link/right_hand_index_0_link/right_hand_index_1_link/right_hand_index_1_link_1/right_hand_middle_1_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-3",
+      "prim": "/World/Fixture3/Hand/Geometry/right_hand_palm_link/right_hand_index_0_link/right_hand_index_0_link_1/right_hand_middle_0_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-3",
+      "prim": "/World/Fixture3/Hand/Geometry/right_hand_palm_link/right_hand_palm_link_1/right_hand_palm_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "object-0",
+      "prim": "/World/Fixture0/Object/Geometry/object/tn__leftobject0grasp0_1_aSC/tn__leftobject0grasp0_dPC",
+      "convex_count": 32
+    },
+    {
+      "asset": "object-1",
+      "prim": "/World/Fixture1/Object/Geometry/object/tn__leftobject0grasp1_1_aSC/tn__leftobject0grasp1_dPC",
+      "convex_count": 32
+    },
+    {
+      "asset": "object-2",
+      "prim": "/World/Fixture2/Object/Geometry/object/tn__rightobject1grasp0_1_pTD/tn__rightobject1grasp0_sQD",
+      "convex_count": 32
+    },
+    {
+      "asset": "object-3",
+      "prim": "/World/Fixture3/Object/Geometry/object/tn__rightobject1grasp1_1_pTD/tn__rightobject1grasp1_sQD",
+      "convex_count": 32
+    }
+  ],
+  "executor_source_sha256": "38f37ab54184b6896ab00016b542de04821d9aefd2ac876d7996f97c2f7baafe",
+  "inputs_manifest_sha256": "ce665f5959188dce8245e74f8f6bac7196f23fb646ead0fa96c02dfcbfa98995",
+  "runtime_python": "3.12.15",
+  "platform": "Linux-5.15.0-126-generic-x86_64-with-glibc2.36",
+  "device": "cpu",
+  "simulation_dt_s": 0.01,
+  "duration_s": 1.0,
+  "gravity_m_s2": [
+    0.0,
+    0.0,
+    -9.81
+  ],
+  "motor_constants": {
+    "ARMATURE_1515": 0.00149,
+    "STIFFNESS_1515": 2.0,
+    "DAMPING_1515": 0.2,
+    "EFFORT_LIMIT_1515": 0.76,
+    "VELOCITY_LIMIT_1515": 23.0
+  },
+  "object_collision_import_migration": "Legacy collider_type=convex_decomposition becomes Sim6 collision_type=Convex Decomposition; other preset fields are reused",
+  "provenance": [
+    {
+      "hand": {
+        "urdf_sha256": "2e55003b8b5f50bbc81a14566a733c85faf2108c41f32cf8a2824992aeddf155",
+        "resolved_urdf_sha256": "f8f504b37a16dc86bd5cd112ce2f186c5024c8cc021cbd200acc252a81af39de",
+        "meshes": {
+          "package://g1/left_hand_palm_link.STL": "23a486b75bd78a9bf03cec25d84d87f97f3dae038cf21a743b6d469b337e4004",
+          "package://g1/left_hand_thumb_0_link.STL": "a90c721661c0622685488a3c74d1e122c7da89242d3a1daef75edb83422d05e0",
+          "package://g1/collision/hands/left_hand_thumb_0_link.obj": "409feca6952f279b6e92758cbbdeff6f3b9b95c77bbe4118561c71fcdbf76d74",
+          "package://g1/left_hand_thumb_1_link.STL": "445c54a45bc13ce36001556f66bc0f49c83cb40321205ae4d676bb2874325684",
+          "package://g1/collision/hands/left_hand_thumb_1_link.obj": "fa5fbbc66ce92686856013c9fdeda65764f804014c39a1cc55fec9f76588ad59",
+          "package://g1/left_hand_thumb_2_link.STL": "3d8dbe5085acfc213d21aa8b0782e89cd79084e9678f3a85fc7b04a86b029db5",
+          "package://g1/collision/hands/left_hand_thumb_2_link.obj": "31f5cf5cd96c0e2662115e7dd5c7a523239c860fbb01909d6e3934d8c2037f28",
+          "package://g1/left_hand_middle_0_link.STL": "6b35f2f77211d5a366f0b9a4e47c4ee35e536731266f1a34e9efa12db579b892",
+          "package://g1/left_hand_middle_1_link.STL": "9e315ebc8a7a0cb98e033985b586b20d81cf8aa761181ae61ce56fcb14077a06",
+          "package://g1/left_hand_index_0_link.STL": "6b35f2f77211d5a366f0b9a4e47c4ee35e536731266f1a34e9efa12db579b892",
+          "package://g1/left_hand_index_1_link.STL": "9e315ebc8a7a0cb98e033985b586b20d81cf8aa761181ae61ce56fcb14077a06"
+        }
+      },
+      "factory_AST_sha256": "a18bdb1bd0210125b3e766a499f14f8db9be94e88020e8e93863ce067fb53483",
+      "hand_material": {
+        "enabled_colliders": 8,
+        "collider_readback": [
+          {
+            "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_2_link/left_hand_thumb_2_link_1/left_hand_thumb_2_link_1",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_1_link_1/left_hand_thumb_1_link_1",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_0_link_1/left_hand_thumb_0_link_1",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_1_link/left_hand_middle_1_link_1/left_hand_middle_1_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_0_link_1/left_hand_middle_0_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_1_link/left_hand_index_1_link_1/left_hand_middle_1_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_0_link_1/left_hand_middle_0_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_palm_link_1/left_hand_palm_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          }
+        ],
+        "static_friction": 2.0,
+        "dynamic_friction": 2.0,
+        "restitution": 0.0,
+        "friction_combine_mode": null,
+        "restitution_combine_mode": null
+      },
+      "object_material": {
+        "enabled_colliders": 1,
+        "collider_readback": [
+          {
+            "prim": "/World/Fixture0/Object/Geometry/object/tn__leftobject0grasp0_1_aSC/tn__leftobject0grasp0_dPC",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexDecomposition"
+          }
+        ],
+        "static_friction": 0.5,
+        "dynamic_friction": 0.5,
+        "restitution": 0.0,
+        "friction_combine_mode": null,
+        "restitution_combine_mode": null
+      },
+      "motor_effort_caps_Nm": {
+        "left_hand_index_0_joint": 0.76,
+        "left_hand_index_1_joint": 0.76,
+        "left_hand_middle_0_joint": 0.76,
+        "left_hand_middle_1_joint": 0.76,
+        "left_hand_thumb_0_joint": 0.76,
+        "left_hand_thumb_1_joint": 0.76,
+        "left_hand_thumb_2_joint": 0.76
+      },
+      "sample": {
+        "prefix": "left-object0-grasp0",
+        "side": "left",
+        "object": 0,
+        "object_scale_at_selected_frame": 0.999999975310567,
+        "source_row": 47,
+        "source_frame": 47,
+        "source_hand_valid": true,
+        "hand_position_stage_m": [
+          -0.04144386807836661,
+          0.12756915851980724,
+          -0.4994610430343571
+        ],
+        "hand_quaternion_stage_xyzw": [
+          0.5045283278366067,
+          0.1344960022655791,
+          -0.15254299364493318,
+          -0.8391022743830557
+        ],
+        "joint_names": [
+          "left_hand_index_0_joint",
+          "left_hand_index_1_joint",
+          "left_hand_middle_0_joint",
+          "left_hand_middle_1_joint",
+          "left_hand_thumb_0_joint",
+          "left_hand_thumb_1_joint",
+          "left_hand_thumb_2_joint"
+        ],
+        "finger_target_rad": [
+          -0.606697405623688,
+          -1.74532925,
+          -0.6037939521761413,
+          -1.5885571264611897,
+          1.04719755,
+          -0.3047981516936664,
+          0.8050691327944159
+        ],
+        "object_position_stage_m": [
+          0.027078482100903696,
+          0.3035445285451175,
+          -0.4916437369883252
+        ],
+        "object_quaternion_stage_xyzw": [
+          0.4134540863637965,
+          -0.46051345631481944,
+          0.5434779208904864,
+          0.5671109455182568
+        ]
+      }
+    },
+    {
+      "hand": {
+        "urdf_sha256": "2e55003b8b5f50bbc81a14566a733c85faf2108c41f32cf8a2824992aeddf155",
+        "resolved_urdf_sha256": "f8f504b37a16dc86bd5cd112ce2f186c5024c8cc021cbd200acc252a81af39de",
+        "meshes": {
+          "package://g1/left_hand_palm_link.STL": "23a486b75bd78a9bf03cec25d84d87f97f3dae038cf21a743b6d469b337e4004",
+          "package://g1/left_hand_thumb_0_link.STL": "a90c721661c0622685488a3c74d1e122c7da89242d3a1daef75edb83422d05e0",
+          "package://g1/collision/hands/left_hand_thumb_0_link.obj": "409feca6952f279b6e92758cbbdeff6f3b9b95c77bbe4118561c71fcdbf76d74",
+          "package://g1/left_hand_thumb_1_link.STL": "445c54a45bc13ce36001556f66bc0f49c83cb40321205ae4d676bb2874325684",
+          "package://g1/collision/hands/left_hand_thumb_1_link.obj": "fa5fbbc66ce92686856013c9fdeda65764f804014c39a1cc55fec9f76588ad59",
+          "package://g1/left_hand_thumb_2_link.STL": "3d8dbe5085acfc213d21aa8b0782e89cd79084e9678f3a85fc7b04a86b029db5",
+          "package://g1/collision/hands/left_hand_thumb_2_link.obj": "31f5cf5cd96c0e2662115e7dd5c7a523239c860fbb01909d6e3934d8c2037f28",
+          "package://g1/left_hand_middle_0_link.STL": "6b35f2f77211d5a366f0b9a4e47c4ee35e536731266f1a34e9efa12db579b892",
+          "package://g1/left_hand_middle_1_link.STL": "9e315ebc8a7a0cb98e033985b586b20d81cf8aa761181ae61ce56fcb14077a06",
+          "package://g1/left_hand_index_0_link.STL": "6b35f2f77211d5a366f0b9a4e47c4ee35e536731266f1a34e9efa12db579b892",
+          "package://g1/left_hand_index_1_link.STL": "9e315ebc8a7a0cb98e033985b586b20d81cf8aa761181ae61ce56fcb14077a06"
+        }
+      },
+      "factory_AST_sha256": "a18bdb1bd0210125b3e766a499f14f8db9be94e88020e8e93863ce067fb53483",
+      "hand_material": {
+        "enabled_colliders": 8,
+        "collider_readback": [
+          {
+            "prim": "/World/Fixture1/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_2_link/left_hand_thumb_2_link_1/left_hand_thumb_2_link_1",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture1/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_1_link_1/left_hand_thumb_1_link_1",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture1/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_0_link_1/left_hand_thumb_0_link_1",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture1/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_1_link/left_hand_middle_1_link_1/left_hand_middle_1_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture1/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_0_link_1/left_hand_middle_0_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture1/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_1_link/left_hand_index_1_link_1/left_hand_middle_1_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture1/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_0_link_1/left_hand_middle_0_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture1/Hand/Geometry/left_hand_palm_link/left_hand_palm_link_1/left_hand_palm_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          }
+        ],
+        "static_friction": 2.0,
+        "dynamic_friction": 2.0,
+        "restitution": 0.0,
+        "friction_combine_mode": null,
+        "restitution_combine_mode": null
+      },
+      "object_material": {
+        "enabled_colliders": 1,
+        "collider_readback": [
+          {
+            "prim": "/World/Fixture1/Object/Geometry/object/tn__leftobject0grasp1_1_aSC/tn__leftobject0grasp1_dPC",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexDecomposition"
+          }
+        ],
+        "static_friction": 0.5,
+        "dynamic_friction": 0.5,
+        "restitution": 0.0,
+        "friction_combine_mode": null,
+        "restitution_combine_mode": null
+      },
+      "motor_effort_caps_Nm": {
+        "left_hand_index_0_joint": 0.76,
+        "left_hand_index_1_joint": 0.76,
+        "left_hand_middle_0_joint": 0.76,
+        "left_hand_middle_1_joint": 0.76,
+        "left_hand_thumb_0_joint": 0.76,
+        "left_hand_thumb_1_joint": 0.76,
+        "left_hand_thumb_2_joint": 0.76
+      },
+      "sample": {
+        "prefix": "left-object0-grasp1",
+        "side": "left",
+        "object": 0,
+        "object_scale_at_selected_frame": 1.0000001364980426,
+        "source_row": 273,
+        "source_frame": 273,
+        "source_hand_valid": true,
+        "hand_position_stage_m": [
+          2.946749877418163,
+          0.11639804068734902,
+          -0.37829037647744657
+        ],
+        "hand_quaternion_stage_xyzw": [
+          -0.5002222154271347,
+          0.31822587784947404,
+          0.7161296087716601,
+          0.3683319281580811
+        ],
+        "joint_names": [
+          "left_hand_index_0_joint",
+          "left_hand_index_1_joint",
+          "left_hand_middle_0_joint",
+          "left_hand_middle_1_joint",
+          "left_hand_thumb_0_joint",
+          "left_hand_thumb_1_joint",
+          "left_hand_thumb_2_joint"
+        ],
+        "finger_target_rad": [
+          -1.4636492549874636,
+          -1.4809122762330704,
+          -1.0957776702017508,
+          -1.0773843640151544,
+          0.2643234819294212,
+          -0.4257339738121814,
+          1.7121348448689606
+        ],
+        "object_position_stage_m": [
+          2.99340133960054,
+          0.30901921903324764,
+          -0.49116999110906817
+        ],
+        "object_quaternion_stage_xyzw": [
+          0.43333215257248386,
+          -0.44675788128430827,
+          0.547590832546832,
+          0.559262837284868
+        ]
+      }
+    },
+    {
+      "hand": {
+        "urdf_sha256": "a60b8c5ed8be4fe8a065f9ad8e854d6f46efd673261335bcde15481a32f2165f",
+        "resolved_urdf_sha256": "8ff200e39bdde5c0550917687a1b27196fd32fc183080a311bbd25e704feb783",
+        "meshes": {
+          "package://g1/right_hand_palm_link.STL": "86c0b231cc44477d64a6493e5a427ba16617a00738112dd187c652675b086fb9",
+          "package://g1/right_hand_thumb_0_link.STL": "544298d0ea1088f5b276a10cc6a6a9e533efdd91594955fdc956c46211d07f83",
+          "package://g1/collision/hands/right_hand_thumb_0_link.obj": "a4f5fcea27a522b05ce0b9c9c3df9ccfe1528664c16c09385dd7801bb86de227",
+          "package://g1/right_hand_thumb_1_link.STL": "0a9a820da8dd10f298778b714f1364216e8a5976f4fd3a05689ea26327d44bf6",
+          "package://g1/collision/hands/right_hand_thumb_1_link.obj": "6a7e46596af6836bd02e1c2e107109d274e043d141eb6c100a518cfb3101f987",
+          "package://g1/right_hand_thumb_2_link.STL": "3f1bfb37668e8f61801c8d25f171fa1949e08666be86c67acad7e0079937cc45",
+          "package://g1/collision/hands/right_hand_thumb_2_link.obj": "0890fb1133c0d003728c0b529cae5e80cf153faa30ca6e159dcc2d0f4f58b6ba",
+          "package://g1/right_hand_middle_0_link.STL": "12ab4300c95e437e834f9aef772b3b431c671bf34338930b52ad11aef73bbd0d",
+          "package://g1/right_hand_middle_1_link.STL": "c9c34efce4563cacdcfd29fc838a982976d40f5442c71219811dcbbf3923a33d",
+          "package://g1/right_hand_index_0_link.STL": "12ab4300c95e437e834f9aef772b3b431c671bf34338930b52ad11aef73bbd0d",
+          "package://g1/right_hand_index_1_link.STL": "c9c34efce4563cacdcfd29fc838a982976d40f5442c71219811dcbbf3923a33d"
+        }
+      },
+      "factory_AST_sha256": "a18bdb1bd0210125b3e766a499f14f8db9be94e88020e8e93863ce067fb53483",
+      "hand_material": {
+        "enabled_colliders": 8,
+        "collider_readback": [
+          {
+            "prim": "/World/Fixture2/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_1_link/right_hand_thumb_2_link/right_hand_thumb_2_link_1/right_hand_thumb_2_link_1",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture2/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_1_link/right_hand_thumb_1_link_1/right_hand_thumb_1_link_1",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture2/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_0_link_1/right_hand_thumb_0_link_1",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture2/Hand/Geometry/right_hand_palm_link/right_hand_middle_0_link/right_hand_middle_1_link/right_hand_middle_1_link_1/right_hand_middle_1_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture2/Hand/Geometry/right_hand_palm_link/right_hand_middle_0_link/right_hand_middle_0_link_1/right_hand_middle_0_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture2/Hand/Geometry/right_hand_palm_link/right_hand_index_0_link/right_hand_index_1_link/right_hand_index_1_link_1/right_hand_middle_1_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture2/Hand/Geometry/right_hand_palm_link/right_hand_index_0_link/right_hand_index_0_link_1/right_hand_middle_0_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture2/Hand/Geometry/right_hand_palm_link/right_hand_palm_link_1/right_hand_palm_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          }
+        ],
+        "static_friction": 2.0,
+        "dynamic_friction": 2.0,
+        "restitution": 0.0,
+        "friction_combine_mode": null,
+        "restitution_combine_mode": null
+      },
+      "object_material": {
+        "enabled_colliders": 1,
+        "collider_readback": [
+          {
+            "prim": "/World/Fixture2/Object/Geometry/object/tn__rightobject1grasp0_1_pTD/tn__rightobject1grasp0_sQD",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexDecomposition"
+          }
+        ],
+        "static_friction": 0.5,
+        "dynamic_friction": 0.5,
+        "restitution": 0.0,
+        "friction_combine_mode": null,
+        "restitution_combine_mode": null
+      },
+      "motor_effort_caps_Nm": {
+        "right_hand_index_0_joint": 0.76,
+        "right_hand_index_1_joint": 0.76,
+        "right_hand_middle_0_joint": 0.76,
+        "right_hand_middle_1_joint": 0.76,
+        "right_hand_thumb_0_joint": 0.76,
+        "right_hand_thumb_1_joint": 0.76,
+        "right_hand_thumb_2_joint": 0.76
+      },
+      "sample": {
+        "prefix": "right-object1-grasp0",
+        "side": "right",
+        "object": 1,
+        "object_scale_at_selected_frame": 1.0000000795963087,
+        "source_row": 47,
+        "source_frame": 47,
+        "source_hand_valid": true,
+        "hand_position_stage_m": [
+          6.071441075087977,
+          0.20092219323050614,
+          -0.3945101614677828
+        ],
+        "hand_quaternion_stage_xyzw": [
+          -0.2399802421284886,
+          -0.33254969109126475,
+          0.4534420496049551,
+          0.7913346283293268
+        ],
+        "joint_names": [
+          "right_hand_index_0_joint",
+          "right_hand_index_1_joint",
+          "right_hand_middle_0_joint",
+          "right_hand_middle_1_joint",
+          "right_hand_thumb_0_joint",
+          "right_hand_thumb_1_joint",
+          "right_hand_thumb_2_joint"
+        ],
+        "finger_target_rad": [
+          0.9258729789879576,
+          1.5420000746194293,
+          0.03518515138223366,
+          0.9708754464612106,
+          -0.6538049436219685,
+          -0.13215817445567024,
+          -1.2070304985022604
+        ],
+        "object_position_stage_m": [
+          6.031685063697162,
+          0.318948986504467,
+          -0.43969292562813594
+        ],
+        "object_quaternion_stage_xyzw": [
+          -0.4766404026373757,
+          -0.5129191604356959,
+          -0.47202859049316626,
+          0.5356462183089284
+        ]
+      }
+    },
+    {
+      "hand": {
+        "urdf_sha256": "a60b8c5ed8be4fe8a065f9ad8e854d6f46efd673261335bcde15481a32f2165f",
+        "resolved_urdf_sha256": "8ff200e39bdde5c0550917687a1b27196fd32fc183080a311bbd25e704feb783",
+        "meshes": {
+          "package://g1/right_hand_palm_link.STL": "86c0b231cc44477d64a6493e5a427ba16617a00738112dd187c652675b086fb9",
+          "package://g1/right_hand_thumb_0_link.STL": "544298d0ea1088f5b276a10cc6a6a9e533efdd91594955fdc956c46211d07f83",
+          "package://g1/collision/hands/right_hand_thumb_0_link.obj": "a4f5fcea27a522b05ce0b9c9c3df9ccfe1528664c16c09385dd7801bb86de227",
+          "package://g1/right_hand_thumb_1_link.STL": "0a9a820da8dd10f298778b714f1364216e8a5976f4fd3a05689ea26327d44bf6",
+          "package://g1/collision/hands/right_hand_thumb_1_link.obj": "6a7e46596af6836bd02e1c2e107109d274e043d141eb6c100a518cfb3101f987",
+          "package://g1/right_hand_thumb_2_link.STL": "3f1bfb37668e8f61801c8d25f171fa1949e08666be86c67acad7e0079937cc45",
+          "package://g1/collision/hands/right_hand_thumb_2_link.obj": "0890fb1133c0d003728c0b529cae5e80cf153faa30ca6e159dcc2d0f4f58b6ba",
+          "package://g1/right_hand_middle_0_link.STL": "12ab4300c95e437e834f9aef772b3b431c671bf34338930b52ad11aef73bbd0d",
+          "package://g1/right_hand_middle_1_link.STL": "c9c34efce4563cacdcfd29fc838a982976d40f5442c71219811dcbbf3923a33d",
+          "package://g1/right_hand_index_0_link.STL": "12ab4300c95e437e834f9aef772b3b431c671bf34338930b52ad11aef73bbd0d",
+          "package://g1/right_hand_index_1_link.STL": "c9c34efce4563cacdcfd29fc838a982976d40f5442c71219811dcbbf3923a33d"
+        }
+      },
+      "factory_AST_sha256": "a18bdb1bd0210125b3e766a499f14f8db9be94e88020e8e93863ce067fb53483",
+      "hand_material": {
+        "enabled_colliders": 8,
+        "collider_readback": [
+          {
+            "prim": "/World/Fixture3/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_1_link/right_hand_thumb_2_link/right_hand_thumb_2_link_1/right_hand_thumb_2_link_1",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture3/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_1_link/right_hand_thumb_1_link_1/right_hand_thumb_1_link_1",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture3/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_0_link_1/right_hand_thumb_0_link_1",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture3/Hand/Geometry/right_hand_palm_link/right_hand_middle_0_link/right_hand_middle_1_link/right_hand_middle_1_link_1/right_hand_middle_1_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture3/Hand/Geometry/right_hand_palm_link/right_hand_middle_0_link/right_hand_middle_0_link_1/right_hand_middle_0_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture3/Hand/Geometry/right_hand_palm_link/right_hand_index_0_link/right_hand_index_1_link/right_hand_index_1_link_1/right_hand_middle_1_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture3/Hand/Geometry/right_hand_palm_link/right_hand_index_0_link/right_hand_index_0_link_1/right_hand_middle_0_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture3/Hand/Geometry/right_hand_palm_link/right_hand_palm_link_1/right_hand_palm_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          }
+        ],
+        "static_friction": 2.0,
+        "dynamic_friction": 2.0,
+        "restitution": 0.0,
+        "friction_combine_mode": null,
+        "restitution_combine_mode": null
+      },
+      "object_material": {
+        "enabled_colliders": 1,
+        "collider_readback": [
+          {
+            "prim": "/World/Fixture3/Object/Geometry/object/tn__rightobject1grasp1_1_pTD/tn__rightobject1grasp1_sQD",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexDecomposition"
+          }
+        ],
+        "static_friction": 0.5,
+        "dynamic_friction": 0.5,
+        "restitution": 0.0,
+        "friction_combine_mode": null,
+        "restitution_combine_mode": null
+      },
+      "motor_effort_caps_Nm": {
+        "right_hand_index_0_joint": 0.76,
+        "right_hand_index_1_joint": 0.76,
+        "right_hand_middle_0_joint": 0.76,
+        "right_hand_middle_1_joint": 0.76,
+        "right_hand_thumb_0_joint": 0.76,
+        "right_hand_thumb_1_joint": 0.76,
+        "right_hand_thumb_2_joint": 0.76
+      },
+      "sample": {
+        "prefix": "right-object1-grasp1",
+        "side": "right",
+        "object": 1,
+        "object_scale_at_selected_frame": 1.000000146016422,
+        "source_row": 236,
+        "source_frame": 236,
+        "source_hand_valid": true,
+        "hand_position_stage_m": [
+          9.242921686112261,
+          0.13318025177693915,
+          -0.4867725648289865
+        ],
+        "hand_quaternion_stage_xyzw": [
+          0.31106713567740185,
+          0.2831299977202879,
+          -0.24219136295496385,
+          -0.8743100052054669
+        ],
+        "joint_names": [
+          "right_hand_index_0_joint",
+          "right_hand_index_1_joint",
+          "right_hand_middle_0_joint",
+          "right_hand_middle_1_joint",
+          "right_hand_thumb_0_joint",
+          "right_hand_thumb_1_joint",
+          "right_hand_thumb_2_joint"
+        ],
+        "finger_target_rad": [
+          0.9277751347855906,
+          1.542000068110306,
+          0.03518514723924319,
+          0.9708754555897071,
+          -0.6428325458490441,
+          -0.10989707326578071,
+          -1.2420733188960882
+        ],
+        "object_position_stage_m": [
+          9.264137191363908,
+          0.2565974536295106,
+          -0.5293282804480205
+        ],
+        "object_quaternion_stage_xyzw": [
+          0.5814834195118008,
+          0.37902972317752914,
+          0.5939433704042382,
+          -0.4067490313862869
+        ]
+      }
+    }
+  ],
+  "initial_pose_readback": [
+    {
+      "sample": "left-object0-grasp0",
+      "hand_translation_error_m": 1.6294344575007447e-08,
+      "hand_quaternion_absolute_dot": 1.0000000415643688,
+      "object_translation_error_m": 1.0162611085995366e-08,
+      "object_quaternion_absolute_dot": 0.9999999839921883,
+      "finger_maximum_error_rad": 0.0,
+      "hand_body_link_pose_stage_xyzw": {
+        "left_hand_palm_link": [
+          -0.04144388437271118,
+          0.12756915390491486,
+          -0.4994610548019409,
+          -0.5045284032821655,
+          -0.1344960331916809,
+          0.15254302322864532,
+          0.8391022682189941
+        ],
+        "left_hand_thumb_0_link": [
+          -0.01805315911769867,
+          0.13755781948566437,
+          -0.4976304769515991,
+          -0.513205885887146,
+          0.3030741512775421,
+          -0.12015798687934875,
+          0.7939318418502808
+        ],
+        "left_hand_middle_0_link": [
+          0.040456198155879974,
+          0.13575461506843567,
+          -0.5082631707191467,
+          -0.4417206048965454,
+          -0.2784257233142853,
+          -0.10384777188301086,
+          0.8465090394020081
+        ],
+        "left_hand_index_0_link": [
+          0.01881692185997963,
+          0.18167775869369507,
+          -0.4823439419269562,
+          -0.4413159489631653,
+          -0.27906668186187744,
+          -0.10507652908563614,
+          0.8463574051856995
+        ],
+        "left_hand_thumb_1_link": [
+          -0.017700212076306343,
+          0.13023628294467926,
+          -0.4796023964881897,
+          -0.5532673597335815,
+          0.22165170311927795,
+          -0.23929205536842346,
+          0.766488790512085
+        ],
+        "left_hand_middle_1_link": [
+          0.07816743105649948,
+          0.13896779716014862,
+          -0.48247212171554565,
+          -0.11094047129154205,
+          -0.5102256536483765,
+          -0.6766408681869507,
+          0.5191525220870972
+        ],
+        "left_hand_index_1_link": [
+          0.05647190287709236,
+          0.18481269478797913,
+          -0.45646125078201294,
+          -0.06989511102437973,
+          -0.5174483060836792,
+          -0.7158895134925842,
+          0.46353480219841003
+        ],
+        "left_hand_thumb_2_link": [
+          -0.023267842829227448,
+          0.11772055923938751,
+          -0.43589887022972107,
+          -0.42221277952194214,
+          0.4206787347793579,
+          0.08010755479335785,
+          0.798967182636261
+        ],
+        "left_middle_tip": [
+          0.06289532780647278,
+          0.11834053695201874,
+          -0.4586755037307739,
+          -0.11094045639038086,
+          -0.5102255940437317,
+          -0.6766408085823059,
+          0.5191524624824524
+        ],
+        "left_index_tip": [
+          0.03685439005494118,
+          0.16411560773849487,
+          -0.43616876006126404,
+          -0.06989510357379913,
+          -0.5174482464790344,
+          -0.7158894538879395,
+          0.46353474259376526
+        ],
+        "left_thumb_tip": [
+          -0.006354495417326689,
+          0.09564822167158127,
+          -0.4146444499492645,
+          -0.42221277952194214,
+          0.4206787347793579,
+          0.08010755479335785,
+          0.798967182636261
+        ]
+      }
+    },
+    {
+      "sample": "left-object0-grasp1",
+      "hand_translation_error_m": 4.819524024313182e-08,
+      "hand_quaternion_absolute_dot": 1.0000000480346114,
+      "object_translation_error_m": 5.0614334057286214e-08,
+      "object_quaternion_absolute_dot": 0.9999999939735033,
+      "finger_maximum_error_rad": 0.0,
+      "hand_body_link_pose_stage_xyzw": {
+        "left_hand_palm_link": [
+          2.9467499256134033,
+          0.11639803647994995,
+          -0.3782903850078583,
+          -0.5002222657203674,
+          0.3182259202003479,
+          0.7161296010017395,
+          0.3683319687843323
+        ],
+        "left_hand_thumb_0_link": [
+          2.940930128097534,
+          0.12173210829496384,
+          -0.40253764390945435,
+          -0.5902296900749207,
+          0.36398845911026,
+          0.643966555595398,
+          0.32318487763404846
+        ],
+        "left_hand_middle_0_link": [
+          2.941401481628418,
+          0.10831756889820099,
+          -0.4604986608028412,
+          -0.5927622318267822,
+          0.011087082326412201,
+          0.4194478690624237,
+          0.6874398589134216
+        ],
+        "left_hand_index_0_link": [
+          2.913926362991333,
+          0.15530139207839966,
+          -0.44356852769851685,
+          -0.5847910642623901,
+          -0.09751634299755096,
+          0.28663942217826843,
+          0.7525609731674194
+        ],
+        "left_hand_thumb_1_link": [
+          2.9574921131134033,
+          0.1319199502468109,
+          -0.4017336666584015,
+          -0.653805136680603,
+          0.23107919096946716,
+          0.5611546635627747,
+          0.45193666219711304
+        ],
+        "left_hand_middle_1_link": [
+          2.971074342727661,
+          0.13412798941135406,
+          -0.48397159576416016,
+          -0.5145033001899719,
+          -0.29457828402519226,
+          0.007379576563835144,
+          0.805267333984375
+        ],
+        "left_hand_index_1_link": [
+          2.951328992843628,
+          0.18028441071510315,
+          -0.45220068097114563,
+          -0.36588308215141296,
+          -0.4664972126483917,
+          -0.29611021280288696,
+          0.7488850355148315
+        ],
+        "left_hand_thumb_2_link": [
+          2.9945616722106934,
+          0.15411972999572754,
+          -0.38654568791389465,
+          -0.2539847493171692,
+          0.6452522873878479,
+          0.7091225385665894,
+          -0.12761881947517395
+        ],
+        "left_middle_tip": [
+          2.9999961853027344,
+          0.14515326917171478,
+          -0.46763238310813904,
+          -0.5145033001899719,
+          -0.29457828402519226,
+          0.007379576563835144,
+          0.805267333984375
+        ],
+        "left_index_tip": [
+          2.9649579524993896,
+          0.17670956254005432,
+          -0.42016205191612244,
+          -0.36588308215141296,
+          -0.4664972126483917,
+          -0.29611021280288696,
+          0.7488850355148315
+        ],
+        "left_thumb_tip": [
+          2.9996986389160156,
+          0.15883514285087585,
+          -0.42084404826164246,
+          -0.2539847493171692,
+          0.6452522873878479,
+          0.7091225385665894,
+          -0.12761881947517395
+        ]
+      }
+    },
+    {
+      "sample": "right-object1-grasp0",
+      "hand_translation_error_m": 9.846548998382332e-08,
+      "hand_quaternion_absolute_dot": 1.0000000667524556,
+      "object_translation_error_m": 1.8820888048054485e-07,
+      "object_quaternion_absolute_dot": 1.0000000010955414,
+      "finger_maximum_error_rad": 0.0,
+      "hand_body_link_pose_stage_xyzw": {
+        "right_hand_palm_link": [
+          6.071441173553467,
+          0.2009221613407135,
+          -0.3945101499557495,
+          -0.23998020589351654,
+          -0.3325497508049011,
+          0.4534420669078827,
+          0.7913346886634827
+        ],
+        "right_hand_thumb_0_link": [
+          6.080815315246582,
+          0.2232922911643982,
+          -0.38663873076438904,
+          -0.0816660225391388,
+          -0.5690447092056274,
+          0.5064887404441833,
+          0.6426413059234619
+        ],
+        "right_hand_middle_0_link": [
+          6.12209939956665,
+          0.2660980522632599,
+          -0.38834908604621887,
+          -0.24579322338104248,
+          -0.328276664018631,
+          0.46729278564453125,
+          0.7832353115081787
+        ],
+        "right_hand_index_0_link": [
+          6.0796942710876465,
+          0.2705569267272949,
+          -0.35052159428596497,
+          -0.36323025822639465,
+          -0.19037742912769318,
+          0.759107232093811,
+          0.5055457353591919
+        ],
+        "right_hand_thumb_1_link": [
+          6.070446491241455,
+          0.23057293891906738,
+          -0.4014112949371338,
+          -0.04391327500343323,
+          -0.5731953382492065,
+          0.46294909715652466,
+          0.6746827960014343
+        ],
+        "right_hand_middle_1_link": [
+          6.138026237487793,
+          0.30701470375061035,
+          -0.3753180205821991,
+          -0.3705693185329437,
+          -0.17566503584384918,
+          0.7787610292434692,
+          0.47471198439598083
+        ],
+        "right_hand_index_1_link": [
+          6.069390296936035,
+          0.3120438754558563,
+          -0.3669624924659729,
+          -0.39317893981933594,
+          0.11657681316137314,
+          0.8967334032058716,
+          -0.16640150547027588
+        ],
+        "right_hand_thumb_2_link": [
+          6.04414176940918,
+          0.2565644085407257,
+          -0.4284321665763855,
+          0.2891557216644287,
+          -0.4968605041503906,
+          -0.0017424523830413818,
+          0.8182394504547119
+        ],
+        "right_middle_tip": [
+          6.128413200378418,
+          0.3374495208263397,
+          -0.3896816372871399,
+          -0.3705693185329437,
+          -0.17566503584384918,
+          0.7787610292434692,
+          0.47471198439598083
+        ],
+        "right_index_tip": [
+          6.047150135040283,
+          0.29839015007019043,
+          -0.3902849853038788,
+          -0.39317893981933594,
+          0.11657681316137314,
+          0.8967334032058716,
+          -0.16640150547027588
+        ],
+        "right_thumb_tip": [
+          6.034184455871582,
+          0.2857114374637604,
+          -0.41180965304374695,
+          0.2891556918621063,
+          -0.49686044454574585,
+          -0.0017424521502107382,
+          0.8182393312454224
+        ]
+      }
+    },
+    {
+      "sample": "right-object1-grasp1",
+      "hand_translation_error_m": 1.4311137164213505e-07,
+      "hand_quaternion_absolute_dot": 1.000000110720551,
+      "object_translation_error_m": 7.670249857483213e-08,
+      "object_quaternion_absolute_dot": 0.9999999973985847,
+      "finger_maximum_error_rad": 0.0,
+      "hand_body_link_pose_stage_xyzw": {
+        "right_hand_palm_link": [
+          9.242921829223633,
+          0.13318023085594177,
+          -0.4867725670337677,
+          -0.311067134141922,
+          -0.2831299901008606,
+          0.2421913594007492,
+          0.8743101358413696
+        ],
+        "right_hand_thumb_0_link": [
+          9.26134204864502,
+          0.1484711766242981,
+          -0.4779900908470154,
+          -0.21862635016441345,
+          -0.5448343753814697,
+          0.3280579447746277,
+          0.7400919795036316
+        ],
+        "right_hand_middle_0_link": [
+          9.317849159240723,
+          0.16707639396190643,
+          -0.4773373603820801,
+          -0.31599974632263184,
+          -0.277614027261734,
+          0.2575344443321228,
+          0.8699141144752502
+        ],
+        "right_hand_index_0_link": [
+          9.281041145324707,
+          0.19026370346546173,
+          -0.44050681591033936,
+          -0.40487387776374817,
+          -0.11402851343154907,
+          0.6077874898910522,
+          0.6735495328903198
+        ],
+        "right_hand_thumb_1_link": [
+          9.25609016418457,
+          0.15996244549751282,
+          -0.4927925169467926,
+          -0.1883736252784729,
+          -0.5560192465782166,
+          0.2869163155555725,
+          0.7569922208786011
+        ],
+        "right_hand_middle_1_link": [
+          9.35051441192627,
+          0.19563350081443787,
+          -0.46267038583755493,
+          -0.40902596712112427,
+          -0.09809736162424088,
+          0.6336798667907715,
+          0.649249255657196
+        ],
+        "right_hand_index_1_link": [
+          9.291812896728516,
+          0.23199138045310974,
+          -0.4560122489929199,
+          -0.3698422908782959,
+          0.20035478472709656,
+          0.905278742313385,
+          0.05954078957438469
+        ],
+        "right_hand_thumb_2_link": [
+          9.245789527893066,
+          0.1949714720249176,
+          -0.5204674601554871,
+          0.17033600807189941,
+          -0.5618074536323547,
+          -0.20713551342487335,
+          0.7825937271118164
+        ],
+        "right_middle_tip": [
+          9.356732368469238,
+          0.22724133729934692,
+          -0.47635552287101746,
+          -0.40902596712112427,
+          -0.09809736162424088,
+          0.6336798667907715,
+          0.649249255657196
+        ],
+        "right_index_tip": [
+          9.26663589477539,
+          0.2305774688720703,
+          -0.48028403520584106,
+          -0.3698422908782959,
+          0.20035478472709656,
+          0.905278742313385,
+          0.05954078957438469
+        ],
+        "right_thumb_tip": [
+          9.25043773651123,
+          0.22493711113929749,
+          -0.5029902458190918,
+          0.17033600807189941,
+          -0.5618074536323547,
+          -0.20713551342487335,
+          0.7825937271118164
+        ]
+      }
+    }
+  ],
+  "summaries": [
+    {
+      "sample": "left-object0-grasp0",
+      "source_frame": 47,
+      "final_displacement_m": 4.0665742440538315,
+      "maximum_displacement_m": 4.0665742440538315,
+      "maximum_orientation_change_deg": 179.55390111059037,
+      "maximum_contact_force_N": 110.75111274809885,
+      "mean_vertical_contact_force_last_0_2s_N": 0.0,
+      "held_within_10mm_for_1s_diagnostic_only": false
+    },
+    {
+      "sample": "left-object0-grasp1",
+      "source_frame": 273,
+      "final_displacement_m": 4.768963087779912,
+      "maximum_displacement_m": 4.768963087779912,
+      "maximum_orientation_change_deg": 179.54519444189896,
+      "maximum_contact_force_N": 19.399827980682797,
+      "mean_vertical_contact_force_last_0_2s_N": 0.0,
+      "held_within_10mm_for_1s_diagnostic_only": false
+    },
+    {
+      "sample": "right-object1-grasp0",
+      "source_frame": 47,
+      "final_displacement_m": 4.935665849497787,
+      "maximum_displacement_m": 4.935665849497787,
+      "maximum_orientation_change_deg": 4.381709803224183,
+      "maximum_contact_force_N": 0.0,
+      "mean_vertical_contact_force_last_0_2s_N": 0.0,
+      "held_within_10mm_for_1s_diagnostic_only": false
+    },
+    {
+      "sample": "right-object1-grasp1",
+      "source_frame": 236,
+      "final_displacement_m": 4.934001174615256,
+      "maximum_displacement_m": 4.934001174615256,
+      "maximum_orientation_change_deg": 3.7546467492244964,
+      "maximum_contact_force_N": 0.0,
+      "mean_vertical_contact_force_last_0_2s_N": 0.0,
+      "held_within_10mm_for_1s_diagnostic_only": false
+    }
+  ],
+  "controls": {
+    "free_fall_drop_m": 4.954054594039917,
+    "free_fall_pass": true,
+    "supported_sphere_final_z_m": 0.05000000074505806,
+    "supported_sphere_mean_vertical_contact_force_N": 2.943000078201294,
+    "supported_sphere_pass": true
+  },
+  "gravity_and_contact_controls_pass": true,
+  "states_sha256": "cb6c62ee9e5f2fddeb958a5fdc3c50d1c44f69c8d0b5e3f5213150e7b9ba9d2a",
+  "video_sha256": "90aaad1c06e4a17f2376ef6d009997b103dc99df4f6775092ac58e51d743d3eb",
+  "not_a_complete_episode_or_official_policy_rollout": true,
+  "source_observations_or_robot_motion_changed": false,
+  "physical_task_accepted": false
+}

@@ -1,0 +1,10 @@
+{
+  "schema": "v2d.static-load-gate.v1",
+  "report_sha256": "8447a6d488531d49bc32b2887f1863069646390c031c3aaafdbe973cbd891bb4",
+  "states_sha256": "cb6c62ee9e5f2fddeb958a5fdc3c50d1c44f69c8d0b5e3f5213150e7b9ba9d2a",
+  "video_sha256": "90aaad1c06e4a17f2376ef6d009997b103dc99df4f6775092ac58e51d743d3eb",
+  "gravity_and_contact_controls_pass": true,
+  "all_four_samples_held_within_10mm_for_1s": false,
+  "physical_task_accepted": false,
+  "learned_policy_evaluated": false
+}

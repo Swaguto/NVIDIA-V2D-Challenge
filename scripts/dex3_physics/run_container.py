@@ -232,6 +232,15 @@ def main():
             (out / "static-load-gate.json").write_text(
                 json.dumps(gate, indent=2) + "\n"
             )
+            subprocess.run(
+                [
+                    sys.executable,
+                    str(ROOT / "scripts/dex3_physics/package_static_preview.py"),
+                    "--run",
+                    str(run),
+                ],
+                check=True,
+            )
             print(json.dumps(gate, indent=2))
             if not gate["all_four_samples_held_within_10mm_for_1s"]:
                 raise SystemExit(2)

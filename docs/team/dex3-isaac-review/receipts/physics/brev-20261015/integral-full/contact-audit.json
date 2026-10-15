@@ -1,0 +1,189 @@
+{
+  "schema": "v2d.supported-task-readback-audit.v1",
+  "states_sha256": "393b6a3bb8a02b2a4a8de077a75a13ec1c7fd67f9285c37d00a8d356e30aa3d8",
+  "video_sha256": "2480326e5db4a71d48243d42c4262b3cec4f1546fe9545560742e38b6b615026",
+  "source_frames": 343,
+  "object_records": 6842,
+  "hand_records": 6842,
+  "control_records": 202,
+  "all_recorded_source_observation_and_display_flags_match": true,
+  "all_686_input_target_approvals_false": true,
+  "objects": [
+    {
+      "object": 0,
+      "observed_position_error_median_p90_max_m": [
+        87.05703583631833,
+        1134.7675958681511,
+        1571.860893283874
+      ],
+      "final_position_error_m": 1742.8117300598146
+    },
+    {
+      "object": 1,
+      "observed_position_error_median_p90_max_m": [
+        27.942155770680227,
+        1207.1063377707162,
+        1755.0728044417503
+      ],
+      "final_position_error_m": 1755.0728044417503
+    }
+  ],
+  "hands": [
+    {
+      "side": "left",
+      "wrist_target_error_median_p90_max_m": [
+        0.005213520818365207,
+        0.027005326830246337,
+        0.07876614258668233
+      ],
+      "wrist_rotation_error_median_p90_max_deg": [
+        0.029188543206504918,
+        3.4819285852975157,
+        10.181340433050213
+      ],
+      "maximum_reported_solver_penetration_m": 0.005003171972930431
+    },
+    {
+      "side": "right",
+      "wrist_target_error_median_p90_max_m": [
+        0.0012719614209030794,
+        0.0076438389148680615,
+        0.04711123442460358
+      ],
+      "wrist_rotation_error_median_p90_max_deg": [
+        0.023195402587665875,
+        0.09780471688274045,
+        0.8710969867237389
+      ],
+      "maximum_reported_solver_penetration_m": 2.332311123609543e-05
+    }
+  ],
+  "source_grasp_comparison": [
+    {
+      "interval": "left_pot_handle_stabilize_lift_lower",
+      "source_definite_core_frames": 185,
+      "physical_contact_frames": [
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144
+      ],
+      "contact_is_not_force_closure_or_a_grasp": true
+    },
+    {
+      "interval": "right_lid_remove_place",
+      "source_definite_core_frames": 62,
+      "physical_contact_frames": [],
+      "contact_is_not_force_closure_or_a_grasp": true
+    },
+    {
+      "interval": "right_lid_regrasp_replace",
+      "source_definite_core_frames": 72,
+      "physical_contact_frames": [],
+      "contact_is_not_force_closure_or_a_grasp": true
+    },
+    {
+      "interval": "left_pot_handle_regrasp_stabilize_release",
+      "source_definite_core_frames": 62,
+      "physical_contact_frames": [],
+      "contact_is_not_force_closure_or_a_grasp": true
+    }
+  ],
+  "scope": "Actual physics readback against inferred frozen targets and frame-indexed independent source labels; not independent human-finger ground truth, complete penetration certification or official metric parity",
+  "physical_task_accepted": false,
+  "official_score_claimed": false
+}

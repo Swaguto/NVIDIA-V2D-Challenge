@@ -1,0 +1,10 @@
+{
+  "schema": "v2d.physics-backup-verification.v1",
+  "unique_files": 16154,
+  "bytes": 4573326213,
+  "all_sha256_verified": true,
+  "mismatches": [],
+  "inventory_sha256": "f0f3ed40bec9c81bfc92745361b009d0beb18227b25c76236e4d40e8369ad77d",
+  "local_backup_root": "/Users/rohithiruku/dex3_physics_implementation_20261015",
+  "scope": "Declared physics outputs, failed-attempt outputs, GPU logs and fresh-host e011 delivery; duplicate inventory entries deduplicated by identical hash"
+}

@@ -1,0 +1,35 @@
+{
+  "schema": "v2d.brev-physics-session-closure.v1",
+  "instance_name": "v2d-dex3-physics-check",
+  "instance_id": "dngrtbldz",
+  "status": "STOPPED",
+  "observed_utc": "2026-10-15T17:42:09.544206+00:00",
+  "created_observed_utc": "2026-10-15T15:49:37+00:00",
+  "listed_hourly_compute_usd": 1.74,
+  "authorized_compute_cap_usd_total": 10,
+  "conservative_compute_usd_if_running_entire_creation_to_stop_interval": 3.2637,
+  "actual_billing_invoice_checked": false,
+  "budget_note": "Conservative bound includes stopped intervals; listed compute rate only. This is not an invoice.",
+  "backup": {
+    "schema": "v2d.physics-backup-verification.v1",
+    "unique_files": 16154,
+    "bytes": 4573326213,
+    "all_sha256_verified": true,
+    "mismatches": [],
+    "inventory_sha256": "f0f3ed40bec9c81bfc92745361b009d0beb18227b25c76236e4d40e8369ad77d",
+    "local_backup_root": "/Users/rohithiruku/dex3_physics_implementation_20261015",
+    "scope": "Declared physics outputs, failed-attempt outputs, GPU logs and fresh-host e011 delivery; duplicate inventory entries deduplicated by identical hash"
+  },
+  "observed_instance": {
+    "name": "v2d-dex3-physics-check",
+    "id": "dngrtbldz",
+    "status": "STOPPED",
+    "build_status": "COMPLETED",
+    "shell_status": "NOT READY",
+    "health_status": "HEALTHY",
+    "instance_type": "l40s-48gb.1x",
+    "instance_kind": "gpu",
+    "gpu": "L40S"
+  },
+  "reason": "All approved validation runs completed; results independently backed up. VM stopped during local refinement and after final backup."
+}

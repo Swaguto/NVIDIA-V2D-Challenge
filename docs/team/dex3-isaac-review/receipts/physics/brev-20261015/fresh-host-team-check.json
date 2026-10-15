@@ -1,0 +1,15 @@
+{
+  "schema": "v2d.team-reproduction-check.v1",
+  "automated_replay_checks_pass": true,
+  "episodes": [
+    {
+      "episode": 11,
+      "frames": 137,
+      "simulator_receipt_sha256": "d37383b191cd1e57693319e50a11eeedb6eb56afd724f7b0d8c905da7a1b91d8",
+      "input_and_frozen_targets_match": true
+    }
+  ],
+  "full_manual_visual_review_performed": false,
+  "physical_task_accepted": false,
+  "cross_gpu_pixel_identity_required": false
+}

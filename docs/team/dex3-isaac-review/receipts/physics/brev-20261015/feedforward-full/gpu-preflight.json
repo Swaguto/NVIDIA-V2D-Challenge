@@ -1,0 +1,15 @@
+{
+  "schema": "v2d.physics-gpu-preflight.v1",
+  "gpu": "NVIDIA L40S",
+  "driver": "580.178.04",
+  "memory_total_MiB": 46068,
+  "torch": "2.11.0+cu130",
+  "torch_cuda": "13.0",
+  "capability": [
+    8,
+    9
+  ],
+  "cuda_tensor_sum": 496.0,
+  "cuda_compute_verified": true,
+  "rtx_rendering_verified": false
+}

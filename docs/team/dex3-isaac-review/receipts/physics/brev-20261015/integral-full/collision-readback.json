@@ -1,0 +1,170 @@
+[
+  {
+    "step": 0,
+    "side": "left",
+    "usd_collision_enabled": {
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_2_link/left_hand_thumb_2_link_1/left_hand_thumb_2_link_1": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_1_link_1/left_hand_thumb_1_link_1": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_0_link_1/left_hand_thumb_0_link_1": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_1_link/left_hand_middle_1_link_1/left_hand_middle_1_link": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_0_link_1/left_hand_middle_0_link": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_1_link/left_hand_index_1_link_1/left_hand_middle_1_link": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_0_link_1/left_hand_middle_0_link": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_palm_link_1/left_hand_palm_link": false
+    }
+  },
+  {
+    "step": 0,
+    "side": "right",
+    "usd_collision_enabled": {
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_1_link/right_hand_thumb_2_link/right_hand_thumb_2_link_1/right_hand_thumb_2_link_1": false,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_1_link/right_hand_thumb_1_link_1/right_hand_thumb_1_link_1": false,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_0_link_1/right_hand_thumb_0_link_1": false,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_middle_0_link/right_hand_middle_1_link/right_hand_middle_1_link_1/right_hand_middle_1_link": false,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_middle_0_link/right_hand_middle_0_link_1/right_hand_middle_0_link": false,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_index_0_link/right_hand_index_1_link/right_hand_index_1_link_1/right_hand_middle_1_link": false,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_index_0_link/right_hand_index_0_link_1/right_hand_middle_0_link": false,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_palm_link_1/right_hand_palm_link": false
+    }
+  },
+  {
+    "step": 460,
+    "side": "left",
+    "usd_collision_enabled": {
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_2_link/left_hand_thumb_2_link_1/left_hand_thumb_2_link_1": true,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_1_link_1/left_hand_thumb_1_link_1": true,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_0_link_1/left_hand_thumb_0_link_1": true,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_1_link/left_hand_middle_1_link_1/left_hand_middle_1_link": true,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_0_link_1/left_hand_middle_0_link": true,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_1_link/left_hand_index_1_link_1/left_hand_middle_1_link": true,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_0_link_1/left_hand_middle_0_link": true,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_palm_link_1/left_hand_palm_link": true
+    }
+  },
+  {
+    "step": 460,
+    "side": "right",
+    "usd_collision_enabled": {
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_1_link/right_hand_thumb_2_link/right_hand_thumb_2_link_1/right_hand_thumb_2_link_1": true,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_1_link/right_hand_thumb_1_link_1/right_hand_thumb_1_link_1": true,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_0_link_1/right_hand_thumb_0_link_1": true,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_middle_0_link/right_hand_middle_1_link/right_hand_middle_1_link_1/right_hand_middle_1_link": true,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_middle_0_link/right_hand_middle_0_link_1/right_hand_middle_0_link": true,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_index_0_link/right_hand_index_1_link/right_hand_index_1_link_1/right_hand_middle_1_link": true,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_index_0_link/right_hand_index_0_link_1/right_hand_middle_0_link": true,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_palm_link_1/right_hand_palm_link": true
+    }
+  },
+  {
+    "step": 1220,
+    "side": "right",
+    "usd_collision_enabled": {
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_1_link/right_hand_thumb_2_link/right_hand_thumb_2_link_1/right_hand_thumb_2_link_1": false,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_1_link/right_hand_thumb_1_link_1/right_hand_thumb_1_link_1": false,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_0_link_1/right_hand_thumb_0_link_1": false,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_middle_0_link/right_hand_middle_1_link/right_hand_middle_1_link_1/right_hand_middle_1_link": false,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_middle_0_link/right_hand_middle_0_link_1/right_hand_middle_0_link": false,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_index_0_link/right_hand_index_1_link/right_hand_index_1_link_1/right_hand_middle_1_link": false,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_index_0_link/right_hand_index_0_link_1/right_hand_middle_0_link": false,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_palm_link_1/right_hand_palm_link": false
+    }
+  },
+  {
+    "step": 1230,
+    "side": "right",
+    "usd_collision_enabled": {
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_1_link/right_hand_thumb_2_link/right_hand_thumb_2_link_1/right_hand_thumb_2_link_1": true,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_1_link/right_hand_thumb_1_link_1/right_hand_thumb_1_link_1": true,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_0_link_1/right_hand_thumb_0_link_1": true,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_middle_0_link/right_hand_middle_1_link/right_hand_middle_1_link_1/right_hand_middle_1_link": true,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_middle_0_link/right_hand_middle_0_link_1/right_hand_middle_0_link": true,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_index_0_link/right_hand_index_1_link/right_hand_index_1_link_1/right_hand_middle_1_link": true,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_index_0_link/right_hand_index_0_link_1/right_hand_middle_0_link": true,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_palm_link_1/right_hand_palm_link": true
+    }
+  },
+  {
+    "step": 2370,
+    "side": "left",
+    "usd_collision_enabled": {
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_2_link/left_hand_thumb_2_link_1/left_hand_thumb_2_link_1": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_1_link_1/left_hand_thumb_1_link_1": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_0_link_1/left_hand_thumb_0_link_1": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_1_link/left_hand_middle_1_link_1/left_hand_middle_1_link": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_0_link_1/left_hand_middle_0_link": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_1_link/left_hand_index_1_link_1/left_hand_middle_1_link": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_0_link_1/left_hand_middle_0_link": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_palm_link_1/left_hand_palm_link": false
+    }
+  },
+  {
+    "step": 2380,
+    "side": "left",
+    "usd_collision_enabled": {
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_2_link/left_hand_thumb_2_link_1/left_hand_thumb_2_link_1": true,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_1_link_1/left_hand_thumb_1_link_1": true,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_0_link_1/left_hand_thumb_0_link_1": true,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_1_link/left_hand_middle_1_link_1/left_hand_middle_1_link": true,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_0_link_1/left_hand_middle_0_link": true,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_1_link/left_hand_index_1_link_1/left_hand_middle_1_link": true,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_0_link_1/left_hand_middle_0_link": true,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_palm_link_1/left_hand_palm_link": true
+    }
+  },
+  {
+    "step": 2650,
+    "side": "left",
+    "usd_collision_enabled": {
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_2_link/left_hand_thumb_2_link_1/left_hand_thumb_2_link_1": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_1_link_1/left_hand_thumb_1_link_1": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_0_link_1/left_hand_thumb_0_link_1": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_1_link/left_hand_middle_1_link_1/left_hand_middle_1_link": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_0_link_1/left_hand_middle_0_link": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_1_link/left_hand_index_1_link_1/left_hand_middle_1_link": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_0_link_1/left_hand_middle_0_link": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_palm_link_1/left_hand_palm_link": false
+    }
+  },
+  {
+    "step": 2670,
+    "side": "left",
+    "usd_collision_enabled": {
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_2_link/left_hand_thumb_2_link_1/left_hand_thumb_2_link_1": true,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_1_link_1/left_hand_thumb_1_link_1": true,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_0_link_1/left_hand_thumb_0_link_1": true,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_1_link/left_hand_middle_1_link_1/left_hand_middle_1_link": true,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_0_link_1/left_hand_middle_0_link": true,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_1_link/left_hand_index_1_link_1/left_hand_middle_1_link": true,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_0_link_1/left_hand_middle_0_link": true,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_palm_link_1/left_hand_palm_link": true
+    }
+  },
+  {
+    "step": 3320,
+    "side": "right",
+    "usd_collision_enabled": {
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_1_link/right_hand_thumb_2_link/right_hand_thumb_2_link_1/right_hand_thumb_2_link_1": false,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_1_link/right_hand_thumb_1_link_1/right_hand_thumb_1_link_1": false,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_0_link_1/right_hand_thumb_0_link_1": false,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_middle_0_link/right_hand_middle_1_link/right_hand_middle_1_link_1/right_hand_middle_1_link": false,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_middle_0_link/right_hand_middle_0_link_1/right_hand_middle_0_link": false,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_index_0_link/right_hand_index_1_link/right_hand_index_1_link_1/right_hand_middle_1_link": false,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_index_0_link/right_hand_index_0_link_1/right_hand_middle_0_link": false,
+      "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_palm_link_1/right_hand_palm_link": false
+    }
+  },
+  {
+    "step": 3330,
+    "side": "left",
+    "usd_collision_enabled": {
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_2_link/left_hand_thumb_2_link_1/left_hand_thumb_2_link_1": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_1_link_1/left_hand_thumb_1_link_1": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_0_link_1/left_hand_thumb_0_link_1": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_1_link/left_hand_middle_1_link_1/left_hand_middle_1_link": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_0_link_1/left_hand_middle_0_link": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_1_link/left_hand_index_1_link_1/left_hand_middle_1_link": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_0_link_1/left_hand_middle_0_link": false,
+      "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_palm_link_1/left_hand_palm_link": false
+    }
+  }
+]

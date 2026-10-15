@@ -265,6 +265,24 @@ already passed gravity/contact controls but failed wrist tracking and object
 retention. Controller stability and a complete physical task remain the next gates. The current official Track 3 policy runtime and six-metric
 submission kit must be validated separately before a final evaluation claim.
 
+The [October 15 physics comparison](../../docs/team/dex3-isaac-review/PHYSICS_VALIDATION.md)
+now contains actual free-space, full-task and decomposed static-load results.
+All three controller candidates pass the short free-space test; full manipulation
+still fails. Those commands reproduce diagnostics and must not be used as a
+training acceptance claim. Build a local comparison page from completed stages:
+
+```bash
+python3 scripts/dex3_physics/build_review.py \
+  --experiment 'implicit PD=/absolute/path/to/implicit-run/candidate-full' \
+  --experiment 'velocity feedforward=/absolute/path/to/feedforward-run/candidate-full' \
+  --out /absolute/path/to/new-physics-review
+```
+
+The builder checks source state/video hashes, recomputes the wrist decisions and
+binds independent contact audits before copying the videos and receipts. It
+allows 1e-12 rounding in recomputed scalar summaries across CPUs; thresholds,
+hashes and pass/fail decisions must match exactly.
+
 ## 7. End each Brev session
 
 Stop compute when it is no longer in use. Prefer a provider marked `stoppable`

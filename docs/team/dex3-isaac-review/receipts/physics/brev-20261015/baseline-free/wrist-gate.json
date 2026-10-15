@@ -1,0 +1,57 @@
+{
+  "schema": "v2d.wrist-tracking-gate.v1",
+  "report_sha256": "11c72bd4ced816ab64d006e182de55e65a06218f93e7893a20f901e9aa9bd132",
+  "state_sha256": "022e3a04b2c966608f27c9f5f01fb02178a2622590d98e34bf0ad5e8b5e22f22",
+  "inputs_manifest_sha256": "4087f41e323f923f88dd31ecf73bb839b8d485b7bd6a2ffaf8d4f43bb6eb34fe",
+  "thresholds": {
+    "position_p95_m": 0.02,
+    "position_max_m": 0.1,
+    "rotation_p95_deg": 10.0,
+    "rotation_max_deg": 45.0
+  },
+  "wrist_diagnostic": {
+    "controller": "project_pd",
+    "free_space": true,
+    "source_duration_s": 2.0,
+    "physics_dt_s": 0.01,
+    "initial_free_space_position_offset_world_m": [
+      0.01,
+      0.0,
+      0.0
+    ],
+    "initial_free_space_rotation_offset_world_rotvec_rad": [
+      0.08726646259971647,
+      0.0,
+      0.0
+    ],
+    "candidate_controller_sha256": "f1cd4bb49bd8d2020a13f98452cb1a6bacc0bf2c58e580f380bb48362874aa2a"
+  },
+  "complete_source_episode": false,
+  "per_side": {
+    "left": {
+      "position_p95_m": 1.4144332042184962,
+      "position_max_m": 1.5723841756458612,
+      "rotation_p95_deg": 152.44896843176767,
+      "rotation_max_deg": 178.69919898716932
+    },
+    "right": {
+      "position_p95_m": 1.0575251853178211,
+      "position_max_m": 1.1746976060137617,
+      "rotation_p95_deg": 154.08055091162908,
+      "rotation_max_deg": 173.71702805229674
+    }
+  },
+  "failures": [
+    "left position_p95_m exceeds 0.02",
+    "left position_max_m exceeds 0.1",
+    "left rotation_p95_deg exceeds 10.0",
+    "left rotation_max_deg exceeds 45.0",
+    "right position_p95_m exceeds 0.02",
+    "right position_max_m exceeds 0.1",
+    "right rotation_p95_deg exceeds 10.0",
+    "right rotation_max_deg exceeds 45.0"
+  ],
+  "controller_tracking_pass": false,
+  "physical_task_accepted": false,
+  "learned_policy_evaluated": false
+}

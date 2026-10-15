@@ -1,0 +1,118 @@
+{
+  "schema": "v2d.physics-review.v1",
+  "experiments": [
+    {
+      "label": "e002 \u00b7 implicit PD \u00b7 full",
+      "stage": "/Users/rohithiruku/dex3_physics_implementation_20261015/gpu-outputs/attempt2/candidate-full",
+      "gate_sha256": "34899b19dfbee646d72ce9647227a74bad03188c55fefe27e61e9603cf42bc8e",
+      "report_sha256": "3ff57e5921e801630d60f123f1d5ce8e8acc3a5f005752ae73fa614502d5f9e5",
+      "state_sha256": "dda139589b869087527b5ec720c0578dbf21adf6b2a96eb708e8ff2121ebea23",
+      "video_sha256": "90f885e4432ee8b951e07d9a834903f2ebe98e8dcdcedace93991d1fdb6e4ddd",
+      "controller_tracking_pass": false,
+      "physical_task_accepted": false
+    },
+    {
+      "label": "e002 \u00b7 velocity feedforward \u00b7 full",
+      "stage": "/Users/rohithiruku/dex3_physics_implementation_20261015/gpu-outputs/attempt3/candidate-full",
+      "gate_sha256": "11a2577422bd11c945fb9e6254a553825506c64f31536cda5bdd101f2eea81bb",
+      "report_sha256": "6f73f5b0c35f3caf2d88ef04f98a7dcd426f58b4e08966c4a0b064d63d9e1cbe",
+      "state_sha256": "3a60a3cfaf8629ac9b26bbf1373bc4812bfa12c18df13b3c73a03361af759a3f",
+      "video_sha256": "ef069e21d43debd031a55f819140a7bfde28da73a2c74b19eec9b91f34a1146a",
+      "controller_tracking_pass": false,
+      "physical_task_accepted": false
+    },
+    {
+      "label": "e002 \u00b7 bounded integral \u00b7 full",
+      "stage": "/Users/rohithiruku/dex3_physics_implementation_20261015/gpu-outputs/attempt4/candidate-full",
+      "gate_sha256": "d3f4621cc2568f0f5dd566c4fc5ffb15f9bbfde75dea7bb79db2e21c92ee8209",
+      "report_sha256": "d0156464b66c64653b6ba7b8121841a35411dcb0dbf356037ea1d98c94d013f2",
+      "state_sha256": "393b6a3bb8a02b2a4a8de077a75a13ec1c7fd67f9285c37d00a8d356e30aa3d8",
+      "video_sha256": "2480326e5db4a71d48243d42c4262b3cec4f1546fe9545560742e38b6b615026",
+      "controller_tracking_pass": false,
+      "physical_task_accepted": false
+    },
+    {
+      "label": "Original controller \u00b7 free space",
+      "stage": "/Users/rohithiruku/dex3_physics_implementation_20261015/gpu-outputs/attempt2/baseline-free",
+      "gate_sha256": "44d87858fda2509c4463141c6809bc71ca272a718b62aef28f86c49cd115aa7e",
+      "report_sha256": "11c72bd4ced816ab64d006e182de55e65a06218f93e7893a20f901e9aa9bd132",
+      "state_sha256": "022e3a04b2c966608f27c9f5f01fb02178a2622590d98e34bf0ad5e8b5e22f22",
+      "video_sha256": "045573f7069d45365a0be41ddc68876071fb648bbb74f13fe6617a5884f338f9",
+      "controller_tracking_pass": false,
+      "physical_task_accepted": false
+    },
+    {
+      "label": "Implicit PD \u00b7 free space",
+      "stage": "/Users/rohithiruku/dex3_physics_implementation_20261015/gpu-outputs/attempt2/candidate-free",
+      "gate_sha256": "0b7f8f9f351ad6695ea71c3f9e85849e35da995b4e6b0138950f65e813174e44",
+      "report_sha256": "45c7b99b592f3ef2266234b3f76d439a5d2f0e11c2bafb585db124b265ae31ab",
+      "state_sha256": "06fe9b3fdbd6b11d754c494a1eb80cd2b830f6cb4e35e95bfd4811847d98e089",
+      "video_sha256": "2e714eea506f459cd144dde7912e8f4d4f8ced7ff0009078bed262a9282c93bb",
+      "controller_tracking_pass": true,
+      "physical_task_accepted": false
+    },
+    {
+      "label": "Velocity feedforward \u00b7 free space",
+      "stage": "/Users/rohithiruku/dex3_physics_implementation_20261015/gpu-outputs/attempt3/candidate-free",
+      "gate_sha256": "9a542a325fdc542a7c4f9eb159abfab80fbcaa8c63a88340a3ba0001bb182156",
+      "report_sha256": "59a9ef6db8d2eebb7926340962e20749d391e9e8767003963186f621cc76844f",
+      "state_sha256": "5cd511274d33be0761ce40306be6ae3158c4755781448dedc33f0dfd4f74b887",
+      "video_sha256": "5ce799d0cdfd048beaac27374798030d250ed374460509390c68ff25979ee7eb",
+      "controller_tracking_pass": true,
+      "physical_task_accepted": false
+    },
+    {
+      "label": "Bounded integral \u00b7 free space",
+      "stage": "/Users/rohithiruku/dex3_physics_implementation_20261015/gpu-outputs/attempt4/candidate-free",
+      "gate_sha256": "f6d8f3d8ed09d8b171db1331c465a04abcdd86e3f5f48ef9bc6b732da873d025",
+      "report_sha256": "2f8295db95f4ea49da5f50f62790192a9384c166a5aecb6a2b85504252863db5",
+      "state_sha256": "7a0901a3b0c354398b6914ed12ebaf3b8247f729065c8acc26e1e950c9178ca7",
+      "video_sha256": "d2f90889a7bd75de5a1aa2426acf131040e12f5f40428fe6eb4be613a0ae576d",
+      "controller_tracking_pass": true,
+      "physical_task_accepted": false
+    }
+  ],
+  "physical_task_accepted": false,
+  "learned_policy_evaluated": false,
+  "static_load": {
+    "gate_sha256": "ef104b279fb97111ac6de5e4623bc8afd2ca8108576d474a5774da0970e117ef",
+    "schema": "v2d.static-load-gate.v1",
+    "report_sha256": "8447a6d488531d49bc32b2887f1863069646390c031c3aaafdbe973cbd891bb4",
+    "states_sha256": "cb6c62ee9e5f2fddeb958a5fdc3c50d1c44f69c8d0b5e3f5213150e7b9ba9d2a",
+    "video_sha256": "90aaad1c06e4a17f2376ef6d009997b103dc99df4f6775092ac58e51d743d3eb",
+    "gravity_and_contact_controls_pass": true,
+    "all_four_samples_held_within_10mm_for_1s": false,
+    "physical_task_accepted": false,
+    "learned_policy_evaluated": false,
+    "browser_preview": {
+      "schema": "v2d.static-browser-preview.v1",
+      "original_video_sha256": "90aaad1c06e4a17f2376ef6d009997b103dc99df4f6775092ac58e51d743d3eb",
+      "preview_video_sha256": "7f5aac6edbdd1ef258539560375def08bd5e2d04fefb9091170d0ef7a8158465",
+      "frames": 21,
+      "codec": "h264",
+      "frame_timestamps_preserved": true,
+      "original_physics_video_preserved": true,
+      "preview_is_transcode": true,
+      "command": [
+        "ffmpeg",
+        "-nostdin",
+        "-v",
+        "error",
+        "-i",
+        "/Users/rohithiruku/dex3_physics_implementation_20261015/gpu-outputs/attempt5/static-load/run/simulator/static-load.mp4",
+        "-c:v",
+        "libx264",
+        "-crf",
+        "18",
+        "-pix_fmt",
+        "yuv420p",
+        "-movflags",
+        "+faststart",
+        "/Users/rohithiruku/dex3_physics_implementation_20261015/gpu-outputs/attempt5/static-load/run/simulator/static-load-browser.mp4"
+      ],
+      "packager_sha256": "880764d91cc1711f26f3c76245d11fb3f257104f7908b47a28a60459ccbe8797",
+      "ffmpeg_version": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers",
+      "physical_task_accepted": false
+    }
+  }
+}

@@ -1,0 +1,330 @@
+{
+  "episodes": [
+    {
+      "schema": "v2d.dex3.reference-adapter.v1",
+      "episode": 2,
+      "source_frames": 343,
+      "source_frame_axis_preserved": true,
+      "source_bundle_manifest_sha256": "cb9549257ae73e622e4e2cf408c2b37e414243fc8dd7283dda2a939aa179f496",
+      "retarget_manifest_sha256": "d9d93737641cf7c2ce4af9b8b605a6d5be99e5c098170fff493e6f841515361e",
+      "retarget_payload_sha256": "76b337f9b0891673157a43f81c6921ecfdef0c456e2bcef548e739dfbb307755",
+      "exporter_sha256": "041eb08c7e955fabc4da8789dcb936158c7abb75aaaede63143540ce1114df0f",
+      "motion_path": "motion/sequence_id=track3_e002/robot_name=dex3/reference.diagnostic.parquet",
+      "motion_sha256": "15c798c8855fab3a0835cbc38fc1b20d29cf19428ea60aa9ec9f39f76a7ff55c",
+      "masks_sha256": "13099968f5422b242601b36dea5220ccecdea78de749ef8a1f2d379edd4c3ed8",
+      "finite_wrist_target_rows_by_hand": [
+        338,
+        337
+      ],
+      "contact_or_wrench_fabricated": false,
+      "training_ready": false,
+      "physical_task_accepted": false,
+      "remaining_gates": [
+        "complete physically reviewed targets",
+        "Dex3 training task registration",
+        "confidence-aware dual-hand motion_v1 consumer",
+        "contact geometry/asset adapter",
+        "policy checkpoint compatibility with the official evaluator"
+      ]
+    },
+    {
+      "schema": "v2d.dex3.reference-adapter.v1",
+      "episode": 11,
+      "source_frames": 137,
+      "source_frame_axis_preserved": true,
+      "source_bundle_manifest_sha256": "09811107013a3f8581b66e404b5c12cd78f98a1177f7c8649fb9b0aaded9cec9",
+      "retarget_manifest_sha256": "7362f5503e04f829a0489013a8143210ec5e4dd5da52d0638253ba217bcb226c",
+      "retarget_payload_sha256": "483ac1de9ccffe6636277f07985c1d7e4196972a7d3affbc100f96f702ea3763",
+      "exporter_sha256": "041eb08c7e955fabc4da8789dcb936158c7abb75aaaede63143540ce1114df0f",
+      "motion_path": "motion/sequence_id=track3_e011/robot_name=dex3/reference.diagnostic.parquet",
+      "motion_sha256": "ed576e0978080da6ee226ac4e783bc1b04547f93298e758e81b09fa1c59ae016",
+      "masks_sha256": "9a52edfdc9c20df68f1abf90bc2dd8e14a9363fe3858303ec0d9e87f18aa217c",
+      "finite_wrist_target_rows_by_hand": [
+        137,
+        134
+      ],
+      "contact_or_wrench_fabricated": false,
+      "training_ready": false,
+      "physical_task_accepted": false,
+      "remaining_gates": [
+        "complete physically reviewed targets",
+        "Dex3 training task registration",
+        "confidence-aware dual-hand motion_v1 consumer",
+        "contact geometry/asset adapter",
+        "policy checkpoint compatibility with the official evaluator"
+      ]
+    },
+    {
+      "schema": "v2d.dex3.reference-adapter.v1",
+      "episode": 12,
+      "source_frames": 181,
+      "source_frame_axis_preserved": true,
+      "source_bundle_manifest_sha256": "da56fce399933be0646a53ade736a661fb317655afda704e604aa9f4160afcd9",
+      "retarget_manifest_sha256": "53dfe44bad4423aaee6fa23c16fe6e3a8a1ed91ea5125b016c5f9691547cf846",
+      "retarget_payload_sha256": "03b386b3af05292563db949954ee1b8badc5088f1ded1c1df1e366262b1cdc69",
+      "exporter_sha256": "041eb08c7e955fabc4da8789dcb936158c7abb75aaaede63143540ce1114df0f",
+      "motion_path": "motion/sequence_id=track3_e012/robot_name=dex3/reference.diagnostic.parquet",
+      "motion_sha256": "3da4e1453cdce9ae686520b7aefc67e293e7d2373316b5470527eaa14642b89a",
+      "masks_sha256": "68a1b3ba4819d8116d98c0eab7a53f8056d4039406fb76bec2161e03f78945eb",
+      "finite_wrist_target_rows_by_hand": [
+        181,
+        181
+      ],
+      "contact_or_wrench_fabricated": false,
+      "training_ready": false,
+      "physical_task_accepted": false,
+      "remaining_gates": [
+        "complete physically reviewed targets",
+        "Dex3 training task registration",
+        "confidence-aware dual-hand motion_v1 consumer",
+        "contact geometry/asset adapter",
+        "policy checkpoint compatibility with the official evaluator"
+      ]
+    },
+    {
+      "schema": "v2d.dex3.reference-adapter.v1",
+      "episode": 13,
+      "source_frames": 190,
+      "source_frame_axis_preserved": true,
+      "source_bundle_manifest_sha256": "b94e75cb63e9e56557facd0210f14e942db688fc846b6d5972236792fd25605a",
+      "retarget_manifest_sha256": "98633b81cc9150ea081d26b7140c71c2ccc432b195a74b80e224c9b9ffe1fac0",
+      "retarget_payload_sha256": "3827a5795859f6801d5d01b1e6581de104e28c5870bc6a28651830660fcf35cf",
+      "exporter_sha256": "041eb08c7e955fabc4da8789dcb936158c7abb75aaaede63143540ce1114df0f",
+      "motion_path": "motion/sequence_id=track3_e013/robot_name=dex3/reference.diagnostic.parquet",
+      "motion_sha256": "8a5708846d30bd61af857b585e09ca49a00716f4e9c68a54eb83fc5e11527008",
+      "masks_sha256": "e8d68e50282e0b1bd5ac9c693fad821314c59e15fda716fcb06e5554461002d5",
+      "finite_wrist_target_rows_by_hand": [
+        190,
+        163
+      ],
+      "contact_or_wrench_fabricated": false,
+      "training_ready": false,
+      "physical_task_accepted": false,
+      "remaining_gates": [
+        "complete physically reviewed targets",
+        "Dex3 training task registration",
+        "confidence-aware dual-hand motion_v1 consumer",
+        "contact geometry/asset adapter",
+        "policy checkpoint compatibility with the official evaluator"
+      ]
+    },
+    {
+      "schema": "v2d.dex3.reference-adapter.v1",
+      "episode": 18,
+      "source_frames": 353,
+      "source_frame_axis_preserved": true,
+      "source_bundle_manifest_sha256": "6804010aa200f3c23fdb6c7a822a5397b096b9d40abca8c185c7d2d1a8d20cf9",
+      "retarget_manifest_sha256": "99297b21da7724d1da63c025bfbccfa96bf6634f68c92e3a8cee0f6fd71e4c85",
+      "retarget_payload_sha256": "f3532fad7fa0fbcc2c80d66f6b0fc7784d2df2c13d6667dfcc51285fcfee1f90",
+      "exporter_sha256": "041eb08c7e955fabc4da8789dcb936158c7abb75aaaede63143540ce1114df0f",
+      "motion_path": "motion/sequence_id=track3_e018/robot_name=dex3/reference.diagnostic.parquet",
+      "motion_sha256": "54997e63bb3fac70da85f2fe7fb430548d54e0214457a6029af82315d5d77324",
+      "masks_sha256": "77c203792d4371d6f55723c041419e363097961cc478ce7c4169129009d68b41",
+      "finite_wrist_target_rows_by_hand": [
+        353,
+        353
+      ],
+      "contact_or_wrench_fabricated": false,
+      "training_ready": false,
+      "physical_task_accepted": false,
+      "remaining_gates": [
+        "complete physically reviewed targets",
+        "Dex3 training task registration",
+        "confidence-aware dual-hand motion_v1 consumer",
+        "contact geometry/asset adapter",
+        "policy checkpoint compatibility with the official evaluator"
+      ]
+    },
+    {
+      "schema": "v2d.dex3.reference-adapter.v1",
+      "episode": 21,
+      "source_frames": 186,
+      "source_frame_axis_preserved": true,
+      "source_bundle_manifest_sha256": "fa2a66ab5646d8618270eff213d4c0b8f6fab7a2a88a552f052c23fe4d4410ea",
+      "retarget_manifest_sha256": "accd0965e24a2dea8d9a135be82ce76af08774f19e02ac6164f47e66c6958865",
+      "retarget_payload_sha256": "4cd69767e6746b665850008f74987d1f2d8a259f1c40200dd9da3b5b4e249240",
+      "exporter_sha256": "041eb08c7e955fabc4da8789dcb936158c7abb75aaaede63143540ce1114df0f",
+      "motion_path": "motion/sequence_id=track3_e021/robot_name=dex3/reference.diagnostic.parquet",
+      "motion_sha256": "cbce89436e1d56b1730c5c936583595f396e4ec4e66abe417fe97f5c5dadf974",
+      "masks_sha256": "645b1e6783e3718f1785ee1daa115d20e29e0a56b081af2c7c28e2618eb6868d",
+      "finite_wrist_target_rows_by_hand": [
+        186,
+        73
+      ],
+      "contact_or_wrench_fabricated": false,
+      "training_ready": false,
+      "physical_task_accepted": false,
+      "remaining_gates": [
+        "complete physically reviewed targets",
+        "Dex3 training task registration",
+        "confidence-aware dual-hand motion_v1 consumer",
+        "contact geometry/asset adapter",
+        "policy checkpoint compatibility with the official evaluator"
+      ]
+    },
+    {
+      "schema": "v2d.dex3.reference-adapter.v1",
+      "episode": 23,
+      "source_frames": 325,
+      "source_frame_axis_preserved": true,
+      "source_bundle_manifest_sha256": "c2f0b53a17a9dc8bd0089207f4167e5cbf91303ad38e1ba3346c37a59072b985",
+      "retarget_manifest_sha256": "efd0f9705e71988bad448a9f4c40077dba8b012a7bd642715bb4b76c0abb9551",
+      "retarget_payload_sha256": "1831c7ebc920113b69716cc06ee319d735085fb9b8f72c06fad9020a3cc418e2",
+      "exporter_sha256": "041eb08c7e955fabc4da8789dcb936158c7abb75aaaede63143540ce1114df0f",
+      "motion_path": "motion/sequence_id=track3_e023/robot_name=dex3/reference.diagnostic.parquet",
+      "motion_sha256": "3f2067d897ed34e6193a355253cb5a77831a2522df3c31e604c6d422380086ee",
+      "masks_sha256": "02bc9c10ead05cc006a2f59b25168b9bb06b297aac7ee9648e56b6c3d5315f18",
+      "finite_wrist_target_rows_by_hand": [
+        325,
+        325
+      ],
+      "contact_or_wrench_fabricated": false,
+      "training_ready": false,
+      "physical_task_accepted": false,
+      "remaining_gates": [
+        "complete physically reviewed targets",
+        "Dex3 training task registration",
+        "confidence-aware dual-hand motion_v1 consumer",
+        "contact geometry/asset adapter",
+        "policy checkpoint compatibility with the official evaluator"
+      ]
+    },
+    {
+      "schema": "v2d.dex3.reference-adapter.v1",
+      "episode": 24,
+      "source_frames": 275,
+      "source_frame_axis_preserved": true,
+      "source_bundle_manifest_sha256": "e6b06534ddd4b78f2129dddd08516d9164c1408206d4328c8a924c25093d474d",
+      "retarget_manifest_sha256": "25ede62a642a8efd22a137fc629be2f3778177ed942ca24be283695565fbf03c",
+      "retarget_payload_sha256": "ec9bd54f4654f31ed7d7a361ef623ba9a7bc9420d845c26b824df1300b3b78f4",
+      "exporter_sha256": "041eb08c7e955fabc4da8789dcb936158c7abb75aaaede63143540ce1114df0f",
+      "motion_path": "motion/sequence_id=track3_e024/robot_name=dex3/reference.diagnostic.parquet",
+      "motion_sha256": "d5c040fed63938ab510589b49f6fdd873abf16fc3e91ce626cd9183468647a7a",
+      "masks_sha256": "2e00910830e451db715afe8ea95ee6a6170329ee972458fe49d48bfc91c03133",
+      "finite_wrist_target_rows_by_hand": [
+        275,
+        248
+      ],
+      "contact_or_wrench_fabricated": false,
+      "training_ready": false,
+      "physical_task_accepted": false,
+      "remaining_gates": [
+        "complete physically reviewed targets",
+        "Dex3 training task registration",
+        "confidence-aware dual-hand motion_v1 consumer",
+        "contact geometry/asset adapter",
+        "policy checkpoint compatibility with the official evaluator"
+      ]
+    },
+    {
+      "schema": "v2d.dex3.reference-adapter.v1",
+      "episode": 31,
+      "source_frames": 290,
+      "source_frame_axis_preserved": true,
+      "source_bundle_manifest_sha256": "18ec9d525b2bc0e025fb04f79926954e7988d7772035c64edfe6140db92867b4",
+      "retarget_manifest_sha256": "1bef2efb9650fb14872f57a323079c25aa085e4439f68cca3ffa71db7cad7fc8",
+      "retarget_payload_sha256": "247f7a466db42c6a0077ab1466f4c9e07dce0e8703e48e310d3c7dd0398071f4",
+      "exporter_sha256": "041eb08c7e955fabc4da8789dcb936158c7abb75aaaede63143540ce1114df0f",
+      "motion_path": "motion/sequence_id=track3_e031/robot_name=dex3/reference.diagnostic.parquet",
+      "motion_sha256": "c93f40661cf04cc310cf598b2ea88303ca8ee28b52a4a387928652a18ff0b470",
+      "masks_sha256": "f347f3054cf43a9f434851aa24940344b1ac1f58d80e201a946b6c88599ae600",
+      "finite_wrist_target_rows_by_hand": [
+        290,
+        290
+      ],
+      "contact_or_wrench_fabricated": false,
+      "training_ready": false,
+      "physical_task_accepted": false,
+      "remaining_gates": [
+        "complete physically reviewed targets",
+        "Dex3 training task registration",
+        "confidence-aware dual-hand motion_v1 consumer",
+        "contact geometry/asset adapter",
+        "policy checkpoint compatibility with the official evaluator"
+      ]
+    },
+    {
+      "schema": "v2d.dex3.reference-adapter.v1",
+      "episode": 40,
+      "source_frames": 260,
+      "source_frame_axis_preserved": true,
+      "source_bundle_manifest_sha256": "744487e4c9329ce03e82417e025849d785dae27a7816a7492c37b31c8be5f297",
+      "retarget_manifest_sha256": "600edc4477985e48c2fa8f37c3c894cb5d9b1601131ade1784de22c03812c695",
+      "retarget_payload_sha256": "73e4b41191a17aeee16dc1fd7c884177c26df805b643ed6d4666cb208a3cd22f",
+      "exporter_sha256": "041eb08c7e955fabc4da8789dcb936158c7abb75aaaede63143540ce1114df0f",
+      "motion_path": "motion/sequence_id=track3_e040/robot_name=dex3/reference.diagnostic.parquet",
+      "motion_sha256": "de81ba5c25dd052f05fa535eeed832ecf336577e9d4dfa8f31699d1b6f8b17a7",
+      "masks_sha256": "f427c7890b059e1cb51e8c95653671824010de54900ccd6d934b0318aae0c51c",
+      "finite_wrist_target_rows_by_hand": [
+        260,
+        260
+      ],
+      "contact_or_wrench_fabricated": false,
+      "training_ready": false,
+      "physical_task_accepted": false,
+      "remaining_gates": [
+        "complete physically reviewed targets",
+        "Dex3 training task registration",
+        "confidence-aware dual-hand motion_v1 consumer",
+        "contact geometry/asset adapter",
+        "policy checkpoint compatibility with the official evaluator"
+      ]
+    },
+    {
+      "schema": "v2d.dex3.reference-adapter.v1",
+      "episode": 41,
+      "source_frames": 299,
+      "source_frame_axis_preserved": true,
+      "source_bundle_manifest_sha256": "f7e58b288d41dafbcd58961653d3e47cba488916daac4817cd0d63295f022987",
+      "retarget_manifest_sha256": "5709851e4314d00d3ca9ad5c5269216413f64c4adb24593fa7644c6d98ae7e3b",
+      "retarget_payload_sha256": "9fef782e5a8e803478af8e2b862c085af5f0ad23b5f58da4dcb556a17bc36a28",
+      "exporter_sha256": "041eb08c7e955fabc4da8789dcb936158c7abb75aaaede63143540ce1114df0f",
+      "motion_path": "motion/sequence_id=track3_e041/robot_name=dex3/reference.diagnostic.parquet",
+      "motion_sha256": "4e8bd370d6af186787fccf6cfce42fa0d5d474d22da0f32f570e0aa8c7e1f830",
+      "masks_sha256": "8be825a18062829555b654e97defc1cf03e6f8e1fdb9326094fe036b1c7e3782",
+      "finite_wrist_target_rows_by_hand": [
+        299,
+        299
+      ],
+      "contact_or_wrench_fabricated": false,
+      "training_ready": false,
+      "physical_task_accepted": false,
+      "remaining_gates": [
+        "complete physically reviewed targets",
+        "Dex3 training task registration",
+        "confidence-aware dual-hand motion_v1 consumer",
+        "contact geometry/asset adapter",
+        "policy checkpoint compatibility with the official evaluator"
+      ]
+    },
+    {
+      "schema": "v2d.dex3.reference-adapter.v1",
+      "episode": 42,
+      "source_frames": 257,
+      "source_frame_axis_preserved": true,
+      "source_bundle_manifest_sha256": "8369f9dd1ad8ef28e137f27b677a5e3f0a36f11f2c5b960f9057ce8ca638ab56",
+      "retarget_manifest_sha256": "8b307c0e5647abe8c08fda3bd46c3f40bcec00d1884c7ce2c0e467ce6b6c1c11",
+      "retarget_payload_sha256": "7c0e9304f4df899abe0a7d36719b466e2d924ff720300a9f8a80751a2e8931a1",
+      "exporter_sha256": "041eb08c7e955fabc4da8789dcb936158c7abb75aaaede63143540ce1114df0f",
+      "motion_path": "motion/sequence_id=track3_e042/robot_name=dex3/reference.diagnostic.parquet",
+      "motion_sha256": "81b3763f8689045c27e66a058a6f7a931f101d85cb76c03e09a1228df7e66c8e",
+      "masks_sha256": "2178c93336320d49323d3e658c6ddb1619bb588a1510289b8a3eb6d5b7115194",
+      "finite_wrist_target_rows_by_hand": [
+        257,
+        257
+      ],
+      "contact_or_wrench_fabricated": false,
+      "training_ready": false,
+      "physical_task_accepted": false,
+      "remaining_gates": [
+        "complete physically reviewed targets",
+        "Dex3 training task registration",
+        "confidence-aware dual-hand motion_v1 consumer",
+        "contact geometry/asset adapter",
+        "policy checkpoint compatibility with the official evaluator"
+      ]
+    }
+  ],
+  "training_ready": false,
+  "physical_task_accepted": false
+}

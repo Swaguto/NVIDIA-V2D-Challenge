@@ -1,0 +1,5 @@
+{
+  "error_type": "IndexError",
+  "error": "index -1 is out of bounds for axis 0 with size 0",
+  "physical_task_accepted": false
+}

@@ -1,0 +1,710 @@
+{
+  "schema": "v2d.dex3-supported-task-result.v1",
+  "executor_source_sha256": "7a0a8ab195f37bd46a819ce6b3f08b6967e15c5005a22ab8e32fd9d8c45d7b5e",
+  "inputs_manifest_sha256": "db86b424c88614447dcd7137802523b78215ee532685bb1ed244286560fb9a26",
+  "controller_source_sha256": "da9f43dec2dff2dc6600a244d5bf881efc0160acd74395f5036ffd1705438e25",
+  "controller_gains": {
+    "tracking_controller_linear_stiffness": 50.0,
+    "tracking_controller_linear_damping": 10.0,
+    "tracking_controller_angular_stiffness": 12.0,
+    "tracking_controller_angular_damping": 0.1,
+    "max_force": 60.0,
+    "max_torque": 60.0
+  },
+  "wrist_diagnostic": {
+    "controller": "implicit_pd",
+    "free_space": false,
+    "source_duration_s": null,
+    "physics_dt_s": 0.01,
+    "initial_free_space_position_offset_world_m": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "initial_free_space_rotation_offset_world_rotvec_rad": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "candidate_controller_sha256": "f1cd4bb49bd8d2020a13f98452cb1a6bacc0bf2c58e580f380bb48362874aa2a"
+  },
+  "full_source_frames": 343,
+  "complete_source_episode": true,
+  "physics_dt_s": 0.01,
+  "initial_hand_root_reset_performed": true,
+  "collision_evidence_source_sha256": "ce807870119df8d650c2e0e07a11620e7718bf73e8995a4d5c40f27dc9150260",
+  "cooked_collider_summary": [
+    {
+      "asset": "hand-left",
+      "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_2_link/left_hand_thumb_2_link_1/left_hand_thumb_2_link_1",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-left",
+      "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_1_link_1/left_hand_thumb_1_link_1",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-left",
+      "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_0_link_1/left_hand_thumb_0_link_1",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-left",
+      "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_1_link/left_hand_middle_1_link_1/left_hand_middle_1_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-left",
+      "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_0_link_1/left_hand_middle_0_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-left",
+      "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_1_link/left_hand_index_1_link_1/left_hand_middle_1_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-left",
+      "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_0_link_1/left_hand_middle_0_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-left",
+      "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_palm_link_1/left_hand_palm_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-right",
+      "prim": "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_1_link/right_hand_thumb_2_link/right_hand_thumb_2_link_1/right_hand_thumb_2_link_1",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-right",
+      "prim": "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_1_link/right_hand_thumb_1_link_1/right_hand_thumb_1_link_1",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-right",
+      "prim": "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_0_link_1/right_hand_thumb_0_link_1",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-right",
+      "prim": "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_middle_0_link/right_hand_middle_1_link/right_hand_middle_1_link_1/right_hand_middle_1_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-right",
+      "prim": "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_middle_0_link/right_hand_middle_0_link_1/right_hand_middle_0_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-right",
+      "prim": "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_index_0_link/right_hand_index_1_link/right_hand_index_1_link_1/right_hand_middle_1_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-right",
+      "prim": "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_index_0_link/right_hand_index_0_link_1/right_hand_middle_0_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "hand-right",
+      "prim": "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_palm_link_1/right_hand_palm_link",
+      "convex_count": 1
+    },
+    {
+      "asset": "object-0",
+      "prim": "/World/Fixture0/Object/Geometry/object/tn__leftobject0task_1_dPC/tn__leftobject0task_gMC",
+      "convex_count": 32
+    },
+    {
+      "asset": "object-1",
+      "prim": "/World/Fixture1/Object/Geometry/object/tn__rightobject1task_1_sQD/tn__rightobject1task_vND",
+      "convex_count": 32
+    }
+  ],
+  "physical_contact_bindings": [
+    {
+      "hand_body_paths": [
+        "/World/Fixture0/Hand/Geometry/left_hand_palm_link",
+        "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link",
+        "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link",
+        "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link",
+        "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link",
+        "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_1_link",
+        "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_1_link",
+        "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_2_link"
+      ],
+      "object_body_paths": [
+        "/World/Fixture0/Object/Geometry/object",
+        "/World/Fixture1/Object/Geometry/object"
+      ]
+    },
+    {
+      "hand_body_paths": [
+        "/World/Fixture1/Hand/Geometry/right_hand_palm_link",
+        "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link",
+        "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_middle_0_link",
+        "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_index_0_link",
+        "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_1_link",
+        "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_middle_0_link/right_hand_middle_1_link",
+        "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_index_0_link/right_hand_index_1_link",
+        "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_1_link/right_hand_thumb_2_link"
+      ],
+      "object_body_paths": [
+        "/World/Fixture0/Object/Geometry/object",
+        "/World/Fixture1/Object/Geometry/object"
+      ]
+    }
+  ],
+  "policy_residual": "zero; no policy loaded or trained",
+  "source_frames": 343,
+  "simulation_steps": 3420,
+  "source_motion_knots": 3956,
+  "source_motion_speed": 0.5,
+  "object_teleports_after_initialization": 0,
+  "external_object_forces": false,
+  "support_is_an_inferred_sheet_not_measured_table": true,
+  "initial_link_poses": [
+    {
+      "left_hand_palm_link": [
+        -0.044996704906225204,
+        0.1258939504623413,
+        -0.4987635016441345,
+        0.44513580203056335,
+        0.12345045804977417,
+        -0.21911990642547607,
+        -0.8594188690185547
+      ],
+      "left_hand_thumb_0_link": [
+        -0.0227226372808218,
+        0.13830062747001648,
+        -0.4983270466327667,
+        0.49295467138290405,
+        -0.17360390722751617,
+        -0.05617046356201172,
+        -0.8507069945335388
+      ],
+      "left_hand_middle_0_link": [
+        0.03405407443642616,
+        0.1442461460828781,
+        -0.5150814056396484,
+        0.41208621859550476,
+        0.20873619616031647,
+        -0.04549206793308258,
+        -0.8857452273368835
+      ],
+      "left_hand_index_0_link": [
+        0.010839816182851791,
+        0.1847740262746811,
+        -0.4824073910713196,
+        0.4105139672756195,
+        0.2118116021156311,
+        -0.038868024945259094,
+        -0.8860605955123901
+      ],
+      "left_hand_thumb_1_link": [
+        -0.019908340647816658,
+        0.12869134545326233,
+        -0.4816392660140991,
+        0.5154461860656738,
+        -0.08635887503623962,
+        0.09077373147010803,
+        -0.8477131128311157
+      ],
+      "left_hand_middle_1_link": [
+        0.07567340135574341,
+        0.15581628680229187,
+        -0.4998629689216614,
+        0.2532062530517578,
+        0.38635796308517456,
+        0.40205052495002747,
+        -0.7905502319335938
+      ],
+      "left_hand_index_1_link": [
+        0.05239187926054001,
+        0.19589343667030334,
+        -0.46667763590812683,
+        0.23715077340602875,
+        0.396415650844574,
+        0.4341285526752472,
+        -0.773399293422699
+      ],
+      "left_hand_thumb_2_link": [
+        -0.022879552096128464,
+        0.10798284411430359,
+        -0.44089654088020325,
+        0.4798479676246643,
+        -0.20709550380706787,
+        -0.11454427242279053,
+        -0.8448296189308167
+      ],
+      "left_middle_tip": [
+        0.08890922367572784,
+        0.14041538536548615,
+        -0.4713563621044159,
+        0.2532062232494354,
+        0.3863579034805298,
+        0.4020504653453827,
+        -0.7905501127243042
+      ],
+      "left_index_tip": [
+        0.06319896876811981,
+        0.1789713203907013,
+        -0.43800973892211914,
+        0.23715080320835114,
+        0.39641571044921875,
+        0.43412861227989197,
+        -0.7733994126319885
+      ],
+      "left_thumb_tip": [
+        -0.009149421937763691,
+        0.09001904726028442,
+        -0.4141797721385956,
+        0.4798479676246643,
+        -0.20709550380706787,
+        -0.11454427242279053,
+        -0.8448296189308167
+      ]
+    },
+    {
+      "right_hand_palm_link": [
+        0.0814075767993927,
+        0.20251038670539856,
+        -0.3932502865791321,
+        -0.1916961967945099,
+        -0.3044317364692688,
+        0.4700268805027008,
+        0.8060079216957092
+      ],
+      "right_hand_thumb_0_link": [
+        0.09091377258300781,
+        0.2248077690601349,
+        -0.3853314220905304,
+        -0.05711926519870758,
+        -0.5115038156509399,
+        0.5043908357620239,
+        0.6933189630508423
+      ],
+      "right_hand_middle_0_link": [
+        0.1305212676525116,
+        0.269025593996048,
+        -0.3892914354801178,
+        -0.19524838030338287,
+        -0.30216583609580994,
+        0.47943419218063354,
+        0.8004478216171265
+      ],
+      "right_hand_index_0_link": [
+        0.0922769159078598,
+        0.27032721042633057,
+        -0.34704598784446716,
+        -0.29117435216903687,
+        -0.21129021048545837,
+        0.7360941767692566,
+        0.5733578205108643
+      ],
+      "right_hand_thumb_1_link": [
+        0.0786232054233551,
+        0.23226700723171234,
+        -0.3984479010105133,
+        -0.0448310524225235,
+        -0.5127270221710205,
+        0.48761171102523804,
+        0.705220639705658
+      ],
+      "right_hand_middle_1_link": [
+        0.1469029039144516,
+        0.309582382440567,
+        -0.3757108747959137,
+        -0.2812022566795349,
+        -0.22439107298851013,
+        0.7090905904769897,
+        0.6064359545707703
+      ],
+      "right_hand_index_1_link": [
+        0.08435551077127457,
+        0.31462201476097107,
+        -0.3555819094181061,
+        -0.35279539227485657,
+        -0.07043826580047607,
+        0.9082432985305786,
+        0.21370108425617218
+      ],
+      "right_hand_thumb_2_link": [
+        0.04922988638281822,
+        0.25610360503196716,
+        -0.4242449700832367,
+        0.14372563362121582,
+        -0.4942081868648529,
+        0.1994047462940216,
+        0.8338698148727417
+      ],
+      "right_middle_tip": [
+        0.14318165183067322,
+        0.34410059452056885,
+        -0.3801431953907013,
+        -0.2812022566795349,
+        -0.22439107298851013,
+        0.7090905904769897,
+        0.6064359545707703
+      ],
+      "right_index_tip": [
+        0.061264801770448685,
+        0.3299480378627777,
+        -0.37695789337158203,
+        -0.35279539227485657,
+        -0.07043826580047607,
+        0.9082432985305786,
+        0.21370108425617218
+      ],
+      "right_thumb_tip": [
+        0.03261832520365715,
+        0.28687426447868347,
+        -0.4227539002895355,
+        0.14372564852237701,
+        -0.4942082464694977,
+        0.199404776096344,
+        0.8338699340820312
+      ]
+    }
+  ],
+  "provenance": [
+    {
+      "hand": {
+        "urdf_sha256": "2e55003b8b5f50bbc81a14566a733c85faf2108c41f32cf8a2824992aeddf155",
+        "resolved_urdf_sha256": "c129588a9ec762480a9b161330b519e313603a6ae9d817296b4e1769a4b02e71",
+        "meshes": {
+          "package://g1/left_hand_palm_link.STL": "23a486b75bd78a9bf03cec25d84d87f97f3dae038cf21a743b6d469b337e4004",
+          "package://g1/left_hand_thumb_0_link.STL": "a90c721661c0622685488a3c74d1e122c7da89242d3a1daef75edb83422d05e0",
+          "package://g1/collision/hands/left_hand_thumb_0_link.obj": "409feca6952f279b6e92758cbbdeff6f3b9b95c77bbe4118561c71fcdbf76d74",
+          "package://g1/left_hand_thumb_1_link.STL": "445c54a45bc13ce36001556f66bc0f49c83cb40321205ae4d676bb2874325684",
+          "package://g1/collision/hands/left_hand_thumb_1_link.obj": "fa5fbbc66ce92686856013c9fdeda65764f804014c39a1cc55fec9f76588ad59",
+          "package://g1/left_hand_thumb_2_link.STL": "3d8dbe5085acfc213d21aa8b0782e89cd79084e9678f3a85fc7b04a86b029db5",
+          "package://g1/collision/hands/left_hand_thumb_2_link.obj": "31f5cf5cd96c0e2662115e7dd5c7a523239c860fbb01909d6e3934d8c2037f28",
+          "package://g1/left_hand_middle_0_link.STL": "6b35f2f77211d5a366f0b9a4e47c4ee35e536731266f1a34e9efa12db579b892",
+          "package://g1/left_hand_middle_1_link.STL": "9e315ebc8a7a0cb98e033985b586b20d81cf8aa761181ae61ce56fcb14077a06",
+          "package://g1/left_hand_index_0_link.STL": "6b35f2f77211d5a366f0b9a4e47c4ee35e536731266f1a34e9efa12db579b892",
+          "package://g1/left_hand_index_1_link.STL": "9e315ebc8a7a0cb98e033985b586b20d81cf8aa761181ae61ce56fcb14077a06"
+        }
+      },
+      "factory_AST_sha256": "a18bdb1bd0210125b3e766a499f14f8db9be94e88020e8e93863ce067fb53483",
+      "hand_material": {
+        "enabled_colliders": 8,
+        "collider_readback": [
+          {
+            "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_2_link/left_hand_thumb_2_link_1/left_hand_thumb_2_link_1",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_1_link/left_hand_thumb_1_link_1/left_hand_thumb_1_link_1",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_thumb_0_link/left_hand_thumb_0_link_1/left_hand_thumb_0_link_1",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_1_link/left_hand_middle_1_link_1/left_hand_middle_1_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_middle_0_link/left_hand_middle_0_link_1/left_hand_middle_0_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_1_link/left_hand_index_1_link_1/left_hand_middle_1_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_index_0_link/left_hand_index_0_link_1/left_hand_middle_0_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture0/Hand/Geometry/left_hand_palm_link/left_hand_palm_link_1/left_hand_palm_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          }
+        ],
+        "static_friction": 2.0,
+        "dynamic_friction": 2.0,
+        "restitution": 0.0,
+        "friction_combine_mode": null,
+        "restitution_combine_mode": null
+      },
+      "object_material": {
+        "enabled_colliders": 1,
+        "collider_readback": [
+          {
+            "prim": "/World/Fixture0/Object/Geometry/object/tn__leftobject0task_1_dPC/tn__leftobject0task_gMC",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexDecomposition"
+          }
+        ],
+        "static_friction": 0.5,
+        "dynamic_friction": 0.5,
+        "restitution": 0.0,
+        "friction_combine_mode": null,
+        "restitution_combine_mode": null
+      },
+      "motor_effort_caps_Nm": {
+        "left_hand_index_0_joint": 0.76,
+        "left_hand_index_1_joint": 0.76,
+        "left_hand_middle_0_joint": 0.76,
+        "left_hand_middle_1_joint": 0.76,
+        "left_hand_thumb_0_joint": 0.76,
+        "left_hand_thumb_1_joint": 0.76,
+        "left_hand_thumb_2_joint": 0.76
+      },
+      "sample": {
+        "prefix": "left-object0-task",
+        "side": "left",
+        "object": 0,
+        "object_scale_at_selected_frame": 1.0000000593054512,
+        "source_row": 0,
+        "source_frame": 0,
+        "source_hand_valid": false,
+        "hand_position_stage_m": [
+          -0.044996696338577856,
+          0.12589395256559446,
+          -0.4987634900310714
+        ],
+        "hand_quaternion_stage_xyzw": [
+          0.44513573347382307,
+          0.12345045999920123,
+          -0.219119900633391,
+          -0.8594187756019297
+        ],
+        "joint_names": [
+          "left_hand_index_0_joint",
+          "left_hand_index_1_joint",
+          "left_hand_middle_0_joint",
+          "left_hand_middle_1_joint",
+          "left_hand_thumb_0_joint",
+          "left_hand_thumb_1_joint",
+          "left_hand_thumb_2_joint"
+        ],
+        "finger_target_rad": [
+          -0.411612280319543,
+          -1.1106689192123926,
+          -0.39665799106092586,
+          -1.0435909142596875,
+          0.6879487270591124,
+          -0.3452130106971115,
+          0.4828704632465525
+        ],
+        "object_position_stage_m": [
+          0.030136868780495218,
+          0.3017120187421398,
+          -0.49262036345109256
+        ],
+        "object_quaternion_stage_xyzw": [
+          0.4129692840817747,
+          -0.460291779259047,
+          0.5453342281640641,
+          0.5658607849500014
+        ]
+      }
+    },
+    {
+      "hand": {
+        "urdf_sha256": "a60b8c5ed8be4fe8a065f9ad8e854d6f46efd673261335bcde15481a32f2165f",
+        "resolved_urdf_sha256": "9e3efb7a191ff2a0d7277245bc64faf6a6eae53496b55d2e2ccb56fc6942ddc9",
+        "meshes": {
+          "package://g1/right_hand_palm_link.STL": "86c0b231cc44477d64a6493e5a427ba16617a00738112dd187c652675b086fb9",
+          "package://g1/right_hand_thumb_0_link.STL": "544298d0ea1088f5b276a10cc6a6a9e533efdd91594955fdc956c46211d07f83",
+          "package://g1/collision/hands/right_hand_thumb_0_link.obj": "a4f5fcea27a522b05ce0b9c9c3df9ccfe1528664c16c09385dd7801bb86de227",
+          "package://g1/right_hand_thumb_1_link.STL": "0a9a820da8dd10f298778b714f1364216e8a5976f4fd3a05689ea26327d44bf6",
+          "package://g1/collision/hands/right_hand_thumb_1_link.obj": "6a7e46596af6836bd02e1c2e107109d274e043d141eb6c100a518cfb3101f987",
+          "package://g1/right_hand_thumb_2_link.STL": "3f1bfb37668e8f61801c8d25f171fa1949e08666be86c67acad7e0079937cc45",
+          "package://g1/collision/hands/right_hand_thumb_2_link.obj": "0890fb1133c0d003728c0b529cae5e80cf153faa30ca6e159dcc2d0f4f58b6ba",
+          "package://g1/right_hand_middle_0_link.STL": "12ab4300c95e437e834f9aef772b3b431c671bf34338930b52ad11aef73bbd0d",
+          "package://g1/right_hand_middle_1_link.STL": "c9c34efce4563cacdcfd29fc838a982976d40f5442c71219811dcbbf3923a33d",
+          "package://g1/right_hand_index_0_link.STL": "12ab4300c95e437e834f9aef772b3b431c671bf34338930b52ad11aef73bbd0d",
+          "package://g1/right_hand_index_1_link.STL": "c9c34efce4563cacdcfd29fc838a982976d40f5442c71219811dcbbf3923a33d"
+        }
+      },
+      "factory_AST_sha256": "a18bdb1bd0210125b3e766a499f14f8db9be94e88020e8e93863ce067fb53483",
+      "hand_material": {
+        "enabled_colliders": 8,
+        "collider_readback": [
+          {
+            "prim": "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_1_link/right_hand_thumb_2_link/right_hand_thumb_2_link_1/right_hand_thumb_2_link_1",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_1_link/right_hand_thumb_1_link_1/right_hand_thumb_1_link_1",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_thumb_0_link/right_hand_thumb_0_link_1/right_hand_thumb_0_link_1",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_middle_0_link/right_hand_middle_1_link/right_hand_middle_1_link_1/right_hand_middle_1_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_middle_0_link/right_hand_middle_0_link_1/right_hand_middle_0_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_index_0_link/right_hand_index_1_link/right_hand_index_1_link_1/right_hand_middle_1_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_index_0_link/right_hand_index_0_link_1/right_hand_middle_0_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          },
+          {
+            "prim": "/World/Fixture1/Hand/Geometry/right_hand_palm_link/right_hand_palm_link_1/right_hand_palm_link",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexHull"
+          }
+        ],
+        "static_friction": 2.0,
+        "dynamic_friction": 2.0,
+        "restitution": 0.0,
+        "friction_combine_mode": null,
+        "restitution_combine_mode": null
+      },
+      "object_material": {
+        "enabled_colliders": 1,
+        "collider_readback": [
+          {
+            "prim": "/World/Fixture1/Object/Geometry/object/tn__rightobject1task_1_sQD/tn__rightobject1task_vND",
+            "contact_offset_m": 0.0,
+            "rest_offset_m": 0.0,
+            "approximation": "convexDecomposition"
+          }
+        ],
+        "static_friction": 0.5,
+        "dynamic_friction": 0.5,
+        "restitution": 0.0,
+        "friction_combine_mode": null,
+        "restitution_combine_mode": null
+      },
+      "motor_effort_caps_Nm": {
+        "right_hand_index_0_joint": 0.76,
+        "right_hand_index_1_joint": 0.76,
+        "right_hand_middle_0_joint": 0.76,
+        "right_hand_middle_1_joint": 0.76,
+        "right_hand_thumb_0_joint": 0.76,
+        "right_hand_thumb_1_joint": 0.76,
+        "right_hand_thumb_2_joint": 0.76
+      },
+      "sample": {
+        "prefix": "right-object1-task",
+        "side": "right",
+        "object": 1,
+        "object_scale_at_selected_frame": 1.0000000551497552,
+        "source_row": 0,
+        "source_frame": 0,
+        "source_hand_valid": false,
+        "hand_position_stage_m": [
+          0.0814075792007562,
+          0.20251039169288565,
+          -0.39325030009097417
+        ],
+        "hand_quaternion_stage_xyzw": [
+          -0.19169619407963037,
+          -0.3044317048017698,
+          0.47002684680005213,
+          0.8060078594989462
+        ],
+        "joint_names": [
+          "right_hand_index_0_joint",
+          "right_hand_index_1_joint",
+          "right_hand_middle_0_joint",
+          "right_hand_middle_1_joint",
+          "right_hand_thumb_0_joint",
+          "right_hand_thumb_1_joint",
+          "right_hand_thumb_2_joint"
+        ],
+        "finger_target_rad": [
+          0.7622033058854576,
+          0.8613333831567064,
+          0.02342354330277548,
+          0.6472419091464094,
+          -0.5489676719351092,
+          -0.04798810424446118,
+          -0.7404564696483648
+        ],
+        "object_position_stage_m": [
+          0.03102275556804932,
+          0.32189053820721536,
+          -0.4427541410929142
+        ],
+        "object_quaternion_stage_xyzw": [
+          -0.45966031326800694,
+          -0.5251550132253039,
+          -0.472144794231141,
+          0.5385201034048053
+        ]
+      }
+    }
+  ],
+  "object_tracking": [
+    {
+      "object": 0,
+      "observed_measurements": 2850,
+      "position_median_m": 0.06557030323903197,
+      "position_p90_m": 197.75597423469347,
+      "position_max_m": 407.82097427099905,
+      "orientation_median_rad": 0.11837299663123602,
+      "orientation_p90_rad": 2.4810919651700787
+    },
+    {
+      "object": 1,
+      "observed_measurements": 3421,
+      "position_median_m": 0.29769998882509036,
+      "position_p90_m": 225.50180365441608,
+      "position_max_m": 501.8232012956605,
+      "orientation_median_rad": 0.5484066522457502,
+      "orientation_p90_rad": 2.776453244733356
+    }
+  ],
+  "gravity_and_contact_controls_pass": true,
+  "controls": {
+    "free_fall_drop_m": 4.954054594039917,
+    "supported_sphere_mean_force_N": 2.943000078201294
+  },
+  "state_sha256": "dda139589b869087527b5ec720c0578dbf21adf6b2a96eb708e8ff2121ebea23",
+  "video_sha256": "90f885e4432ee8b951e07d9a834903f2ebe98e8dcdcedace93991d1fdb6e4ddd",
+  "source_observation_and_target_approval_flags_changed": false,
+  "physical_task_accepted": false,
+  "official_evaluation_score_claimed": false
+}

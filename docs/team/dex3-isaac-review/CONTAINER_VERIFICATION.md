@@ -65,9 +65,47 @@ Historical source, image IDs, pilot results and archive receipt are preserved.
 The original native twelve-episode replay and 3,096-frame simulator checks predate
 containerization. The separate Brev container pilot covers three episodes, not
 all twelve. This Mac has no NVIDIA GPU.
-Physics-enabled manipulation and learned-policy evaluation are unvalidated.
+Later physics-enabled experiments are recorded below. Successful manipulation
+and learned-policy evaluation remain unvalidated.
+
+## Fresh registry host and physics comparison — October 15
+
+A second, stoppable L40S VM pulled the published simulator image by its GHCR
+digest, independently of the original builder. Its image ID matches the recorded
+registry config digest. The host uses driver 580.178.04; the pinned Torch 2.11.0
+CUDA 13 environment passed an actual GPU calculation. Persistent Sim 6 SDK cache
+and log paths are now mounted by Compose.
+
+The complete **e011 replay passed** on this fresh host: 137 frames, four decoded
+videos, reconstruction/frozen-IK hash bindings, numerical readback tolerances,
+observation masks and frame/PTS receipts. The
+[team verifier receipt](receipts/physics/brev-20261015/fresh-host-team-check.json)
+records the check. This is a fresh-machine run by the same operator; independent
+teammate execution and full manual playback are still separate checks.
+
+The published image remains the runtime from `5128f63`; physics experiments mount
+new code read-only and record its exact source hashes and checkout commit.
+No new physics image has been published or relabelled. The three complete e002
+controller candidates fail task acceptance, and four corrected static grasp-load
+fixtures fail unsupported retention. See the
+[measured physics results](PHYSICS_VALIDATION.md#measured-gpu-results).
+
+The twelve preserved target bundles were also exported to diagnostic `motion_v1`
+references with hash-bound observation/contact uncertainty. These are not marked
+training-ready. Their exact export receipts are
+[preserved here](receipts/physics/brev-20261015/diagnostic-references-12-episodes.json).
 
 ## Compute closure
+
+The later physics VM `v2d-dex3-physics-check` (`dngrtbldz`) is **STOPPED**, verified
+October 15 at 17:42:09 UTC. All 16,154 declared output/log files (4,573,326,213 bytes)
+are independently backed up and SHA256-verified on the Mac. The
+[new session receipt](receipts/physics/brev-20261015/compute-closure.json) records
+the approved $10 compute cap and stopped state. Its conservative bound at the
+listed rate, including stopped intervals, is $3.27; this is not an invoice.
+The VM is preserved for future work, and the RunPod resources are unchanged.
+
+### Original container builder
 
 All cloud builds, rendering and registry publication completed. Brev rejected the
 stop request because `v2d-dex3-container-check` (`da0f8igen`) does not support stop.

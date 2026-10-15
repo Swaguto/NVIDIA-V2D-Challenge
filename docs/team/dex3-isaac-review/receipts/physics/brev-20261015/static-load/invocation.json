@@ -1,0 +1,26 @@
+{
+  "stage": "static-load",
+  "prepare_only": false,
+  "command": [
+    "/opt/sim/bin/python",
+    "/code/scripts/reproduction/reproduce_frozen_dex3_replay.py",
+    "--archive",
+    "/physics-inputs/input-pack.tar.gz",
+    "--sha256",
+    "759b6e9fa642b47ec24306969688cc1ce15ead4cb0b80e4f8d086b727b93c680",
+    "--out",
+    "/outputs/static-load/run",
+    "--support-plane",
+    "/code/docs/team/reproduction/dex3-motion-replay/support-inferred-support-plane-report-v1.json",
+    "--support-plane-sha256",
+    "38a6bf97df7def496bed7773e265c894e77da6bb5521d3077bf43330cbd3166f",
+    "--static-load-check",
+    "--runtime-python",
+    "/opt/sim/bin/python",
+    "--lab",
+    "/opt/IsaacLab"
+  ],
+  "candidate_controller_sha256": "f645a544b4c3dcbbfa6f90007d47a0d7cc85d52bf5c5af865e03a9c42671d491",
+  "executor_sha256": "38f37ab54184b6896ab00016b542de04821d9aefd2ac876d7996f97c2f7baafe",
+  "physical_task_accepted": false
+}

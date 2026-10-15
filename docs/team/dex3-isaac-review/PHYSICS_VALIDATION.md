@@ -2,10 +2,13 @@
 
 ## Scope and status
 
-The October 15 implementation adds a controller candidate and explicit validation
-stages. Local mechanics/schema controls pass; a new GPU comparison is in progress.
-No physical task or learned policy has been accepted. Existing preview images,
-frozen renderer and historical failed-task receipts remain available.
+The October 15 implementation adds explicit controller, contact and reference
+validation stages. All 37 local controls pass. GPU comparisons completed on a
+stoppable Brev L40S using the published runtime and hash-verified source overlays.
+The candidates pass the short free-space test; all three complete e002 task runs
+fail the unchanged wrist gate and object retention. The four decomposed-geometry
+static grasp starts also fail unsupported retention. No controller candidate has
+been promoted into the training task. No physical task or learned policy is accepted.
 
 The saved failed e002 run loses tracking before object contact: the left wrist
 first exceeds 10 cm error at source time 0.075 s, versus its first sampled object
@@ -49,6 +52,72 @@ Controller-only limits, fixed before the GPU comparison, are p95 position error
 hand. No startup interval is excluded. Gravity/contact controls and complete
 requested physics-step coverage must also pass. These are diagnostic limits,
 not official score thresholds or a physical grasp certificate.
+
+## Measured GPU results
+
+The completed comparison uses 0.01 s physics steps, the original PD gains/caps,
+and the original inferred e002 reference. Each full run covers 343 source frames
+and 3,420 physics steps, with actual hand/object readback and decoded video checks.
+The separate bounded-integral candidate adds the declared integral gain above.
+
+| Full-task controller | Left position p95 | Right position p95 | First pot grasp: sampled positive contacts | Wrist gate |
+| --- | ---: | ---: | ---: | --- |
+| `implicit_pd` | 7.65 cm | 7.64 cm | 184/185 | Fail |
+| `implicit_pd_ff` | 6.38 cm | 1.28 cm | 184/185 | Fail |
+| `implicit_pid_ff` | 4.16 cm | 1.30 cm | 98/185 | Fail |
+
+The original project controller fails the perturbed free-space test with left /
+right position p95 errors of 1.414 / 1.058 m. All three candidates pass that same
+41-frame prefix. The prefix mainly tests recovery from a fixed reference; it
+does not establish tracking across all moving portions of the episode.
+
+Feedforward removes much of the right wrist's motion lag. In that full run the
+left wrist's position p95 is 1.83 cm without measured object contact and 6.81 cm
+during contact (contact split threshold 0.001 N). This motivates separating
+contact-load error from free motion. Integral compensation improves the left
+position statistic but reduces sampled pot-contact coverage, so the numerical
+improvement does not justify promoting it.
+
+Every full run records zero sampled positive contacts in both right-lid grasp
+cores (0/62 and 0/72), and zero in the final left-pot core (0/62). The new USD
+readback confirms actual hand collider enablement in these eligible intervals.
+Contact alone is not force closure. Both objects eventually leave the finite
+inferred support in these runs; none reproduces the complete source task.
+
+### Static geometry isolation
+
+The new fixed-wrist repeat captures **32 cooked convexes per object** and verifies
+all 404 grasp records, 202 control records and 21 decoded video frames. Both
+gravity/contact controls pass. All four automatically selected inferred grasp
+starts fail the unchanged unsupported one-second / 10 mm retention test:
+
+| Sample | Final displacement | Maximum net normal contact force |
+| --- | ---: | ---: |
+| First left pot start, source frame 47 | 4.067 m | 110.75 N |
+| Second left pot start, source frame 273 | 4.769 m | 19.40 N |
+| First right lid start, source frame 47 | 4.936 m | 0 N |
+| Second right lid start, source frame 236 | 4.934 m | 0 N |
+
+These four fixtures omit the table, other object, other hand and squeeze preload.
+The starts are inferred first-touch poses. Their failure isolates an unresolved
+grasp/load problem; it does not prove that a supported source interaction is
+impossible. The older convex-hull measurements remain separate historical evidence.
+
+### Evidence and next gate
+
+The [receipt directory](receipts/physics/brev-20261015/) preserves every comparison
+gate, report, source-deployment manifest, decoded-frame receipt and full-task
+contact audit, including failures. The first GPU attempt's empty-observation
+summary error is preserved separately; its partial output was not accepted.
+Raw states/videos/SDK logs are privately backed up with per-file SHA256 inventories.
+
+Next work is contact-aware retargeting and a closed-loop manipulation controller:
+check body/mesh frames and initial settling, find feasible Dex3 pad contacts,
+establish supported grasp acquisition and object retention, then repeat a complete
+episode with the same observation masks. Source grasp annotations remain validation
+inputs. A fixed wrist or extra wrist force cannot substitute for this gate.
+Task registration, confidence-aware training consumption and evaluator checkpoint
+compatibility remain required before a learned-policy pilot.
 
 ## Run with the published runtime
 
@@ -122,6 +191,12 @@ It supplies no table, other object, squeeze preload or learned residual. A
 first-touch failure does not prove that the source manipulation is impossible.
 This repeat addresses the earlier static test's documented convex-hull geometry
 qualification. It does not replace the full dynamic task or approve its targets.
+The wrapper preserves the original MPEG-4 physics video and creates a separate
+H.264 browser derivative, checking all 21 frame timestamps and binding both
+hashes in `browser-preview.json`. Historical static outputs can use
+`package_static_preview.py --run /absolute/path/to/static-load/run/simulator`.
+The initial static video image can retain the importer rest display; numerical
+initial-pose readback establishes the starting state. Later images follow physics.
 
 ### Replay verification and diagnostic references
 

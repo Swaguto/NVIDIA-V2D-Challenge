@@ -1,0 +1,30 @@
+{
+  "schema": "v2d.static-browser-preview.v1",
+  "original_video_sha256": "90aaad1c06e4a17f2376ef6d009997b103dc99df4f6775092ac58e51d743d3eb",
+  "preview_video_sha256": "7f5aac6edbdd1ef258539560375def08bd5e2d04fefb9091170d0ef7a8158465",
+  "frames": 21,
+  "codec": "h264",
+  "frame_timestamps_preserved": true,
+  "original_physics_video_preserved": true,
+  "preview_is_transcode": true,
+  "command": [
+    "ffmpeg",
+    "-nostdin",
+    "-v",
+    "error",
+    "-i",
+    "/Users/rohithiruku/dex3_physics_implementation_20261015/gpu-outputs/attempt5/static-load/run/simulator/static-load.mp4",
+    "-c:v",
+    "libx264",
+    "-crf",
+    "18",
+    "-pix_fmt",
+    "yuv420p",
+    "-movflags",
+    "+faststart",
+    "/Users/rohithiruku/dex3_physics_implementation_20261015/gpu-outputs/attempt5/static-load/run/simulator/static-load-browser.mp4"
+  ],
+  "packager_sha256": "880764d91cc1711f26f3c76245d11fb3f257104f7908b47a28a60459ccbe8797",
+  "ffmpeg_version": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers",
+  "physical_task_accepted": false
+}
