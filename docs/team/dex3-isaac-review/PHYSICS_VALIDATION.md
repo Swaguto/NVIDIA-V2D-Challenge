@@ -45,6 +45,12 @@ mounts the checked-out candidate code read-only; it does not rebuild or relabel
 the published image. The producing source checkout and image digest must both
 be recorded for the experiment.
 
+The host must supply an NVIDIA driver compatible with CUDA 13 (580 or newer).
+Some Brev VM templates arrive with older drivers even when the GPU is an L40S.
+Each physics stage checks the actual host driver and executes a CUDA tensor
+calculation in the simulator environment before launching Isaac. An RTX render
+is still required after that compute preflight.
+
 Obtain the separate, verified physics inputs:
 
 ```bash

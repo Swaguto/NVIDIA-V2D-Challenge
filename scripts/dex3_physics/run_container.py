@@ -108,6 +108,17 @@ def main():
     (out / "invocation.json").write_text(json.dumps(receipt, indent=2) + "\n")
     env = dict(os.environ)
     env.pop("PYTHONPATH", None)
+    if not args.prepare_only:
+        subprocess.run(
+            [
+                sys.executable,
+                str(ROOT / "scripts/dex3_physics/check_gpu.py"),
+                "--out",
+                str(out / "gpu-preflight.json"),
+            ],
+            check=True,
+            env=env,
+        )
     subprocess.run(command, check=True, env=env)
     if not args.prepare_only:
         video = out / "run/simulator/supported-task.mp4"
