@@ -66,7 +66,9 @@ def refine_sequence(
         local_j = (local_j - centre) * scale + centre
         for i, record in enumerate(records):
             valid = (dw[i] > 0) & (points[i, :, 2] > 0)
-            if record.get("flow_supported", False) and torch.count_nonzero(valid) >= 4:
+            if (
+                record.get("flow_supported", False) or record.get("fresh_image_supported", False)
+            ) and torch.count_nonzero(valid) >= 4:
                 z = depths[i, valid]
                 measured = torch.stack(
                     [(points[i, valid, 0] - cx) * z / fx, (points[i, valid, 1] - cy) * z / fy, z], dim=-1

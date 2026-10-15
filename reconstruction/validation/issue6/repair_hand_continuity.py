@@ -54,6 +54,7 @@ def repair(
     prior_weight=0.05,
     image_flow=False,
     bidirectional_image_flow=False,
+    image_observations=None,
 ):
     label = f"e{episode:03d}"
     cache = input_root / "issue6-quality-cache/episodes" / label
@@ -148,6 +149,18 @@ def repair(
         if r["frame_idx"] in raw[side]:
             raise ValueError("Ambiguous same-side native hand")
         raw[side][r["frame_idx"]] = r
+    additional = {side: {} for side in raw}
+    if image_observations is not None:
+        from issue6.image_observations import load_image_estimate
+
+        for side in raw:
+            for frame in frames:
+                fid = frame["id"]
+                estimate = load_image_estimate(
+                    image_observations, side, fid, c, bool(gate[side][fid])
+                )
+                if estimate is not None:
+                    additional[side][fid] = estimate
     objects_cache = {}
     measurements = {s: np.zeros((len(frames), 3)) for s in raw}
     weights = {s: np.zeros(len(frames)) for s in raw}
@@ -184,7 +197,12 @@ def repair(
 
     @lru_cache(maxsize=1024)
     def measured_mask(side, fid):
-        p = original / "hands/masks" / side / f"{fid:06d}.png"
+        extra = additional[side].get(fid)
+        p = (
+            extra["mask"]
+            if extra
+            else original / "hands/masks" / side / f"{fid:06d}.png"
+        )
         mask = (
             np.asarray(Image.open(p)) > 0
             if p.exists()
@@ -262,6 +280,9 @@ def repair(
                     and (gate[side][fid] or mask.sum() >= 64)
                 )
                 r["directly_observed"] = bool(gate[side][fid])
+                r["fresh_image_supported"] = fid in additional[side]
+                if r["fresh_image_supported"]:
+                    r["image_estimate_source"] = additional[side][fid]["source"]
                 r["depth_measurement"] = diagnostic
                 records[side][fid] = r
                 prior_count[side] += 1
@@ -310,12 +331,21 @@ def repair(
                         / f"{h:03d}"
                         / f"{f['id']:06d}_keypoints.json"
                     )
+                    extra = additional[side].get(f["id"])
                     observation_rows.append(
-                        read(p)["people"][0]["pose_keypoints_2d"]
-                        if p.exists() and gate[side][f["id"]]
-                        else None
+                        extra["keypoints"]
+                        if extra
+                        else (
+                            read(p)["people"][0]["pose_keypoints_2d"]
+                            if p.exists() and gate[side][f["id"]]
+                            else None
+                        )
                     )
-                    mask = original / "hands/masks" / side / f"{f['id']:06d}.png"
+                    mask = (
+                        extra["mask"]
+                        if extra
+                        else original / "hands/masks" / side / f"{f['id']:06d}.png"
+                    )
                     mask_paths.append(mask if mask.exists() else None)
                     image_paths.append(output / "align/frames" / f"{f['id']:06d}.png")
                 if image_flow:
@@ -340,7 +370,9 @@ def repair(
                     if f["id"] not in records[side]:
                         continue
                     records[side][f["id"]]["flow_supported"] = bool(
-                        not gate[side][f["id"]] and np.count_nonzero(kp[i, :, 2]) >= 4
+                        not gate[side][f["id"]]
+                        and not records[side][f["id"]]["fresh_image_supported"]
+                        and np.count_nonzero(kp[i, :, 2]) >= 4
                     )
                     write(
                         output / "image-observations" / side / f"{f['id']:06d}.json",
@@ -398,6 +430,13 @@ def repair(
                     c,
                     side == "right",
                 )
+                if additional[side]:
+                    image_receipt["additional_image_estimate_frames"] = sorted(
+                        additional[side]
+                    )
+                    image_receipt["landmark_source"] = (
+                        "saved predictions plus explicit fresh source-image estimates"
+                    )
                 image_receipt["image_flow"] = image_flow
                 image_receipt["bidirectional_image_flow"] = bidirectional_image_flow
                 image_receipt["flow_supported_frames"] = [
@@ -442,8 +481,10 @@ def repair(
                     )
                 r["diagnostics"].update(diagnostic)
                 projected_visibility[i] = bool((rendered > 0).sum() >= 256)
-                observed_visibility[i] = r["visual_valid"] or r.get(
-                    "flow_depth_supported", False
+                observed_visibility[i] = (
+                    r["visual_valid"]
+                    or r.get("fresh_image_supported", False)
+                    or r.get("flow_depth_supported", False)
                 )
                 r["continuity"] = {
                     "method": "robust_sequence_depth_in_fitted_world",
@@ -508,6 +549,9 @@ def repair(
             "maximum_visual_gap_seconds": 1.5,
             "image_flow": image_flow,
             "bidirectional_image_flow": bidirectional_image_flow,
+            "image_observations": str(image_observations)
+            if image_observations
+            else None,
             "prior_records": str(prior_records) if prior_records else None,
             "cad_foreground_margin_m": 0.005,
             "minimum_pixels": config["minimum_pixels"],
@@ -528,6 +572,7 @@ if __name__ == "__main__":
     p.add_argument("--image-fit", action="store_true")
     p.add_argument("--image-flow", action="store_true")
     p.add_argument("--bidirectional-image-flow", action="store_true")
+    p.add_argument("--image-observations", type=Path)
     p.add_argument("--prior-records", type=Path)
     p.add_argument("--smooth-seconds", type=float, default=0.15)
     p.add_argument("--prior-weight", type=float, default=0.05)
@@ -543,4 +588,5 @@ if __name__ == "__main__":
         a.prior_weight,
         a.image_flow or a.bidirectional_image_flow,
         a.bidirectional_image_flow,
+        a.image_observations,
     )

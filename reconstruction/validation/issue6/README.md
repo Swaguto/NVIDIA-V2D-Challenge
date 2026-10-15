@@ -474,3 +474,27 @@ landmark is discarded. Remaining visual bridging still requires finite fitted
 geometry and endpoints within 1.5 seconds. These additional tracks remain
 inferred and cannot promote contact validity. The forward-only mode remains
 available for reproducing earlier receipts.
+
+### Fresh image estimates for failed segmentation
+
+A box prompt can segment a grasped object instead of its hand. Longer gaps and
+side-classification errors therefore need source-image review, not stronger
+smoothing. `recover_hand_image_estimates.py` accepts JSON windows of the form
+`[{"side":"left","start":158,"end":206}]`. Both endpoints must be saved direct
+observations of the same physical hand. The tool prompts SAM2 with saved wrist
+and thumb-base landmarks and a negative forearm point, propagates independently
+from each endpoint, and intersects masks with IoU >= 0.25. It rejects image-border
+masks and masks with fewer than 64 pixels. Fresh HaMeR inference on accepted masks
+supplies only landmarks within a 7-pixel dilated mask; at least four are required.
+
+Pass its output directory to `repair_hand_continuity.py --image-observations`
+on **both** the image-fit pass and the following surface pass. Estimates retain
+the original observation gate and cannot declare metric validity. Use a new
+output directory and inspect the source overlays: two agreeing segmentations
+can still track the wrong object, and a saved direct detection can have the wrong
+hand identity. In e041, corrected image masks recovered both visible hands over
+the remaining gaps; the original observation and contact files were preserved.
+
+`full_hand_masks.py` now retains ungated SAM2 output in `visual_masks/` and exports
+separate observation-gated `masks/`. Atomic replacement prevents a pre-existing
+hardlink from clearing the preserved visual mask.

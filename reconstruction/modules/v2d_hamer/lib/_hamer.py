@@ -71,11 +71,13 @@ def crop_for_hamer(
 
     patch_w = patch_h = cfg.MODEL.IMAGE_SIZE
     bgr = image[..., ::-1].copy()  # generate_image_patch_cv2 expects BGR
-    patch_bgr, _ = generate_image_patch_cv2(
+    patch_result = generate_image_patch_cv2(
         bgr, cx, cy, size, size, patch_w, patch_h,
         flip, 1.0, 0,    # flip, scale, rot
         # default border_mode = cv2.BORDER_CONSTANT
     )
+    # Upstream variants return two or three items; only the image is needed.
+    patch_bgr = patch_result[0]
     patch_rgb = patch_bgr[..., ::-1].astype(np.float32) / 255.0
     mean = np.array(cfg.MODEL.IMAGE_MEAN, dtype=np.float32)
     std  = np.array(cfg.MODEL.IMAGE_STD,  dtype=np.float32)
@@ -138,9 +140,13 @@ def run_hamer(
     pred_cam = out["pred_cam"][0].detach().cpu().numpy().copy()    # (3,)
     pred_cam_t = out["pred_cam_t"][0].detach().cpu().numpy()       # (3,)
     pred_mano = out["pred_mano_params"]
-    betas         = pred_mano["betas"][0].detach().cpu().numpy()
-    hand_pose     = pred_mano["hand_pose"][0].detach().cpu().numpy()
-    global_orient = pred_mano["global_orient"][0].detach().cpu().numpy()
+    def parameter(name):
+        value = pred_mano[0][name] if isinstance(pred_mano, (list, tuple)) else pred_mano[name][0]
+        return value.detach().cpu().numpy() if isinstance(value, torch.Tensor) else np.asarray(value)
+
+    betas         = parameter("betas")
+    hand_pose     = parameter("hand_pose")
+    global_orient = parameter("global_orient")
     vertices      = out["pred_vertices"][0].detach().cpu().numpy().copy()
     joints3d      = out["pred_keypoints_3d"][0].detach().cpu().numpy().copy()
 
