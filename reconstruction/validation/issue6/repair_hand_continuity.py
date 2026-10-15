@@ -265,12 +265,8 @@ def repair(
             image_receipt = None
             if image_fit:
                 import torch
-                from issue6.image_fit import refine_sequence
+                from issue6.image_fit import refine_available_sequence
 
-                if any(f["id"] not in records[side] for f in frames):
-                    raise ValueError(
-                        "Image refinement requires the complete finite native fit"
-                    )
                 kp = np.zeros((len(frames), 21, 3))
                 targets = np.zeros((len(frames), 21))
                 confidence = np.zeros_like(targets)
@@ -305,6 +301,8 @@ def repair(
                 reference_depth = None
                 for f in frames:
                     i = frame_index[f["id"]]
+                    if f["id"] not in records[side]:
+                        continue
                     records[side][f["id"]]["flow_supported"] = bool(
                         not gate[side][f["id"]] and np.count_nonzero(kp[i, :, 2]) >= 4
                     )
@@ -352,8 +350,8 @@ def repair(
                     )
                 device = "cuda" if torch.cuda.is_available() else "cpu"
                 fitted_mano = render._mano_layer(str(mano_root)).to(device)
-                ordered = [records[side][f["id"]] for f in frames]
-                poses, translations, image_receipt = refine_sequence(
+                ordered = [records[side].get(f["id"]) for f in frames]
+                poses, translations, image_receipt = refine_available_sequence(
                     fitted_mano,
                     ordered,
                     kp,
@@ -368,10 +366,12 @@ def repair(
                 image_receipt["flow_supported_frames"] = [
                     f["id"]
                     for f in frames
-                    if records[side][f["id"]].get("flow_supported", False)
+                    if records[side].get(f["id"], {}).get("flow_supported", False)
                 ]
                 del fitted_mano
                 for i, record in enumerate(ordered):
+                    if record is None:
+                        continue
                     record["mano"]["global_orient"] = poses[i, :3].tolist()
                     record["mano"]["hand_pose"] = poses[i, 3:].tolist()
                     record["cam_t"] = translations[i].tolist()

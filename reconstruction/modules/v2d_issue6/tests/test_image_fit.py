@@ -98,3 +98,32 @@ def test_trailing_pose_prior_follows_camera_rotation_without_claiming_observatio
     np.testing.assert_array_equal(fitted[1, 3:], 0)
     np.testing.assert_array_equal(fitted[2], poses[2])
     assert records[1]["directly_observed"] is False
+
+
+def test_unknown_native_pose_splits_the_fit_and_stays_unknown(monkeypatch):
+    import issue6.image_fit as fitting
+
+    calls = []
+
+    def fake_fit(mano, records, keypoints, depths, weights, rotations, camera_t, camera, is_right, iterations):
+        calls.append(keypoints[:, 0, 0].tolist())
+        return np.zeros((len(records), 48)), np.ones((len(records), 3)), {}
+
+    monkeypatch.setattr(fitting, "refine_sequence", fake_fit)
+    keypoints = np.zeros((7, 21, 3))
+    keypoints[:, 0, 0] = np.arange(7)
+    poses, translations, receipt = fitting.refine_available_sequence(
+        None,
+        [{}] * 3 + [None] + [{}] * 3,
+        keypoints,
+        np.zeros((7, 21)),
+        np.zeros((7, 21)),
+        np.tile(np.eye(3), (7, 1, 1)),
+        np.zeros((7, 3)),
+        {},
+        True,
+    )
+    assert calls == [[0, 1, 2], [4, 5, 6]]
+    assert receipt["unknown_frame_indices"] == [3]
+    assert np.isnan(poses[3]).all() and np.isnan(translations[3]).all()
+    assert np.isfinite(translations[[0, 2, 4, 6]]).all()

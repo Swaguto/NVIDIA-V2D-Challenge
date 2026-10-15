@@ -146,3 +146,66 @@ def refine_sequence(
         "independent_accuracy_claimed": False,
     }
     return (initial_pose + delta_pose).detach().cpu().numpy(), (initial_t + delta_t).detach().cpu().numpy(), receipt
+
+
+def refine_available_sequence(
+    mano,
+    records,
+    keypoints,
+    depth_targets,
+    depth_weights,
+    rotations,
+    camera_translations,
+    camera,
+    is_right,
+    iterations=200,
+):
+    """Fit contiguous finite priors without smoothing across unknown geometry."""
+    if all(record is not None for record in records):
+        return refine_sequence(
+            mano,
+            records,
+            keypoints,
+            depth_targets,
+            depth_weights,
+            rotations,
+            camera_translations,
+            camera,
+            is_right,
+            iterations,
+        )
+    n = len(records)
+    poses = np.full((n, 48), np.nan)
+    translations = np.full((n, 3), np.nan)
+    available = np.array([record is not None for record in records])
+    boundaries = np.flatnonzero(np.diff(np.r_[False, available, False]))
+    segments = []
+    for start, end in boundaries.reshape(-1, 2):
+        selected = records[start:end]
+        if end - start < 3:
+            poses[start:end] = [r["mano"]["global_orient"] + r["mano"]["hand_pose"] for r in selected]
+            translations[start:end] = [r["cam_t"] for r in selected]
+            receipt = {"optimized": False, "reason": "fewer_than_three_finite_frames"}
+        else:
+            poses[start:end], translations[start:end], receipt = refine_sequence(
+                mano,
+                selected,
+                keypoints[start:end],
+                depth_targets[start:end],
+                depth_weights[start:end],
+                rotations[start:end],
+                camera_translations[start:end],
+                camera,
+                is_right,
+                iterations,
+            )
+        segments.append({"start_index": int(start), "end_index_exclusive": int(end), "receipt": receipt})
+    return (
+        poses,
+        translations,
+        {
+            "segments": segments,
+            "unknown_frame_indices": np.flatnonzero(~available).tolist(),
+            "independent_accuracy_claimed": False,
+        },
+    )
