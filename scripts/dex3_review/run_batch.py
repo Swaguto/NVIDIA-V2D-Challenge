@@ -4,7 +4,7 @@ import argparse,json,os,subprocess
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--env-file',type=Path,required=True);p.add_argument('--episodes',default='11,40,41');p.add_argument('--reuse-frozen-ik',action='store_true');a=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--env-file',type=Path,required=True);p.add_argument('--episodes',default='11,40,41');g=p.add_mutually_exclusive_group();g.add_argument('--reuse-frozen-ik',dest='reuse_frozen_ik',action='store_true',default=True);g.add_argument('--recompute-ik',dest='reuse_frozen_ik',action='store_false');a=p.parse_args()
  episodes=[]
  for value in a.episodes.split(','):
   ep=int(value)

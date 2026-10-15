@@ -57,6 +57,8 @@ def main(args):
     requirements=prefix/'replay-requirements.txt'
     requirements.write_text('\n'.join(locked)+'\n')
     python=prefix/'bin/python'
+    # A pinned installer supports resuming multi-gigabyte NVIDIA wheel downloads.
+    run([python,'-m','pip','install','pip==25.3'])
     # All transitive versions are already recorded; do not resolve optional Lab extras.
     run([python,'-m','pip','install','--no-compile','--no-deps','--extra-index-url',
          'https://pypi.nvidia.com','-r',requirements])

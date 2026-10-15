@@ -20,7 +20,7 @@ RUN python -m venv /opt/ik && /opt/ik/bin/pip install --no-cache-dir --no-deps \
     --extra-index-url https://download.pytorch.org/whl/cpu -r /opt/locks/ik-runtime-lock.txt
 FROM base AS sim-runtime
 COPY docker/dex3-review/setup_sim6.py docker/dex3-review/sim6-runtime-lock.txt /opt/locks/
-RUN --mount=type=cache,target=/root/.cache/pip /usr/local/bin/python /opt/locks/setup_sim6.py --lock /opt/locks/sim6-runtime-lock.txt \
+RUN --mount=type=cache,target=/root/.cache/pip PIP_DEFAULT_TIMEOUT=300 PIP_RETRIES=10 PIP_RESUME_RETRIES=20 /usr/local/bin/python /opt/locks/setup_sim6.py --lock /opt/locks/sim6-runtime-lock.txt \
     --prefix /opt/sim --lab /opt/IsaacLab
 FROM base AS ik
 COPY --from=ik-runtime /opt/ik /opt/ik

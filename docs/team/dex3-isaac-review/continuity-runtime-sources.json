@@ -1,7 +1,7 @@
 {
-  "archive": "continuity-runtime-sources-v1.tar.gz",
-  "bytes": 67441,
-  "sha256": "213456709bf5b31c62818831ab0cc751c016a01bea73f333f1242f1cca7bf61b",
+  "archive": "continuity-runtime-sources-v2.tar.gz",
+  "bytes": 71035,
+  "sha256": "01b70d030d8f0429718a5ffff8d6ce3a5fb638a23445fd80fc52e9f5e6a12a18",
   "files": {
     "chumpy/__init__.py": "4ef801a387cea77b17b5f17c50a9c91c9da7e3a5372f50fd0cc1a6a178845312",
     "chumpy/api_compatibility.py": "48ac1a8134b08150c9f5fe714f6dc9e64644d4ddfe003a497754976e89a197d1",
@@ -35,7 +35,15 @@
     "manotorch/utils/geometry.py": "0b1983cce8ffd0a9a6320b1f4ea23904a3f278a2facebfd3bd98b3bcfd85a595",
     "manotorch/utils/quatutils.py": "f0344aca6e655eca4e0fe94ca73281d11814aa0894f3b433d52a3181880afee0",
     "manotorch/utils/rodrigues.py": "02699b5d43405ee665844dc3b1fb36b5114a34a2b0732ac324c3c7d583ad8d02",
-    "manotorch/utils/visutils.py": "696b5f1fe4cb1010abe03dff5a5d8a42c1a5c49717f8bee7f14b82a3ed1e8466"
+    "manotorch/utils/visutils.py": "696b5f1fe4cb1010abe03dff5a5d8a42c1a5c49717f8bee7f14b82a3ed1e8466",
+    "mano/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mano/webuser/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mano/webuser/lbs.py": "2d0b736b525e1b3c09fc4b91a3931d826e21899eff5d18249f55215864bac94e",
+    "mano/webuser/posemapper.py": "d89a16128ce7db1dd57aca2460f92a7b864f4c281a0917dfa9f6005de97a2609",
+    "mano/webuser/serialization.py": "942762315d06bad3e4b57afd668f648163e3496c05edc27764c55375833b7912",
+    "mano/webuser/smpl_handpca_wrapper_HAND_only.py": "c17e7af38ab6224fae7790604d79273af22f4de0713dab26e01ee1e05b6fc5d3",
+    "mano/webuser/verts.py": "ae5658d8af884a0940ee136217d1fe0276d273460de58571dcca4796c2218c19"
   },
-  "scope": "Private runtime source snapshot, excluding MANO model weights; retain upstream licenses."
+  "scope": "Private runtime source snapshot including mano Python support code, excluding MANO model weights; retain upstream licenses.",
+  "supersedes": "v1 omitted the mano support module required by manotorch"
 }

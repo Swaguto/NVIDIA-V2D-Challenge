@@ -92,9 +92,9 @@ GPU render. See [verification status](../../docs/team/dex3-isaac-review/CONTAINE
 ## 4. Reproduce the previews
 
 Start with e011, e040 and e041. Use a fresh host output directory per batch.
-The command reruns the existing solver with 100 maximum iterations, compares
-its complete frame axis, unknown mask and qpos against frozen IK (fixed absolute
-tolerance 1e-6), renders the full sequence, and composes/verifies four videos.
+The default uses the exact recorded IK targets, renders the full sequence and
+composes/verifies four videos. This isolates the renderer/runtime migration from
+a new optimization run.
 There is no hard-coded cloud host, SSH key, expired deadline or pilot approval file.
 
 ```bash
@@ -105,8 +105,12 @@ python3 scripts/dex3_review/run_batch.py \
   --env-file docker/dex3-review/.env --episodes 2,11,12,13,18,21,23,24,31,40,41,42
 ```
 
-`--reuse-frozen-ik` skips new IK and renders the exact recorded motion targets.
-This is useful to distinguish a renderer/runtime change from a solver change.
+`--reuse-frozen-ik` explicitly selects the default. `--recompute-ik` reruns the
+existing solver with 100 maximum iterations and checks its full frame axis,
+unknown mask and qpos against frozen IK (fixed absolute tolerance 1e-6).
+The first Mac-emulated Linux reruns of e011/e021 failed this strict numerical
+comparison; joint limits and masks passed. No tolerance was loosened. Treat fresh
+IK as a diagnostic until the native Brev host has been checked.
 Fresh retarget manifest bytes include timing/runtime details; a new render binds
 to the new manifest. Video bytes may differ across GPU/driver/FFmpeg versions;
 compare frame axes, masks, numerical receipts and sampled/full playback, not only
@@ -131,10 +135,19 @@ workspace at the same container path. Keep the existing pod/volume until a verif
 copy and the new results have been checked. Exclude disposable installed virtual
 environments from transfer if desired; preserve inputs, outputs, receipts and models.
 
-`continuity-runtime-sources-v1.tar.gz` and its committed hash inventory preserve
-33 runtime source files if `runtime-additions` must be restored separately. They
+`continuity-runtime-sources-v2.tar.gz` and its committed hash inventory preserve
+the runtime source files (including the required `mano` support module) if `runtime-additions` must be restored separately. They
 exclude MANO weights. The user/team must already be licensed for the mounted
 MANO assets; the containers do not download or redistribute them.
+
+If restoring those source files separately, verify and extract them into a fresh directory:
+
+```bash
+python3 scripts/dex3_review/restore_runtime_sources.py \
+  --archive downloads/continuity-runtime-sources-v2.tar.gz \
+  --receipt docs/team/dex3-isaac-review/continuity-runtime-sources.json \
+  --out "$HOME/v2d-preserved/hand-continuity-repair/runtime-additions"
+```
 
 Set `V2D_WORKSPACE_DIR` in `.env`, then:
 

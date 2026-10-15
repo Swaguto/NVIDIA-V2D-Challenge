@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libglib2.0-0 libgomp1 libx11-6 libsm6 libxext6 \
     && rm -rf /var/lib/apt/lists/*
 COPY docker/dex3-review/continuity-runtime-lock.txt /opt/locks/continuity-runtime-lock.txt
-RUN --mount=type=cache,target=/root/.cache/pip python -m pip install --no-deps \
+RUN --mount=type=cache,target=/root/.cache/pip PIP_DEFAULT_TIMEOUT=300 PIP_RETRIES=10 python -m pip install --no-deps \
     --extra-index-url https://download.pytorch.org/whl/cu124 -r /opt/locks/continuity-runtime-lock.txt
 COPY reconstruction/modules/v2d_issue6 /opt/v2d/reconstruction/modules/v2d_issue6
 COPY reconstruction/modules/v2d_hamer/lib /opt/v2d/reconstruction/modules/v2d_hamer/lib
