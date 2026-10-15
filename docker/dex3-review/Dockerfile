@@ -36,13 +36,25 @@ LABEL org.opencontainers.image.revision=$VCS_REF \
 ENTRYPOINT ["/usr/local/bin/python", "/opt/v2d/scripts/dex3_review/container.py"]
 CMD ["doctor", "--runtime", "ik"]
 
-# Inherit the large simulator layers to avoid copying the full SDK a second time.
-FROM sim-runtime AS review
-COPY --from=ik /opt/ik /opt/ik
-COPY --from=ik /opt/locks/ik-runtime-lock.txt /opt/locks/ik-runtime-lock.txt
-COPY --from=ik /opt/v2d /opt/v2d
-ENV PYTHONPATH=/opt/v2d/robotic_grounding/source/robotic_grounding PATH=/opt/ik/bin:$PATH
-ENTRYPOINT ["/usr/local/bin/python", "/opt/v2d/scripts/dex3_review/container.py"]
+# Bound each simulator payload layer to 8 GiB for GHCR's 10 GB layer limit.
+# The large installation layer remains in the builder cache, outside the final image.
+FROM ik AS review
+COPY docker/dex3-review/copy_sim_layers.py /opt/locks/copy_sim_layers.py
+RUN --mount=from=sim-runtime,source=/opt/sim,target=/sim-source \
+    python /opt/locks/copy_sim_layers.py --source /sim-source --destination /opt/sim --part root
+RUN --mount=from=sim-runtime,source=/opt/sim,target=/sim-source \
+    python /opt/locks/copy_sim_layers.py --source /sim-source --destination /opt/sim --part 0
+RUN --mount=from=sim-runtime,source=/opt/sim,target=/sim-source \
+    python /opt/locks/copy_sim_layers.py --source /sim-source --destination /opt/sim --part 1
+RUN --mount=from=sim-runtime,source=/opt/sim,target=/sim-source \
+    python /opt/locks/copy_sim_layers.py --source /sim-source --destination /opt/sim --part 2
+RUN --mount=from=sim-runtime,source=/opt/sim,target=/sim-source \
+    python /opt/locks/copy_sim_layers.py --source /sim-source --destination /opt/sim --part 3
+RUN --mount=from=sim-runtime,source=/opt/sim,target=/sim-source \
+    python /opt/locks/copy_sim_layers.py --source /sim-source --destination /opt/sim --verify
+COPY --from=sim-runtime /opt/IsaacLab /opt/IsaacLab
+COPY --from=sim-runtime /opt/locks/setup_sim6.py /opt/locks/setup_sim6.py
+COPY --from=sim-runtime /opt/locks/sim6-runtime-lock.txt /opt/locks/sim6-runtime-lock.txt
 # The original IK and simulator environments intentionally keep separate NumPy/Torch closures.
 ENV V2D_SIM_PYTHON=/opt/sim/bin/python V2D_LAB=/opt/IsaacLab
 RUN mkdir -p /outputs /cache /data && \

@@ -82,6 +82,11 @@ docker compose --env-file docker/dex3-review/.env \
   -f docker/dex3-review/compose.yaml run --rm review doctor --runtime all --gpu
 ```
 
+The review image copies the already installed simulator prefix into payload layers
+of at most 8 GiB, then verifies every installed file's bytes/mode and each symlink
+against the builder. This stays below GHCR's 10 GB layer limit without changing
+runtime package versions. The builder cache itself is not published.
+
 The image build needs network access for package registries and the pinned public
 Isaac Lab checkout. Cold extension/shader startup can take several minutes.
 Version/import checks and `nvidia-smi` do not establish RTX rendering success.
@@ -109,8 +114,11 @@ python3 scripts/dex3_review/run_batch.py \
 existing solver with 100 maximum iterations and checks its full frame axis,
 unknown mask and qpos against frozen IK (fixed absolute tolerance 1e-6).
 The first Mac-emulated Linux reruns of e011/e021 failed this strict numerical
-comparison; joint limits and masks passed. No tolerance was loosened. Treat fresh
-IK as a diagnostic until the native Brev host has been checked.
+comparison; joint limits and masks passed. On the native x86 Brev L40S host,
+both episodes passed at the unchanged 1e-6 tolerance (maximum differences
+4.22e-14 and 1.77e-12 respectively). The Mac failures remain in the receipts.
+The strict comparison still runs for every requested fresh IK episode; two passes
+do not establish numerical identity for every episode or host.
 Fresh retarget manifest bytes include timing/runtime details; a new render binds
 to the new manifest. Video bytes may differ across GPU/driver/FFmpeg versions;
 compare frame axes, masks, numerical receipts and sampled/full playback, not only
@@ -216,3 +224,22 @@ explicitly keep gravity/collision response off and directly assign object poses.
 Turning on gravity alone does not turn this replay into a learned policy or an
 unassisted grasp test. The current official Track 3 policy runtime and six-metric
 submission kit must be validated separately before a final evaluation claim.
+
+## 7. End each Brev session
+
+Stop compute when it is no longer in use. Prefer a provider marked `stoppable`
+when the team needs to preserve a VM between sessions. After copying the results,
+use the exact instance name and verify the resulting state:
+
+```bash
+brev stop YOUR_INSTANCE_NAME
+brev ls --json
+```
+
+Some providers, including the temporary `massedcompute_L40S` build VM, are listed
+as non-stoppable. A paused container or disconnected SSH session does not release
+that VM. Copy and verify source, image archives and results first, then delete the
+temporary VM with the owner's confirmation and verify it is absent from `brev ls`.
+Do not delete the original RunPod workspace as part of this procedure.
+
+See [Brev instance lifecycle commands](https://docs.nvidia.com/brev/cli/instance-management).
