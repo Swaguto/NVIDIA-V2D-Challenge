@@ -36,17 +36,20 @@ LABEL org.opencontainers.image.revision=$VCS_REF \
 ENTRYPOINT ["/usr/local/bin/python", "/opt/v2d/scripts/dex3_review/container.py"]
 CMD ["doctor", "--runtime", "ik"]
 
-FROM ik AS review
-COPY --from=sim-runtime /opt/sim /opt/sim
-COPY --from=sim-runtime /opt/IsaacLab /opt/IsaacLab
-COPY --from=sim-runtime /opt/locks/setup_sim6.py /opt/locks/setup_sim6.py
-COPY --from=sim-runtime /opt/locks/sim6-runtime-lock.txt /opt/locks/sim6-runtime-lock.txt
+# Inherit the large simulator layers to avoid copying the full SDK a second time.
+FROM sim-runtime AS review
+COPY --from=ik /opt/ik /opt/ik
+COPY --from=ik /opt/locks/ik-runtime-lock.txt /opt/locks/ik-runtime-lock.txt
+COPY --from=ik /opt/v2d /opt/v2d
+ENV PYTHONPATH=/opt/v2d/robotic_grounding/source/robotic_grounding PATH=/opt/ik/bin:$PATH
+ENTRYPOINT ["/usr/local/bin/python", "/opt/v2d/scripts/dex3_review/container.py"]
 # The original IK and simulator environments intentionally keep separate NumPy/Torch closures.
 ENV V2D_SIM_PYTHON=/opt/sim/bin/python V2D_LAB=/opt/IsaacLab
 RUN mkdir -p /outputs /cache /data && \
     /opt/sim/bin/python -c 'import cv2; from PIL import Image; print("Media imports passed")'
 ARG VCS_REF=unknown
 LABEL org.opencontainers.image.title="V2D hand continuity and Dex3 review" \
+    org.opencontainers.image.source="https://github.com/Swaguto/NVIDIA-V2D-Challenge" \
     org.opencontainers.image.revision=$VCS_REF \
     org.opencontainers.image.description="Pinned kinematic preview runtime; physical grasp and policy evaluation remain unvalidated"
 CMD ["doctor", "--runtime", "all"]

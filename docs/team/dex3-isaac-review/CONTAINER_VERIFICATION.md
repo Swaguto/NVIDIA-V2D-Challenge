@@ -29,7 +29,8 @@ frozen targets. New IK remains a diagnostic until checked on the native target h
 
 ## In progress / remaining
 
-The full Isaac image is still downloading its official 5.9 GB extension-cache wheel.
+The full Isaac image downloaded its official 5.9 GB extension-cache wheel and is
+now downloading the remaining SDK/runtime dependencies.
 Its final build, package check and complete three-image export are pending. Current
 image IDs and the producing commit are recorded in `receipts/container/`.
 
