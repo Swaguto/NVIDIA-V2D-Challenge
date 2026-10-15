@@ -12,6 +12,10 @@ export OMP_NUM_THREADS="${OMP_NUM_THREADS:-4}"
 [[ ! -e "$OUT" ]] || { echo "Preserve existing experiment: $OUT" >&2; exit 1; }
 mkdir -p "$(dirname "$OUT")"
 mkdir "$OUT"
+FLOW_ARGS=(--image-flow)
+if [[ "${BIDIRECTIONAL_FLOW:-0}" == "1" ]]; then
+    FLOW_ARGS+=(--bidirectional-image-flow)
+fi
 [[ $# -gt 0 ]] || set -- 12 40
 for episode in "$@"; do
     [[ "$episode" =~ ^[0-9]+$ ]] || { echo "Invalid episode: $episode" >&2; exit 1; }
@@ -25,7 +29,7 @@ for episode in "$@"; do
         --smooth-seconds 0.08 --prior-weight 0.01
     "$PY" "$runner" --input-root "$INPUT_ROOT" --episode "$episode" --modules "$modules" \
         --output "$OUT/gap-recovery/$label" --prior-records "$OUT/surface-prior/$label/align/records" \
-        --image-fit --image-flow
+        --image-fit "${FLOW_ARGS[@]}"
     "$PY" "$runner" --input-root "$INPUT_ROOT" --episode "$episode" --modules "$modules" \
         --output "$OUT/runs/$label" --prior-records "$OUT/gap-recovery/$label/align/records" \
         --smooth-seconds 0.08 --prior-weight 0.01

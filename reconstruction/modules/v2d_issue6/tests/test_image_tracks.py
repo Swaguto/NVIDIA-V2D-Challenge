@@ -29,3 +29,38 @@ def test_an_unobserved_track_is_never_initialized_from_background(tmp_path):
     cv2.imwrite(str(p), np.zeros((80, 80), np.uint8))
     result = propagate_landmarks([p, p], [None, None], [None, None], [0, 0.05])
     assert not result.any()
+
+
+def test_future_observation_recovers_earlier_pixels_without_extending_time_limit(tmp_path):
+    from issue6.image_tracks import propagate_landmarks_bidirectional
+
+    image = np.zeros((80, 80), np.uint8)
+    image[10:55, 10:55] = np.random.default_rng(7).integers(20, 240, (45, 45), dtype=np.uint8)
+    paths = []
+    for i in range(3):
+        p = tmp_path / f"{i}.png"
+        cv2.imwrite(str(p), cv2.warpAffine(image, np.float32([[1, 0, i * 2], [0, 1, i * 3]]), (80, 80)))
+        paths.append(p)
+    mask = tmp_path / "mask.png"
+    cv2.imwrite(str(mask), (cv2.imread(str(paths[-1]), 0) > 0).astype(np.uint8) * 255)
+    kp = np.array([[x + 4, y + 6, 1] for y in (20, 30, 40) for x in (15, 20, 25, 30, 35, 40, 45)], float)
+    result = propagate_landmarks_bidirectional(paths, [None, None, mask], [None, None, kp], [0, 0.05, 0.1])
+    valid = result[0, :, 2] > 0
+    assert valid.sum() >= 15
+    np.testing.assert_allclose(result[0, valid, :2], kp[valid, :2] - [4, 6], atol=0.5)
+    expired = propagate_landmarks_bidirectional(paths, [None, None, mask], [None, None, kp], [0, 1, 2])
+    assert not expired[0].any()
+    np.testing.assert_array_equal(expired[2], kp)
+
+
+def test_disagreeing_past_and_future_tracks_are_rejected(monkeypatch):
+    import issue6.image_tracks as tracking
+
+    forward = np.ones((3, 21, 3))
+    forward[..., :2] = 10
+    backward = np.ones((3, 21, 3))
+    backward[..., :2] = 30
+    answers = iter([forward, backward])
+    monkeypatch.setattr(tracking, "propagate_landmarks", lambda *args: next(answers))
+    result = tracking.propagate_landmarks_bidirectional([None] * 3, [None] * 3, [None] * 3, [0, 0.05, 0.1])
+    assert not result.any()

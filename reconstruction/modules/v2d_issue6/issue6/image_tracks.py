@@ -70,3 +70,25 @@ def propagate_landmarks(images, masks, observations, times, max_gap_seconds=1.5)
             active[:] = False
         previous = gray
     return result
+
+
+def propagate_landmarks_bidirectional(images, masks, observations, times, max_gap_seconds=1.5):
+    """Use past and future image anchors with the same bounded tracking checks."""
+    forward = propagate_landmarks(images, masks, observations, times, max_gap_seconds)
+    backward = propagate_landmarks(
+        images[::-1], masks[::-1], observations[::-1], -np.asarray(times)[::-1], max_gap_seconds
+    )[::-1]
+    result = forward.copy()
+    for i, observed in enumerate(observations):
+        if observed is not None:
+            continue
+        a, b = forward[i, :, 2] > 0, backward[i, :, 2] > 0
+        only_future = b & ~a
+        result[i, only_future] = backward[i, only_future]
+        both = a & b
+        agree = both & (np.linalg.norm(forward[i, :, :2] - backward[i, :, :2], axis=1) <= 1.5)
+        result[i, both & ~agree] = 0
+        result[i, agree, :2] = (forward[i, agree, :2] + backward[i, agree, :2]) / 2
+        if np.count_nonzero(result[i, :, 2]) < 4:
+            result[i] = 0
+    return result

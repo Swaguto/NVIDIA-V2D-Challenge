@@ -53,6 +53,7 @@ def repair(
     smooth_seconds=0.15,
     prior_weight=0.05,
     image_flow=False,
+    bidirectional_image_flow=False,
 ):
     label = f"e{episode:03d}"
     cache = input_root / "issue6-quality-cache/episodes" / label
@@ -318,11 +319,17 @@ def repair(
                     mask_paths.append(mask if mask.exists() else None)
                     image_paths.append(output / "align/frames" / f"{f['id']:06d}.png")
                 if image_flow:
-                    from issue6.image_tracks import propagate_landmarks
-
-                    kp = propagate_landmarks(
-                        image_paths, mask_paths, observation_rows, times
+                    from issue6.image_tracks import (
+                        propagate_landmarks,
+                        propagate_landmarks_bidirectional,
                     )
+
+                    tracker = (
+                        propagate_landmarks_bidirectional
+                        if bidirectional_image_flow
+                        else propagate_landmarks
+                    )
+                    kp = tracker(image_paths, mask_paths, observation_rows, times)
                 else:
                     for i, observed in enumerate(observation_rows):
                         if observed is not None:
@@ -392,6 +399,7 @@ def repair(
                     side == "right",
                 )
                 image_receipt["image_flow"] = image_flow
+                image_receipt["bidirectional_image_flow"] = bidirectional_image_flow
                 image_receipt["flow_supported_frames"] = [
                     f["id"]
                     for f in frames
@@ -499,6 +507,7 @@ def repair(
             "image_fit": image_fit,
             "maximum_visual_gap_seconds": 1.5,
             "image_flow": image_flow,
+            "bidirectional_image_flow": bidirectional_image_flow,
             "prior_records": str(prior_records) if prior_records else None,
             "cad_foreground_margin_m": 0.005,
             "minimum_pixels": config["minimum_pixels"],
@@ -518,6 +527,7 @@ if __name__ == "__main__":
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--image-fit", action="store_true")
     p.add_argument("--image-flow", action="store_true")
+    p.add_argument("--bidirectional-image-flow", action="store_true")
     p.add_argument("--prior-records", type=Path)
     p.add_argument("--smooth-seconds", type=float, default=0.15)
     p.add_argument("--prior-weight", type=float, default=0.05)
@@ -531,5 +541,6 @@ if __name__ == "__main__":
         a.prior_records,
         a.smooth_seconds,
         a.prior_weight,
-        a.image_flow,
+        a.image_flow or a.bidirectional_image_flow,
+        a.bidirectional_image_flow,
     )

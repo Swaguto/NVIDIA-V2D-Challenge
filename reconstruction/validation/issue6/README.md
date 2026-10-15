@@ -464,3 +464,13 @@ combined renderer reads source images from the executed manifest, so duplicate
 depth or hand mask is an input recovery problem; display continuity cannot
 replace those inputs. Broad evaluation must report unavailable episodes and
 remaining unknown frames explicitly.
+
+For offline gaps with reliable observations on both sides, set
+`BIDIRECTIONAL_FLOW=1` when running the review script. This checks image motion
+backward from future observations as well as forward from past observations.
+Both directions retain the 1.5 second anchor limit and existing forward/backward
+checks. Where both predict a landmark, they must agree within 1.5 pixels or that
+landmark is discarded. Remaining visual bridging still requires finite fitted
+geometry and endpoints within 1.5 seconds. These additional tracks remain
+inferred and cannot promote contact validity. The forward-only mode remains
+available for reproducing earlier receipts.
