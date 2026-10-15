@@ -1,9 +1,9 @@
 name: Dex3 physics and reference controls
 on:
   push:
-    paths: ['scripts/dex3_physics/**', 'scripts/reproduction/**', 'docker/dex3-review/physics.compose.yaml', '.github/workflows/dex3-physics-controls.yml']
+    paths: ['scripts/dex3_physics/**', 'scripts/dex3_training/**', 'scripts/reproduction/**', 'docker/dex3-training/**', 'docker/dex3-review/physics.compose.yaml', '.github/workflows/dex3-physics-controls.yml']
   pull_request:
-    paths: ['scripts/dex3_physics/**', 'scripts/reproduction/**', 'docker/dex3-review/physics.compose.yaml', '.github/workflows/dex3-physics-controls.yml']
+    paths: ['scripts/dex3_physics/**', 'scripts/dex3_training/**', 'scripts/reproduction/**', 'docker/dex3-training/**', 'docker/dex3-review/physics.compose.yaml', '.github/workflows/dex3-physics-controls.yml']
 jobs:
   cpu-controls:
     runs-on: ubuntu-latest
@@ -13,7 +13,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install pytest==8.4.2 numpy==2.2.6 scipy==1.15.3 trimesh==4.5.1 pyarrow==18.1.0
-      - run: python -m pytest scripts/reproduction/tests scripts/dex3_physics/tests -q
+      - run: python -m pytest scripts/reproduction/tests scripts/dex3_physics/tests scripts/dex3_training/tests -q
       - name: Check physics Compose overlay
         env:
           V2D_DATA_DIR: /tmp/data
@@ -21,3 +21,8 @@ jobs:
           V2D_CODE_DIR: /tmp/code
           V2D_PHYSICS_ARCHIVE: /tmp/input-pack.tar.gz
         run: docker compose -f docker/dex3-review/compose.yaml -f docker/dex3-review/physics.compose.yaml config --quiet
+      - name: Check training Compose
+        env:
+          DEX3_TRAINING_INPUTS: /tmp/data
+          DEX3_TRAINING_OUTPUTS: /tmp/out
+        run: docker compose -f docker/dex3-training/compose.yaml config --quiet

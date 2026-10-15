@@ -66,7 +66,7 @@ def inventory(
         "scored_episodes": [int(key) for key in episodes],
         "required_mesh_pairs": sum(len(objects) for objects in episodes.values()),
         "checkpoint_template": {
-            key: f"/path/to/checkpoints/episode_{int(key):06d}.pt" for key in episodes
+            key: f"/path/to/checkpoints/episode_{int(key):06d}.safetensors" for key in episodes
         },
         "present_checkpoint_files": present_checkpoints,
         "missing_checkpoints": missing_checkpoints,

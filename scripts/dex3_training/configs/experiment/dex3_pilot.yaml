@@ -1,0 +1,65 @@
+# @package _global_
+# A short, unassisted development pilot; no measured Dex3 contact labels exist.
+defaults:
+  - override /embodiment: dex3_hands
+  - override /collision: physical
+  - _self_
+
+task:
+  parquet: /data/reference.parquet
+  motion_speed: 1.0
+  source_frame_playback: false
+  motion_start_frame: 0
+  motion_end_frame: -1
+scene:
+  world_count: 64
+  support: true
+  contact_friction: 1.0
+collision:
+  ground: false
+action:
+  wrist_kp: 12.0
+  wrist_tau_max: 60.0
+objective:
+  _target_: v2d_dex3_flashchord.objective.Dex3ObjectiveConfig
+  object_keypoints:
+    weight: 1.0
+    var: 0.02
+  hand_keypoints:
+    weight: 0.25
+  hand_joint_pos:
+    weight: 0.05
+  contact_wrench_support:
+    enabled: false
+    weight: 0.0
+  missed_contact:
+    enabled: false
+    weight: 0.0
+  unintended_contact:
+    enabled: false
+    weight: 0.0
+env:
+  voc_scale: 0.0
+curriculum: null
+voc_scale_override: 0.0
+reset:
+  reset_finger_openness: 1.0
+  always_reset_to_first_frame: true
+  reset_to_first_frame_probability: 1.0
+  voc_decay_steps: 0
+logging:
+  mode: disabled
+  experiment: dex3-development
+  run_name: unassisted-pilot
+  upload_checkpoints: false
+  upload_training_state: false
+training:
+  max_iterations: 100
+  save_interval: 25
+  network:
+    actor_hidden_dims: [128, 128]
+    critic_hidden_dims: [128, 128]
+  ppo:
+    learning_epochs: 3
+    mini_batches: 4
+output_dir: /outputs/ppo

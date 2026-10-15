@@ -93,6 +93,148 @@ def object_tracking_summary(rows):
     return result
 
 
+def apply_grasp_seeds(samples, proposal):
+    """Apply bounded robot-only seeds after matching each original source pose."""
+    import copy
+    import numpy as np
+    from scipy.spatial.transform import Rotation
+
+    if (
+        proposal["schema"] != "v2d.dex3-antipodal-seed.v1"
+        or proposal["physical_task_accepted"]
+    ):
+        raise ValueError("Need explicit unaccepted geometric grasp seeds")
+    result = copy.deepcopy(samples)
+    changed = []
+    for record in proposal["results"]:
+        candidate = record["candidate"]
+        if candidate is None:
+            continue
+        matches = [s for s in result if s["prefix"] == record["sample"]]
+        if len(matches) != 1:
+            raise ValueError("Grasp seed does not identify one source sample")
+        sample = matches[0]
+        source = record["source_sample"]
+        for key in ("source_frame", "object", "side"):
+            if sample[key] != source[key]:
+                raise ValueError("Grasp seed source identity differs")
+        for key in (
+            "hand_position_stage_m",
+            "hand_quaternion_stage_xyzw",
+            "object_position_stage_m",
+            "object_quaternion_stage_xyzw",
+        ):
+            if not np.allclose(sample[key], source[key], atol=1e-6, rtol=0):
+                raise ValueError("Grasp seed source pose differs")
+        original = dict(
+            zip(sample["joint_names"], sample["finger_target_rad"], strict=True)
+        )
+        old = dict(zip(source["joint_names"], source["finger_target_rad"], strict=True))
+        new = dict(
+            zip(candidate["joint_names"], candidate["finger_target_rad"], strict=True)
+        )
+        if set(new) != set(original) or any(
+            abs(original[n] - old[n]) > 1e-6 for n in original
+        ):
+            raise ValueError("Grasp seed finger names/source values differ")
+        values = np.array(list(new.values()))
+        pos = np.array(candidate["hand_position_stage_m"])
+        quat = np.array(candidate["hand_quaternion_stage_xyzw"])
+        geometry = np.array(
+            [
+                candidate["pad_escape_direction_dot"],
+                candidate["maximum_piece_penetration_lower_bound_m"],
+            ]
+        )
+        if (
+            not np.isfinite(np.r_[values, pos, quat, geometry]).all()
+            or abs(np.linalg.norm(quat) - 1) > 1e-6
+        ):
+            raise ValueError("Nonfinite or invalid grasp seed")
+        angle = (
+            Rotation.from_quat(quat)
+            * Rotation.from_quat(sample["hand_quaternion_stage_xyzw"]).inv()
+        ).magnitude()
+        if (
+            np.max(np.abs(pos - sample["hand_position_stage_m"])) > 0.030001
+            or angle > 0.5
+            or max(abs(new[n] - original[n]) for n in original) > 0.600001
+            or candidate["pad_escape_direction_dot"] > -0.5
+            or candidate["pad_escape_direction_dot"] < -1.000001
+            or candidate["maximum_piece_penetration_lower_bound_m"] < 0
+            or candidate["maximum_piece_penetration_lower_bound_m"] > 0.003
+        ):
+            raise ValueError("Grasp seed exceeds the declared geometric search bounds")
+        sample["hand_position_stage_m"] = pos.tolist()
+        sample["hand_quaternion_stage_xyzw"] = quat.tolist()
+        sample["finger_target_rad"] = [new[n] for n in sample["joint_names"]]
+        sample["robot_grasp_seed_is_experimental"] = True
+        changed.append(sample["prefix"])
+    if not changed or len(set(changed)) != len(changed):
+        raise ValueError("Need unique nonempty grasp seed changes")
+    return result, changed
+
+
+def acquisition_pairs(originals, seeded):
+    """Matched source/seed fixtures, with the same initial fingers and support."""
+    import copy
+    import numpy as np
+
+    result, changed = [], []
+    for candidate in seeded:
+        if not candidate.get("robot_grasp_seed_is_experimental"):
+            continue
+        source_index = next(
+            i for i, s in enumerate(originals) if s["prefix"] == candidate["prefix"]
+        )
+        original = originals[source_index]
+        for variant, value in (("baseline", original), ("antipodal", candidate)):
+            sample = copy.deepcopy(value)
+            shift = np.array([3.0 * (len(result) - source_index), 0.0, 0.0])
+            for key in ("hand_position_stage_m", "object_position_stage_m"):
+                sample[key] = (np.asarray(sample[key]) + shift).tolist()
+            sample["source_grasp_prefix"] = original["prefix"]
+            sample["prefix"] += "-" + variant
+            sample["variant"] = variant
+            sample["finger_initial_rad"] = original["finger_target_rad"].copy()
+            result.append(sample)
+            if variant == "antipodal":
+                changed.append(sample["prefix"])
+    if len(result) != 4:
+        raise ValueError(
+            "Controlled acquisition currently needs two complete paired source/seed grasps"
+        )
+    return result, changed
+
+
+def acquisition_support(vertices, position, quaternion):
+    """A finite diagnostic tray under the mesh's nearly horizontal thin axis."""
+    import numpy as np
+    from scipy.spatial.transform import Rotation
+
+    vertices = np.asarray(vertices, dtype=float)
+    _, vectors = np.linalg.eigh(np.cov(vertices.T))
+    normal = Rotation.from_quat(quaternion).apply(vectors[:, 0])
+    if normal[2] < 0:
+        normal = -normal
+    if normal[2] < 0.7:
+        raise ValueError(
+            "Controlled acquisition tray requires a nearly horizontal thin object"
+        )
+    rotation = Rotation.align_vectors(normal[None], np.array([[0.0, 0.0, 1.0]]))[0]
+    points = rotation.inv().apply(Rotation.from_quat(quaternion).apply(vertices))
+    lower, upper = points.min(0), points.max(0)
+    thickness = 0.02
+    center = np.r_[(lower[:2] + upper[:2]) / 2, lower[2] - 0.0001 - thickness / 2]
+    return dict(
+        position_stage_m=(rotation.apply(center) + position).tolist(),
+        quaternion_stage_xyzw=rotation.as_quat().tolist(),
+        dimensions_m=np.r_[upper[:2] - lower[:2] + 0.04, thickness].tolist(),
+        initial_minimum_clearance_m=0.0001,
+        scope="temporary diagnostic tray; not reconstructed source support or an evaluation scene",
+    )
+
+
 def prepare(
     case: Path,
     repo: Path,
@@ -105,6 +247,9 @@ def prepare(
     free_space: bool = False,
     source_duration_s: float | None = None,
     physics_dt: float = 0.01,
+    grasp_seed: Path | None = None,
+    grasp_seed_sha256: str | None = None,
+    controlled_acquisition: bool = False,
 ) -> dict:
     """Validate byte/coordinate contracts and build portable nominal load inputs."""
     import numpy as np
@@ -133,6 +278,8 @@ def prepare(
         raise ValueError("Wrist diagnostic options require supported-task mode")
     if out.exists():
         raise FileExistsError("Use a fresh load-input directory")
+    if controlled_acquisition and (grasp_seed is None or task_motion is not None):
+        raise ValueError("Controlled acquisition requires static mode and grasp seeds")
     files = json.loads((case / "file-manifest.json").read_text())["files_sha256"]
     for name, expected in files.items():
         path = case / name
@@ -228,6 +375,17 @@ def prepare(
                 )
     if not samples:
         raise ValueError("No source-derived closed grasps to test")
+    seed_changes = []
+    if grasp_seed is not None:
+        if task_motion is not None or digest(grasp_seed) != grasp_seed_sha256:
+            raise ValueError("Grasp seed requires static mode and its exact SHA256")
+        originals = samples
+        samples, seed_changes = apply_grasp_seeds(
+            samples, json.loads(grasp_seed.read_text())
+        )
+        if controlled_acquisition:
+            samples, seed_changes = acquisition_pairs(originals, samples)
+        (out / "grasp-seeds.json").write_bytes(grasp_seed.read_bytes())
     if task_motion is not None:
         producer = json.loads((case / "proposal/report.json").read_text())
         if digest(task_motion) != producer["motion_module_sha256"]:
@@ -287,6 +445,12 @@ def prepare(
             source[f"object_{oi}_vertices"] * sample["object_scale_at_selected_frame"]
         )
         faces = source[f"object_{oi}_faces"]
+        if controlled_acquisition:
+            sample["acquisition_support"] = acquisition_support(
+                vertices,
+                np.asarray(sample["object_position_stage_m"]),
+                sample["object_quaternion_stage_xyzw"],
+            )
         mesh = trimesh.Trimesh(vertices=vertices, faces=faces, process=False)
         mesh_file = objects_dir / f"{sample['prefix']}.obj"
         mesh.export(mesh_file, include_normals=False, include_color=False, digits=10)
@@ -337,11 +501,16 @@ def prepare(
         "nominal_object_inertia_diagonal_kg_m2": [0.001] * 3,
         "mass_and_inertia_are_existing_generator_defaults_not_measurements": True,
         "fixed_wrists_are_a_fixture_not_whole_body_feasibility": task_motion is None,
-        "source_observations_or_robot_motion_changed": False,
+        "source_observations_or_robot_motion_changed": bool(seed_changes),
+        "source_observations_changed": False,
+        "experimental_grasp_seed_samples": seed_changes,
+        "grasp_seed_sha256": grasp_seed_sha256,
         "per_frame_source_scale_preserved_for_each_static_fixture": task_motion is None,
         "whole_body_feasibility_claimed": False,
         "physical_task_accepted": False,
         "supported_task_mode": task_motion is not None,
+        "controlled_acquisition": controlled_acquisition,
+        "temporary_support_release_s": 0.5 if controlled_acquisition else None,
     }
     if task_motion is not None:
         result.update(
@@ -530,6 +699,8 @@ def execute(
     light = sim_utils.DomeLightCfg(intensity=1800.0)
     light.func("/World/Light", light)
     hands, objects, sensors, cameras, provenance = [], [], [], [], []
+    acquisition_mode = prepared.get("controlled_acquisition", False)
+    acquisition_platforms = []
 
     if task_mode:
         sheet_file = inputs / "inferred-support-sheet.npz"
@@ -762,6 +933,33 @@ def execute(
             }
         )
 
+    if acquisition_mode:
+        for index, sample in enumerate(prepared["samples"]):
+            support = sample["acquisition_support"]
+            path = f"/World/AcquisitionSupport{index}"
+            root = UsdGeom.Xform.Define(sim.stage, path)
+            root.AddTranslateOp().Set(Gf.Vec3d(*support["position_stage_m"]))
+            q = support["quaternion_stage_xyzw"]
+            root.AddOrientOp().Set(Gf.Quatf(float(q[3]), Gf.Vec3f(*q[:3])))
+            box = UsdGeom.Cube.Define(sim.stage, path + "/Box")
+            box.CreateSizeAttr(1.0)
+            box.AddScaleOp().Set(Gf.Vec3f(*support["dimensions_m"]))
+            collision = UsdPhysics.CollisionAPI.Apply(box.GetPrim())
+            collision.CreateCollisionEnabledAttr(True)
+            physx = PhysxSchema.PhysxCollisionAPI.Apply(box.GetPrim())
+            physx.CreateContactOffsetAttr(0.0)
+            physx.CreateRestOffsetAttr(0.0)
+            material = bind_material(path, 1.0)
+            acquisition_platforms.append(
+                dict(
+                    prim=path + "/Box",
+                    material=material,
+                    initial_collision_enabled=bool(
+                        collision.GetCollisionEnabledAttr().Get()
+                    ),
+                    pose_and_dimensions=support,
+                )
+            )
     if task_mode:
         with np.load(case / "bundle/episode.npz", allow_pickle=False) as source:
             image_width, image_height = map(int, source["image_size"])
@@ -800,7 +998,7 @@ def execute(
         )
     # Two independent physics controls: unsupported free fall and a sphere on a local fixed platform.
     control_objects, control_sensors = [], []
-    for index, x in enumerate((14.0, 16.0)):
+    for index, x in enumerate((14.0, 16.0, 18.0) if acquisition_mode else (14.0, 16.0)):
         cfg = RigidObjectCfg(
             prim_path=f"/World/Control{index}/Ball",
             spawn=sim_utils.SphereCfg(
@@ -830,6 +1028,17 @@ def execute(
     platform_cfg.func(
         "/World/Control1/Platform", platform_cfg, translation=(16.0, 0.0, 0.0)
     )
+    release_control_platforms = []
+    if acquisition_mode:
+        box = UsdGeom.Cube.Define(sim.stage, "/World/Control2/Platform")
+        box.CreateSizeAttr(1.0)
+        box.AddTranslateOp().Set(Gf.Vec3d(18.0, 0.0, 0.0))
+        box.AddScaleOp().Set(Gf.Vec3f(0.5, 0.5, 0.05))
+        UsdPhysics.CollisionAPI.Apply(box.GetPrim()).CreateCollisionEnabledAttr(True)
+        px = PhysxSchema.PhysxCollisionAPI.Apply(box.GetPrim())
+        px.CreateContactOffsetAttr(0.0)
+        px.CreateRestOffsetAttr(0.0)
+        release_control_platforms.append(dict(prim="/World/Control2/Platform"))
     if task_mode:
         # Sim6's importer activates contact reporting only on the root body.
         # Pair-wise finger measurements need reporting on every real hand body.
@@ -855,7 +1064,7 @@ def execute(
             ),
             torch.tensor(position[None], dtype=torch.float32, device=sim.device),
         )
-    targets = []
+    targets, initial_targets = [], []
     for hand, sample in zip(hands, prepared["samples"], strict=True):
         values = dict(
             zip(sample["joint_names"], sample["finger_target_rad"], strict=True)
@@ -869,12 +1078,27 @@ def execute(
             dtype=torch.float32,
             device=sim.device,
         )
-        hand.write_joint_state_to_sim(q, torch.zeros_like(q))
-        hand.set_joint_position_target(q)
+        initial_values = dict(
+            zip(
+                sample["joint_names"],
+                sample["finger_initial_rad"]
+                if acquisition_mode
+                else sample["finger_target_rad"],
+                strict=True,
+            )
+        )
+        initial_q = torch.tensor(
+            [[initial_values[name] for name in hand.joint_names]],
+            dtype=torch.float32,
+            device=sim.device,
+        )
+        hand.write_joint_state_to_sim(initial_q, torch.zeros_like(q))
+        hand.set_joint_position_target(initial_q)
         hand.write_data_to_sim()
         # Reuse the frozen renderer's explicit FK refresh before the first render/contact step.
         _ = hand.data.body_link_pose_w
         targets.append(q)
+        initial_targets.append(initial_q)
     for obj in objects + control_objects:
         # One initialization only. No object state writes or external forces during load.
         obj.write_root_state_to_sim(obj.data.default_root_state.clone())
@@ -911,7 +1135,7 @@ def execute(
     sim.render()
     initial_readback = []
     for hand, obj, target, sample in zip(
-        hands, objects, targets, prepared["samples"], strict=True
+        hands, objects, initial_targets, prepared["samples"], strict=True
     ):
         record = {"sample": sample["prefix"]}
         for asset, prefix in ((hand, "hand"), (obj, "object")):
@@ -939,7 +1163,30 @@ def execute(
             for name, pose in zip(hand.body_names, body_poses, strict=True)
         }
         initial_readback.append(record)
-    for step in range(101):
+    last_step = 150 if acquisition_mode else 100
+    load_start_step = 50 if acquisition_mode else 0
+    release_readback = []
+    for step in range(last_step + 1):
+        if acquisition_mode and step == 50:
+            for support in acquisition_platforms + release_control_platforms:
+                prim = sim.stage.GetPrimAtPath(support["prim"])
+                api = UsdPhysics.CollisionAPI(prim)
+                before = bool(api.GetCollisionEnabledAttr().Get())
+                api.GetCollisionEnabledAttr().Set(False)
+                UsdGeom.Imageable(prim).MakeInvisible()
+                after = bool(api.GetCollisionEnabledAttr().Get())
+                if not before or after:
+                    raise RuntimeError("Diagnostic tray collision did not switch off")
+                release_readback.append(
+                    dict(
+                        prim=support["prim"],
+                        step=step,
+                        before_enabled=before,
+                        after_enabled=after,
+                        visibility=UsdGeom.Imageable(prim).GetVisibilityAttr().Get(),
+                    )
+                )
+            sim.render()
         for index, (obj, sensor, hand, sample) in enumerate(
             zip(objects, sensors, hands, prepared["samples"], strict=True)
         ):
@@ -953,6 +1200,13 @@ def execute(
                     "step": step,
                     "time_s": step * dt,
                     "sample_index": index,
+                    "phase": (
+                        "support_release_boundary"
+                        if acquisition_mode and step == 50
+                        else "supported_closure"
+                        if acquisition_mode and step < 50
+                        else "unsupported_load"
+                    ),
                     "object_root_state_stage_xyzw": state.tolist(),
                     "contact_force_stage_N": contact.tolist(),
                     "finger_position_rad_sim_order": joint.tolist(),
@@ -967,6 +1221,8 @@ def execute(
         for index, (obj, sensor) in enumerate(
             zip(control_objects, control_sensors, strict=True)
         ):
+            if step > 100 and index != 2:
+                continue
             control_records.append(
                 {
                     "step": step,
@@ -995,7 +1251,7 @@ def execute(
                 bgr = cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR)
                 cv2.putText(
                     bgr,
-                    f"{sample['side']} object {sample['object']} frame {sample['source_frame']}",
+                    f"{sample['side']} f{sample['source_frame']} {sample.get('variant', '')}",
                     (6, 18),
                     cv2.FONT_HERSHEY_SIMPLEX,
                     0.4,
@@ -1004,7 +1260,7 @@ def execute(
                 )
                 cv2.putText(
                     bgr,
-                    f"gravity/contact ON   t={step * dt:.2f}s",
+                    f"gravity ON; tray {'ON' if acquisition_mode and step < 50 else 'OFF'}  t={step * dt:.2f}s",
                     (6, 38),
                     cv2.FONT_HERSHEY_SIMPLEX,
                     0.4,
@@ -1013,10 +1269,12 @@ def execute(
                 )
                 images.append(bgr)
             frames.append(np.concatenate(images, axis=1))
-        if step == 100:
+        if step == last_step:
             break
-        for hand, target in zip(hands, targets, strict=True):
-            hand.set_joint_position_target(target)
+        blend = min(1.0, (step + 1) / 25.0) if acquisition_mode else 1.0
+        blend = blend * blend * (3 - 2 * blend)
+        for hand, target, initial in zip(hands, targets, initial_targets, strict=True):
+            hand.set_joint_position_target(initial + blend * (target - initial))
             hand.write_data_to_sim()
         sim.step(render=step % 5 == 4)
         for asset in hands + objects + control_objects:
@@ -1028,19 +1286,31 @@ def execute(
         rows = [row for row in records if row["sample_index"] == index]
         positions = np.array([row["object_root_state_stage_xyzw"][:3] for row in rows])
         quats = np.array([row["object_root_state_stage_xyzw"][3:7] for row in rows])
-        distance = np.linalg.norm(positions - positions[0], axis=1)
+        distance = np.linalg.norm(
+            positions[load_start_step:] - positions[load_start_step], axis=1
+        )
         angles = (
-            Rotation.from_quat(quats) * Rotation.from_quat(quats[0]).inv()
+            Rotation.from_quat(quats[load_start_step:])
+            * Rotation.from_quat(quats[load_start_step]).inv()
         ).magnitude()
         forces = np.array([row["contact_force_stage_N"] for row in rows])
         summaries.append(
             {
                 "sample": sample["prefix"],
                 "source_frame": sample["source_frame"],
+                "variant": sample.get("variant", "source-static"),
+                "load_interval_s": [load_start_step * dt, last_step * dt],
+                "displacement_during_supported_closure_m": float(
+                    np.linalg.norm(positions[load_start_step] - positions[0])
+                ),
                 "final_displacement_m": float(distance[-1]),
                 "maximum_displacement_m": float(distance.max()),
                 "maximum_orientation_change_deg": float(np.rad2deg(angles.max())),
-                "maximum_contact_force_N": float(np.linalg.norm(forces, axis=1).max()),
+                "maximum_contact_force_N": float(
+                    np.linalg.norm(
+                        forces[load_start_step + int(acquisition_mode) :], axis=1
+                    ).max()
+                ),
                 "mean_vertical_contact_force_last_0_2s_N": float(
                     forces[-20:, 2].mean()
                 ),
@@ -1066,6 +1336,33 @@ def execute(
             abs(supported_z - 0.05) < 0.005 and abs(supported_force - 0.3 * 9.81) < 0.3
         ),
     }
+    if acquisition_mode:
+        released = [row for row in control_records if row["control"] == 2]
+        release_z = released[50]["root_state_stage_xyzw"][2]
+        release_drop = release_z - released[-1]["root_state_stage_xyzw"][2]
+        residual_force = float(
+            np.max(
+                np.linalg.norm(
+                    np.array([r["contact_force_stage_N"] for r in released[-20:]]),
+                    axis=1,
+                )
+            )
+        )
+        controls.update(
+            temporary_support_release_control_z_at_release_m=release_z,
+            temporary_support_release_control_drop_m=release_drop,
+            temporary_support_release_control_final_contact_force_max_N=residual_force,
+            temporary_support_release_control_pass=bool(
+                abs(release_z - 0.05) < 0.005
+                and 4.8 <= release_drop <= 5.1
+                and residual_force < 0.001
+            ),
+        )
+    controls_pass = (
+        controls["free_fall_pass"]
+        and controls["supported_sphere_pass"]
+        and controls.get("temporary_support_release_control_pass", True)
+    )
     write(out / "states.json", {"records": records, "controls": control_records})
     video_path = out / "static-load.mp4"
     writer = cv2.VideoWriter(
@@ -1094,7 +1391,12 @@ def execute(
             "platform": runtime_platform.platform(),
             "device": device,
             "simulation_dt_s": dt,
-            "duration_s": 1.0,
+            "duration_s": last_step * dt,
+            "controlled_acquisition": acquisition_mode,
+            "load_start_s": load_start_step * dt,
+            "temporary_support_is_a_diagnostic_fixture": acquisition_mode,
+            "acquisition_platforms": acquisition_platforms,
+            "support_release_readback": release_readback,
             "gravity_m_s2": list(sim_cfg.gravity),
             "motor_constants": motors,
             "object_collision_import_migration": "Legacy collider_type=convex_decomposition becomes Sim6 collision_type=Convex Decomposition; other preset fields are reused",
@@ -1102,17 +1404,23 @@ def execute(
             "initial_pose_readback": initial_readback,
             "summaries": summaries,
             "controls": controls,
-            "gravity_and_contact_controls_pass": controls["free_fall_pass"]
-            and controls["supported_sphere_pass"],
+            "gravity_and_contact_controls_pass": controls_pass,
             "states_sha256": digest(out / "states.json"),
             "video_sha256": digest(video_path),
             "not_a_complete_episode_or_official_policy_rollout": True,
-            "source_observations_or_robot_motion_changed": False,
+            "source_observations_or_robot_motion_changed": bool(
+                prepared.get("experimental_grasp_seed_samples")
+            ),
+            "source_observations_changed": False,
+            "experimental_grasp_seed_samples": prepared.get(
+                "experimental_grasp_seed_samples", []
+            ),
+            "grasp_seed_sha256": prepared.get("grasp_seed_sha256"),
             "physical_task_accepted": False,
         },
     )
     sim.stop()
-    if not all((controls["free_fall_pass"], controls["supported_sphere_pass"])):
+    if not controls_pass:
         raise RuntimeError("Physics controls failed; do not interpret grasp outcomes")
 
 

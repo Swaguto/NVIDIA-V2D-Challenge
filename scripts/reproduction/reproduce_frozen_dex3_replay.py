@@ -83,9 +83,24 @@ def main():
         help="Explicit partial diagnostic duration; never full-task acceptance",
     )
     parser.add_argument("--physics-dt", type=float, default=0.01)
+    parser.add_argument("--static-grasp-seed", type=Path)
+    parser.add_argument("--static-grasp-seed-sha256")
+    parser.add_argument("--controlled-acquisition", action="store_true")
     args = parser.parse_args()
     if args.static_load_check and args.supported_task_check:
         parser.error("Choose one physical diagnostic mode")
+    if args.static_grasp_seed and (
+        not args.static_load_check or not args.static_grasp_seed_sha256
+    ):
+        parser.error(
+            "Experimental grasp seeds require --static-load-check and --static-grasp-seed-sha256"
+        )
+    if args.controlled_acquisition and (
+        not args.static_load_check or not args.static_grasp_seed
+    ):
+        parser.error(
+            "Controlled acquisition requires --static-load-check and --static-grasp-seed"
+        )
     if args.supported_task_check and args.task_motion_evaluator is None:
         parser.error(
             "--supported-task-check requires the frozen --task-motion-evaluator"
@@ -163,6 +178,9 @@ def main():
             free_space=args.free_space,
             source_duration_s=args.source_duration_s,
             physics_dt=args.physics_dt,
+            grasp_seed=args.static_grasp_seed,
+            grasp_seed_sha256=args.static_grasp_seed_sha256,
+            controlled_acquisition=args.controlled_acquisition,
         )
         print("Prepared source-derived static grasps: " + str(len(prepared["samples"])))
     if args.check_only:

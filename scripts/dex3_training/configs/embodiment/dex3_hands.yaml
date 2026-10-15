@@ -1,0 +1,5 @@
+_target_: v2d_dex3_flashchord.embodiment.Dex3Hands
+config:
+  _target_: v2d_dex3_flashchord.embodiment.Dex3HandsConfig
+  left_urdf_path: /data/robot/urdfs/g1/dex3_left.urdf
+  right_urdf_path: /data/robot/urdfs/g1/dex3_right.urdf

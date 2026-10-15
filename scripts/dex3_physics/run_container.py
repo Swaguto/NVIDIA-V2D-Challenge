@@ -29,16 +29,32 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--stage",
-        choices=["baseline-free", "candidate-free", "candidate-full", "static-load"],
+        choices=[
+            "baseline-free",
+            "candidate-free",
+            "candidate-full",
+            "static-load",
+            "grasp-seed",
+            "grasp-acquisition",
+        ],
         required=True,
     )
     parser.add_argument("--prepare-only", action="store_true")
+    parser.add_argument("--grasp-seed", type=Path)
     parser.add_argument(
         "--candidate-controller",
         choices=["implicit_pd", "implicit_pd_ff", "implicit_pid_ff"],
         default="implicit_pd",
     )
     args = parser.parse_args()
+    static_stage = args.stage in {"static-load", "grasp-seed", "grasp-acquisition"}
+    acquisition_stage = args.stage == "grasp-acquisition"
+    if (args.stage in {"grasp-seed", "grasp-acquisition"}) != (
+        args.grasp_seed is not None
+    ):
+        parser.error(
+            "--stage grasp-seed requires --grasp-seed; other stages preserve source targets"
+        )
     out = Path("/outputs") / args.stage
     if out.exists():
         raise FileExistsError("Choose a fresh output root for this experiment")
@@ -84,8 +100,17 @@ def main():
         "--support-plane-sha256",
         PLANE_SHA,
     ]
-    if args.stage == "static-load":
+    if static_stage:
         command += ["--static-load-check"]
+        if args.grasp_seed:
+            command += [
+                "--static-grasp-seed",
+                str(args.grasp_seed),
+                "--static-grasp-seed-sha256",
+                digest(args.grasp_seed),
+            ]
+            if acquisition_stage:
+                command += ["--controlled-acquisition"]
     else:
         command += [
             "--supported-task-check",
@@ -147,11 +172,7 @@ def main():
         video = (
             out
             / "run/simulator"
-            / (
-                "static-load.mp4"
-                if args.stage == "static-load"
-                else "supported-task.mp4"
-            )
+            / ("static-load.mp4" if static_stage else "supported-task.mp4")
         )
         subprocess.run(
             ["ffmpeg", "-v", "error", "-i", str(video), "-f", "null", "-"], check=True
@@ -175,11 +196,15 @@ def main():
             )
         )
         report = json.loads((out / "run/simulator/report.json").read_text())
-        expected_frames = 21 if args.stage == "static-load" else report["source_frames"]
+        expected_frames = (
+            (31 if acquisition_stage else 21)
+            if static_stage
+            else report["source_frames"]
+        )
         if int(probe["streams"][0]["nb_read_frames"]) != expected_frames:
             raise ValueError("Actual decoded physics video frame count differs")
         (out / "video-verification.json").write_text(json.dumps(probe, indent=2) + "\n")
-        if args.stage == "static-load":
+        if static_stage:
             run = out / "run/simulator"
             states = json.loads((run / "states.json").read_text())
             if (
@@ -190,21 +215,25 @@ def main():
             if not report["gravity_and_contact_controls_pass"]:
                 raise ValueError("Static load physics controls failed")
             if (
-                len(states["records"]) != 404
-                or len(states["controls"]) != 202
+                len(states["records"]) != (604 if acquisition_stage else 404)
+                or len(states["controls"]) != (353 if acquisition_stage else 202)
                 or len(report["summaries"]) != 4
             ):
                 raise ValueError("Static load record counts differ")
             for sample in range(4):
                 if [
                     r["step"] for r in states["records"] if r["sample_index"] == sample
-                ] != list(range(101)):
+                ] != list(range(151 if acquisition_stage else 101)):
                     raise ValueError("Static load state coverage differs")
             for control in range(2):
                 if [
                     r["step"] for r in states["controls"] if r["control"] == control
                 ] != list(range(101)):
                     raise ValueError("Static load control coverage differs")
+            if acquisition_stage and [
+                r["step"] for r in states["controls"] if r["control"] == 2
+            ] != list(range(151)):
+                raise ValueError("Temporary support release control coverage differs")
             cooked = report["cooked_collider_summary"]
             if {r["asset"] for r in cooked if r["asset"].startswith("object-")} != {
                 f"object-{i}" for i in range(4)
@@ -228,7 +257,43 @@ def main():
                 ),
                 "physical_task_accepted": False,
                 "learned_policy_evaluated": False,
+                "controlled_acquisition": acquisition_stage,
             }
+            if acquisition_stage:
+                releases = report["support_release_readback"]
+                if (
+                    not report["controlled_acquisition"]
+                    or len(releases) != 5
+                    or report["load_start_s"] != 0.5
+                    or report["duration_s"] != 1.5
+                    or any(
+                        r["step"] != 50
+                        or not r["before_enabled"]
+                        or r["after_enabled"]
+                        or r["visibility"] != "invisible"
+                        for r in releases
+                    )
+                    or not report["controls"]["temporary_support_release_control_pass"]
+                ):
+                    raise ValueError(
+                        "Controlled acquisition did not remove all temporary supports"
+                    )
+                gate["temporary_supports_removed_before_load"] = True
+            if args.grasp_seed:
+                changed = report["experimental_grasp_seed_samples"]
+                selected = [r for r in report["summaries"] if r["sample"] in changed]
+                if (
+                    not changed
+                    or len(selected) != len(changed)
+                    or report["grasp_seed_sha256"] != digest(args.grasp_seed)
+                ):
+                    raise ValueError(
+                        "Experimental grasp seed results are incomplete or mismatched"
+                    )
+                gate["experimental_grasp_seed_samples"] = changed
+                gate["changed_seeds_held_within_10mm_for_1s"] = all(
+                    r["held_within_10mm_for_1s_diagnostic_only"] for r in selected
+                )
             (out / "static-load-gate.json").write_text(
                 json.dumps(gate, indent=2) + "\n"
             )
@@ -242,7 +307,10 @@ def main():
                 check=True,
             )
             print(json.dumps(gate, indent=2))
-            if not gate["all_four_samples_held_within_10mm_for_1s"]:
+            if not gate.get(
+                "changed_seeds_held_within_10mm_for_1s",
+                gate["all_four_samples_held_within_10mm_for_1s"],
+            ):
                 raise SystemExit(2)
             return
         if args.stage == "candidate-full":
