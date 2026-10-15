@@ -10,6 +10,12 @@ fail the unchanged wrist gate and object retention. The four decomposed-geometry
 static grasp starts also fail unsupported retention. No controller candidate has
 been promoted into the training task. No physical task or learned policy is accepted.
 
+The subsequent development training and acquisition work is recorded in
+[TRAINING_VALIDATION.md](TRAINING_VALIDATION.md). The source and runtime now have
+44 passing CPU controls across training, grasp geometry and reproduction. A
+1,000-iteration unassisted training pilot runs, but its controlled window success
+remains zero. The new acquisition candidates also fail retention.
+
 The saved failed e002 run loses tracking before object contact: the left wrist
 first exceeds 10 cm error at source time 0.075 s, versus its first sampled object
 contact at 7.09 s. The right exceeds 10 cm at 0.015 s and has no sampled positive

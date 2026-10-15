@@ -8,7 +8,12 @@ import numpy as np
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from _dex3_static_load import acquisition_pairs, acquisition_support, apply_grasp_seeds
+from _dex3_static_load import (
+    acquisition_pairs,
+    acquisition_support,
+    apply_grasp_seeds,
+    cooked_acquisition_support,
+)
 from scipy.spatial.transform import Rotation
 from itertools import product
 
@@ -124,3 +129,25 @@ def test_tilted_tray_is_below_every_source_mesh_vertex():
     assert (tray_local[:, 2] - dimensions[2] / 2).min() == pytest.approx(
         0.0001, abs=1e-10
     )
+
+
+def test_tray_matches_cooked_surface_when_cooking_changes_the_bottom():
+    raw = np.array(list(product([-0.1, 0.1], [-0.08, 0.08], [-0.005, 0.005])))
+    rotation = Rotation.from_euler("xyz", [0.2, 0.1, 0.3])
+    position = np.array([0.3, 0.2, -0.5])
+    tray = acquisition_support(raw, position, rotation.as_quat())
+    cooked = raw.copy()
+    cooked[cooked[:, 2] < 0, 2] += 0.0015
+    world = rotation.apply(cooked) + position
+    adjusted = cooked_acquisition_support(world, tray)
+    local = (
+        Rotation.from_quat(adjusted["quaternion_stage_xyzw"])
+        .inv()
+        .apply(world - adjusted["position_stage_m"])
+    )
+    assert (local[:, 2] - adjusted["dimensions_m"][2] / 2).min() == pytest.approx(
+        0.0001, abs=1e-10
+    )
+    assert np.linalg.norm(
+        np.array(adjusted["position_stage_m"]) - tray["position_stage_m"]
+    ) == pytest.approx(0.0015, abs=1e-10)

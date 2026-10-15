@@ -1,0 +1,54 @@
+{
+  "schema": "v2d.dex3-controlled-policy-comparison.v1",
+  "scope": "selected development window; not full episode or official scored roster",
+  "input_manifest_sha256": "ea7186339e1215b16a117e7d4d6af8fd3b86882d84c4f4c4951c2a5c92912360",
+  "runtime_controls_sha256": "0821d8c6c8a25543c63e8144b4e86eddcf7fa3154df234db9f5cbf71a25d3cb6",
+  "image_context_sha256": "7306d53238fdad78e1a92792d398b826bbebdedc725415d83d7f1778beb90a9a",
+  "frozen_collision_files_sha256": {
+    "collision-cache/convex/2511207f3006d7d8.npz": "b5bddc4ae503d8270126a9520a26dce8824ede7497fbdee447e6fb138d3baea6",
+    "collision-cache/convex/cb3b7ee675bc4424.npz": "2de206248215a987ab30e117bddb3af576a6390837e1679c65b742d1a6a20447"
+  },
+  "same_saved_experiment_config": true,
+  "collision_geometry_identical": true,
+  "controlled_comparison": true,
+  "virtual_object_assistance": 0,
+  "rows": [
+    {
+      "iteration": 0,
+      "environment_steps": 0,
+      "checkpoint_sha256": "8e6124b53a02597d2582a7774bad543d0a0d77223156e387da14245b4a51e8b5",
+      "report_sha256": "4a0a9a5386698f68a94ec20afe98323cff685dcf7f788cd55e44c91673a7f00a",
+      "success_rate": 0.0,
+      "chord_sr": 0.0,
+      "mppe_cm": 18.838706653227298,
+      "mean_add_m": 0.09941938156919332,
+      "object_position_error_per_body_m": [
+        0.008445105781479955,
+        0.18506871244954579
+      ],
+      "world_count": 4,
+      "step_count": 75
+    },
+    {
+      "iteration": 1000,
+      "environment_steps": 1536000,
+      "checkpoint_sha256": "f221d1515353e436df65bcaa20c3152a7c0dc586e8dba0ea5b56277b807750e6",
+      "report_sha256": "caa153303cdc9e41797ac7e9b4e49efc3963a20c4c41574c8a42214aff78f54e",
+      "success_rate": 0.0,
+      "chord_sr": 0.0,
+      "mppe_cm": 18.535634174134056,
+      "mean_add_m": 0.10176413881460336,
+      "object_position_error_per_body_m": [
+        0.01512123940188412,
+        0.18190091551411375
+      ],
+      "world_count": 4,
+      "step_count": 75
+    }
+  ],
+  "primary_success_improved": false,
+  "bit_exact_training_reproducibility_claimed": false,
+  "checkpoint_compatibility_verified_with_installed_extension": true,
+  "unmodified_stock_runtime_compatibility_claimed": false,
+  "physical_task_accepted": false
+}

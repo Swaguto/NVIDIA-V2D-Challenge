@@ -242,6 +242,46 @@ def acquisition_support(vertices, position, quaternion):
     )
 
 
+def cooked_acquisition_support(world_vertices, original):
+    """Seat a diagnostic tray against a broad lower face of actual cooked geometry."""
+    import numpy as np
+    from scipy.spatial import ConvexHull
+    from scipy.spatial.transform import Rotation
+
+    vertices = np.asarray(world_vertices)
+    centered = vertices - vertices.mean(0)
+    hull = ConvexHull(centered)
+    triangles = centered[hull.simplices]
+    areas = np.linalg.norm(
+        np.cross(triangles[:, 1] - triangles[:, 0], triangles[:, 2] - triangles[:, 0]),
+        axis=1,
+    )
+    eligible = np.flatnonzero(hull.equations[:, 2] < -0.7)
+    if not len(eligible):
+        raise ValueError("Cooked object has no nearly horizontal lower support face")
+    normal = -hull.equations[eligible[np.argmax(areas[eligible])], :3]
+    rotation = Rotation.align_vectors(normal[None], np.array([[0.0, 0.0, 1.0]]))[0]
+    local = rotation.inv().apply(vertices)
+    lower, upper = local.min(0), local.max(0)
+    dimensions = np.asarray(original["dimensions_m"])
+    if np.any(upper[:2] - lower[:2] >= dimensions[:2]):
+        raise ValueError("Diagnostic tray no longer covers cooked object footprint")
+    center = np.r_[(lower[:2] + upper[:2]) / 2, lower[2] - dimensions[2] / 2 - 0.0001]
+    position = rotation.apply(center)
+    old_rotation = Rotation.from_quat(original["quaternion_stage_xyzw"])
+    if (
+        np.linalg.norm(position - original["position_stage_m"]) > 0.02
+        or (rotation * old_rotation.inv()).magnitude() > 0.3
+    ):
+        raise ValueError("Cooked support adjustment exceeds diagnostic bounds")
+    return {
+        **original,
+        "position_stage_m": position.tolist(),
+        "quaternion_stage_xyzw": rotation.as_quat().tolist(),
+        "support_uses_actual_cooked_lower_face": True,
+    }
+
+
 def prepare(
     case: Path,
     repo: Path,
@@ -1136,6 +1176,40 @@ def execute(
         write,
         out / "cooked-colliders.json",
     )
+    cooked_support_alignment = None
+    if acquisition_mode:
+        helper = repo / "scripts/dex3_physics/cooked_grasp_audit.py"
+        spatial, helper_ast = load_functions(
+            helper, {"world_convexes"}, {"np": np, "Rotation": Rotation}
+        )
+        cooked = json.loads((out / "cooked-colliders.json").read_text())["colliders"]
+        for index, support in enumerate(acquisition_platforms):
+            pose = objects[index].data.root_link_pose_w[0].detach().cpu().numpy()
+            vertices = np.concatenate(
+                [
+                    v
+                    for c in cooked
+                    if c["asset"] == f"object-{index}"
+                    for v in spatial["world_convexes"](c, pose)
+                ]
+            )
+            updated = cooked_acquisition_support(
+                vertices, support["pose_and_dimensions"]
+            )
+            root = sim.stage.GetPrimAtPath(support["prim"]).GetParent()
+            root.GetAttribute("xformOp:translate").Set(
+                Gf.Vec3d(*updated["position_stage_m"])
+            )
+            q = updated["quaternion_stage_xyzw"]
+            root.GetAttribute("xformOp:orient").Set(
+                Gf.Quatf(float(q[3]), Gf.Vec3f(*q[:3]))
+            )
+            support["actual_cooked_surface_pose_and_dimensions"] = updated
+        cooked_support_alignment = dict(
+            helper_source_sha256=digest(helper),
+            helper_AST_sha256=helper_ast,
+            cooked_colliders_sha256=digest(out / "cooked-colliders.json"),
+        )
     frames = []
     records = []
     control_records = []
@@ -1403,6 +1477,7 @@ def execute(
             "load_start_s": load_start_step * dt,
             "temporary_support_is_a_diagnostic_fixture": acquisition_mode,
             "acquisition_platforms": acquisition_platforms,
+            "cooked_support_alignment": cooked_support_alignment,
             "support_release_readback": release_readback,
             "gravity_m_s2": list(sim_cfg.gravity),
             "motor_constants": motors,

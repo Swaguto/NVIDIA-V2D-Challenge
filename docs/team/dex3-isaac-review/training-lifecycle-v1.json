@@ -1,0 +1,17 @@
+{
+  "schema": "v2d.training-lifecycle.v1",
+  "instance_name": "v2d-dex3-physics-check",
+  "instance_id": "dngrtbldz",
+  "status": "STOPPED",
+  "confirmed_utc": "2026-10-15T20:54:17+00:00",
+  "listed_hourly_usd": 1.74,
+  "authorized_total_compute_cap_usd": 10,
+  "conservative_total_compute_bound_usd": 6.7005,
+  "bound_includes_stopped_intervals": true,
+  "not_an_invoice": true,
+  "all_new_backups_hash_verified": true,
+  "new_backup_file_count": 9173,
+  "new_backup_bytes": 2708926129,
+  "backup_inventory_sha256": "4f5432e114d6988d69cf08249e7579af1b47980daf91bfba03ef08f678800b90",
+  "physical_task_accepted": false
+}

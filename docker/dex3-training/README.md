@@ -27,6 +27,26 @@ Isaac Sim image remains the separate physics diagnostic runtime.
 These are development diagnostics. A learned checkpoint alone does not establish
 grasp acquisition, full-episode success, hidden-set performance, or submission acceptance.
 
+## Tested image and current result
+
+The private GHCR image is pinned in `registry.env.example`. Team members need
+repository/package read access and the local frozen input pack. Authenticate to
+GHCR, then load the image reference below. The image contains no episode pack.
+
+```bash
+set -a
+. docker/dex3-training/registry.env.example
+set +a
+docker pull "$DEX3_TRAINING_IMAGE"
+```
+
+The tested 1,000-iteration e002 experiment completed 1,536,000 environment steps.
+The unchanged upstream evaluator loaded both checkpoints inside this extension
+image, using identical frozen collision geometry. Both achieved **0% success**
+on the 75-frame development window. The training path runs, but the learned
+controller has not solved retention. See
+`docs/team/dex3-isaac-review/TRAINING_VALIDATION.md` for measured results.
+
 ## Build
 
 Use Linux amd64, an NVIDIA GPU, Container Toolkit and driver 580 or newer. The
@@ -95,6 +115,14 @@ image. `experiment=dex3_exploration` is a separate 1,000-iteration experiment wi
 higher exploration and a simulation force penalty above 10 N per contact slot.
 Its force penalty uses simulated contacts and requires no human contact labels.
 
+To reproduce that longer experiment in a fresh output directory:
+
+```bash
+docker compose -f docker/dex3-training/compose.yaml run --rm pilot \
+  /opt/dex3-extension/train.py --config-dir /opt/dex3-extension/configs \
+  experiment=dex3_exploration output_dir=/outputs/exploration
+```
+
 Evaluate the initial and learned checkpoints with the same unmodified upstream
 evaluator entry point, inside the extension image:
 
@@ -110,6 +138,15 @@ docker compose -f docker/dex3-training/compose.yaml run --rm pilot \
 Repeat for `model_0` with fresh output names. The evaluator uses explicit resets,
 VOC zero and schema checks. Its metrics cover the selected development window;
 they are not a score for the official evaluation roster.
+
+For the longer experiment, evaluate `exploration/model_0.safetensors` and
+`exploration/model_1000.safetensors` with fresh report/trajectory names. After
+downloading results, use this checkout's `scripts/dex3_training/compare_policies.py`
+under Python 3.11 or newer to compare them. It verifies all input bytes, frozen
+collision hashes, matching policy configurations/schema/image receipts, checkpoint
+hashes, installed controls, evaluation coverage and zero assistance. It rejects
+the comparison if these contracts differ. This comparison helper was added after
+the published image; invoke it from this checkout.
 
 Installed runtime contract controls:
 

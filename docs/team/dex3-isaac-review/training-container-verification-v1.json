@@ -1,0 +1,18 @@
+{
+  "schema": "v2d.dex3-training-image.v1",
+  "image": "ghcr.io/swaguto/nvidia-v2d-challenge-dex3-review@sha256:13ed1f0846af69a3dd6f02755f753dfdc58194cc3f7c2a0f6e12c0803fa67f29",
+  "tag": "training-6a0179e",
+  "visibility": "private",
+  "repository": "Swaguto/NVIDIA-V2D-Challenge",
+  "source_commit": "6a0179ec1ed0add849d81200cb9c482bea34149d",
+  "upstream_commit": "8c778f905cb35f76f8e6cd6e2ea486da4fb9e0ef",
+  "image_config_sha256": "ef768b62a976ba77d8eb7365d023fd88afc26b539213cf66dbd91d3425772f8a",
+  "context_manifest_sha256": "7306d53238fdad78e1a92792d398b826bbebdedc725415d83d7f1778beb90a9a",
+  "private_episode_inputs_in_image": false,
+  "mano_weights_in_image": false,
+  "credentials_in_image": false,
+  "installed_runtime_controls_pass": true,
+  "official_evaluator_entrypoint_loaded_checkpoint_with_extension": true,
+  "unmodified_stock_runtime_compatibility_claimed": false,
+  "physical_task_accepted": false
+}

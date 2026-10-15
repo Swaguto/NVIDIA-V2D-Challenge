@@ -1,0 +1,12 @@
+{
+  "installed_dispatch_loads_dual_hand": true,
+  "collision_cache_locked": true,
+  "unknown_contact_reward_rejected": true,
+  "implicit_resampling_rejected": true,
+  "changed_manifest_rejected": true,
+  "frame_window_retains_shape": true,
+  "frame_count": 75,
+  "input_manifest_sha256": "ea7186339e1215b16a117e7d4d6af8fd3b86882d84c4f4c4951c2a5c92912360",
+  "source_sha256": "da33cca15052458ee03b24cc20cdf13fd1d00b2515b6e9241b29ea2efd570add",
+  "physical_task_accepted": false
+}
