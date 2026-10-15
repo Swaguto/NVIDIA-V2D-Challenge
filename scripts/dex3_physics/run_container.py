@@ -29,7 +29,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--stage",
-        choices=["baseline-free", "candidate-free", "candidate-full"],
+        choices=["baseline-free", "candidate-free", "candidate-full", "static-load"],
         required=True,
     )
     parser.add_argument("--prepare-only", action="store_true")
@@ -79,19 +79,26 @@ def main():
         PACK_SHA,
         "--out",
         str(out / "run"),
-        "--supported-task-check",
-        "--task-motion-evaluator",
-        str(out / "evidence/motion-evaluator.py"),
         "--support-plane",
         str(evidence / "support-inferred-support-plane-report-v1.json"),
         "--support-plane-sha256",
         PLANE_SHA,
-        "--wrist-controller",
-        "project_pd" if args.stage == "baseline-free" else args.candidate_controller,
-        "--physics-dt",
-        "0.01",
     ]
-    if args.stage != "candidate-full":
+    if args.stage == "static-load":
+        command += ["--static-load-check"]
+    else:
+        command += [
+            "--supported-task-check",
+            "--task-motion-evaluator",
+            str(out / "evidence/motion-evaluator.py"),
+            "--wrist-controller",
+            "project_pd"
+            if args.stage == "baseline-free"
+            else args.candidate_controller,
+            "--physics-dt",
+            "0.01",
+        ]
+    if args.stage in {"baseline-free", "candidate-free"}:
         command += ["--free-space", "--source-duration-s", "2"]
     if args.prepare_only:
         command += ["--check-only"]
@@ -137,7 +144,15 @@ def main():
                 target.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(log, target)
     if not args.prepare_only:
-        video = out / "run/simulator/supported-task.mp4"
+        video = (
+            out
+            / "run/simulator"
+            / (
+                "static-load.mp4"
+                if args.stage == "static-load"
+                else "supported-task.mp4"
+            )
+        )
         subprocess.run(
             ["ffmpeg", "-v", "error", "-i", str(video), "-f", "null", "-"], check=True
         )
@@ -160,9 +175,67 @@ def main():
             )
         )
         report = json.loads((out / "run/simulator/report.json").read_text())
-        if int(probe["streams"][0]["nb_read_frames"]) != report["source_frames"]:
+        expected_frames = 21 if args.stage == "static-load" else report["source_frames"]
+        if int(probe["streams"][0]["nb_read_frames"]) != expected_frames:
             raise ValueError("Actual decoded physics video frame count differs")
         (out / "video-verification.json").write_text(json.dumps(probe, indent=2) + "\n")
+        if args.stage == "static-load":
+            run = out / "run/simulator"
+            states = json.loads((run / "states.json").read_text())
+            if (
+                digest(run / "states.json") != report["states_sha256"]
+                or digest(video) != report["video_sha256"]
+            ):
+                raise ValueError("Static load artifact hashes differ")
+            if not report["gravity_and_contact_controls_pass"]:
+                raise ValueError("Static load physics controls failed")
+            if (
+                len(states["records"]) != 404
+                or len(states["controls"]) != 202
+                or len(report["summaries"]) != 4
+            ):
+                raise ValueError("Static load record counts differ")
+            for sample in range(4):
+                if [
+                    r["step"] for r in states["records"] if r["sample_index"] == sample
+                ] != list(range(101)):
+                    raise ValueError("Static load state coverage differs")
+            for control in range(2):
+                if [
+                    r["step"] for r in states["controls"] if r["control"] == control
+                ] != list(range(101)):
+                    raise ValueError("Static load control coverage differs")
+            cooked = report["cooked_collider_summary"]
+            if {r["asset"] for r in cooked if r["asset"].startswith("object-")} != {
+                f"object-{i}" for i in range(4)
+            } or any(
+                r["convex_count"] <= 1
+                for r in cooked
+                if r["asset"].startswith("object-")
+            ):
+                raise ValueError(
+                    "Static load object convex decomposition was not established"
+                )
+            gate = {
+                "schema": "v2d.static-load-gate.v1",
+                "report_sha256": digest(run / "report.json"),
+                "states_sha256": report["states_sha256"],
+                "video_sha256": report["video_sha256"],
+                "gravity_and_contact_controls_pass": True,
+                "all_four_samples_held_within_10mm_for_1s": all(
+                    r["held_within_10mm_for_1s_diagnostic_only"]
+                    for r in report["summaries"]
+                ),
+                "physical_task_accepted": False,
+                "learned_policy_evaluated": False,
+            }
+            (out / "static-load-gate.json").write_text(
+                json.dumps(gate, indent=2) + "\n"
+            )
+            print(json.dumps(gate, indent=2))
+            if not gate["all_four_samples_held_within_10mm_for_1s"]:
+                raise SystemExit(2)
+            return
         if args.stage == "candidate-full":
             subprocess.run(
                 [

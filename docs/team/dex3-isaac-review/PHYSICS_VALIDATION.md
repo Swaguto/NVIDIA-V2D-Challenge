@@ -111,6 +111,20 @@ object retention, inferred targets, collision geometry or policy performance.
 
 ## Team reproduction and reference handoff
 
+### Separate unsupported grasp-load check
+
+In a fresh output root, run the same Compose command with `--stage static-load`.
+This selects four existing inferred grasp starts automatically, fixes the wrists
+and runs each object unsupported for one second under gravity. The test captures
+the actual cooked object convexes, verifies all 404 grasp / 202 control records
+and 21 video frames, and records the original 10 mm retention criterion.
+It supplies no table, other object, squeeze preload or learned residual. A
+first-touch failure does not prove that the source manipulation is impossible.
+This repeat addresses the earlier static test's documented convex-hull geometry
+qualification. It does not replace the full dynamic task or approve its targets.
+
+### Replay verification and diagnostic references
+
 After the frozen-target container pilots, a teammate can check their deliveries:
 
 ```bash

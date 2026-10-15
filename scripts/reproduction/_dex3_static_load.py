@@ -896,6 +896,15 @@ def execute(
             provenance,
         )
         return
+    from _dex3_collision_evidence import capture_cooked_colliders
+
+    cooked_collider_summary = capture_cooked_colliders(
+        sim.stage,
+        [(f"hand-{i}", hand) for i, hand in enumerate(hands)]
+        + [(f"object-{i}", obj) for i, obj in enumerate(objects)],
+        write,
+        out / "cooked-colliders.json",
+    )
     frames = []
     records = []
     control_records = []
@@ -1078,6 +1087,7 @@ def execute(
         out / "report.json",
         {
             "schema": "v2d.dex3-static-load-result.v1",
+            "cooked_collider_summary": cooked_collider_summary,
             "executor_source_sha256": digest(Path(__file__)),
             "inputs_manifest_sha256": manifest_sha,
             "runtime_python": runtime_platform.python_version(),
