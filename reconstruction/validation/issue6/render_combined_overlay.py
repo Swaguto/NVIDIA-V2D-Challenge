@@ -38,6 +38,12 @@ parser.add_argument(
 )
 parser.add_argument("--manifest", type=Path)
 parser.add_argument(
+    "--hands-mode",
+    choices=("metric", "continuous"),
+    default="metric",
+    help="Continuous shows explicitly marked visual estimates from sequence alignment.",
+)
+parser.add_argument(
     "--modules-dir", type=Path, default=Path(__file__).resolve().parents[2] / "modules"
 )
 parser.add_argument(
@@ -131,7 +137,14 @@ try:
         upstream._add_lights(scene, np.eye(4))
         hand_rows = records.get(frame["id"], [])
         for record in hand_rows:
-            if not record["diagnostics"]["metric_valid"]:
+            if (
+                args.hands_mode == "metric"
+                and not record["diagnostics"]["metric_valid"]
+            ):
+                continue
+            if args.hands_mode == "continuous" and not record.get(
+                "visual_valid", False
+            ):
                 continue
             with torch.no_grad():
                 vertices, faces = upstream._build_hand_mesh(record, mano)
@@ -175,7 +188,25 @@ try:
             font=upstream._font(15),
             fill="white",
         )
-        if any(not r["diagnostics"]["metric_valid"] for r in hand_rows):
+        estimated = [
+            "right" if r["is_right"] else "left"
+            for r in hand_rows
+            if r.get("visual_valid") and not r["diagnostics"]["metric_valid"]
+        ]
+        if args.hands_mode == "continuous" and estimated:
+            draw.text(
+                (12, camera["height"] - 28),
+                "Estimated hand pose: "
+                + ", ".join(estimated)
+                + " | metric contact remains unknown",
+                font=upstream._font(15),
+                fill=(255, 220, 80),
+                stroke_width=2,
+                stroke_fill=(10, 10, 10),
+            )
+        elif args.hands_mode == "metric" and any(
+            not r["diagnostics"]["metric_valid"] for r in hand_rows
+        ):
             draw.text(
                 (12, camera["height"] - 28),
                 "Unsupported hand meshes omitted: associated contacts remain unknown",
@@ -190,6 +221,13 @@ try:
                 "frame_id": frame["id"],
                 "timestamp_s": frame["timestamp_s"],
                 "hands": len(hand_rows),
+                "hands_rendered": sum(
+                    bool(r.get("visual_valid", False))
+                    if args.hands_mode == "continuous"
+                    else bool(r["diagnostics"]["metric_valid"])
+                    for r in hand_rows
+                ),
+                "estimated_hands": estimated if args.hands_mode == "continuous" else [],
                 "observed_objects": [o["id"] for o in frame["projected_objects"]],
             }
         )
@@ -209,6 +247,7 @@ assert process.wait() == 0
 montage.save(out / "cad-temporal-hands-montage.jpg", quality=94)
 receipt = {
     "episode": args.episode,
+    "hands_mode": args.hands_mode,
     "frames": counts,
     "fps": fps,
     "video": str(video),
@@ -216,9 +255,18 @@ receipt = {
     "camera": camera,
     "configuration_sha256": digest(json.loads((root / "inputs.lock.json").read_text())),
     "renderer_source_sha256": file_hash(Path(__file__)),
-    "upstream_renderer_sha256": file_hash(args.modules_dir / "v2d_hamer/lib/render_hands_aligned_video.py"),
+    "upstream_renderer_sha256": file_hash(
+        args.modules_dir / "v2d_hamer/lib/render_hands_aligned_video.py"
+    ),
     "mano_model_sha256": file_hash(args.mano_assets_root / "models/MANO_RIGHT.pkl"),
-    "basis": "Same observed CAD transforms/meshes as contact calculation and same final aligned temporal MANO records; joint depth-buffer rendering in source camera. Missing poses are omitted. No ground-truth poses or filled object poses.",
+    "basis": (
+        "Continuous fitted visual hands with separate per-frame metric support and observed CAD; "
+        "joint source-camera depth rendering. Estimates are marked; contacts are not recomputed or accepted. "
+        "No ground-truth poses or filled object poses."
+        if args.hands_mode == "continuous"
+        else "Same observed CAD transforms/meshes as contact calculation and same final aligned temporal MANO records; "
+        "joint depth-buffer rendering in source camera. Missing poses are omitted. No ground-truth poses or filled object poses."
+    ),
 }
 (out / "cad-temporal-hands-receipt.json").write_text(
     json.dumps(receipt, indent=2) + "\n"

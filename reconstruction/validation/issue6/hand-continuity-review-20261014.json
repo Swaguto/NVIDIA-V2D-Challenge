@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-14",
+  "status": "visual_continuity_repaired_stereo_support_partial",
+  "source_code_base": "3db10766bf09bca10fe1b452afe5c78e1649c870",
+  "original_inputs_and_aligned_records_hash_verified": 1830,
+  "source_frames_preserved": true,
+  "original_contacts_unchanged": true,
+  "episodes": {
+    "e012": {
+      "source_frames": 181,
+      "hands": {
+        "left": {
+          "baseline_visual_frames": 90,
+          "repaired_visual_frames": 181,
+          "internal_visual_gaps": 0,
+          "final_stereo_supported_frames": 87,
+          "image_fit_median_error_px": 3.569617748260498,
+          "image_fit_p95_error_px": 10.106616973876953,
+          "stereo_initialized_inferred_frames": 19
+        },
+        "right": {
+          "baseline_visual_frames": 116,
+          "repaired_visual_frames": 181,
+          "internal_visual_gaps": 0,
+          "final_stereo_supported_frames": 118,
+          "image_fit_median_error_px": 3.661699056625366,
+          "image_fit_p95_error_px": 14.38456916809082,
+          "stereo_initialized_inferred_frames": 24
+        }
+      }
+    },
+    "e040": {
+      "source_frames": 260,
+      "hands": {
+        "left": {
+          "baseline_visual_frames": 120,
+          "repaired_visual_frames": 260,
+          "internal_visual_gaps": 0,
+          "final_stereo_supported_frames": 167,
+          "image_fit_median_error_px": 2.434756278991699,
+          "image_fit_p95_error_px": 8.594996452331543,
+          "stereo_initialized_inferred_frames": 0
+        },
+        "right": {
+          "baseline_visual_frames": 76,
+          "repaired_visual_frames": 260,
+          "internal_visual_gaps": 0,
+          "final_stereo_supported_frames": 83,
+          "image_fit_median_error_px": 2.5895283222198486,
+          "image_fit_p95_error_px": 8.827630043029785,
+          "stereo_initialized_inferred_frames": 11
+        }
+      }
+    }
+  },
+  "limits": [
+    "Visual availability includes explicitly marked estimates.",
+    "Metric support remains partial; e012 left has three fewer supported frames than the baseline.",
+    "Image landmark residuals use predictions and checked image motion, not independent ground truth.",
+    "Contact acceptance and robot grasp success are not established."
+  ],
+  "media": [
+    {
+      "file": "e012-cad-temporal-hands.mp4",
+      "sha256": "a134bb5211309ae201714cab76f09f83dd40cb9b63cf79c99dfd944318d7c465",
+      "width": 1280,
+      "height": 800,
+      "r_frame_rate": "688397/33988",
+      "duration": "8.936454",
+      "nb_frames": "181"
+    },
+    {
+      "file": "e012-hand-tracking.mp4",
+      "sha256": "1029c9a3faecea7d14949917095e0611b6b6d62ccf9260cb4fc61f9dfe8be03c",
+      "width": 1280,
+      "height": 828,
+      "r_frame_rate": "425438/21005",
+      "duration": "8.936449",
+      "nb_frames": "181"
+    },
+    {
+      "file": "e040-cad-temporal-hands.mp4",
+      "sha256": "fa358b88ee614a4c7d99a18aad565556be99e803c029358d98ed6a485d44625e",
+      "width": 1280,
+      "height": 800,
+      "r_frame_rate": "688397/33988",
+      "duration": "12.836895",
+      "nb_frames": "260"
+    },
+    {
+      "file": "e040-hand-tracking.mp4",
+      "sha256": "6cd327cafdff0209c3ad1db55b9d13a566022301be227598c905257243dea32d",
+      "width": 1280,
+      "height": 828,
+      "r_frame_rate": "440021/21725",
+      "duration": "12.836887",
+      "nb_frames": "260"
+    }
+  ],
+  "validation": {
+    "core_cpu_tests_passed": 148,
+    "core_optional_runtime_modules_skipped": 2,
+    "core_subtests_passed": 2,
+    "native_regression_and_compatibility_tests_passed": 11,
+    "lint_and_format": "ruff 0.16.9 passed",
+    "full_media_decode_passed": true,
+    "normal_speed_comparison_playback": "Both episode pairs reached the source end with no media errors."
+  }
+}

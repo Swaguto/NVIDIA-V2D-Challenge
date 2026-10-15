@@ -401,3 +401,49 @@ before reruns. Keep the source checkout fixed while pipeline stages execute.
 Save and verify all required evidence before stopping the GPU. Keep failed runs
 as failure evidence, never count them toward the three-episode acceptance gate.
 No independent contact precision or successful robot training is claimed.
+
+## Continuous hand review from preserved episode fits
+
+`run_hand_continuity_review.sh` produces a separate visual tracking repair. It
+uses the recorded final fit, saved wearer landmarks, masks and stereo inputs.
+The first pass fits hand roots and articulation against image landmarks and
+stereo, with a world-motion prior. Source-image optical flow can carry landmarks
+through detector gaps for up to 1.5 seconds. It requires at least four landmarks,
+segmented-hand seeds, and at most 1.5 pixels of forward/backward disagreement;
+these observations remain inferred. Image-track recovery also requires stereo
+support at at least four tracked landmarks, with a 10 cm continuity window
+around the preceding hand-surface depth to reject distant background. Those
+measurements initialize the missing frame's 3D translation, preventing a
+near-camera enlarged hand when the native depth prior is unconstrained.
+For a trailing interval, the last observed articulation and world orientation
+initialize the fit, transported with camera motion. New image/stereo observations
+then determine the output motion; the initialization is not a held output pose.
+The runner first aligns the directly
+observed landmarks, then recovers image-supported gaps in a second fit. Each
+fit is followed by smooth surface-depth corrections after articulation changes.
+Calibrated cameras, CAD, hand shape and
+original contact artifacts stay fixed. The executed input lock supplies the
+manifest; relocated paths point into the recovered workspace layout.
+
+```bash
+INPUT_ROOT=/workspace/hand-continuity-repair/inputs \
+OUT=/workspace/hand-continuity-review-new \
+PYTHON=/opt/conda/bin/python \
+PYTHONPATH=/workspace/hand-continuity-repair/runtime-additions \
+bash reconstruction/validation/issue6/run_hand_continuity_review.sh 12 40
+```
+
+Each output has image-fit and sequence receipts, all original source frames,
+combined CAD/hand video, and a four-view hand video. The combined renderer's
+`--hands-mode continuous` displays estimated poses explicitly and writes actual
+rendered-hand counts. Its default metric mode retains the measurement-only
+diagnostic behavior. Visibility can bridge a gap of at most 1.5 seconds only
+when both endpoints are visible and an existing finite projected fitted pose
+exists throughout; it does not create contact evidence. End recovery requires
+new checked image tracks and stereo measurements, rather than pose extrapolation.
+
+New geometry is checked against the original pixel-count and strict 2 cm depth
+residual thresholds. Improved visual coverage does not accept the separate
+contact-quality criteria above. The image landmarks are saved HaMeR predictions,
+so their reprojection error is an internal alignment check, not independent
+ground-truth accuracy. Keep both pass receipts and the rejected baselines.
