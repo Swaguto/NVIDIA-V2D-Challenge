@@ -1,0 +1,42 @@
+{
+  "comparison.mp4": {
+    "width": 1920,
+    "height": 432,
+    "avg_frame_rate": "688397/33988",
+    "duration": "14.762429",
+    "nb_read_frames": "299",
+    "presentation_timestamps_strictly_increasing": true,
+    "composition": "source frame index; one decode per input per output frame",
+    "sha256": "66a3bfaab31f4c293892c772402cbb1169f788f71c84251c588b1479a3af2eed"
+  },
+  "human-input.mp4": {
+    "width": 1280,
+    "height": 800,
+    "avg_frame_rate": "688397/33988",
+    "duration": "14.762429",
+    "nb_read_frames": "299",
+    "presentation_timestamps_strictly_increasing": true,
+    "composition": "source frame index; one decode per input per output frame",
+    "sha256": "d99e2f385e76e7933136efe0583e9b6f8b2146bfca3aea604d5ecd443e5deab6"
+  },
+  "isaac-oblique.mp4": {
+    "width": 1280,
+    "height": 800,
+    "avg_frame_rate": "81/4",
+    "duration": "14.765432",
+    "nb_read_frames": "299",
+    "presentation_timestamps_strictly_increasing": true,
+    "composition": "source frame index; one decode per input per output frame",
+    "sha256": "2960eb4a147586384499593973a3f54b7e69d2d3c3019ace2f9a61b75b359057"
+  },
+  "isaac-source.mp4": {
+    "width": 1280,
+    "height": 800,
+    "avg_frame_rate": "81/4",
+    "duration": "14.765432",
+    "nb_read_frames": "299",
+    "presentation_timestamps_strictly_increasing": true,
+    "composition": "source frame index; one decode per input per output frame",
+    "sha256": "8052d7665c04c73f683a2367fbd8129ff9ad6a2d075733ee7124d5245230ca5f"
+  }
+}

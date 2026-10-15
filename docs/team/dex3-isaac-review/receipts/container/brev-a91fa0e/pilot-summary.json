@@ -1,0 +1,50 @@
+{
+  "code_commit": "a91fa0e36968c25eaca44349caf628450d8b4c71",
+  "gpu": "NVIDIA L40S",
+  "driver": "580.126.09",
+  "total_source_frames": 696,
+  "episodes": [
+    {
+      "episode": 11,
+      "source_frames": 137,
+      "decoded_video_frames": 137,
+      "oblique_decoded_frames": 137,
+      "physical_task_accepted": false,
+      "source_sha256": "83cfb67e3b88a65db092b6f677f7ec05b58ae8d53114034bc47efff30d2d3f37",
+      "maximum_root_position_error_m": 7.522101064675076e-08,
+      "maximum_joint_error_rad": 5.941398284470267e-08,
+      "maximum_root_orientation_error_rad": 2.5216935010110856e-07,
+      "maximum_camera_position_error_m": 4.0829178878530566e-09,
+      "maximum_camera_rotation_error_rad": 3.3067967331939503e-07
+    },
+    {
+      "episode": 40,
+      "source_frames": 260,
+      "decoded_video_frames": 260,
+      "oblique_decoded_frames": 260,
+      "physical_task_accepted": false,
+      "source_sha256": "83cfb67e3b88a65db092b6f677f7ec05b58ae8d53114034bc47efff30d2d3f37",
+      "maximum_root_position_error_m": 8.908110323936837e-08,
+      "maximum_joint_error_rad": 5.9594541745866536e-08,
+      "maximum_root_orientation_error_rad": 2.565278093464409e-07,
+      "maximum_camera_position_error_m": 3.949043143441707e-09,
+      "maximum_camera_rotation_error_rad": 3.621785723657298e-07
+    },
+    {
+      "episode": 41,
+      "source_frames": 299,
+      "decoded_video_frames": 299,
+      "oblique_decoded_frames": 299,
+      "physical_task_accepted": false,
+      "source_sha256": "83cfb67e3b88a65db092b6f677f7ec05b58ae8d53114034bc47efff30d2d3f37",
+      "maximum_root_position_error_m": 9.020092842631832e-08,
+      "maximum_joint_error_rad": 5.9512253125504344e-08,
+      "maximum_root_orientation_error_rad": 3.059227844314119e-07,
+      "maximum_camera_position_error_m": 7.071264129326122e-09,
+      "maximum_camera_rotation_error_rad": 3.670480681327538e-07
+    }
+  ],
+  "source_masks_preserved": true,
+  "full_manual_video_review_performed": false,
+  "backup_verification": "output-backup-verification.json"
+}

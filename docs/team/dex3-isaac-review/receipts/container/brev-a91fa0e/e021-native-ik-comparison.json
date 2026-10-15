@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "atol_qpos": 1e-06,
+  "max_absolute_qpos_difference": 1.7680301667155618e-12,
+  "maximum_root_translation_difference_m": 2.298161660974074e-14,
+  "maximum_quaternion_component_difference": 1.6964207816272392e-13,
+  "maximum_finger_angle_difference_rad": 1.7680301667155618e-12,
+  "frame_axes_and_unknown_masks_match": true,
+  "joint_limits_verified": true,
+  "physical_grasp_success_tested": false,
+  "scope": "Strict numerical target comparison. A failure is retained; use frozen targets for exact target playback."
+}

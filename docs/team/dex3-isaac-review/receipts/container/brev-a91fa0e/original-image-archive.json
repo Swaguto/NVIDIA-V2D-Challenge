@@ -1,0 +1,36 @@
+{
+  "archive": "v2d-checkpoint-a91fa0e.docker-image.tar.zst",
+  "bytes": 16440235501,
+  "sha256": "439404151798b173195da9f1fc962028eef73e160208d6a733f9dcf596f4557f",
+  "compression": "zstd",
+  "images": [
+    {
+      "tags": [
+        "v2d-dex3-ik:checkpoint"
+      ],
+      "id": "sha256:477ee15c941c7461ffc750fe39555f8aedfb213d69ca2c0ec39188b9e6d0ff31",
+      "os": "linux",
+      "architecture": "amd64",
+      "revision": "a91fa0e36968c25eaca44349caf628450d8b4c71"
+    },
+    {
+      "tags": [
+        "v2d-dex3-review:checkpoint"
+      ],
+      "id": "sha256:af27e67f6b684f461538450cbf5c2c3918a84d8bdc2827c2d7865ff562384b3d",
+      "os": "linux",
+      "architecture": "amd64",
+      "revision": "a91fa0e36968c25eaca44349caf628450d8b4c71"
+    },
+    {
+      "tags": [
+        "v2d-hand-continuity:checkpoint"
+      ],
+      "id": "sha256:db671d5239ffc20e9ebd792cc5e6e498c524f8b37e6d5baa88b1915e860a62b1",
+      "os": "linux",
+      "architecture": "amd64",
+      "revision": "a91fa0e36968c25eaca44349caf628450d8b4c71"
+    }
+  ],
+  "scope": "Local image build/export; no GPU container rendering or Brev acceptance implied."
+}

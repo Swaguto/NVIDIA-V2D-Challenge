@@ -16,6 +16,37 @@ APT layer later. The package installer checks all 178 simulator pins and the
 tracked Lab source. These are workflow images, not the official challenge policy
 runtime and not a complete fresh video-to-policy implementation.
 
+## Use the published private images
+
+The three images are published privately on GHCR, linked to this repository.
+Their exact digests, Linux amd64 platform, source revision and privacy checks are
+in [the registry receipt](../../docs/team/dex3-isaac-review/receipts/container/brev-5128f63/ghcr-images.json).
+The release source is `5128f63e250ca5626e7b093ccb6d26cdfad304b6`; later documentation
+commits do not imply a different image build. The first Brev pilot rendered
+three complete development episodes (696 frames), and the final registry image
+replayed e011 with four byte-identical videos. This does not validate the RL stack.
+
+Team members need access to the private repository/packages. Authenticate with
+`docker login ghcr.io` using your own GitHub identity and a package-read credential
+([GitHub authentication guide](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#authenticating-to-the-container-registry)).
+Obtain and restore the separate private inputs as described in section 2. Then:
+
+```bash
+cp docker/dex3-review/registry.env.example docker/dex3-review/.env
+# Edit absolute host paths; Brev providers may use ubuntu, shadeform, or another user.
+# Read the NVIDIA license before enabling the two EULA values for a render.
+docker compose --env-file docker/dex3-review/.env \
+  -f docker/dex3-review/compose.yaml --profile native-cache pull
+docker compose --env-file docker/dex3-review/.env \
+  -f docker/dex3-review/compose.yaml run --rm review doctor --runtime all --gpu
+python3 scripts/dex3_review/run_batch.py \
+  --env-file docker/dex3-review/.env --episodes 11,40,41
+```
+
+`registry.env.example` pins registry digests for **pull/run**. For rebuilding from
+source, start from `.env.example` with local image tags and follow section 3.
+No episode video, private MANO model or credential is in a published image.
+
 ## 1. Brev host and code
 
 Use an **x86_64 Linux GPU VM** with Docker/Compose and NVIDIA Container Toolkit.
@@ -222,7 +253,10 @@ Export data, outputs and image hashes before retiring the old machine. Physics
 validation belongs in new output directories and a new mode: these replay commands
 explicitly keep gravity/collision response off and directly assign object poses.
 Turning on gravity alone does not turn this replay into a learned policy or an
-unassisted grasp test. The current official Track 3 policy runtime and six-metric
+unassisted grasp test. The existing
+[full-task physics diagnostic](../../docs/team/reproduction/SUPPORTED_DEX3_TASK_DIAGNOSTIC_2026-10-14.md)
+already passed gravity/contact controls but failed wrist tracking and object
+retention. Controller stability and a complete physical task remain the next gates. The current official Track 3 policy runtime and six-metric
 submission kit must be validated separately before a final evaluation claim.
 
 ## 7. End each Brev session

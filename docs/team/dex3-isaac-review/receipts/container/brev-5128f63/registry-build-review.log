@@ -1,0 +1,117 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 5.20kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 DONE 0.2s
+
+#3 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/python:3.12.15-slim-bookworm@sha256:34386ef0cb081344d7ec1c103ba398e6e9f64e9ab3a1509accc92a4e24a07258
+#4 DONE 0.0s
+
+#5 [base 1/4] FROM docker.io/library/python:3.12.15-slim-bookworm@sha256:34386ef0cb081344d7ec1c103ba398e6e9f64e9ab3a1509accc92a4e24a07258
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 3.53MB 0.1s done
+#6 DONE 0.1s
+
+#7 [ik 4/6] COPY robotic_grounding/scripts/retarget /opt/v2d/robotic_grounding/scripts/retarget
+#7 CACHED
+
+#8 [base 2/4] RUN test "amd64" = amd64
+#8 CACHED
+
+#9 [base 3/4] RUN apt-get update && apt-get install -y --no-install-recommends     ca-certificates git ffmpeg fonts-dejavu-core build-essential     libgl1 libegl1 libglu1-mesa libopengl0 libvulkan1 libx11-6 libxext6     libxi6 libxrender1 libxrandr2 libxcursor1 libxinerama1 libxt6     libsm6 libice6 libglib2.0-0 libgomp1 libnss3 libasound2     && rm -rf /var/lib/apt/lists/*
+#9 CACHED
+
+#10 [base 4/4] WORKDIR /opt/v2d
+#10 CACHED
+
+#11 [sim-runtime 1/2] COPY docker/dex3-review/setup_sim6.py docker/dex3-review/sim6-runtime-lock.txt /opt/locks/
+#11 CACHED
+
+#12 [sim-runtime 2/2] RUN --mount=type=cache,target=/root/.cache/pip PIP_DEFAULT_TIMEOUT=300 PIP_RETRIES=10 PIP_RESUME_RETRIES=20 /usr/local/bin/python /opt/locks/setup_sim6.py --lock /opt/locks/sim6-runtime-lock.txt     --prefix /opt/sim --lab /opt/IsaacLab
+#12 CACHED
+
+#13 [ik 5/6] COPY scripts/dex3_review /opt/v2d/scripts/dex3_review
+#13 DONE 0.0s
+
+#14 [ik 6/6] RUN /opt/ik/bin/python -c 'import pinocchio,pink,viser,torch; print("IK imports passed")'
+#14 1.910 IK imports passed
+#14 DONE 2.3s
+
+#15 [ik 1/6] COPY --from=ik-runtime /opt/ik /opt/ik
+#15 CACHED
+
+#16 [ik 4/6] COPY robotic_grounding/scripts/retarget /opt/v2d/robotic_grounding/scripts/retarget
+#16 CACHED
+
+#17 [ik 5/6] COPY scripts/dex3_review /opt/v2d/scripts/dex3_review
+#17 CACHED
+
+#18 [ik-runtime 1/2] COPY docker/dex3-review/ik-runtime-lock.txt /opt/locks/ik-runtime-lock.txt
+#18 CACHED
+
+#19 [ik-runtime 2/2] RUN python -m venv /opt/ik && /opt/ik/bin/pip install --no-cache-dir --no-deps     --extra-index-url https://download.pytorch.org/whl/cpu -r /opt/locks/ik-runtime-lock.txt
+#19 CACHED
+
+#20 [ik 3/6] COPY robotic_grounding/source/robotic_grounding/robotic_grounding /opt/v2d/robotic_grounding/source/robotic_grounding/robotic_grounding
+#20 CACHED
+
+#21 [ik 6/6] RUN /opt/ik/bin/python -c 'import pinocchio,pink,viser,torch; print("IK imports passed")'
+#21 CACHED
+
+#22 [ik 2/6] COPY --from=ik-runtime /opt/locks/ik-runtime-lock.txt /opt/locks/ik-runtime-lock.txt
+#22 CACHED
+
+#23 [review  1/11] COPY docker/dex3-review/copy_sim_layers.py /opt/locks/copy_sim_layers.py
+#23 DONE 0.0s
+
+#24 [review  2/11] RUN --mount=from=sim-runtime,source=/opt/sim,target=/sim-source     python /opt/locks/copy_sim_layers.py --source /sim-source --destination /opt/sim --part root
+#24 20.70 SIM_LAYER_COPIED root 68724 8163336045
+#24 DONE 26.2s
+
+#25 [review  3/11] RUN --mount=from=sim-runtime,source=/opt/sim,target=/sim-source     python /opt/locks/copy_sim_layers.py --source /sim-source --destination /opt/sim --part 0
+#25 4.350 SIM_LAYER_COPIED 0 15344 3874659802
+#25 DONE 7.3s
+
+#26 [review  4/11] RUN --mount=from=sim-runtime,source=/opt/sim,target=/sim-source     python /opt/locks/copy_sim_layers.py --source /sim-source --destination /opt/sim --part 1
+#26 4.191 SIM_LAYER_COPIED 1 14873 2320989552
+#26 DONE 6.0s
+
+#27 [review  5/11] RUN --mount=from=sim-runtime,source=/opt/sim,target=/sim-source     python /opt/locks/copy_sim_layers.py --source /sim-source --destination /opt/sim --part 2
+#27 5.222 SIM_LAYER_COPIED 2 29481 3356388269
+#27 DONE 8.3s
+
+#28 [review  6/11] RUN --mount=from=sim-runtime,source=/opt/sim,target=/sim-source     python /opt/locks/copy_sim_layers.py --source /sim-source --destination /opt/sim --part 3
+#28 6.584 SIM_LAYER_COPIED 3 18270 6199517028
+#28 DONE 8.8s
+
+#29 [review  7/11] RUN --mount=from=sim-runtime,source=/opt/sim,target=/sim-source     python /opt/locks/copy_sim_layers.py --source /sim-source --destination /opt/sim --verify
+#29 77.75 SIM_PREFIX_BYTES_VERIFIED 146692
+#29 DONE 78.3s
+
+#30 [review  8/11] COPY --from=sim-runtime /opt/IsaacLab /opt/IsaacLab
+#30 DONE 0.5s
+
+#31 [review  9/11] COPY --from=sim-runtime /opt/locks/setup_sim6.py /opt/locks/setup_sim6.py
+#31 DONE 0.0s
+
+#32 [review 10/11] COPY --from=sim-runtime /opt/locks/sim6-runtime-lock.txt /opt/locks/sim6-runtime-lock.txt
+#32 DONE 0.0s
+
+#33 [review 11/11] RUN mkdir -p /outputs /cache /data &&     /opt/sim/bin/python -c 'import cv2; from PIL import Image; print("Media imports passed")'
+#33 0.391 Media imports passed
+#33 DONE 0.4s
+
+#34 exporting to image
+#34 exporting layers
+#34 exporting layers 19.6s done
+#34 writing image sha256:a3a14f2d0d156c6c6110fd6c471e29f1fc2cbf5b256927fb5e1d5091280da322 done
+#34 naming to docker.io/library/v2d-dex3-review:5128f63e250c done
+#34 DONE 19.6s

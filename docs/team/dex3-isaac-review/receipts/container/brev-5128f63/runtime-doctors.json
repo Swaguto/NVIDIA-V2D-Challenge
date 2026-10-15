@@ -1,0 +1,18 @@
+{
+  "code_commit": "5128f63e250ca5626e7b093ccb6d26cdfad304b6",
+  "reports": [
+    {
+      "runtime": "ik",
+      "checked_packages": 72,
+      "mismatches": []
+    },
+    {
+      "status": "passed",
+      "python": "3.12.15 (main, Oct  6 2026, 02:02:31) [GCC 12.2.0]",
+      "checked_packages": 178,
+      "lab_commit": "28a37cecdd433c22d9eabd6a5954add9f13a8951",
+      "mismatches": [],
+      "scope": "installed package versions and tracked Lab source; no renderer or optional training dependency claim"
+    }
+  ]
+}

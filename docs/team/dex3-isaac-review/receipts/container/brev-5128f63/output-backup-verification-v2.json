@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "checked_files": 330,
+  "checked_bytes": 138056449,
+  "mismatches": [],
+  "scope": "All recorded Brev pilot/registry results and build/runtime logs; current images independently preserved on private GHCR"
+}

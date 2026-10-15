@@ -1,0 +1,24 @@
+{
+  "instance_name": "v2d-dex3-container-check",
+  "instance_id": "da0f8igen",
+  "instance_type": "massedcompute_L40S",
+  "listed_hourly_usd": 1.056,
+  "authorized_initial_budget_usd": 10,
+  "created_observed_utc": "2026-10-15T13:59:00Z",
+  "stop_request": "rejected: instance does not support stop",
+  "deletion_authorized_by_owner": true,
+  "delete_command": "brev delete v2d-dex3-container-check",
+  "delete_command_exit_code": 0,
+  "verification_command": "brev ls --json",
+  "verified_absent_utc": "2026-10-15T15:09:37Z",
+  "verification_result": {
+    "workspaces": null
+  },
+  "status": "deleted",
+  "preservation": {
+    "current_images": "three private GHCR images; ghcr-images.json",
+    "output_log_backup": "330 files, 138056449 bytes, all SHA256 verified on Mac",
+    "intermediate_archive": "a91fa0e archive superseded by current GHCR images; interrupted Mac copy is not a valid archive"
+  },
+  "scope": "Temporary Brev VM only; original RunPod resources were not changed."
+}

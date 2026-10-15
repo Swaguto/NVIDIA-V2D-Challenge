@@ -1,0 +1,41 @@
+{
+  "schema": "v2d.ghcr-images.v1",
+  "images": [
+    {
+      "tag": "ghcr.io/swaguto/nvidia-v2d-challenge-dex3-ik:5128f63e250c",
+      "digest_ref": "ghcr.io/swaguto/nvidia-v2d-challenge-dex3-ik@sha256:cdc4dbb13b7a2356e34e159b642094581ac95616c38f2d8a30ed493339963177",
+      "image_id": "sha256:b934de3ad88d4f232f0a678984a24eccd16ce09955bd5960869c4621968f98ca",
+      "revision": "5128f63e250ca5626e7b093ccb6d26cdfad304b6",
+      "platform": "linux/amd64",
+      "visibility": "private",
+      "repository": "Swaguto/NVIDIA-V2D-Challenge",
+      "package_url": "https://github.com/users/Swaguto/packages/container/package/nvidia-v2d-challenge-dex3-ik",
+      "maximum_compressed_layer_bytes": 445661628,
+      "anonymous_pull_denied": true
+    },
+    {
+      "tag": "ghcr.io/swaguto/nvidia-v2d-challenge-hand-continuity:5128f63e250c",
+      "digest_ref": "ghcr.io/swaguto/nvidia-v2d-challenge-hand-continuity@sha256:df7ae3a41cd8eb25f7f4b5a165b3f663a06899bbeffefb18c695e44f0627584f",
+      "image_id": "sha256:dd9267cf87b2ac77e2872cd0c7958236db79e275974c279bd0dde52a2ec1af20",
+      "revision": "5128f63e250ca5626e7b093ccb6d26cdfad304b6",
+      "platform": "linux/amd64",
+      "visibility": "private",
+      "repository": "Swaguto/NVIDIA-V2D-Challenge",
+      "package_url": "https://github.com/users/Swaguto/packages/container/package/nvidia-v2d-challenge-hand-continuity",
+      "maximum_compressed_layer_bytes": 3198020606,
+      "anonymous_pull_denied": true
+    },
+    {
+      "tag": "ghcr.io/swaguto/nvidia-v2d-challenge-dex3-review:5128f63e250c",
+      "digest_ref": "ghcr.io/swaguto/nvidia-v2d-challenge-dex3-review@sha256:8585588357d898929bf6f80f0011441cbcab07a3d95e2f5f4d0e24bc5c177190",
+      "image_id": "sha256:a3a14f2d0d156c6c6110fd6c471e29f1fc2cbf5b256927fb5e1d5091280da322",
+      "revision": "5128f63e250ca5626e7b093ccb6d26cdfad304b6",
+      "platform": "linux/amd64",
+      "visibility": "private",
+      "repository": "Swaguto/NVIDIA-V2D-Challenge",
+      "package_url": "https://github.com/users/Swaguto/packages/container/package/nvidia-v2d-challenge-dex3-review",
+      "maximum_compressed_layer_bytes": 3831304457,
+      "anonymous_pull_denied": true
+    }
+  ]
+}
