@@ -1,0 +1,9 @@
+# @package _global_
+defaults:
+  - dex3_repaired_firm_point
+  - _self_
+
+# Enable existing torsional friction as one finite-patch contact DOF.
+embodiment:
+  config:
+    hand_contact_profile: firm_patch

@@ -50,6 +50,8 @@ class ReadbackEnv:
         model = getattr(env.solver, "mj_model", None)
         for name in (
             "geom_type",
+            "geom_condim",
+            "geom_priority",
             "geom_bodyid",
             "geom_dataid",
             "geom_pos",

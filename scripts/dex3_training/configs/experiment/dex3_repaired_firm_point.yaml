@@ -1,0 +1,9 @@
+# @package _global_
+defaults:
+  - dex3_repaired_velocity
+  - _self_
+
+# Contact-response experiment at 400 Hz physics. No coefficient/motor changes.
+embodiment:
+  config:
+    hand_contact_profile: firm_point
