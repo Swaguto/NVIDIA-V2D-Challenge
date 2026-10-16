@@ -16,6 +16,7 @@ def payload_position_bias(
     pos_dofs: wp.array(dtype=wp.int32),
     wrench: wp.array(dtype=wp.spatial_vector),
     stiffness: wp.array(dtype=wp.float32),
+    nominal: wp.array(dtype=wp.float32),
     target: wp.array(dtype=wp.float32),
 ):
     world, hand = wp.tid()
@@ -29,7 +30,7 @@ def payload_position_bias(
     fade = fade * fade * (3.0 - 2.0 * fade)
     for axis in range(3):
         dof = world * dofs + pos_dofs[hand * 3 + axis]
-        target[dof] = target[dof] + fade * wrench[ri][axis] / stiffness[dof]
+        target[dof] = nominal[dof] + fade * wrench[ri][axis] / stiffness[dof]
 
 
 @wp.kernel

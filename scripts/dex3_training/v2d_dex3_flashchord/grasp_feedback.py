@@ -275,7 +275,6 @@ class FeedbackGripAction(GripResidualAction):
         super().process(action, timestep, state)
         if self.payload_wrench is not None:
             wp.copy(self.payload_timestep, timestep)
-            self.payload_state = state
         layout = self.buffers.layout
         wp.launch(
             correct_grasp_targets,
@@ -323,10 +322,13 @@ class FeedbackGripAction(GripResidualAction):
             ],
         )
 
-    def prepare_control(self, control):
-        super().prepare_control(control)
+    def apply_control(self, state, control):
+        super().apply_control(state, control)
         if self.payload_wrench is not None:
-            from .payload_kernels import payload_position_bias
+            from .payload_kernels import (
+                payload_position_bias,
+                payload_orientation_effort,
+            )
 
             wp.launch(
                 payload_position_bias,
@@ -339,19 +341,14 @@ class FeedbackGripAction(GripResidualAction):
                     self.body_stride,
                     self.object_body,
                     self.ref_object,
-                    self.payload_state.body_q,
+                    state.body_q,
                     self.buffers.wrist_pos_dof_ids,
                     self.payload_wrench,
                     self.grip_stiffness,
+                    self.joint_target,
                     control.joint_target_pos,
                 ],
             )
-
-    def apply_control(self, state, control):
-        super().apply_control(state, control)
-        if self.payload_wrench is not None:
-            from .payload_kernels import payload_orientation_effort
-
             wp.launch(
                 payload_orientation_effort,
                 dim=(self.buffers.world_count, self.buffers.layout.num_hands),
