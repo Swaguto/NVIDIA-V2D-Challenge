@@ -162,7 +162,30 @@ def implicit_root_wrench(
     }
 
 
-def finger_position_target(target, position, velocity, stiffness, damping, effort):
+def encode_finger_feedforward(target, feedforward, stiffness):
+    """Put constant feedforward inside the implicit drive's shared effort cap.
+
+    K * ((q_ref + tau_ff/K) - q) - D*v equals PD + feedforward.
+    A separate PhysX joint force bypasses the implicit drive's force limit.
+    """
+    target, feedforward, stiffness = map(
+        lambda value: np.asarray(value, float), (target, feedforward, stiffness)
+    )
+    if (
+        target.shape != feedforward.shape
+        or target.shape != stiffness.shape
+        or not np.isfinite(
+            np.r_[target.ravel(), feedforward.ravel(), stiffness.ravel()]
+        ).all()
+        or np.any(stiffness <= 0)
+    ):
+        raise ValueError("Invalid feedforward drive encoding inputs")
+    return target + feedforward / stiffness
+
+
+def finger_position_target(
+    target, position, velocity, stiffness, damping, effort, feedforward=None
+):
     """Keep the original per-joint effort clamp; reject zero stiffness and NaNs."""
     target, position, velocity, stiffness, damping, effort = (
         np.asarray(x, dtype=float)
@@ -175,6 +198,8 @@ def finger_position_target(target, position, velocity, stiffness, damping, effor
         raise ValueError("Finger controller arrays must be finite and aligned")
     if np.any(stiffness <= 0) or np.any(damping < 0) or np.any(effort <= 0):
         raise ValueError("Invalid finger drive constants")
+    if feedforward is not None:
+        target = encode_finger_feedforward(target, feedforward, stiffness)
     return np.clip(
         target,
         position + (-effort + damping * velocity) / stiffness,

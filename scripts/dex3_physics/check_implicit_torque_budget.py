@@ -8,12 +8,14 @@ limit semantics; ImplicitActuator.applied_effort itself is only an estimate.
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--encode-in-drive", action="store_true")
     args = parser.parse_args()
     from isaaclab.app import AppLauncher
 
@@ -25,6 +27,9 @@ def main():
         from isaaclab.assets import Articulation, ArticulationCfg
         from isaaclab.actuators import ImplicitActuatorCfg
         from pxr import Gf, Sdf, UsdGeom, UsdPhysics, PhysxSchema
+
+        sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "reproduction"))
+        from _dex3_wrist_control import encode_finger_feedforward
 
         dt = 0.001
         sim = sim_utils.SimulationContext(
@@ -83,7 +88,10 @@ def main():
         if mass.shape != (1, 1, 1) or not np.isclose(mass[0, 0, 0], 0.001, rtol=1e-4):
             raise RuntimeError(f"Unexpected probe inertia {mass.tolist()}")
         rows = []
-        for effort in [0.0, 0.55, -0.55]:
+        cases = [(1.0, 0.0), (1.0, 0.55), (1.0, -0.55)]
+        if args.encode_in_drive:
+            cases += [(-1.0, -0.55), (0.02, 0.55), (0.02, -0.55)]
+        for reference, effort in cases:
             robot.write_joint_state_to_sim(zero, zero)
             robot.set_joint_position_target(zero)
             robot.set_joint_effort_target(zero)
@@ -91,20 +99,47 @@ def main():
             sim.step(render=False)
             robot.update(dt)
             robot.write_joint_state_to_sim(zero, zero)
-            robot.set_joint_position_target(torch.ones((1, 1), dtype=torch.float32))
-            robot.set_joint_effort_target(torch.tensor([[effort]], dtype=torch.float32))
+            target = (
+                float(encode_finger_feedforward([reference], [effort], [8.0])[0])
+                if args.encode_in_drive
+                else reference
+            )
+            external = 0.0 if args.encode_in_drive else effort
+            robot.set_joint_position_target(
+                torch.tensor([[target]], dtype=torch.float32)
+            )
+            robot.set_joint_effort_target(
+                torch.tensor([[external]], dtype=torch.float32)
+            )
             robot.write_data_to_sim()
             sim.step(render=False)
             robot.update(dt)
             velocity = float(robot.data.joint_vel[0, 0].cpu().numpy())
             rows.append(
                 dict(
+                    posture_reference_rad=reference,
                     feedforward_Nm=effort,
+                    separate_joint_effort_target_Nm=external,
+                    implicit_drive_position_target_rad=target,
                     measured_average_net_motor_torque_Nm=float(
                         mass[0, 0, 0] * velocity / dt
                     ),
                     velocity_rad_s=velocity,
                 )
+            )
+        # Independent implicit-Euler equation for the unsaturated hinge:
+        # tau = (K*q_ref + ff)/(1 + K*dt^2/I), with initial q=v=0.
+        equivalence = None
+        if args.encode_in_drive:
+            equivalence = all(
+                np.isclose(
+                    row["measured_average_net_motor_torque_Nm"],
+                    (8.0 * row["posture_reference_rad"] + row["feedforward_Nm"])
+                    / (1.0 + 8.0 * dt**2 / float(mass[0, 0, 0])),
+                    atol=0.0002,
+                    rtol=0,
+                )
+                for row in rows[-2:]
             )
         result = dict(
             schema="v2d.implicit-torque-budget-probe.v1",
@@ -127,6 +162,12 @@ def main():
             ),
             source_episode_loaded=False,
             implicit_actuator_estimate_is_direct_measurement=False,
+            unsaturated_control_law_verified=None
+            if equivalence is None
+            else bool(equivalence),
+            feedforward_encoding="drive_target_bias"
+            if args.encode_in_drive
+            else "separate_joint_effort",
         )
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(json.dumps(result, indent=2) + "\n")

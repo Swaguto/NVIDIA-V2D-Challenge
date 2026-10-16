@@ -8,7 +8,11 @@ import pytest
 from scipy.spatial.transform import Rotation
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from _dex3_wrist_control import finger_position_target, implicit_root_wrench
+from _dex3_wrist_control import (
+    encode_finger_feedforward,
+    finger_position_target,
+    implicit_root_wrench,
+)
 
 
 def inputs():
@@ -112,6 +116,48 @@ def test_finger_clamp_respects_effort_in_independent_pd_equation():
     target = finger_position_target(np.array([5, -5]), q, v, stiffness, damping, limit)
     actual_torque = stiffness * (target - q) - damping * v
     np.testing.assert_allclose(actual_torque, [1, -2], atol=1e-12)
+
+
+def test_feedforward_drive_bias_preserves_unsaturated_pd_control_law():
+    q = np.array([[0.1, -0.2, 0.3]])
+    v = np.array([[0.3, -0.4, 0.1]])
+    reference = q + np.array([[0.01, -0.02, 0.03]])
+    stiffness = np.array([[8.0, 2.0, 8.0]])
+    damping = np.array([[0.2, 0.2, 0.2]])
+    feedforward = np.array([[0.55, -0.1, -0.3]])
+    biased = encode_finger_feedforward(reference, feedforward, stiffness)
+    np.testing.assert_allclose(
+        stiffness * (biased - q) - damping * v,
+        stiffness * (reference - q) - damping * v + feedforward,
+        atol=1e-12,
+    )
+    bounded = finger_position_target(
+        reference, q, v, stiffness, damping, np.full_like(q, 0.76), feedforward
+    )
+    np.testing.assert_allclose(bounded, biased, atol=1e-12)
+
+
+def test_feedforward_and_posture_share_one_motor_budget_in_both_directions():
+    q = np.array([[0.1, -0.2]])
+    v = np.array([[0.3, -0.4]])
+    stiffness, damping = np.full_like(q, 8.0), np.full_like(q, 0.2)
+    reference, ff, limit = q + [[1.0, -1.0]], np.array([[0.55, -0.55]]), 0.76
+    bounded = finger_position_target(
+        reference, q, v, stiffness, damping, np.full_like(q, limit), ff
+    )
+    np.testing.assert_allclose(
+        stiffness * (bounded - q) - damping * v, [[limit, -limit]], atol=1e-12
+    )
+    # Regression: independently limiting PD then adding feedforward exceeds
+    # the motor cap, as the isolated pinned-backend acceleration probe found.
+    old = np.clip(stiffness * (reference - q) - damping * v, -limit, limit) + ff
+    assert np.all(np.abs(old) > limit)
+
+
+@pytest.mark.parametrize("stiffness", [np.array([0.0]), np.array([np.nan])])
+def test_feedforward_encoding_rejects_invalid_stiffness(stiffness):
+    with pytest.raises(ValueError):
+        encode_finger_feedforward(np.array([0.0]), np.array([0.55]), stiffness)
 
 
 def test_reference_velocity_does_not_brake_perfect_constant_speed_tracking():

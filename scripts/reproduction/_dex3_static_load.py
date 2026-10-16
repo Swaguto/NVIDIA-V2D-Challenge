@@ -1644,13 +1644,19 @@ def execute(
         for index, (hand, target, initial, effort) in enumerate(
             zip(hands, targets, initial_targets, effort_targets, strict=True)
         ):
-            hand.set_joint_position_target(initial + blend * (target - initial))
             squeeze_blend = (
                 min(1.0, max(0.0, (step + 1 - 25) / 25)) if acquisition_mode else 1.0
             )
             squeeze_blend = squeeze_blend * squeeze_blend * (3 - 2 * squeeze_blend)
             applied_efforts[index] = squeeze_blend * effort
-            hand.set_joint_effort_target(applied_efforts[index])
+            # Include feedforward in the implicit drive, so the native motor
+            # cap bounds PD plus feedforward rather than just the PD component.
+            hand.set_joint_position_target(
+                initial
+                + blend * (target - initial)
+                + applied_efforts[index] / hand.data.joint_stiffness
+            )
+            hand.set_joint_effort_target(torch.zeros_like(applied_efforts[index]))
             if lift_mode:
                 sample = prepared["samples"][index]
                 initial_pose = np.r_[
@@ -1854,6 +1860,7 @@ def execute(
             "static_contact_bindings": static_contact_bindings,
             "initial_solver_contact_buffer_is_cached_not_current_pose": True,
             "finger_feedforward_scope": "bounded real finger motor torques; original combined simulator motor effort limits unchanged; no external object wrench",
+            "finger_feedforward_encoding": "implicit drive target bias; separate joint effort target is zero",
             "summaries": summaries,
             "controls": controls,
             "gravity_and_contact_controls_pass": controls_pass,
@@ -2736,6 +2743,9 @@ def run_supported_task(
                             cpu(hand.data.joint_stiffness),
                             cpu(hand.data.joint_damping),
                             cpu(hand.data.joint_effort_limits),
+                            feedforward=grip_effort_sim[None]
+                            if grip_effort_sim is not None
+                            else None,
                         ),
                         dtype=torch.float32,
                         device=sim.device,
@@ -2753,13 +2763,7 @@ def run_supported_task(
                 )
                 hand.set_joint_position_target(fingers)
                 if grip_command is not None:
-                    hand.set_joint_effort_target(
-                        torch.tensor(
-                            grip_effort_sim[None],
-                            dtype=torch.float32,
-                            device=sim.device,
-                        )
-                    )
+                    hand.set_joint_effort_target(torch.zeros_like(fingers))
                 hand.write_data_to_sim()
                 hand_rows.append(
                     {
@@ -3078,6 +3082,7 @@ def run_supported_task(
             "task_motor_readback": task_motor_readbacks,
             "implicit_actuator_torque_is_clipped_model_estimate": True,
             "direct_solver_motor_torque_measured": False,
+            "finger_feedforward_encoding": "implicit drive target bias; separate joint effort target is zero",
             "initial_scene_clearance_check": initial_scene_check,
             "scene_projection_maximum_correction_m": task_grip.spec.get(
                 "scene_projection", {}

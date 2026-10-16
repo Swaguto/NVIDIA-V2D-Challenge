@@ -142,3 +142,25 @@ Primary source for estimate semantics: [pinned IsaacLab ImplicitActuator](https:
 The [Omni Physics drive model API](https://docs.omniverse.nvidia.com/kit/docs/omni_physics/108.0/extensions/runtime/source/omni.physics.tensors/docs/api/python.html)
 documents combined internal-drive and user-force effort constraints. The probe
 checks the active runtime rather than assuming those semantics from a label.
+
+## Shared motor-limit repair
+
+The isolated runtime probe measured 0.7600 Nm with the drive alone, 1.3100 Nm
+with an additional aligned 0.55 Nm joint effort, and 0.2100 Nm with opposing
+effort. In this pinned runtime, the separate joint effort bypasses the drive's
+0.76 Nm cap. Historical clipped torque estimates therefore cannot certify the
+combined motor budget, including for the earlier isolated lifts.
+
+Feedforward is now encoded as a bias of the implicit drive target:
+`q_drive = q_posture + torque_feedforward / stiffness`. The separate joint
+effort command is zero. Below saturation, this preserves
+`K*(q_posture-q) - D*velocity + torque_feedforward`; the complete command now
+passes through the native implicit drive's motor cap. Physical joint limits
+remain unchanged. The bias is a force-control command rather than a desired
+reachable finger configuration. Task targets also retain the existing current
+state torque clamp. Static acquisition and lift use the same drive encoding.
+
+83 CPU tests pass, including the unsaturated control law and simultaneous
+posture/feedforward saturation in both directions. Before running an episode,
+the isolated inertia-based probe must confirm both signed limits and the
+unsaturated implicit dynamics. This change is pending that simulator check.
