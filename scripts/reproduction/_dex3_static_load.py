@@ -2836,7 +2836,7 @@ def run_supported_task(
                         "finger_feedforward_Nm": grip_effort_sim.tolist()
                         if grip_command is not None
                         else None,
-                        "actual_combined_finger_effort_Nm": controller_tensor(
+                        "estimated_implicit_actuator_torque_Nm": controller_tensor(
                             hand.data.applied_torque
                         )[0]
                         .cpu()
@@ -3076,6 +3076,8 @@ def run_supported_task(
             "task_grasp_seed_sha256": prepared.get("task_grasps_sha256"),
             "task_grip_controller_sha256": prepared.get("task_grip_controller_sha256"),
             "task_motor_readback": task_motor_readbacks,
+            "implicit_actuator_torque_is_clipped_model_estimate": True,
+            "direct_solver_motor_torque_measured": False,
             "initial_scene_clearance_check": initial_scene_check,
             "scene_projection_maximum_correction_m": task_grip.spec.get(
                 "scene_projection", {}

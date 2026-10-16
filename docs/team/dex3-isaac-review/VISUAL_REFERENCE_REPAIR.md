@@ -121,3 +121,24 @@ wrist pose and opens from the measured finger configuration, instead of
 continuing a source-relative park path that could cross the displaced object.
 This affects robot targets only. 79 CPU tests pass; the final fault hold still
 requires its new simulator comparison.
+
+## Torque telemetry correction
+
+The legacy `actual_combined_finger_effort_Nm` name overstates its measurement
+scope. Its values come from `hand.data.applied_torque`, which the pinned
+ImplicitActuator computes as a clipped model estimate. New runs use
+`estimated_implicit_actuator_torque_Nm`; the auditor also interprets the old
+field as an estimate. Historical raw files and hashes are preserved. Reported
+old maxima do not independently certify actual motor torque.
+
+An isolated fixed-base hinge check measures average net torque from known
+constant inertia and angular acceleration, with gravity, friction and collisions
+absent. It tests drive-only, aligned feedforward and opposing feedforward cases
+in the pinned backend. A valid drive-only calibration is required before
+interpreting the combined 0.76 Nm limit result. This probe loads no source data
+and must pass before trusting a combined-budget claim in the next comparison.
+
+Primary source for estimate semantics: [pinned IsaacLab ImplicitActuator](https://github.com/isaac-sim/IsaacLab/blob/28a37cecdd433c22d9eabd6a5954add9f13a8951/source/isaaclab/isaaclab/actuators/actuator_pd.py).
+The [Omni Physics drive model API](https://docs.omniverse.nvidia.com/kit/docs/omni_physics/108.0/extensions/runtime/source/omni.physics.tensors/docs/api/python.html)
+documents combined internal-drive and user-force effort constraints. The probe
+checks the active runtime rather than assuming those semantics from a label.

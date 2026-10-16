@@ -143,10 +143,21 @@ def summarize(run):
                 item["all_primary_digits_above_0_5N_fraction"] = float(
                     np.mean((digit_loads >= 0.5).all(axis=1))
                 )
-                item["maximum_actual_combined_finger_effort_Nm"] = float(
+                item["maximum_estimated_implicit_actuator_torque_Nm"] = float(
                     np.max(
-                        np.abs([r["actual_combined_finger_effort_Nm"] for r in rows])
+                        np.abs(
+                            [
+                                r.get(
+                                    "estimated_implicit_actuator_torque_Nm",
+                                    r.get("actual_combined_finger_effort_Nm"),
+                                )
+                                for r in rows
+                            ]
+                        )
                     )
+                )
+                item["effort_data_scope"] = (
+                    "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
                 )
             grasps.append(item)
     return dict(
