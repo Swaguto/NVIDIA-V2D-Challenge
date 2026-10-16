@@ -1,8 +1,11 @@
 # Coupled e002 diagnostic: approach, grasp, transport and release
 
-**Current status:** seven complete e002 trials fail carrying. The signed-force
-handling bug is fixed; live allocation remains disabled. See the final validation
-section below and `coupled-physics-campaign-v2.json`. All 70 CPU tests pass.
+**Current status:** complete e002 carrying remains unresolved. The hand runaway
+after object loss is fixed in a fresh simulation. The newest motor-limit repair
+is under validation; historical torque telemetry is a clipped model estimate,
+and a separate joint effort was found to bypass the native drive cap. See
+[visual inspection and subsequent repairs](VISUAL_REFERENCE_REPAIR.md). All 83
+CPU tests pass. Earlier campaign sections below retain their original chronology.
 
 This is experimental robot-reference/controller code. No complete physical task,
 policy or official score is accepted by this document. The isolated pot/lid
@@ -37,8 +40,10 @@ second phase at source row 274, despite the static lift passing. The task model
 uses coefficient 1.25, matching the nominal average of unchanged hand friction
 2.0 and object friction 0.5. The inscribed friction octagon remains inside that
 cone. The runtime explicitly authors and reads back the average combine mode
-and coefficients. Motor feedforward remains capped at 0.55 Nm and the real
-combined motor limit remains 0.76 Nm. Pot stiffness is 8 Nm/rad; lid stiffness
+and coefficients. Motor feedforward remains capped at 0.55 Nm and the declared
+drive limit is 0.76 Nm. Historical separate-effort runs did not enforce that
+limit on the combined motor command; the target-bias repair places both terms
+inside the native drive. Pot stiffness is 8 Nm/rad; lid stiffness
 is 2 Nm/rad, with original damping and wrist caps.
 
 Wrist feedback sums measured normal and friction contact forces and moments
@@ -102,8 +107,9 @@ other object is recorded at the sampled failure times. The 2 N minimum nominal
 force plan therefore remains unsuitable as a training reference. The follow-up
 raises the planned minimum to 4 N for every pot pad, with all source orientations
 feasible and at most 0.511 Nm feedforward, below the unchanged 0.55 Nm cap.
-Per-body/per-object normal forces and actual combined finger effort are now
-recorded. Compensation contact eligibility uses the primary object only.
+Per-body/per-object normal forces and estimated finger effort are recorded.
+The legacy effort field is not a direct solver motor measurement.
+Compensation contact eligibility uses the primary object only.
 The 4 N version still requires a new simulator run; no policy is retrained yet.
 
 ## Tactile seating follow-up
@@ -168,7 +174,8 @@ The next disabled candidate is `experimental_live_contact_wrench`. It recomputes
 patch centroids and inward normals from current copied PhysX contact data for
 the primary object. Current finger FK supplies point Jacobians. A bounded nominal
 load allocation produces squeeze torques; actual simulator joint gravity
-compensation is added, with the original 0.76 Nm total command limit enforced.
+compensation is added, with a 0.76 Nm planned total command limit. The historical
+separate-effort motor execution did not certify that combined limit.
 During valid allocation, finger position targets follow current joint positions,
 retaining drive damping while avoiding a competing geometric posture spring.
 Missing contacts, infeasible forces or invalid data fall back to the frozen
@@ -260,8 +267,9 @@ product with reported normals matches the independently checked aggregate force.
 The corrected allocator activates for 70/1830 first-pot load steps (3.83%), then
 contact weakens and fallback dominates. It never activates in the second pot
 phase. The full carry and wrist gate fail. Finger gravity compensation is at
-most 0.02684 Nm and the live commanded motor effort at most 0.54234 Nm; actual
-combined effort reaches the unchanged 0.76 Nm limit during the run. This variant
+most 0.02684 Nm and the live commanded motor effort at most 0.54234 Nm; the
+clipped implicit model estimate reaches 0.76 Nm during the run. This does not
+certify actual combined motor effort. This variant
 is rejected.
 
 The next comparison keeps the frozen grasp position target when live allocation
