@@ -54,7 +54,7 @@ def solve_gravity_contacts(
         raise ValueError("Contact geometry and Jacobians must be finite and aligned")
     if (
         not 0 < mass_kg <= 1
-        or not 0 < friction <= 1
+        or not 0 < friction <= 1.25
         or not 2 <= normal_cap_N <= 10
         or not np.allclose(np.linalg.norm(inward, axis=1), 1, atol=1e-6)
     ):

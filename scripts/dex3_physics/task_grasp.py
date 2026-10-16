@@ -1,0 +1,193 @@
+"""Bind locally verified grasp commands to every original e002 phase."""
+
+import copy
+import hashlib
+import json
+import sys
+from pathlib import Path
+
+import numpy as np
+from scipy.spatial.transform import Rotation
+
+sys.path.insert(0, str(Path(__file__).parents[1] / "reproduction"))
+from _dex3_task_grip import relative_pose  # noqa: E402
+from _dex3_static_load import apply_grasp_seeds  # noqa: E402
+from grasp_preload import URDFKinematics  # noqa: E402
+from grip_force import point_jacobian, solve_gravity_contacts  # noqa: E402
+
+
+def build(case, original_samples, proposal, stage_rotation, urdfs):
+    """Produce robot-only commands, preserving source masks, frames and geometry."""
+    samples, changed = apply_grasp_seeds(original_samples, proposal)
+    if set(changed) != {s["prefix"] for s in original_samples}:
+        raise ValueError(
+            "Full task requires every source grasp, with no missing candidate"
+        )
+    with np.load(case / "bundle/episode.npz", allow_pickle=False) as f:
+        source = {k: f[k] for k in f.files}
+    with np.load(case / "proposal/robot-motion-proposal.npz", allow_pickle=False) as f:
+        motion = {k: f[k] for k in f.files}
+    stage = Rotation.from_matrix(stage_rotation)
+    times = source["timestamps_s"]
+    result = dict(
+        schema="v2d.dex3-task-grips.v1",
+        park_height_m=0.12,
+        physical_task_accepted=False,
+        source_observations_changed=False,
+        case_manifest_sha256=hashlib.sha256(
+            (case / "file-manifest.json").read_bytes()
+        ).hexdigest(),
+        source_times_s=times.tolist(),
+        phases={"left": [], "right": []},
+        observation_contract="source object reference plus measured object pose during approach; measured hand-object reaction for wrist feedback; diagnostic only",
+        contact_model_friction=1.25,
+        required_physical_materials="hand 2.0 / object 0.5, average combination = 1.25; explicit combine mode and coefficient readback required",
+    )
+    controls = {r["sample"]: r for r in proposal["grip_effort"]["controls"]}
+    if "scene_projection" in proposal:
+        scene = proposal["scene_projection"]
+        values = np.asarray(scene["upward_corrections_m"])
+        if (
+            scene["schema"] != "v2d.cooked-scene-projection.v1"
+            or scene["original_source_arrays_changed"]
+            or scene["physical_task_accepted"]
+            or not np.array_equal(scene["source_times_s"], times)
+            or values.shape != (len(times), 2)
+            or not np.isfinite(values).all()
+            or values.min() < 0
+            or values.max() > 0.06
+            or scene["cap_m"] != 0.06
+        ):
+            raise ValueError("Invalid bounded scene projection proposal")
+        result["scene_projection"] = copy.deepcopy(scene)
+    for sample in samples:
+        side, oi = sample["side"], sample["object"]
+        si = ("left", "right").index(side)
+        record = next(r for r in proposal["results"] if r["sample"] == sample["prefix"])
+        phase_id = motion["robot_grasp_phase_index_inferred"][sample["source_row"], si]
+        phase_rows = np.flatnonzero(
+            motion["robot_grasp_phase_index_inferred"][:, si] == phase_id
+        )
+        contact_rows = phase_rows[
+            motion["robot_contact_intent_inferred"][phase_rows, si, oi]
+        ]
+        close, end = (
+            float(times[contact_rows[0]]),
+            float(times[contact_rows[-1]] + np.median(np.diff(times))),
+        )
+        start = float(times[phase_rows[0]] - 0.5)
+        if close - 0.25 <= start:
+            raise ValueError(
+                "Insufficient source interval for explicit approach and closure"
+            )
+        kin = URDFKinematics(urdfs / f"dex3_{side}.urdf")
+        q = dict(zip(sample["joint_names"], sample["finger_target_rad"], strict=True))
+        root = np.r_[
+            sample["hand_position_stage_m"], sample["hand_quaternion_stage_xyzw"]
+        ]
+        obj = np.r_[
+            sample["object_position_stage_m"], sample["object_quaternion_stage_xyzw"]
+        ]
+        relative = relative_pose(root, obj)
+        # Fixture world offsets cancel in the relative transform.
+        order = [
+            record["candidate"]["joint_names"].index(n) for n in sample["joint_names"]
+        ]
+        effort_times, efforts = times[contact_rows], []
+        if record["candidate"].get("three_pad_geometric_contacts"):
+            pads = controls[sample["prefix"]]["pads"]
+            poses = kin.poses(root, q)
+            points = np.array(
+                [
+                    poses[p["link"]][:3, :3] @ p["contact_point_link_m"]
+                    + poses[p["link"]][:3, 3]
+                    for p in pads
+                ]
+            )
+            inward = np.array([p["inward_direction_stage"] for p in pads])
+            jac = np.array(
+                [
+                    point_jacobian(
+                        kin, root, q, p["link"], np.asarray(p["contact_point_link_m"])
+                    )
+                    for p in pads
+                ]
+            )
+            for row in contact_rows:
+                rotation = (
+                    stage
+                    * Rotation.from_matrix(source[f"object_{oi}_world"][row, :3, :3])
+                    * Rotation.from_quat(obj[3:]).inv()
+                )
+                try:
+                    _, torque, _ = solve_gravity_contacts(
+                        rotation.apply(points - obj[:3]),
+                        rotation.apply(inward),
+                        np.einsum("ij,pjk->pik", rotation.as_matrix(), jac),
+                        np.zeros(3),
+                        0.3,
+                        10.0,
+                        friction=1.25,
+                    )
+                except ValueError as error:
+                    raise ValueError(
+                        f"{sample['prefix']} source row {row}: {error}"
+                    ) from error
+                efforts.append(
+                    [torque[kin.names.index(n)] for n in sample["joint_names"]]
+                )
+        else:
+            efforts = [
+                np.array(record["candidate"]["finger_feedforward_Nm"])[order].tolist()
+            ] * len(contact_rows)
+        result["phases"][side].append(
+            dict(
+                sample=sample["prefix"],
+                object=oi,
+                joint_names=sample["joint_names"],
+                hand_in_object_xyzw=relative.tolist(),
+                open_rad=sample["finger_pregrasp_rad"],
+                closed_rad=sample["finger_target_rad"],
+                effort_times_s=effort_times.tolist(),
+                effort_Nm=efforts,
+                stiffness_Nm_per_rad=sample.get("finger_stiffness_Nm_per_rad", 2),
+                required_digits=sample.get(
+                    "required_contact_digits", ["thumb", "index"]
+                ),
+                approach_start_s=start,
+                close_s=close,
+                release_start_s=end,
+            )
+        )
+    for side, phases in result["phases"].items():
+        phases.sort(key=lambda x: x["close_s"])
+        if any(
+            b["approach_start_s"] < a["release_start_s"] + 0.75
+            for a, b in zip(phases, phases[1:])
+        ):
+            raise ValueError(f"{side}: approach/release schedules overlap")
+        if len({p["stiffness_Nm_per_rad"] for p in phases}) != 1:
+            raise ValueError("Per-phase gains must agree for the same hand")
+    return result
+
+
+def combine(paths):
+    """Combine two exact local seeds; never modify their source identity records."""
+    proposals = [json.loads(Path(p).read_text()) for p in paths]
+    for p in proposals:
+        apply_grasp_seeds([r["source_sample"] for r in p["results"]], p)
+    result = copy.deepcopy(proposals[0])
+    result["results"] = [copy.deepcopy(r) for p in proposals for r in p["results"]]
+    result["grip_effort"]["controls"] = [
+        copy.deepcopy(r) for p in proposals for r in p["grip_effort"]["controls"]
+    ]
+    for key, default in {
+        "wrist_translation_cap_m": 0.03,
+        "wrist_rotation_cap_rad": 0.5,
+        "finger_delta_cap_rad": 0.6,
+    }.items():
+        result[key] = max(p.get(key, default) for p in proposals)
+    result["component_seed_sha256"] = [
+        hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in paths
+    ]
+    return result

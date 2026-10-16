@@ -1,0 +1,48 @@
+{
+  "schema": "v2d.local-input-bundle-receipt.v1",
+  "filename": "dex3-pot-task-inputs-local-v1.tar.gz",
+  "bytes": 95550634,
+  "sha256": "276d4be0645312f3a1054037aa47a54c4cb8a6e71944961b402611882613ed1a",
+  "all_members_hash_verified": true,
+  "member_manifest": {
+    "schema": "v2d.local-pot-task-inputs.v1",
+    "scope": "pot isolated fixtures verified with source v16; full task v17 is experimental, not accepted",
+    "files": {
+      "input-pack.tar.gz": {
+        "bytes": 83764720,
+        "sha256": "759b6e9fa642b47ec24306969688cc1ce15ead4cb0b80e4f8d086b727b93c680"
+      },
+      "pot-three-pad-effort-v3.json": {
+        "bytes": 38076,
+        "sha256": "de153d0ebc1a7814dd9773c083acaf3ab9fa0c907b2a2229316d3675ade8c599"
+      },
+      "lid-grip-effort.json": {
+        "bytes": 12675,
+        "sha256": "ef60d82709133fccc0f6e8a51e5f343a67f5abfbc4c71d26fa812363a9bccbd5"
+      },
+      "combined-task-grasps-v1.json": {
+        "bytes": 49522,
+        "sha256": "45cf4de3bcd2b2a10b88be354f0008b19aaeecc05ef056da5ba371d7b602e2a2"
+      },
+      "sources/physics-source-v16.tar.gz": {
+        "bytes": 6008792,
+        "sha256": "637a3a6bb2d7344d7cad4770602966586f931eb197befa97a5f9553e77a7fedc"
+      },
+      "sources/physics-source-v16.json": {
+        "bytes": 26233,
+        "sha256": "3d014e6850306a6092cacc52081e92e148bd3cb9143a29c0639471e1eb20d9b1"
+      },
+      "sources/physics-source-v17.tar.gz": {
+        "bytes": 6016935,
+        "sha256": "432f9d85bc299c182647d5c33d39e2380dbdc582f4434723b7473d86604d9968"
+      },
+      "sources/physics-source-v17.json": {
+        "bytes": 26578,
+        "sha256": "c40db67809b73f85d72e06a49018470ad3b3025219bc825527e794d6ef0c45dc"
+      }
+    },
+    "excludes_credentials_and_MANO_weights": true,
+    "uploaded": false
+  },
+  "published": false
+}

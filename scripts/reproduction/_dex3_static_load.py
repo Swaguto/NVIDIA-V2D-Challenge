@@ -356,6 +356,8 @@ def prepare(
     grasp_seed_sha256: str | None = None,
     controlled_acquisition: bool = False,
     controlled_grip_lift: bool = False,
+    task_grasps: Path | None = None,
+    task_grasps_sha256: str | None = None,
 ) -> dict:
     """Validate byte/coordinate contracts and build portable nominal load inputs."""
     import numpy as np
@@ -388,6 +390,15 @@ def prepare(
         raise ValueError("Controlled acquisition requires static mode and grasp seeds")
     if controlled_grip_lift and not controlled_acquisition:
         raise ValueError("Controlled lift requires acquisition")
+    if task_grasps is not None and (
+        task_motion is None
+        or grasp_seed is not None
+        or digest(task_grasps) != task_grasps_sha256
+        or controller_mode != "implicit_pd_ff"
+    ):
+        raise ValueError(
+            "Task grasps need the supported task, exact SHA and implicit PD velocity tracking"
+        )
     files = json.loads((case / "file-manifest.json").read_text())["files_sha256"]
     for name, expected in files.items():
         path = case / name
@@ -484,6 +495,24 @@ def prepare(
     if not samples:
         raise ValueError("No source-derived closed grasps to test")
     seed_changes = []
+    grip_spec = None
+    if task_grasps is not None:
+        import sys
+
+        sys.path.insert(0, str(Path(__file__).parents[1] / "dex3_physics"))
+        from task_grasp import build
+
+        grip_spec = build(
+            case,
+            samples,
+            json.loads(task_grasps.read_text()),
+            stage_rotation,
+            case
+            / "source/robotic_grounding/source/robotic_grounding/robotic_grounding/assets/urdfs/g1",
+        )
+        seed_changes = [s["prefix"] for s in samples]
+        write(out / "task-grips.json", grip_spec)
+        (out / "task-grasp-seeds.json").write_bytes(task_grasps.read_bytes())
     if grasp_seed is not None:
         if task_motion is not None or digest(grasp_seed) != grasp_seed_sha256:
             raise ValueError("Grasp seed requires static mode and its exact SHA256")
@@ -540,6 +569,29 @@ def prepare(
                 .as_quat()
                 .tolist(),
             )
+            if grip_spec is not None:
+                from _dex3_task_grip import TaskGripReference
+
+                command = TaskGripReference(grip_spec).command(
+                    sample["side"],
+                    float(source["timestamps_s"][0]),
+                    np.r_[
+                        sample["object_position_stage_m"],
+                        sample["object_quaternion_stage_xyzw"],
+                    ],
+                )
+                sample.update(
+                    hand_position_stage_m=command["pose"][:3].tolist(),
+                    hand_quaternion_stage_xyzw=command["pose"][3:].tolist(),
+                    finger_target_rad=command["fingers"].tolist(),
+                    finger_stiffness_Nm_per_rad=grip_spec["phases"][sample["side"]][0][
+                        "stiffness_Nm_per_rad"
+                    ],
+                )
+                if "scene_projection" in grip_spec:
+                    sample["object_position_stage_m"][2] += grip_spec[
+                        "scene_projection"
+                    ]["upward_corrections_m"][0][oi]
         (out / "motion-evaluator.py").write_bytes(task_motion.read_bytes())
         sheet = case / "support/inferred-support-sheet.npz"
         if "support/inferred-support-sheet.npz" not in files:
@@ -620,6 +672,15 @@ def prepare(
         "controlled_acquisition": controlled_acquisition,
         "controlled_grip_lift": controlled_grip_lift,
         "temporary_support_release_s": 0.5 if controlled_acquisition else None,
+        "task_grasps_sha256": task_grasps_sha256,
+        "task_grip_spec_sha256": digest(out / "task-grips.json")
+        if grip_spec is not None
+        else None,
+        "task_grip_controller_sha256": digest(
+            Path(__file__).with_name("_dex3_task_grip.py")
+        )
+        if grip_spec is not None
+        else None,
     }
     if task_motion is not None:
         result.update(
@@ -847,8 +908,26 @@ def execute(
         cfg = sim_utils.RigidBodyMaterialCfg(
             static_friction=coefficient, dynamic_friction=coefficient, restitution=0.0
         )
+        if prepared.get("task_grip_spec_sha256"):
+            cfg.friction_combine_mode = "average"
+            cfg.restitution_combine_mode = "average"
         cfg.func(material_path, cfg)
         material = UsdShade.Material(sim.stage.GetPrimAtPath(material_path))
+        material_prim = material.GetPrim()
+        physical = UsdPhysics.MaterialAPI(material_prim)
+        actual_material = dict(
+            static_friction=physical.GetStaticFrictionAttr().Get(),
+            dynamic_friction=physical.GetDynamicFrictionAttr().Get(),
+            friction_combine_mode=PhysxSchema.PhysxMaterialAPI(material_prim)
+            .GetFrictionCombineModeAttr()
+            .Get(),
+        )
+        if prepared.get("task_grip_spec_sha256") and (
+            actual_material["static_friction"] != coefficient
+            or actual_material["dynamic_friction"] != coefficient
+            or actual_material["friction_combine_mode"] != "average"
+        ):
+            raise ValueError("Actual physical material differs from task contact model")
         colliders = 0
         collider_readback = []
         for prim in Usd.PrimRange(sim.stage.GetPrimAtPath(prim_path)):
@@ -888,6 +967,7 @@ def execute(
             "restitution": 0.0,
             "friction_combine_mode": cfg.friction_combine_mode,
             "restitution_combine_mode": cfg.restitution_combine_mode,
+            "physical_material_readback": actual_material,
         }
 
     for index, sample in enumerate(prepared["samples"]):
@@ -1008,6 +1088,13 @@ def execute(
         object_material = bind_material(
             cfg.prim_path, float(sim_cfg.physics_material.dynamic_friction)
         )
+        if (
+            prepared.get("task_grip_spec_sha256")
+            and object_material["dynamic_friction"] != 0.5
+        ):
+            raise ValueError(
+                "Task force model expects the original 0.5 object friction"
+            )
         if any(
             collider["approximation"] != "convexDecomposition"
             for collider in object_material["collider_readback"]
@@ -1817,9 +1904,27 @@ def run_supported_task(
     from PIL import Image, ImageDraw
     from scipy.spatial.transform import Rotation
     from _dex3_wrist_control import finger_position_target, implicit_root_wrench
+    from _dex3_grip_control import payload_contact_hold
+    from _dex3_task_grip import (
+        TaskGripReference,
+        contact_wrench,
+        filtered_reaction_compensation,
+    )
 
     diagnostic = prepared.get("wrist_diagnostic", {})
     controller_mode = diagnostic.get("controller", "project_pd")
+    task_grip = None
+    if prepared.get("task_grip_spec_sha256"):
+        spec_file = inputs / "task-grips.json"
+        if (
+            digest(spec_file) != prepared["task_grip_spec_sha256"]
+            or digest(Path(__file__).with_name("_dex3_task_grip.py"))
+            != prepared["task_grip_controller_sha256"]
+            or digest(inputs / "task-grasp-seeds.json")
+            != prepared["task_grasps_sha256"]
+        ):
+            raise ValueError("Task grasp commands or controller changed")
+        task_grip = TaskGripReference(json.loads(spec_file.read_text()))
     candidate_file = Path(__file__).with_name("_dex3_wrist_control.py")
     if (
         diagnostic
@@ -2011,6 +2116,20 @@ def run_supported_task(
         out / "cooked-colliders.json",
     )
     print("Cooked collision representation captured", flush=True)
+    initial_scene_check = None
+    if task_grip is not None and "scene_projection" in task_grip.spec:
+        sys.path.insert(0, str(Path(__file__).parents[1] / "dex3_physics"))
+        from scene_projection import verify_initial_scene
+
+        initial_scene_check = verify_initial_scene(
+            out / "cooked-colliders.json",
+            task_grip.spec["scene_projection"],
+            [
+                controller_tensor(obj.data.root_link_pose_w)[0].cpu().numpy()
+                for obj in objects
+            ],
+        )
+        write(out / "initial-scene-clearance.json", initial_scene_check)
     source_times = source["timestamps_s"]
     original_source_frames = len(source_times)
     if diagnostic.get("source_duration_s") is not None:
@@ -2019,11 +2138,33 @@ def run_supported_task(
         ]
     speed = prepared["source_motion_speed"]
     dt = sim.get_physics_dt()
-    steps = int(np.ceil((source_times[-1] - source_times[0]) / speed / dt))
+    postroll_s = (
+        1.0 if task_grip is not None and not diagnostic.get("free_space") else 0.0
+    )
+    steps = int(np.ceil((source_times[-1] - source_times[0] + postroll_s) / speed / dt))
     rows, frames, hand_rows, controls_rows = [], [], [], []
+    postroll_frames = []
     collision_state = [None, None]
     collision_transitions = []
     integral_force = [np.zeros(3), np.zeros(3)]
+    reaction_compensation = [np.zeros(6), np.zeros(6)]
+    contact_hold = [0.0, 0.0]
+    task_motor_readbacks = []
+    for hand, sample in zip(hands, prepared["samples"], strict=True):
+        stiffness = controller_tensor(hand.data.joint_stiffness)[0].cpu().numpy()
+        caps = controller_tensor(hand.data.joint_effort_limits)[0].cpu().numpy()
+        if task_grip is not None and (
+            not np.allclose(stiffness, sample["finger_stiffness_Nm_per_rad"], atol=1e-6)
+            or np.max(caps) > 0.760001
+        ):
+            raise ValueError("Task motor gains or limits differ from declared commands")
+        task_motor_readbacks.append(
+            dict(
+                side=sample["side"],
+                stiffness_Nm_per_rad=stiffness.tolist(),
+                effort_caps_Nm=caps.tolist(),
+            )
+        )
     source_row = 0
     writer = imageio.get_writer(
         out / "supported-task.mp4",
@@ -2046,9 +2187,8 @@ def run_supported_task(
         )
     try:
         for step in range(steps + 1):
-            timestamp = min(
-                float(source_times[0] + step * dt * speed), float(source_times[-1])
-            )
+            grip_time = float(source_times[0] + step * dt * speed)
+            timestamp = min(grip_time, float(source_times[-1]))
             index = int(
                 np.clip(
                     np.searchsorted(source_times, timestamp + 1e-10, side="right") - 1,
@@ -2063,8 +2203,8 @@ def run_supported_task(
                 else None
             )
             for si, (hand, order) in enumerate(zip(hands, joint_order, strict=True)):
-                enabled = not diagnostic.get("free_space", False) and not bool(
-                    display[index, si]
+                enabled = not diagnostic.get("free_space", False) and (
+                    task_grip is not None or not bool(display[index, si])
                 )
                 if collision_state[si] != enabled:
                     integral_force[si] = np.zeros(3)
@@ -2105,11 +2245,44 @@ def run_supported_task(
                     stage_rotation.apply(desired[si, :3]),
                     (stage_rotation * Rotation.from_quat(desired[si, 3:7])).as_quat(),
                 ]
+                grip_command, grip_next = None, None
+                if task_grip is not None:
+                    oi = prepared["samples"][si]["object"]
+                    measured = (
+                        controller_tensor(objects[si].data.root_link_pose_w)[0]
+                        .cpu()
+                        .numpy()
+                    )
+
+                    def grip_at(t):
+                        r, p, _scale = motion.object_pose(
+                            oi, min(t, float(source_times[-1]))
+                        )
+                        obj_pose = np.r_[
+                            stage_rotation.apply(p),
+                            (stage_rotation * Rotation.from_matrix(r)).as_quat(),
+                        ]
+                        return task_grip.command(
+                            ("left", "right")[si],
+                            t,
+                            obj_pose,
+                            None if diagnostic.get("free_space") else measured,
+                        )
+
+                    grip_command = grip_at(grip_time)
+                    grip_next = grip_at(grip_time + dt * speed)
+                    target_pose = grip_command["pose"]
                 target = torch.tensor(
                     target_pose[None], dtype=torch.float32, device=sim.device
                 )
                 finger_target = torch.tensor(
-                    desired[si, 7:][order][None], dtype=torch.float32, device=sim.device
+                    (
+                        grip_command["fingers"]
+                        if grip_command is not None
+                        else desired[si, 7:]
+                    )[order][None],
+                    dtype=torch.float32,
+                    device=sim.device,
                 )
                 control_details = None
                 if controller_mode == "project_pd":
@@ -2161,7 +2334,9 @@ def run_supported_task(
                     wrench, control_details = implicit_root_wrench(
                         link_pose_xyzw=cpu(hand.data.root_link_pose_w)[0],
                         target_link_pose_xyzw=target_pose,
-                        target_link_pose_next_xyzw=np.r_[
+                        target_link_pose_next_xyzw=grip_next["pose"]
+                        if grip_next is not None
+                        else np.r_[
                             stage_rotation.apply(desired_next[si, :3]),
                             (
                                 stage_rotation
@@ -2204,6 +2379,95 @@ def run_supported_task(
                     integral_force[si] = np.array(
                         control_details["integral_force_world_next_N"]
                     )
+                    if grip_command is not None:
+                        measured_wrench = np.zeros(6)
+                        if step > 0 and enabled:
+                            normal_matrix = (
+                                contact_views[si]
+                                .get_contact_force_matrix(dt)
+                                .numpy()
+                                .copy()
+                            )
+                            normal_data = [
+                                x.numpy().copy()
+                                for x in contact_views[si].get_contact_data(dt)
+                            ]
+                            friction_data = [
+                                x.numpy().copy()
+                                for x in contact_views[si].get_friction_data(dt)
+                            ]
+                            current_pose = cpu(hand.data.root_link_pose_w)[0]
+                            com = current_pose[:3] + Rotation.from_quat(
+                                current_pose[3:]
+                            ).apply(cpu(com_positions[si])[0])
+                            measured_wrench = contact_wrench(
+                                normal_data, friction_data, com
+                            )
+                            normal_sum = contact_wrench(
+                                normal_data,
+                                [
+                                    np.zeros((0, 3)),
+                                    np.zeros((0, 3)),
+                                    np.zeros_like(normal_data[-2]),
+                                    np.zeros_like(normal_data[-1]),
+                                ],
+                                com,
+                            )[:3]
+                            if not np.allclose(
+                                normal_sum,
+                                normal_matrix.sum(axis=(0, 1)),
+                                atol=1e-3,
+                                rtol=1e-3,
+                            ):
+                                write(
+                                    out / "contact-buffer-mismatch.json",
+                                    dict(
+                                        step=step,
+                                        side=("left", "right")[si],
+                                        aggregate_normal_force=normal_matrix.tolist(),
+                                        detailed_normal_force=normal_sum.tolist(),
+                                        normal_buffers=[
+                                            x.tolist() for x in normal_data
+                                        ],
+                                        friction_buffers=[
+                                            x.tolist() for x in friction_data
+                                        ],
+                                    ),
+                                )
+                                raise ValueError(
+                                    f"Detailed normal-force buffer differs from aggregate hand forces: step {step}, side {si}, detailed {normal_sum.tolist()}, aggregate {normal_matrix.sum(axis=(0, 1)).tolist()}"
+                                )
+                            contact_hold[si] = payload_contact_hold(
+                                normal_matrix.sum(axis=1),
+                                contact_bindings[si]["hand_body_paths"],
+                                contact_hold[si],
+                                dt,
+                                grip_command["required_digits"],
+                            )
+                        reaction_compensation[si] = filtered_reaction_compensation(
+                            measured_wrench,
+                            reaction_compensation[si],
+                            dt,
+                            enabled
+                            and contact_hold[si] > 0
+                            and grip_command["squeeze_scale"] > 0,
+                        )
+                        wrench = np.clip(
+                            wrench + reaction_compensation[si],
+                            -np.array(
+                                [gains["max_force"]] * 3 + [gains["max_torque"]] * 3
+                            ),
+                            np.array(
+                                [gains["max_force"]] * 3 + [gains["max_torque"]] * 3
+                            ),
+                        )
+                        control_details.update(
+                            measured_object_reaction_wrench_world=measured_wrench.tolist(),
+                            applied_reaction_compensation_world=reaction_compensation[
+                                si
+                            ].tolist(),
+                            contact_hold_remaining_s=contact_hold[si],
+                        )
                     force = torch.tensor(
                         wrench[None, :3], dtype=torch.float32, device=sim.device
                     )
@@ -2234,11 +2498,22 @@ def run_supported_task(
                     is_global=is_global,
                 )
                 hand.set_joint_position_target(fingers)
+                if grip_command is not None:
+                    hand.set_joint_effort_target(
+                        torch.tensor(
+                            grip_command["effort"][order][None],
+                            dtype=torch.float32,
+                            device=sim.device,
+                        )
+                    )
                 hand.write_data_to_sim()
                 hand_rows.append(
                     {
                         "step": step,
                         "source_time_s": timestamp,
+                        "inferred_grip_time_s": grip_time
+                        if task_grip is not None
+                        else None,
                         "side": ("left", "right")[si],
                         "display_only": bool(display[index, si]),
                         "collisions_enabled": enabled,
@@ -2286,6 +2561,20 @@ def run_supported_task(
                         .numpy()
                         .tolist(),
                         "controller_details": control_details,
+                        "inferred_grasp_phase": grip_command["phase"]
+                        if grip_command is not None
+                        else None,
+                        "squeeze_scale": grip_command["squeeze_scale"]
+                        if grip_command is not None
+                        else None,
+                        "measured_object_feedback_weight": grip_command[
+                            "object_feedback_weight"
+                        ]
+                        if grip_command is not None
+                        else None,
+                        "finger_feedforward_Nm": grip_command["effort"][order].tolist()
+                        if grip_command is not None
+                        else None,
                         "object_normal_contact_force_N": contact_views[si]
                         .get_contact_force_matrix(dt)
                         .numpy()
@@ -2361,11 +2650,18 @@ def run_supported_task(
                             .tolist(),
                         }
                     )
-            if (
+            render_source = (
                 source_row < len(source_times)
                 and timestamp + 1e-10 >= source_times[source_row]
-            ):
-                matrix = source["camera_c2w"][source_row]
+            )
+            render_postroll = (
+                task_grip is not None
+                and grip_time > source_times[-1] + 1e-9
+                and step % round(0.05 / (dt * speed)) == 0
+            )
+            if render_source or render_postroll:
+                camera_row = min(source_row, len(source_times) - 1)
+                matrix = source["camera_c2w"][camera_row]
                 camera.set_world_poses(
                     torch.tensor(
                         stage_rotation.apply(matrix[:3, 3])[None],
@@ -2399,27 +2695,37 @@ def run_supported_task(
                 draw.rectangle((0, 0, camera_cfg["width"], 42), fill=(20, 20, 20))
                 draw.text(
                     (10, 7),
-                    f"{'FREE SPACE' if diagnostic.get('free_space') else 'Dynamic objects'}; {controller_mode}; source frame {int(source['frame_indices'][source_row])}; t={timestamp:.2f}s",
+                    f"{'POSTROLL release/settle' if render_postroll else 'FREE SPACE' if diagnostic.get('free_space') else 'Dynamic objects'}; {controller_mode}; source frame {int(source['frame_indices'][camera_row])}; t={grip_time:.2f}s",
                     fill=(255, 255, 255),
                 )
                 writer.append_data(np.asarray(rgb))
-                frames.append(
+                (postroll_frames if render_postroll else frames).append(
                     {
-                        "source_frame": int(source["frame_indices"][source_row]),
+                        "source_frame": int(source["frame_indices"][camera_row]),
                         "source_time_s": timestamp,
+                        "inferred_grip_time_s": grip_time,
                         "sim_time_s": step * dt,
                     }
                 )
-                if source_row % 20 == 0 or source_row == len(source_times) - 1:
+                if (
+                    source_row % 20 == 0
+                    or source_row == len(source_times) - 1
+                    or step == steps
+                ):
                     print(
                         f"Physical source frame {source_row}/{len(source_times) - 1}; object errors {[row['position_error_m'] for row in rows[-2:]]}",
                         flush=True,
                     )
                     rgb.save(
                         out
-                        / f"source-frame-{int(source['frame_indices'][source_row]):06d}.png"
+                        / (
+                            f"postroll-step-{step:06d}.png"
+                            if render_postroll
+                            else f"source-frame-{int(source['frame_indices'][camera_row]):06d}.png"
+                        )
                     )
-                source_row += 1
+                if render_source:
+                    source_row += 1
             if step == steps:
                 break
             sim.step(render=False)
@@ -2439,6 +2745,7 @@ def run_supported_task(
                     "hands": hand_rows,
                     "controls": controls_rows,
                     "rendered_source_frames": frames,
+                    "rendered_inferred_postroll_frames": postroll_frames,
                     "hand_collision_state_readback": collision_transitions,
                 },
             )
@@ -2476,7 +2783,22 @@ def run_supported_task(
             "cooked_collider_summary": cooked_summary,
             "physical_contact_bindings": contact_bindings,
             "policy_residual": "zero; no policy loaded or trained",
+            "task_grip_spec_sha256": prepared.get("task_grip_spec_sha256"),
+            "task_grasp_seed_sha256": prepared.get("task_grasps_sha256"),
+            "task_grip_controller_sha256": prepared.get("task_grip_controller_sha256"),
+            "task_motor_readback": task_motor_readbacks,
+            "initial_scene_clearance_check": initial_scene_check,
+            "scene_projection_maximum_correction_m": task_grip.spec.get(
+                "scene_projection", {}
+            ).get("maximum_correction_m")
+            if task_grip is not None
+            else None,
+            "object_errors_use_original_source_without_scene_projection": True,
+            "robot_colliders_persist_through_human_occlusion": task_grip is not None,
+            "robot_targets_are_inferred_grasp_commands": task_grip is not None,
             "source_frames": len(frames),
+            "rendered_video_frames": len(frames) + len(postroll_frames),
+            "inferred_postroll_source_seconds": postroll_s,
             "simulation_steps": steps,
             "source_motion_knots": len(motion.breakpoints),
             "source_motion_speed": speed,

@@ -37,6 +37,8 @@ def main():
             "grasp-seed",
             "grasp-acquisition",
             "grip-lift",
+            "grip-task-free",
+            "grip-task",
         ],
         required=True,
     )
@@ -55,18 +57,24 @@ def main():
         "grip-lift",
     }
     acquisition_stage = args.stage in {"grasp-acquisition", "grip-lift"}
-    if (args.stage in {"grasp-seed", "grasp-acquisition", "grip-lift"}) != (
-        args.grasp_seed is not None
-    ):
+    task_grip_stage = args.stage in {"grip-task-free", "grip-task"}
+    if (
+        args.stage in {"grasp-seed", "grasp-acquisition", "grip-lift"}
+        or task_grip_stage
+    ) != (args.grasp_seed is not None):
         parser.error(
-            "--stage grasp-seed requires --grasp-seed; other stages preserve source targets"
+            "Grasp stages require --grasp-seed; other stages preserve source targets"
         )
+    if task_grip_stage and args.candidate_controller != "implicit_pd_ff":
+        parser.error("Task grip stages require --candidate-controller implicit_pd_ff")
     out = Path("/outputs") / args.stage
     if out.exists():
         raise FileExistsError("Choose a fresh output root for this experiment")
     candidate_file = ROOT / "scripts/reproduction/_dex3_wrist_control.py"
-    if args.stage == "candidate-full":
-        free = Path("/outputs/candidate-free")
+    if args.stage in {"candidate-full", "grip-task"}:
+        free = Path("/outputs") / (
+            "grip-task-free" if task_grip_stage else "candidate-free"
+        )
         gate = json.loads((free / "wrist-gate.json").read_text())
         invocation = json.loads((free / "invocation.json").read_text())
         checked_gate = audit(free / "run/simulator")
@@ -81,6 +89,14 @@ def main():
             or gate["wrist_diagnostic"]["physics_dt_s"] != 0.01
             or gate["wrist_diagnostic"]["controller"] != args.candidate_controller
             or not gate["wrist_diagnostic"]["free_space"]
+            or (
+                task_grip_stage
+                and (
+                    invocation.get("task_grasp_seed_sha256") != digest(args.grasp_seed)
+                    or invocation.get("task_grip_controller_sha256")
+                    != digest(ROOT / "scripts/reproduction/_dex3_task_grip.py")
+                )
+            )
         ):
             raise ValueError(
                 "Full-task candidate requires a passing free-space gate with this controller"
@@ -131,7 +147,14 @@ def main():
             "--physics-dt",
             "0.01",
         ]
-    if args.stage in {"baseline-free", "candidate-free"}:
+        if task_grip_stage:
+            command += [
+                "--task-grasps",
+                str(args.grasp_seed),
+                "--task-grasps-sha256",
+                digest(args.grasp_seed),
+            ]
+    if args.stage in {"baseline-free", "candidate-free", "grip-task-free"}:
         command += ["--free-space", "--source-duration-s", "2"]
     if args.prepare_only:
         command += ["--check-only"]
@@ -151,6 +174,12 @@ def main():
         "candidate_controller_sha256": digest(candidate_file),
         "executor_sha256": digest(ROOT / "scripts/reproduction/_dex3_static_load.py"),
         "physical_task_accepted": False,
+        "task_grasp_seed_sha256": digest(args.grasp_seed) if task_grip_stage else None,
+        "task_grip_controller_sha256": digest(
+            ROOT / "scripts/reproduction/_dex3_task_grip.py"
+        )
+        if task_grip_stage
+        else None,
     }
     (out / "invocation.json").write_text(json.dumps(receipt, indent=2) + "\n")
     env = dict(os.environ)
@@ -207,7 +236,7 @@ def main():
         expected_frames = (
             (31 if acquisition_stage else 21)
             if static_stage
-            else report["source_frames"]
+            else report.get("rendered_video_frames", report["source_frames"])
         )
         if int(probe["streams"][0]["nb_read_frames"]) != expected_frames:
             raise ValueError("Actual decoded physics video frame count differs")
@@ -330,7 +359,7 @@ def main():
             ):
                 raise SystemExit(2)
             return
-        if args.stage == "candidate-full":
+        if args.stage in {"candidate-full", "grip-task"}:
             subprocess.run(
                 [
                     sys.executable,
