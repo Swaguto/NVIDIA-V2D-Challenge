@@ -30,6 +30,7 @@ from v2d_dex3_flashchord.phase_prior import (
     project,
     schedule,
     phase_envelope,
+    position_basis,
 )
 from v2d_dex3_flashchord.sampling import resample_targets
 
@@ -161,8 +162,17 @@ def main(cfg):
                 "Previously accepted phases need refitting after a physics change"
             )
         bounds_profile = str(cfg.fit.get("bounds_profile", "local"))
+        position_frame = str(cfg.fit.get("position_frame", "world"))
+        if (
+            any(r["robust_phase_pass"] for r in plan.get("fit_reports", {}).values())
+            and plan.get("position_frame", "world") != position_frame
+        ):
+            raise ValueError(
+                "Previously accepted phases use another policy position frame"
+            )
         plan.update(
             bounds_profile=bounds_profile,
+            position_frame=position_frame,
             native_physics_model_sha256=env.action.native_physics_model_sha256,
             control_fps=float(ec.sim.fps),
             physics_substeps=int(ec.sim.substeps),
@@ -206,6 +216,7 @@ def main(cfg):
         stride = env.model.body_count // worlds
         slot_count = env.contact.layout.slots_per_world
         wrist_envelope = phase_envelope(phase, times)
+        basis = position_basis(spec, phase, times, position_frame)
         start = sides.index(side) * 13
         rng = np.random.default_rng(int(cfg.fit.get("seed", 42)))
         population = worlds // 2
@@ -231,7 +242,11 @@ def main(cfg):
             cap_verified = True
             for frame in range(setup.reference.num_frames):
                 raw = np.broadcast_to(fixed[frame], (worlds, 26)).copy()
-                raw[:, start : start + 13] += actions * wrist_envelope[frame]
+                rotated_actions = actions.copy()
+                rotated_actions[:, :3] = np.einsum(
+                    "ij,wj->wi", basis[frame], actions[:, :3]
+                )
+                raw[:, start : start + 13] += rotated_actions * wrist_envelope[frame]
                 env.step(wp.array(raw.ravel(), dtype=wp.float32, device=env.device))
                 bodies.append(
                     env.state_0.body_q.numpy().reshape(worlds, stride, 7).copy()

@@ -4,6 +4,8 @@ import hashlib
 import json
 from dataclasses import asdict
 import numpy as np
+from scipy.spatial.transform import Rotation
+from .sampling import interpolate_quaternions
 
 BOUNDS = np.array([0.1] * 3 + [0.35] * 3 + [0.65] * 7)
 
@@ -99,6 +101,24 @@ def phase_envelope(phase, times):
     return np.stack([wrist] * 6 + [finger] * 7, axis=1)
 
 
+def position_basis(spec, phase, times, frame="world"):
+    if frame == "world":
+        return np.broadcast_to(np.eye(3), (len(times), 3, 3))
+    if frame != "object_reference":
+        raise ValueError("Unknown phase position frame")
+    source_times = np.asarray(spec["source_times_s"])
+    poses = np.asarray(spec["smooth_robot_object_reference"][str(phase["object"])])
+    high = np.clip(
+        np.searchsorted(source_times, times, side="right"), 1, len(source_times) - 1
+    )
+    low = high - 1
+    weight = ((times - source_times[low]) / (source_times[high] - source_times[low]))[
+        :, None
+    ]
+    quats = interpolate_quaternions(poses[low, 3:], poses[high, 3:], weight)
+    return Rotation.from_quat(quats).as_matrix()
+
+
 def schedule(spec, plan, sides, finger_names, times):
     if plan.get("schema") != "v2d.native-phase-policy-prior.v1":
         raise ValueError("Unsupported phase-policy plan")
@@ -126,5 +146,11 @@ def schedule(spec, plan, sides, finger_names, times):
         order = [names.index(n) for n in finger_names[side]]
         arranged = np.r_[raw[:6], raw[6:][order]]
         start = sides.index(side) * 13
-        out[:, start : start + 13] += phase_envelope(phase, times) * arranged
+        values = np.broadcast_to(arranged, (len(times), 13)).copy()
+        values[:, :3] = np.einsum(
+            "tij,j->ti",
+            position_basis(spec, phase, times, plan.get("position_frame", "world")),
+            arranged[:3],
+        )
+        out[:, start : start + 13] += phase_envelope(phase, times) * values
     return out
