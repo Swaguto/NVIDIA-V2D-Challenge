@@ -1,0 +1,9 @@
+# @package _global_
+defaults:
+  - dex3_repaired_velocity
+  - _self_
+
+# Preserve the original contact time constant; test only constraint impedance.
+embodiment:
+  config:
+    hand_contact_profile: constraint_point

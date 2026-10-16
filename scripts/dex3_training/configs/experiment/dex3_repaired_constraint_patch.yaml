@@ -1,0 +1,8 @@
+# @package _global_
+defaults:
+  - dex3_repaired_constraint_point
+  - _self_
+
+embodiment:
+  config:
+    hand_contact_profile: constraint_patch

@@ -25,7 +25,12 @@ from flash_chord.scene.collision import CollisionPolicy
 from flash_chord.scene.setup import setup_scene
 from audit_native_task import phase_metrics
 from v2d_dex3_flashchord.kinematics import URDFKinematics
-from v2d_dex3_flashchord.phase_prior import BOUNDS, project, schedule, phase_envelope
+from v2d_dex3_flashchord.phase_prior import (
+    parameter_bounds,
+    project,
+    schedule,
+    phase_envelope,
+)
 from v2d_dex3_flashchord.sampling import resample_targets
 
 
@@ -147,6 +152,21 @@ def main(cfg):
         )
         if plan["input_manifest_sha256"] != input_sha:
             raise ValueError("Existing policy parameters belong to other inputs")
+        if (
+            any(r["robust_phase_pass"] for r in plan.get("fit_reports", {}).values())
+            and plan.get("native_physics_model_sha256")
+            != env.action.native_physics_model_sha256
+        ):
+            raise ValueError(
+                "Previously accepted phases need refitting after a physics change"
+            )
+        bounds_profile = str(cfg.fit.get("bounds_profile", "local"))
+        plan.update(
+            bounds_profile=bounds_profile,
+            native_physics_model_sha256=env.action.native_physics_model_sha256,
+            control_fps=float(ec.sim.fps),
+            physics_substeps=int(ec.sim.substeps),
+        )
         previous = [
             name
             for name, row in plan.get("fit_reports", {}).items()
@@ -163,7 +183,8 @@ def main(cfg):
                     layouts[p["sample"]] = phase_layout(
                         env, setup.scene, manifest, spec, names, s, p
                     )
-        lower, upper = -BOUNDS.copy(), BOUNDS.copy()
+        bounds = parameter_bounds(bounds_profile)
+        lower, upper = -bounds.copy(), bounds.copy()
         for i, name in enumerate(names[side]):
             if not any(d in name for d in phase["required_digits"]):
                 lower[6 + i] = upper[6 + i] = 0
@@ -188,12 +209,21 @@ def main(cfg):
         rng = np.random.default_rng(int(cfg.fit.get("seed", 42)))
         population = worlds // 2
         mu = np.asarray(plan["phase_actions"].get(phase["sample"], np.zeros(13)), float)
-        sigma = np.array([0.035] * 3 + [0.12] * 3 + [0.25] * 7)
+        sigma = (
+            np.array([0.035] * 3 + [0.12] * 3 + [0.25] * 7)
+            if bounds_profile == "local"
+            else np.array([0.12] * 3 + [0.4] * 3 + [0.65] * 7)
+        )
         best_cost, best_raw, best_metrics = float("inf"), mu.copy(), None
         journal = (out / "iterations.jsonl").open("x")
         for iteration in range(int(cfg.fit.iterations)):
-            candidates = project(rng.normal(mu, sigma, (population, 13)), lower, upper)
-            candidates[0] = project(best_raw, lower, upper)
+            candidates = project(
+                rng.normal(mu, sigma, (population, 13)),
+                lower,
+                upper,
+                profile=bounds_profile,
+            )
+            candidates[0] = project(best_raw, lower, upper, profile=bounds_profile)
             actions = np.repeat(candidates, 2, axis=0)
             env.reset(frame_id=0)
             bodies, joints, contacts = [], [], []
@@ -297,7 +327,9 @@ def main(cfg):
                 best_raw = candidates[winner].copy()
                 best_metrics = metrics[2 * winner : 2 * winner + 2]
             elite = candidates[order[: max(4, population // 5)]]
-            mu = project(0.3 * mu + 0.7 * elite.mean(0), lower, upper)
+            mu = project(
+                0.3 * mu + 0.7 * elite.mean(0), lower, upper, profile=bounds_profile
+            )
             sigma = np.maximum(
                 0.65 * sigma + 0.35 * elite.std(0), [0.005] * 6 + [0.02] * 7
             )

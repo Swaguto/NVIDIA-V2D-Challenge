@@ -14,7 +14,7 @@ import numpy as np
 import warp as wp
 from flash_chord.runtime.actions import ActionConfig, ResidualHandPoseAction
 from .sampling import resample_targets
-from .phase_prior import schedule as prior_schedule
+from .phase_prior import schedule as prior_schedule, model_signature
 
 
 @wp.kernel
@@ -72,6 +72,7 @@ class GraspActionConfig(ActionConfig):
     wrist_reference_velocity: bool = False
     maximum_reference_wrist_speed_m_s: float = 1.0
     phase_policy_prior: str | None = None
+    phase_policy_physics_substeps: int = 20
 
     def build(self, scene, device=None):
         if self.delay.max_steps != 0:
@@ -129,6 +130,9 @@ class GraspActionConfig(ActionConfig):
         result = GripResidualAction(
             base, np.concatenate(arranged, axis=1), scene.model.joint_target_ke, device
         )
+        result.native_physics_model_sha256 = model_signature(
+            scene.model, scene.world_count
+        )
         if self.wrist_reference_velocity:
             velocity = np.gradient(
                 sampled["robot_qpos"][:, :, :3], sampled["timestamps_s"], axis=0
@@ -172,6 +176,17 @@ class GraspActionConfig(ActionConfig):
                 "phase_policy_prior_base_manifest_sha256"
             ):
                 raise ValueError("Fitted phase policy belongs to other inputs")
+            if (
+                plan.get("native_physics_model_sha256")
+                != model_signature(scene.model, scene.world_count)
+                or plan.get("physics_substeps") != self.phase_policy_physics_substeps
+            ):
+                raise ValueError(
+                    "Fitted phase policy physics differs from the loaded scene"
+                )
+            control_fps = 1 / np.median(np.diff(sampled["timestamps_s"]))
+            if not np.isclose(plan.get("control_fps", -1), control_fps):
+                raise ValueError("Fitted phase policy control clock differs")
             if self.input_mode != "raw" or (
                 self.wrist_pos_scale,
                 self.wrist_ori_scale,

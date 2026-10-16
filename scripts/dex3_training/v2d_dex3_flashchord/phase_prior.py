@@ -1,8 +1,62 @@
 """Bounded phase-policy parameters, separate from source reference trajectories."""
 
+import hashlib
+import json
 import numpy as np
 
 BOUNDS = np.array([0.1] * 3 + [0.35] * 3 + [0.65] * 7)
+
+
+def parameter_bounds(profile="local"):
+    if profile == "local":
+        return BOUNDS.copy()
+    if profile == "grasp_refit":
+        return np.array([0.4] * 3 + [1.4] * 3 + [2.0] * 7)
+    raise ValueError("Unknown physical policy parameter bounds")
+
+
+def model_signature(model, worlds):
+    """Bind per-world physical parameters, independently of cohort size."""
+    digest = hashlib.sha256()
+    names = [
+        "body_mass",
+        "body_inertia",
+        "shape_flags",
+        "shape_material_mu",
+        "shape_material_ke",
+        "shape_material_kd",
+        "shape_material_mu_torsional",
+        "shape_material_mu_rolling",
+        "joint_target_ke",
+        "joint_target_kd",
+        "joint_effort_limit",
+        "joint_armature",
+        "joint_limit_lower",
+        "joint_limit_upper",
+        "gravity",
+    ]
+    fields = [(n, getattr(model, n, None)) for n in names]
+    custom = getattr(model, "mujoco", None)
+    fields += [
+        ("mujoco." + n, getattr(custom, n, None))
+        for n in (
+            "condim",
+            "geom_priority",
+            "geom_solimp",
+            "geom_solmix",
+            "gravcomp",
+            "jnt_actgravcomp",
+        )
+    ]
+    for name, value in fields:
+        if value is None:
+            continue
+        array = value.numpy() if hasattr(value, "numpy") else np.asarray(value)
+        if array.ndim and len(array) % worlds == 0:
+            array = array[: len(array) // worlds]
+        digest.update(json.dumps([name, str(array.dtype), array.shape]).encode())
+        digest.update(array.tobytes())
+    return digest.hexdigest()
 
 
 def smooth(x):
@@ -10,11 +64,12 @@ def smooth(x):
     return u * u * (3 - 2 * u)
 
 
-def project(values, lower=None, upper=None):
+def project(values, lower=None, upper=None, profile="local"):
+    bounds = parameter_bounds(profile)
     result = np.clip(
-        values, -BOUNDS if lower is None else lower, BOUNDS if upper is None else upper
+        values, -bounds if lower is None else lower, bounds if upper is None else upper
     )
-    for begin, end, radius in ((0, 3, 0.1), (3, 6, 0.35)):
+    for begin, end, radius in ((0, 3, bounds[0]), (3, 6, bounds[3])):
         vectors = result[..., begin:end]
         result[..., begin:end] /= np.maximum(
             1.0, np.linalg.norm(vectors, axis=-1, keepdims=True) / radius
@@ -43,7 +98,10 @@ def schedule(spec, plan, sides, finger_names, times):
         if (
             raw.shape != (13,)
             or not np.isfinite(raw).all()
-            or not np.all(abs(project(raw) - raw) <= 1e-8)
+            or not np.all(
+                abs(project(raw, profile=plan.get("bounds_profile", "local")) - raw)
+                <= 1e-8
+            )
         ):
             raise ValueError("Fitted phase action exceeds physical residual bounds")
         side, phase = phases[name]

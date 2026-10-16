@@ -10,7 +10,7 @@ import numpy as np
 import pytest
 
 sys.path.insert(0, str(Path(__file__).parents[1]))
-from v2d_dex3_flashchord.phase_prior import project, schedule
+from v2d_dex3_flashchord.phase_prior import project, schedule, model_signature
 from freeze_phase_policy import freeze
 
 
@@ -80,3 +80,31 @@ def test_an_untested_parameter_file_cannot_be_promoted(tmp_path):
     with pytest.raises(ValueError, match="exact fitted policy"):
         freeze(inputs, plan, audit, tmp_path / "out")
     assert not (tmp_path / "out").exists()
+
+
+def test_refit_bounds_remain_physical_and_explicit():
+    bounded = project(np.ones(13) * 10, profile="grasp_refit")
+    assert np.linalg.norm(bounded[:3]) * 0.05 <= 0.020000001
+    assert np.linalg.norm(bounded[3:6]) * 0.15 <= 0.210000001
+    assert abs(bounded[6:]).max() * 0.15 <= 0.300000001
+    spec, plan, names = fixture()
+    plan["phase_actions"]["grasp"][6] = 1.0
+    with pytest.raises(ValueError):
+        schedule(spec, plan, ["right", "left"], names, np.arange(6.0))
+    plan["bounds_profile"] = "grasp_refit"
+    schedule(spec, plan, ["right", "left"], names, np.arange(6.0))
+
+
+def test_physics_signature_survives_cohort_size_but_detects_friction_change():
+    from types import SimpleNamespace
+
+    def model(worlds, friction):
+        return SimpleNamespace(
+            body_mass=np.tile([0.3, 0.02], worlds),
+            shape_material_mu=np.tile([friction, friction], worlds),
+            gravity=np.array([0.0, 0.0, -9.81]),
+            mujoco=SimpleNamespace(condim=np.tile([3, 3], worlds)),
+        )
+
+    assert model_signature(model(2, 1.25), 2) == model_signature(model(64, 1.25), 64)
+    assert model_signature(model(2, 1.25), 2) != model_signature(model(2, 0.5), 2)

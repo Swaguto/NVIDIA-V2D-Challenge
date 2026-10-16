@@ -194,6 +194,7 @@ def audit(run, inputs):
         ).hexdigest(),
         analysis_source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         fitted_phase_policy_sha256=report.get("fitted_phase_policy_sha256"),
+        native_physics_model_sha256=report.get("native_physics_model_sha256"),
     )
 
 

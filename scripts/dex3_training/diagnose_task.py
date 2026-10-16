@@ -34,6 +34,7 @@ from flash_chord.scene.setup import setup_scene
 from flash_chord.runtime.contact import read_contacts_w, contact_gaps_w
 from flash_chord.training.environment import WarpRLEnv
 from train import audit_scene
+from v2d_dex3_flashchord.phase_prior import model_signature
 
 
 class ReadbackEnv:
@@ -359,6 +360,11 @@ def main(cfg):
                 manifest_path.read_bytes()
             ).hexdigest(),
             learned_policy=False,
+            native_physics_model_sha256=getattr(
+                env.action,
+                "native_physics_model_sha256",
+                model_signature(env.model, env.world_count),
+            ),
             fitted_phase_policy_sha256=plan_sha,
             virtual_object_assistance=0.0,
             source_motion_speed=float(cfg.task.motion_speed),

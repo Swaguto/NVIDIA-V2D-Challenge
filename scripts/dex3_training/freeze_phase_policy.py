@@ -30,6 +30,10 @@ def validate(inputs, plan_path, replay_audit):
         raise ValueError(
             "Need the exact fitted policy and independent native motor verification"
         )
+    if not plan.get("native_physics_model_sha256") or plan[
+        "native_physics_model_sha256"
+    ] != audit.get("native_physics_model_sha256"):
+        raise ValueError("Fitted policy and independent replay physics differ")
     for name, row in plan["fit_reports"].items():
         measured = [g for g in audit["grasps"] if g["sample"] == name]
         if (

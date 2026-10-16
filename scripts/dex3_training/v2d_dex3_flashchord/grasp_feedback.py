@@ -231,6 +231,7 @@ class FeedbackGripAction(GripResidualAction):
         )
         self.reference_velocity = base.reference_velocity
         self.phase_policy_prior = base.phase_policy_prior
+        self.native_physics_model_sha256 = base.native_physics_model_sha256
         if self.phase_policy_prior is not None:
             self.combined_actor_action = base.combined_actor_action
         if self.reference_velocity is not None:

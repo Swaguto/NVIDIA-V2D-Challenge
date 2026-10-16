@@ -6,3 +6,4 @@ defaults:
 # Requires a hash-bound plan that passed independent native physics replay.
 action:
   phase_policy_prior: phase-policy.json
+  phase_policy_physics_substeps: ${sim.substeps}
