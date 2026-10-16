@@ -34,6 +34,7 @@ from v2d_dex3_flashchord.phase_prior import (
 )
 from v2d_dex3_flashchord.sampling import resample_targets
 from v2d_dex3_flashchord.native_depth import maximum_assigned_depth
+from v2d_dex3_flashchord.fit_curriculum import window_end, complete
 
 
 def phase_layout(env, scene, manifest, spec, names, side, phase):
@@ -140,6 +141,11 @@ def main(cfg):
         times = target["timestamps_s"]
         side, pi = str(cfg.fit.side), int(cfg.fit.phase)
         phase = spec["phases"][side][pi]
+        curriculum_step = float(cfg.fit.get("curriculum_step_s", 0))
+        prefix_end = window_end(phase, curriculum_step)
+        support_weight = float(cfg.fit.get("support_penalty_weight", 2))
+        if not np.isfinite(support_weight) or not 2 <= support_weight <= 50:
+            raise ValueError("Unsupported sampled-support objective weight")
         prior_path = cfg.fit.get("prior")
         plan = (
             json.loads(Path(prior_path).read_text())
@@ -250,7 +256,8 @@ def main(cfg):
         )
         best_cost, best_raw, best_metrics = float("inf"), mu.copy(), None
         journal = (out / "iterations.jsonl").open("x")
-        for iteration in range(int(cfg.fit.iterations)):
+        maximum_iterations = int(cfg.fit.iterations)
+        for iteration in range(maximum_iterations):
             candidates = project(
                 rng.normal(mu, sigma, (population, 13)),
                 lower,
@@ -322,9 +329,13 @@ def main(cfg):
             metrics = [[] for _ in range(worlds)]
             for name, layout in layouts.items():
                 p = layout["phase"]
+                end = (
+                    prefix_end
+                    if name == phase["sample"]
+                    else p["release_start_s"] - 0.05
+                )
                 indices = np.flatnonzero(
-                    (times >= p["close_s"] + 0.05 - 1e-8)
-                    & (times <= p["release_start_s"] - 0.05 + 1e-8)
+                    (times >= p["close_s"] + 0.05 - 1e-8) & (times <= end + 1e-8)
                 )
                 ref = target["object_poses"][indices, p["object"]]
                 for world in range(worlds):
@@ -360,7 +371,8 @@ def main(cfg):
                         cost = (
                             2 * m["maximum_relative_position_drift_m"] / 0.01
                             + m["maximum_relative_rotation_drift_deg"] / 5
-                            + 2 * (1 - m["all_required_pad_sampled_support_fraction"])
+                            + support_weight
+                            * (1 - m["all_required_pad_sampled_support_fraction"])
                             + max(
                                 0,
                                 m["maximum_reference_lift_m"]
@@ -422,6 +434,8 @@ def main(cfg):
                 best_pair_metrics=best_metrics,
                 native_motor_caps_verified=True,
                 source_frames_per_world=setup.reference.num_frames,
+                selected_phase_objective_end_source_s=prefix_end,
+                selected_phase_full_window_covered=complete(phase, prefix_end),
                 simulated_environment_steps=(iteration + 1)
                 * worlds
                 * setup.reference.num_frames,
@@ -432,10 +446,17 @@ def main(cfg):
             if best_metrics and all(
                 m["phase_pass"] for rows in best_metrics for m in rows
             ):
-                break
+                if complete(phase, prefix_end):
+                    break
+                if iteration + 1 < maximum_iterations:
+                    prefix_end = window_end(phase, curriculum_step, prefix_end)
+                    mu = best_raw.copy()
+                    best_cost, best_metrics = float("inf"), None
         journal.close()
         robust = bool(
-            best_metrics and all(m["phase_pass"] for rows in best_metrics for m in rows)
+            complete(phase, prefix_end)
+            and best_metrics
+            and all(m["phase_pass"] for rows in best_metrics for m in rows)
         )
         plan["phase_actions"][phase["sample"]] = best_raw.tolist()
         plan.setdefault("fit_reports", {})[phase["sample"]] = dict(
@@ -444,6 +465,8 @@ def main(cfg):
             best_pair_metrics=best_metrics,
             candidates_repeated_worlds=2,
             iterations=iteration + 1,
+            selected_phase_objective_end_source_s=prefix_end,
+            selected_phase_full_window_covered=complete(phase, prefix_end),
         )
         plan.update(
             optimizer="bounded_CEM_native_physics",
@@ -473,6 +496,9 @@ def main(cfg):
                     PPO_training_steps=0,
                     native_motor_caps_verified=True,
                     physical_task_accepted=False,
+                    selected_phase_objective_end_source_s=prefix_end,
+                    selected_phase_full_window_covered=complete(phase, prefix_end),
+                    curriculum_step_s=curriculum_step,
                 ),
                 indent=2,
             )
