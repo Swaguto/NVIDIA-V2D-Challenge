@@ -10,7 +10,11 @@ import numpy as np
 from scipy.spatial.transform import Rotation
 
 sys.path.insert(0, str(Path(__file__).parents[1] / "reproduction"))
-from _dex3_task_grip import SmoothObjectReference, relative_pose  # noqa: E402
+from _dex3_task_grip import (  # noqa: E402
+    SmoothObjectReference,
+    denoise_robot_reference,
+    relative_pose,
+)
 from _dex3_static_load import apply_grasp_seeds  # noqa: E402
 from grasp_preload import URDFKinematics  # noqa: E402
 from grip_force import point_jacobian, solve_gravity_contacts  # noqa: E402
@@ -35,12 +39,18 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
     live_enabled = proposal.get("experimental_live_contact_wrench", False)
     live_posture = proposal.get("live_contact_posture_mode")
     interpolation = proposal.get("task_reference_interpolation", "piecewise")
+    denoising = proposal.get("experimental_reference_denoising", False)
+    registration = proposal.get("experimental_register_settled_grasp", False)
     load_model = proposal.get("live_contact_load_model", "gravity")
     bounded_reacquisition = proposal.get("experimental_bounded_reacquisition", False)
     patch_minimum = float(proposal.get("minimum_live_patch_force_N", 0.5))
     speed = float(proposal.get("source_motion_speed", 0.5))
     if (
         interpolation not in {"piecewise", "cubic"}
+        or not isinstance(denoising, bool)
+        or not isinstance(registration, bool)
+        or ((denoising or registration) and interpolation != "cubic")
+        or (registration and not bounded_reacquisition)
         or load_model not in {"gravity", "reference_acceleration"}
         or not np.isfinite(speed)
         or not 0.1 <= speed <= 0.5
@@ -92,6 +102,8 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
         experimental_live_contact_wrench=live_enabled,
         live_contact_posture_mode=live_posture,
         task_reference_interpolation=interpolation,
+        experimental_reference_denoising=denoising,
+        experimental_register_settled_grasp=registration,
         live_contact_load_model=load_model,
         source_motion_speed=speed,
         experimental_bounded_reacquisition=bounded_reacquisition,
@@ -131,9 +143,39 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
                 poses[:, 2] += np.asarray(
                     result["scene_projection"]["upward_corrections_m"]
                 )[:, oi]
+            baseline = SmoothObjectReference(times, poses)
+            if denoising:
+                poses = denoise_robot_reference(times, poses)
             reference = SmoothObjectReference(times, poses)
             object_references[oi] = reference
             audit = reference.deviation_audit()
+            if denoising:
+                grid = np.linspace(times[0], times[-1], 20 * (len(times) - 1) + 1)
+                audit.update(
+                    denoising_horizon_source_s=0.1,
+                    maximum_position_change_from_unsmoothed_cubic_m=float(
+                        np.linalg.norm(
+                            reference.position(grid) - baseline.position(grid), axis=1
+                        ).max()
+                    ),
+                    maximum_rotation_change_from_unsmoothed_cubic_deg=float(
+                        np.rad2deg(
+                            (
+                                reference.rotation(grid) * baseline.rotation(grid).inv()
+                            ).magnitude()
+                        ).max()
+                    ),
+                    knots_preserved=False,
+                    original_source_arrays_changed=False,
+                    target_knots_only_denoised=True,
+                )
+                if (
+                    audit["maximum_position_change_from_unsmoothed_cubic_m"] > 0.006
+                    or audit["maximum_rotation_change_from_unsmoothed_cubic_deg"] > 3
+                ):
+                    raise ValueError(
+                        "Denoised robot target exceeds 6 mm / 3 degree path bound"
+                    )
             if (
                 audit["maximum_position_deviation_from_piecewise_m"] > 0.006
                 or audit["maximum_rotation_deviation_from_piecewise_deg"] > 3

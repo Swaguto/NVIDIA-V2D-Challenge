@@ -2,6 +2,8 @@
 
 import numpy as np
 from scipy.interpolate import CubicSpline
+from scipy.optimize import lsq_linear
+from scipy.sparse import diags, eye, vstack
 from scipy.spatial.transform import Rotation, RotationSpline, Slerp
 
 
@@ -44,6 +46,61 @@ def aborted_hand_hold(anchor_pose, initial_fingers, open_fingers, elapsed_source
         + smooth(elapsed_source_s / 0.25)
         * (np.asarray(open_fingers, float) - np.asarray(initial_fingers, float))
     )
+
+
+def denoise_robot_reference(times, poses, horizon_s=0.1):
+    """Bounded acceleration regularization of robot targets, never observations.
+
+    Every translation knot stays within 5 mm and every rotation knot within two
+    degrees of its input. Quaternion signs are unwrapped before chordal fitting.
+    The caller separately audits the interpolated path against the input path.
+    """
+    times, poses = np.asarray(times, float), np.asarray(poses, float)
+    if (
+        times.ndim != 1
+        or len(times) < 3
+        or poses.shape != (len(times), 7)
+        or not np.isfinite(np.r_[times, poses.ravel(), horizon_s]).all()
+        or np.any(np.diff(times) <= 0)
+        or not 0.05 <= horizon_s <= 0.2
+        or not np.allclose(np.linalg.norm(poses[:, 3:], axis=1), 1, atol=1e-6)
+    ):
+        raise ValueError("Invalid bounded robot reference denoising inputs")
+    n = len(times)
+    before, after = np.diff(times)[:-1], np.diff(times)[1:]
+    second = diags(
+        [
+            2 / (before * (before + after)),
+            -2 / (before * after),
+            2 / (after * (before + after)),
+        ],
+        [0, 1, 2],
+        shape=(n - 2, n),
+        format="csr",
+    )
+    penalty = horizon_s**2 * second
+    matrix = vstack([eye(n, format="csr"), penalty], format="csr")
+    values = poses.copy()
+    for i in range(1, n):
+        if values[i, 3:] @ values[i - 1, 3:] < 0:
+            values[i, 3:] *= -1
+    result = values.copy()
+    # The coordinate boxes imply Euclidean bounds. For a unit quaternion q,
+    # normalizing q+e changes its rotation by <= 2 asin(||e||).
+    bounds = [0.005 / np.sqrt(3)] * 3 + [np.sin(np.deg2rad(2) / 2) / 2] * 4
+    for j, bound in enumerate(bounds):
+        offset = lsq_linear(
+            matrix,
+            np.r_[np.zeros(n), -penalty @ values[:, j]],
+            bounds=(-bound, bound),
+            tol=1e-10,
+            lsmr_tol=1e-11,
+        )
+        if not offset.success:
+            raise ValueError("Bounded robot reference optimization failed")
+        result[:, j] += offset.x
+    result[:, 3:] /= np.linalg.norm(result[:, 3:], axis=1)[:, None]
+    return result
 
 
 class SmoothObjectReference:
@@ -142,6 +199,7 @@ class TaskGripReference:
             raise ValueError("Need an explicitly unaccepted task grasp reference")
         self.spec = spec
         self.aborted_phases = {}
+        self.grasp_registrations = {}
         self.object_references = {
             int(oi): SmoothObjectReference(spec["source_times_s"], poses)
             for oi, poses in spec.get("smooth_robot_object_reference", {}).items()
@@ -170,7 +228,37 @@ class TaskGripReference:
             start, close, end = [
                 phase[k] for k in ("approach_start_s", "close_s", "release_start_s")
             ]
-            obj = np.asarray(object_pose, float)
+            obj = np.asarray(object_pose, float).copy()
+            registration = self.grasp_registrations.get(phase["sample"])
+            register = self.spec.get("experimental_register_settled_grasp", False)
+            # Capture once at closure. Future command prediction must not mutate
+            # feedback state or register a phase before the physical clock does.
+            if (
+                register
+                and registration is None
+                and measured_object_pose is not None
+                and close <= time_s <= close + 0.05
+                and not parked
+                and phase["sample"] not in self.aborted_phases
+            ):
+                measured = np.asarray(measured_object_pose, float)
+                distance = np.linalg.norm(measured[:3] - obj[:3])
+                angle = (
+                    Rotation.from_quat(measured[3:]) * Rotation.from_quat(obj[3:]).inv()
+                ).magnitude()
+                if distance <= 0.03 and angle <= np.deg2rad(10):
+                    registration = dict(
+                        captured_source_time_s=float(time_s),
+                        transform_xyzw=compose_pose(
+                            measured, relative_pose([0, 0, 0, 0, 0, 0, 1], obj)
+                        ).tolist(),
+                        position_offset_m=float(distance),
+                        rotation_offset_deg=float(np.rad2deg(angle)),
+                    )
+                    if commit:
+                        self.grasp_registrations[phase["sample"]] = registration
+            if registration is not None:
+                obj = compose_pose(registration["transform_xyzw"], obj)
             feedback = smooth((time_s - start) / 0.1) * (
                 1 - smooth((time_s - close) / 0.5)
             )
@@ -202,7 +290,7 @@ class TaskGripReference:
             if aborted_at is not None:
                 feedback = 0.0
                 rejection = "Object outside bounded reacquisition window; phase aborted"
-            if measured_object_pose is not None:
+            if measured_object_pose is not None and registration is None:
                 obj = blend_pose(obj, measured_object_pose, feedback)
             pose = compose_pose(obj, phase["hand_in_object_xyzw"])
             descend = smooth((time_s - start) / (close - 0.25 - start))
@@ -227,6 +315,20 @@ class TaskGripReference:
             effort = np.array(
                 [np.interp(time_s, times, efforts[:, j]) for j in range(7)]
             )
+            desired_wrench = (
+                self.object_references[oi].load_wrench(
+                    time_s, self.spec["source_motion_speed"]
+                )
+                if self.spec.get("live_contact_load_model") == "reference_acceleration"
+                else None
+            )
+            if desired_wrench is not None and registration is not None:
+                alignment = Rotation.from_quat(registration["transform_xyzw"][3:])
+                gravity = np.array([0, 0, 0.3 * 9.81])
+                desired_wrench = np.r_[
+                    alignment.apply(desired_wrench[:3] - gravity) + gravity,
+                    alignment.apply(desired_wrench[3:]),
+                ]
             return dict(
                 pose=pose,
                 fingers=q,
@@ -237,13 +339,10 @@ class TaskGripReference:
                 pad_normal_jacobians=phase.get("pad_normal_jacobians", []),
                 joint_limits_rad=phase.get("joint_limits_rad"),
                 object_feedback_weight=float(feedback)
-                if measured_object_pose is not None
+                if measured_object_pose is not None and registration is None
                 else 0.0,
-                desired_object_wrench_stage=self.object_references[oi].load_wrench(
-                    time_s, self.spec["source_motion_speed"]
-                )
-                if self.spec.get("live_contact_load_model") == "reference_acceleration"
-                else None,
+                desired_object_wrench_stage=desired_wrench,
+                settled_grasp_registration=registration,
                 reacquisition_failure=rejection,
             )
 

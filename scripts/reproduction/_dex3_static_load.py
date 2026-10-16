@@ -2882,6 +2882,9 @@ def run_supported_task(
                         ]
                         if grip_command is not None
                         else None,
+                        "settled_grasp_registration": grip_command.get(
+                            "settled_grasp_registration"
+                        ) if grip_command is not None else None,
                         "reacquisition_failure": grip_command.get(
                             "reacquisition_failure"
                         )
@@ -3164,6 +3167,14 @@ def run_supported_task(
             )
             if task_grip is not None
             else None,
+            "experimental_reference_denoising_enabled": task_grip.spec.get(
+                "experimental_reference_denoising", False
+            ) if task_grip is not None else False,
+            "experimental_settled_grasp_registration_enabled": task_grip.spec.get(
+                "experimental_register_settled_grasp", False
+            ) if task_grip is not None else False,
+            "settled_grasp_registrations": task_grip.grasp_registrations
+            if task_grip is not None else {},
             "bounded_reacquisition_enabled": task_grip.spec.get(
                 "experimental_bounded_reacquisition", False
             )
