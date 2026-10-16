@@ -178,3 +178,17 @@ increases integration to 400 Hz while preserving the fixture clock: 0.25 s
 closure, 0.25 s squeeze ramp, 0.5 s support release, 1.5 s duration and 20 fps
 video. Lift metrics select the physical load interval, and force averaging
 keeps its 0.2 s window. No motor or friction limit changes. 86 CPU tests pass.
+
+The 400 Hz fixed-posture lift also fails both pot fixtures. Maximum wrist
+rotation improves from about 6.0 to 2.6 degrees, but relative object drift is
+still 2.62 / 1.08 m. Its gravity, support and support-removal controls pass.
+The initial postprocessor rejected the increased raw record counts; a local
+re-audit confirms all 2,404 sample records, 1,403 control records and timestamps
+cover the complete 1.5 s fixture clock. Count checks now derive from that clock.
+The original failed postprocessing receipt and raw hashes remain preserved.
+
+The next unaccepted full-episode diagnostic compares fixed posture against the
+live force/posture controller at 400 Hz, each with a fresh free-space gate.
+The fixture uses frozen finger efforts and nominal payload compensation;
+the full candidate uses current contact allocation and measured wrist reaction.
+Neither fixture failure nor a passing wrist gate certifies the full controller.

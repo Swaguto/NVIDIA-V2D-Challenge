@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts/reproduction"))
 from reproduce_frozen_dex3_replay import restore_methods  # noqa: E402
 from audit_wrist_run import audit  # noqa: E402
+from _dex3_grip_control import static_load_schedule  # noqa: E402
 
 PACK_SHA = "759b6e9fa642b47ec24306969688cc1ce15ead4cb0b80e4f8d086b727b93c680"
 PLANE_SHA = "38a6bf97df7def496bed7773e265c894e77da6bb5521d3077bf43330cbd3166f"
@@ -262,6 +263,9 @@ def main():
         if static_stage:
             run = out / "run/simulator"
             states = json.loads((run / "states.json").read_text())
+            schedule = static_load_schedule(args.physics_dt, acquisition_stage)
+            if report["simulation_dt_s"] != args.physics_dt:
+                raise ValueError("Static load physics timestep differs")
             if (
                 digest(run / "states.json") != report["states_sha256"]
                 or digest(video) != report["video_sha256"]
@@ -270,25 +274,32 @@ def main():
             if not report["gravity_and_contact_controls_pass"]:
                 raise ValueError("Static load physics controls failed")
             if (
-                len(states["records"]) != (604 if acquisition_stage else 404)
-                or len(states["controls"]) != (353 if acquisition_stage else 202)
+                len(states["records"]) != 4 * (schedule["last_step"] + 1)
+                or len(states["controls"])
+                != 2 * (schedule["control_last_step"] + 1)
+                + (schedule["last_step"] + 1 if acquisition_stage else 0)
                 or len(report["summaries"]) != 4
             ):
                 raise ValueError("Static load record counts differ")
             for sample in range(4):
                 if [
                     r["step"] for r in states["records"] if r["sample_index"] == sample
-                ] != list(range(151 if acquisition_stage else 101)):
+                ] != list(range(schedule["last_step"] + 1)):
                     raise ValueError("Static load state coverage differs")
             for control in range(2):
                 if [
                     r["step"] for r in states["controls"] if r["control"] == control
-                ] != list(range(101)):
+                ] != list(range(schedule["control_last_step"] + 1)):
                     raise ValueError("Static load control coverage differs")
             if acquisition_stage and [
                 r["step"] for r in states["controls"] if r["control"] == 2
-            ] != list(range(151)):
+            ] != list(range(schedule["last_step"] + 1)):
                 raise ValueError("Temporary support release control coverage differs")
+            if any(
+                abs(row["time_s"] - row["step"] * args.physics_dt) > 1e-12
+                for row in states["records"] + states["controls"]
+            ):
+                raise ValueError("Static load record times differ from physics clock")
             cooked = report["cooked_collider_summary"]
             if {r["asset"] for r in cooked if r["asset"].startswith("object-")} != {
                 f"object-{i}" for i in range(4)
