@@ -97,7 +97,11 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
         ).hexdigest(),
         source_times_s=times.tolist(),
         phases={"left": [], "right": []},
-        observation_contract="source object reference plus measured object pose during approach; measured hand-object reaction for wrist feedback; diagnostic only",
+        observation_contract=(
+            "source object reference plus measured object pose during approach and bounded compliant carry; measured hand-object reaction for wrist feedback; diagnostic only"
+            if carry_compliance
+            else "source object reference plus measured object pose during approach; measured hand-object reaction for wrist feedback; diagnostic only"
+        ),
         contact_model_friction=1.25,
         minimum_planned_pad_normal_N=minimum_normal,
         wrist_payload_compensation=payload_mode,

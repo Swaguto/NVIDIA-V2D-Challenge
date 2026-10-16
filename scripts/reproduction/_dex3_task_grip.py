@@ -206,9 +206,10 @@ class SmoothObjectReference:
 class TaskGripReference:
     """Robot commands use the original source clock and object reference.
 
-    During approach only, an explicitly supplied measured object pose accounts
+    By default during approach only, a supplied measured object pose accounts
     for initial settling. It blends back to the source over 0.5 source seconds
-    after closure. This is a diagnostic feedback contract, not a trained actor.
+    after closure. Optional registered carry compliance retains bounded pose
+    feedback during load. This diagnostic controller is not a trained actor.
     """
 
     def __init__(self, spec):
@@ -266,16 +267,30 @@ class TaskGripReference:
                 if distance <= 0.03 and angle <= np.deg2rad(10):
                     registration = dict(
                         captured_source_time_s=float(time_s),
-                        transform_xyzw=compose_pose(
-                            measured, relative_pose([0, 0, 0, 0, 0, 0, 1], obj)
-                        ).tolist(),
+                        position_offset_world_m=(measured[:3] - obj[:3]).tolist(),
+                        rotation_offset_body_xyzw=(
+                            Rotation.from_quat(obj[3:]).inv()
+                            * Rotation.from_quat(measured[3:])
+                        )
+                        .as_quat()
+                        .tolist(),
+                        mode="world_translation_and_body_rotation_bias",
                         position_offset_m=float(distance),
                         rotation_offset_deg=float(np.rad2deg(angle)),
                     )
                     if commit:
                         self.grasp_registrations[phase["sample"]] = registration
             if registration is not None:
-                obj = compose_pose(registration["transform_xyzw"], obj)
+                # The table/gravity frame is already fixed. Preserve world
+                # translation and world angular increments instead of rotating
+                # the whole transport path by an object's settling tilt.
+                obj = np.r_[
+                    obj[:3] + registration["position_offset_world_m"],
+                    (
+                        Rotation.from_quat(obj[3:])
+                        * Rotation.from_quat(registration["rotation_offset_body_xyzw"])
+                    ).as_quat(),
+                ]
             feedback = smooth((time_s - start) / 0.1) * (
                 1 - smooth((time_s - close) / 0.5)
             )
@@ -355,13 +370,9 @@ class TaskGripReference:
                 if self.spec.get("live_contact_load_model") == "reference_acceleration"
                 else None
             )
-            if desired_wrench is not None and registration is not None:
-                alignment = Rotation.from_quat(registration["transform_xyzw"][3:])
-                gravity = np.array([0, 0, 0.3 * 9.81])
-                desired_wrench = np.r_[
-                    alignment.apply(desired_wrench[:3] - gravity) + gravity,
-                    alignment.apply(desired_wrench[3:]),
-                ]
+            # A constant world translation and right rotation bias preserve
+            # world acceleration/angular rate. With the declared isotropic
+            # nominal inertia, the reference load wrench is unchanged.
             return dict(
                 pose=pose,
                 fingers=q,

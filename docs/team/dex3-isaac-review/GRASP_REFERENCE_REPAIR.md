@@ -26,12 +26,17 @@ audit rejects total changes above 6 mm / 3° against the previous cubic path.
 The dense check is not a continuous collision certificate. Nominal finger load
 planning uses the resulting reference orientation.
 
-`experimental_register_settled_grasp` captures a single rigid alignment at
+`experimental_register_settled_grasp` captures settled translation and body
+rotation offsets once at
 closure, requiring a settled pose within 3 cm / 10° of the inferred reference.
-It preserves subsequent relative reference motion. The alignment stays fixed;
+It preserves subsequent world translation and world angular increments. The offsets stay fixed;
 an object that later falls is not chased. Lookahead calls cannot mutate the
-registration. Previously aborted phases cannot register. The inertial load is
-rotated consistently, with gravity remaining vertical in world coordinates.
+registration. Previously aborted phases cannot register. Settling tilt cannot
+rotate the transport path relative to the table. With the declared isotropic
+nominal inertia, its world load wrench is unchanged.
+
+The historical source37 trial used a spatial rigid alignment that rotated the
+whole transport path. That rejected trial and its original bytes remain intact.
 
 Both flags require cubic interpolation. Registration also requires bounded
 reacquisition. Both default to false. The settings are recorded in the generated

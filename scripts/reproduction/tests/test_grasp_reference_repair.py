@@ -11,7 +11,6 @@ from _dex3_task_grip import (  # noqa: E402
     TaskGripReference,
     compose_pose,
     denoise_robot_reference,
-    relative_pose,
 )
 
 
@@ -90,7 +89,11 @@ def test_registration_anchors_once_preserves_relative_motion_and_prediction_is_r
     # The settled pose never changes the source clock or subsequent path shape.
     moved = original.copy()
     moved[:3] += [0.04, 0.02, 0.03]
-    aligned = compose_pose(settled, relative_pose(moved, original))
+    moved[3:] = Rotation.from_euler("z", 0.1).as_quat()
+    aligned = np.r_[
+        moved[:3] + settled[:3] - original[:3],
+        (Rotation.from_quat(moved[3:]) * Rotation.from_quat(settled[3:])).as_quat(),
+    ]
     lost = settled.copy()
     lost[2] -= 10
     carry = ref.command("left", 3, moved, lost)
