@@ -1904,7 +1904,7 @@ def run_supported_task(
     from PIL import Image, ImageDraw
     from scipy.spatial.transform import Rotation
     from _dex3_wrist_control import finger_position_target, implicit_root_wrench
-    from _dex3_grip_control import payload_contact_hold
+    from _dex3_grip_control import payload_contact_hold, payload_gravity_wrench
     from _dex3_task_grip import (
         TaskGripReference,
         contact_wrench,
@@ -2456,7 +2456,17 @@ def run_supported_task(
                                 grip_command["required_digits"],
                             )
                         reaction_compensation[si] = filtered_reaction_compensation(
-                            measured_wrench,
+                            -payload_gravity_wrench(
+                                cpu(hand.data.root_link_pose_w)[0, :3]
+                                + Rotation.from_quat(
+                                    cpu(hand.data.root_link_pose_w)[0, 3:]
+                                ).apply(cpu(com_positions[si])[0]),
+                                cpu(objects[si].data.root_link_pose_w)[0, :3],
+                                prepared["nominal_object_mass_kg"],
+                            )
+                            if task_grip.spec.get("wrist_payload_compensation")
+                            == "nominal_gravity"
+                            else measured_wrench,
                             reaction_compensation[si],
                             dt,
                             enabled
@@ -2477,9 +2487,16 @@ def run_supported_task(
                             applied_reaction_compensation_world=reaction_compensation[
                                 si
                             ].tolist(),
+                            payload_compensation_mode=task_grip.spec.get(
+                                "wrist_payload_compensation"
+                            ),
                             contact_hold_remaining_s=contact_hold[si],
                         )
-                        if len(grip_command["required_digits"]) == 3:
+                        if len(
+                            grip_command["required_digits"]
+                        ) == 3 and task_grip.spec.get(
+                            "experimental_tactile_seating", False
+                        ):
                             pads = grip_command["pad_normal_jacobians"]
                             if tactile_phase[si] != grip_command["phase"]:
                                 tactile_integrals[si] = np.zeros(len(pads))
@@ -2870,6 +2887,16 @@ def run_supported_task(
             "object_errors_use_original_source_without_scene_projection": True,
             "robot_colliders_persist_through_human_occlusion": task_grip is not None,
             "robot_targets_are_inferred_grasp_commands": task_grip is not None,
+            "wrist_payload_compensation_mode": task_grip.spec.get(
+                "wrist_payload_compensation"
+            )
+            if task_grip is not None
+            else None,
+            "experimental_tactile_seating_enabled": task_grip.spec.get(
+                "experimental_tactile_seating", False
+            )
+            if task_grip is not None
+            else False,
             "source_frames": len(frames),
             "rendered_video_frames": len(frames) + len(postroll_frames),
             "inferred_postroll_source_seconds": postroll_s,

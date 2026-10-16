@@ -30,7 +30,7 @@ It is not an approved learned actor observation contract.
 Three-pad force plans are recomputed at every original pot orientation. The
 original extra-conservative coefficient 1 model becomes infeasible for the
 second phase at source row 274, despite the static lift passing. The task model
-uses a 4 N minimum normal force at each pot pad and coefficient 1.25, matching the nominal average of unchanged hand friction
+uses coefficient 1.25, matching the nominal average of unchanged hand friction
 2.0 and object friction 0.5. The inscribed friction octagon remains inside that
 cone. The runtime explicitly authors and reads back the average combine mode
 and coefficients. Motor feedforward remains capped at 0.55 Nm and the real
@@ -123,3 +123,29 @@ its compatibility with the learned actor contract is not established.
 source-object metrics, reports each grasp's relative drift and contact coverage,
 and records actual combined finger effort when available. It does not certify
 an official score or automatically accept a full task.
+
+## Controller isolation after the tactile trial
+
+The tactile candidate also failed during the first carry. It is retained for
+inspection and is **disabled by default**. Measured reaction cancellation is now
+an explicit experimental mode. The default payload controller uses the nominal
+0.3 kg gravity force and lever-arm moment already checked in isolated lifts,
+with measured contact eligibility and filtered enable/disable. The current
+comparison explicitly selects a 4 N planned minimum and nominal compensation,
+without tactile target changes. The outcome is not yet accepted.
+
+Controller choices are bound in the private proposal: `task_minimum_pad_normal_N`
+(default 2), `wrist_payload_compensation` (`nominal_gravity`, or the experimental
+`measured_reaction`), and boolean `experimental_tactile_seating` (default false).
+All source orientations are checked again for the selected force floor.
+
+Completed `grip-task` runs now produce a local `review/index.html`, browser-compatible
+video, state/spec-bound grasp audit and video receipt before the wrist gate is
+interpreted. Failed candidates remain reviewable. This adds no publication or
+input upload. For an existing run:
+
+```bash
+python scripts/dex3_physics/package_coupled_preview.py \
+  --run /private/results/grip-task/run/simulator \
+  --out /private/results/new-review
+```

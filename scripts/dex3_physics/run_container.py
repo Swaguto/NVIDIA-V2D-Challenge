@@ -392,6 +392,31 @@ def main():
                 check=True,
                 env=env,
             )
+        if args.stage == "grip-task":
+            subprocess.run(
+                [
+                    sys.executable,
+                    str(ROOT / "scripts/dex3_physics/audit_coupled_grip.py"),
+                    "--run",
+                    str(out / "run/simulator"),
+                    "--out",
+                    str(out / "coupled-grasp-audit.json"),
+                ],
+                check=True,
+                env=env,
+            )
+            subprocess.run(
+                [
+                    sys.executable,
+                    str(ROOT / "scripts/dex3_physics/package_coupled_preview.py"),
+                    "--run",
+                    str(out / "run/simulator"),
+                    "--out",
+                    str(out / "review"),
+                ],
+                check=True,
+                env=env,
+            )
         subprocess.run(
             [
                 sys.executable,

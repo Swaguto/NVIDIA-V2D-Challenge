@@ -29,6 +29,16 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
         motion = {k: f[k] for k in f.files}
     stage = Rotation.from_matrix(stage_rotation)
     times = source["timestamps_s"]
+    minimum_normal = float(proposal.get("task_minimum_pad_normal_N", 2.0))
+    payload_mode = proposal.get("wrist_payload_compensation", "nominal_gravity")
+    tactile_enabled = proposal.get("experimental_tactile_seating", False)
+    if not 2 <= minimum_normal <= 5 or payload_mode not in {
+        "nominal_gravity",
+        "measured_reaction",
+    }:
+        raise ValueError("Unsupported explicit coupled controller configuration")
+    if not isinstance(tactile_enabled, bool):
+        raise ValueError("Experimental tactile seating requires an explicit boolean")
     result = dict(
         schema="v2d.dex3-task-grips.v1",
         park_height_m=0.12,
@@ -41,7 +51,9 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
         phases={"left": [], "right": []},
         observation_contract="source object reference plus measured object pose during approach; measured hand-object reaction for wrist feedback; diagnostic only",
         contact_model_friction=1.25,
-        minimum_planned_pad_normal_N=4.0,
+        minimum_planned_pad_normal_N=minimum_normal,
+        wrist_payload_compensation=payload_mode,
+        experimental_tactile_seating=tactile_enabled,
         planner_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         required_physical_materials="hand 2.0 / object 0.5, average combination = 1.25; explicit combine mode and coefficient readback required",
     )
@@ -130,7 +142,7 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
                         0.3,
                         10.0,
                         friction=1.25,
-                        minimum_normal_N=4.0,
+                        minimum_normal_N=minimum_normal,
                     )
                 except ValueError as error:
                     raise ValueError(
