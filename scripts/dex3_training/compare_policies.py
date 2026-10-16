@@ -115,7 +115,13 @@ def compare(inputs, checkpoints, reports, controls):
         raise ValueError("Need equal evaluation coverage, initial then learned policy")
     return dict(
         schema="v2d.dex3-controlled-policy-comparison.v1",
-        scope="selected development window; not full episode or official scored roster",
+        scope=(
+            "full development episode with inferred robot targets and original source confidence masks; not an official scored roster"
+            if manifest.get("full_episode_covered") is True
+            and manifest["selected_frame_count"] == manifest.get("source_frame_count")
+            else "selected development window; not full episode or official scored roster"
+        ),
+        comparison_source_sha256=digest(Path(__file__)),
         input_manifest_sha256=manifest_sha,
         runtime_controls_sha256=digest(controls),
         image_context_sha256=metas[0]["user.dex3_image_context_sha256"],
