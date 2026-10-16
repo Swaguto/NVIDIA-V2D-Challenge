@@ -1,11 +1,9 @@
 # Coupled e002 diagnostic: approach, grasp, transport and release
 
-**Current status:** complete e002 carrying remains unresolved. The hand runaway
-after object loss is fixed in a fresh simulation. The newest motor-limit repair
-is under validation; historical torque telemetry is a clipped model estimate,
-and a separate joint effort was found to bypass the native drive cap. See
-[visual inspection and subsequent repairs](VISUAL_REFERENCE_REPAIR.md). All 83
-CPU tests pass. Earlier campaign sections below retain their original chronology.
+**Current status:** Complete e002 transport remains unresolved; no full physical task or official policy is accepted. The shared motor-limit repair and fresh
+isolated pot lifts pass their simulator checks. See [latest measured checkpoint](motor-contact-repair-results-v1.json)
+and [video-driven changes](VISUAL_REFERENCE_REPAIR.md). 87 CPU tests pass.
+Earlier campaign sections below retain their original chronology.
 
 This is experimental robot-reference/controller code. No complete physical task,
 policy or official score is accepted by this document. The isolated pot/lid
@@ -131,7 +129,7 @@ its compatibility with the learned actor contract is not established.
 
 `audit_coupled_grip.py` verifies state/spec hashes, excludes inferred postroll from
 source-object metrics, reports each grasp's relative drift and contact coverage,
-and records actual combined finger effort when available. It does not certify
+and records a clipped implicit motor estimate when available. It does not certify
 an official score or automatically accept a full task.
 
 ## Controller isolation after the tactile trial

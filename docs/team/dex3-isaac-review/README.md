@@ -7,21 +7,37 @@ This branch combines `codex/hand-continuity` at `9f93a50` with
 
 ## Current e002 physics checkpoint
 
-The pot and lid each pass two isolated acquisition/lift fixtures. The complete
-two-hand carry remains unresolved after seven full controller trials. The live
-allocator's signed-force rejection bug is fixed, but both exercised posture
-variants lose the pot. They remain disabled by default. PPO has not been
-retrained. See [pot evidence](POT_GRIP_FIX.md), [complete diagnostic and next
-work](COUPLED_TASK_DIAGNOSTIC.md), [seven-run measurements](coupled-physics-campaign-v2.json)
-and [measured failure details](live-contact-failure-diagnosis-v1.json).
+Complete e002 transport remains unresolved; no full physical task or official policy is accepted.
+The motor feedforward bug is repaired: posture and feedforward now share the
+native implicit drive cap. The inertia-based simulator probe verifies signed
+0.76 Nm saturation and unsaturated command scaling. Historical clipped torque
+telemetry cannot certify the combined budget of the older separate-effort runs.
 
-All 70 CPU tests pass. The private v3 reproduction bundle includes the exact
-source overlays and inputs for these rejected trials; see
-[local-pot-task-input-receipt-v3.json](local-pot-task-input-receipt-v3.json).
-Inputs remain local. All 44,985 result files are SHA-256 verified on the owner's
-Mac and Brev is confirmed stopped. The renewed $10 validation allowance used a
-conservative $0.6006; cumulative compute bound is $10.3761 of $20, not an invoice.
-Reproducing a failed experiment is distinct from an accepted task or submission.
+Both fresh pot lift fixtures pass at 400 Hz with the optional grip solver profile:
+49.6 / 51.2 mm lift and 1.86 / 1.42 mm relative slip. The hand runaway after object
+loss is repaired. Aborted or unsupported stationary phases fail the corrected
+retention audit. Full replays preserve all 343 source frames and 20 labelled
+settling frames; their losses remain in the measurements.
+
+See [latest measured results](motor-contact-repair-results-v1.json),
+[video findings and implementation](VISUAL_REFERENCE_REPAIR.md), and
+[earlier campaign](COUPLED_TASK_DIAGNOSTIC.md). 87 CPU tests pass. The grip solver
+profile differs from the default diagnostic solver; compatibility with official
+evaluation settings has not been established. No hidden-episode result or PPO
+training is claimed.
+
+The private [v4 reproduction receipt](local-pot-task-input-receipt-v4.json)
+binds exact inputs, source overlays and run receipts. The 180,579,458-byte
+archive is retained locally and has not been published. The newest recipes use
+source33, the pinned simulator image, `--physics-dt 0.0025` and
+`--contact-solver grip`. A full episode requires a fresh matching free-space gate.
+An input recipient must receive the private pack separately.
+
+All 79,097 result/log files (23,795,980,176 bytes)
+are backed up and hash-verified through the immutable inventory chain. Brev is
+confirmed stopped. Conservative cumulative compute bound:
+$12.5618 of the approved $20; not an invoice.
+Reproducing a diagnostic does not establish an accepted submission.
 
 ## Executed result
 

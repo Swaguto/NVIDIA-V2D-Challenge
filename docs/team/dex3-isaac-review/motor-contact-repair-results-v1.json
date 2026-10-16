@@ -1,0 +1,1076 @@
+{
+  "schema": "v2d.motor-contact-repair-results.v1",
+  "isolated_lifts": [
+    {
+      "name": "pot-lift-v3",
+      "label": "Earlier separate-effort lift",
+      "physics_dt_s": 0.01,
+      "source_commit": "6736901e4af7cd8728c0e3204e9c6af9d86ff91e",
+      "source_archive_sha256": "637a3a6bb2d7344d7cad4770602966586f931eb197befa97a5f9553e77a7fedc",
+      "report_sha256": "24b7d0f34922f3783596d8921509dab7c77a553ac90220b4e513bcc167330dee",
+      "physics_controls_pass": true,
+      "lift_diagnostic_pass": true,
+      "grasps": [
+        {
+          "sample": "left-object0-grasp0-squeeze",
+          "source_frame": 47,
+          "variant": "squeeze",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.00012457458097092397,
+          "final_displacement_m": 0.05102708531186931,
+          "maximum_displacement_m": 0.058977495535183014,
+          "maximum_orientation_change_deg": 1.5540719974269792,
+          "maximum_contact_force_N": 8.244127766949507,
+          "mean_vertical_contact_force_last_0_2s_N": -5.596584916114807,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "object_lift_m": 0.05101791024208069,
+          "maximum_object_drift_relative_to_wrist_m": 0.001665720650116022,
+          "maximum_wrist_position_error_m": 0.008097278758727998,
+          "maximum_wrist_rotation_error_deg": 1.109847742325988,
+          "lifted_and_retained_diagnostic_only": true
+        },
+        {
+          "sample": "left-object0-grasp1-squeeze",
+          "source_frame": 273,
+          "variant": "squeeze",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.000353421741645594,
+          "final_displacement_m": 0.051438505072318286,
+          "maximum_displacement_m": 0.059101009689441965,
+          "maximum_orientation_change_deg": 1.1184488840163496,
+          "maximum_contact_force_N": 10.684923216974378,
+          "mean_vertical_contact_force_last_0_2s_N": -5.092377638816833,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "object_lift_m": 0.051430344581604004,
+          "maximum_object_drift_relative_to_wrist_m": 0.0015461909746550542,
+          "maximum_wrist_position_error_m": 0.008758729567816672,
+          "maximum_wrist_rotation_error_deg": 1.1797992753517397,
+          "lifted_and_retained_diagnostic_only": true
+        }
+      ],
+      "separate_effort_zero": false,
+      "physical_task_accepted": false
+    },
+    {
+      "name": "pot-lift-bounded-v1",
+      "label": "Shared motor cap, 100 Hz",
+      "physics_dt_s": 0.01,
+      "source_commit": "3ceaf91707e9c5c10058115d039cbc2b26275ded",
+      "source_archive_sha256": "a20c7a153e585030563ece03ddc8ba2fde5bb0e783e24033fb5256b0ee49c8d4",
+      "report_sha256": "be9a8d1f80504502907a654628dddb3ab1ff7ed9fcb31c966a1af4877a2592ba",
+      "physics_controls_pass": true,
+      "lift_diagnostic_pass": false,
+      "grasps": [
+        {
+          "sample": "left-object0-grasp0-squeeze",
+          "source_frame": 47,
+          "variant": "squeeze",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.00010073525307340086,
+          "final_displacement_m": 2.7767986099583024,
+          "maximum_displacement_m": 2.7767986099583024,
+          "maximum_orientation_change_deg": 58.799387901186826,
+          "maximum_contact_force_N": 9.099788561016714,
+          "mean_vertical_contact_force_last_0_2s_N": 0.0,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "object_lift_m": -2.776771605014801,
+          "maximum_object_drift_relative_to_wrist_m": 2.8282374547717213,
+          "maximum_wrist_position_error_m": 0.008032885126471915,
+          "maximum_wrist_rotation_error_deg": 6.032314027360828,
+          "lifted_and_retained_diagnostic_only": false
+        },
+        {
+          "sample": "left-object0-grasp1-squeeze",
+          "source_frame": 273,
+          "variant": "squeeze",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.0003771025413786611,
+          "final_displacement_m": 3.097800402330891,
+          "maximum_displacement_m": 3.097800402330891,
+          "maximum_orientation_change_deg": 43.3577033971246,
+          "maximum_contact_force_N": 9.551194714076074,
+          "mean_vertical_contact_force_last_0_2s_N": 0.0,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "object_lift_m": -3.0977779924869537,
+          "maximum_object_drift_relative_to_wrist_m": 3.15094581863283,
+          "maximum_wrist_position_error_m": 0.007480889292943837,
+          "maximum_wrist_rotation_error_deg": 6.063983767706954,
+          "lifted_and_retained_diagnostic_only": false
+        }
+      ],
+      "separate_effort_zero": true,
+      "physical_task_accepted": false
+    },
+    {
+      "name": "pot-lift-bounded-fine-v1",
+      "label": "Shared motor cap, 400 Hz",
+      "physics_dt_s": 0.0025,
+      "source_commit": "f011f11110d275ca7e209afea91de9e483bb0836",
+      "source_archive_sha256": "3eb5cd0688d330b73d6d15b28cca4c8ed091f3be5691b7b4139a2bb0b0003149",
+      "report_sha256": "0bbf32a780c60cda77d129f2f1997329e1f430796bc2ae288ce10d82c4384f84",
+      "physics_controls_pass": true,
+      "lift_diagnostic_pass": false,
+      "grasps": [
+        {
+          "sample": "left-object0-grasp0-squeeze",
+          "source_frame": 47,
+          "variant": "squeeze",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.00011068460564462576,
+          "final_displacement_m": 2.570984237168911,
+          "maximum_displacement_m": 2.570984237168911,
+          "maximum_orientation_change_deg": 14.035486907305838,
+          "maximum_contact_force_N": 17.739754212043675,
+          "mean_vertical_contact_force_last_0_2s_N": 0.0,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "object_lift_m": -2.570975124835968,
+          "maximum_object_drift_relative_to_wrist_m": 2.621685591776179,
+          "maximum_wrist_position_error_m": 0.008850858326612109,
+          "maximum_wrist_rotation_error_deg": 2.621247489611015,
+          "lifted_and_retained_diagnostic_only": false
+        },
+        {
+          "sample": "left-object0-grasp1-squeeze",
+          "source_frame": 273,
+          "variant": "squeeze",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.0003518558622063913,
+          "final_displacement_m": 1.026926213951888,
+          "maximum_displacement_m": 1.026926213951888,
+          "maximum_orientation_change_deg": 10.1944595767388,
+          "maximum_contact_force_N": 24.79623394273191,
+          "mean_vertical_contact_force_last_0_2s_N": 0.0,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "object_lift_m": -1.0269244015216827,
+          "maximum_object_drift_relative_to_wrist_m": 1.0801525230914197,
+          "maximum_wrist_position_error_m": 0.012979657246558422,
+          "maximum_wrist_rotation_error_deg": 2.6296115487488714,
+          "lifted_and_retained_diagnostic_only": false
+        }
+      ],
+      "separate_effort_zero": true,
+      "physical_task_accepted": false
+    },
+    {
+      "name": "pot-lift-grip-fine-v1",
+      "label": "Shared motor cap, grip solver, 400 Hz",
+      "physics_dt_s": 0.0025,
+      "source_commit": "6309d2a6b27cb16e8b49baf06445b5f7d1e99933",
+      "source_archive_sha256": "2d7ee08f8a42ffd6bf2640fd2f39e05696d2a3ed0d7fa15e8d9b57ecb592e756",
+      "report_sha256": "ae2d5b0d46e3403f190cde66a9e8164f27f91f6ce32c07cf2348a1087cd52a6c",
+      "physics_controls_pass": true,
+      "lift_diagnostic_pass": true,
+      "grasps": [
+        {
+          "sample": "left-object0-grasp0-squeeze",
+          "source_frame": 47,
+          "variant": "squeeze",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.00011853637612788717,
+          "final_displacement_m": 0.04962773648387253,
+          "maximum_displacement_m": 0.05701437637177528,
+          "maximum_orientation_change_deg": 1.3390012850987236,
+          "maximum_contact_force_N": 8.136407946167871,
+          "mean_vertical_contact_force_last_0_2s_N": -5.623953342437744,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "object_lift_m": 0.04960274696350098,
+          "maximum_object_drift_relative_to_wrist_m": 0.0018608390866931455,
+          "maximum_wrist_position_error_m": 0.008555124638354028,
+          "maximum_wrist_rotation_error_deg": 0.6593280553966688,
+          "lifted_and_retained_diagnostic_only": true
+        },
+        {
+          "sample": "left-object0-grasp1-squeeze",
+          "source_frame": 273,
+          "variant": "squeeze",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.0004172998495346728,
+          "final_displacement_m": 0.05119747554963147,
+          "maximum_displacement_m": 0.05871872586545858,
+          "maximum_orientation_change_deg": 0.6853761992294635,
+          "maximum_contact_force_N": 14.143697430314745,
+          "mean_vertical_contact_force_last_0_2s_N": -5.1993258714675905,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "object_lift_m": 0.051192641258239746,
+          "maximum_object_drift_relative_to_wrist_m": 0.0014175470917363753,
+          "maximum_wrist_position_error_m": 0.008927833165307396,
+          "maximum_wrist_rotation_error_deg": 0.7150593703649345,
+          "lifted_and_retained_diagnostic_only": true
+        }
+      ],
+      "separate_effort_zero": true,
+      "physical_task_accepted": false
+    }
+  ],
+  "full_episode_comparisons": [
+    {
+      "name": "coupled-task-hybrid-fine-v4",
+      "label": "Shared motor cap + hybrid at 400 Hz",
+      "source_commit": "59e0769210ac2494a126b37fd7211c290669d197",
+      "source_archive_sha256": "bc9cb606cc9cf6eca3d0fe06e1f14bfd63e492a353dbe4ca5915363a97624706",
+      "report_sha256": "6042e1d421a80f5b94bdf793c628cdf18bc174caf7ab363de6d844d854bafb49",
+      "wrist_tracking_pass": true,
+      "physics_dt_s": 0.0025,
+      "readback": {
+        "schema": "v2d.coupled-grasp-readback-audit.v1",
+        "report_sha256": "6042e1d421a80f5b94bdf793c628cdf18bc174caf7ab363de6d844d854bafb49",
+        "states_sha256": "36265f684f2b4f30b63a6dc12fad8385537fcb20d59e6489c61c051ef1ed7eea",
+        "task_grip_spec_sha256": "66e6a3eab941b0d8d708f6fb716eab33935c2eba13931f82e25727398f535e52",
+        "source_object_metrics_exclude_inferred_postroll": true,
+        "objects": [
+          {
+            "object": 0,
+            "observed_source_steps": 11400,
+            "position_mean_m": 0.043522855032287595,
+            "position_median_m": 0.034934228841287815,
+            "position_p90_m": 0.08824411745977402,
+            "position_max_m": 0.12709577731390195
+          },
+          {
+            "object": 1,
+            "observed_source_steps": 13681,
+            "position_mean_m": 0.05758387232825797,
+            "position_median_m": 0.016264077609558978,
+            "position_p90_m": 0.19469123260484683,
+            "position_max_m": 0.20387201024892504
+          }
+        ],
+        "grasps": [
+          {
+            "sample": "left-object0-grasp0",
+            "source_interval_s": [
+              2.4,
+              11.55
+            ],
+            "load_steps": 7320,
+            "maximum_relative_position_drift_m": 0.12981682251357213,
+            "maximum_relative_rotation_drift_deg": 35.62348295035657,
+            "contact_gate_coverage_fraction": 0.17281420765027322,
+            "phase_aborted": false,
+            "measured_support_exercised": true,
+            "retained_within_10mm_diagnostic": false,
+            "live_contact_allocation": {
+              "attempted_steps": 7320,
+              "active_steps": 201,
+              "active_fraction_of_load_steps": 0.02745901639344262,
+              "exercised_at_least_once": true,
+              "fallback_reasons": {
+                "No contact load plan within the unchanged force/motor bounds: The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)": 961,
+                "Live pad pressure is insufficient or invalid": 324,
+                "A required live pad contact is missing or truncated": 5834
+              },
+              "patch_readbacks": 21960,
+              "patches_with_negative_force_scalar": 7148,
+              "acceptance_scope": "Activation diagnostic only; exercising a controller does not accept a grasp"
+            },
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0,
+              "middle": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.15683060109289618,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.7114225625991821,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          },
+          {
+            "sample": "left-object0-grasp1",
+            "source_interval_s": [
+              13.700000000000001,
+              16.6
+            ],
+            "load_steps": 2320,
+            "maximum_relative_position_drift_m": 0.0,
+            "maximum_relative_rotation_drift_deg": 2.4040686152500794e-15,
+            "contact_gate_coverage_fraction": 0.0,
+            "phase_aborted": true,
+            "measured_support_exercised": false,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0,
+              "middle": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.0,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.02199520356953144,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          },
+          {
+            "sample": "right-object1-grasp0",
+            "source_interval_s": [
+              2.4,
+              5.3999999999999995
+            ],
+            "load_steps": 2400,
+            "maximum_relative_position_drift_m": 0.02998460863334411,
+            "maximum_relative_rotation_drift_deg": 16.072151891933647,
+            "contact_gate_coverage_fraction": 0.5054166666666666,
+            "phase_aborted": false,
+            "measured_support_exercised": true,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.4845833333333333,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.6520723104476929,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          },
+          {
+            "sample": "right-object1-grasp1",
+            "source_interval_s": [
+              11.850000000000001,
+              15.450000000000001
+            ],
+            "load_steps": 2879,
+            "maximum_relative_position_drift_m": 0.2088518370044649,
+            "maximum_relative_rotation_drift_deg": 18.14866889375321,
+            "contact_gate_coverage_fraction": 0.31642931573463007,
+            "phase_aborted": false,
+            "measured_support_exercised": true,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.30218825981243486,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.7599999904632568,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          }
+        ],
+        "all_four_grasps_retained_within_10mm": false,
+        "physics_controls_pass": true,
+        "initial_scene_clearance": {
+          "maximum_cooked_shape_difference_m": 9.52203605659553e-17,
+          "minimum_initial_table_gap_m": 0.00020000480757409456,
+          "maximum_initial_object_piece_axis_depth_m": -0.0004995027049035095,
+          "independently_checked": true
+        },
+        "physical_task_accepted": false,
+        "policy_trained": false,
+        "official_score_claimed": false,
+        "scope": "Recorded simulated grasp retention and original inferred-source tracking only; no ground-truth contact, continuous collision, or official success certificate"
+      },
+      "aborted_reacquisition": {
+        "left-object0-grasp1": 12.700000000000001
+      },
+      "left_actual_z_range_m": [
+        -0.34933850169181824,
+        -0.21909299492835999
+      ],
+      "source_frames": 343,
+      "rendered_frames": 363,
+      "physical_task_accepted": false
+    },
+    {
+      "name": "coupled-task-fine-v4",
+      "label": "Shared motor cap + frozen posture at 400 Hz",
+      "source_commit": "59e0769210ac2494a126b37fd7211c290669d197",
+      "source_archive_sha256": "bc9cb606cc9cf6eca3d0fe06e1f14bfd63e492a353dbe4ca5915363a97624706",
+      "report_sha256": "dfb2a6c72795ee3cbf8d364523ea63049a4e0883ec70897a8961d7cc10f69669",
+      "wrist_tracking_pass": true,
+      "physics_dt_s": 0.0025,
+      "readback": {
+        "schema": "v2d.coupled-grasp-readback-audit.v1",
+        "report_sha256": "dfb2a6c72795ee3cbf8d364523ea63049a4e0883ec70897a8961d7cc10f69669",
+        "states_sha256": "4e0f0e93a32d828f42add8ee911e2e3c8378f91bb6db898be7a356c14da019b0",
+        "task_grip_spec_sha256": "0a8fb796dfd7e09dc8e55b8fcf9a2da13eed8374d098ab969f7917bf37ac0dfb",
+        "source_object_metrics_exclude_inferred_postroll": true,
+        "objects": [
+          {
+            "object": 0,
+            "observed_source_steps": 11400,
+            "position_mean_m": 0.04383351424985148,
+            "position_median_m": 0.04058034220372425,
+            "position_p90_m": 0.08509889242191845,
+            "position_max_m": 0.12390586877983434
+          },
+          {
+            "object": 1,
+            "observed_source_steps": 13681,
+            "position_mean_m": 0.09370992434978226,
+            "position_median_m": 0.03925693214709978,
+            "position_p90_m": 0.28527146388185365,
+            "position_max_m": 0.29177853900841133
+          }
+        ],
+        "grasps": [
+          {
+            "sample": "left-object0-grasp0",
+            "source_interval_s": [
+              2.4,
+              11.55
+            ],
+            "load_steps": 7320,
+            "maximum_relative_position_drift_m": 0.12677794907160075,
+            "maximum_relative_rotation_drift_deg": 28.196740017092033,
+            "contact_gate_coverage_fraction": 0.07076502732240438,
+            "phase_aborted": false,
+            "measured_support_exercised": true,
+            "retained_within_10mm_diagnostic": false,
+            "live_contact_allocation": {
+              "attempted_steps": 7320,
+              "active_steps": 450,
+              "active_fraction_of_load_steps": 0.06147540983606557,
+              "exercised_at_least_once": true,
+              "fallback_reasons": {
+                "No contact load plan within the unchanged force/motor bounds: The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)": 46,
+                "Live pad pressure is insufficient or invalid": 180,
+                "A required live pad contact is missing or truncated": 6644
+              },
+              "patch_readbacks": 21960,
+              "patches_with_negative_force_scalar": 6149,
+              "acceptance_scope": "Activation diagnostic only; exercising a controller does not accept a grasp"
+            },
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0,
+              "middle": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.06693989071038252,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.7300354838371277,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          },
+          {
+            "sample": "left-object0-grasp1",
+            "source_interval_s": [
+              13.700000000000001,
+              16.6
+            ],
+            "load_steps": 2320,
+            "maximum_relative_position_drift_m": 0.0,
+            "maximum_relative_rotation_drift_deg": 2.832651314438081e-15,
+            "contact_gate_coverage_fraction": 0.0,
+            "phase_aborted": true,
+            "measured_support_exercised": false,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0,
+              "middle": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.0,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.02199520356953144,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          },
+          {
+            "sample": "right-object1-grasp0",
+            "source_interval_s": [
+              2.4,
+              5.3999999999999995
+            ],
+            "load_steps": 2400,
+            "maximum_relative_position_drift_m": 0.08871173317701098,
+            "maximum_relative_rotation_drift_deg": 14.931685180287891,
+            "contact_gate_coverage_fraction": 0.4025,
+            "phase_aborted": false,
+            "measured_support_exercised": true,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.38,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.5316200256347656,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          },
+          {
+            "sample": "right-object1-grasp1",
+            "source_interval_s": [
+              11.850000000000001,
+              15.450000000000001
+            ],
+            "load_steps": 2879,
+            "maximum_relative_position_drift_m": 0.29131612887819236,
+            "maximum_relative_rotation_drift_deg": 39.946532750793985,
+            "contact_gate_coverage_fraction": 0.0,
+            "phase_aborted": false,
+            "measured_support_exercised": false,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.0,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.6504443287849426,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          }
+        ],
+        "all_four_grasps_retained_within_10mm": false,
+        "physics_controls_pass": true,
+        "initial_scene_clearance": {
+          "maximum_cooked_shape_difference_m": 9.52203605659553e-17,
+          "minimum_initial_table_gap_m": 0.00020000480757409456,
+          "maximum_initial_object_piece_axis_depth_m": -0.0004995027049035095,
+          "independently_checked": true
+        },
+        "physical_task_accepted": false,
+        "policy_trained": false,
+        "official_score_claimed": false,
+        "scope": "Recorded simulated grasp retention and original inferred-source tracking only; no ground-truth contact, continuous collision, or official success certificate"
+      },
+      "aborted_reacquisition": {
+        "left-object0-grasp1": 12.700000000000001
+      },
+      "left_actual_z_range_m": [
+        -0.34978193044662476,
+        -0.21909299492835999
+      ],
+      "source_frames": 343,
+      "rendered_frames": 363,
+      "physical_task_accepted": false
+    },
+    {
+      "name": "coupled-task-grip-solver-v1",
+      "label": "Shared motor cap + verified grip solver + hybrid at 400 Hz",
+      "source_commit": "6309d2a6b27cb16e8b49baf06445b5f7d1e99933",
+      "source_archive_sha256": "2d7ee08f8a42ffd6bf2640fd2f39e05696d2a3ed0d7fa15e8d9b57ecb592e756",
+      "report_sha256": "457d900c8599d6ac14359c0d834261322c150f832a61020b1e4b5e6f24f3b830",
+      "wrist_tracking_pass": true,
+      "physics_dt_s": 0.0025,
+      "readback": {
+        "schema": "v2d.coupled-grasp-readback-audit.v1",
+        "report_sha256": "457d900c8599d6ac14359c0d834261322c150f832a61020b1e4b5e6f24f3b830",
+        "states_sha256": "c396193c0575666f2bca71693656b5e00c5b6d8a14b77d9620b7459fbd87fd73",
+        "task_grip_spec_sha256": "66e6a3eab941b0d8d708f6fb716eab33935c2eba13931f82e25727398f535e52",
+        "source_object_metrics_exclude_inferred_postroll": true,
+        "objects": [
+          {
+            "object": 0,
+            "observed_source_steps": 11400,
+            "position_mean_m": 0.02975815092049845,
+            "position_median_m": 0.016211831395649794,
+            "position_p90_m": 0.08338330088364851,
+            "position_max_m": 0.11278323079178437
+          },
+          {
+            "object": 1,
+            "observed_source_steps": 13681,
+            "position_mean_m": 0.010153712564230585,
+            "position_median_m": 0.005799850249414067,
+            "position_p90_m": 0.021723984901781124,
+            "position_max_m": 0.03442367076935217
+          }
+        ],
+        "grasps": [
+          {
+            "sample": "left-object0-grasp0",
+            "source_interval_s": [
+              2.4,
+              11.55
+            ],
+            "load_steps": 7320,
+            "maximum_relative_position_drift_m": 0.11508280609560623,
+            "maximum_relative_rotation_drift_deg": 18.396041435622365,
+            "contact_gate_coverage_fraction": 0.22377049180327868,
+            "phase_aborted": false,
+            "measured_support_exercised": true,
+            "retained_within_10mm_diagnostic": false,
+            "live_contact_allocation": {
+              "attempted_steps": 7320,
+              "active_steps": 306,
+              "active_fraction_of_load_steps": 0.04180327868852459,
+              "exercised_at_least_once": true,
+              "fallback_reasons": {
+                "No contact load plan within the unchanged force/motor bounds: The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)": 1328,
+                "Live pad pressure is insufficient or invalid": 150,
+                "A required live pad contact is missing or truncated": 5536
+              },
+              "patch_readbacks": 21960,
+              "patches_with_negative_force_scalar": 7903,
+              "acceptance_scope": "Activation diagnostic only; exercising a controller does not accept a grasp"
+            },
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0,
+              "middle": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.21133879781420764,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.5748246312141418,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          },
+          {
+            "sample": "left-object0-grasp1",
+            "source_interval_s": [
+              13.700000000000001,
+              16.6
+            ],
+            "load_steps": 2320,
+            "maximum_relative_position_drift_m": 0.013620534574690127,
+            "maximum_relative_rotation_drift_deg": 8.040789749717606,
+            "contact_gate_coverage_fraction": 0.06982758620689655,
+            "phase_aborted": false,
+            "measured_support_exercised": true,
+            "retained_within_10mm_diagnostic": false,
+            "live_contact_allocation": {
+              "attempted_steps": 2320,
+              "active_steps": 135,
+              "active_fraction_of_load_steps": 0.05818965517241379,
+              "exercised_at_least_once": true,
+              "fallback_reasons": {
+                "No contact load plan within the unchanged force/motor bounds: The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)": 12,
+                "Live pad pressure is insufficient or invalid": 32,
+                "A required live pad contact is missing or truncated": 2141
+              },
+              "patch_readbacks": 6960,
+              "patches_with_negative_force_scalar": 2354,
+              "acceptance_scope": "Activation diagnostic only; exercising a controller does not accept a grasp"
+            },
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0,
+              "middle": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.060775862068965514,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.7599997520446777,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          },
+          {
+            "sample": "right-object1-grasp0",
+            "source_interval_s": [
+              2.4,
+              5.3999999999999995
+            ],
+            "load_steps": 2400,
+            "maximum_relative_position_drift_m": 0.007009584433912246,
+            "maximum_relative_rotation_drift_deg": 13.758093894280405,
+            "contact_gate_coverage_fraction": 1.0,
+            "phase_aborted": false,
+            "measured_support_exercised": true,
+            "retained_within_10mm_diagnostic": true,
+            "primary_digit_load_p10_N": {
+              "thumb": 5.678859193767959,
+              "index": 4.337697824158893
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.9775,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.41782045364379883,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          },
+          {
+            "sample": "right-object1-grasp1",
+            "source_interval_s": [
+              11.850000000000001,
+              15.450000000000001
+            ],
+            "load_steps": 2879,
+            "maximum_relative_position_drift_m": 0.015420135310615148,
+            "maximum_relative_rotation_drift_deg": 12.731992203051306,
+            "contact_gate_coverage_fraction": 0.9253212921153178,
+            "phase_aborted": false,
+            "measured_support_exercised": true,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 0.45893510521890796,
+              "index": 3.8248392972854783
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.8843348384855853,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.63587486743927,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          }
+        ],
+        "all_four_grasps_retained_within_10mm": false,
+        "physics_controls_pass": true,
+        "initial_scene_clearance": {
+          "maximum_cooked_shape_difference_m": 1.1236938283130691e-16,
+          "minimum_initial_table_gap_m": 0.00020000480757409456,
+          "maximum_initial_object_piece_axis_depth_m": -0.0004995027049035095,
+          "independently_checked": true
+        },
+        "physical_task_accepted": false,
+        "policy_trained": false,
+        "official_score_claimed": false,
+        "scope": "Recorded simulated grasp retention and original inferred-source tracking only; no ground-truth contact, continuous collision, or official success certificate"
+      },
+      "aborted_reacquisition": {},
+      "left_actual_z_range_m": [
+        -0.35036930441856384,
+        -0.21324066817760468
+      ],
+      "source_frames": 343,
+      "rendered_frames": 363,
+      "physical_task_accepted": false
+    },
+    {
+      "name": "coupled-task-grip4N-v1",
+      "label": "Grip solver + fixed posture + 4 N squeeze floor",
+      "source_commit": "6309d2a6b27cb16e8b49baf06445b5f7d1e99933",
+      "source_archive_sha256": "2d7ee08f8a42ffd6bf2640fd2f39e05696d2a3ed0d7fa15e8d9b57ecb592e756",
+      "report_sha256": "88e4f687dd4ec6a1cd681f1bd9d4ff90672c269e295aa4dee96fd36d3edb779c",
+      "wrist_tracking_pass": true,
+      "physics_dt_s": 0.0025,
+      "readback": {
+        "schema": "v2d.coupled-grasp-readback-audit.v1",
+        "report_sha256": "88e4f687dd4ec6a1cd681f1bd9d4ff90672c269e295aa4dee96fd36d3edb779c",
+        "states_sha256": "c83f3c1723b483799a997dd15baf307f7e0765ba8b69321cad02f892359cf25f",
+        "task_grip_spec_sha256": "15799d5ed1e21007a7c27a682f62619bcd1c6fbde6a501f01fe7996c5e804937",
+        "source_object_metrics_exclude_inferred_postroll": true,
+        "objects": [
+          {
+            "object": 0,
+            "observed_source_steps": 11400,
+            "position_mean_m": 415.0207664158225,
+            "position_median_m": 141.19632008307025,
+            "position_p90_m": 1309.7710884588032,
+            "position_max_m": 1774.3957069664598
+          },
+          {
+            "object": 1,
+            "observed_source_steps": 13681,
+            "position_mean_m": 0.015849308915154802,
+            "position_median_m": 0.005513331582246435,
+            "position_p90_m": 0.02296295731698984,
+            "position_max_m": 0.08987957135639178
+          }
+        ],
+        "grasps": [
+          {
+            "sample": "left-object0-grasp0",
+            "source_interval_s": [
+              2.4,
+              11.55
+            ],
+            "load_steps": 7320,
+            "maximum_relative_position_drift_m": 434.35221620072355,
+            "maximum_relative_rotation_drift_deg": 179.99166349313862,
+            "contact_gate_coverage_fraction": 0.4628415300546448,
+            "phase_aborted": false,
+            "measured_support_exercised": true,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0,
+              "middle": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.4532786885245902,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.5502176880836487,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          },
+          {
+            "sample": "left-object0-grasp1",
+            "source_interval_s": [
+              13.700000000000001,
+              16.6
+            ],
+            "load_steps": 2320,
+            "maximum_relative_position_drift_m": 874.6913449927966,
+            "maximum_relative_rotation_drift_deg": 179.82630890516677,
+            "contact_gate_coverage_fraction": 0.0,
+            "phase_aborted": true,
+            "measured_support_exercised": false,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0,
+              "middle": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.0,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.0257886853069067,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          },
+          {
+            "sample": "right-object1-grasp0",
+            "source_interval_s": [
+              2.4,
+              5.3999999999999995
+            ],
+            "load_steps": 2400,
+            "maximum_relative_position_drift_m": 0.007416483366562031,
+            "maximum_relative_rotation_drift_deg": 14.929202575641181,
+            "contact_gate_coverage_fraction": 1.0,
+            "phase_aborted": false,
+            "measured_support_exercised": true,
+            "retained_within_10mm_diagnostic": true,
+            "primary_digit_load_p10_N": {
+              "thumb": 5.719905333056176,
+              "index": 4.253497260304476
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.9745833333333334,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.42069387435913086,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          },
+          {
+            "sample": "right-object1-grasp1",
+            "source_interval_s": [
+              11.850000000000001,
+              15.450000000000001
+            ],
+            "load_steps": 2879,
+            "maximum_relative_position_drift_m": 0.006200080536863378,
+            "maximum_relative_rotation_drift_deg": 11.96900082202739,
+            "contact_gate_coverage_fraction": 1.0,
+            "phase_aborted": false,
+            "measured_support_exercised": true,
+            "retained_within_10mm_diagnostic": true,
+            "primary_digit_load_p10_N": {
+              "thumb": 5.265799630466877,
+              "index": 4.0027951081380975
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.9881903438693991,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.41866832971572876,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          }
+        ],
+        "all_four_grasps_retained_within_10mm": false,
+        "physics_controls_pass": true,
+        "initial_scene_clearance": {
+          "maximum_cooked_shape_difference_m": 1.1236938283130691e-16,
+          "minimum_initial_table_gap_m": 0.00020000480757409456,
+          "maximum_initial_object_piece_axis_depth_m": -0.0004995027049035095,
+          "independently_checked": true
+        },
+        "physical_task_accepted": false,
+        "policy_trained": false,
+        "official_score_claimed": false,
+        "scope": "Recorded simulated grasp retention and original inferred-source tracking only; no ground-truth contact, continuous collision, or official success certificate"
+      },
+      "aborted_reacquisition": {
+        "left-object0-grasp1": 12.700000000000001
+      },
+      "left_actual_z_range_m": [
+        -0.34924235939979553,
+        -0.2190978229045868
+      ],
+      "source_frames": 343,
+      "rendered_frames": 363,
+      "physical_task_accepted": false
+    }
+  ],
+  "motor_probes": {
+    "motor-budget-v1": {
+      "schema": "v2d.implicit-torque-budget-probe.v1",
+      "dt_s": 0.001,
+      "inertia_kg_m2": 0.0010000000474974513,
+      "drive_max_force_readback_Nm": [
+        [
+          0.7599999904632568
+        ]
+      ],
+      "cases": [
+        {
+          "feedforward_Nm": 0.0,
+          "measured_average_net_motor_torque_Nm": 0.7599999904632568,
+          "velocity_rad_s": 0.7599999904632568
+        },
+        {
+          "feedforward_Nm": 0.55,
+          "measured_average_net_motor_torque_Nm": 1.3100000619888306,
+          "velocity_rad_s": 1.3100000619888306
+        },
+        {
+          "feedforward_Nm": -0.55,
+          "measured_average_net_motor_torque_Nm": 0.20999997854232788,
+          "velocity_rad_s": 0.20999997854232788
+        }
+      ],
+      "combined_0_76Nm_limit_observed": false,
+      "drive_only_calibration_pass": true,
+      "source_episode_loaded": false,
+      "implicit_actuator_estimate_is_direct_measurement": false
+    },
+    "motor-budget-v3": {
+      "schema": "v2d.implicit-torque-budget-probe.v1",
+      "dt_s": 0.001,
+      "inertia_kg_m2": 0.0010000000474974513,
+      "drive_max_force_readback_Nm": [
+        [
+          0.7599999904632568
+        ]
+      ],
+      "cases": [
+        {
+          "posture_reference_rad": 1.0,
+          "feedforward_Nm": 0.0,
+          "separate_joint_effort_target_Nm": 0.0,
+          "implicit_drive_position_target_rad": 1.0,
+          "measured_average_net_motor_torque_Nm": 0.7599999904632568,
+          "velocity_rad_s": 0.7599999904632568
+        },
+        {
+          "posture_reference_rad": 1.0,
+          "feedforward_Nm": 0.55,
+          "separate_joint_effort_target_Nm": 0.0,
+          "implicit_drive_position_target_rad": 1.06875,
+          "measured_average_net_motor_torque_Nm": 0.7599999904632568,
+          "velocity_rad_s": 0.7599999904632568
+        },
+        {
+          "posture_reference_rad": 1.0,
+          "feedforward_Nm": -0.55,
+          "separate_joint_effort_target_Nm": 0.0,
+          "implicit_drive_position_target_rad": 0.93125,
+          "measured_average_net_motor_torque_Nm": 0.7599999904632568,
+          "velocity_rad_s": 0.7599999904632568
+        },
+        {
+          "posture_reference_rad": -1.0,
+          "feedforward_Nm": -0.55,
+          "separate_joint_effort_target_Nm": 0.0,
+          "implicit_drive_position_target_rad": -1.06875,
+          "measured_average_net_motor_torque_Nm": -0.7599999904632568,
+          "velocity_rad_s": -0.7599999904632568
+        },
+        {
+          "posture_reference_rad": 0.02,
+          "feedforward_Nm": 0.0,
+          "separate_joint_effort_target_Nm": 0.0,
+          "implicit_drive_position_target_rad": 0.02,
+          "measured_average_net_motor_torque_Nm": 0.15976634621620178,
+          "velocity_rad_s": 0.15976634621620178
+        },
+        {
+          "posture_reference_rad": 0.02,
+          "feedforward_Nm": 0.55,
+          "separate_joint_effort_target_Nm": 0.0,
+          "implicit_drive_position_target_rad": 0.08875000000000001,
+          "measured_average_net_motor_torque_Nm": 0.7089632749557495,
+          "velocity_rad_s": 0.7089632749557495
+        },
+        {
+          "posture_reference_rad": 0.02,
+          "feedforward_Nm": -0.55,
+          "separate_joint_effort_target_Nm": 0.0,
+          "implicit_drive_position_target_rad": -0.04875,
+          "measured_average_net_motor_torque_Nm": -0.3894304633140564,
+          "velocity_rad_s": -0.3894304633140564
+        }
+      ],
+      "combined_0_76Nm_limit_observed": true,
+      "drive_only_calibration_pass": true,
+      "source_episode_loaded": false,
+      "implicit_actuator_estimate_is_direct_measurement": false,
+      "unsaturated_control_law_verified": true,
+      "unsaturated_drive_only_measured_gain": 0.9985396638512611,
+      "unsaturated_verification_scope": "Drive-only inertial calibration and signed feedforward scaling; no assumption of single-step TGS integration",
+      "feedforward_encoding": "drive_target_bias"
+    },
+    "motor-budget-grip-v1": {
+      "schema": "v2d.implicit-torque-budget-probe.v1",
+      "dt_s": 0.001,
+      "inertia_kg_m2": 0.0010000000474974513,
+      "drive_max_force_readback_Nm": [
+        [
+          0.7599999904632568
+        ]
+      ],
+      "cases": [
+        {
+          "posture_reference_rad": 1.0,
+          "feedforward_Nm": 0.0,
+          "separate_joint_effort_target_Nm": 0.0,
+          "implicit_drive_position_target_rad": 1.0,
+          "measured_average_net_motor_torque_Nm": 0.7599999904632568,
+          "velocity_rad_s": 0.7599999904632568
+        },
+        {
+          "posture_reference_rad": 1.0,
+          "feedforward_Nm": 0.55,
+          "separate_joint_effort_target_Nm": 0.0,
+          "implicit_drive_position_target_rad": 1.06875,
+          "measured_average_net_motor_torque_Nm": 0.7599999904632568,
+          "velocity_rad_s": 0.7599999904632568
+        },
+        {
+          "posture_reference_rad": 1.0,
+          "feedforward_Nm": -0.55,
+          "separate_joint_effort_target_Nm": 0.0,
+          "implicit_drive_position_target_rad": 0.93125,
+          "measured_average_net_motor_torque_Nm": 0.7599999904632568,
+          "velocity_rad_s": 0.7599999904632568
+        },
+        {
+          "posture_reference_rad": -1.0,
+          "feedforward_Nm": -0.55,
+          "separate_joint_effort_target_Nm": 0.0,
+          "implicit_drive_position_target_rad": -1.06875,
+          "measured_average_net_motor_torque_Nm": -0.7599999904632568,
+          "velocity_rad_s": -0.7599999904632568
+        },
+        {
+          "posture_reference_rad": 0.02,
+          "feedforward_Nm": 0.0,
+          "separate_joint_effort_target_Nm": 0.0,
+          "implicit_drive_position_target_rad": 0.02,
+          "measured_average_net_motor_torque_Nm": 0.15976634621620178,
+          "velocity_rad_s": 0.15976634621620178
+        },
+        {
+          "posture_reference_rad": 0.02,
+          "feedforward_Nm": 0.55,
+          "separate_joint_effort_target_Nm": 0.0,
+          "implicit_drive_position_target_rad": 0.08875000000000001,
+          "measured_average_net_motor_torque_Nm": 0.7089632749557495,
+          "velocity_rad_s": 0.7089632749557495
+        },
+        {
+          "posture_reference_rad": 0.02,
+          "feedforward_Nm": -0.55,
+          "separate_joint_effort_target_Nm": 0.0,
+          "implicit_drive_position_target_rad": -0.04875,
+          "measured_average_net_motor_torque_Nm": -0.3894304633140564,
+          "velocity_rad_s": -0.3894304633140564
+        }
+      ],
+      "combined_0_76Nm_limit_observed": true,
+      "drive_only_calibration_pass": true,
+      "source_episode_loaded": false,
+      "contact_solver": "grip",
+      "implicit_actuator_estimate_is_direct_measurement": false,
+      "unsaturated_control_law_verified": true,
+      "unsaturated_drive_only_measured_gain": 0.9985396638512611,
+      "unsaturated_verification_scope": "Drive-only inertial calibration and signed feedforward scaling; no assumption of single-step TGS integration",
+      "feedforward_encoding": "drive_target_bias"
+    }
+  },
+  "latest_lifecycle": {
+    "instance_id": "dngrtbldz",
+    "status": "STOPPED",
+    "confirmed_utc": "2026-10-16T14:33:24.370553+00:00",
+    "conservative_total_compute_bound_usd": 12.5618,
+    "not_an_invoice": true,
+    "backup_all_hashes_verified": true
+  },
+  "latest_session_stage_results": [
+    {
+      "experiment": "coupled-task-grip4N-v1",
+      "stage": "grip-task-free",
+      "physics_dt_s": 0.0025,
+      "returncode": 0
+    },
+    {
+      "experiment": "coupled-task-grip4N-v1",
+      "stage": "grip-task",
+      "physics_dt_s": 0.0025,
+      "returncode": 0
+    }
+  ],
+  "preferred_review_run": "coupled-task-grip-solver-v1",
+  "selection_scope": "More stable than the rejected 4N trial; no complete physical task accepted",
+  "cpu_tests_passed": 87,
+  "physical_task_accepted": false,
+  "policy_trained": false,
+  "source_observations_changed": false,
+  "published_inputs": false
+}

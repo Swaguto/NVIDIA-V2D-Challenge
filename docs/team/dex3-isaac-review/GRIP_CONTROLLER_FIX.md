@@ -45,7 +45,10 @@ PPO checkpoint has not been retrained with this controller, and its recorded
 
 - `scripts/dex3_physics/grip_force.py` maps a 6 N opposing pad-force command to
   real finger efforts using the Jacobian transpose. Feedforward is capped at
-  0.55 Nm. The original combined simulator motor limit remains 0.76 Nm.
+  0.55 Nm. The declared native drive cap is 0.76 Nm. This historical
+  separate-effort implementation did not certify the combined torque budget;
+  the [current repair](VISUAL_REFERENCE_REPAIR.md#shared-motor-limit-repair)
+  puts feedforward inside the bounded drive and validates it with an inertial probe.
 - `--stage grasp-acquisition` compares identical open/closed poses and wrist
   geometry when a pregrasp is supplied. Only squeeze effort differs between
   its paired cases. Fingers close for 0.25 s; effort ramps during the next

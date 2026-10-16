@@ -1,5 +1,11 @@
 # e002 pot grasp correction
 
+This is the historical separate-effort checkpoint. Its simulator outcomes are
+preserved, but its combined motor budget was not certified: later probes found
+that separate feedforward bypassed the native drive cap. See the
+[current measured repair](motor-contact-repair-results-v1.json) for the shared
+drive command and fresh lift validation.
+
 Both left/pot source phases pass isolated supported acquisition and a floating
 wrist lift. This is a development diagnostic; complete episode and learned policy
 acceptance remain false. The earlier 0% PPO result is unchanged.
@@ -19,9 +25,10 @@ the counter moment. A bounded point-contact linear program balances nominal
 forces between 2 and 10 N, and motor feedforward at most 0.55 Nm. The command is
 mapped through each contact Jacobian transpose.
 
-The tested finger stiffness is 8 Nm/rad; original damping 0.2 and real motor cap
-0.76 Nm remain unchanged. Actual maximum estimated motor effort is 0.625 Nm in
-acquisition and 0.579 Nm in lift. Floating wrist payload compensation requires
+The tested finger stiffness is 8 Nm/rad; original damping 0.2 and declared drive
+cap 0.76 Nm remain unchanged. The maximum clipped motor estimate is 0.625 Nm in
+acquisition and 0.579 Nm in lift; actual combined torque was not measured.
+Floating wrist payload compensation requires
 measured contact on thumb, index and middle, allowing a 30 ms dropout hold.
 The wrist caps remain 60 N / 60 Nm. Objects receive no external wrench, weld,
 attachment or pose writes after initialization.

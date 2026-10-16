@@ -301,3 +301,30 @@ temporary VM with the owner's confirmation and verify it is absent from `brev ls
 Do not delete the original RunPod workspace as part of this procedure.
 
 See [Brev instance lifecycle commands](https://docs.nvidia.com/brev/cli/instance-management).
+
+
+## Current motor and contact diagnostics
+
+Use the locally retained v4 input pack and its source33 overlay for the newest
+motor/contact checks. See the [measured checkpoint](../../docs/team/dex3-isaac-review/motor-contact-repair-results-v1.json)
+and [private input receipt](../../docs/team/dex3-isaac-review/local-pot-task-input-receipt-v4.json).
+The existing pinned image is unchanged; these commands require the source overlay.
+The optional `--contact-solver grip` profile and `--physics-dt 0.0025` must match
+between `grip-task-free` and `grip-task`. Bind the recipe's exact seed through
+`V2D_GRIP_SEED`; use a fresh `V2D_OUTPUT_DIR` per recipe. The fixed 4 N comparison
+uses `combined-task-grasps-grip4N-v11.json`; the live comparison uses
+`combined-task-grasps-hybrid-v10.json`. Both remain diagnostic references.
+
+The isolated probe uses `/opt/sim/bin/python` as its container entrypoint and:
+
+```bash
+/code/scripts/dex3_physics/check_implicit_torque_budget.py \
+  --out /outputs/probe.json --encode-in-drive --contact-solver grip
+```
+
+A passing probe checks the actuator implementation; it does not certify a grasp.
+A full-stage exit code of zero verifies execution, physics controls and wrist
+tracking; inspect the separate grasp diagnostics for object retention.
+The optional grip solver differs
+from the default diagnostic settings; official evaluation compatibility remains
+unverified. Inputs are local and are not included in GHCR images or Git.

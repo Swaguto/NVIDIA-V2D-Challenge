@@ -213,3 +213,24 @@ probe accepts the same option. 87 CPU tests pass; simulator checks are required.
 
 Sources: [pinned PhysxCfg](https://github.com/isaac-sim/IsaacLab/blob/28a37cecdd433c22d9eabd6a5954add9f13a8951/source/isaaclab_physx/isaaclab_physx/physics/physx_manager_cfg.py)
 and [NVIDIA articulation stability guide](https://docs.omniverse.nvidia.com/kit/docs/omni_physics/107.3/dev_guide/guides/articulation_stability_guide.html#articulation-solver-order).
+
+## Measured motor/contact checkpoint
+
+The optional grip solver passes the repeated direct motor probe and both new
+pot lift fixtures. Their source readback confirms the requested scene flags.
+The motor cap, nominal mass, friction, geometry and source data are preserved.
+The profile differs from the default diagnostic solver; official evaluation
+settings have not been matched. These are local experimental results.
+
+| Full comparison | Pot 1 drift | Pot 2 drift | Lid 1 drift | Lid 2 drift | Wrist gate |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Shared motor cap + hybrid at 400 Hz | 129.82 mm | aborted | 29.98 mm | 208.85 mm | pass |
+| Shared motor cap + frozen posture at 400 Hz | 126.78 mm | aborted | 88.71 mm | 291.32 mm | pass |
+| Shared motor cap + verified grip solver + hybrid at 400 Hz | 115.08 mm | 13.62 mm | 7.01 mm | 15.42 mm | pass |
+| Grip solver + fixed posture + 4 N squeeze floor | 434352.22 mm | aborted | 7.42 mm | 6.20 mm | pass |
+
+Position drift alone does not establish rotational retention or full task success.
+The JSON receipt includes rotation, contact coverage, aborted phases, source and
+state/spec hashes. Historical raw audits remain preserved; the current derived
+summaries apply the aborted/no-support rejection. The v4 input receipt binds
+all recipes, including rejected comparisons, and remains local.
