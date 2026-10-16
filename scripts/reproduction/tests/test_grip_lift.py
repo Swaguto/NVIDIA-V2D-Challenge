@@ -10,6 +10,7 @@ from _dex3_grip_control import (
     lift_target,
     payload_gravity_wrench,
     payload_contact_hold,
+    static_load_schedule,
 )
 
 
@@ -88,3 +89,36 @@ def test_lift_gate_requires_actual_lift_retention_and_wrist_tracking():
     rows[-1]["object_root_state_stage_xyzw"][0] -= 0.012
     rows[-1]["actual_wrist_pose_stage_xyzw"][0] += 0.03
     assert not lift_summary(rows)["lifted_and_retained_diagnostic_only"]
+
+
+@pytest.mark.parametrize("dt", [0.01, 0.0025])
+def test_finer_physics_preserves_fixture_events_and_observation_clock(dt):
+    schedule = static_load_schedule(dt, True)
+    assert schedule["load_start_step"] * dt == pytest.approx(0.5)
+    assert schedule["closure_steps"] * dt == pytest.approx(0.25)
+    assert schedule["averaging_steps"] * dt == pytest.approx(0.2)
+    times = np.arange(0, schedule["last_step"] + 1, schedule["render_steps"]) * dt
+    np.testing.assert_allclose(times, np.linspace(0, 1.5, 31), atol=1e-12)
+    rows = []
+    for step in range(schedule["last_step"] + 1):
+        t = step * dt
+        pose = lift_target([0, 0, 0.1, 0, 0, 0, 1], t)
+        obj = pose.copy()
+        obj[2] -= 0.03
+        if t < 0.5:
+            obj[0] += 2.0  # The supported approach is outside the lift metric.
+        rows.append(
+            dict(
+                step=step,
+                time_s=t,
+                actual_wrist_pose_stage_xyzw=pose.tolist(),
+                target_wrist_pose_stage_xyzw=pose.tolist(),
+                object_root_state_stage_xyzw=obj.tolist(),
+            )
+        )
+    assert lift_summary(rows)["lifted_and_retained_diagnostic_only"]
+
+
+def test_static_physics_rejects_timestep_that_moves_fixture_events():
+    with pytest.raises(ValueError, match="event times"):
+        static_load_schedule(0.003, True)

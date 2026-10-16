@@ -4,6 +4,27 @@ import numpy as np
 from scipy.spatial.transform import Rotation
 
 
+def static_load_schedule(dt, acquisition):
+    """Keep fixture event times and 20 fps rendering invariant under substeps."""
+    if not np.isfinite(dt) or not 0.0005 <= dt <= 0.01:
+        raise ValueError("Static physics timestep must be in [0.0005, 0.01]")
+
+    def steps(seconds):
+        count = round(seconds / dt)
+        if not np.isclose(count * dt, seconds, atol=1e-12, rtol=0):
+            raise ValueError("Static timestep must divide all fixture event times")
+        return count
+
+    return dict(
+        last_step=steps(1.5 if acquisition else 1.0),
+        load_start_step=steps(0.5) if acquisition else 0,
+        closure_steps=steps(0.25),
+        control_last_step=steps(1.0),
+        averaging_steps=steps(0.2),
+        render_steps=steps(0.05),
+    )
+
+
 def payload_gravity_wrench(wrist_com, payload_com, mass_kg):
     if not np.isfinite(mass_kg) or not 0 < mass_kg <= 1:
         raise ValueError("Diagnostic payload mass must be in (0, 1] kg")
@@ -34,7 +55,7 @@ def lift_target(initial, time_s):
 
 
 def lift_summary(rows):
-    loaded = [r for r in rows if r["step"] >= 50]
+    loaded = [r for r in rows if r.get("time_s", r["step"] * 0.01) >= 0.5 - 1e-12]
     obj = np.array([r["object_root_state_stage_xyzw"][:3] for r in loaded])
     hand = np.array([r["actual_wrist_pose_stage_xyzw"] for r in loaded])
     target = np.array([r["target_wrist_pose_stage_xyzw"] for r in loaded])

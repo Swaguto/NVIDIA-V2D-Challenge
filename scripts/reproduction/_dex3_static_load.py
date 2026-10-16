@@ -373,15 +373,16 @@ def prepare(
         raise ValueError("Unknown wrist controller")
     if not math.isfinite(physics_dt) or not 0 < physics_dt <= 0.01:
         raise ValueError("Physics dt must be finite and in (0, 0.01]")
+    if task_motion is None:
+        from _dex3_grip_control import static_load_schedule
+
+        static_load_schedule(physics_dt, controlled_acquisition)
     if source_duration_s is not None and (
         not math.isfinite(source_duration_s) or source_duration_s < 0.5
     ):
         raise ValueError("Diagnostic source duration must be at least 0.5 seconds")
     if task_motion is None and (
-        controller_mode != "project_pd"
-        or free_space
-        or source_duration_s is not None
-        or physics_dt != 0.01
+        controller_mode != "project_pd" or free_space or source_duration_s is not None
     ):
         raise ValueError("Wrist diagnostic options require supported-task mode")
     if out.exists():
@@ -637,6 +638,7 @@ def prepare(
         raise ValueError("Frozen simulator package lacks its verified hand factory")
     result = {
         "schema": "v2d.dex3-static-load-inputs.v1",
+        "simulation_dt_s": physics_dt,
         "case_manifest_sha256": digest(case / "file-manifest.json"),
         "source_bundle_payload_sha256": digest(case / "bundle/episode.npz"),
         "motion_payload_sha256": digest(case / "proposal/robot-motion-proposal.npz"),
@@ -859,13 +861,13 @@ def execute(
     )
     preset = namespace["RIGID_OBJECT_CFG"]
     diagnostic = prepared.get("wrist_diagnostic", {})
-    dt = diagnostic.get("physics_dt_s", 0.01)
+    dt = diagnostic.get("physics_dt_s", prepared.get("simulation_dt_s", 0.01))
     sim_cfg = sim_utils.SimulationCfg(
         dt=dt,
         device=device,
         use_fabric=device != "cpu",
         gravity=tuple(prepared["gravity_stage_m_s2"]),
-        render_interval=5,
+        render_interval=max(1, round(0.05 / dt)),
         physics=PhysxCfg(bounce_threshold_velocity=0.2),
     )
     sim = sim_utils.SimulationContext(sim_cfg)
@@ -1483,8 +1485,14 @@ def execute(
             for name, pose in zip(hand.body_names, body_poses, strict=True)
         }
         initial_readback.append(record)
-    last_step = 150 if acquisition_mode else 100
-    load_start_step = 50 if acquisition_mode else 0
+    from _dex3_grip_control import static_load_schedule
+
+    schedule = static_load_schedule(dt, acquisition_mode)
+    last_step = schedule["last_step"]
+    load_start_step = schedule["load_start_step"]
+    closure_steps = schedule["closure_steps"]
+    averaging_steps = schedule["averaging_steps"]
+    render_steps = schedule["render_steps"]
     release_readback = []
     applied_efforts = [torch.zeros_like(t) for t in effort_targets]
     from _dex3_grip_control import (
@@ -1498,7 +1506,7 @@ def execute(
     wrist_wrenches = [np.zeros(6) for _ in hands]
     payload_contact_timers = [0.0 for _ in hands]
     for step in range(last_step + 1):
-        if acquisition_mode and step == 50:
+        if acquisition_mode and step == load_start_step:
             for support in acquisition_platforms + release_control_platforms:
                 prim = sim.stage.GetPrimAtPath(support["prim"])
                 api = UsdPhysics.CollisionAPI(prim)
@@ -1533,9 +1541,9 @@ def execute(
                     "sample_index": index,
                     "phase": (
                         "support_release_boundary"
-                        if acquisition_mode and step == 50
+                        if acquisition_mode and step == load_start_step
                         else "supported_closure"
-                        if acquisition_mode and step < 50
+                        if acquisition_mode and step < load_start_step
                         else "unsupported_load"
                     ),
                     "object_root_state_stage_xyzw": state.tolist(),
@@ -1589,7 +1597,7 @@ def execute(
         for index, (obj, sensor) in enumerate(
             zip(control_objects, control_sensors, strict=True)
         ):
-            if step > 100 and index != 2:
+            if step > schedule["control_last_step"] and index != 2:
                 continue
             control_records.append(
                 {
@@ -1609,7 +1617,7 @@ def execute(
                     .tolist(),
                 }
             )
-        if step % 5 == 0:
+        if step % render_steps == 0:
             images = []
             for (camera, _), sample in zip(cameras, prepared["samples"], strict=True):
                 camera.update(dt, force_recompute=True)
@@ -1628,7 +1636,7 @@ def execute(
                 )
                 cv2.putText(
                     bgr,
-                    f"gravity ON; tray {'ON' if acquisition_mode and step < 50 else 'OFF'}  t={step * dt:.2f}s",
+                    f"gravity ON; tray {'ON' if acquisition_mode and step < load_start_step else 'OFF'}  t={step * dt:.2f}s",
                     (6, 38),
                     cv2.FONT_HERSHEY_SIMPLEX,
                     0.4,
@@ -1639,13 +1647,15 @@ def execute(
             frames.append(np.concatenate(images, axis=1))
         if step == last_step:
             break
-        blend = min(1.0, (step + 1) / 25.0) if acquisition_mode else 1.0
+        blend = min(1.0, (step + 1) / closure_steps) if acquisition_mode else 1.0
         blend = blend * blend * (3 - 2 * blend)
         for index, (hand, target, initial, effort) in enumerate(
             zip(hands, targets, initial_targets, effort_targets, strict=True)
         ):
             squeeze_blend = (
-                min(1.0, max(0.0, (step + 1 - 25) / 25)) if acquisition_mode else 1.0
+                min(1.0, max(0.0, (step + 1 - closure_steps) / closure_steps))
+                if acquisition_mode
+                else 1.0
             )
             squeeze_blend = squeeze_blend * squeeze_blend * (3 - 2 * squeeze_blend)
             applied_efforts[index] = squeeze_blend * effort
@@ -1685,7 +1695,7 @@ def execute(
                     dt,
                     sample.get("required_contact_digits", ("thumb", "index")),
                 )
-                if step >= 50 and payload_contact_timers[index] > 0:
+                if step >= load_start_step and payload_contact_timers[index] > 0:
                     gravity += payload_gravity_wrench(
                         cpu(hand.data.root_com_pos_w)[0],
                         cpu(objects[index].data.root_com_pos_w)[0],
@@ -1717,7 +1727,7 @@ def execute(
                     is_global=True,
                 )
             hand.write_data_to_sim()
-        sim.step(render=step % 5 == 4)
+        sim.step(render=step % render_steps == render_steps - 1)
         for asset in hands + objects + control_objects:
             asset.update(dt)
         for sensor in sensors + control_sensors:
@@ -1753,7 +1763,7 @@ def execute(
                     ).max()
                 ),
                 "mean_vertical_contact_force_last_0_2s_N": float(
-                    forces[-20:, 2].mean()
+                    forces[-averaging_steps:, 2].mean()
                 ),
                 "held_within_10mm_for_1s_diagnostic_only": bool(distance.max() <= 0.01),
             }
@@ -1768,7 +1778,9 @@ def execute(
     )
     supported_z = platform[-1]["root_state_stage_xyzw"][2]
     supported_force = float(
-        np.mean([row["contact_force_stage_N"][2] for row in platform[-20:]])
+        np.mean(
+            [row["contact_force_stage_N"][2] for row in platform[-averaging_steps:]]
+        )
     )
     controls = {
         "free_fall_drop_m": drop,
@@ -1781,12 +1793,17 @@ def execute(
     }
     if acquisition_mode:
         released = [row for row in control_records if row["control"] == 2]
-        release_z = released[50]["root_state_stage_xyzw"][2]
+        release_z = released[load_start_step]["root_state_stage_xyzw"][2]
         release_drop = release_z - released[-1]["root_state_stage_xyzw"][2]
         residual_force = float(
             np.max(
                 np.linalg.norm(
-                    np.array([r["contact_force_stage_N"] for r in released[-20:]]),
+                    np.array(
+                        [
+                            r["contact_force_stage_N"]
+                            for r in released[-averaging_steps:]
+                        ]
+                    ),
                     axis=1,
                 )
             )

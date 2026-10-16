@@ -118,9 +118,12 @@ def main():
         args.wrist_controller != "project_pd"
         or args.free_space
         or args.source_duration_s is not None
-        or args.physics_dt != 0.01
     ):
         parser.error("Wrist controller options require --supported-task-check")
+    if args.physics_dt != 0.01 and not (
+        args.supported_task_check or args.static_load_check
+    ):
+        parser.error("--physics-dt requires a physics diagnostic")
     if (args.archive is None) == (args.verified_case is None):
         parser.error("Provide exactly one --archive or --verified-case")
     if args.archive is not None and args.sha256 is None:

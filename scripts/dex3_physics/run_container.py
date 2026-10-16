@@ -59,12 +59,8 @@ def main():
     }
     acquisition_stage = args.stage in {"grasp-acquisition", "grip-lift"}
     task_grip_stage = args.stage in {"grip-task-free", "grip-task"}
-    if not 0.0005 <= args.physics_dt <= 0.01 or (
-        static_stage and args.physics_dt != 0.01
-    ):
-        parser.error(
-            "--physics-dt must be in [0.0005, 0.01] for supported tasks; static stages retain 0.01"
-        )
+    if not 0.0005 <= args.physics_dt <= 0.01:
+        parser.error("--physics-dt must be in [0.0005, 0.01]")
     task_preparation = (
         {
             name: digest(ROOT / "scripts/dex3_physics" / name)
@@ -144,7 +140,7 @@ def main():
         PLANE_SHA,
     ]
     if static_stage:
-        command += ["--static-load-check"]
+        command += ["--static-load-check", "--physics-dt", str(args.physics_dt)]
         if args.grasp_seed:
             command += [
                 "--static-grasp-seed",
@@ -326,13 +322,14 @@ def main():
                     or report["load_start_s"] != 0.5
                     or report["duration_s"] != 1.5
                     or any(
-                        r["step"] != 50
+                        abs(r["step"] * report["simulation_dt_s"] - 0.5) > 1e-12
                         or not r["before_enabled"]
                         or r["after_enabled"]
                         or r["visibility"] != "invisible"
                         for r in releases
                     )
                     or not report["controls"]["temporary_support_release_control_pass"]
+                    or report["simulation_dt_s"] != args.physics_dt
                 ):
                     raise ValueError(
                         "Controlled acquisition did not remove all temporary supports"

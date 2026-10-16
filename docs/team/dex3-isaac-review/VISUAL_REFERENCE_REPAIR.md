@@ -163,4 +163,18 @@ state torque clamp. Static acquisition and lift use the same drive encoding.
 83 CPU tests pass, including the unsaturated control law and simultaneous
 posture/feedforward saturation in both directions. Before running an episode,
 the isolated inertia-based probe must confirm both signed limits and the
-unsaturated implicit dynamics. This change is pending that simulator check.
+unsaturated implicit dynamics.
+
+The fresh `motor-budget-v3` simulator probe confirms signed saturation at
+±0.7600 Nm and verifies unsaturated positive/negative feedforward scaling
+against a calibrated drive-only inertial response. The measured unsaturated
+gain is 0.998540. PhysX's iterative integration does not equal one full-timestep
+implicit Euler update, so the probe does not assume that formula.
+
+The repaired 100 Hz pot lift fails both fixtures despite passing gravity,
+support and release controls. The old lift result cannot validate this repaired
+motor command. Full carries were skipped at that gate. The next comparison
+increases integration to 400 Hz while preserving the fixture clock: 0.25 s
+closure, 0.25 s squeeze ramp, 0.5 s support release, 1.5 s duration and 20 fps
+video. Lift metrics select the physical load interval, and force averaging
+keeps its 0.2 s window. No motor or friction limit changes. 86 CPU tests pass.
