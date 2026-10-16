@@ -1,0 +1,7 @@
+# @package _global_
+defaults:
+  - dex3_repaired_wrist
+  - _self_
+action:
+  _target_: v2d_dex3_flashchord.grasp_feedback.FeedbackGraspActionConfig
+output_dir: /outputs/repaired-feedback

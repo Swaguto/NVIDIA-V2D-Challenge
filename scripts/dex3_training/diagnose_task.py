@@ -41,9 +41,13 @@ class ReadbackEnv:
     def __init__(self, wrapped, env):
         self.wrapped, self.env = wrapped, env
         self.body, self.joints, self.motor = [], [], []
+        self.joint_motor = []
         model = getattr(env.solver, "mj_model", None)
         self.ranges = getattr(model, "actuator_forcerange", None)
         self.limited = getattr(model, "actuator_forcelimited", None)
+        self.joint_ranges = getattr(model, "jnt_actfrcrange", None)
+        self.joint_limited = getattr(model, "jnt_actfrclimited", None)
+        self.joint_dofadr = getattr(model, "jnt_dofadr", None)
 
     def step(self, action):
         result = self.wrapped.step(action)
@@ -53,6 +57,9 @@ class ReadbackEnv:
         force = getattr(data, "actuator_force", None)
         if force is not None:
             self.motor.append(force.numpy().copy())
+        force = getattr(data, "qfrc_actuator", None)
+        if force is not None:
+            self.joint_motor.append(force.numpy().copy())
         return result
 
     def save(self, output):
@@ -91,6 +98,38 @@ class ReadbackEnv:
                 if finger.any()
                 else None,
                 native_capped_drive_verified=bool(within and finger.sum() >= 14),
+            )
+        if (
+            self.joint_motor
+            and self.joint_ranges is not None
+            and self.joint_limited is not None
+        ):
+            force = np.asarray(self.joint_motor)
+            ranges, limited = (
+                np.asarray(self.joint_ranges),
+                np.asarray(self.joint_limited, bool),
+            )
+            addresses = np.asarray(self.joint_dofadr, int)
+            finger = (
+                limited
+                & np.isclose(ranges[:, 0], -0.76)
+                & np.isclose(ranges[:, 1], 0.76)
+            )
+            values = force[..., addresses[finger]]
+            within = bool(np.isfinite(values).all() and np.all(abs(values) <= 0.76001))
+            arrays.update(
+                native_combined_joint_motor_force=force,
+                joint_motor_range=ranges,
+                joint_motor_limited=limited,
+                joint_dof_addresses=addresses,
+            )
+            verification.update(
+                limited_finger_joints=int(finger.sum()),
+                maximum_actual_combined_finger_motor_torque_Nm=float(abs(values).max())
+                if finger.any()
+                else None,
+                native_capped_drive_verified=bool(finger.sum() >= 14 and within),
+                verification_scope="Combined joint actuator force after native joint limits; separate position/velocity actuator components need not be individually capped",
             )
         np.savez_compressed(output / "native-state-readback.npz", **arrays)
         (output / "body-labels.json").write_text(

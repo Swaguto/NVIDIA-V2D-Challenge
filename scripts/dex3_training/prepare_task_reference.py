@@ -20,7 +20,7 @@ import numpy as np
 from v2d_dex3_flashchord.kinematics import URDFKinematics
 
 sys.path.insert(0, str(Path(__file__).parents[1] / "reproduction"))
-from _dex3_task_grip import TaskGripReference
+from _dex3_task_grip import TaskGripReference, compose_pose, hand_control_settings
 
 
 def sha(path):
@@ -66,6 +66,11 @@ def prepare(base, case, task_spec, out):
     q = np.zeros((count, 2, 14))
     effort = np.zeros((count, 2, 7))
     stiffness = np.zeros((count, 2, 7))
+    grasp = np.zeros((count, 2, 7))
+    park = np.zeros((count, 2))
+    feedback = np.zeros((count, 2))
+    capture = np.zeros((count, 2), dtype=bool)
+    phase_ids = np.zeros((count, 2), dtype=np.int32)
     frames = {}
     for si, side in enumerate(("left", "right")):
         phases = spec["phases"][side]
@@ -77,6 +82,7 @@ def prepare(base, case, task_spec, out):
         kin = URDFKinematics(base / f"robot/urdfs/g1/dex3_{side}.urdf")
         target_frames = []
         ref = TaskGripReference(spec)
+        feedback_ref = TaskGripReference(spec)
         for i, time in enumerate(times):
             command = ref.command(side, float(time), objects[i, oi], commit=False)
             phase = next(p for p in phases if p["sample"] == command["phase"])
@@ -84,6 +90,19 @@ def prepare(base, case, task_spec, out):
             q[i, si] = np.r_[command["pose"], np.asarray(command["fingers"])[order]]
             effort[i, si] = np.asarray(command["effort"])[order]
             stiffness[i, si] = phase["stiffness_Nm_per_rad"]
+            grasp[i, si] = phase["hand_in_object_xyzw"]
+            park[i, si] = (
+                command["pose"][2] - compose_pose(objects[i, oi], grasp[i, si])[2]
+            )
+            nominal_feedback = feedback_ref.command(
+                side, float(time), objects[i, oi], objects[i, oi]
+            )
+            feedback[i, si] = nominal_feedback["object_feedback_weight"]
+            capture[i, si] = (
+                hand_control_settings(spec, side)["experimental_register_settled_grasp"]
+                and phase["close_s"] <= time <= phase["close_s"] + 0.0500001
+            )
+            phase_ids[i, si] = phases.index(phase)
             fk = kin.poses(command["pose"], dict(zip(names, q[i, si, 7:], strict=True)))
             target_frames.append(
                 [fk[name][:3, 3] for name in original["frame_names"][side]]
@@ -124,6 +143,11 @@ def prepare(base, case, task_spec, out):
         timestamps_s=times,
         finger_feedforward_Nm=effort,
         finger_stiffness_Nm_per_rad=stiffness,
+        grasp_pose_object_xyzw=grasp,
+        park_height_world_m=park,
+        measured_object_feedback_weight=feedback,
+        capture_settled_registration=capture,
+        phase_index=phase_ids,
     )
     shutil.copyfile(task_spec, out / "task-grips.json")
     manifest = copy.deepcopy(original)
