@@ -45,6 +45,7 @@ class ReadbackEnv:
         self.joint_motor = []
         self.contacts = []
         self.motor_target, self.feedback_weight = [], []
+        self.velocity_target = []
         self.native_model = {}
         model = getattr(env.solver, "mj_model", None)
         for name in (
@@ -84,6 +85,7 @@ class ReadbackEnv:
         self.body.append(self.env.state_0.body_q.numpy().copy())
         self.joints.append(self.env.state_0.joint_q.numpy().copy())
         self.motor_target.append(self.env.action.joint_target.numpy().copy())
+        self.velocity_target.append(self.env.control.joint_target_vel.numpy().copy())
         feedback = getattr(self.env.action, "actual_feedback", None)
         if feedback is not None:
             self.feedback_weight.append(feedback.numpy().copy())
@@ -104,6 +106,7 @@ class ReadbackEnv:
             body_poses=np.asarray(self.body),
             joint_positions=np.asarray(self.joints),
             motor_target=np.asarray(self.motor_target),
+            motor_velocity_target=np.asarray(self.velocity_target),
         )
         if self.feedback_weight:
             arrays["measured_feedback_weight"] = np.asarray(self.feedback_weight)
@@ -158,6 +161,15 @@ class ReadbackEnv:
             )
             values = force[..., addresses[finger]]
             within = bool(np.isfinite(values).all() and np.all(abs(values) <= 0.76001))
+            limited_values = force[..., addresses[limited]]
+            all_within = bool(
+                np.isfinite(limited_values).all()
+                and np.all(limited_values >= ranges[limited, 0] - 1e-5)
+                and np.all(limited_values <= ranges[limited, 1] + 1e-5)
+            )
+            root = (
+                limited & np.isclose(ranges[:, 0], -60) & np.isclose(ranges[:, 1], 60)
+            )
             arrays.update(
                 native_combined_joint_motor_force=force,
                 joint_motor_range=ranges,
@@ -166,10 +178,14 @@ class ReadbackEnv:
             )
             verification.update(
                 limited_finger_joints=int(finger.sum()),
+                limited_root_position_joints=int(root.sum()),
+                all_native_limited_joint_forces_within_bounds=all_within,
                 maximum_actual_combined_finger_motor_torque_Nm=float(abs(values).max())
                 if finger.any()
                 else None,
-                native_capped_drive_verified=bool(finger.sum() >= 14 and within),
+                native_capped_drive_verified=bool(
+                    finger.sum() >= 14 and within and all_within
+                ),
                 verification_scope="Combined joint actuator force after native joint limits; separate position/velocity actuator components need not be individually capped",
             )
         np.savez_compressed(output / "native-state-readback.npz", **arrays)
@@ -242,7 +258,7 @@ def main(cfg):
         env.reset()
         env.capture_step()
         env.reset(frame_id=0)
-        audit_scene(env, setup.scene, output)
+        audit_scene(env, setup.scene, output, json.loads(manifest_path.read_text()))
         jax_env = WarpRLEnv(env, publish_diagnostics=True, publish_step_metrics=True)
         readback = ReadbackEnv(jax_env, env)
         observation = jnp.asarray(

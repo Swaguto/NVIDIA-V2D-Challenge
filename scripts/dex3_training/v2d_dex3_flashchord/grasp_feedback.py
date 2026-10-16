@@ -229,6 +229,10 @@ class FeedbackGripAction(GripResidualAction):
             base.grip_feedforward,
             base.grip_stiffness,
         )
+        self.reference_velocity = base.reference_velocity
+        if self.reference_velocity is not None:
+            self.velocity_dofs = base.velocity_dofs
+            self.motor_velocity_target = base.motor_velocity_target
 
     def process(self, action, timestep, state=None):
         if state is None:

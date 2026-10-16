@@ -1,0 +1,8 @@
+# @package _global_
+defaults:
+  - dex3_repaired_velocity
+  - _self_
+
+sim:
+  fps: 100.0
+  substeps: 4

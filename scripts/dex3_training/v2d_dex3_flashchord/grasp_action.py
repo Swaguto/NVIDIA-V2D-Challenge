@@ -35,9 +35,25 @@ def add_grip_motor_bias(
     )
 
 
+@wp.kernel
+def gather_reference_velocity(
+    timestep: wp.array(dtype=wp.int32),
+    frames: int,
+    dofs: int,
+    wrist_dofs: wp.array(dtype=wp.int32),
+    velocity: wp.array(dtype=wp.float32),
+    target: wp.array(dtype=wp.float32),
+):
+    world, component = wp.tid()
+    frame = wp.clamp(timestep[world], 0, frames - 1)
+    target[world * dofs + wrist_dofs[component]] = velocity[frame * 6 + component]
+
+
 @dataclass(frozen=True)
 class GraspActionConfig(ActionConfig):
     input_root: str = "/data"
+    wrist_reference_velocity: bool = False
+    maximum_reference_wrist_speed_m_s: float = 1.0
 
     def build(self, scene, device=None):
         if self.delay.max_steps != 0:
@@ -55,7 +71,8 @@ class GraspActionConfig(ActionConfig):
         base = ResidualHandPoseAction.build(scene, config=self, device=device)
         with np.load(targets, allow_pickle=False) as data:
             sampled = resample_targets(
-                {k: data[k].copy() for k in data.files}, base.buffers.reference.num_frames
+                {k: data[k].copy() for k in data.files},
+                base.buffers.reference.num_frames,
             )
             ff = sampled["finger_feedforward_Nm"]
             expected_kp = sampled["finger_stiffness_Nm_per_rad"]
@@ -91,9 +108,39 @@ class GraspActionConfig(ActionConfig):
             )[:, dofs]
             if not np.allclose(caps, 0.76):
                 raise ValueError("Native finger motor cap differs from 0.76 Nm")
-        return GripResidualAction(
+        result = GripResidualAction(
             base, np.concatenate(arranged, axis=1), scene.model.joint_target_ke, device
         )
+        if self.wrist_reference_velocity:
+            velocity = np.gradient(
+                sampled["robot_qpos"][:, :, :3], sampled["timestamps_s"], axis=0
+            )
+            if (
+                not 0 < self.maximum_reference_wrist_speed_m_s <= 2.0
+                or not np.isfinite(velocity).all()
+                or np.linalg.norm(velocity, axis=-1).max()
+                > self.maximum_reference_wrist_speed_m_s
+            ):
+                raise ValueError(
+                    "Reference wrist velocity exceeds the declared motor plan"
+                )
+            # The final command is a hold; no extrapolated motion after source end.
+            velocity[-1] = 0
+            result.reference_velocity = wp.array(
+                np.concatenate(
+                    [velocity[:, ("left", "right").index(s)] for s in base.sides],
+                    axis=1,
+                ).ravel(),
+                dtype=wp.float32,
+                device=device,
+            )
+            result.velocity_dofs = wp.array(
+                [d for s in base.sides for d in scene.layout.hand(s).wrist_pos_dof_ids],
+                dtype=wp.int32,
+                device=device,
+            )
+            result.motor_velocity_target = wp.zeros_like(result.joint_target)
+        return result
 
 
 class GripResidualAction(ResidualHandPoseAction):
@@ -103,6 +150,7 @@ class GripResidualAction(ResidualHandPoseAction):
             feedforward.ravel(), dtype=wp.float32, device=device
         )
         self.grip_stiffness = stiffness
+        self.reference_velocity = None
 
     def process(self, action, timestep, state=None):
         super().process(action, timestep, state)
@@ -121,3 +169,21 @@ class GripResidualAction(ResidualHandPoseAction):
                 self.joint_target,
             ],
         )
+        if self.reference_velocity is not None:
+            wp.launch(
+                gather_reference_velocity,
+                dim=(self.buffers.world_count, 6),
+                inputs=[
+                    timestep,
+                    self.buffers.reference.num_frames,
+                    layout.num_joint_dof,
+                    self.velocity_dofs,
+                    self.reference_velocity,
+                    self.motor_velocity_target,
+                ],
+            )
+
+    def prepare_control(self, control):
+        super().prepare_control(control)
+        if self.reference_velocity is not None:
+            wp.copy(control.joint_target_vel, self.motor_velocity_target)

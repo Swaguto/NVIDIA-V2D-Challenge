@@ -1,0 +1,8 @@
+# @package _global_
+defaults:
+  - dex3_repaired_exact_collision
+  - _self_
+
+action:
+  wrist_reference_velocity: true
+  maximum_reference_wrist_speed_m_s: 1.0

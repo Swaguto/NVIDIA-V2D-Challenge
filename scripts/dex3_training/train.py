@@ -49,7 +49,7 @@ class LocalMetricLogger:
         self.stream.close()
 
 
-def audit_scene(env, scene, output):
+def audit_scene(env, scene, output, manifest=None):
     applied_voc = env.reset_policy.applied_voc_scale.numpy()
     if not np.all(applied_voc == 0):
         raise ValueError("Unassisted pilot has nonzero object assistance")
@@ -73,7 +73,13 @@ def audit_scene(env, scene, output):
         ],
         actual_applied_object_assistance=applied_voc.tolist(),
         support_shape_count=scene.support_shape_count,
-        geometry_scope="Newton CoACD decomposition, not the Isaac Sim cooked hulls",
+        geometry_scope=(
+            manifest.get(
+                "collision_geometry_contract", "Frozen Newton CoACD decomposition"
+            )
+            if manifest is not None
+            else "Geometry contract not supplied"
+        ),
         source_inertias_may_be_corrected_by_newton=True,
         physical_task_accepted=False,
     )
@@ -146,7 +152,7 @@ def main(cfg: DictConfig):
         env.reset()
         env.capture_step()
         env.reset()
-        audit_scene(env, setup.scene, output)
+        audit_scene(env, setup.scene, output, input_manifest)
         jax_env = WarpRLEnv(env)
         config = resolved_dict(cfg)
         config["task"]["parquet"] = str(setup.parquet_path)
