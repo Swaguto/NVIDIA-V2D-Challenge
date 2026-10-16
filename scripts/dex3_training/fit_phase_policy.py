@@ -33,6 +33,7 @@ from v2d_dex3_flashchord.phase_prior import (
     position_basis,
 )
 from v2d_dex3_flashchord.sampling import resample_targets
+from v2d_dex3_flashchord.native_depth import maximum_assigned_depth
 
 
 def phase_layout(env, scene, manifest, spec, names, side, phase):
@@ -214,6 +215,27 @@ def main(cfg):
         if np.isclose(ranges[:, 1], 0.76).sum() < 14:
             raise ValueError("Native finger motor caps missing")
         stride = env.model.body_count // worlds
+        owner = np.full(stride, -1, dtype=np.int32)
+        for i, label in enumerate(env.model.body_label[:stride]):
+            for si, s in enumerate(sides):
+                if label.startswith("dex3_" + s + "/"):
+                    owner[i] = si
+        assigned = []
+        for s in sides:
+            objects = {p["object"] for p in spec["phases"][s]}
+            if len(objects) != 1:
+                raise ValueError(
+                    "Depth-bounded fitting needs one assigned object per hand"
+                )
+            name = manifest["objects"][next(iter(objects))]["name"]
+            assigned.append(
+                next(b.root.body_id for b in setup.scene.objects if b.name == name)
+            )
+        owners = wp.array(owner, dtype=wp.int32, device=env.device)
+        object_ids = wp.array(assigned, dtype=wp.int32, device=env.device)
+        sampled_depth = wp.zeros(
+            worlds * len(sides), dtype=wp.float32, device=env.device
+        )
         slot_count = env.contact.layout.slots_per_world
         wrist_envelope = phase_envelope(phase, times)
         basis = position_basis(spec, phase, times, position_frame)
@@ -238,7 +260,7 @@ def main(cfg):
             candidates[0] = project(best_raw, lower, upper, profile=bounds_profile)
             actions = np.repeat(candidates, 2, axis=0)
             env.reset(frame_id=0)
-            bodies, joints, contacts = [], [], []
+            bodies, joints, contacts, depths = [], [], [], []
             cap_verified = True
             for frame in range(setup.reference.num_frames):
                 raw = np.broadcast_to(fixed[frame], (worlds, 26)).copy()
@@ -257,6 +279,29 @@ def main(cfg):
                     .reshape(worlds, slot_count, 3)
                     .copy()
                 )
+                sampled_depth.zero_()
+                c = env.contacts
+                wp.launch(
+                    maximum_assigned_depth,
+                    dim=c.rigid_contact_shape0.shape[0],
+                    inputs=[
+                        c.rigid_contact_count,
+                        c.rigid_contact_shape0,
+                        c.rigid_contact_shape1,
+                        c.rigid_contact_point0,
+                        c.rigid_contact_point1,
+                        c.rigid_contact_normal,
+                        env.model.shape_body,
+                        env.state_0.body_q,
+                        stride,
+                        len(sides),
+                        owners,
+                        object_ids,
+                        sampled_depth,
+                    ],
+                    device=env.device,
+                )
+                depths.append(sampled_depth.numpy().reshape(worlds, len(sides)).copy())
                 actual = env.solver.mjw_data.qfrc_actuator.numpy()[:, addresses]
                 cap_verified &= bool(
                     np.isfinite(actual).all()
@@ -272,6 +317,7 @@ def main(cfg):
                 np.asarray(joints),
                 np.asarray(contacts),
             )
+            depths = np.asarray(depths)
             costs = np.zeros(worlds)
             metrics = [[] for _ in range(worlds)]
             for name, layout in layouts.items():
@@ -306,6 +352,10 @@ def main(cfg):
                             and m["maximum_source_position_error_m"] <= 0.03
                             and angle <= 15
                             and margin >= 0.003
+                            and depths[
+                                indices, world, sides.index(layout["side"])
+                            ].max()
+                            <= 0.002
                         )
                         cost = (
                             2 * m["maximum_relative_position_drift_m"] / 0.01
@@ -321,6 +371,17 @@ def main(cfg):
                             + m["maximum_source_position_error_m"] / 0.03
                             + angle / 15
                             + 1000 * max(0, 0.003 - margin)
+                            + 5
+                            * max(
+                                0,
+                                float(
+                                    depths[
+                                        indices, world, sides.index(layout["side"])
+                                    ].max()
+                                )
+                                - 0.001,
+                            )
+                            / 0.001
                         )
                         if not passed:
                             cost += 1000
@@ -328,6 +389,11 @@ def main(cfg):
                             sample=name,
                             **m,
                             minimum_required_joint_margin_rad=margin,
+                            maximum_sampled_hand_object_penetration_m=float(
+                                depths[
+                                    indices, world, sides.index(layout["side"])
+                                ].max()
+                            ),
                             phase_pass=passed,
                         )
                     except ValueError:
