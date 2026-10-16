@@ -4,6 +4,16 @@ import warp as wp
 
 
 @wp.kernel
+def reset_payload_clock(
+    mask: wp.array(dtype=wp.int32),
+    timestep: wp.array(dtype=wp.int32),
+):
+    world = wp.tid()
+    if mask[world] != 0:
+        timestep[world] = -1
+
+
+@wp.kernel
 def payload_position_bias(
     timestep: wp.array(dtype=wp.int32),
     frames: int,
@@ -20,6 +30,8 @@ def payload_position_bias(
     target: wp.array(dtype=wp.float32),
 ):
     world, hand = wp.tid()
+    if timestep[world] < 0:
+        return
     frame = wp.clamp(timestep[world], 0, frames - 1)
     ri = frame * hands + hand
     error = wp.length(
@@ -51,6 +63,8 @@ def payload_orientation_effort(
     effort: wp.array(dtype=wp.float32),
 ):
     world, hand = wp.tid()
+    if timestep[world] < 0:
+        return
     frame = wp.clamp(timestep[world], 0, frames - 1)
     ri = frame * hands + hand
     oi = world * bodies + object_ids[hand]

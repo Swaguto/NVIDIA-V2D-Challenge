@@ -245,8 +245,8 @@ class FeedbackGraspActionConfig(GraspActionConfig):
                 device=device,
             )
             result.payload_com = scene.model.body_com
-            result.payload_timestep = wp.zeros(
-                scene.world_count, dtype=wp.int32, device=device
+            result.payload_timestep = wp.full(
+                scene.world_count, -1, dtype=wp.int32, device=device
             )
         return result
 
@@ -311,6 +311,14 @@ class FeedbackGripAction(GripResidualAction):
 
     def reset(self, mask):
         super().reset(mask)
+        if self.payload_wrench is not None:
+            from .payload_kernels import reset_payload_clock
+
+            wp.launch(
+                reset_payload_clock,
+                dim=self.buffers.world_count,
+                inputs=[mask, self.payload_timestep],
+            )
         wp.launch(
             reset_feedback,
             dim=(self.buffers.world_count, self.buffers.layout.num_hands),
