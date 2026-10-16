@@ -119,6 +119,11 @@ def summarize(run):
                     drift.max() <= 0.01 and coverage > 0 and not aborted
                 ),
             )
+            item["retained_within_10mm_and_5deg_diagnostic"] = bool(
+                item["retained_within_10mm_diagnostic"]
+                and item["maximum_relative_rotation_drift_deg"] <= 5.0
+                and coverage >= 0.95
+            )
             live = live_allocation_summary(rows)
             if live is not None:
                 item["live_contact_allocation"] = live
@@ -176,6 +181,9 @@ def summarize(run):
         grasps=grasps,
         all_four_grasps_retained_within_10mm=all(
             r["retained_within_10mm_diagnostic"] for r in grasps
+        ),
+        all_grasps_retained_within_10mm_and_5deg=all(
+            r["retained_within_10mm_and_5deg_diagnostic"] for r in grasps
         ),
         physics_controls_pass=report["gravity_and_contact_controls_pass"],
         initial_scene_clearance=report["initial_scene_clearance_check"],

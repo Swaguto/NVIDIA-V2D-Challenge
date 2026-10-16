@@ -421,6 +421,15 @@ def add_middle(
             rejected["load"] += 1
             continue
         planned = copy.deepcopy(candidate)
+        # Changing the fitted pose invalidates commands derived from its old
+        # contact geometry. Recompute effort and opening after pose transfer.
+        for key in (
+            "finger_feedforward_Nm",
+            "finger_pregrasp_rad",
+            "required_contact_digits",
+            "finger_stiffness_Nm_per_rad",
+        ):
+            planned.pop(key, None)
         original = dict(
             zip(source["joint_names"], source["finger_target_rad"], strict=True)
         )
@@ -432,6 +441,8 @@ def add_middle(
                 abs(current[n] - original[n]) for n in current
             ),
             maximum_piece_penetration_lower_bound_m=max(depths.values()),
+            pad_escape_direction_dot=float(escapes[links[0]] @ escapes[links[1]]),
+            object_contact_points_stage_m=np.asarray(contact).tolist(),
             three_pad_geometric_contacts=True,
             middle_contact_point_stage_m=points[j].tolist(),
             middle_inward_direction_stage=(-escapes[links[2]]).tolist(),

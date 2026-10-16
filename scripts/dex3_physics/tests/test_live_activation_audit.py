@@ -99,3 +99,21 @@ def test_stationary_aborted_grasp_cannot_pass_retention(tmp_path):
     report["state_sha256"] = hashlib.sha256(state_file.read_bytes()).hexdigest()
     (run / "report.json").write_text(json.dumps(report))
     assert not summarize(run)["grasps"][0]["retained_within_10mm_diagnostic"]
+    # A two-pad pinch can retain position while the object twists in place.
+    for row in states["hands"]:
+        row["controller_details"]["contact_hold_remaining_s"] = 0.03
+    states["objects"][2]["actual_root_pose_stage_xyzw"] = [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0.0871557427,
+        0.9961946981,
+    ]
+    state_file.write_text(json.dumps(states))
+    report["state_sha256"] = hashlib.sha256(state_file.read_bytes()).hexdigest()
+    (run / "report.json").write_text(json.dumps(report))
+    grasp = summarize(run)["grasps"][0]
+    assert grasp["retained_within_10mm_diagnostic"]
+    assert not grasp["retained_within_10mm_and_5deg_diagnostic"]
