@@ -14,8 +14,8 @@ import time
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts/reproduction"))
-from reproduce_frozen_dex3_replay import restore_methods
-from audit_wrist_run import audit
+from reproduce_frozen_dex3_replay import restore_methods  # noqa: E402
+from audit_wrist_run import audit  # noqa: E402
 
 PACK_SHA = "759b6e9fa642b47ec24306969688cc1ce15ead4cb0b80e4f8d086b727b93c680"
 PLANE_SHA = "38a6bf97df7def496bed7773e265c894e77da6bb5521d3077bf43330cbd3166f"
@@ -36,6 +36,7 @@ def main():
             "static-load",
             "grasp-seed",
             "grasp-acquisition",
+            "grip-lift",
         ],
         required=True,
     )
@@ -47,9 +48,14 @@ def main():
         default="implicit_pd",
     )
     args = parser.parse_args()
-    static_stage = args.stage in {"static-load", "grasp-seed", "grasp-acquisition"}
-    acquisition_stage = args.stage == "grasp-acquisition"
-    if (args.stage in {"grasp-seed", "grasp-acquisition"}) != (
+    static_stage = args.stage in {
+        "static-load",
+        "grasp-seed",
+        "grasp-acquisition",
+        "grip-lift",
+    }
+    acquisition_stage = args.stage in {"grasp-acquisition", "grip-lift"}
+    if (args.stage in {"grasp-seed", "grasp-acquisition", "grip-lift"}) != (
         args.grasp_seed is not None
     ):
         parser.error(
@@ -111,6 +117,8 @@ def main():
             ]
             if acquisition_stage:
                 command += ["--controlled-acquisition"]
+            if args.stage == "grip-lift":
+                command += ["--controlled-grip-lift"]
     else:
         command += [
             "--supported-task-check",
@@ -294,6 +302,12 @@ def main():
                 gate["changed_seeds_held_within_10mm_for_1s"] = all(
                     r["held_within_10mm_for_1s_diagnostic_only"] for r in selected
                 )
+                if args.stage == "grip-lift":
+                    if not report.get("controlled_grip_lift"):
+                        raise ValueError("Lift stage did not execute dynamic wrists")
+                    gate["changed_seeds_lifted_and_retained"] = all(
+                        r["lifted_and_retained_diagnostic_only"] for r in selected
+                    )
             (out / "static-load-gate.json").write_text(
                 json.dumps(gate, indent=2) + "\n"
             )
@@ -308,8 +322,11 @@ def main():
             )
             print(json.dumps(gate, indent=2))
             if not gate.get(
-                "changed_seeds_held_within_10mm_for_1s",
-                gate["all_four_samples_held_within_10mm_for_1s"],
+                "changed_seeds_lifted_and_retained",
+                gate.get(
+                    "changed_seeds_held_within_10mm_for_1s",
+                    gate["all_four_samples_held_within_10mm_for_1s"],
+                ),
             ):
                 raise SystemExit(2)
             return

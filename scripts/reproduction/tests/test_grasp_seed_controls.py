@@ -90,6 +90,18 @@ def test_source_pose_mismatch_is_rejected():
         apply_grasp_seeds(samples, proposal)
 
 
+def test_squeeze_effort_is_bounded_named_and_never_added_to_the_baseline():
+    samples, proposal = example()
+    proposal["grip_effort"] = {"schema": "v2d.dex3-jacobian-grip-effort.v1"}
+    proposal["results"][0]["candidate"]["finger_feedforward_Nm"] = [0.4] * 7
+    result, _ = apply_grasp_seeds(samples, proposal)
+    assert result[0]["finger_feedforward_Nm"] == [0.4] * 7
+    assert "finger_feedforward_Nm" not in samples[0]
+    proposal["results"][0]["candidate"]["finger_feedforward_Nm"][0] = 0.56
+    with pytest.raises(ValueError, match="squeeze feedforward"):
+        apply_grasp_seeds(samples, proposal)
+
+
 def test_acquisition_compares_matching_sources_with_same_initial_fingers():
     base, _ = example()
     originals = []
@@ -114,6 +126,40 @@ def test_acquisition_compares_matching_sources_with_same_initial_fingers():
             sample["hand_position_stage_m"][0] - sample["object_position_stage_m"][0]
         )
         assert relative_x == pytest.approx(0.002 if i % 2 else 0)
+
+
+def test_grip_comparison_has_identical_geometry_and_only_changes_motor_effort():
+    base, _ = example()
+    originals = []
+    for i in range(4):
+        row = copy.deepcopy(base[0])
+        row["prefix"] = f"sample{i}"
+        originals.append(row)
+    seeded = copy.deepcopy(originals)
+    for i in (2, 3):
+        seeded[i].update(
+            robot_grasp_seed_is_experimental=True,
+            finger_pregrasp_rad=[-0.1] * 7,
+            finger_feedforward_Nm=[0.4] * 7,
+        )
+    result, _ = acquisition_pairs(originals, seeded)
+    assert [s["variant"] for s in result] == ["position-only", "squeeze"] * 2
+    for baseline, squeeze in [(result[0], result[1]), (result[2], result[3])]:
+        for sample in [baseline, squeeze]:
+            assert sample["finger_initial_rad"] == [-0.1] * 7
+            assert sample["finger_target_rad"] == [0.0] * 7
+        np.testing.assert_allclose(
+            np.asarray(baseline["hand_position_stage_m"])
+            - baseline["object_position_stage_m"],
+            np.asarray(squeeze["hand_position_stage_m"])
+            - squeeze["object_position_stage_m"],
+        )
+        assert (
+            baseline["hand_quaternion_stage_xyzw"]
+            == squeeze["hand_quaternion_stage_xyzw"]
+        )
+        assert baseline["finger_feedforward_Nm"] == [0.0] * 7
+        assert squeeze["finger_feedforward_Nm"] == [0.4] * 7
 
 
 def test_tilted_tray_is_below_every_source_mesh_vertex():

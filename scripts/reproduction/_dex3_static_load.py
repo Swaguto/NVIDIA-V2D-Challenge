@@ -175,6 +175,30 @@ def apply_grasp_seeds(samples, proposal):
         sample["hand_position_stage_m"] = pos.tolist()
         sample["hand_quaternion_stage_xyzw"] = quat.tolist()
         sample["finger_target_rad"] = [new[n] for n in sample["joint_names"]]
+        if "finger_feedforward_Nm" in candidate:
+            effort = np.asarray(candidate["finger_feedforward_Nm"], dtype=float)
+            if (
+                proposal.get("grip_effort", {}).get("schema")
+                != "v2d.dex3-jacobian-grip-effort.v1"
+                or effort.shape != (len(candidate["joint_names"]),)
+                or not np.isfinite(effort).all()
+                or np.max(np.abs(effort)) > 0.55
+            ):
+                raise ValueError("Invalid bounded finger squeeze feedforward")
+            by_name = dict(zip(candidate["joint_names"], effort.tolist(), strict=True))
+            sample["finger_feedforward_Nm"] = [
+                by_name[n] for n in sample["joint_names"]
+            ]
+        if "finger_pregrasp_rad" in candidate:
+            opened = np.asarray(candidate["finger_pregrasp_rad"], dtype=float)
+            if (
+                opened.shape != values.shape
+                or not np.isfinite(opened).all()
+                or np.max(np.abs(opened - values)) > 0.400001
+            ):
+                raise ValueError("Invalid bounded open pregrasp")
+            by_name = dict(zip(candidate["joint_names"], opened.tolist(), strict=True))
+            sample["finger_pregrasp_rad"] = [by_name[n] for n in sample["joint_names"]]
         sample["robot_grasp_seed_is_experimental"] = True
         changed.append(sample["prefix"])
     if not changed or len(set(changed)) != len(changed):
@@ -195,7 +219,14 @@ def acquisition_pairs(originals, seeded):
             i for i, s in enumerate(originals) if s["prefix"] == candidate["prefix"]
         )
         original = originals[source_index]
-        for variant, value in (("baseline", original), ("antipodal", candidate)):
+        force_comparison = "finger_pregrasp_rad" in candidate
+        if force_comparison:
+            baseline = copy.deepcopy(candidate)
+            baseline["finger_feedforward_Nm"] = [0.0] * len(candidate["joint_names"])
+            variants = (("position-only", baseline), ("squeeze", candidate))
+        else:
+            variants = (("baseline", original), ("antipodal", candidate))
+        for variant, value in variants:
             sample = copy.deepcopy(value)
             shift = np.array([3.0 * (len(result) - source_index), 0.0, 0.0])
             for key in ("hand_position_stage_m", "object_position_stage_m"):
@@ -203,9 +234,14 @@ def acquisition_pairs(originals, seeded):
             sample["source_grasp_prefix"] = original["prefix"]
             sample["prefix"] += "-" + variant
             sample["variant"] = variant
-            sample["finger_initial_rad"] = original["finger_target_rad"].copy()
+            sample["finger_initial_rad"] = (
+                candidate["finger_pregrasp_rad"]
+                if force_comparison
+                else original["finger_target_rad"]
+            ).copy()
+            sample["same_geometry_motor_effort_comparison"] = force_comparison
             result.append(sample)
-            if variant == "antipodal":
+            if variant in {"antipodal", "squeeze"}:
                 changed.append(sample["prefix"])
     if len(result) != 4:
         raise ValueError(
@@ -297,6 +333,7 @@ def prepare(
     grasp_seed: Path | None = None,
     grasp_seed_sha256: str | None = None,
     controlled_acquisition: bool = False,
+    controlled_grip_lift: bool = False,
 ) -> dict:
     """Validate byte/coordinate contracts and build portable nominal load inputs."""
     import numpy as np
@@ -327,6 +364,8 @@ def prepare(
         raise FileExistsError("Use a fresh load-input directory")
     if controlled_acquisition and (grasp_seed is None or task_motion is not None):
         raise ValueError("Controlled acquisition requires static mode and grasp seeds")
+    if controlled_grip_lift and not controlled_acquisition:
+        raise ValueError("Controlled lift requires acquisition")
     files = json.loads((case / "file-manifest.json").read_text())["files_sha256"]
     for name, expected in files.items():
         path = case / name
@@ -557,6 +596,7 @@ def prepare(
         "physical_task_accepted": False,
         "supported_task_mode": task_motion is not None,
         "controlled_acquisition": controlled_acquisition,
+        "controlled_grip_lift": controlled_grip_lift,
         "temporary_support_release_s": 0.5 if controlled_acquisition else None,
     }
     if task_motion is not None:
@@ -633,6 +673,7 @@ def execute(
         raise ValueError("Prepared physical input manifest changed")
     prepared = json.loads(manifest.read_text())
     task_mode = prepared.get("supported_task_mode", False)
+    lift_mode = prepared.get("controlled_grip_lift", False)
     if digest(case / "file-manifest.json") != prepared["case_manifest_sha256"]:
         raise ValueError("Physical input and frozen case differ")
     for name, expected in json.loads((case / "file-manifest.json").read_text())[
@@ -847,12 +888,22 @@ def execute(
                 <= float(limits[name]["upper"])
             ):
                 raise ValueError("Frozen finger target exceeds URDF limit")
+        if acquisition_mode:
+            for name, value in zip(
+                sample["joint_names"], sample["finger_initial_rad"], strict=True
+            ):
+                if (
+                    not float(limits[name]["lower"])
+                    <= value
+                    <= float(limits[name]["upper"])
+                ):
+                    raise ValueError("Pregrasp initial finger exceeds URDF limit")
 
         def physical_hand(
             *, cfg, prim_root=prim_root, sample=sample, target=target, limits=limits
         ):
             cfg.prim_path = prim_root + "/Hand"
-            cfg.spawn.fix_base = not task_mode
+            cfg.spawn.fix_base = not (task_mode or lift_mode)
             cfg.spawn.activate_contact_sensors = True
             cfg.spawn.rigid_props.disable_gravity = False
             cfg.spawn.collision_props = sim_utils.CollisionPropertiesCfg(
@@ -1086,15 +1137,12 @@ def execute(
         px.CreateContactOffsetAttr(0.0)
         px.CreateRestOffsetAttr(0.0)
         release_control_platforms.append(dict(prim="/World/Control2/Platform"))
-    if task_mode:
-        # Sim6's importer activates contact reporting only on the root body.
-        # Pair-wise finger measurements need reporting on every real hand body.
-        for asset in hands + objects:
-            for prim in Usd.PrimRange(sim.stage.GetPrimAtPath(asset.cfg.prim_path)):
-                if prim.HasAPI(UsdPhysics.RigidBodyAPI):
-                    PhysxSchema.PhysxContactReportAPI.Apply(prim).CreateThresholdAttr(
-                        0.0
-                    )
+    # Sim6's importer activates contact reporting only on the root body.
+    # Pair-wise finger measurements need reporting on every real hand body.
+    for asset in hands + objects:
+        for prim in Usd.PrimRange(sim.stage.GetPrimAtPath(asset.cfg.prim_path)):
+            if prim.HasAPI(UsdPhysics.RigidBodyAPI):
+                PhysxSchema.PhysxContactReportAPI.Apply(prim).CreateThresholdAttr(0.0)
     if diagnostic.get("free_space", False):
         for hand in hands:
             sim_utils.modify_collision_properties(
@@ -1111,15 +1159,28 @@ def execute(
             ),
             torch.tensor(position[None], dtype=torch.float32, device=sim.device),
         )
-    targets, initial_targets = [], []
+    targets, initial_targets, effort_targets = [], [], []
     for hand, sample in zip(hands, prepared["samples"], strict=True):
         values = dict(
             zip(sample["joint_names"], sample["finger_target_rad"], strict=True)
         )
-        if set(hand.joint_names) != set(values) or hand.is_fixed_base == task_mode:
+        if set(hand.joint_names) != set(values) or hand.is_fixed_base == (
+            task_mode or lift_mode
+        ):
             raise ValueError(
                 "Physical articulation topology differs from declared fixture"
             )
+        if lift_mode:
+            initial = hand.data.default_root_state.clone()
+            initial[:, :3] = torch.tensor(
+                sample["hand_position_stage_m"], device=sim.device
+            )
+            initial[:, 3:7] = torch.tensor(
+                sample["hand_quaternion_stage_xyzw"], device=sim.device
+            )
+            initial[:, 7:] = 0
+            hand.write_root_state_to_sim(initial)
+            hand.reset()
         q = torch.tensor(
             [[values[name] for name in hand.joint_names]],
             dtype=torch.float32,
@@ -1146,6 +1207,20 @@ def execute(
         _ = hand.data.body_link_pose_w
         targets.append(q)
         initial_targets.append(initial_q)
+        efforts = dict(
+            zip(
+                sample["joint_names"],
+                sample.get("finger_feedforward_Nm", [0.0] * len(sample["joint_names"])),
+                strict=True,
+            )
+        )
+        effort_targets.append(
+            torch.tensor(
+                [[efforts[n] for n in hand.joint_names]],
+                dtype=torch.float32,
+                device=sim.device,
+            )
+        )
     for obj in objects + control_objects:
         # One initialization only. No object state writes or external forces during load.
         obj.write_root_state_to_sim(obj.data.default_root_state.clone())
@@ -1167,7 +1242,34 @@ def execute(
             provenance,
         )
         return
-    from _dex3_collision_evidence import capture_cooked_colliders
+    from isaaclab_physx.physics import PhysxManager
+
+    static_contact_views, static_contact_bindings = [], []
+    for hand, obj in zip(hands, objects, strict=True):
+        paths = [
+            path
+            for path in hand.root_physx_view.link_paths[0]
+            if any(
+                prim.HasAPI(UsdPhysics.CollisionAPI)
+                for prim in Usd.PrimRange(sim.stage.GetPrimAtPath(path))
+            )
+        ]
+        object_path = obj.root_physx_view.prim_paths[0]
+        view = PhysxManager.get_physics_sim_view().create_rigid_contact_view(
+            paths,
+            filter_patterns=[[object_path]] * len(paths),
+            max_contact_data_count=64 * len(paths),
+        )
+        if view.sensor_count != len(paths) or view.filter_count != 1:
+            raise ValueError("Static finger/object contact bindings differ")
+        static_contact_views.append(view)
+        static_contact_bindings.append(
+            dict(hand_body_paths=paths, object_body_path=object_path)
+        )
+    from _dex3_collision_evidence import (
+        capture_cooked_colliders,
+        contact_separation_summary,
+    )
 
     cooked_collider_summary = capture_cooked_colliders(
         sim.stage,
@@ -1213,6 +1315,7 @@ def execute(
     frames = []
     records = []
     control_records = []
+    sim.forward()
     sim.render()
     initial_readback = []
     for hand, obj, target, sample in zip(
@@ -1247,6 +1350,11 @@ def execute(
     last_step = 150 if acquisition_mode else 100
     load_start_step = 50 if acquisition_mode else 0
     release_readback = []
+    applied_efforts = [torch.zeros_like(t) for t in effort_targets]
+    from _dex3_grip_control import lift_target, lift_summary, payload_gravity_wrench
+    from _dex3_wrist_control import implicit_root_wrench
+
+    wrist_wrenches = [np.zeros(6) for _ in hands]
     for step in range(last_step + 1):
         if acquisition_mode and step == 50:
             for support in acquisition_platforms + release_control_platforms:
@@ -1297,6 +1405,40 @@ def execute(
                     .cpu()
                     .numpy()
                     .tolist(),
+                    "commanded_finger_feedforward_Nm_sim_order": applied_efforts[index][
+                        0
+                    ]
+                    .detach()
+                    .cpu()
+                    .numpy()
+                    .tolist(),
+                    "object_normal_force_by_hand_link_stage_N": static_contact_views[
+                        index
+                    ]
+                    .get_contact_force_matrix(dt)
+                    .numpy()[:, 0, :]
+                    .tolist(),
+                    "hand_object_solver_contacts": contact_separation_summary(
+                        static_contact_views[index], dt
+                    ),
+                    "solver_contact_snapshot_valid_for_current_pose": step > 0,
+                    "actual_wrist_pose_stage_xyzw": hand.data.root_link_pose_w[0]
+                    .detach()
+                    .cpu()
+                    .numpy()
+                    .tolist(),
+                    "target_wrist_pose_stage_xyzw": lift_target(
+                        np.r_[
+                            sample["hand_position_stage_m"],
+                            sample["hand_quaternion_stage_xyzw"],
+                        ],
+                        step * dt,
+                    ).tolist()
+                    if lift_mode
+                    else None,
+                    "applied_wrist_wrench_world": wrist_wrenches[index].tolist()
+                    if lift_mode
+                    else None,
                 }
             )
         for index, (obj, sensor) in enumerate(
@@ -1354,8 +1496,66 @@ def execute(
             break
         blend = min(1.0, (step + 1) / 25.0) if acquisition_mode else 1.0
         blend = blend * blend * (3 - 2 * blend)
-        for hand, target, initial in zip(hands, targets, initial_targets, strict=True):
+        for index, (hand, target, initial, effort) in enumerate(
+            zip(hands, targets, initial_targets, effort_targets, strict=True)
+        ):
             hand.set_joint_position_target(initial + blend * (target - initial))
+            squeeze_blend = (
+                min(1.0, max(0.0, (step + 1 - 25) / 25)) if acquisition_mode else 1.0
+            )
+            squeeze_blend = squeeze_blend * squeeze_blend * (3 - 2 * squeeze_blend)
+            applied_efforts[index] = squeeze_blend * effort
+            hand.set_joint_effort_target(applied_efforts[index])
+            if lift_mode:
+                sample = prepared["samples"][index]
+                initial_pose = np.r_[
+                    sample["hand_position_stage_m"],
+                    sample["hand_quaternion_stage_xyzw"],
+                ]
+
+                def cpu(value):
+                    return (
+                        value.detach().cpu().numpy()
+                        if hasattr(value, "detach")
+                        else value.numpy()
+                    )
+
+                gravity = cpu(hand.root_physx_view.get_gravity_compensation_forces())[
+                    0, :6
+                ].copy()
+                # Expected payload weight is applied only through the wrist actuator.
+                # Objects receive no external force, attachment, or pose playback.
+                if step >= 50:
+                    gravity += payload_gravity_wrench(
+                        cpu(hand.data.root_com_pos_w)[0],
+                        cpu(objects[index].data.root_com_pos_w)[0],
+                        prepared["nominal_object_mass_kg"],
+                    )
+                wrench, _ = implicit_root_wrench(
+                    link_pose_xyzw=cpu(hand.data.root_link_pose_w)[0],
+                    target_link_pose_xyzw=lift_target(initial_pose, step * dt),
+                    target_link_pose_next_xyzw=lift_target(
+                        initial_pose, (step + 1) * dt
+                    ),
+                    root_com_offset_b=cpu(hand.root_physx_view.get_coms())[0, 0, :3],
+                    root_com_velocity_w=cpu(hand.data.root_com_vel_w)[0],
+                    root_mass_matrix_w=cpu(
+                        hand.root_physx_view.get_generalized_mass_matrices()
+                    )[0, :6, :6],
+                    gravity_compensation_w=gravity,
+                    dt=dt,
+                )
+                wrist_wrenches[index] = wrench
+                hand.set_external_force_and_torque(
+                    forces=torch.tensor(
+                        wrench[None, None, :3], dtype=torch.float32, device=sim.device
+                    ),
+                    torques=torch.tensor(
+                        wrench[None, None, 3:], dtype=torch.float32, device=sim.device
+                    ),
+                    body_ids=[0],
+                    is_global=True,
+                )
             hand.write_data_to_sim()
         sim.step(render=step % 5 == 4)
         for asset in hands + objects + control_objects:
@@ -1398,6 +1598,8 @@ def execute(
                 "held_within_10mm_for_1s_diagnostic_only": bool(distance.max() <= 0.01),
             }
         )
+        if lift_mode:
+            summaries[-1].update(lift_summary(rows))
     freefall = [row for row in control_records if row["control"] == 0]
     platform = [row for row in control_records if row["control"] == 1]
     drop = (
@@ -1474,6 +1676,16 @@ def execute(
             "simulation_dt_s": dt,
             "duration_s": last_step * dt,
             "controlled_acquisition": acquisition_mode,
+            "controlled_grip_lift": lift_mode,
+            "wrist_load_feedforward": {
+                "nominal_payload_mass_kg": prepared["nominal_object_mass_kg"],
+                "force_applied_to": "wrist only",
+                "includes_payload_lever_arm_moment": True,
+                "force_cap_N": 60,
+                "torque_cap_Nm": 60,
+            }
+            if lift_mode
+            else None,
             "load_start_s": load_start_step * dt,
             "temporary_support_is_a_diagnostic_fixture": acquisition_mode,
             "acquisition_platforms": acquisition_platforms,
@@ -1484,6 +1696,9 @@ def execute(
             "object_collision_import_migration": "Legacy collider_type=convex_decomposition becomes Sim6 collision_type=Convex Decomposition; other preset fields are reused",
             "provenance": provenance,
             "initial_pose_readback": initial_readback,
+            "static_contact_bindings": static_contact_bindings,
+            "initial_solver_contact_buffer_is_cached_not_current_pose": True,
+            "finger_feedforward_scope": "bounded real finger motor torques; original combined simulator motor effort limits unchanged; no external object wrench",
             "summaries": summaries,
             "controls": controls,
             "gravity_and_contact_controls_pass": controls_pass,

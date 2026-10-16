@@ -1,0 +1,9 @@
+# Add after compose.yaml and physics.compose.yaml for the grip diagnostics.
+services:
+  physics:
+    volumes:
+      - type: bind
+        source: ${V2D_GRIP_SEED:?Set V2D_GRIP_SEED to the private verified grip proposal}
+        target: /physics-inputs/grasp-seeds.json
+        read_only: true
+        bind: {create_host_path: false}

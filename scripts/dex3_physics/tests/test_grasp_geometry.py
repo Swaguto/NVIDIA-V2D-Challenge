@@ -12,6 +12,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from cooked_grasp_audit import convex_distance, convex_escape, world_convexes
 from grasp_preload import URDFKinematics
 from antipodal_seed import antipodal_pairs, exposed_faces
+from grip_force import open_pregrasp, point_jacobian
 
 
 def cube(half=0.01):
@@ -80,3 +81,54 @@ def test_antipodal_pair_requires_opposed_normals_and_friction_cone():
     assert not antipodal_pairs(points, bad, points[:2])
     _, outward = exposed_faces([cube()])
     assert len(outward) == 12
+
+
+def test_grip_jacobian_transpose_matches_virtual_work_and_world_rotation(tmp_path):
+    p = tmp_path / "hand.urdf"
+    p.write_text("""<robot name="test"><link name="root"/><link name="pad"/>
+      <joint name="hinge" type="revolute"><parent link="root"/><child link="pad"/>
+      <axis xyz="0 0 1"/><limit lower="-2" upper="2"/></joint></robot>""")
+    kin = URDFKinematics(p)
+    root = np.array([0, 0, 0, 0, 0, 0, 1])
+    jac = point_jacobian(kin, root, {"hinge": 0.0}, "pad", np.array([0.05, 0, 0]))
+    np.testing.assert_allclose(jac[:, 0], [0, 0.05, 0], atol=1e-10)
+    force = np.array([0, 6.0, 0])
+    assert (jac.T @ force)[0] == pytest.approx(0.3)
+    rot = Rotation.from_euler("xyz", [0.2, -0.5, 0.6])
+    moved = np.r_[[2, -1, 3], rot.as_quat()]
+    rotated = point_jacobian(kin, moved, {"hinge": 0.0}, "pad", np.array([0.05, 0, 0]))
+    np.testing.assert_allclose(rotated.T @ rot.apply(force), jac.T @ force, atol=1e-9)
+
+
+def test_pregrasp_opens_opposed_pads_without_moving_the_wrist(tmp_path):
+    path = tmp_path / "pinch.urdf"
+    path.write_text("""<robot name="pinch"><link name="root"/><link name="a"/><link name="b"/>
+      <joint name="ja" type="revolute"><parent link="root"/><child link="a"/>
+      <axis xyz="0 0 1"/><limit lower="-1" upper="1"/></joint>
+      <joint name="jb" type="revolute"><parent link="root"/><child link="b"/>
+      <axis xyz="0 0 1"/><limit lower="-1" upper="1"/></joint></robot>""")
+    kin = URDFKinematics(path)
+    anchors = [
+        dict(link=link, point_local_m=[0.05, 0, 0], direction_world=[0, sign, 0])
+        for link, sign in [("a", 1), ("b", -1)]
+    ]
+    opened = open_pregrasp(
+        kin, [0, 0, 0, 0, 0, 0, 1], {"ja": 0, "jb": 0}, anchors, 0.004
+    )
+    assert opened["ja"] < 0 < opened["jb"]
+    assert abs(0.05 * np.sin(opened["ja"])) == pytest.approx(0.004, abs=1e-5)
+    # A pad corner needs more opening than its anchor point. Require the whole
+    # pad to clear a 2 mm thick object by 2 mm, not just its point target.
+    pad = cube(0.002) + [0.05, 0, 0]
+    terms = [
+        (link, pad, np.array([[0, 1, 0]]), np.array([-0.001]), np.array([0.001]))
+        for link in ["a", "b"]
+    ]
+    opened = open_pregrasp(
+        kin, [0, 0, 0, 0, 0, 0, 1], {"ja": 0, "jb": 0}, anchors, 0.004, terms
+    )
+    poses = kin.poses([0, 0, 0, 0, 0, 0, 1], opened)
+    for link in ["a", "b"]:
+        world = pad @ poses[link][:3, :3].T + poses[link][:3, 3]
+        gap = max(world[:, 1].min() - 0.001, -0.001 - world[:, 1].max())
+        assert gap >= 0.0018

@@ -86,7 +86,10 @@ def main():
     parser.add_argument("--static-grasp-seed", type=Path)
     parser.add_argument("--static-grasp-seed-sha256")
     parser.add_argument("--controlled-acquisition", action="store_true")
+    parser.add_argument("--controlled-grip-lift", action="store_true")
     args = parser.parse_args()
+    if args.controlled_grip_lift and not args.controlled_acquisition:
+        parser.error("Controlled grip lift requires controlled acquisition")
     if args.static_load_check and args.supported_task_check:
         parser.error("Choose one physical diagnostic mode")
     if args.static_grasp_seed and (
@@ -181,6 +184,7 @@ def main():
             grasp_seed=args.static_grasp_seed,
             grasp_seed_sha256=args.static_grasp_seed_sha256,
             controlled_acquisition=args.controlled_acquisition,
+            controlled_grip_lift=args.controlled_grip_lift,
         )
         print("Prepared source-derived static grasps: " + str(len(prepared["samples"])))
     if args.check_only:
