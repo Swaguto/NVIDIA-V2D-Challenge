@@ -50,7 +50,7 @@ forces are introduced.
 
 ## Verification protocol
 
-The CPU suite has 93 passing tests, including bounded jitter rejection, retained
+The CPU suite has 95 passing tests, including bounded jitter rejection, retained
 linear motion, quaternion sign equivalence, immutable inputs, fixed registration,
 read-only lookahead, and rejection of late or aborted registration.
 
@@ -74,6 +74,37 @@ remains approximate. Approach gains and original force/torque limits are
 unchanged. The regression test checks this limit and unchanged force saturation.
 Nominal acceleration-aware load planning is independent of whether live contact
 allocation is enabled, allowing a fixed-posture comparison with the same plan.
+
+## Executed checkpoint
+
+Five new complete e002 comparisons ran with fresh wrist gates and passing
+gravity/contact controls. Every replay retains 343 original frames and 20 labelled
+settling frames. None completes reliable pot transport. Fixed-posture compensated
+carry maintains a tight grasp through source time 7 s, then loses contact near
+7.9 s. Its unblended registered reference clears the table by approximately
+55–69 mm during the later loss; the actual pot also clears it. Late loss is not
+explained by table penetration. The early reference can still cross the table
+by 4.2 mm after settling alignment, so collision-feasible reference planning is
+not fully solved.
+
+The smoothing-only comparison has the best new lid position diagnostics: 5.26 /
+6.07 mm relative drift and 100% required-digit contact-gate coverage. Rotation
+drift remains 10.31 / 11.24°. These are separate diagnostics, not task acceptance.
+See [complete measurements](grasp-reference-repair-results-v1.json).
+
+The optional underside search rolls the wrist about the two pinch contacts,
+searches downward-facing object surfaces and verifies the resulting middle
+contact pushes upward. Reconfiguration stays within original source-relative
+joint and wrist bounds. The final search includes fixture-floor clearance in
+the optimization and independent postcheck. All original 1.5 mm penetration
+limits remain. Of 44 fitted trials across nine configurations, none passes
+every contact, support-direction and clearance check. No rejected proposal was
+sent to a GPU grasp trial. This bounded search does not establish infeasibility.
+See [search receipts](geometry-search-results-v1.json).
+
+The remaining priority is a physically robust grasp and collision-feasible
+approach/transport, followed by fresh load and complete-episode validation.
+These failures are not accepted demonstrations for policy training.
 
 Compare two fresh complete e002 trials with the same hybrid controller and
 400 Hz grip solver: smoothing alone, then smoothing plus closure alignment.

@@ -25,6 +25,31 @@ def cube(half=0.01):
     return np.array(list(product([-half, half], repeat=3)))
 
 
+def test_pinch_roll_keeps_both_fk_contact_anchors_fixed_and_changes_support_direction():
+    from grasp_roll import roll_about_contacts
+
+    root = np.array([0.2, -0.1, 1.0, 0, 0, 0, 1.0])
+    anchors = np.array([[-0.02, 0, -0.08], [0.02, 0, -0.08]])
+    contacts = anchors + root[:3]
+    before = contacts.copy()
+    rolled = roll_about_contacts(root, contacts, 150)
+    reconstructed = Rotation.from_quat(rolled[3:]).apply(anchors) + rolled[:3]
+    np.testing.assert_allclose(reconstructed, contacts, atol=1e-12)
+    assert Rotation.from_quat(rolled[3:]).apply([0, 0, -1])[2] > 0.8
+    np.testing.assert_array_equal(contacts, before)
+    np.testing.assert_array_equal(root, [0.2, -0.1, 1, 0, 0, 0, 1])
+
+
+def test_pinch_roll_rejects_degenerate_axes_and_out_of_bound_rotation():
+    from grasp_roll import roll_about_contacts
+
+    root = [0, 0, 0, 0, 0, 0, 1]
+    with pytest.raises(ValueError, match="close"):
+        roll_about_contacts(root, [[0, 0, 0], [0, 0, 0]], 150)
+    with pytest.raises(ValueError, match="Invalid"):
+        roll_about_contacts(root, [[0, 0, 0], [0.02, 0, 0]], 181)
+
+
 def test_distance_and_escape_for_analytic_solids():
     a, b = cube(), cube() + [0.023, 0, 0]
     distance, witness = convex_distance(a, b)

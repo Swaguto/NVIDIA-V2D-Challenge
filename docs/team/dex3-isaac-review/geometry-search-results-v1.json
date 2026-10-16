@@ -1,0 +1,230 @@
+{
+  "schema": "v2d.gravity-support-grasp-search.v1",
+  "trials": [
+    {
+      "name": "pot-under-support-roll-120-floor-v3",
+      "proposal_sha256": "c8e74018b340decff07c5bc47a8c1a73619c6b8f2b7811eda5b4b7d920db0576",
+      "generator_sha256": "e0b00f97cd39296f64074bbba9e456e0a02d28f9bce64aecec72142e86c685b3",
+      "wrist_roll_deg": -120.0,
+      "support_from_below": true,
+      "reconfigure_fingers": true,
+      "search": {
+        "surface_candidates": 702,
+        "fitted_candidates": 8,
+        "rejection_counts": {
+          "fit": 1,
+          "geometry": 7,
+          "load": 0
+        },
+        "geometrically_and_nominally_load_feasible": 0,
+        "closest_geometry_rejection": {
+          "score_m": 0,
+          "middle_inward_up_component": 0.00550347564464895,
+          "maximum_piece_axis_depth_m": 0.0010635342526405219
+        }
+      },
+      "accepted_candidate": false,
+      "physical_task_accepted": false
+    },
+    {
+      "name": "pot-under-support-roll-120-wide-v2",
+      "proposal_sha256": "2bf7719162666c6cc063490a6a26a2dd8ddc9463178178b6bc2f57451dad73ce",
+      "generator_sha256": "5a905a7b51f60764dfa0f9a124e853032f757fe9d33a8ad0f7f4712a76815e58",
+      "wrist_roll_deg": -120.0,
+      "support_from_below": true,
+      "reconfigure_fingers": true,
+      "search": {
+        "surface_candidates": 702,
+        "fitted_candidates": 4,
+        "rejection_counts": {
+          "fit": 1,
+          "geometry": 3,
+          "load": 0
+        },
+        "geometrically_and_nominally_load_feasible": 0,
+        "closest_geometry_rejection": {
+          "score_m": 0.0008169932737606134,
+          "maximum_piece_axis_depth_m": 0.0008348791374101425
+        }
+      },
+      "accepted_candidate": false,
+      "physical_task_accepted": false
+    },
+    {
+      "name": "pot-under-support-roll-135-floor-v3",
+      "proposal_sha256": "810819909b5f2f4a3f24f9ef967750194ef2184afca7a07373715defeae8ff2f",
+      "generator_sha256": "e0b00f97cd39296f64074bbba9e456e0a02d28f9bce64aecec72142e86c685b3",
+      "wrist_roll_deg": -135.0,
+      "support_from_below": true,
+      "reconfigure_fingers": true,
+      "search": {
+        "surface_candidates": 707,
+        "fitted_candidates": 8,
+        "rejection_counts": {
+          "fit": 0,
+          "geometry": 8,
+          "load": 0
+        },
+        "geometrically_and_nominally_load_feasible": 0,
+        "closest_geometry_rejection": {
+          "score_m": 9.473041932167581e-05,
+          "middle_inward_up_component": 0.0,
+          "maximum_piece_axis_depth_m": 0.0014763881191968992
+        }
+      },
+      "accepted_candidate": false,
+      "physical_task_accepted": false
+    },
+    {
+      "name": "pot-under-support-roll-150-v1",
+      "proposal_sha256": "d305a7aa0aa0e9ff87b7555125f8a503e8d7371697b0b949794cf61714325da3",
+      "generator_sha256": "2b3326e3294d02890aa0f8b9b2150258d0ff03b29e4c7b86ccb6086dbbe4526f",
+      "wrist_roll_deg": -150.0,
+      "support_from_below": true,
+      "reconfigure_fingers": false,
+      "search": {
+        "surface_candidates": 665,
+        "fitted_candidates": 4,
+        "rejection_counts": {
+          "fit": 0,
+          "geometry": 4,
+          "load": 0
+        },
+        "geometrically_and_nominally_load_feasible": 0,
+        "closest_geometry_rejection": {
+          "score_m": 0.017851757219099332,
+          "maximum_piece_axis_depth_m": 0.019351757219099333
+        }
+      },
+      "accepted_candidate": false,
+      "physical_task_accepted": false
+    },
+    {
+      "name": "pot-under-support-roll-150-wide-v2",
+      "proposal_sha256": "6043b2f63a59efc3e403ef708fd863380d556b57d9aac48a98d75f60730a5dab",
+      "generator_sha256": "5a905a7b51f60764dfa0f9a124e853032f757fe9d33a8ad0f7f4712a76815e58",
+      "wrist_roll_deg": -150.0,
+      "support_from_below": true,
+      "reconfigure_fingers": true,
+      "search": {
+        "surface_candidates": 665,
+        "fitted_candidates": 4,
+        "rejection_counts": {
+          "fit": 0,
+          "geometry": 4,
+          "load": 0
+        },
+        "geometrically_and_nominally_load_feasible": 0,
+        "closest_geometry_rejection": {
+          "score_m": 0.017396214132030276,
+          "maximum_piece_axis_depth_m": 0.018896214132030277
+        }
+      },
+      "accepted_candidate": false,
+      "physical_task_accepted": false
+    },
+    {
+      "name": "pot-under-support-roll120-v1",
+      "proposal_sha256": "ac3009a87d1f30305694fe6591a40f73180fc8bf552cadd2a278cb20b61ac87f",
+      "generator_sha256": "2b3326e3294d02890aa0f8b9b2150258d0ff03b29e4c7b86ccb6086dbbe4526f",
+      "wrist_roll_deg": 120.0,
+      "support_from_below": true,
+      "reconfigure_fingers": false,
+      "search": {
+        "surface_candidates": 225,
+        "fitted_candidates": 4,
+        "rejection_counts": {
+          "fit": 0,
+          "geometry": 4,
+          "load": 0
+        },
+        "geometrically_and_nominally_load_feasible": 0,
+        "closest_geometry_rejection": {
+          "score_m": 0.010588273440688202,
+          "maximum_piece_axis_depth_m": 0.010891069415242559
+        }
+      },
+      "accepted_candidate": false,
+      "physical_task_accepted": false
+    },
+    {
+      "name": "pot-under-support-roll120-wide-v2",
+      "proposal_sha256": "a5502a9c94251822b86d6e41d70acd9577b64e3149ce6a977e9dbe73efd80b65",
+      "generator_sha256": "5a905a7b51f60764dfa0f9a124e853032f757fe9d33a8ad0f7f4712a76815e58",
+      "wrist_roll_deg": 120.0,
+      "support_from_below": true,
+      "reconfigure_fingers": true,
+      "search": {
+        "surface_candidates": 225,
+        "fitted_candidates": 4,
+        "rejection_counts": {
+          "fit": 0,
+          "geometry": 4,
+          "load": 0
+        },
+        "geometrically_and_nominally_load_feasible": 0,
+        "closest_geometry_rejection": {
+          "score_m": 0.012757416177163515,
+          "maximum_piece_axis_depth_m": 0.014257416177163515
+        }
+      },
+      "accepted_candidate": false,
+      "physical_task_accepted": false
+    },
+    {
+      "name": "pot-under-support-roll150-v1",
+      "proposal_sha256": "eca37e5943e5b56d2e176011df7a27f394439b4256ea308b38c7599cbe1b91a6",
+      "generator_sha256": "2b3326e3294d02890aa0f8b9b2150258d0ff03b29e4c7b86ccb6086dbbe4526f",
+      "wrist_roll_deg": 150.0,
+      "support_from_below": true,
+      "reconfigure_fingers": false,
+      "search": {
+        "surface_candidates": 316,
+        "fitted_candidates": 4,
+        "rejection_counts": {
+          "fit": 1,
+          "geometry": 3,
+          "load": 0
+        },
+        "geometrically_and_nominally_load_feasible": 0,
+        "closest_geometry_rejection": {
+          "score_m": 0.014249187998362918,
+          "maximum_piece_axis_depth_m": 0.015749187998362918
+        }
+      },
+      "accepted_candidate": false,
+      "physical_task_accepted": false
+    },
+    {
+      "name": "pot-under-support-roll150-wide-v2",
+      "proposal_sha256": "33ac1d15ceeb56620eb5ef8551eac4b47b0467fa09a58f9aff253508c2ff09fe",
+      "generator_sha256": "5a905a7b51f60764dfa0f9a124e853032f757fe9d33a8ad0f7f4712a76815e58",
+      "wrist_roll_deg": 150.0,
+      "support_from_below": true,
+      "reconfigure_fingers": true,
+      "search": {
+        "surface_candidates": 316,
+        "fitted_candidates": 4,
+        "rejection_counts": {
+          "fit": 0,
+          "geometry": 4,
+          "load": 0
+        },
+        "geometrically_and_nominally_load_feasible": 0,
+        "closest_geometry_rejection": {
+          "score_m": 0.012227470126871772,
+          "maximum_piece_axis_depth_m": 0.013727470126871772
+        }
+      },
+      "accepted_candidate": false,
+      "physical_task_accepted": false
+    }
+  ],
+  "fitted_candidates": 44,
+  "valid_candidates": 0,
+  "new_gpu_grasp_trials_started": false,
+  "cpu_tests_passed": 95,
+  "source_observations_changed": false,
+  "physical_task_accepted": false,
+  "scope": "Bounded search failure is not proof of infeasibility; positive contact depths do not certify upward supporting contact normals"
+}
