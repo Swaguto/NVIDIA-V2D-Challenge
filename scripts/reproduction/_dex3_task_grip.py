@@ -51,7 +51,7 @@ def aborted_hand_hold(anchor_pose, initial_fingers, open_fingers, elapsed_source
 def denoise_robot_reference(times, poses, horizon_s=0.1):
     """Bounded acceleration regularization of robot targets, never observations.
 
-    Every translation knot stays within 5 mm and every rotation knot within two
+    Every translation knot stays within 3 mm and every rotation knot within two
     degrees of its input. Quaternion signs are unwrapped before chordal fitting.
     The caller separately audits the interpolated path against the input path.
     """
@@ -87,7 +87,7 @@ def denoise_robot_reference(times, poses, horizon_s=0.1):
     result = values.copy()
     # The coordinate boxes imply Euclidean bounds. For a unit quaternion q,
     # normalizing q+e changes its rotation by <= 2 asin(||e||).
-    bounds = [0.005 / np.sqrt(3)] * 3 + [np.sin(np.deg2rad(2) / 2) / 2] * 4
+    bounds = [0.003 / np.sqrt(3)] * 3 + [np.sin(np.deg2rad(2) / 2) / 2] * 4
     for j, bound in enumerate(bounds):
         offset = lsq_linear(
             matrix,

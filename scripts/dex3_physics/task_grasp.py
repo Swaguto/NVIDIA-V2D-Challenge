@@ -147,12 +147,32 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
             if denoising:
                 poses = denoise_robot_reference(times, poses)
             reference = SmoothObjectReference(times, poses)
+            clearance_raise = 0.0
+            if denoising and "scene_projection" in result:
+                # Smoothing rotation/height can reintroduce a table crossing.
+                # A constant offset preserves derivatives; dense readback is
+                # diagnostic, not a continuous collision certificate.
+                scene = result["scene_projection"]
+                vertices = np.concatenate(scene["expected_body_local_convexes"][oi])
+                grid = np.linspace(times[0], times[-1], 20 * (len(times) - 1) + 1)
+                bottom = reference.position(grid)[:, 2] + np.einsum(
+                    "ij,kj->ik", reference.rotation(grid).as_matrix()[:, 2, :], vertices
+                ).min(axis=1)
+                clearance_raise = max(
+                    0.0,
+                    scene["inferred_support_height_stage_m"]
+                    + 0.0002
+                    - float(bottom.min()),
+                )
+                poses[:, 2] += clearance_raise
+                reference = SmoothObjectReference(times, poses)
             object_references[oi] = reference
             audit = reference.deviation_audit()
             if denoising:
                 grid = np.linspace(times[0], times[-1], 20 * (len(times) - 1) + 1)
                 audit.update(
                     denoising_horizon_source_s=0.1,
+                    denoising_table_clearance_raise_m=float(clearance_raise),
                     maximum_position_change_from_unsmoothed_cubic_m=float(
                         np.linalg.norm(
                             reference.position(grid) - baseline.position(grid), axis=1
