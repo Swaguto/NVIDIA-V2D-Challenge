@@ -11,6 +11,7 @@ from pathlib import Path
 
 import numpy as np
 from scipy.spatial.transform import Rotation
+from v2d_dex3_flashchord.sampling import resample_targets
 
 
 def phase_metrics(hand, objects, reference, pad_force):
@@ -50,6 +51,11 @@ def phase_metrics(hand, objects, reference, pad_force):
         maximum_source_position_error_m=float(
             np.linalg.norm(objects[:, :3] - reference[:, :3], axis=1).max()
         ),
+        maximum_source_orientation_error_deg=float(
+            np.rad2deg(
+                (Rotation.from_quat(reference[:, 3:]).inv() * o).magnitude()
+            ).max()
+        ),
     )
 
 
@@ -75,7 +81,9 @@ def audit(run, inputs):
     with np.load(run / "native-contacts-readback.npz") as f:
         contacts = {k: f[k].copy() for k in f.files}
     with np.load(inputs / "targets.npz") as f:
-        target = f["object_poses"]
+        target = resample_targets({k: f[k].copy() for k in f.files}, len(body))[
+            "object_poses"
+        ]
         source_times = f["timestamps_s"]
     labels = json.loads((run / "body-labels.json").read_text())
     worlds = report["metrics"]["world_count"]
@@ -112,30 +120,40 @@ def audit(run, inputs):
                 (times >= phase["close_s"] + 0.05 - 1e-8)
                 & (times <= phase["release_start_s"] - 0.05 + 1e-8)
             )
-            reference = np.stack(
-                [
-                    np.interp(times[indices], source_times, target[:, oi, axis])
-                    for axis in range(3)
-                ],
-                axis=1,
-            )
-            # phase_metrics only needs reference translation; unit identity rotation.
-            reference = np.column_stack(
-                [reference, np.tile([0, 0, 0, 1], (len(reference), 1))]
-            )
+            reference = target[indices, oi]
             for world in range(worlds):
                 offset = world * stride
                 forces = np.zeros((len(indices), len(required)))
+                penetration = []
                 for fi, frame in enumerate(indices):
                     start, end = contacts["frame_offsets"][frame : frame + 2]
                     a = contacts["body0_ids"][start:end]
                     b = contacts["body1_ids"][start:end]
                     force = contacts["contact_force_w"][start:end]
+                    if "signed_gap_m" in contacts:
+                        hand_bodies = [
+                            i + offset
+                            for i, label in enumerate(local_labels)
+                            if label.startswith("dex3_" + side + "/")
+                        ]
+                        assigned = (
+                            np.isin(a, hand_bodies) & (b == object_id + offset)
+                        ) | (np.isin(b, hand_bodies) & (a == object_id + offset))
+                        gaps = contacts["signed_gap_m"][start:end][assigned]
+                        penetration.append(
+                            float(max(0, -gaps.min())) if len(gaps) else 0.0
+                        )
                     for pi, pad in enumerate(required):
                         pair = ((a == pad + offset) & (b == object_id + offset)) | (
                             (b == pad + offset) & (a == object_id + offset)
                         )
                         forces[fi, pi] = np.linalg.norm(force[pair], axis=1).sum()
+                measured = phase_metrics(
+                    body[indices, hand_id + offset],
+                    body[indices, object_id + offset],
+                    reference,
+                    forces,
+                )
                 rows.append(
                     dict(
                         side=side,
@@ -145,11 +163,17 @@ def audit(run, inputs):
                         sampled_frames=len(indices),
                         start_source_time_s=float(times[indices[0]]),
                         end_source_time_s=float(times[indices[-1]]),
-                        **phase_metrics(
-                            body[indices, hand_id + offset],
-                            body[indices, object_id + offset],
-                            reference,
-                            forces,
+                        **measured,
+                        maximum_sampled_hand_object_penetration_m=max(penetration)
+                        if penetration
+                        else None,
+                        sampled_penetration_verified=bool(penetration),
+                        supported_retention_with_sampled_depth_within_2mm=bool(
+                            penetration
+                            and max(penetration) <= 0.002
+                            and measured[
+                                "relative_retention_10mm_5deg_with_sampled_support"
+                            ]
                         ),
                     )
                 )
@@ -169,6 +193,7 @@ def audit(run, inputs):
             (run / "report.json").read_bytes()
         ).hexdigest(),
         analysis_source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        fitted_phase_policy_sha256=report.get("fitted_phase_policy_sha256"),
     )
 
 

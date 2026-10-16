@@ -31,7 +31,7 @@ from flash_chord.evaluation.rollout import (
 )
 from flash_chord.scene.collision import CollisionPolicy
 from flash_chord.scene.setup import setup_scene
-from flash_chord.runtime.contact import read_contacts_w
+from flash_chord.runtime.contact import read_contacts_w, contact_gaps_w
 from flash_chord.training.environment import WarpRLEnv
 from train import audit_scene
 
@@ -44,6 +44,7 @@ class ReadbackEnv:
         self.body, self.joints, self.motor = [], [], []
         self.joint_motor = []
         self.contacts = []
+        self.contact_gaps = []
         self.motor_target, self.feedback_weight = [], []
         self.velocity_target = []
         self.native_model = {}
@@ -100,6 +101,9 @@ class ReadbackEnv:
             self.joint_motor.append(force.numpy().copy())
         self.contacts.append(
             read_contacts_w(self.env.model, self.env.state_0, self.env.contacts)
+        )
+        self.contact_gaps.append(
+            contact_gaps_w(self.env.model, self.env.state_0, self.env.contacts)
         )
         return result
 
@@ -206,6 +210,7 @@ class ReadbackEnv:
         np.savez_compressed(
             output / "native-contacts-readback.npz",
             frame_offsets=np.cumsum([0] + [len(c) for c in self.contacts]),
+            signed_gap_m=np.concatenate(self.contact_gaps),
             **contact_arrays,
         )
         verification["contact_readback_scope"] = (
@@ -267,8 +272,45 @@ def main(cfg):
             env.observation.numpy().reshape(env.world_count, env.observation_dim)
         )
         zero = jnp.zeros((env.world_count, env.action.action_dim), dtype=jnp.float32)
+        phase_policy = None
+        plan_path = cfg.get("residual_plan")
+        plan_sha = None
+        if plan_path:
+            from v2d_dex3_flashchord.phase_prior import schedule
+            from v2d_dex3_flashchord.sampling import resample_targets
+
+            path = Path(plan_path)
+            plan = json.loads(path.read_text())
+            if (
+                plan["input_manifest_sha256"]
+                != hashlib.sha256(manifest_path.read_bytes()).hexdigest()
+            ):
+                raise ValueError("Diagnostic policy plan belongs to other inputs")
+            with np.load(manifest_path.parent / "targets.npz") as f:
+                data = resample_targets(
+                    {k: f[k].copy() for k in f.files}, setup.reference.num_frames
+                )
+            phase_policy = schedule(
+                json.loads((manifest_path.parent / "task-grips.json").read_text()),
+                plan,
+                list(env.action.sides),
+                {
+                    s: setup.scene.layout.hand(s).finger_joint_names
+                    for s in env.action.sides
+                },
+                data["timestamps_s"],
+            )
+            plan_sha = hashlib.sha256(path.read_bytes()).hexdigest()
+        cursor = [0]
 
         def policy(_state, _observation, key):
+            if phase_policy is not None:
+                action = jnp.broadcast_to(
+                    jnp.asarray(phase_policy[cursor[0]]),
+                    (env.world_count, env.action.action_dim),
+                )
+                cursor[0] += 1
+                return action, key
             return zero, key
 
         rollout = record_object_pose_rollout(
@@ -308,6 +350,7 @@ def main(cfg):
                 manifest_path.read_bytes()
             ).hexdigest(),
             learned_policy=False,
+            fitted_phase_policy_sha256=plan_sha,
             virtual_object_assistance=0.0,
             source_motion_speed=float(cfg.task.motion_speed),
             physical_task_accepted=False,

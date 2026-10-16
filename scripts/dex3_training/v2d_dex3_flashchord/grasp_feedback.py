@@ -230,6 +230,9 @@ class FeedbackGripAction(GripResidualAction):
             base.grip_stiffness,
         )
         self.reference_velocity = base.reference_velocity
+        self.phase_policy_prior = base.phase_policy_prior
+        if self.phase_policy_prior is not None:
+            self.combined_actor_action = base.combined_actor_action
         if self.reference_velocity is not None:
             self.velocity_dofs = base.velocity_dofs
             self.motor_velocity_target = base.motor_velocity_target

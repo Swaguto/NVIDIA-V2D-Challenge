@@ -14,6 +14,23 @@ import numpy as np
 import warp as wp
 from flash_chord.runtime.actions import ActionConfig, ResidualHandPoseAction
 from .sampling import resample_targets
+from .phase_prior import schedule as prior_schedule
+
+
+@wp.kernel
+def add_phase_policy_prior(
+    timestep: wp.array(dtype=wp.int32),
+    frames: int,
+    dimensions: int,
+    actor: wp.array(dtype=wp.float32),
+    prior: wp.array(dtype=wp.float32),
+    combined: wp.array(dtype=wp.float32),
+):
+    world, axis = wp.tid()
+    frame = wp.clamp(timestep[world], 0, frames - 1)
+    combined[world * dimensions + axis] = (
+        actor[world * dimensions + axis] + prior[frame * dimensions + axis]
+    )
 
 
 @wp.kernel
@@ -54,6 +71,7 @@ class GraspActionConfig(ActionConfig):
     input_root: str = "/data"
     wrist_reference_velocity: bool = False
     maximum_reference_wrist_speed_m_s: float = 1.0
+    phase_policy_prior: str | None = None
 
     def build(self, scene, device=None):
         if self.delay.max_steps != 0:
@@ -140,6 +158,39 @@ class GraspActionConfig(ActionConfig):
                 device=device,
             )
             result.motor_velocity_target = wp.zeros_like(result.joint_target)
+        if self.phase_policy_prior is not None:
+            path = (root / self.phase_policy_prior).resolve()
+            if (
+                not path.is_relative_to(root)
+                or self.phase_policy_prior not in manifest["files"]
+                or hashlib.sha256(path.read_bytes()).hexdigest()
+                != manifest["files"][self.phase_policy_prior]
+            ):
+                raise ValueError("Phase-policy prior is not bound to these inputs")
+            plan = json.loads(path.read_text())
+            if plan["input_manifest_sha256"] != manifest.get(
+                "phase_policy_prior_base_manifest_sha256"
+            ):
+                raise ValueError("Fitted phase policy belongs to other inputs")
+            if self.input_mode != "raw" or (
+                self.wrist_pos_scale,
+                self.wrist_ori_scale,
+                self.finger_joint_pos_scale,
+            ) != (0.05, 0.15, 0.15):
+                raise ValueError(
+                    "Fitted phase prior requires the measured residual action scale"
+                )
+            policy = prior_schedule(
+                json.loads((root / "task-grips.json").read_text()),
+                plan,
+                list(base.sides),
+                {s: scene.layout.hand(s).finger_joint_names for s in base.sides},
+                sampled["timestamps_s"],
+            )
+            result.phase_policy_prior = wp.array(
+                policy.ravel(), dtype=wp.float32, device=device
+            )
+            result.combined_actor_action = wp.zeros_like(result.buffers.raw_action)
         return result
 
 
@@ -151,8 +202,23 @@ class GripResidualAction(ResidualHandPoseAction):
         )
         self.grip_stiffness = stiffness
         self.reference_velocity = None
+        self.phase_policy_prior = None
 
     def process(self, action, timestep, state=None):
+        if self.phase_policy_prior is not None:
+            wp.launch(
+                add_phase_policy_prior,
+                dim=(self.buffers.world_count, self.action_dim),
+                inputs=[
+                    timestep,
+                    self.buffers.reference.num_frames,
+                    self.action_dim,
+                    action,
+                    self.phase_policy_prior,
+                    self.combined_actor_action,
+                ],
+            )
+            action = self.combined_actor_action
         super().process(action, timestep, state)
         layout = self.buffers.layout
         wp.launch(

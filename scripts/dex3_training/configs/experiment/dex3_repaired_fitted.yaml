@@ -1,0 +1,8 @@
+# @package _global_
+defaults:
+  - dex3_repaired_velocity
+  - _self_
+
+# Requires a hash-bound plan that passed independent native physics replay.
+action:
+  phase_policy_prior: phase-policy.json
