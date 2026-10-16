@@ -18,7 +18,7 @@ from _dex3_task_grip import (  # noqa: E402
 def test_bounded_denoising_removes_jitter_without_erasing_linear_motion_or_editing_input():
     times = np.linspace(0, 2, 81)
     trend = np.c_[0.03 * times, times * 0, times * 0]
-    jitter = 0.002 * np.cos(2 * np.pi * 10 * times)
+    jitter = 0.001 * np.cos(2 * np.pi * 10 * times)
     poses = np.c_[
         trend + jitter[:, None] * [0, 1, 0],
         Rotation.from_rotvec(jitter[:, None] * [0, 0, 8]).as_quat(),
@@ -29,7 +29,12 @@ def test_bounded_denoising_removes_jitter_without_erasing_linear_motion_or_editi
     assert np.std(filtered[8:-8, 1]) < np.std(poses[8:-8, 1]) / 10
     assert np.std(Rotation.from_quat(filtered[8:-8, 3:]).as_rotvec()[:, 2]) < 0.001
     np.testing.assert_array_equal(poses, original)
-    assert np.linalg.norm(filtered[:, :3] - poses[:, :3], axis=1).max() <= 0.005
+    assert np.linalg.norm(filtered[:, :3] - poses[:, :3], axis=1).max() <= 0.003
+    # A larger outlier must hit the displacement bound rather than be erased.
+    outlier = poses.copy()
+    outlier[len(times) // 2, :3] += 0.02
+    bounded = denoise_robot_reference(times, outlier)
+    assert np.linalg.norm(bounded[:, :3] - outlier[:, :3], axis=1).max() <= 0.003001
     angles = (
         Rotation.from_quat(filtered[:, 3:]) * Rotation.from_quat(poses[:, 3:]).inv()
     ).magnitude()
