@@ -1,5 +1,11 @@
 # Dex3 development training
 
+For the newer **343-frame full-task experiment**, measured initial/trained
+results, corrected force-plan clock and local reproduction pack, start with
+[the ordered fixes checkpoint](../../docs/team/dex3-isaac-review/ORDERED_FIXES.md).
+The 75-frame experiment below is retained as historical evidence. Neither
+experiment has achieved successful complete-task retention.
+
 This is a short unassisted training path for two floating Dex3 hands. It uses the
 submission kit's FlashCHORD runtime at
 `8c778f905cb35f76f8e6cd6e2ea486da4fb9e0ef`, Newton/MuJoCo-Warp physics,
