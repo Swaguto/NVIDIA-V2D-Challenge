@@ -30,6 +30,10 @@ def sha(path):
 def prepare(base, case, task_spec, out):
     original = json.loads((base / "manifest.json").read_text())
     spec = json.loads(task_spec.read_text())
+    if spec.get("source_motion_speed") != 1.0:
+        raise ValueError(
+            "Native training requires a force plan computed at source speed 1.0"
+        )
     if spec["case_manifest_sha256"] != sha(case / "file-manifest.json"):
         raise ValueError("Task reference is bound to a different reconstruction")
     declared = json.loads((case / "file-manifest.json").read_text())["files_sha256"]
@@ -154,6 +158,9 @@ def prepare(base, case, task_spec, out):
     manifest.update(
         schema="v2d.dex3-training-task.v3",
         target_contract="inferred_robot_grasp_commands.v1",
+        playback_source_motion_speed=1.0,
+        motor_plan_source_motion_speed=1.0,
+        inertial_force_plan_clock_verified=True,
         source_rows_half_open=[0, count],
         source_frame_indices=source["frame_indices"].tolist(),
         selected_frame_count=count,

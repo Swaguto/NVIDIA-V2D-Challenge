@@ -21,7 +21,15 @@ from grasp_preload import URDFKinematics  # noqa: E402
 from grip_force import point_jacobian, solve_gravity_contacts  # noqa: E402
 
 
-def build(case, original_samples, proposal, stage_rotation, urdfs):
+def build(
+    case,
+    original_samples,
+    proposal,
+    stage_rotation,
+    urdfs,
+    *,
+    physical_source_speed=None,
+):
     """Produce robot-only commands, preserving source masks, frames and geometry."""
     samples, changed = apply_grasp_seeds(original_samples, proposal)
     if set(changed) != {s["prefix"] for s in original_samples}:
@@ -47,7 +55,11 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
     load_model = proposal.get("live_contact_load_model", "gravity")
     bounded_reacquisition = proposal.get("experimental_bounded_reacquisition", False)
     patch_minimum = float(proposal.get("minimum_live_patch_force_N", 0.5))
-    speed = float(proposal.get("source_motion_speed", 0.5))
+    speed = float(
+        proposal.get("source_motion_speed", 0.5)
+        if physical_source_speed is None
+        else physical_source_speed
+    )
     if (
         interpolation not in {"piecewise", "cubic"}
         or not isinstance(denoising, bool)
@@ -60,7 +72,7 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
         or (registration and not bounded_reacquisition)
         or load_model not in {"gravity", "reference_acceleration"}
         or not np.isfinite(speed)
-        or not 0.1 <= speed <= 0.5
+        or not 0.1 <= speed <= (0.5 if physical_source_speed is None else 1.0)
         or not isinstance(bounded_reacquisition, bool)
         or not 0.05 <= patch_minimum <= 0.5
         or (load_model == "reference_acceleration" and interpolation != "cubic")

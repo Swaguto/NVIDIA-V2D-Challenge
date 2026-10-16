@@ -87,6 +87,9 @@ def load_dex3(
     target_fps = fps if control_fps is None else float(control_fps)
     if motion_speed != 1:
         raise ValueError("Dex3 references require unchanged source motion speed")
+    planned_speed = manifest.get("motor_plan_source_motion_speed")
+    if planned_speed is not None and planned_speed != motion_speed:
+        raise ValueError("Frozen motor force plan and playback speed differ")
     with np.load(root / "targets.npz", allow_pickle=False) as source:
         data = {k: source[k].copy() for k in source.files}
     count = len(data["frame_indices"])
