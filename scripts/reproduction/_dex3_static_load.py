@@ -1931,7 +1931,7 @@ def run_supported_task(
         "experimental_live_contact_wrench", False
     ):
         sys.path.insert(0, str(Path(__file__).parents[1] / "dex3_physics"))
-        from live_contact_control import allocate
+        from live_contact_control import allocate, patch_readback
         from grasp_preload import URDFKinematics
 
         live_kinematics = {
@@ -2612,6 +2612,11 @@ def run_supported_task(
                                     active=False,
                                     fallback_to_frozen_position_and_effort=str(error),
                                 )
+                            live_details["input_patch_readback"] = patch_readback(
+                                normal_data,
+                                indices,
+                                prepared["samples"][si]["object"],
+                            )
                     force = torch.tensor(
                         wrench[None, :3], dtype=torch.float32, device=sim.device
                     )

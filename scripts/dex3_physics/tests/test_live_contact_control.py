@@ -5,7 +5,11 @@ import numpy as np
 import pytest
 
 sys.path.insert(0, str(Path(__file__).parents[1]))
-from live_contact_control import contact_patches, motor_effort  # noqa: E402
+from live_contact_control import (  # noqa: E402
+    contact_patches,
+    motor_effort,
+    patch_readback,
+)
 
 
 def test_live_patches_select_the_primary_object_and_ignore_unused_capacity():
@@ -32,6 +36,18 @@ def test_live_patches_select_the_primary_object_and_ignore_unused_capacity():
     moved, directions = contact_patches(shifted, [0, 1], 1)
     np.testing.assert_allclose(moved, centers + [4, -2, 3])
     np.testing.assert_allclose(directions, inward)
+    # Reversing both signed force and normal preserves the physical force.
+    # Dropping negative scalars would falsely reject a fully loaded patch.
+    reversed_data = list(data)
+    reversed_data[0] = -forces
+    reversed_data[2] = -normals
+    reversed_centers, reversed_inward = contact_patches(reversed_data, [0, 1], 1)
+    np.testing.assert_allclose(reversed_centers, centers)
+    np.testing.assert_allclose(reversed_inward, inward)
+    evidence = patch_readback(reversed_data, [0, 1], 1)
+    assert evidence[0]["signed_scalar_min_N"] == -4
+    assert evidence[0]["scalar_magnitude_sum_N"] == 6
+    np.testing.assert_allclose(evidence[0]["resultant_force_on_hand_N"], [6, 0, 0])
     missing = list(data)
     missing[-2] = np.zeros((2, 2), dtype=int)
     with pytest.raises(ValueError, match="missing"):

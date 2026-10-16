@@ -230,3 +230,21 @@ The runtime enforces the free-space prerequisite again. Inspect
 `grip-task/review/index.html`, the grasp audit and wrist gate. Full task and
 learned policy acceptance remain false. Back up outputs and stop Brev after the
 run and whenever it is idle.
+
+## First live-contact validation
+
+The user approved another $10 (cumulative cap $20) for the existing stoppable
+L40S. Overlay v22 passed the fresh free-space and full wrist checks, but the pot
+still slipped. The live allocator was inactive for every loaded pot step: it
+reported insufficient or missing patch pressure and therefore repeated the
+frozen baseline. This is a failed activation check, not evidence that the live
+torque controller was physically exercised.
+
+The follow-up preserves the signed scalar multiplied by its reported normal
+when forming force. Absolute scalar magnitude weights contact centroids; negative
+scalars are no longer clipped to zero. Reversing both scalar and normal must
+preserve the physical patch, covered by the regression test. New per-patch
+telemetry records signed ranges, magnitude sums and resultant force, including
+fallback cases, so the simulator's actual convention can be checked. The change
+still needs a fresh GPU run. All 69 CPU tests pass. Input publication and PPO
+training remain pending physical validation.

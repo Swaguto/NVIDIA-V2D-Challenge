@@ -9,6 +9,30 @@ import numpy as np
 from grip_force import point_jacobian, solve_gravity_contacts
 
 
+def patch_readback(normal_data, sensor_indices, object_index):
+    """Retain signed scalar evidence for selected patches, excluding capacity."""
+    forces, _points, normals, _distances, counts, starts = map(np.asarray, normal_data)
+    forces = forces.reshape(-1)
+    result = []
+    for index in sensor_indices:
+        count, start = (
+            int(counts[index, object_index]),
+            int(starts[index, object_index]),
+        )
+        item = dict(sensor_index=index, count=count, start=start)
+        if count > 0 and start >= 0 and start + count <= len(forces):
+            f, n = forces[start : start + count], normals[start : start + count]
+            if np.isfinite(f).all() and np.isfinite(n).all():
+                item.update(
+                    signed_scalar_min_N=float(f.min()),
+                    signed_scalar_max_N=float(f.max()),
+                    scalar_magnitude_sum_N=float(np.abs(f).sum()),
+                    resultant_force_on_hand_N=(f[:, None] * n).sum(0).tolist(),
+                )
+        result.append(item)
+    return result
+
+
 def contact_patches(normal_data, sensor_indices, object_index):
     magnitudes, points, normals, _distances, counts, starts = [
         np.asarray(x) for x in normal_data
@@ -22,14 +46,17 @@ def contact_patches(normal_data, sensor_indices, object_index):
         )
         if count <= 0 or start < 0 or start + count > len(magnitudes):
             raise ValueError("A required live pad contact is missing or truncated")
-        weights = np.maximum(magnitudes[start : start + count], 0)
+        signed = magnitudes[start : start + count]
+        weights = np.abs(signed)
         p, n = points[start : start + count], normals[start : start + count]
         if (
             not np.isfinite(np.r_[weights, p.ravel(), n.ravel()]).all()
             or weights.sum() < 0.5
         ):
             raise ValueError("Live pad pressure is insufficient or invalid")
-        reaction = (n * weights[:, None]).sum(0)
+        # The backend's signed scalar and normal jointly define force.  Use
+        # magnitude only for the centroid, preserving the sign in the reaction.
+        reaction = (n * signed[:, None]).sum(0)
         if np.linalg.norm(reaction) < 0.5:
             raise ValueError("Live patch has cancelling or ambiguous normals")
         centers.append((p * weights[:, None]).sum(0) / weights.sum())
