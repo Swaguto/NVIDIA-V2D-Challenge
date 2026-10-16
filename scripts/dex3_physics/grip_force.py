@@ -43,6 +43,7 @@ def solve_gravity_contacts(
     normal_cap_N=10.0,
     friction=1.0,
     minimum_normal_N=2.0,
+    desired_wrench_stage=None,
 ):
     """Plan motor forces under a point-contact Coulomb model; not a physical certificate."""
     points, inward, jacobians, com = [
@@ -99,7 +100,15 @@ def solve_gravity_contacts(
     bounds.extend([0.55] * len(torque_map))
     inequalities.extend(-torque_map)
     bounds.extend([0.55] * len(torque_map))
-    desired = np.array([0, 0, mass_kg * 9.81, 0, 0, 0])
+    desired = (
+        np.array([0, 0, mass_kg * 9.81, 0, 0, 0])
+        if desired_wrench_stage is None
+        else np.asarray(desired_wrench_stage, float)
+    )
+    if desired.shape != (6,) or not np.isfinite(desired).all():
+        raise ValueError(
+            "Desired object wrench must be finite with six world components"
+        )
     result = linprog(
         inward.ravel(),
         A_ub=np.asarray(inequalities),

@@ -67,7 +67,13 @@ def contact_patches(normal_data, sensor_indices, object_index):
 
 
 def motor_effort(
-    points, inward, jacobians, object_com, gravity_compensation, mass_kg=0.3
+    points,
+    inward,
+    jacobians,
+    object_com,
+    gravity_compensation,
+    mass_kg=0.3,
+    desired_wrench_stage=None,
 ):
     gravity = np.asarray(gravity_compensation, float)
     if gravity.shape != (7,) or not np.isfinite(gravity).all():
@@ -81,6 +87,7 @@ def motor_effort(
         normal_cap_N=10,
         friction=1.25,
         minimum_normal_N=2,
+        desired_wrench_stage=desired_wrench_stage,
     )
     effort = squeeze + gravity
     if np.max(abs(effort)) > 0.760001:
@@ -105,6 +112,7 @@ def allocate(
     normal_data,
     object_com,
     joint_gravity,
+    desired_wrench_stage=None,
 ):
     """Return actual simulator joint order; no state or object force is written."""
     if set(simulator_names) != set(kin.names):
@@ -119,7 +127,12 @@ def allocate(
         jacobians.append(point_jacobian(kin, root, q, pad["link"], local))
     gravity = np.asarray(joint_gravity)[[simulator_names.index(n) for n in kin.names]]
     effort, details = motor_effort(
-        points, inward, np.asarray(jacobians), object_com, gravity
+        points,
+        inward,
+        np.asarray(jacobians),
+        object_com,
+        gravity,
+        desired_wrench_stage=desired_wrench_stage,
     )
     details.update(
         contact_points_world_m=points.tolist(),

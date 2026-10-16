@@ -10,7 +10,7 @@ import numpy as np
 from scipy.spatial.transform import Rotation
 
 sys.path.insert(0, str(Path(__file__).parents[1] / "reproduction"))
-from _dex3_task_grip import relative_pose  # noqa: E402
+from _dex3_task_grip import SmoothObjectReference, relative_pose  # noqa: E402
 from _dex3_static_load import apply_grasp_seeds  # noqa: E402
 from grasp_preload import URDFKinematics  # noqa: E402
 from grip_force import point_jacobian, solve_gravity_contacts  # noqa: E402
@@ -34,6 +34,20 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
     tactile_enabled = proposal.get("experimental_tactile_seating", False)
     live_enabled = proposal.get("experimental_live_contact_wrench", False)
     live_posture = proposal.get("live_contact_posture_mode")
+    interpolation = proposal.get("task_reference_interpolation", "piecewise")
+    load_model = proposal.get("live_contact_load_model", "gravity")
+    speed = float(proposal.get("source_motion_speed", 0.5))
+    if (
+        interpolation not in {"piecewise", "cubic"}
+        or load_model not in {"gravity", "reference_acceleration"}
+        or not np.isfinite(speed)
+        or not 0.1 <= speed <= 0.5
+        or (
+            load_model == "reference_acceleration"
+            and (not live_enabled or interpolation != "cubic")
+        )
+    ):
+        raise ValueError("Invalid explicit robot reference/load configuration")
     if not 2 <= minimum_normal <= 5 or payload_mode not in {
         "nominal_gravity",
         "measured_reaction",
@@ -68,6 +82,9 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
         experimental_tactile_seating=tactile_enabled,
         experimental_live_contact_wrench=live_enabled,
         live_contact_posture_mode=live_posture,
+        task_reference_interpolation=interpolation,
+        live_contact_load_model=load_model,
+        source_motion_speed=speed,
         planner_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         required_physical_materials="hand 2.0 / object 0.5, average combination = 1.25; explicit combine mode and coefficient readback required",
     )
@@ -88,6 +105,34 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
         ):
             raise ValueError("Invalid bounded scene projection proposal")
         result["scene_projection"] = copy.deepcopy(scene)
+    object_references = {}
+    if interpolation == "cubic":
+        references, audits = {}, {}
+        for oi in sorted({sample["object"] for sample in samples}):
+            matrix = source[f"object_{oi}_world"]
+            poses = np.column_stack(
+                (
+                    stage.apply(matrix[:, :3, 3]),
+                    (stage * Rotation.from_matrix(matrix[:, :3, :3])).as_quat(),
+                )
+            )
+            if "scene_projection" in result:
+                poses[:, 2] += np.asarray(
+                    result["scene_projection"]["upward_corrections_m"]
+                )[:, oi]
+            reference = SmoothObjectReference(times, poses)
+            object_references[oi] = reference
+            audit = reference.deviation_audit()
+            if (
+                audit["maximum_position_deviation_from_piecewise_m"] > 0.006
+                or audit["maximum_rotation_deviation_from_piecewise_deg"] > 3
+            ):
+                raise ValueError(
+                    f"Smooth robot reference exceeds 6 mm / 3 degree interpolation bounds: object {oi}: {audit}"
+                )
+            references[str(oi)], audits[str(oi)] = poses.tolist(), audit
+        result["smooth_robot_object_reference"] = references
+        result["smooth_robot_reference_audit"] = audits
     for sample in samples:
         side, oi = sample["side"], sample["object"]
         si = ("left", "right").index(side)
@@ -157,6 +202,11 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
                         10.0,
                         friction=1.25,
                         minimum_normal_N=minimum_normal,
+                        desired_wrench_stage=object_references[oi].load_wrench(
+                            float(times[row]), speed
+                        )
+                        if load_model == "reference_acceleration"
+                        else None,
                     )
                 except ValueError as error:
                     raise ValueError(

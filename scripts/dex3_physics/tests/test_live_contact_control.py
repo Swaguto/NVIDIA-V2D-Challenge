@@ -68,3 +68,26 @@ def test_live_effort_adds_finger_gravity_with_correct_sign_and_preserves_real_li
     assert np.max(abs(after)) < 0.76
     with pytest.raises(ValueError, match="original motor limit"):
         motor_effort(points, inward, jac, np.zeros(3), np.ones(7))
+
+
+def test_accelerating_payload_receives_force_and_moment_without_changing_motor_caps():
+    from grip_force import solve_gravity_contacts
+
+    points = np.array([[-0.02, 0, 0], [0.02, 0, 0]])
+    inward = np.array([[1, 0, 0], [-1, 0, 0]])
+    jac = np.zeros((2, 3, 7))
+    jac[0, :, :3] = np.eye(3) * 0.01
+    jac[1, :, 3:6] = np.eye(3) * 0.01
+    desired = np.array([0.3, 0.1, 3.543, 0, 0.01, 0.005])
+    forces, torque, plan = solve_gravity_contacts(
+        points, inward, jac, np.zeros(3), 0.3, desired_wrench_stage=desired
+    )
+    np.testing.assert_allclose(
+        np.r_[forces.sum(0), np.cross(points, forces).sum(0)], desired, atol=1e-9
+    )
+    assert max(abs(torque)) <= 0.55
+    np.testing.assert_allclose(plan["desired_object_wrench_stage"], desired)
+    with pytest.raises(ValueError, match="six world"):
+        solve_gravity_contacts(
+            points, inward, jac, np.zeros(3), 0.3, desired_wrench_stage=[1, 2]
+        )

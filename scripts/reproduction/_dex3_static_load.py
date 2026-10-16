@@ -694,7 +694,9 @@ def prepare(
                 repo
                 / "robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d/mdp/actions/actions_cfg.py"
             ),
-            source_motion_speed=0.5,
+            source_motion_speed=grip_spec["source_motion_speed"]
+            if grip_spec is not None
+            else 0.5,
             wrist_diagnostic={
                 "controller": controller_mode,
                 "free_space": free_space,
@@ -2600,6 +2602,9 @@ def run_supported_task(
                                     cpu(
                                         hand.root_physx_view.get_gravity_compensation_forces()
                                     )[0, 6:],
+                                    desired_wrench_stage=grip_command[
+                                        "desired_object_wrench_stage"
+                                    ],
                                 )
                                 if (
                                     task_grip.spec["live_contact_posture_mode"]
@@ -2624,6 +2629,15 @@ def run_supported_task(
                             live_details["posture_mode"] = task_grip.spec[
                                 "live_contact_posture_mode"
                             ]
+                            live_details["load_model"] = task_grip.spec.get(
+                                "live_contact_load_model", "gravity"
+                            )
+                            live_details["requested_object_wrench_stage"] = (
+                                grip_command["desired_object_wrench_stage"].tolist()
+                                if grip_command["desired_object_wrench_stage"]
+                                is not None
+                                else None
+                            )
                     force = torch.tensor(
                         wrench[None, :3], dtype=torch.float32, device=sim.device
                     )
@@ -2981,9 +2995,20 @@ def run_supported_task(
             if task_grip is not None
             else False,
             "experimental_live_contact_wrench_enabled": live_kinematics is not None,
-            "live_contact_posture_mode": task_grip.spec.get(
-                "live_contact_posture_mode"
+            "task_reference_interpolation": task_grip.spec.get(
+                "task_reference_interpolation", "piecewise"
             )
+            if task_grip is not None
+            else None,
+            "smooth_robot_reference_audit": task_grip.spec.get(
+                "smooth_robot_reference_audit"
+            )
+            if task_grip is not None
+            else None,
+            "live_contact_load_model": task_grip.spec.get("live_contact_load_model")
+            if task_grip is not None
+            else None,
+            "live_contact_posture_mode": task_grip.spec.get("live_contact_posture_mode")
             if task_grip is not None
             else None,
             "source_frames": len(frames),

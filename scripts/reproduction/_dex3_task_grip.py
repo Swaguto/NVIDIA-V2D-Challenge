@@ -1,7 +1,8 @@
 """Explicit inferred robot grasp schedule; no simulator state writes."""
 
 import numpy as np
-from scipy.spatial.transform import Rotation
+from scipy.interpolate import CubicSpline
+from scipy.spatial.transform import Rotation, RotationSpline, Slerp
 
 
 def smooth(value):
@@ -36,6 +37,89 @@ def compose_pose(obj, relative):
     ]
 
 
+class SmoothObjectReference:
+    """Inferred robot reference through frozen pose knots; no observation edits.
+
+    Translation is C2 and rotation has continuous angular rate/acceleration in
+    the source interval. Outside it, the last/first pose is held for settling.
+    The endpoint hold is not a claim of smooth angular acceleration there.
+    """
+
+    def __init__(self, times, poses):
+        self.times = np.asarray(times, float).copy()
+        self.poses = np.asarray(poses, float).copy()
+        if (
+            self.times.ndim != 1
+            or len(self.times) < 3
+            or self.poses.shape != (len(self.times), 7)
+            or not np.isfinite(np.r_[self.times, self.poses.ravel()]).all()
+            or np.any(np.diff(self.times) <= 0)
+            or not np.allclose(np.linalg.norm(self.poses[:, 3:], axis=1), 1, atol=1e-6)
+        ):
+            raise ValueError("Smooth reference needs aligned finite pose knots")
+        self.position = CubicSpline(
+            self.times, self.poses[:, :3], axis=0, bc_type="clamped"
+        )
+        self.rotation = RotationSpline(
+            self.times, Rotation.from_quat(self.poses[:, 3:])
+        )
+
+    def pose(self, time_s):
+        t = float(np.clip(time_s, self.times[0], self.times[-1]))
+        return np.r_[self.position(t), self.rotation(t).as_quat()]
+
+    def load_wrench(self, time_s, speed, mass_kg=0.3, inertia_body=None):
+        if not np.isfinite([time_s, speed, mass_kg]).all() or not 0 < speed <= 1:
+            raise ValueError("Invalid physical reference time or speed")
+        inertia = (
+            np.eye(3) * 0.001 if inertia_body is None else np.asarray(inertia_body)
+        )
+        if (
+            not 0 < mass_kg <= 1
+            or inertia.shape != (3, 3)
+            or not np.isfinite(inertia).all()
+            or not np.allclose(inertia, inertia.T)
+            or np.linalg.eigvalsh(inertia).min() <= 0
+        ):
+            raise ValueError("Invalid nominal payload mass/inertia")
+        acceleration, omega, alpha = np.zeros(3), np.zeros(3), np.zeros(3)
+        if self.times[0] < time_s < self.times[-1]:
+            acceleration = self.position(time_s, 2) * speed**2
+            omega = self.rotation(time_s, 1) * speed
+            alpha = self.rotation(time_s, 2) * speed**2
+        rotation = self.rotation(float(np.clip(time_s, *self.times[[0, -1]])))
+        # RotationSpline returns body-axis angular derivatives.  Euler's rigid
+        # body equation includes the gyroscopic moment before rotating to world.
+        moment = rotation.apply(inertia @ alpha + np.cross(omega, inertia @ omega))
+        return np.r_[mass_kg * (acceleration + [0, 0, 9.81]), moment]
+
+    def deviation_audit(self):
+        grid = np.unique(
+            np.r_[
+                self.times,
+                np.linspace(
+                    self.times[0], self.times[-1], 20 * (len(self.times) - 1) + 1
+                ),
+            ]
+        )
+        linear = np.column_stack(
+            [np.interp(grid, self.times, self.poses[:, j]) for j in range(3)]
+        )
+        baseline = Slerp(self.times, Rotation.from_quat(self.poses[:, 3:]))(grid)
+        return dict(
+            samples=len(grid),
+            maximum_position_deviation_from_piecewise_m=float(
+                np.linalg.norm(self.position(grid) - linear, axis=1).max()
+            ),
+            maximum_rotation_deviation_from_piecewise_deg=float(
+                np.rad2deg((self.rotation(grid) * baseline.inv()).magnitude()).max()
+            ),
+            knots_preserved=True,
+            original_source_arrays_changed=False,
+            continuous_collision_clearance_certified=False,
+        )
+
+
 class TaskGripReference:
     """Robot commands use the original source clock and object reference.
 
@@ -48,6 +132,10 @@ class TaskGripReference:
         if spec["schema"] != "v2d.dex3-task-grips.v1" or spec["physical_task_accepted"]:
             raise ValueError("Need an explicitly unaccepted task grasp reference")
         self.spec = spec
+        self.object_references = {
+            int(oi): SmoothObjectReference(spec["source_times_s"], poses)
+            for oi, poses in spec.get("smooth_robot_object_reference", {}).items()
+        }
 
     def command(self, side, time_s, object_pose, measured_object_pose=None):
         phases = self.spec["phases"][side]
@@ -55,7 +143,10 @@ class TaskGripReference:
             raise ValueError("Nonfinite source time")
         object_pose = np.asarray(object_pose, float).copy()
         scene = self.spec.get("scene_projection")
-        if scene is not None:
+        oi = phases[0].get("object", 0)
+        if oi in self.object_references:
+            object_pose = self.object_references[oi].pose(time_s)
+        elif scene is not None:
             oi = phases[0]["object"]
             object_pose[2] += np.interp(
                 time_s,
@@ -105,6 +196,11 @@ class TaskGripReference:
                 object_feedback_weight=float(feedback)
                 if measured_object_pose is not None
                 else 0.0,
+                desired_object_wrench_stage=self.object_references[oi].load_wrench(
+                    time_s, self.spec["source_motion_speed"]
+                )
+                if self.spec.get("live_contact_load_model") == "reference_acceleration"
+                else None,
             )
 
         for phase in phases:
