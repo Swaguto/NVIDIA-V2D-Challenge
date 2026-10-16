@@ -59,10 +59,7 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
         or not 0.1 <= speed <= 0.5
         or not isinstance(bounded_reacquisition, bool)
         or not 0.05 <= patch_minimum <= 0.5
-        or (
-            load_model == "reference_acceleration"
-            and (not live_enabled or interpolation != "cubic")
-        )
+        or (load_model == "reference_acceleration" and interpolation != "cubic")
     ):
         raise ValueError("Invalid explicit robot reference/load configuration")
     if not 2 <= minimum_normal <= 5 or payload_mode not in {

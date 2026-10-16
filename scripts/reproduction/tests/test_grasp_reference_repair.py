@@ -149,3 +149,61 @@ def test_measurement_prediction_uses_world_actor_twist_and_real_time():
     delta = Rotation.from_quat(predicted[3:]) * Rotation.from_quat(pose[3:]).inv()
     np.testing.assert_allclose(delta.as_rotvec(), [0, 0, 0.005], atol=1e-12)
     np.testing.assert_array_equal(pose[:3], [1, 2, 3])
+
+
+def test_compensated_carry_retains_world_tracking_in_rigid_grasp_limit_and_force_cap():
+    import pytest
+    from _dex3_task_grip import (
+        blend_pose,
+        predict_measured_pose,
+        registered_carry_gain_scale,
+    )
+    from _dex3_wrist_control import implicit_root_wrench
+
+    dt = 1e-7  # Continuous-law limit; coupled discrete prediction is approximate.
+    hand = np.array([0, 0, 0, 0, 0, 0, 1.0])
+    desired = hand.copy()
+    desired[0] = 0.01
+    following = desired.copy()
+    following[0] += 0.03 * dt
+    velocity = np.array([0.02, 0, 0, 0, 0, 0])
+    measured_next = predict_measured_pose(hand, velocity, dt)
+    common = dict(
+        link_pose_xyzw=hand,
+        root_com_offset_b=np.zeros(3),
+        root_com_velocity_w=velocity,
+        root_mass_matrix_w=np.diag([0.7] * 3 + [0.001] * 3),
+        gravity_compensation_w=np.zeros(6),
+        dt=dt,
+        max_force=60,
+        max_torque=60,
+    )
+    nominal, _ = implicit_root_wrench(
+        **common,
+        target_link_pose_xyzw=desired,
+        target_link_pose_next_xyzw=following,
+    )
+    for weight in [0, 0.5, 0.9]:
+        scale = registered_carry_gain_scale(weight, True)
+        actual, _ = implicit_root_wrench(
+            **common,
+            target_link_pose_xyzw=blend_pose(desired, hand, weight),
+            target_link_pose_next_xyzw=blend_pose(following, measured_next, weight),
+            linear_stiffness=50 * scale,
+            linear_damping=10 * scale,
+            angular_stiffness=12 * scale,
+            angular_damping=0.1 * scale,
+        )
+        np.testing.assert_allclose(actual, nominal, atol=1e-5)
+    assert registered_carry_gain_scale(1, False) == 1  # approach stays unchanged
+    with pytest.raises(ValueError, match="bound"):
+        registered_carry_gain_scale(1, True)
+    far = desired.copy()
+    far[0] = 100
+    saturated, _ = implicit_root_wrench(
+        **common,
+        target_link_pose_xyzw=far,
+        linear_stiffness=500,
+        linear_damping=100,
+    )
+    assert saturated[0] == 60

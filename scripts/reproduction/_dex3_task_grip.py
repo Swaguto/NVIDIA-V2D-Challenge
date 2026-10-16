@@ -56,6 +56,22 @@ def predict_measured_pose(pose, link_twist_world, dt):
     ]
 
 
+def registered_carry_gain_scale(feedback_weight, registered_carry):
+    """Retain world gains while adding measured-grasp impedance.
+
+    In the rigid-grasp limit e_blend=(1-w)*e_world, also for velocity error.
+    Dividing gains by (1-w) prevents unintended tenfold softening. The implicit
+    discrete prediction remains approximate for coupled contact.
+    """
+    if not np.isfinite(feedback_weight) or not 0 <= feedback_weight <= 1:
+        raise ValueError("Invalid measured feedback gain weight")
+    if not registered_carry:
+        return 1.0
+    if feedback_weight > 0.900000001:
+        raise ValueError("Registered carry feedback exceeds its declared bound")
+    return 1 / max(0.1, 1 - feedback_weight)
+
+
 def aborted_hand_hold(anchor_pose, initial_fingers, open_fingers, elapsed_source_s):
     """Hold the measured wrist and open smoothly after unavailable reacquisition."""
     return np.asarray(anchor_pose, float).copy(), (

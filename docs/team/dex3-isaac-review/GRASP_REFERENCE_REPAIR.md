@@ -50,7 +50,7 @@ forces are introduced.
 
 ## Verification protocol
 
-The CPU suite has 92 passing tests, including bounded jitter rejection, retained
+The CPU suite has 93 passing tests, including bounded jitter rejection, retained
 linear motion, quaternion sign equivalence, immutable inputs, fixed registration,
 read-only lookahead, and rejection of late or aborted registration.
 
@@ -63,7 +63,17 @@ target velocity. This prediction is a robot control input, never an object state
 write. The [pinned runtime implementation](https://github.com/isaac-sim/IsaacLab/blob/28a37cecdd433c22d9eabd6a5954add9f13a8951/source/isaaclab_physx/isaaclab_physx/assets/rigid_object/rigid_object_data.py)
 documents the actor pose/twist frame and xyzw convention. CPU tests check
 attenuation, world-axis prediction and latched rejection of a dropped object.
-This candidate also defaults to false and needs a fresh GPU trial.
+This candidate also defaults to false.
+
+The first compliant trial reduced world stiffness along with its pose error and
+failed transport. The repaired controller scales wrist stiffness and damping by
+`1 / (1 - feedback_weight)` during registered carry, at most tenfold. In the
+rigid-grasp continuous limit this retains the original world tracking law while
+adding impedance against relative grasp error. Its discrete coupled prediction
+remains approximate. Approach gains and original force/torque limits are
+unchanged. The regression test checks this limit and unchanged force saturation.
+Nominal acceleration-aware load planning is independent of whether live contact
+allocation is enabled, allowing a fixed-posture comparison with the same plan.
 
 Compare two fresh complete e002 trials with the same hybrid controller and
 400 Hz grip solver: smoothing alone, then smoothing plus closure alignment.

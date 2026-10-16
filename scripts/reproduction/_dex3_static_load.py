@@ -1970,6 +1970,7 @@ def run_supported_task(
         contact_wrench,
         filtered_reaction_compensation,
         predict_measured_pose,
+        registered_carry_gain_scale,
         seat_contact_pads,
     )
 
@@ -2459,6 +2460,12 @@ def run_supported_task(
                     )
                     is_global = False
                 else:
+                    feedback_gain_scale = registered_carry_gain_scale(
+                        grip_command["object_feedback_weight"] if grip_command else 0,
+                        grip_command is not None
+                        and grip_command.get("settled_grasp_registration") is not None
+                        and task_grip.spec.get("experimental_carry_compliance", False),
+                    )
                     wrench, control_details = implicit_root_wrench(
                         link_pose_xyzw=cpu(hand.data.root_link_pose_w)[0],
                         target_link_pose_xyzw=target_pose,
@@ -2495,15 +2502,16 @@ def run_supported_task(
                             hand.root_physx_view.get_gravity_compensation_forces()
                         )[0, :6],
                         dt=dt,
-                        linear_stiffness=gains["tracking_controller_linear_stiffness"],
-                        linear_damping=gains["tracking_controller_linear_damping"],
+                        linear_stiffness=feedback_gain_scale * gains["tracking_controller_linear_stiffness"],
+                        linear_damping=feedback_gain_scale * gains["tracking_controller_linear_damping"],
                         angular_stiffness=gains[
                             "tracking_controller_angular_stiffness"
-                        ],
-                        angular_damping=gains["tracking_controller_angular_damping"],
+                        ] * feedback_gain_scale,
+                        angular_damping=feedback_gain_scale * gains["tracking_controller_angular_damping"],
                         max_force=gains["max_force"],
                         max_torque=gains["max_torque"],
                     )
+                    control_details["registered_carry_gain_scale"] = feedback_gain_scale
                     integral_force[si] = np.array(
                         control_details["integral_force_world_next_N"]
                     )
