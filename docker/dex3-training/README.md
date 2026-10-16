@@ -46,6 +46,10 @@ image, using identical frozen collision geometry. Both achieved **0% success**
 on the 75-frame development window. The training path runs, but the learned
 controller has not solved retention. See
 `docs/team/dex3-isaac-review/TRAINING_VALIDATION.md` for measured results.
+The later Isaac grip-controller correction passes two lid acquisition/lift
+diagnostics; its source overlay and private input recipe are documented in
+`docs/team/dex3-isaac-review/GRIP_CONTROLLER_FIX.md`. It has not been integrated
+into this recorded PPO experiment.
 
 ## Build
 

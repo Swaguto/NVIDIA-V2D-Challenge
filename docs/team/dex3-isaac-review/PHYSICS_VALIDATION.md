@@ -2,6 +2,12 @@
 
 ## Scope and status
 
+**Latest update:** the grip-force and payload-moment correction now passes two
+e002 lid acquisition and floating-wrist lift diagnostics. See
+[GRIP_CONTROLLER_FIX.md](GRIP_CONTROLLER_FIX.md). There are 52 passing CPU
+controls. The complete episode, pot grasp and learned policy remain unaccepted.
+The original source-target failures below are preserved as historical evidence.
+
 The October 15 implementation adds explicit controller, contact and reference
 validation stages. All 37 local controls pass. GPU comparisons completed on a
 stoppable Brev L40S using the published runtime and hash-verified source overlays.

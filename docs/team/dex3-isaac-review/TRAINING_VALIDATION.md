@@ -2,9 +2,10 @@
 
 ## Status
 
-The training/evaluation plumbing is implemented and GPU tested. **Physical grasp
-retention remains unsolved.** No candidate or learned checkpoint is promoted as
-a working task solution. These runs cover e002 development data and do not
+The training/evaluation plumbing is implemented and GPU tested. **The learned
+pilot remains unsuccessful.** A subsequent controller correction passes two lid
+acquisition and lift diagnostics; see [GRIP_CONTROLLER_FIX.md](GRIP_CONTROLLER_FIX.md).
+No learned checkpoint is promoted as a working task solution. These runs cover e002 development data and do not
 establish hidden-episode performance or organizer acceptance of the custom schema.
 
 ## Implementation
@@ -62,7 +63,7 @@ disables and hides every tray and tests one unsupported second. Independent
 free-fall, permanent-support and released-support controls pass. No object pose
 playback or external object wrench is used after initialization.
 
-All three acquisition attempts fail the unchanged 10 mm retention limit. The
+The first three acquisition attempts fail the unchanged 10 mm retention limit. The
 older joint-limit candidate briefly retained one lid with 45 mm displacement
 and a very large contact force; it is rejected. Candidates with interior joint
 margins avoid that artifact but drop the lid. Aligning the tray to actual cooked
@@ -85,8 +86,8 @@ an approved private channel. The repository/image alone does not supply inputs.
 The local bundle receipt and exact saved-policy replay commands are in
 [LOCAL_TRAINING_REPRODUCTION.md](LOCAL_TRAINING_REPRODUCTION.md).
 
-Before extending training to more episodes, establish a supported close followed
-by unsupported retention with bounded forces, then validate lift and release in
-the full scene. The existing source-oriented geometric seeds have failed that
-gate. A successful physical acquisition/contact strategy is still required;
-additional PPO iterations alone have not repaired it.
+The subsequent squeeze and payload correction establishes supported closure,
+unsupported retention and a short lift for the two lid cases. Before extending
+training, integrate it with complete episode references, repair the pot grasp,
+and validate lift and release in the full scene. Additional PPO iterations on
+the original reference have not repaired that reference.

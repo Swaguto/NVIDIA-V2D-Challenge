@@ -1,0 +1,17 @@
+{
+  "schema": "v2d.grip-fix-lifecycle.v1",
+  "instance_name": "v2d-dex3-physics-check",
+  "instance_id": "dngrtbldz",
+  "status": "STOPPED",
+  "confirmed_utc": "2026-10-16T00:53:37+00:00",
+  "authorized_total_compute_cap_usd": 10,
+  "conservative_total_compute_bound_usd": 7.8338,
+  "bound_includes_stopped_intervals": true,
+  "not_an_invoice": true,
+  "new_backup_file_count": 9105,
+  "new_backup_bytes": 2642937442,
+  "all_new_backup_hashes_match": true,
+  "backup_inventory_sha256": "3c7f3fd9be96c7c04a7519b0220d2de4036a0e8e0984b4b6d7edb174d71bae08",
+  "local_grip_bundle_payload_hashes_verified": true,
+  "private_inputs_uploaded": false
+}

@@ -1,0 +1,664 @@
+{
+  "schema": "v2d.dex3-grip-controller-fix.v1",
+  "controller_source_commit": "f67b2db74ca288f7fe464162ee4bf32d7eee7425",
+  "runtime_image": "ghcr.io/swaguto/nvidia-v2d-challenge-dex3-review@sha256:8585588357d898929bf6f80f0011441cbcab07a3d95e2f5f4d0e24bc5c177190",
+  "source_overlay_archive_sha256": "8c99218a59419e9f959797e28b4daeb0b3fde0ba8154aa9da6b19a054088f3b3",
+  "deployed_runtime_source_files_match_commit": true,
+  "episode": 2,
+  "scope": "two selected right-lid grasps; separate source-oriented fixture tests, not complete episode",
+  "private_grip_seed_sha256": "ef60d82709133fccc0f6e8a51e5f343a67f5abfbc4c71d26fa812363a9bccbd5",
+  "pad_force_command_N": 6,
+  "motor_effort_cap_Nm": 0.76,
+  "grip_feedforward_cap_Nm": 0.55,
+  "wrist_force_cap_N": 60,
+  "wrist_torque_cap_Nm": 60,
+  "nominal_object_mass_kg": 0.3,
+  "hand_friction": 2.0,
+  "object_friction": 1.0,
+  "fixture_table_removed_at_s": 0.5,
+  "pregrasp_pad_clearance_m": [
+    [
+      0.0026092797044636974,
+      0.003283971812791519
+    ],
+    [
+      0.0020000000445190625,
+      0.003269179880387201
+    ]
+  ],
+  "external_object_wrench": false,
+  "object_pose_writes_after_initialization": false,
+  "object_attachment": false,
+  "unmodified_retention_limit_m": 0.01,
+  "unmodified_lift_gate": {
+    "minimum_object_lift_m": 0.04,
+    "maximum_relative_drift_m": 0.01,
+    "maximum_wrist_position_error_m": 0.02,
+    "maximum_wrist_rotation_error_deg": 5
+  },
+  "experiments": [
+    {
+      "experiment": "effort-static-v1",
+      "source_overlay": "v6",
+      "report_sha256": "8daf205734344577889a367a8f48039d08e7b58947c7cb12031d6068d31260c0",
+      "executor_sha256": "552100dde528f029b8f476aec32995f73ee2100af4aef3ee777952b23de1aa48",
+      "states_sha256": "c3c0e09acdefa5dccb3ee082a2c16a6046a61f4bb70baaa8ae61a3d794abc34a",
+      "video_sha256": "32a7db2848190ed4525964c2256f7e42d562f552637506451da309bca8e0e278",
+      "preview_sha256": "9060b53fa557f28baf5a4a01ae72a535292b23cc0caac2df94f75b20aa52c827",
+      "frames": 21,
+      "gravity_and_contact_controls_pass": true,
+      "source_observations_changed": false,
+      "gate": {
+        "schema": "v2d.static-load-gate.v1",
+        "report_sha256": "8daf205734344577889a367a8f48039d08e7b58947c7cb12031d6068d31260c0",
+        "states_sha256": "c3c0e09acdefa5dccb3ee082a2c16a6046a61f4bb70baaa8ae61a3d794abc34a",
+        "video_sha256": "32a7db2848190ed4525964c2256f7e42d562f552637506451da309bca8e0e278",
+        "gravity_and_contact_controls_pass": true,
+        "all_four_samples_held_within_10mm_for_1s": false,
+        "physical_task_accepted": false,
+        "learned_policy_evaluated": false,
+        "controlled_acquisition": false,
+        "experimental_grasp_seed_samples": [
+          "right-object1-grasp0",
+          "right-object1-grasp1"
+        ],
+        "changed_seeds_held_within_10mm_for_1s": true
+      },
+      "summaries": [
+        {
+          "sample": "left-object0-grasp0",
+          "source_frame": 47,
+          "variant": "source-static",
+          "load_interval_s": [
+            0.0,
+            1.0
+          ],
+          "displacement_during_supported_closure_m": 0.0,
+          "final_displacement_m": 4.0665742440538315,
+          "maximum_displacement_m": 4.0665742440538315,
+          "maximum_orientation_change_deg": 179.55390111059037,
+          "maximum_contact_force_N": 110.75111275290602,
+          "mean_vertical_contact_force_last_0_2s_N": 0.0,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "maximum_estimated_motor_torque_Nm": 0.7599999904632568
+        },
+        {
+          "sample": "left-object0-grasp1",
+          "source_frame": 273,
+          "variant": "source-static",
+          "load_interval_s": [
+            0.0,
+            1.0
+          ],
+          "displacement_during_supported_closure_m": 0.0,
+          "final_displacement_m": 4.768963087779912,
+          "maximum_displacement_m": 4.768963087779912,
+          "maximum_orientation_change_deg": 179.54519444189896,
+          "maximum_contact_force_N": 19.399827980682797,
+          "mean_vertical_contact_force_last_0_2s_N": 0.0,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "maximum_estimated_motor_torque_Nm": 0.4110274910926819
+        },
+        {
+          "sample": "right-object1-grasp0",
+          "source_frame": 47,
+          "variant": "source-static",
+          "load_interval_s": [
+            0.0,
+            1.0
+          ],
+          "displacement_during_supported_closure_m": 0.0,
+          "final_displacement_m": 0.006246166640219861,
+          "maximum_displacement_m": 0.006254083825872223,
+          "maximum_orientation_change_deg": 11.452387991491948,
+          "maximum_contact_force_N": 3.1460794860567423,
+          "mean_vertical_contact_force_last_0_2s_N": -1.1933231234550477,
+          "held_within_10mm_for_1s_diagnostic_only": true,
+          "maximum_estimated_motor_torque_Nm": 0.41031286120414734
+        },
+        {
+          "sample": "right-object1-grasp1",
+          "source_frame": 236,
+          "variant": "source-static",
+          "load_interval_s": [
+            0.0,
+            1.0
+          ],
+          "displacement_during_supported_closure_m": 0.0,
+          "final_displacement_m": 0.005193554599333989,
+          "maximum_displacement_m": 0.0052172648531528375,
+          "maximum_orientation_change_deg": 10.190746146544278,
+          "maximum_contact_force_N": 8.8476991146107,
+          "mean_vertical_contact_force_last_0_2s_N": -0.8496583729982377,
+          "held_within_10mm_for_1s_diagnostic_only": true,
+          "maximum_estimated_motor_torque_Nm": 0.4510524272918701
+        }
+      ]
+    },
+    {
+      "experiment": "effort-acquisition-v1",
+      "source_overlay": "v7",
+      "report_sha256": "0a7d493b1f376fde9eafd48ad75f74234dd477f4c660886d2f3ebe125e48e920",
+      "executor_sha256": "97a507d2facc4122e3af1ed33014fd5bcb6cc4d32fb006ffad320899a821d6dd",
+      "states_sha256": "a7fa91a41aed63ca5a3f059ea3aae2be1f2996e44bc38ec544a292be34ff53ca",
+      "video_sha256": "8ea62adf77b383c0d7a5174378ee9dafeb24f6c9c5e324ad798afd5643105e51",
+      "preview_sha256": "ca569b1465613701acdcb2e499c60f5a1f7009fd2a141cd6f761a5ebb08a97b3",
+      "frames": 31,
+      "gravity_and_contact_controls_pass": true,
+      "source_observations_changed": false,
+      "gate": {
+        "schema": "v2d.static-load-gate.v1",
+        "report_sha256": "0a7d493b1f376fde9eafd48ad75f74234dd477f4c660886d2f3ebe125e48e920",
+        "states_sha256": "a7fa91a41aed63ca5a3f059ea3aae2be1f2996e44bc38ec544a292be34ff53ca",
+        "video_sha256": "8ea62adf77b383c0d7a5174378ee9dafeb24f6c9c5e324ad798afd5643105e51",
+        "gravity_and_contact_controls_pass": true,
+        "all_four_samples_held_within_10mm_for_1s": false,
+        "physical_task_accepted": false,
+        "learned_policy_evaluated": false,
+        "controlled_acquisition": true,
+        "temporary_supports_removed_before_load": true,
+        "experimental_grasp_seed_samples": [
+          "right-object1-grasp0-squeeze",
+          "right-object1-grasp1-squeeze"
+        ],
+        "changed_seeds_held_within_10mm_for_1s": true
+      },
+      "summaries": [
+        {
+          "sample": "right-object1-grasp0-position-only",
+          "source_frame": 47,
+          "variant": "position-only",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.00036735715951745384,
+          "final_displacement_m": 4.936570463250961,
+          "maximum_displacement_m": 4.936570463250961,
+          "maximum_orientation_change_deg": 1.2454673938816514,
+          "maximum_contact_force_N": 0.010882277477109657,
+          "mean_vertical_contact_force_last_0_2s_N": 0.0,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "maximum_estimated_motor_torque_Nm": 0.03542283549904823,
+          "raw_maximum_solver_penetration_including_cached_initial_snapshot_m": 0.007983729243278503,
+          "maximum_solver_penetration_after_executed_physics_steps_m": 0.0001088874414563179
+        },
+        {
+          "sample": "right-object1-grasp0-squeeze",
+          "source_frame": 47,
+          "variant": "squeeze",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.0004311329140609828,
+          "final_displacement_m": 0.003947022722088228,
+          "maximum_displacement_m": 0.00394819907275165,
+          "maximum_orientation_change_deg": 7.609386412298386,
+          "maximum_contact_force_N": 3.185802020252896,
+          "mean_vertical_contact_force_last_0_2s_N": -0.8889948099851608,
+          "held_within_10mm_for_1s_diagnostic_only": true,
+          "maximum_estimated_motor_torque_Nm": 0.4355338215827942,
+          "raw_maximum_solver_penetration_including_cached_initial_snapshot_m": 0.007983563467860222,
+          "maximum_solver_penetration_after_executed_physics_steps_m": 0.00121324323117733
+        },
+        {
+          "sample": "right-object1-grasp1-position-only",
+          "source_frame": 236,
+          "variant": "position-only",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.00037857858691532414,
+          "final_displacement_m": 4.934930962582231,
+          "maximum_displacement_m": 4.934930962582231,
+          "maximum_orientation_change_deg": 1.3760376786488444,
+          "maximum_contact_force_N": 0.04001526769384086,
+          "mean_vertical_contact_force_last_0_2s_N": 0.0,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "maximum_estimated_motor_torque_Nm": 0.047601278871297836,
+          "raw_maximum_solver_penetration_including_cached_initial_snapshot_m": 0.013391343876719475,
+          "maximum_solver_penetration_after_executed_physics_steps_m": 0.00016214139759540558
+        },
+        {
+          "sample": "right-object1-grasp1-squeeze",
+          "source_frame": 236,
+          "variant": "squeeze",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.00037979938052167006,
+          "final_displacement_m": 0.005338714190753329,
+          "maximum_displacement_m": 0.005342090092972397,
+          "maximum_orientation_change_deg": 11.085215713823683,
+          "maximum_contact_force_N": 2.3771268493371016,
+          "mean_vertical_contact_force_last_0_2s_N": -0.825149604678154,
+          "held_within_10mm_for_1s_diagnostic_only": true,
+          "maximum_estimated_motor_torque_Nm": 0.4158346354961395,
+          "raw_maximum_solver_penetration_including_cached_initial_snapshot_m": 0.016221359372138977,
+          "maximum_solver_penetration_after_executed_physics_steps_m": 0.0002933349460363388
+        }
+      ]
+    },
+    {
+      "experiment": "effort-lift-v1",
+      "source_overlay": "v8",
+      "report_sha256": "5b445d34203cab8fa00d60ea2da4eb4ef52e7677176625b505a9061432ef5b14",
+      "executor_sha256": "a1d7da9b2e689e07202fc8c7fbbed48d269e6bc7744bcf8d73f37ce75a4d75ba",
+      "states_sha256": "e645a2b9c6bb17f7b3484c06e6e0805723d0cba7ff3c4a55e405ffddfec25606",
+      "video_sha256": "038f6b534a4069d0c0f158446e44ddc6aa395aa10c01543069367abcf0768175",
+      "preview_sha256": "c55dd6e01239d866047c74554f1c3a28d25f411d1206e55a12b68263b57ea758",
+      "frames": 31,
+      "gravity_and_contact_controls_pass": true,
+      "source_observations_changed": false,
+      "gate": {
+        "schema": "v2d.static-load-gate.v1",
+        "report_sha256": "5b445d34203cab8fa00d60ea2da4eb4ef52e7677176625b505a9061432ef5b14",
+        "states_sha256": "e645a2b9c6bb17f7b3484c06e6e0805723d0cba7ff3c4a55e405ffddfec25606",
+        "video_sha256": "038f6b534a4069d0c0f158446e44ddc6aa395aa10c01543069367abcf0768175",
+        "gravity_and_contact_controls_pass": true,
+        "all_four_samples_held_within_10mm_for_1s": false,
+        "physical_task_accepted": false,
+        "learned_policy_evaluated": false,
+        "controlled_acquisition": true,
+        "temporary_supports_removed_before_load": true,
+        "experimental_grasp_seed_samples": [
+          "right-object1-grasp0-squeeze",
+          "right-object1-grasp1-squeeze"
+        ],
+        "changed_seeds_held_within_10mm_for_1s": false,
+        "changed_seeds_lifted_and_retained": false
+      },
+      "summaries": [
+        {
+          "sample": "right-object1-grasp0-position-only",
+          "source_frame": 47,
+          "variant": "position-only",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.00037997763415321126,
+          "final_displacement_m": 4.93768701306379,
+          "maximum_displacement_m": 4.93768701306379,
+          "maximum_orientation_change_deg": 1.1865808165737863,
+          "maximum_contact_force_N": 0.0,
+          "mean_vertical_contact_force_last_0_2s_N": 0.0,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "object_lift_m": -4.937687009572983,
+          "maximum_object_drift_relative_to_wrist_m": 5.056000406455209,
+          "maximum_wrist_position_error_m": 0.07405482094197707,
+          "maximum_wrist_rotation_error_deg": 0.5440578959304087,
+          "lifted_and_retained_diagnostic_only": false,
+          "maximum_estimated_motor_torque_Nm": 0.04015730693936348,
+          "raw_maximum_solver_penetration_including_cached_initial_snapshot_m": 0.016649389639496803,
+          "maximum_solver_penetration_after_executed_physics_steps_m": 0.00026859482750296593,
+          "maximum_wrist_force_component_N": 9.812246739497462,
+          "maximum_wrist_torque_component_Nm": 0.09302690653157025
+        },
+        {
+          "sample": "right-object1-grasp0-squeeze",
+          "source_frame": 47,
+          "variant": "squeeze",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.0003270857561812511,
+          "final_displacement_m": 0.04920656881761817,
+          "maximum_displacement_m": 0.05588203200334118,
+          "maximum_orientation_change_deg": 11.524741042008985,
+          "maximum_contact_force_N": 3.1594090553921466,
+          "mean_vertical_contact_force_last_0_2s_N": -0.7788806527853012,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "object_lift_m": 0.048981934785842896,
+          "maximum_object_drift_relative_to_wrist_m": 0.005172867203297613,
+          "maximum_wrist_position_error_m": 0.015465258780345818,
+          "maximum_wrist_rotation_error_deg": 5.70529932486053,
+          "lifted_and_retained_diagnostic_only": false,
+          "maximum_estimated_motor_torque_Nm": 0.4143202602863312,
+          "raw_maximum_solver_penetration_including_cached_initial_snapshot_m": 0.016724497079849243,
+          "maximum_solver_penetration_after_executed_physics_steps_m": 0.001588340848684311,
+          "maximum_wrist_force_component_N": 10.753442736853158,
+          "maximum_wrist_torque_component_Nm": 0.3311796972838836
+        },
+        {
+          "sample": "right-object1-grasp1-position-only",
+          "source_frame": 236,
+          "variant": "position-only",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.0003794189610884155,
+          "final_displacement_m": 4.8139139486962135,
+          "maximum_displacement_m": 4.8139139486962135,
+          "maximum_orientation_change_deg": 18.979821262677753,
+          "maximum_contact_force_N": 0.3400516251903579,
+          "mean_vertical_contact_force_last_0_2s_N": 0.0,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "object_lift_m": -4.813870310783386,
+          "maximum_object_drift_relative_to_wrist_m": 4.931968726222878,
+          "maximum_wrist_position_error_m": 0.07390575086840881,
+          "maximum_wrist_rotation_error_deg": 1.1392399309897039,
+          "lifted_and_retained_diagnostic_only": false,
+          "maximum_estimated_motor_torque_Nm": 0.07327693700790405,
+          "raw_maximum_solver_penetration_including_cached_initial_snapshot_m": 0.013454576022922993,
+          "maximum_solver_penetration_after_executed_physics_steps_m": 0.00019001774489879608,
+          "maximum_wrist_force_component_N": 9.799099138168083,
+          "maximum_wrist_torque_component_Nm": 0.18657516131536084
+        },
+        {
+          "sample": "right-object1-grasp1-squeeze",
+          "source_frame": 236,
+          "variant": "squeeze",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.00040133019784992626,
+          "final_displacement_m": 0.04934902384341987,
+          "maximum_displacement_m": 0.055943641720286645,
+          "maximum_orientation_change_deg": 14.433682981880795,
+          "maximum_contact_force_N": 2.9262219869290185,
+          "mean_vertical_contact_force_last_0_2s_N": -0.4468216449022293,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "object_lift_m": 0.04910778999328613,
+          "maximum_object_drift_relative_to_wrist_m": 0.006363614422941163,
+          "maximum_wrist_position_error_m": 0.015201886683247482,
+          "maximum_wrist_rotation_error_deg": 4.85107164772626,
+          "lifted_and_retained_diagnostic_only": true,
+          "maximum_estimated_motor_torque_Nm": 0.39376357197761536,
+          "raw_maximum_solver_penetration_including_cached_initial_snapshot_m": 0.013232472352683544,
+          "maximum_solver_penetration_after_executed_physics_steps_m": 0.0013773664832115173,
+          "maximum_wrist_force_component_N": 10.682712513855869,
+          "maximum_wrist_torque_component_Nm": 0.3409834597145487
+        }
+      ]
+    },
+    {
+      "experiment": "effort-lift-v2",
+      "source_overlay": "v9",
+      "report_sha256": "ef1da9b9502c2e1057338e18e47c6e20db158d51b8be7b13f67c7d9951d605b0",
+      "executor_sha256": "b426161ab930407bb73f2f01c7e92bd7b903684bbf07d4f30546704e31907838",
+      "states_sha256": "414ea1636431424a4d85486599657c2d3e9a3e7bf2e75c4757677a5d8e53c025",
+      "video_sha256": "60d2490cdf7a7e84463591ae4a6d10674d9c242973324cbf7b81ad0a016b7f24",
+      "preview_sha256": "bd016978be7e81749b703a8be2c043333e63b7b430a01ac5b883a1e44c818be9",
+      "frames": 31,
+      "gravity_and_contact_controls_pass": true,
+      "source_observations_changed": false,
+      "gate": {
+        "schema": "v2d.static-load-gate.v1",
+        "report_sha256": "ef1da9b9502c2e1057338e18e47c6e20db158d51b8be7b13f67c7d9951d605b0",
+        "states_sha256": "414ea1636431424a4d85486599657c2d3e9a3e7bf2e75c4757677a5d8e53c025",
+        "video_sha256": "60d2490cdf7a7e84463591ae4a6d10674d9c242973324cbf7b81ad0a016b7f24",
+        "gravity_and_contact_controls_pass": true,
+        "all_four_samples_held_within_10mm_for_1s": false,
+        "physical_task_accepted": false,
+        "learned_policy_evaluated": false,
+        "controlled_acquisition": true,
+        "temporary_supports_removed_before_load": true,
+        "experimental_grasp_seed_samples": [
+          "right-object1-grasp0-squeeze",
+          "right-object1-grasp1-squeeze"
+        ],
+        "changed_seeds_held_within_10mm_for_1s": false,
+        "changed_seeds_lifted_and_retained": true
+      },
+      "summaries": [
+        {
+          "sample": "right-object1-grasp0-position-only",
+          "source_frame": 47,
+          "variant": "position-only",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.00037997763415321126,
+          "final_displacement_m": 4.937512012407343,
+          "maximum_displacement_m": 4.937512012407343,
+          "maximum_orientation_change_deg": 1.131058320258488,
+          "maximum_contact_force_N": 0.0,
+          "mean_vertical_contact_force_last_0_2s_N": 0.0,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "object_lift_m": -4.937512010335922,
+          "maximum_object_drift_relative_to_wrist_m": 5.0548976221355755,
+          "maximum_wrist_position_error_m": 0.06623254787998953,
+          "maximum_wrist_rotation_error_deg": 4.119363731457981,
+          "lifted_and_retained_diagnostic_only": false,
+          "maximum_estimated_motor_torque_Nm": 0.04306093975901604,
+          "raw_maximum_solver_penetration_including_cached_initial_snapshot_m": 0.016649389639496803,
+          "maximum_solver_penetration_after_executed_physics_steps_m": 0.00026859482750296593,
+          "maximum_wrist_force_component_N": 9.812246739497462,
+          "maximum_wrist_torque_component_Nm": 0.21628503310445252
+        },
+        {
+          "sample": "right-object1-grasp0-squeeze",
+          "source_frame": 47,
+          "variant": "squeeze",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.0003270857561812511,
+          "final_displacement_m": 0.04920294539517339,
+          "maximum_displacement_m": 0.055866336913151876,
+          "maximum_orientation_change_deg": 8.44487273664193,
+          "maximum_contact_force_N": 2.800660808388457,
+          "mean_vertical_contact_force_last_0_2s_N": -0.8472910165786743,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "object_lift_m": 0.04905661940574646,
+          "maximum_object_drift_relative_to_wrist_m": 0.00376587047481297,
+          "maximum_wrist_position_error_m": 0.008360417049205869,
+          "maximum_wrist_rotation_error_deg": 1.1025521451296343,
+          "lifted_and_retained_diagnostic_only": true,
+          "maximum_estimated_motor_torque_Nm": 0.4143202602863312,
+          "raw_maximum_solver_penetration_including_cached_initial_snapshot_m": 0.016724497079849243,
+          "maximum_solver_penetration_after_executed_physics_steps_m": 0.001103842630982399,
+          "maximum_wrist_force_component_N": 10.614854110661659,
+          "maximum_wrist_torque_component_Nm": 0.3014961584532925
+        },
+        {
+          "sample": "right-object1-grasp1-position-only",
+          "source_frame": 236,
+          "variant": "position-only",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.0003794189610884155,
+          "final_displacement_m": 4.873093869347929,
+          "maximum_displacement_m": 4.873093869347929,
+          "maximum_orientation_change_deg": 15.426229501488223,
+          "maximum_contact_force_N": 0.30694237429304055,
+          "mean_vertical_contact_force_last_0_2s_N": 0.0,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "object_lift_m": -4.873076796531677,
+          "maximum_object_drift_relative_to_wrist_m": 4.990085632145423,
+          "maximum_wrist_position_error_m": 0.06611223120700513,
+          "maximum_wrist_rotation_error_deg": 4.224851943818424,
+          "lifted_and_retained_diagnostic_only": false,
+          "maximum_estimated_motor_torque_Nm": 0.07604069262742996,
+          "raw_maximum_solver_penetration_including_cached_initial_snapshot_m": 0.013454576022922993,
+          "maximum_solver_penetration_after_executed_physics_steps_m": 0.00019001774489879608,
+          "maximum_wrist_force_component_N": 9.799099138168083,
+          "maximum_wrist_torque_component_Nm": 0.28575912192689507
+        },
+        {
+          "sample": "right-object1-grasp1-squeeze",
+          "source_frame": 236,
+          "variant": "squeeze",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.00040133019784992626,
+          "final_displacement_m": 0.048715427068169656,
+          "maximum_displacement_m": 0.0553047178472683,
+          "maximum_orientation_change_deg": 12.343597645705858,
+          "maximum_contact_force_N": 2.2916501712817725,
+          "mean_vertical_contact_force_last_0_2s_N": -0.8327007949352264,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "object_lift_m": 0.048478931188583374,
+          "maximum_object_drift_relative_to_wrist_m": 0.006024813592041029,
+          "maximum_wrist_position_error_m": 0.008109114537610472,
+          "maximum_wrist_rotation_error_deg": 1.0756548037808558,
+          "lifted_and_retained_diagnostic_only": true,
+          "maximum_estimated_motor_torque_Nm": 0.39376357197761536,
+          "raw_maximum_solver_penetration_including_cached_initial_snapshot_m": 0.013232472352683544,
+          "maximum_solver_penetration_after_executed_physics_steps_m": 0.0009000524878501892,
+          "maximum_wrist_force_component_N": 10.564472479979058,
+          "maximum_wrist_torque_component_Nm": 0.3170144892495127
+        }
+      ]
+    },
+    {
+      "experiment": "effort-lift-v3",
+      "source_overlay": "v10",
+      "report_sha256": "450aed9ddbb2a8d07e780defa916343f0be52d90dc765d7c2b906cf3fae8b053",
+      "executor_sha256": "e6cf26a72ab521eaa274d462d20a550c3053e83ed42555fb932e8ca9b9f4d85e",
+      "states_sha256": "5dc8c0bf921574e69e5d2dd8ea54f2dcb1faf76de3c7489ee6a4331ee84a3b15",
+      "video_sha256": "c1c2aaa43291512402556559202997d4795c1899ca18aad4e8c91e70a652f63d",
+      "preview_sha256": "513d275dd970d6fcc3074668e3f1af3e16a00e27a1980e915d61338dd11bbae5",
+      "frames": 31,
+      "gravity_and_contact_controls_pass": true,
+      "source_observations_changed": false,
+      "gate": {
+        "schema": "v2d.static-load-gate.v1",
+        "report_sha256": "450aed9ddbb2a8d07e780defa916343f0be52d90dc765d7c2b906cf3fae8b053",
+        "states_sha256": "5dc8c0bf921574e69e5d2dd8ea54f2dcb1faf76de3c7489ee6a4331ee84a3b15",
+        "video_sha256": "c1c2aaa43291512402556559202997d4795c1899ca18aad4e8c91e70a652f63d",
+        "gravity_and_contact_controls_pass": true,
+        "all_four_samples_held_within_10mm_for_1s": false,
+        "physical_task_accepted": false,
+        "learned_policy_evaluated": false,
+        "controlled_acquisition": true,
+        "temporary_supports_removed_before_load": true,
+        "experimental_grasp_seed_samples": [
+          "right-object1-grasp0-squeeze",
+          "right-object1-grasp1-squeeze"
+        ],
+        "changed_seeds_held_within_10mm_for_1s": false,
+        "changed_seeds_lifted_and_retained": true
+      },
+      "summaries": [
+        {
+          "sample": "right-object1-grasp0-position-only",
+          "source_frame": 47,
+          "variant": "position-only",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.00037997763415321126,
+          "final_displacement_m": 4.937512012407343,
+          "maximum_displacement_m": 4.937512012407343,
+          "maximum_orientation_change_deg": 1.131058320258488,
+          "maximum_contact_force_N": 0.0,
+          "mean_vertical_contact_force_last_0_2s_N": 0.0,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "object_lift_m": -4.937512010335922,
+          "maximum_object_drift_relative_to_wrist_m": 4.987624151132249,
+          "maximum_wrist_position_error_m": 0.00571499385982235,
+          "maximum_wrist_rotation_error_deg": 3.581137060368131,
+          "lifted_and_retained_diagnostic_only": false,
+          "maximum_estimated_motor_torque_Nm": 0.04306093975901604,
+          "raw_maximum_solver_penetration_including_cached_initial_snapshot_m": 0.016649389639496803,
+          "maximum_solver_penetration_after_executed_physics_steps_m": 0.00026859482750296593,
+          "maximum_wrist_force_component_N": 9.812246739497462,
+          "maximum_wrist_torque_component_Nm": 0.21628503310445252,
+          "loaded_steps_with_payload_compensation": 4
+        },
+        {
+          "sample": "right-object1-grasp0-squeeze",
+          "source_frame": 47,
+          "variant": "squeeze",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.0003270857561812511,
+          "final_displacement_m": 0.04920294539517339,
+          "maximum_displacement_m": 0.055866336913151876,
+          "maximum_orientation_change_deg": 8.44487273664193,
+          "maximum_contact_force_N": 2.800660808388457,
+          "mean_vertical_contact_force_last_0_2s_N": -0.8472910165786743,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "object_lift_m": 0.04905661940574646,
+          "maximum_object_drift_relative_to_wrist_m": 0.00376587047481297,
+          "maximum_wrist_position_error_m": 0.008360417049205869,
+          "maximum_wrist_rotation_error_deg": 1.1025521451296343,
+          "lifted_and_retained_diagnostic_only": true,
+          "maximum_estimated_motor_torque_Nm": 0.4143202602863312,
+          "raw_maximum_solver_penetration_including_cached_initial_snapshot_m": 0.016724497079849243,
+          "maximum_solver_penetration_after_executed_physics_steps_m": 0.001103842630982399,
+          "maximum_wrist_force_component_N": 10.614854110661659,
+          "maximum_wrist_torque_component_Nm": 0.3014961584532925,
+          "loaded_steps_with_payload_compensation": 101
+        },
+        {
+          "sample": "right-object1-grasp1-position-only",
+          "source_frame": 236,
+          "variant": "position-only",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.0003794189610884155,
+          "final_displacement_m": 4.873093869347929,
+          "maximum_displacement_m": 4.873093869347929,
+          "maximum_orientation_change_deg": 15.426229501488223,
+          "maximum_contact_force_N": 0.30694237429304055,
+          "mean_vertical_contact_force_last_0_2s_N": 0.0,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "object_lift_m": -4.873076796531677,
+          "maximum_object_drift_relative_to_wrist_m": 4.922953063372412,
+          "maximum_wrist_position_error_m": 0.005650914290069959,
+          "maximum_wrist_rotation_error_deg": 3.089354671509455,
+          "lifted_and_retained_diagnostic_only": false,
+          "maximum_estimated_motor_torque_Nm": 0.07604069262742996,
+          "raw_maximum_solver_penetration_including_cached_initial_snapshot_m": 0.013454576022922993,
+          "maximum_solver_penetration_after_executed_physics_steps_m": 0.00019001774489879608,
+          "maximum_wrist_force_component_N": 9.799099138168083,
+          "maximum_wrist_torque_component_Nm": 0.28575912192689507,
+          "loaded_steps_with_payload_compensation": 4
+        },
+        {
+          "sample": "right-object1-grasp1-squeeze",
+          "source_frame": 236,
+          "variant": "squeeze",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.00040133019784992626,
+          "final_displacement_m": 0.048715427068169656,
+          "maximum_displacement_m": 0.0553047178472683,
+          "maximum_orientation_change_deg": 12.343597645705858,
+          "maximum_contact_force_N": 2.2916501712817725,
+          "mean_vertical_contact_force_last_0_2s_N": -0.8327007949352264,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "object_lift_m": 0.048478931188583374,
+          "maximum_object_drift_relative_to_wrist_m": 0.006024813592041029,
+          "maximum_wrist_position_error_m": 0.008109114537610472,
+          "maximum_wrist_rotation_error_deg": 1.0756548037808558,
+          "lifted_and_retained_diagnostic_only": true,
+          "maximum_estimated_motor_torque_Nm": 0.39376357197761536,
+          "raw_maximum_solver_penetration_including_cached_initial_snapshot_m": 0.013232472352683544,
+          "maximum_solver_penetration_after_executed_physics_steps_m": 0.0009000524878501892,
+          "maximum_wrist_force_component_N": 10.564472479979058,
+          "maximum_wrist_torque_component_Nm": 0.3170144892495127,
+          "loaded_steps_with_payload_compensation": 101
+        }
+      ]
+    }
+  ],
+  "latest_both_lift_cases_pass": true,
+  "learned_policy_retrained_with_fix": false,
+  "left_pot_grasp_fixed": false,
+  "complete_episode_accepted": false,
+  "hidden_episode_performance_measured": false,
+  "physical_task_accepted": false
+}
