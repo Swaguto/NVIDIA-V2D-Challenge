@@ -70,6 +70,8 @@ def refine_tripod(
     support_height_stage_m=None,
     middle_patch_normal=None,
     pinch_targets=None,
+    preserve_pinch_pose=False,
+    obstacle_shapes=None,
 ):
     """Keep the first two contacts while moving the wrist slightly for the third."""
     original = kin.poses(root, q)
@@ -170,6 +172,14 @@ def refine_tripod(
         return np.r_[
             errors,
             2 * collision_residual(poses, hand_collision, object_collision, links),
+            3
+            * collision_residual(
+                poses,
+                hand_collision,
+                obstacle_shapes or [],
+                [],
+                minimum_other_clearance_m=0.004,
+            ),
             0.1 * x[:3] / translation_limit,
             0.1 * x[3:6] / 0.3,
             0.02 * x[6:],
@@ -178,6 +188,25 @@ def refine_tripod(
     initial = np.zeros(13)
     for name, value in initial_middle.items():
         initial[6 + kin.names.index(name)] = value - q[name]
+    if preserve_pinch_pose:
+        # An additional digit must not move the verified wrist/pinch into the
+        # other hand. Optimize only this digit's genuine two revolute joints.
+        active = np.array(
+            [6 + i for i, name in enumerate(kin.names) if "_middle_" in name]
+        )
+
+        def expand(values):
+            x = np.zeros(13)
+            x[active] = values
+            return x
+
+        fit = least_squares(
+            lambda values: residual(expand(values)),
+            np.clip(initial[active], lower[active] + 1e-9, upper[active] - 1e-9),
+            bounds=(lower[active], upper[active]),
+            max_nfev=200,
+        )
+        return (*decode(expand(fit.x)), fit)
     fit = least_squares(
         residual,
         np.clip(initial, lower + 1e-9, upper - 1e-9),
@@ -201,6 +230,8 @@ def add_middle(
     orient_support_patch=False,
     side_support=False,
     orient_pinch_patches=False,
+    preserve_pinch_pose=False,
+    avoidance=None,
 ):
     if (
         not np.isfinite(wrist_roll_deg)
@@ -220,6 +251,25 @@ def add_middle(
     ):
         raise ValueError("Invalid support-grasp search configuration")
     report = json.loads((run / "report.json").read_text())
+    obstacles = []
+    if avoidance is not None:
+        obstacle_data = json.loads(avoidance.read_text())
+        if (
+            obstacle_data["schema"] != "v2d.other-hand-planning-obstacles.v1"
+            or obstacle_data["sample"] != sample_name
+        ):
+            raise ValueError(
+                "Other-hand planning obstacles identify a different sample"
+            )
+        for vertices in obstacle_data["convexes_stage_m"]:
+            vertices = np.asarray(vertices, float)
+            if (
+                vertices.ndim != 2
+                or vertices.shape[1] != 3
+                or not np.isfinite(vertices).all()
+            ):
+                raise ValueError("Invalid other-hand convex geometry")
+            obstacles.append((vertices, ConvexHull(vertices).equations[:, :3]))
     if (
         hashlib.sha256((run / "states.json").read_bytes()).hexdigest()
         != report["states_sha256"]
@@ -363,6 +413,8 @@ def add_middle(
             support_height_stage_m=support_height_stage_m,
             middle_patch_normal=patch_normal,
             pinch_targets=pinch_targets if orient_pinch_patches else None,
+            preserve_pinch_pose=preserve_pinch_pose,
+            obstacle_shapes=obstacles,
         )
         if not fit_all.success:
             rejected["fit"] += 1
@@ -376,12 +428,22 @@ def add_middle(
                 (convex_escape(a, b) for a in hand[name] for b in shapes),
                 key=lambda x: x[0],
             )
+        obstacle_depth = max(
+            (
+                convex_escape(a, b)[0]
+                for pieces in hand.values()
+                for a in pieces
+                for b, _axes in obstacles
+            ),
+            default=-1.0,
+        )
         if (
             min(depths[n] for n in links) < 0
             or max(depths.values()) > 0.0015
             or escapes[links[0]] @ escapes[links[1]] > -0.5
             or (support_from_below and -escapes[links[2]][2] < 0.5)
             or (side_support and abs(escapes[links[2]][2]) > 0.35)
+            or obstacle_depth > -0.003
             or (
                 support_height_stage_m is not None
                 and min(v[:, 2].min() for pieces in hand.values() for v in pieces)
@@ -389,10 +451,17 @@ def add_middle(
             )
         ):
             rejected["geometry"] += 1
-            score = max(0, max(depths.values()) - 0.0015) + max(0, -depths[middle])
+            score = (
+                max(0, max(depths.values()) - 0.0015)
+                + max(0, -depths[middle])
+                + max(0, obstacle_depth + 0.003)
+            )
             if closest_rejection is None or score < closest_rejection["score_m"]:
                 closest_rejection = dict(
                     score_m=score,
+                    other_hand_maximum_signed_depth_m=float(obstacle_depth)
+                    if obstacles
+                    else None,
                     piece_depths_m=depths,
                     middle_fingers_rad=fit.x.tolist(),
                     middle_inward_up_component=float(-escapes[middle][2]),
@@ -498,6 +567,10 @@ def add_middle(
         orient_support_patch=orient_support_patch,
         side_support=side_support,
         orient_pinch_patches=orient_pinch_patches,
+        preserve_pinch_pose=preserve_pinch_pose,
+        avoidance_sha256=hashlib.sha256(avoidance.read_bytes()).hexdigest()
+        if avoidance
+        else None,
         physical_task_accepted=False,
     )
     return proposal
@@ -516,6 +589,8 @@ if __name__ == "__main__":
     parser.add_argument("--orient-support-patch", action="store_true")
     parser.add_argument("--side-support", action="store_true")
     parser.add_argument("--orient-pinch-patches", action="store_true")
+    parser.add_argument("--preserve-pinch-pose", action="store_true")
+    parser.add_argument("--avoidance", type=Path)
     args = parser.parse_args()
     result = add_middle(
         args.run,
@@ -530,6 +605,8 @@ if __name__ == "__main__":
         orient_support_patch=args.orient_support_patch,
         side_support=args.side_support,
         orient_pinch_patches=args.orient_pinch_patches,
+        preserve_pinch_pose=args.preserve_pinch_pose,
+        avoidance=args.avoidance,
     )
     with args.out.open("x") as stream:
         json.dump(result, stream, indent=2, allow_nan=False)

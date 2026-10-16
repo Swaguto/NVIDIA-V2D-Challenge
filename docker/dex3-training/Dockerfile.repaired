@@ -1,0 +1,13 @@
+# syntax=docker/dockerfile:1.7
+# Reuse the verified dependency/runtime layers; replace only our committed code.
+FROM ghcr.io/swaguto/nvidia-v2d-challenge-dex3-review@sha256:13ed1f0846af69a3dd6f02755f753dfdc58194cc3f7c2a0f6e12c0803fa67f29
+COPY extension/ /opt/dex3-extension/
+COPY context-manifest.json /opt/dex3-extension/image-context-manifest.json
+ARG VCS_REF
+LABEL org.opencontainers.image.source="https://github.com/Swaguto/NVIDIA-V2D-Challenge" \
+      org.opencontainers.image.revision="${VCS_REF}" \
+      io.v2d.flash-chord.commit="8c778f905cb35f76f8e6cd6e2ea486da4fb9e0ef" \
+      io.v2d.parent-training-image="sha256:13ed1f0846af69a3dd6f02755f753dfdc58194cc3f7c2a0f6e12c0803fa67f29"
+RUN V2D_BUILD_REVISION=${VCS_REF} /opt/flash-env/bin/python -c \
+    'import json,os,compileall; m=json.load(open("/opt/dex3-extension/image-context-manifest.json")); assert m["source_code_commit"] == os.environ["V2D_BUILD_REVISION"] and not m["selected_source_dirty"]; assert compileall.compile_dir("/opt/dex3-extension",quiet=1)'
+CMD ["/opt/dex3-extension/train.py", "--config-dir", "/opt/dex3-extension/configs", "experiment=dex3_repaired"]

@@ -1,0 +1,27 @@
+# @package _global_
+defaults:
+  - dex3_pilot
+  - _self_
+
+action:
+  _target_: v2d_dex3_flashchord.grasp_action.GraspActionConfig
+  input_root: /data
+embodiment:
+  config:
+    default_joint:
+      _target_: flash_chord.embodiments.base.JointControlSpec
+      kp: 8.0
+      kd: 0.2
+      armature: 0.00149
+      effort_limit: 0.76
+      velocity_limit: 23.0
+scene:
+  contact_friction: 1.25
+sim:
+  substeps: 20
+  nconmax: 512
+  njmax: 2048
+training:
+  max_iterations: 100
+  save_interval: 25
+output_dir: /outputs/repaired-pilot

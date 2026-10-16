@@ -13,7 +13,7 @@ PREFIX = "robotic_grounding/flash_chord/"
 ROOT = Path(__file__).resolve().parents[2]
 
 
-def create(upstream, out):
+def create(upstream, out, repair_layer=False):
     head = subprocess.check_output(
         ["git", "-C", str(upstream), "rev-parse", "HEAD"], text=True
     ).strip()
@@ -91,7 +91,20 @@ def create(upstream, out):
                 "-C",
                 str(ROOT),
                 "show",
-                f"{source_commit}:docker/dex3-training/Dockerfile",
+                f"{source_commit}:docker/dex3-training/"
+                + ("Dockerfile.repaired" if repair_layer else "Dockerfile"),
+            ]
+        )
+    )
+    # The offline full-task adapter shares the exact frozen reference planner.
+    (out / "extension/_dex3_task_grip.py").write_bytes(
+        subprocess.check_output(
+            [
+                "git",
+                "-C",
+                str(ROOT),
+                "show",
+                f"{source_commit}:scripts/reproduction/_dex3_task_grip.py",
             ]
         )
     )
@@ -105,10 +118,12 @@ def create(upstream, out):
             "--",
             "scripts/dex3_training",
             "docker/dex3-training",
+            "scripts/reproduction/_dex3_task_grip.py",
         ],
         text=True,
     ).strip()
     manifest = dict(
+        build_kind="repaired-code-layer" if repair_layer else "full-runtime",
         runtime_commit=COMMIT,
         source_code_commit=source_commit,
         selected_source_dirty=bool(dirty),
@@ -127,8 +142,9 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--upstream", type=Path, required=True)
     p.add_argument("--out", type=Path, required=True)
+    p.add_argument("--repair-layer", action="store_true")
     args = p.parse_args()
-    result = create(args.upstream, args.out)
+    result = create(args.upstream, args.out, args.repair_layer)
     print(
         json.dumps(
             dict(runtime_commit=result["runtime_commit"], files=len(result["files"]))

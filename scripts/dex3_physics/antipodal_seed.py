@@ -106,7 +106,9 @@ def antipodal_pairs(points, normals, seed_points, radius=0.06):
     return sorted(candidates)
 
 
-def collision_residual(poses, hand_shapes, object_shapes, contact_links):
+def collision_residual(
+    poses, hand_shapes, object_shapes, contact_links, minimum_other_clearance_m=0.0005
+):
     """Cheap conservative face-axis overlap penalty for IK refinement.
 
     Omitting edge cross axes can overestimate overlap. Final acceptance always
@@ -123,7 +125,7 @@ def collision_residual(poses, hand_shapes, object_shapes, contact_links):
                 aabb_gap = np.maximum(
                     world.min(0) - vertices.max(0), vertices.min(0) - world.max(0)
                 )
-                if aabb_gap.max() > 0.003:
+                if aabb_gap.max() > max(0.003, minimum_other_clearance_m):
                     continue
                 axes = np.r_[axes_hand, axes_object]
                 origin = vertices.mean(0)
@@ -131,7 +133,7 @@ def collision_residual(poses, hand_shapes, object_shapes, contact_links):
                 b = np.einsum("ij,kj->ik", vertices - origin, axes)
                 gap = np.maximum(a.min(0) - b.max(0), b.min(0) - a.max(0)).max()
                 maximum = max(maximum, -gap)
-        allowed = 0.001 if name in contact_links else -0.0005
+        allowed = 0.001 if name in contact_links else -minimum_other_clearance_m
         penalties.append(max(0.0, maximum - allowed) / 0.001)
     return np.asarray(penalties)
 
@@ -150,8 +152,9 @@ def select_grasp(candidates, mode="source", gravity_lever_weight=0.0):
     return (
         min(
             candidates,
-            key=lambda c: c["objective"]
-            + gravity_lever_weight * c["gravity_lever_m"] / 0.05,
+            key=lambda c: (
+                c["objective"] + gravity_lever_weight * c["gravity_lever_m"] / 0.05
+            ),
         )
         if candidates
         else None
@@ -255,9 +258,11 @@ def search(
         if gravity_lever_weight:
             com = np.asarray(row["object_root_state_stage_xyzw"][:3])
             pairs.sort(
-                key=lambda item: item[0]
-                + gravity_lever_weight
-                * np.linalg.norm((points[list(item[1:])].mean(0) - com)[:2])
+                key=lambda item: (
+                    item[0]
+                    + gravity_lever_weight
+                    * np.linalg.norm((points[list(item[1:])].mean(0) - com)[:2])
+                )
             )
         # Avoid spending the whole fit budget on adjacent samples of one face.
         diverse = []

@@ -63,6 +63,7 @@ def load_dex3(
     if manifest["schema"] not in {
         "v2d.dex3-training-window.v1",
         "v2d.dex3-training-window.v2",
+        "v2d.dex3-training-task.v3",
     }:
         raise ValueError("Unsupported Dex3 reference manifest")
     for relative, expected in manifest["files"].items():
@@ -91,7 +92,15 @@ def load_dex3(
     count = len(data["frame_indices"])
     if count < 2 or not np.all(np.diff(data["frame_indices"]) == 1):
         raise ValueError("Confidence window is not contiguous")
-    if not data["confidence_valid"].all() or not np.allclose(
+    inferred_task = manifest["schema"] == "v2d.dex3-training-task.v3"
+    if inferred_task and (
+        manifest.get("target_contract") != "inferred_robot_grasp_commands.v1"
+        or manifest.get("allows_inferred_robot_targets") is not True
+        or manifest.get("source_observations_changed") is not False
+        or manifest.get("contact_labels_fabricated") is not False
+    ):
+        raise ValueError("Invalid inferred task target contract")
+    if (not inferred_task and not data["confidence_valid"].all()) or not np.allclose(
         np.diff(data["timestamps_s"]), 1 / fps
     ):
         raise ValueError("Confidence or time-axis gap in training reference")

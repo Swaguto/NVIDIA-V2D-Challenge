@@ -118,9 +118,9 @@ def main(cfg: DictConfig):
         )
     output = Path(cfg.output_dir)
     output.mkdir(parents=True, exist_ok=False)
-    input_sha = hashlib.sha256(
-        (Path(cfg.task.parquet).parent / "manifest.json").read_bytes()
-    ).hexdigest()
+    input_manifest_path = Path(cfg.task.parquet).parent / "manifest.json"
+    input_manifest = json.loads(input_manifest_path.read_text())
+    input_sha = hashlib.sha256(input_manifest_path.read_bytes()).hexdigest()
     OmegaConf.update(
         cfg, "embodiment.config.reference_manifest_sha256", input_sha, force_add=True
     )
@@ -166,7 +166,9 @@ def main(cfg: DictConfig):
             Path("/opt/dex3-extension/image-context-manifest.json").read_bytes()
         ).hexdigest()
         metadata["dex3_pilot_scope"] = (
-            "confident development window; unassisted; not full episode acceptance"
+            "full source episode with inferred robot targets; original source confidence masks preserved; unassisted development experiment"
+            if input_manifest["schema"] == "v2d.dex3-training-task.v3"
+            else "confident development window; unassisted; not full episode acceptance"
         )
         initial = create_learner(jax_env, training)
         save_checkpoint(
