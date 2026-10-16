@@ -1,0 +1,22 @@
+{
+  "schema": "v2d.side-bracing-grasp-search.v1",
+  "source_archive_sha256": "8bbfe4b7ed1f1d6656832e04c6d61887a0eec233fe1bd80ec6def30320293e76",
+  "source_parent_commit": "973d371fd56e7db16b6bfe55e846ab3034d6854b",
+  "proposal_sha256": "c9ee5152768a9eedb0c9603e808d92487bc6572752edb78d784fab2b7815ccf9",
+  "generator_sha256": "9beb209f945cb364afed11ccac6ecdbc69c4ccbcb8db0f3336165322113d4d80",
+  "archived_generator_sha256": "9beb209f945cb364afed11ccac6ecdbc69c4ccbcb8db0f3336165322113d4d80",
+  "fitted_candidates": 6,
+  "valid_nominal_candidates": 1,
+  "side_support": true,
+  "orient_support_patch": true,
+  "orient_pinch_patches": false,
+  "wrist_roll_deg": 0,
+  "reconfigure_fingers": true,
+  "maximum_piece_SAT_depth_m": 0.0007526645195994434,
+  "maximum_finger_delta_rad": 0.6711812996122044,
+  "middle_inward_up_component": 0.004587951014985732,
+  "maximum_nominal_static_feedforward_Nm": 0.408461993105128,
+  "nominal_static_friction_lower_bound": 1.0,
+  "source_observations_changed": false,
+  "physical_task_accepted": false
+}

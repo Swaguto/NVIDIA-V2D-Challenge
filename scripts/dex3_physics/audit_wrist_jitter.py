@@ -60,6 +60,13 @@ def audit(run, start_s=5.5, end_s=7.5):
     if digest != report["state_sha256"]:
         raise ValueError("Simulation readback hash mismatch")
     states = json.loads(state_file.read_text())
+    spec_file = run.parent / "static-load-inputs/task-grips.json"
+    if (
+        hashlib.sha256(spec_file.read_bytes()).hexdigest()
+        != report["task_grip_spec_sha256"]
+    ):
+        raise ValueError("Grasp specification hash mismatch")
+    spec = json.loads(spec_file.read_text())
     result = dict(
         schema="v2d.wrist-jitter-audit.v1",
         states_sha256=digest,
@@ -74,6 +81,53 @@ def audit(run, start_s=5.5, end_s=7.5):
             if h["side"] == side and start_s <= h["source_time_s"] < end_s
         ]
         times = np.array([r["step"] for r in rows]) * report["physics_dt_s"]
+        bindings = report["physical_contact_bindings"][["left", "right"].index(side)][
+            "hand_body_paths"
+        ]
+        phase = spec["phases"][side][0]
+        indices = [
+            next(
+                i for i, path in enumerate(bindings) if path.endswith("/" + pad["link"])
+            )
+            for pad in phase["pad_normal_jacobians"]
+        ]
+        forces = np.array(
+            [
+                np.array(r["normal_force_by_hand_body_and_object_world_N"])[
+                    indices, phase["object"], :
+                ]
+                for r in rows
+            ]
+        )
+        loads = np.linalg.norm(forces, axis=-1)
+        opposed = (
+            np.einsum("ij,ij->i", forces[:, 0], forces[:, 1])
+            / np.maximum(1e-12, loads[:, 0] * loads[:, 1])
+            <= -0.5
+        )
+        present = (loads >= 0.5).all(axis=1)
+        pair_details = {}
+        any_opposed = np.zeros(len(rows), dtype=bool)
+        for i in range(len(indices)):
+            for j in range(i + 1, len(indices)):
+                both = (loads[:, i] >= 0.5) & (loads[:, j] >= 0.5)
+                dot = np.einsum("ij,ij->i", forces[:, i], forces[:, j]) / np.maximum(
+                    1e-12, loads[:, i] * loads[:, j]
+                )
+                opp = both & (dot <= -0.5)
+                any_opposed |= opp
+                digits = [
+                    phase["pad_normal_jacobians"][k]["link"]
+                    .split("_hand_")[1]
+                    .rsplit("_", 2)[0]
+                    for k in [i, j]
+                ]
+                pair_details["-".join(digits)] = dict(
+                    opposed_fraction=float(np.mean(opp)),
+                    median_normal_dot_when_both_loaded=float(np.median(dot[both]))
+                    if both.any()
+                    else None,
+                )
         result["hands"][side] = dict(
             target=motion_residual(
                 times, [r["target_root_pose_stage_xyzw"] for r in rows]
@@ -82,6 +136,17 @@ def audit(run, start_s=5.5, end_s=7.5):
                 times, [r["actual_root_pose_stage_xyzw"] for r in rows]
             ),
             aborted_samples=sum(bool(r.get("reacquisition_failure")) for r in rows),
+            distal_pad_presence_fraction=float(np.mean(present)),
+            distal_pads_with_opposed_thumb_index_fraction=float(
+                np.mean(present & opposed)
+            ),
+            distal_pads_with_any_opposed_pair_fraction=float(
+                np.mean(present & any_opposed)
+            ),
+            measured_distal_pair_normals=pair_details,
+            maximum_recorded_solver_penetration_m=max(
+                r["solver_contacts"]["maximum_solver_penetration_m"] for r in rows
+            ),
             required_digit_support_fraction=float(
                 np.mean(
                     [

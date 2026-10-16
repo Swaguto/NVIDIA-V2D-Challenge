@@ -16,6 +16,28 @@ APT layer later. The package installer checks all 178 simulator pins and the
 tracked Lab source. These are workflow images, not the official challenge policy
 runtime and not a complete fresh video-to-policy implementation.
 
+### Current e002 handle-grip validation
+
+The new side-bracing grasp and reduced-feedback left controller complete both
+pot grasps in the measured replay. See
+[the repair and limits](../../docs/team/dex3-isaac-review/HANDLE_GRIP_REPAIR.md)
+and [current measurements](../../docs/team/dex3-isaac-review/handle-repair-results-v1.json).
+Use the local v6 input pack and its exact recipe; it has not been published.
+`side_quiet` uses source42 and seed20. `side_left_quiet` uses source43 and
+`combined-task-grasps-side-left-quiet-v22.json`, restoring the previous right
+controller. Source/seed pairs must not be mixed.
+
+Keep the pinned simulator image and mount the selected source overlay as
+`V2D_CODE_DIR`; these fixes are not baked into the older image. Set
+`V2D_GRIP_SEED` to that recipe's private seed, choose a fresh `V2D_OUTPUT_DIR`,
+and use the existing three-file Compose invocation below with
+`--candidate-controller implicit_pd_ff --physics-dt 0.0025 --contact-solver grip`.
+Run `grip-task-free`, then `grip-task` in the same fresh experiment root.
+For the separate acquisition/lift diagnostic use source42, `pot-side-effort-v9.json`
+and stage `grip-lift`. Preserve all failed outputs and compare measured contacts
+as well as the complete video. Reproduction is a diagnostic, not official policy
+acceptance or a hidden-episode result.
+
 ## Use the published private images
 
 The three images are published privately on GHCR, linked to this repository.

@@ -5,7 +5,37 @@ This branch combines `codex/hand-continuity` at `9f93a50` with
 `3db10766bf09bca10fe1b452afe5c78e1649c870`. Both histories are retained.
 
 
-## Current e002 physics checkpoint
+## Current e002 left-hand repair
+
+The new side-bracing handle grasp completes both pot grasps with **2.040 / 3.042 mm**
+maximum relative slip, **1.034 / 1.656°** rotation drift, full required-digit
+support and no aborts. All four grasp position-retention diagnostics pass in the
+final hand-scoped run. Lid rotation remains **16.404 / 11.851°**; a full physical
+policy and official evaluation are not accepted.
+
+Left wrist motion above 3 Hz drops from **2.103° to 0.0233° RMS** and from
+**1.008 to 0.0445 mm RMS**, over the same source interval 5.5–7.5 s. All three
+actual distal pads stay loaded there, with an opposed thumb–middle pair. The
+previous quiet-control/old-grip failure is preserved; aborted stationary hands
+are not counted as low-jitter successes.
+
+See [the repair and remaining limits](HANDLE_GRIP_REPAIR.md),
+[full measured outcomes](handle-repair-results-v1.json),
+[the exact geometric search receipt](handle-grip-search-v1.json), and the local
+[v6 input-pack receipt](local-pot-task-input-receipt-v6.json). Inputs remain local.
+The final recipe uses source43 (`437ef44`), the unchanged pinned runtime image,
+seed22, 0.0025 s steps and the optional `grip` solver. A fresh matching free-space
+gate and complete replay both pass. 100 CPU tests pass. The source42 isolated
+side-grip fixtures also pass both gravity lifts after support removal.
+
+All 109,567 result/log files (34,302,839,389 bytes) are backed
+up and hash-verified through the immutable inventory chain. Brev is confirmed
+**STOPPED**. Conservative cumulative compute bound: **$15.0380 of $20**;
+not an invoice. Original observations, masks, geometry and source timestamps are
+preserved. Official solver compatibility and hidden-episode performance remain
+unverified.
+
+## Previous e002 reference-repair checkpoint
 
 Complete e002 transport remains unresolved; no full physical task or official
 policy is accepted. Reference jitter is bounded, settled-grasp registration

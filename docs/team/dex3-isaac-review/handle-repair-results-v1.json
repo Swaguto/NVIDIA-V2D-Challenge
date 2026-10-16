@@ -1,0 +1,950 @@
+{
+  "recommended_left_hand_case": "coupled-task-side-left-quiet-v1",
+  "analysis_source_sha256": "e7766a2fed80655b7d407b53d8f68af89fe059340d2a19446daaa414cd5acd28",
+  "schema": "v2d.handle-repair-results.v1",
+  "runs": [
+    {
+      "name": "coupled-task-compensated-frozen-v1",
+      "label": "Earlier high-feedback grasp",
+      "source_version": 40,
+      "source_parent_commit": "058b746a462435b2d3a1560eeb121317e862550c",
+      "source_archive_sha256": "c65f8281a79356abb3b55d0c5128b1a3543d9cfeedeb614253060e1f1696e4a8",
+      "report_sha256": "c94aa0b3807afa848691b21ccaf8a377d9eec849376ab7ee6c27c62386002465",
+      "grasp_audit": {
+        "schema": "v2d.coupled-grasp-readback-audit.v1",
+        "report_sha256": "c94aa0b3807afa848691b21ccaf8a377d9eec849376ab7ee6c27c62386002465",
+        "states_sha256": "45c15d279c70ed2b23629219680b2c637dd051d11ba59c7c271916788324d68e",
+        "task_grip_spec_sha256": "48904802ec88f130be7bce35bb4f1570dd77c6bf9eedeb5a1f4afec89c0590a8",
+        "source_object_metrics_exclude_inferred_postroll": true,
+        "objects": [
+          {
+            "object": 0,
+            "observed_source_steps": 11400,
+            "position_mean_m": 8.447590303260906,
+            "position_median_m": 0.07114406336132725,
+            "position_p90_m": 29.04822617357006,
+            "position_max_m": 135.05586164207938
+          },
+          {
+            "object": 1,
+            "observed_source_steps": 13681,
+            "position_mean_m": 0.02330766547557016,
+            "position_median_m": 0.016335938844086073,
+            "position_p90_m": 0.02847770646824156,
+            "position_max_m": 0.09272848602507922
+          }
+        ],
+        "grasps": [
+          {
+            "sample": "left-object0-grasp0",
+            "source_interval_s": [
+              2.4,
+              11.55
+            ],
+            "load_steps": 7320,
+            "maximum_relative_position_drift_m": 0.10037220666400072,
+            "maximum_relative_rotation_drift_deg": 21.567000132710252,
+            "contact_gate_coverage_fraction": 0.5991803278688524,
+            "phase_aborted": true,
+            "measured_support_exercised": true,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0,
+              "middle": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.5975409836065574,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.531852126121521,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          },
+          {
+            "sample": "left-object0-grasp1",
+            "source_interval_s": [
+              13.700000000000001,
+              16.6
+            ],
+            "load_steps": 2320,
+            "maximum_relative_position_drift_m": 135.0649624979972,
+            "maximum_relative_rotation_drift_deg": 179.83414962537557,
+            "contact_gate_coverage_fraction": 0.0,
+            "phase_aborted": true,
+            "measured_support_exercised": false,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0,
+              "middle": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.0,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.10966745018959045,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          },
+          {
+            "sample": "right-object1-grasp0",
+            "source_interval_s": [
+              2.4,
+              5.3999999999999995
+            ],
+            "load_steps": 2400,
+            "maximum_relative_position_drift_m": 0.026748328622429936,
+            "maximum_relative_rotation_drift_deg": 20.795259486649027,
+            "contact_gate_coverage_fraction": 0.5254166666666666,
+            "phase_aborted": false,
+            "measured_support_exercised": true,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 1.3201349222936258
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.5016666666666667,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.474957674741745,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          },
+          {
+            "sample": "right-object1-grasp1",
+            "source_interval_s": [
+              11.850000000000001,
+              15.450000000000001
+            ],
+            "load_steps": 2879,
+            "maximum_relative_position_drift_m": 0.012476170849122871,
+            "maximum_relative_rotation_drift_deg": 23.239660349929085,
+            "contact_gate_coverage_fraction": 1.0,
+            "phase_aborted": false,
+            "measured_support_exercised": true,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 3.815834413711193,
+              "index": 3.2569018749079985
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.9906217436609934,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.4389144480228424,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          }
+        ],
+        "all_four_grasps_retained_within_10mm": false,
+        "physics_controls_pass": true,
+        "initial_scene_clearance": {
+          "maximum_cooked_shape_difference_m": 1.1236938283130691e-16,
+          "minimum_initial_table_gap_m": 0.00020000480757409456,
+          "maximum_initial_object_piece_axis_depth_m": -0.0004995027049035095,
+          "independently_checked": true
+        },
+        "physical_task_accepted": false,
+        "policy_trained": false,
+        "official_score_claimed": false,
+        "scope": "Recorded simulated grasp retention and original inferred-source tracking only; no ground-truth contact, continuous collision, or official success certificate"
+      },
+      "jitter": {
+        "schema": "v2d.wrist-jitter-audit.v1",
+        "states_sha256": "45c15d279c70ed2b23629219680b2c637dd051d11ba59c7c271916788324d68e",
+        "source_interval_s": [
+          5.5,
+          7.5
+        ],
+        "physical_task_accepted": false,
+        "hands": {
+          "left": {
+            "target": {
+              "position_residual_rms_mm": 1.0431888069559827,
+              "rotation_residual_rms_deg": 1.9626173729404868,
+              "physical_cutoff_hz": 3.0,
+              "boundary_trim_physical_s": 0.0999999999999801,
+              "samples_before_filter": 1600
+            },
+            "actual": {
+              "position_residual_rms_mm": 1.0079531248876228,
+              "rotation_residual_rms_deg": 2.103211600255438,
+              "physical_cutoff_hz": 3.0,
+              "boundary_trim_physical_s": 0.0999999999999801,
+              "samples_before_filter": 1600
+            },
+            "aborted_samples": 0,
+            "distal_pad_presence_fraction": 1.0,
+            "distal_pads_with_opposed_thumb_index_fraction": 0.695625,
+            "distal_pads_with_any_opposed_pair_fraction": 0.695625,
+            "measured_distal_pair_normals": {
+              "thumb-index": {
+                "opposed_fraction": 0.695625,
+                "median_normal_dot_when_both_loaded": -0.9544010929575142
+              },
+              "thumb-middle": {
+                "opposed_fraction": 0.0,
+                "median_normal_dot_when_both_loaded": -0.014615020079720103
+              },
+              "index-middle": {
+                "opposed_fraction": 0.0,
+                "median_normal_dot_when_both_loaded": 0.25948250453723365
+              }
+            },
+            "maximum_recorded_solver_penetration_m": 8.64081084728241e-06,
+            "required_digit_support_fraction": 1.0
+          },
+          "right": {
+            "target": {
+              "position_residual_rms_mm": 0.07973011805959909,
+              "rotation_residual_rms_deg": 0.0015042401492337681,
+              "physical_cutoff_hz": 3.0,
+              "boundary_trim_physical_s": 0.0999999999999801,
+              "samples_before_filter": 1600
+            },
+            "actual": {
+              "position_residual_rms_mm": 0.18040131550624242,
+              "rotation_residual_rms_deg": 0.030762640878376615,
+              "physical_cutoff_hz": 3.0,
+              "boundary_trim_physical_s": 0.0999999999999801,
+              "samples_before_filter": 1600
+            },
+            "aborted_samples": 0,
+            "distal_pad_presence_fraction": 0.0,
+            "distal_pads_with_opposed_thumb_index_fraction": 0.0,
+            "distal_pads_with_any_opposed_pair_fraction": 0.0,
+            "measured_distal_pair_normals": {
+              "thumb-index": {
+                "opposed_fraction": 0.0,
+                "median_normal_dot_when_both_loaded": null
+              }
+            },
+            "maximum_recorded_solver_penetration_m": 9.473413228988647e-06,
+            "required_digit_support_fraction": 0.0
+          }
+        }
+      },
+      "wrist_tracking_pass": true,
+      "physics_controls_pass": true,
+      "source_motion_speed": 0.5,
+      "source_frames": 343,
+      "rendered_frames": 363,
+      "hand_control_settings": null,
+      "physical_task_accepted": false
+    },
+    {
+      "name": "coupled-task-quiet-carry-v1",
+      "label": "Reduced feedback, original grip (rejected)",
+      "source_version": 42,
+      "source_parent_commit": "973d371fd56e7db16b6bfe55e846ab3034d6854b",
+      "source_archive_sha256": "8bbfe4b7ed1f1d6656832e04c6d61887a0eec233fe1bd80ec6def30320293e76",
+      "report_sha256": "59586b553c5a3ed9ffef73d6211112741266a0a7a75a67533185a87e29ddb0bb",
+      "grasp_audit": {
+        "schema": "v2d.coupled-grasp-readback-audit.v1",
+        "report_sha256": "59586b553c5a3ed9ffef73d6211112741266a0a7a75a67533185a87e29ddb0bb",
+        "states_sha256": "e82d03c1609192174dc40f6d1804721e42c0ddbe2853dffa0e77871ccf0a9849",
+        "task_grip_spec_sha256": "2b2d71053dba3567b167029c779c6ca32d7771ce4c374d4ce02cd97daa60d6f3",
+        "source_object_metrics_exclude_inferred_postroll": true,
+        "objects": [
+          {
+            "object": 0,
+            "observed_source_steps": 11400,
+            "position_mean_m": 0.04047779366402529,
+            "position_median_m": 0.03500073549105817,
+            "position_p90_m": 0.08342606302868646,
+            "position_max_m": 0.12204096083051882
+          },
+          {
+            "object": 1,
+            "observed_source_steps": 13681,
+            "position_mean_m": 0.15457587207067364,
+            "position_median_m": 0.24380387139892004,
+            "position_p90_m": 0.2511113891734671,
+            "position_max_m": 0.2542038813140064
+          }
+        ],
+        "grasps": [
+          {
+            "sample": "left-object0-grasp0",
+            "source_interval_s": [
+              2.4,
+              11.55
+            ],
+            "load_steps": 7320,
+            "maximum_relative_position_drift_m": 0.05895956194564376,
+            "maximum_relative_rotation_drift_deg": 8.197847617135436,
+            "contact_gate_coverage_fraction": 0.0,
+            "phase_aborted": true,
+            "measured_support_exercised": false,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0,
+              "middle": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.0,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.11002641916275024,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          },
+          {
+            "sample": "left-object0-grasp1",
+            "source_interval_s": [
+              13.700000000000001,
+              16.6
+            ],
+            "load_steps": 2320,
+            "maximum_relative_position_drift_m": 0.013414356037831206,
+            "maximum_relative_rotation_drift_deg": 5.6429619380008,
+            "contact_gate_coverage_fraction": 0.0,
+            "phase_aborted": false,
+            "measured_support_exercised": false,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 0.8516100846017145,
+              "index": 0.0,
+              "middle": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.0,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.04554715007543564,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          },
+          {
+            "sample": "right-object1-grasp0",
+            "source_interval_s": [
+              2.4,
+              5.3999999999999995
+            ],
+            "load_steps": 2400,
+            "maximum_relative_position_drift_m": 0.05282889942372294,
+            "maximum_relative_rotation_drift_deg": 12.786785525135482,
+            "contact_gate_coverage_fraction": 0.05541666666666667,
+            "phase_aborted": true,
+            "measured_support_exercised": true,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.007083333333333333,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.0883927196264267,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          },
+          {
+            "sample": "right-object1-grasp1",
+            "source_interval_s": [
+              11.850000000000001,
+              15.450000000000001
+            ],
+            "load_steps": 2879,
+            "maximum_relative_position_drift_m": 0.003827372873151808,
+            "maximum_relative_rotation_drift_deg": 2.4898831325196418,
+            "contact_gate_coverage_fraction": 0.0,
+            "phase_aborted": true,
+            "measured_support_exercised": false,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.0,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.031268127262592316,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          }
+        ],
+        "all_four_grasps_retained_within_10mm": false,
+        "physics_controls_pass": true,
+        "initial_scene_clearance": {
+          "maximum_cooked_shape_difference_m": 1.1236938283130691e-16,
+          "minimum_initial_table_gap_m": 0.00020000480757409456,
+          "maximum_initial_object_piece_axis_depth_m": -0.0004995027049035095,
+          "independently_checked": true
+        },
+        "physical_task_accepted": false,
+        "policy_trained": false,
+        "official_score_claimed": false,
+        "scope": "Recorded simulated grasp retention and original inferred-source tracking only; no ground-truth contact, continuous collision, or official success certificate"
+      },
+      "jitter": {
+        "schema": "v2d.wrist-jitter-audit.v1",
+        "states_sha256": "e82d03c1609192174dc40f6d1804721e42c0ddbe2853dffa0e77871ccf0a9849",
+        "source_interval_s": [
+          5.5,
+          7.5
+        ],
+        "physical_task_accepted": false,
+        "hands": {
+          "left": {
+            "target": {
+              "position_residual_rms_mm": 0.5902955319128418,
+              "rotation_residual_rms_deg": 0.035860600916880946,
+              "physical_cutoff_hz": 3.0,
+              "boundary_trim_physical_s": 0.0999999999999801,
+              "samples_before_filter": 1600
+            },
+            "actual": {
+              "position_residual_rms_mm": 0.33413791692414313,
+              "rotation_residual_rms_deg": 0.04674556604726684,
+              "physical_cutoff_hz": 3.0,
+              "boundary_trim_physical_s": 0.0999999999999801,
+              "samples_before_filter": 1600
+            },
+            "aborted_samples": 980,
+            "distal_pad_presence_fraction": 0.0,
+            "distal_pads_with_opposed_thumb_index_fraction": 0.0,
+            "distal_pads_with_any_opposed_pair_fraction": 0.0,
+            "measured_distal_pair_normals": {
+              "thumb-index": {
+                "opposed_fraction": 0.0,
+                "median_normal_dot_when_both_loaded": -0.2291717686232962
+              },
+              "thumb-middle": {
+                "opposed_fraction": 0.0,
+                "median_normal_dot_when_both_loaded": -0.025865749284293547
+              },
+              "index-middle": {
+                "opposed_fraction": 0.0,
+                "median_normal_dot_when_both_loaded": null
+              }
+            },
+            "maximum_recorded_solver_penetration_m": 1.9334256649017334e-05,
+            "required_digit_support_fraction": 0.0
+          },
+          "right": {
+            "target": {
+              "position_residual_rms_mm": 2.7111468454550277e-15,
+              "rotation_residual_rms_deg": 1.8522163409236993e-32,
+              "physical_cutoff_hz": 3.0,
+              "boundary_trim_physical_s": 0.0999999999999801,
+              "samples_before_filter": 1600
+            },
+            "actual": {
+              "position_residual_rms_mm": 2.1077826617011705e-05,
+              "rotation_residual_rms_deg": 2.2448700388225603e-06,
+              "physical_cutoff_hz": 3.0,
+              "boundary_trim_physical_s": 0.0999999999999801,
+              "samples_before_filter": 1600
+            },
+            "aborted_samples": 1600,
+            "distal_pad_presence_fraction": 0.0,
+            "distal_pads_with_opposed_thumb_index_fraction": 0.0,
+            "distal_pads_with_any_opposed_pair_fraction": 0.0,
+            "measured_distal_pair_normals": {
+              "thumb-index": {
+                "opposed_fraction": 0.0,
+                "median_normal_dot_when_both_loaded": null
+              }
+            },
+            "maximum_recorded_solver_penetration_m": 0.0,
+            "required_digit_support_fraction": 0.0
+          }
+        }
+      },
+      "wrist_tracking_pass": false,
+      "physics_controls_pass": true,
+      "source_motion_speed": 0.5,
+      "source_frames": 343,
+      "rendered_frames": 363,
+      "hand_control_settings": null,
+      "physical_task_accepted": false
+    },
+    {
+      "name": "coupled-task-side-quiet-v1",
+      "label": "New side grip + quiet controller (both pot grasps pass)",
+      "source_version": 42,
+      "source_parent_commit": "973d371fd56e7db16b6bfe55e846ab3034d6854b",
+      "source_archive_sha256": "8bbfe4b7ed1f1d6656832e04c6d61887a0eec233fe1bd80ec6def30320293e76",
+      "report_sha256": "95036891330c58c73149863028b86f75c506c2510f7e4eede920687cc9a9b952",
+      "grasp_audit": {
+        "schema": "v2d.coupled-grasp-readback-audit.v1",
+        "report_sha256": "95036891330c58c73149863028b86f75c506c2510f7e4eede920687cc9a9b952",
+        "states_sha256": "6842e4a69a65e1939eb54b89493dd8df8b97a49f3dcad0bde55b0a98e343bb73",
+        "task_grip_spec_sha256": "a11d422af9fcf74ccfd6e3df5a028b1c40fcdfe112e28a422ef016aee9fd6749",
+        "source_object_metrics_exclude_inferred_postroll": true,
+        "objects": [
+          {
+            "object": 0,
+            "observed_source_steps": 11400,
+            "position_mean_m": 0.008711886007454398,
+            "position_median_m": 0.007859070756288788,
+            "position_p90_m": 0.01316934935567104,
+            "position_max_m": 0.0363881392356441
+          },
+          {
+            "object": 1,
+            "observed_source_steps": 13681,
+            "position_mean_m": 0.08243331781443276,
+            "position_median_m": 0.01459486957089635,
+            "position_p90_m": 0.3008708536558249,
+            "position_max_m": 0.30707943207142396
+          }
+        ],
+        "grasps": [
+          {
+            "sample": "left-object0-grasp0",
+            "source_interval_s": [
+              2.4,
+              11.55
+            ],
+            "load_steps": 7320,
+            "maximum_relative_position_drift_m": 0.004164040252288965,
+            "maximum_relative_rotation_drift_deg": 2.410469371213839,
+            "contact_gate_coverage_fraction": 1.0,
+            "phase_aborted": false,
+            "measured_support_exercised": true,
+            "retained_within_10mm_diagnostic": true,
+            "primary_digit_load_p10_N": {
+              "thumb": 6.436541310277575,
+              "index": 4.530140295650549,
+              "middle": 4.37020176147448
+            },
+            "all_primary_digits_above_0_5N_fraction": 1.0,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.39795997738838196,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          },
+          {
+            "sample": "left-object0-grasp1",
+            "source_interval_s": [
+              13.700000000000001,
+              16.6
+            ],
+            "load_steps": 2320,
+            "maximum_relative_position_drift_m": 0.0008329885737517302,
+            "maximum_relative_rotation_drift_deg": 0.44555572365366286,
+            "contact_gate_coverage_fraction": 1.0,
+            "phase_aborted": false,
+            "measured_support_exercised": true,
+            "retained_within_10mm_diagnostic": true,
+            "primary_digit_load_p10_N": {
+              "thumb": 6.28220791067621,
+              "index": 5.265524580230898,
+              "middle": 3.606587140716997
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.9991379310344828,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.43930068612098694,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          },
+          {
+            "sample": "right-object1-grasp0",
+            "source_interval_s": [
+              2.4,
+              5.3999999999999995
+            ],
+            "load_steps": 2400,
+            "maximum_relative_position_drift_m": 0.0032900537706518074,
+            "maximum_relative_rotation_drift_deg": 8.676046386054724,
+            "contact_gate_coverage_fraction": 1.0,
+            "phase_aborted": false,
+            "measured_support_exercised": true,
+            "retained_within_10mm_diagnostic": true,
+            "primary_digit_load_p10_N": {
+              "thumb": 6.045279691839016,
+              "index": 4.579584153697426
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.9995833333333334,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.3589441776275635,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          },
+          {
+            "sample": "right-object1-grasp1",
+            "source_interval_s": [
+              11.850000000000001,
+              15.450000000000001
+            ],
+            "load_steps": 2879,
+            "maximum_relative_position_drift_m": 0.0544712238312485,
+            "maximum_relative_rotation_drift_deg": 4.861448366687654,
+            "contact_gate_coverage_fraction": 0.0093782563390066,
+            "phase_aborted": true,
+            "measured_support_exercised": true,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.0010420284821118443,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.037028372287750244,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          }
+        ],
+        "all_four_grasps_retained_within_10mm": false,
+        "physics_controls_pass": true,
+        "initial_scene_clearance": {
+          "maximum_cooked_shape_difference_m": 1.1236938283130691e-16,
+          "minimum_initial_table_gap_m": 0.00020000480757409456,
+          "maximum_initial_object_piece_axis_depth_m": -0.0004995027049035095,
+          "independently_checked": true
+        },
+        "physical_task_accepted": false,
+        "policy_trained": false,
+        "official_score_claimed": false,
+        "scope": "Recorded simulated grasp retention and original inferred-source tracking only; no ground-truth contact, continuous collision, or official success certificate"
+      },
+      "jitter": {
+        "schema": "v2d.wrist-jitter-audit.v1",
+        "states_sha256": "6842e4a69a65e1939eb54b89493dd8df8b97a49f3dcad0bde55b0a98e343bb73",
+        "source_interval_s": [
+          5.5,
+          7.5
+        ],
+        "physical_task_accepted": false,
+        "hands": {
+          "left": {
+            "target": {
+              "position_residual_rms_mm": 0.0562993713290503,
+              "rotation_residual_rms_deg": 0.00814197948361902,
+              "physical_cutoff_hz": 3.0,
+              "boundary_trim_physical_s": 0.0999999999999801,
+              "samples_before_filter": 1600
+            },
+            "actual": {
+              "position_residual_rms_mm": 0.03755908936314924,
+              "rotation_residual_rms_deg": 0.014284703760508853,
+              "physical_cutoff_hz": 3.0,
+              "boundary_trim_physical_s": 0.0999999999999801,
+              "samples_before_filter": 1600
+            },
+            "aborted_samples": 0,
+            "distal_pad_presence_fraction": 1.0,
+            "distal_pads_with_opposed_thumb_index_fraction": 0.99875,
+            "distal_pads_with_any_opposed_pair_fraction": 1.0,
+            "measured_distal_pair_normals": {
+              "thumb-index": {
+                "opposed_fraction": 0.99875,
+                "median_normal_dot_when_both_loaded": -0.7822123951756417
+              },
+              "thumb-middle": {
+                "opposed_fraction": 1.0,
+                "median_normal_dot_when_both_loaded": -0.9494455570805251
+              },
+              "index-middle": {
+                "opposed_fraction": 0.0,
+                "median_normal_dot_when_both_loaded": 0.5711096422760545
+              }
+            },
+            "maximum_recorded_solver_penetration_m": 2.6780785447044764e-06,
+            "required_digit_support_fraction": 1.0
+          },
+          "right": {
+            "target": {
+              "position_residual_rms_mm": 0.07973011805959909,
+              "rotation_residual_rms_deg": 0.0015042401492337681,
+              "physical_cutoff_hz": 3.0,
+              "boundary_trim_physical_s": 0.0999999999999801,
+              "samples_before_filter": 1600
+            },
+            "actual": {
+              "position_residual_rms_mm": 0.2816186176176275,
+              "rotation_residual_rms_deg": 0.0871980526827579,
+              "physical_cutoff_hz": 3.0,
+              "boundary_trim_physical_s": 0.0999999999999801,
+              "samples_before_filter": 1600
+            },
+            "aborted_samples": 0,
+            "distal_pad_presence_fraction": 0.019375,
+            "distal_pads_with_opposed_thumb_index_fraction": 0.019375,
+            "distal_pads_with_any_opposed_pair_fraction": 0.019375,
+            "measured_distal_pair_normals": {
+              "thumb-index": {
+                "opposed_fraction": 0.019375,
+                "median_normal_dot_when_both_loaded": -0.9849440757771258
+              }
+            },
+            "maximum_recorded_solver_penetration_m": 5.863606929779053e-05,
+            "required_digit_support_fraction": 0.03
+          }
+        }
+      },
+      "wrist_tracking_pass": true,
+      "physics_controls_pass": true,
+      "source_motion_speed": 0.5,
+      "source_frames": 343,
+      "rendered_frames": 363,
+      "hand_control_settings": null,
+      "physical_task_accepted": false
+    },
+    {
+      "name": "coupled-task-side-left-quiet-v1",
+      "label": "Final: new left grip, earlier right controller",
+      "source_version": 43,
+      "source_parent_commit": "437ef447f0ef1368a40f60c8fa691da6dfcefb7b",
+      "source_archive_sha256": "37d7946da508e02808d974da4f2c1b5172a43ab75586cc8e3effa6fffb0d33ba",
+      "report_sha256": "a6e8b9fe36b2ad1ff53aec6f05e616ccb326046b9d1d8941d0d1a38b15fb760a",
+      "grasp_audit": {
+        "schema": "v2d.coupled-grasp-readback-audit.v1",
+        "report_sha256": "a6e8b9fe36b2ad1ff53aec6f05e616ccb326046b9d1d8941d0d1a38b15fb760a",
+        "states_sha256": "b824d61a76aac6ec976972cc7ca1bb7dcb473babc16f77ac01a473a0d59e1128",
+        "task_grip_spec_sha256": "2a6159568fbc8f7fc7f16926257068603c0377b9845aadb4baf62c819c0c52d7",
+        "source_object_metrics_exclude_inferred_postroll": true,
+        "objects": [
+          {
+            "object": 0,
+            "observed_source_steps": 11400,
+            "position_mean_m": 0.010294964399236677,
+            "position_median_m": 0.008035420153280636,
+            "position_p90_m": 0.01994030131538073,
+            "position_max_m": 0.02155396667620601
+          },
+          {
+            "object": 1,
+            "observed_source_steps": 13681,
+            "position_mean_m": 0.010432043221928578,
+            "position_median_m": 0.005664521931478792,
+            "position_p90_m": 0.02210717848243197,
+            "position_max_m": 0.03442367076935217
+          }
+        ],
+        "grasps": [
+          {
+            "sample": "left-object0-grasp0",
+            "source_interval_s": [
+              2.4,
+              11.55
+            ],
+            "load_steps": 7320,
+            "maximum_relative_position_drift_m": 0.002039525110146448,
+            "maximum_relative_rotation_drift_deg": 1.0339106287439943,
+            "contact_gate_coverage_fraction": 1.0,
+            "phase_aborted": false,
+            "measured_support_exercised": true,
+            "retained_within_10mm_diagnostic": true,
+            "primary_digit_load_p10_N": {
+              "thumb": 6.985876079416901,
+              "index": 4.088478349542154,
+              "middle": 4.520062685488149
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.9993169398907104,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.4190123975276947,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          },
+          {
+            "sample": "left-object0-grasp1",
+            "source_interval_s": [
+              13.700000000000001,
+              16.6
+            ],
+            "load_steps": 2320,
+            "maximum_relative_position_drift_m": 0.0030418645720484755,
+            "maximum_relative_rotation_drift_deg": 1.6559038498549778,
+            "contact_gate_coverage_fraction": 1.0,
+            "phase_aborted": false,
+            "measured_support_exercised": true,
+            "retained_within_10mm_diagnostic": true,
+            "primary_digit_load_p10_N": {
+              "thumb": 5.5588365366860595,
+              "index": 4.892728861934706,
+              "middle": 1.511305997954187
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.9956896551724138,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.4803299009799957,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          },
+          {
+            "sample": "right-object1-grasp0",
+            "source_interval_s": [
+              2.4,
+              5.3999999999999995
+            ],
+            "load_steps": 2400,
+            "maximum_relative_position_drift_m": 0.007977056023228641,
+            "maximum_relative_rotation_drift_deg": 16.404451984382536,
+            "contact_gate_coverage_fraction": 1.0,
+            "phase_aborted": false,
+            "measured_support_exercised": true,
+            "retained_within_10mm_diagnostic": true,
+            "primary_digit_load_p10_N": {
+              "thumb": 5.809185476371204,
+              "index": 4.160717606690465
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.9808333333333333,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.42029544711112976,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          },
+          {
+            "sample": "right-object1-grasp1",
+            "source_interval_s": [
+              11.850000000000001,
+              15.450000000000001
+            ],
+            "load_steps": 2879,
+            "maximum_relative_position_drift_m": 0.0060128392152792014,
+            "maximum_relative_rotation_drift_deg": 11.851182560044505,
+            "contact_gate_coverage_fraction": 1.0,
+            "phase_aborted": false,
+            "measured_support_exercised": true,
+            "retained_within_10mm_diagnostic": true,
+            "primary_digit_load_p10_N": {
+              "thumb": 4.993645473714424,
+              "index": 3.8325150106335704
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.9878430010420285,
+            "maximum_estimated_implicit_actuator_torque_Nm": 0.39219316840171814,
+            "effort_data_scope": "Clipped IsaacLab implicit-actuator model estimate; legacy actual_combined field is also an estimate, not measured solver motor torque"
+          }
+        ],
+        "all_four_grasps_retained_within_10mm": true,
+        "physics_controls_pass": true,
+        "initial_scene_clearance": {
+          "maximum_cooked_shape_difference_m": 1.1236938283130691e-16,
+          "minimum_initial_table_gap_m": 0.00020000480757409456,
+          "maximum_initial_object_piece_axis_depth_m": -0.0004995027049035095,
+          "independently_checked": true
+        },
+        "physical_task_accepted": false,
+        "policy_trained": false,
+        "official_score_claimed": false,
+        "scope": "Recorded simulated grasp retention and original inferred-source tracking only; no ground-truth contact, continuous collision, or official success certificate"
+      },
+      "jitter": {
+        "schema": "v2d.wrist-jitter-audit.v1",
+        "states_sha256": "b824d61a76aac6ec976972cc7ca1bb7dcb473babc16f77ac01a473a0d59e1128",
+        "source_interval_s": [
+          5.5,
+          7.5
+        ],
+        "physical_task_accepted": false,
+        "hands": {
+          "left": {
+            "target": {
+              "position_residual_rms_mm": 0.0441469207155803,
+              "rotation_residual_rms_deg": 0.015981668926879158,
+              "physical_cutoff_hz": 3.0,
+              "boundary_trim_physical_s": 0.0999999999999801,
+              "samples_before_filter": 1600
+            },
+            "actual": {
+              "position_residual_rms_mm": 0.04450241844418479,
+              "rotation_residual_rms_deg": 0.023284865213746588,
+              "physical_cutoff_hz": 3.0,
+              "boundary_trim_physical_s": 0.0999999999999801,
+              "samples_before_filter": 1600
+            },
+            "aborted_samples": 0,
+            "distal_pad_presence_fraction": 1.0,
+            "distal_pads_with_opposed_thumb_index_fraction": 0.0,
+            "distal_pads_with_any_opposed_pair_fraction": 1.0,
+            "measured_distal_pair_normals": {
+              "thumb-index": {
+                "opposed_fraction": 0.0,
+                "median_normal_dot_when_both_loaded": -0.41842228056769204
+              },
+              "thumb-middle": {
+                "opposed_fraction": 1.0,
+                "median_normal_dot_when_both_loaded": -0.9499263290130078
+              },
+              "index-middle": {
+                "opposed_fraction": 0.0,
+                "median_normal_dot_when_both_loaded": 0.22358826585816205
+              }
+            },
+            "maximum_recorded_solver_penetration_m": 2.6575116862659343e-06,
+            "required_digit_support_fraction": 1.0
+          },
+          "right": {
+            "target": {
+              "position_residual_rms_mm": 0.07973011805959909,
+              "rotation_residual_rms_deg": 0.0015042401492337681,
+              "physical_cutoff_hz": 3.0,
+              "boundary_trim_physical_s": 0.0999999999999801,
+              "samples_before_filter": 1600
+            },
+            "actual": {
+              "position_residual_rms_mm": 0.10843154207221416,
+              "rotation_residual_rms_deg": 0.04177852438009633,
+              "physical_cutoff_hz": 3.0,
+              "boundary_trim_physical_s": 0.0999999999999801,
+              "samples_before_filter": 1600
+            },
+            "aborted_samples": 0,
+            "distal_pad_presence_fraction": 0.024375,
+            "distal_pads_with_opposed_thumb_index_fraction": 0.024375,
+            "distal_pads_with_any_opposed_pair_fraction": 0.024375,
+            "measured_distal_pair_normals": {
+              "thumb-index": {
+                "opposed_fraction": 0.024375,
+                "median_normal_dot_when_both_loaded": -0.9971165332423786
+              }
+            },
+            "maximum_recorded_solver_penetration_m": 0.00016579777002334595,
+            "required_digit_support_fraction": 0.041875
+          }
+        }
+      },
+      "wrist_tracking_pass": true,
+      "physics_controls_pass": true,
+      "source_motion_speed": 0.5,
+      "source_frames": 343,
+      "rendered_frames": 363,
+      "hand_control_settings": {
+        "left": {
+          "experimental_register_settled_grasp": true,
+          "experimental_carry_compliance": true,
+          "carry_object_feedback_weight": 0.5,
+          "wrist_payload_compensation": "nominal_gravity"
+        },
+        "right": {
+          "experimental_register_settled_grasp": false,
+          "experimental_carry_compliance": false,
+          "carry_object_feedback_weight": 0.5,
+          "wrist_payload_compensation": "measured_primary_reaction"
+        }
+      },
+      "physical_task_accepted": false
+    }
+  ],
+  "isolated_side_grip_lift": {
+    "report_sha256": "99ae513e724d04434e6e9217568967e192b4de9fd3bb3bc33fa3645427784fdc",
+    "samples": [
+      {
+        "sample": "left-object0-grasp0-squeeze",
+        "source_frame": 47,
+        "variant": "squeeze",
+        "load_interval_s": [
+          0.5,
+          1.5
+        ],
+        "displacement_during_supported_closure_m": 0.0005355848597101171,
+        "final_displacement_m": 0.051196787001186815,
+        "maximum_displacement_m": 0.05850427608415432,
+        "maximum_orientation_change_deg": 1.2713312920950945,
+        "maximum_contact_force_N": 10.697068157971973,
+        "mean_vertical_contact_force_last_0_2s_N": 1.2389815583825112,
+        "held_within_10mm_for_1s_diagnostic_only": false,
+        "object_lift_m": 0.05118492245674133,
+        "maximum_object_drift_relative_to_wrist_m": 0.0034467570721665075,
+        "maximum_wrist_position_error_m": 0.009516514026401407,
+        "maximum_wrist_rotation_error_deg": 1.0048261311042204,
+        "lifted_and_retained_diagnostic_only": true
+      },
+      {
+        "sample": "left-object0-grasp1-squeeze",
+        "source_frame": 273,
+        "variant": "squeeze",
+        "load_interval_s": [
+          0.5,
+          1.5
+        ],
+        "displacement_during_supported_closure_m": 0.0004623592393177055,
+        "final_displacement_m": 0.04950093919946755,
+        "maximum_displacement_m": 0.05686169655437293,
+        "maximum_orientation_change_deg": 0.9996251107452198,
+        "maximum_contact_force_N": 32.04564565033808,
+        "mean_vertical_contact_force_last_0_2s_N": -0.21475875689357055,
+        "held_within_10mm_for_1s_diagnostic_only": false,
+        "object_lift_m": 0.04950028657913208,
+        "maximum_object_drift_relative_to_wrist_m": 0.003377527385807646,
+        "maximum_wrist_position_error_m": 0.008925578133586739,
+        "maximum_wrist_rotation_error_deg": 0.716724512872289,
+        "lifted_and_retained_diagnostic_only": true
+      }
+    ],
+    "physics_controls_pass": true
+  },
+  "cpu_tests_passed": 100,
+  "latest_lifecycle": {
+    "instance_id": "dngrtbldz",
+    "status": "STOPPED",
+    "confirmed_utc": "2026-10-16T17:06:28.282171+00:00",
+    "conservative_total_compute_bound_usd": 15.038,
+    "not_an_invoice": true,
+    "backup_all_hashes_verified": true
+  },
+  "backup_verification": {
+    "file_count": 109567,
+    "bytes": 34302839389,
+    "new_files_hash_verified": 3581,
+    "prior_verified_file_count": 105986,
+    "prior_inventory_sha256": "2d34a440aa2e76c9468baabe1234b9b7452e21f230058d400ff34d8e50bdc77e",
+    "prior_results_immutable_and_not_rehashed": true,
+    "hash_mismatches": [],
+    "all_verified": true
+  },
+  "source_observations_changed": false,
+  "episode_inputs_published": false,
+  "physical_task_accepted": false
+}
