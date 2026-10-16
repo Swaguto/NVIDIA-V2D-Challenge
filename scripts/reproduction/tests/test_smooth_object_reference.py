@@ -119,3 +119,18 @@ def test_lost_object_cannot_pull_reacquisition_hand_out_of_scene_or_close_empty_
     assert recovered["reacquisition_failure"] is None
     np.testing.assert_allclose(recovered["fingers"], 0.2)
     np.testing.assert_array_equal(original, [0, 0, 0, 0, 0, 0, 1])
+
+
+def test_aborted_hand_holds_measured_pose_instead_of_following_source_or_fallen_object():
+    from _dex3_task_grip import aborted_hand_hold
+
+    anchor = np.array([0.1, 0.2, 0.3, 0, 0, 0, 1.0])
+    initial = np.ones(7) * 0.2
+    opened = np.zeros(7)
+    pose, start = aborted_hand_hold(anchor, initial, opened, 0)
+    np.testing.assert_array_equal(pose, anchor)
+    np.testing.assert_array_equal(start, initial)
+    pose, end = aborted_hand_hold(anchor, initial, opened, 1)
+    np.testing.assert_array_equal(pose, anchor)
+    np.testing.assert_array_equal(end, opened)
+    np.testing.assert_array_equal(initial, np.ones(7) * 0.2)

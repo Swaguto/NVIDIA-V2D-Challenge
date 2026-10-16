@@ -37,6 +37,15 @@ def compose_pose(obj, relative):
     ]
 
 
+def aborted_hand_hold(anchor_pose, initial_fingers, open_fingers, elapsed_source_s):
+    """Hold the measured wrist and open smoothly after unavailable reacquisition."""
+    return np.asarray(anchor_pose, float).copy(), (
+        np.asarray(initial_fingers, float)
+        + smooth(elapsed_source_s / 0.25)
+        * (np.asarray(open_fingers, float) - np.asarray(initial_fingers, float))
+    )
+
+
 class SmoothObjectReference:
     """Inferred robot reference through frozen pose knots; no observation edits.
 

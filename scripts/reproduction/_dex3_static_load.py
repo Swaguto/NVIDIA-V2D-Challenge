@@ -1909,6 +1909,7 @@ def run_supported_task(
     from _dex3_grip_control import payload_contact_hold, payload_gravity_wrench
     from _dex3_task_grip import (
         TaskGripReference,
+        aborted_hand_hold,
         contact_wrench,
         filtered_reaction_compensation,
         seat_contact_pads,
@@ -1972,6 +1973,9 @@ def run_supported_task(
         if isinstance(value, wp.array):
             return wp.to_torch(value)
         return value
+
+    def cpu(value):
+        return controller_tensor(value).detach().cpu().numpy()
 
     evaluator_file = inputs / "motion-evaluator.py"
     if digest(evaluator_file) != prepared["motion_evaluator_sha256"]:
@@ -2173,6 +2177,7 @@ def run_supported_task(
     reaction_compensation = [np.zeros(6), np.zeros(6)]
     contact_hold = [0.0, 0.0]
     measured_reaction_hold = [0.0, 0.0]
+    aborted_hand_anchors = {}
     tactile_integrals = [np.zeros(3), np.zeros(3)]
     tactile_phase = [None, None]
     task_motor_readbacks = []
@@ -2298,6 +2303,33 @@ def run_supported_task(
 
                     grip_command = grip_at(grip_time)
                     grip_next = grip_at(grip_time + dt * speed)
+                    if grip_command.get("reacquisition_failure"):
+                        key = f"{('left', 'right')[si]}:{grip_command['phase']}"
+                        if key not in aborted_hand_anchors:
+                            aborted_hand_anchors[key] = dict(
+                                time_s=grip_time,
+                                pose=cpu(hand.data.root_link_pose_w)[0].tolist(),
+                                fingers=cpu(hand.data.joint_pos)[0].tolist(),
+                            )
+                        anchor = aborted_hand_anchors[key]
+                        phase = next(
+                            p
+                            for p in task_grip.spec["phases"][("left", "right")[si]]
+                            if p["sample"] == grip_command["phase"]
+                        )
+                        for command, command_time in (
+                            (grip_command, grip_time),
+                            (grip_next, grip_time + dt * speed),
+                        ):
+                            command["pose"], opened = aborted_hand_hold(
+                                anchor["pose"],
+                                anchor["fingers"],
+                                np.array(phase["open_rad"])[order],
+                                command_time - anchor["time_s"],
+                            )
+                            command["fingers"] = opened[np.argsort(order)]
+                            command["effort"] = np.zeros(7)
+                            command["squeeze_scale"] = 0.0
                     target_pose = grip_command["pose"]
                 target = torch.tensor(
                     target_pose[None], dtype=torch.float32, device=sim.device
@@ -2361,10 +2393,6 @@ def run_supported_task(
                     )
                     is_global = False
                 else:
-
-                    def cpu(value):
-                        return controller_tensor(value).detach().cpu().numpy()
-
                     wrench, control_details = implicit_root_wrench(
                         link_pose_xyzw=cpu(hand.data.root_link_pose_w)[0],
                         target_link_pose_xyzw=target_pose,
@@ -3086,6 +3114,7 @@ def run_supported_task(
             "aborted_reacquisition_phases": task_grip.aborted_phases
             if task_grip is not None
             else {},
+            "aborted_hand_hold_anchors": aborted_hand_anchors,
             "live_contact_load_model": task_grip.spec.get("live_contact_load_model")
             if task_grip is not None
             else None,

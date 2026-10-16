@@ -112,3 +112,12 @@ scale is increased. Static fixtures retain their original 0.01 s timestep.
 78 CPU tests pass, including hybrid posture torque orthogonality, retained
 configuration, rank rejection and joint-bound enforcement. Fresh simulator
 results, including failed variants, determine whether either change is useful.
+
+The bounded-reacquisition simulator comparison confirms that a pot loss no
+longer pulls the blue hand out of the scene: its actual root z stays between
+-0.3494 and -0.2173 m while the failed object continues falling. The failed
+phase is recorded. The final fault response additionally holds the measured
+wrist pose and opens from the measured finger configuration, instead of
+continuing a source-relative park path that could cross the displaced object.
+This affects robot targets only. 79 CPU tests pass; the final fault hold still
+requires its new simulator comparison.
