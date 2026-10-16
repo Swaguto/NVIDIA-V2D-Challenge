@@ -31,6 +31,7 @@ from flash_chord.evaluation.rollout import (
 )
 from flash_chord.scene.collision import CollisionPolicy
 from flash_chord.scene.setup import setup_scene
+from flash_chord.runtime.contact import read_contacts_w
 from flash_chord.training.environment import WarpRLEnv
 from train import audit_scene
 
@@ -42,7 +43,36 @@ class ReadbackEnv:
         self.wrapped, self.env = wrapped, env
         self.body, self.joints, self.motor = [], [], []
         self.joint_motor = []
+        self.contacts = []
+        self.motor_target, self.feedback_weight = [], []
+        self.native_model = {}
         model = getattr(env.solver, "mj_model", None)
+        for name in (
+            "geom_type",
+            "geom_bodyid",
+            "geom_dataid",
+            "geom_pos",
+            "geom_quat",
+            "geom_size",
+            "geom_friction",
+            "geom_solref",
+            "geom_solimp",
+            "geom_margin",
+            "geom_gap",
+            "mesh_vert",
+            "mesh_vertadr",
+            "mesh_vertnum",
+            "mesh_pos",
+            "mesh_quat",
+            "body_mass",
+            "body_inertia",
+            "body_ipos",
+            "body_iquat",
+            "dof_armature",
+        ):
+            value = getattr(model, name, None)
+            if value is not None:
+                self.native_model[name] = np.asarray(value).copy()
         self.ranges = getattr(model, "actuator_forcerange", None)
         self.limited = getattr(model, "actuator_forcelimited", None)
         self.joint_ranges = getattr(model, "jnt_actfrcrange", None)
@@ -53,6 +83,10 @@ class ReadbackEnv:
         result = self.wrapped.step(action)
         self.body.append(self.env.state_0.body_q.numpy().copy())
         self.joints.append(self.env.state_0.joint_q.numpy().copy())
+        self.motor_target.append(self.env.action.joint_target.numpy().copy())
+        feedback = getattr(self.env.action, "actual_feedback", None)
+        if feedback is not None:
+            self.feedback_weight.append(feedback.numpy().copy())
         data = getattr(self.env.solver, "mjw_data", None)
         force = getattr(data, "actuator_force", None)
         if force is not None:
@@ -60,12 +94,19 @@ class ReadbackEnv:
         force = getattr(data, "qfrc_actuator", None)
         if force is not None:
             self.joint_motor.append(force.numpy().copy())
+        self.contacts.append(
+            read_contacts_w(self.env.model, self.env.state_0, self.env.contacts)
+        )
         return result
 
     def save(self, output):
         arrays = dict(
-            body_poses=np.asarray(self.body), joint_positions=np.asarray(self.joints)
+            body_poses=np.asarray(self.body),
+            joint_positions=np.asarray(self.joints),
+            motor_target=np.asarray(self.motor_target),
         )
+        if self.feedback_weight:
+            arrays["measured_feedback_weight"] = np.asarray(self.feedback_weight)
         verification = dict(
             native_actuator_force_readback_available=bool(self.motor),
             native_capped_drive_verified=False,
@@ -132,6 +173,27 @@ class ReadbackEnv:
                 verification_scope="Combined joint actuator force after native joint limits; separate position/velocity actuator components need not be individually capped",
             )
         np.savez_compressed(output / "native-state-readback.npz", **arrays)
+        np.savez_compressed(output / "native-model-readback.npz", **self.native_model)
+        contact_arrays = {
+            name: np.concatenate([getattr(c, name) for c in self.contacts], axis=0)
+            for name in (
+                "body0_ids",
+                "body1_ids",
+                "contact_pos_w",
+                "contact_normal_w",
+                "contact_force_w",
+                "contact_torque_w",
+            )
+        }
+        np.savez_compressed(
+            output / "native-contacts-readback.npz",
+            frame_offsets=np.cumsum([0] + [len(c) for c in self.contacts]),
+            **contact_arrays,
+        )
+        verification["contact_readback_scope"] = (
+            "Measured contacts at the final physics substep of each source frame; "
+            "not continuous contact coverage or a support certificate"
+        )
         (output / "body-labels.json").write_text(
             json.dumps(list(self.env.model.body_label), indent=2) + "\n"
         )
@@ -218,6 +280,12 @@ def main(cfg):
             metrics=metrics,
             reference_tracking=reference_metrics,
             frame_count=setup.reference.num_frames,
+            control_fps=float(env_config.sim.fps),
+            physics_fps=float(env_config.sim.physics_fps),
+            source_frame_count=len(
+                np.load(manifest_path.parent / "targets.npz")["frame_indices"]
+            ),
+            source_fps=float(setup.reference.metadata.source_fps),
             source_manifest_sha256=hashlib.sha256(
                 manifest_path.read_bytes()
             ).hexdigest(),

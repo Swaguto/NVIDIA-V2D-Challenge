@@ -1,0 +1,9 @@
+# @package _global_
+defaults:
+  - dex3_repaired_feedback
+  - _self_
+
+# Same source speed and 400 Hz physics; five times more frequent motor updates.
+sim:
+  fps: 100.0
+  substeps: 4

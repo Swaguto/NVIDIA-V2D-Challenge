@@ -13,6 +13,7 @@ from pathlib import Path
 import numpy as np
 import warp as wp
 from flash_chord.runtime.actions import ActionConfig, ResidualHandPoseAction
+from .sampling import resample_targets
 
 
 @wp.kernel
@@ -53,8 +54,11 @@ class GraspActionConfig(ActionConfig):
             raise ValueError("Task motor targets changed")
         base = ResidualHandPoseAction.build(scene, config=self, device=device)
         with np.load(targets, allow_pickle=False) as data:
-            ff = data["finger_feedforward_Nm"]
-            expected_kp = data["finger_stiffness_Nm_per_rad"]
+            sampled = resample_targets(
+                {k: data[k].copy() for k in data.files}, base.buffers.reference.num_frames
+            )
+            ff = sampled["finger_feedforward_Nm"]
+            expected_kp = sampled["finger_stiffness_Nm_per_rad"]
         if (
             ff.shape != (base.buffers.reference.num_frames, 2, 7)
             or not np.isfinite(ff).all()

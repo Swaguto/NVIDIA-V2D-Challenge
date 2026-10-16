@@ -17,6 +17,7 @@ from flash_chord.utils.quat import (
     quat_to_rotvec,
 )
 from .grasp_action import GraspActionConfig, GripResidualAction
+from .sampling import resample_targets
 
 
 @wp.func
@@ -161,7 +162,9 @@ class FeedbackGraspActionConfig(GraspActionConfig):
         manifest = json.loads((root / "manifest.json").read_text())
         spec = json.loads((root / "task-grips.json").read_text())
         with np.load(root / "targets.npz", allow_pickle=False) as f:
-            data = {k: f[k].copy() for k in f.files}
+            data = resample_targets(
+                {k: f[k].copy() for k in f.files}, base.buffers.reference.num_frames
+            )
         object_ids = []
         hand_ids = []
         objects = []

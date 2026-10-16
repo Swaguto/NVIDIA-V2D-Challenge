@@ -11,6 +11,7 @@ from pathlib import Path
 
 import numpy as np
 from v2d_dex3_flashchord import RUNTIME_COMMIT
+from .sampling import resample_targets
 
 
 def sha(path):
@@ -83,16 +84,23 @@ def load_dex3(
 
     row = pq.ParquetFile(path).read().to_pylist()[0]
     fps = float(row["fps"])
-    if motion_speed != 1 or (control_fps is not None and control_fps != fps):
-        raise ValueError(
-            "Dex3 confidence window currently requires source-rate playback"
-        )
+    target_fps = fps if control_fps is None else float(control_fps)
+    if motion_speed != 1:
+        raise ValueError("Dex3 references require unchanged source motion speed")
     with np.load(root / "targets.npz", allow_pickle=False) as source:
         data = {k: source[k].copy() for k in source.files}
     count = len(data["frame_indices"])
     if count < 2 or not np.all(np.diff(data["frame_indices"]) == 1):
         raise ValueError("Confidence window is not contiguous")
     inferred_task = manifest["schema"] == "v2d.dex3-training-task.v3"
+    if target_fps != fps and (not inferred_task or source_frame_playback):
+        raise ValueError("Confidence windows require source-rate playback")
+    if (
+        not np.isfinite(target_fps)
+        or target_fps < fps
+        or target_fps / fps != int(target_fps / fps)
+    ):
+        raise ValueError("Only integer source-rate command upsampling is supported")
     if inferred_task and (
         manifest.get("target_contract") != "inferred_robot_grasp_commands.v1"
         or manifest.get("allows_inferred_robot_targets") is not True
@@ -107,6 +115,8 @@ def load_dex3(
     for key, values in data.items():
         if not np.isfinite(values).all():
             raise ValueError(f"Nonfinite training target {key}")
+    count = (count - 1) * int(target_fps / fps) + 1
+    data = resample_targets(data, count)
     sides = ("left", "right")
     objects = manifest["objects"]
     assets = tuple(
@@ -133,7 +143,7 @@ def load_dex3(
             source_dataset="local_development",
             coord_frame="inferred support aligned world; metres; wxyz",
         ),
-        _fps=fps,
+        _fps=target_fps,
         _wrist_pos_w={s: data["robot_qpos"][:, i, :3] for i, s in enumerate(sides)},
         _wrist_quat_w={s: quat(data["robot_qpos"][:, i]) for i, s in enumerate(sides)},
         _finger_joint_pos={

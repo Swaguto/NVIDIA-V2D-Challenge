@@ -1,0 +1,7 @@
+# @package _global_
+defaults:
+  - dex3_repaired_control100
+  - _self_
+
+scene:
+  decompose_objects: false
