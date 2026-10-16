@@ -34,6 +34,10 @@ def validate(inputs, plan_path, replay_audit):
         "native_physics_model_sha256"
     ] != audit.get("native_physics_model_sha256"):
         raise ValueError("Fitted policy and independent replay physics differ")
+    if not plan.get("action_control_contract_sha256") or plan[
+        "action_control_contract_sha256"
+    ] != audit.get("action_control_contract_sha256"):
+        raise ValueError("Fitted policy and independent replay controller differ")
     for name, row in plan["fit_reports"].items():
         measured = [g for g in audit["grasps"] if g["sample"] == name]
         if (

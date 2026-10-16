@@ -14,7 +14,7 @@ import numpy as np
 import warp as wp
 from flash_chord.runtime.actions import ActionConfig, ResidualHandPoseAction
 from .sampling import resample_targets
-from .phase_prior import schedule as prior_schedule, model_signature
+from .phase_prior import schedule as prior_schedule, model_signature, control_signature
 
 
 @wp.kernel
@@ -133,6 +133,7 @@ class GraspActionConfig(ActionConfig):
         result.native_physics_model_sha256 = model_signature(
             scene.model, scene.world_count
         )
+        result.policy_control_contract_sha256 = control_signature(self)
         if self.wrist_reference_velocity:
             velocity = np.gradient(
                 sampled["robot_qpos"][:, :, :3], sampled["timestamps_s"], axis=0
@@ -183,6 +184,13 @@ class GraspActionConfig(ActionConfig):
             ):
                 raise ValueError(
                     "Fitted phase policy physics differs from the loaded scene"
+                )
+            if (
+                plan.get("action_control_contract_sha256")
+                != result.policy_control_contract_sha256
+            ):
+                raise ValueError(
+                    "Fitted phase policy controller differs from the loaded action"
                 )
             control_fps = 1 / np.median(np.diff(sampled["timestamps_s"]))
             if not np.isclose(plan.get("control_fps", -1), control_fps):

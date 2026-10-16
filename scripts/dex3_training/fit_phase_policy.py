@@ -166,6 +166,7 @@ def main(cfg):
             native_physics_model_sha256=env.action.native_physics_model_sha256,
             control_fps=float(ec.sim.fps),
             physics_substeps=int(ec.sim.substeps),
+            action_control_contract_sha256=env.action.policy_control_contract_sha256,
         )
         previous = [
             name

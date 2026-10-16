@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+from dataclasses import asdict
 import numpy as np
 
 BOUNDS = np.array([0.1] * 3 + [0.35] * 3 + [0.65] * 7)
@@ -31,6 +32,10 @@ def model_signature(model, worlds):
         "joint_target_kd",
         "joint_effort_limit",
         "joint_armature",
+        "joint_velocity_limit",
+        "joint_friction",
+        "shape_gap",
+        "shape_margin",
         "joint_limit_lower",
         "joint_limit_upper",
         "gravity",
@@ -46,6 +51,8 @@ def model_signature(model, worlds):
             "geom_solmix",
             "gravcomp",
             "jnt_actgravcomp",
+            "dof_passive_damping",
+            "dof_passive_stiffness",
         )
     ]
     for name, value in fields:
@@ -57,6 +64,14 @@ def model_signature(model, worlds):
         digest.update(json.dumps([name, str(array.dtype), array.shape]).encode())
         digest.update(array.tobytes())
     return digest.hexdigest()
+
+
+def control_signature(config):
+    fields = asdict(config)
+    for key in ("input_root", "phase_policy_prior", "phase_policy_physics_substeps"):
+        fields.pop(key, None)
+    fields["type"] = type(config).__module__ + "." + type(config).__name__
+    return hashlib.sha256(json.dumps(fields, sort_keys=True).encode()).hexdigest()
 
 
 def smooth(x):

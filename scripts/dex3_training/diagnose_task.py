@@ -360,6 +360,9 @@ def main(cfg):
                 manifest_path.read_bytes()
             ).hexdigest(),
             learned_policy=False,
+            action_control_contract_sha256=getattr(
+                env.action, "policy_control_contract_sha256", None
+            ),
             native_physics_model_sha256=getattr(
                 env.action,
                 "native_physics_model_sha256",
