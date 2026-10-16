@@ -261,10 +261,11 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
             )
             for row in contact_rows:
                 rotation = (
-                    stage
+                    object_references[oi].rotation(float(times[row]))
+                    if oi in object_references
+                    else stage
                     * Rotation.from_matrix(source[f"object_{oi}_world"][row, :3, :3])
-                    * Rotation.from_quat(obj[3:]).inv()
-                )
+                ) * Rotation.from_quat(obj[3:]).inv()
                 try:
                     _, torque, _ = solve_gravity_contacts(
                         rotation.apply(points - obj[:3]),
