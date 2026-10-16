@@ -218,6 +218,36 @@ class FeedbackGraspActionConfig(GraspActionConfig):
         result.offset = wp.zeros(total, dtype=wp.vec3, device=device)
         result.bias = wp.zeros(total, dtype=wp.quat, device=device)
         result.actual_feedback = wp.zeros(total, dtype=wp.float32, device=device)
+        result.payload_wrench = None
+        if self.wrist_payload_compensation:
+            from .payload import payload_plan
+
+            values = []
+            masses = scene.model.body_mass.numpy()
+            inertias = scene.model.body_inertia.numpy()
+            com = scene.model.body_com.numpy()
+            for side, body in zip(base.sides, object_ids, strict=True):
+                oi = next(iter({p["object"] for p in spec["phases"][side]}))
+                values.append(
+                    payload_plan(
+                        data["timestamps_s"],
+                        data["object_poses"][:, oi],
+                        spec["phases"][side],
+                        float(masses[body]),
+                        inertias[body],
+                        com[body],
+                        self.wrist_payload_gain,
+                    )
+                )
+            result.payload_wrench = wp.array(
+                np.stack(values, axis=1).reshape(-1, 6),
+                dtype=wp.spatial_vector,
+                device=device,
+            )
+            result.payload_com = scene.model.body_com
+            result.payload_timestep = wp.zeros(
+                scene.world_count, dtype=wp.int32, device=device
+            )
         return result
 
 
@@ -243,6 +273,9 @@ class FeedbackGripAction(GripResidualAction):
         if state is None:
             raise ValueError("Measured grasp feedback requires live simulator state")
         super().process(action, timestep, state)
+        if self.payload_wrench is not None:
+            wp.copy(self.payload_timestep, timestep)
+            self.payload_state = state
         layout = self.buffers.layout
         wp.launch(
             correct_grasp_targets,
@@ -289,3 +322,53 @@ class FeedbackGripAction(GripResidualAction):
                 self.registered,
             ],
         )
+
+    def prepare_control(self, control):
+        super().prepare_control(control)
+        if self.payload_wrench is not None:
+            from .payload_kernels import payload_position_bias
+
+            wp.launch(
+                payload_position_bias,
+                dim=(self.buffers.world_count, self.buffers.layout.num_hands),
+                inputs=[
+                    self.payload_timestep,
+                    self.buffers.reference.num_frames,
+                    self.buffers.layout.num_hands,
+                    self.buffers.layout.num_joint_dof,
+                    self.body_stride,
+                    self.object_body,
+                    self.ref_object,
+                    self.payload_state.body_q,
+                    self.buffers.wrist_pos_dof_ids,
+                    self.payload_wrench,
+                    self.grip_stiffness,
+                    control.joint_target_pos,
+                ],
+            )
+
+    def apply_control(self, state, control):
+        super().apply_control(state, control)
+        if self.payload_wrench is not None:
+            from .payload_kernels import payload_orientation_effort
+
+            wp.launch(
+                payload_orientation_effort,
+                dim=(self.buffers.world_count, self.buffers.layout.num_hands),
+                inputs=[
+                    self.payload_timestep,
+                    self.buffers.reference.num_frames,
+                    self.buffers.layout.num_hands,
+                    self.buffers.layout.num_joint_dof,
+                    self.body_stride,
+                    self.object_body,
+                    self.hand_body,
+                    self.ref_object,
+                    state.body_q,
+                    self.payload_com,
+                    self.buffers.wrist_ori_dof_ids,
+                    self.payload_wrench,
+                    self.wrist.tau_max,
+                    control.joint_f,
+                ],
+            )

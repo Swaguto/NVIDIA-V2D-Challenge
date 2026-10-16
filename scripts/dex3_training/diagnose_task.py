@@ -48,6 +48,7 @@ class ReadbackEnv:
         self.contact_gaps = []
         self.motor_target, self.feedback_weight = [], []
         self.velocity_target = []
+        self.applied_motor_target, self.direct_effort = [], []
         self.native_model = {}
         model = getattr(env.solver, "mj_model", None)
         for name in (
@@ -90,6 +91,10 @@ class ReadbackEnv:
         self.joints.append(self.env.state_0.joint_q.numpy().copy())
         self.motor_target.append(self.env.action.joint_target.numpy().copy())
         self.velocity_target.append(self.env.control.joint_target_vel.numpy().copy())
+        self.applied_motor_target.append(
+            self.env.control.joint_target_pos.numpy().copy()
+        )
+        self.direct_effort.append(self.env.control.joint_f.numpy().copy())
         feedback = getattr(self.env.action, "actual_feedback", None)
         if feedback is not None:
             self.feedback_weight.append(feedback.numpy().copy())
@@ -114,6 +119,8 @@ class ReadbackEnv:
             joint_positions=np.asarray(self.joints),
             motor_target=np.asarray(self.motor_target),
             motor_velocity_target=np.asarray(self.velocity_target),
+            applied_motor_position_target=np.asarray(self.applied_motor_target),
+            direct_joint_effort=np.asarray(self.direct_effort),
         )
         if self.feedback_weight:
             arrays["measured_feedback_weight"] = np.asarray(self.feedback_weight)
@@ -121,6 +128,17 @@ class ReadbackEnv:
             native_actuator_force_readback_available=bool(self.motor),
             native_capped_drive_verified=False,
         )
+        direct = np.asarray(self.direct_effort).reshape(
+            len(self.direct_effort), self.env.world_count, -1
+        )
+        wrist = self.env.action.buffers.wrist_ori_dof_ids.numpy()
+        caps = self.env.action.wrist.tau_max.numpy()
+        actual = direct[..., wrist].reshape(len(direct), self.env.world_count, -1, 3)
+        verification["direct_wrist_effort_within_shared_cap"] = bool(
+            np.isfinite(actual).all()
+            and np.all(abs(actual) <= caps[None, None, :, None] + 1e-5)
+        )
+        verification["maximum_actual_direct_wrist_effort_Nm"] = float(abs(actual).max())
         if self.motor and self.ranges is not None and self.limited is not None:
             force = np.asarray(self.motor)
             ranges, limited = np.asarray(self.ranges), np.asarray(self.limited, bool)

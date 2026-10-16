@@ -1,0 +1,8 @@
+# @package _global_
+defaults:
+  - dex3_repaired_velocity
+  - _self_
+action:
+  wrist_payload_compensation: true
+  wrist_payload_gain: 1.0
+output_dir: /outputs/repaired-payload
