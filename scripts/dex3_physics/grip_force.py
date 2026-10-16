@@ -12,7 +12,7 @@ import json
 from pathlib import Path
 
 import numpy as np
-from scipy.optimize import least_squares, minimize
+from scipy.optimize import least_squares, minimize, linprog
 from scipy.spatial import ConvexHull
 
 from cooked_grasp_audit import minimum_distance, world_convexes
@@ -32,6 +32,98 @@ def point_jacobian(kin, root, positions, link, point, epsilon=1e-5):
             points.append(pose[:3, :3] @ point + pose[:3, 3])
         columns.append((points[0] - points[1]) / (2 * epsilon))
     return np.column_stack(columns)
+
+
+def solve_gravity_contacts(
+    points, inward, jacobians, com, mass_kg, normal_cap_N=10.0, friction=1.0
+):
+    """Plan motor forces under a point-contact Coulomb model; not a physical certificate."""
+    points, inward, jacobians, com = [
+        np.asarray(x, float) for x in (points, inward, jacobians, com)
+    ]
+    count = len(points)
+    if (
+        not 2 <= count <= 3
+        or points.shape != (count, 3)
+        or inward.shape != (count, 3)
+        or jacobians.ndim != 3
+        or jacobians.shape[:2] != (count, 3)
+        or com.shape != (3,)
+        or not all(np.isfinite(x).all() for x in (points, inward, jacobians, com))
+    ):
+        raise ValueError("Contact geometry and Jacobians must be finite and aligned")
+    if (
+        not 0 < mass_kg <= 1
+        or not 0 < friction <= 1
+        or not 2 <= normal_cap_N <= 10
+        or not np.allclose(np.linalg.norm(inward, axis=1), 1, atol=1e-6)
+    ):
+        raise ValueError("Invalid nominal load or contact force bounds")
+    wrench = np.zeros((6, 3 * count))
+    inequalities, bounds = [], []
+    for i, (point, axis) in enumerate(zip(points, inward, strict=True)):
+        sl = slice(3 * i, 3 * i + 3)
+        wrench[:3, sl] = np.eye(3)
+        x, y, z = point - com
+        wrench[3:, sl] = [[0, -z, y], [z, 0, -x], [-y, x, 0]]
+        for sign, bound in [(1, normal_cap_N), (-1, -2.0)]:
+            row = np.zeros(3 * count)
+            row[sl] = sign * axis
+            inequalities.append(row)
+            bounds.append(bound)
+        basis = np.eye(3)[np.argmin(abs(axis))]
+        tangent = np.cross(axis, basis)
+        tangent /= np.linalg.norm(tangent)
+        other = np.cross(axis, tangent)
+        # Inscribed friction octagon: the resultant tangential force remains
+        # inside the circular cone, including halfway between facet normals.
+        for angle in np.arange(8) * np.pi / 4:
+            row = np.zeros(3 * count)
+            row[sl] = (
+                np.cos(angle) * tangent
+                + np.sin(angle) * other
+                - friction * np.cos(np.pi / 8) * axis
+            )
+            inequalities.append(row)
+            bounds.append(0.0)
+    torque_map = np.concatenate([jac.T for jac in jacobians], axis=1)
+    inequalities.extend(torque_map)
+    bounds.extend([0.55] * len(torque_map))
+    inequalities.extend(-torque_map)
+    bounds.extend([0.55] * len(torque_map))
+    desired = np.array([0, 0, mass_kg * 9.81, 0, 0, 0])
+    result = linprog(
+        inward.ravel(),
+        A_ub=np.asarray(inequalities),
+        b_ub=np.asarray(bounds),
+        A_eq=wrench,
+        b_eq=desired,
+        bounds=[(None, None)] * (3 * count),
+        method="highs",
+    )
+    if not result.success:
+        raise ValueError(
+            "No contact load plan within the unchanged force/motor bounds: "
+            + result.message
+        )
+    forces = result.x.reshape(count, 3)
+    torque = torque_map @ result.x
+    return (
+        forces,
+        torque,
+        dict(
+            nominal_mass_kg=mass_kg,
+            friction_lower_bound=friction,
+            minimum_normal_N=2.0,
+            normal_cap_N=normal_cap_N,
+            normal_forces_N=np.einsum("ij,ij->i", forces, inward).tolist(),
+            forces_stage_N=forces.tolist(),
+            equilibrium_residual=(wrench.dot(result.x) - desired).tolist(),
+            desired_object_wrench_stage=desired.tolist(),
+            maximum_motor_feedforward_Nm=float(np.max(abs(torque))),
+            scope="FK/cooked-geometry force proposal under a nominal point-contact friction model; not measured forces or force-closure proof",
+        ),
+    )
 
 
 def open_pregrasp(kin, root, closed, anchors, distance_m, clearance_terms=()):
@@ -106,15 +198,42 @@ def open_pregrasp(kin, root, closed, anchors, distance_m, clearance_terms=()):
     return dict(zip(kin.names, opened, strict=True))
 
 
-def add_grip_effort(run, urdfs, seed_path, force_N=6.0, opening_m=0.0):
-    if not 0 < force_N <= 8:
-        raise ValueError("Pad force experiment must be in (0, 8] N")
+def add_grip_effort(
+    run,
+    urdfs,
+    seed_path,
+    force_N=6.0,
+    opening_m=0.0,
+    side="right",
+    predict_closed_pose=False,
+    finger_stiffness=None,
+    load_balance=False,
+):
+    if not 0 < force_N <= 10:
+        raise ValueError(
+            "Pad force experiment must be in (0, 10] N; the 0.55 Nm feedforward cap still applies"
+        )
     if not 0 <= opening_m <= 0.006:
         raise ValueError("Pregrasp opening must be in [0, 6] mm")
+    if finger_stiffness is not None and not 2 <= finger_stiffness <= 8:
+        raise ValueError("Experimental finger stiffness must be in [2, 8] Nm/rad")
     result = copy.deepcopy(json.loads(seed_path.read_text()))
     report = json.loads((run / "report.json").read_text())
-    planned = plan(run, urdfs)
-    kin = URDFKinematics(urdfs / "dex3_right.urdf")
+    if predict_closed_pose:
+        import sys
+
+        sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "reproduction"))
+        from _dex3_static_load import apply_grasp_seeds
+
+        apply_grasp_seeds([p["sample"] for p in report["provenance"]], result)
+    planned = plan(
+        run,
+        urdfs,
+        side=side,
+        proposal=result if predict_closed_pose else None,
+        include_middle=load_balance,
+    )
+    kin = URDFKinematics(urdfs / f"dex3_{side}.urdf")
     controls = []
     states = json.loads((run / "states.json").read_text())["records"]
     colliders = json.loads((run / "cooked-colliders.json").read_text())["colliders"]
@@ -122,7 +241,7 @@ def add_grip_effort(run, urdfs, seed_path, force_N=6.0, opening_m=0.0):
         initial = next(
             x for x in report["initial_pose_readback"] if x["sample"] == row["sample"]
         )
-        root = initial["hand_body_link_pose_stage_xyzw"][kin.root_name]
+        root = row["closed_root_pose_stage_xyzw"]
         q = dict(zip(row["joint_names"], row["source_finger_targets_rad"], strict=True))
         candidate = next(
             x["candidate"] for x in result["results"] if x["sample"] == row["sample"]
@@ -134,6 +253,8 @@ def add_grip_effort(run, urdfs, seed_path, force_N=6.0, opening_m=0.0):
             raise ValueError("Closed-state readback differs from the geometric seed")
         torque = np.zeros(len(kin.names))
         pads = []
+        jacobians, contact_points, directions = [], [], []
+        poses = kin.poses(root, q)
         for anchor in row["anchors"]:
             jac = point_jacobian(
                 kin, root, q, anchor["link"], np.asarray(anchor["point_local_m"])
@@ -142,6 +263,12 @@ def add_grip_effort(run, urdfs, seed_path, force_N=6.0, opening_m=0.0):
             force = direction * force_N
             contribution = jac.T @ force
             torque += contribution
+            jacobians.append(jac)
+            contact_points.append(
+                poses[anchor["link"]][:3, :3] @ anchor["point_local_m"]
+                + poses[anchor["link"]][:3, 3]
+            )
+            directions.append(direction)
             pads.append(
                 dict(
                     link=anchor["link"],
@@ -150,11 +277,30 @@ def add_grip_effort(run, urdfs, seed_path, force_N=6.0, opening_m=0.0):
                     normal_jacobian_m_per_rad=(jac.T @ direction).tolist(),
                 )
             )
+        load_plan = None
+        if load_balance:
+            index = report["initial_pose_readback"].index(initial)
+            obj = next(
+                s for s in states if s["sample_index"] == index and s["step"] == 0
+            )
+            forces, torque, load_plan = solve_gravity_contacts(
+                contact_points,
+                directions,
+                jacobians,
+                obj["object_root_state_stage_xyzw"][:3],
+                0.3,
+                force_N,
+            )
+            for pad, force in zip(pads, forces, strict=True):
+                pad["desired_force_stage_N"] = force.tolist()
+            candidate["required_contact_digits"] = ["thumb", "index", "middle"]
         if not np.isfinite(torque).all() or np.max(abs(torque)) > 0.55:
             raise ValueError("Squeeze feedforward exceeds the 0.55 Nm experiment cap")
         candidate["finger_feedforward_Nm"] = [
             float(torque[kin.names.index(n)]) for n in candidate["joint_names"]
         ]
+        if finger_stiffness is not None:
+            candidate["finger_stiffness_Nm_per_rad"] = float(finger_stiffness)
         gaps = None
         if opening_m:
             index = report["initial_pose_readback"].index(initial)
@@ -227,6 +373,7 @@ def add_grip_effort(run, urdfs, seed_path, force_N=6.0, opening_m=0.0):
             dict(
                 sample=row["sample"],
                 pads=pads,
+                load_plan=load_plan,
                 max_feedforward_Nm=float(np.max(abs(torque))),
                 pregrasp_pad_solid_gaps_m=gaps,
                 estimated_pad_force_from_original_0_75mm_overlap_N=[
@@ -246,6 +393,11 @@ def add_grip_effort(run, urdfs, seed_path, force_N=6.0, opening_m=0.0):
         pregrasp_opening_m=opening_m,
         feedforward_cap_Nm=0.55,
         preserve_motor_effort_cap_Nm=0.76,
+        closed_pose_is_urdf_fk_prediction=predict_closed_pose,
+        source_geometry_is_recorded_cooked_mesh=True,
+        new_sdk_closed_pose_readback=not predict_closed_pose,
+        finger_stiffness_override_Nm_per_rad=finger_stiffness,
+        gravity_load_balanced=load_balance,
         planner_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         source_closed_report_sha256=hashlib.sha256(
             (run / "report.json").read_bytes()
@@ -263,10 +415,30 @@ if __name__ == "__main__":
     parser.add_argument("--seed", type=Path, required=True)
     parser.add_argument("--pad-force-N", type=float, default=6.0)
     parser.add_argument("--pregrasp-open-mm", type=float, default=0.0)
+    parser.add_argument("--side", choices=["left", "right"], default="right")
+    parser.add_argument("--finger-stiffness", type=float)
+    parser.add_argument(
+        "--load-balance",
+        action="store_true",
+        help="Use three contacts to balance nominal gravity and its moment; --pad-force-N is the per-contact normal cap",
+    )
+    parser.add_argument(
+        "--predict-closed-pose",
+        action="store_true",
+        help="Use explicit FK-predicted robot commands on recorded cooked geometry; no new SDK readback is claimed",
+    )
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
     result = add_grip_effort(
-        args.run, args.urdfs, args.seed, args.pad_force_N, args.pregrasp_open_mm / 1000
+        args.run,
+        args.urdfs,
+        args.seed,
+        args.pad_force_N,
+        args.pregrasp_open_mm / 1000,
+        args.side,
+        args.predict_closed_pose,
+        args.finger_stiffness,
+        args.load_balance,
     )
     with args.out.open("x") as stream:
         json.dump(result, stream, indent=2, allow_nan=False)

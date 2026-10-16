@@ -11,8 +11,14 @@ from scipy.spatial.transform import Rotation
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from cooked_grasp_audit import convex_distance, convex_escape, world_convexes
 from grasp_preload import URDFKinematics
-from antipodal_seed import antipodal_pairs, exposed_faces
-from grip_force import open_pregrasp, point_jacobian
+from antipodal_seed import (
+    antipodal_pairs,
+    exposed_faces,
+    collision_residual,
+    select_grasp,
+)
+from grip_force import open_pregrasp, point_jacobian, solve_gravity_contacts
+from object_grasp import transfer_pose
 
 
 def cube(half=0.01):
@@ -81,6 +87,88 @@ def test_antipodal_pair_requires_opposed_normals_and_friction_cone():
     assert not antipodal_pairs(points, bad, points[:2])
     _, outward = exposed_faces([cube()])
     assert len(outward) == 12
+
+
+def test_surface_grid_recovers_exposed_parts_of_partially_covered_faces():
+    from scipy.spatial import ConvexHull
+
+    long_box = cube() * [5, 1, 1]
+    cover = cube(0.012) + [0, 0, 0.016]
+    points, normals = exposed_faces([long_box, cover], spacing_m=0.008)
+    repeat, directions = exposed_faces([long_box, cover], spacing_m=0.008)
+    np.testing.assert_array_equal(points, repeat)
+    np.testing.assert_array_equal(normals, directions)
+    assert np.isfinite(points).all()
+    assert np.any(np.isclose(points[:, 2], 0.01) & (points[:, 0] > 0.025))
+    for shape in [long_box, cover]:
+        equations = ConvexHull(shape).equations
+        outside = (
+            np.einsum("ij,kj->ik", points + 0.0001 * normals, equations[:, :3])
+            + equations[:, 3]
+        )
+        assert not np.any(np.all(outside < -1e-7, axis=1))
+
+
+def test_whole_hand_fit_penalizes_nonpad_overlap_and_accepts_separation():
+    from scipy.spatial import ConvexHull
+
+    a = cube()
+    geometry = [(a, ConvexHull(a).equations[:, :3])]
+    palm = np.eye(4)
+    palm[:3, 3] = [0.018, 0, 0]
+    assert collision_residual({"palm": palm}, {"palm": geometry}, geometry, [])[
+        0
+    ] == pytest.approx(2.5)
+    palm[0, 3] = 0.023
+    assert collision_residual({"palm": palm}, {"palm": geometry}, geometry, [])[0] == 0
+
+
+def test_object_relative_grasp_transfer_preserves_the_rigid_transform():
+    before = np.r_[[3, -2, 1], Rotation.from_euler("xyz", [0.1, -0.3, 0.2]).as_quat()]
+    after = np.r_[[-1, 2, 4], Rotation.from_euler("xyz", [-0.4, 0.2, 1.2]).as_quat()]
+    relative_pos = np.array([0.02, 0.03, 0.1])
+    relative_rot = Rotation.from_euler("x", 0.6)
+    hand = np.r_[
+        Rotation.from_quat(before[3:]).apply(relative_pos) + before[:3],
+        (Rotation.from_quat(before[3:]) * relative_rot).as_quat(),
+    ]
+    transferred = transfer_pose(hand, before, after)
+    np.testing.assert_allclose(
+        Rotation.from_quat(after[3:]).inv().apply(transferred[:3] - after[:3]),
+        relative_pos,
+    )
+    assert (
+        Rotation.from_quat(after[3:]).inv()
+        * Rotation.from_quat(transferred[3:])
+        * relative_rot.inv()
+    ).magnitude() < 1e-12
+    np.testing.assert_allclose(transfer_pose(transferred, after, before), hand)
+
+
+def test_load_ranking_requires_opposition_and_reduces_the_load_moment_arm():
+    candidates = [
+        dict(gravity_lever_m=0.15, pad_escape_direction_dot=-0.95, objective=0.01),
+        dict(gravity_lever_m=0.09, pad_escape_direction_dot=-0.99, objective=0.4),
+        dict(gravity_lever_m=0.08, pad_escape_direction_dot=-0.6, objective=0.1),
+    ]
+    assert select_grasp(candidates) is candidates[0]
+    assert select_grasp(candidates, "load") is candidates[1]
+    assert select_grasp([candidates[2]], "load") is None
+
+
+def test_contact_load_plan_balances_weight_and_rejects_unresisted_lever_torque():
+    points = np.array([[-0.02, 0, 0], [0.02, 0, 0]])
+    inward = np.array([[1, 0, 0], [-1, 0, 0]])
+    jac = np.zeros((2, 3, 7))
+    forces, torque, receipt = solve_gravity_contacts(
+        points, inward, jac, np.zeros(3), 0.3
+    )
+    np.testing.assert_allclose(forces.sum(0), [0, 0, 2.943], atol=1e-7)
+    np.testing.assert_allclose(np.cross(points, forces).sum(0), 0, atol=1e-7)
+    np.testing.assert_allclose(receipt["equilibrium_residual"], 0, atol=1e-7)
+    assert max(abs(torque)) <= 0.55
+    with pytest.raises(ValueError, match="No contact load plan"):
+        solve_gravity_contacts(points + [0, 0.1, 0], inward, jac, np.zeros(3), 0.3)
 
 
 def test_grip_jacobian_transpose_matches_virtual_work_and_world_rotation(tmp_path):

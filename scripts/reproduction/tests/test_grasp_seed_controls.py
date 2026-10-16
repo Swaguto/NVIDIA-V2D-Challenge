@@ -90,6 +90,22 @@ def test_source_pose_mismatch_is_rejected():
         apply_grasp_seeds(samples, proposal)
 
 
+def test_larger_robot_posture_correction_requires_declared_bounds():
+    samples, proposal = example()
+    proposal["results"][0]["candidate"]["finger_target_rad"] = [1.0] * 7
+    proposal["results"][0]["candidate"]["hand_quaternion_stage_xyzw"] = (
+        Rotation.from_rotvec([0, 0, 1.0]).as_quat().tolist()
+    )
+    with pytest.raises(ValueError, match="bounds"):
+        apply_grasp_seeds(samples, proposal)
+    proposal.update(finger_delta_cap_rad=1.2, wrist_rotation_cap_rad=1.2)
+    result, _ = apply_grasp_seeds(samples, proposal)
+    assert result[0]["finger_target_rad"] == [1.0] * 7
+    proposal["finger_delta_cap_rad"] = 1.3
+    with pytest.raises(ValueError, match="finger correction"):
+        apply_grasp_seeds(samples, proposal)
+
+
 def test_squeeze_effort_is_bounded_named_and_never_added_to_the_baseline():
     samples, proposal = example()
     proposal["grip_effort"] = {"schema": "v2d.dex3-jacobian-grip-effort.v1"}
@@ -99,6 +115,18 @@ def test_squeeze_effort_is_bounded_named_and_never_added_to_the_baseline():
     assert "finger_feedforward_Nm" not in samples[0]
     proposal["results"][0]["candidate"]["finger_feedforward_Nm"][0] = 0.56
     with pytest.raises(ValueError, match="squeeze feedforward"):
+        apply_grasp_seeds(samples, proposal)
+
+
+def test_declared_finger_stiffness_override_is_bounded_and_preserves_effort():
+    samples, proposal = example()
+    proposal["results"][0]["candidate"]["finger_stiffness_Nm_per_rad"] = 8.0
+    result, _ = apply_grasp_seeds(samples, proposal)
+    assert result[0]["finger_stiffness_Nm_per_rad"] == 8.0
+    assert "finger_stiffness_Nm_per_rad" not in samples[0]
+    assert "finger_feedforward_Nm" not in result[0]
+    proposal["results"][0]["candidate"]["finger_stiffness_Nm_per_rad"] = 8.01
+    with pytest.raises(ValueError, match="finger stiffness"):
         apply_grasp_seeds(samples, proposal)
 
 
@@ -197,3 +225,22 @@ def test_tray_matches_cooked_surface_when_cooking_changes_the_bottom():
     assert np.linalg.norm(
         np.array(adjusted["position_stage_m"]) - tray["position_stage_m"]
     ) == pytest.approx(0.0015, abs=1e-10)
+
+
+def test_long_handle_does_not_force_a_steep_global_hull_tray():
+    body = np.array(list(product([-0.1, 0.1], [-0.1, 0.1], [-0.005, 0.005])))
+    handle = np.array(list(product([-0.01, 0.01], [-0.4, -0.1], [0.10, 0.12])))
+    vertices = np.r_[body, handle]
+    original = dict(
+        position_stage_m=[0, -0.15, -0.0151],
+        quaternion_stage_xyzw=[0, 0, 0, 1],
+        dimensions_m=[0.25, 0.55, 0.02],
+    )
+    tray = cooked_acquisition_support(vertices, original)
+    np.testing.assert_allclose(tray["quaternion_stage_xyzw"], [0, 0, 0, 1], atol=1e-10)
+    np.testing.assert_allclose(
+        tray["position_stage_m"], original["position_stage_m"], atol=1e-10
+    )
+    assert (vertices[:, 2] - tray["position_stage_m"][2] - 0.01).min() == pytest.approx(
+        0.0001
+    )

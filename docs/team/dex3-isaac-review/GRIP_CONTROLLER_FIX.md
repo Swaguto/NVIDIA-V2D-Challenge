@@ -1,5 +1,8 @@
 # Dex3 grip force and wrist payload correction
 
+Update: both pot grasps now pass isolated acquisition and lift; see
+[POT_GRIP_FIX.md](POT_GRIP_FIX.md) for the newer result and scope.
+
 ## Result
 
 Two e002 right-hand lid grasps now pass supported closure, removal of support,

@@ -40,6 +40,34 @@ def test_payload_compensation_uses_two_digit_contacts_and_expires_after_loss():
     assert remaining == 0
 
 
+def test_three_pad_payload_compensation_requires_the_middle_contact_too():
+    paths = [
+        "left_hand_thumb_2_link",
+        "left_hand_index_1_link",
+        "left_hand_middle_1_link",
+    ]
+    assert (
+        payload_contact_hold(
+            [[1, 0, 0], [-1, 0, 0], [0, 0, 0]],
+            paths,
+            0,
+            0.01,
+            ("thumb", "index", "middle"),
+        )
+        == 0
+    )
+    assert (
+        payload_contact_hold(
+            [[1, 0, 0], [-1, 0, 0], [1, 0, 0]],
+            paths,
+            0,
+            0.01,
+            ("thumb", "index", "middle"),
+        )
+        == 0.03
+    )
+
+
 def test_lift_gate_requires_actual_lift_retention_and_wrist_tracking():
     rows = []
     for step in range(151):

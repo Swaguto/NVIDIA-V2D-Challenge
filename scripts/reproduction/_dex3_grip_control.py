@@ -14,12 +14,14 @@ def payload_gravity_wrench(wrist_com, payload_com, mass_kg):
     return np.r_[force, np.cross(offset, force)]
 
 
-def payload_contact_hold(forces, body_paths, remaining_s, dt):
+def payload_contact_hold(
+    forces, body_paths, remaining_s, dt, required_digits=("thumb", "index")
+):
     """Require measured thumb AND index contact; bridge a 30 ms contact dropout."""
     magnitudes = np.linalg.norm(np.asarray(forces), axis=1)
     loads = [
         sum(v for p, v in zip(body_paths, magnitudes, strict=True) if f"_{digit}_" in p)
-        for digit in ["thumb", "index"]
+        for digit in required_digits
     ]
     return 0.03 if min(loads) >= 0.5 else max(0.0, remaining_s - dt)
 

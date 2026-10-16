@@ -17,7 +17,16 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "dex3_training"))
 from v2d_dex3_flashchord.kinematics import URDFKinematics
 
 
-def plan(run, urdfs, *, preload_m=0.00075, max_joint_delta_rad=0.15, side="right"):
+def plan(
+    run,
+    urdfs,
+    *,
+    preload_m=0.00075,
+    max_joint_delta_rad=0.15,
+    side="right",
+    proposal=None,
+    include_middle=False,
+):
     if not 0 < preload_m <= 0.002 or not 0 < max_joint_delta_rad <= 0.25:
         raise ValueError("Preload bounds exceed the declared small-motion experiment")
     report = json.loads((run / "report.json").read_text())
@@ -49,6 +58,28 @@ def plan(run, urdfs, *, preload_m=0.00075, max_joint_delta_rad=0.15, side="right
         )
         if frame_error > 2e-6:
             raise ValueError("URDF kinematics differ from recorded SDK link frames")
+        if proposal is not None:
+            candidate = next(
+                r["candidate"]
+                for r in proposal["results"]
+                if r["sample"] == initial["sample"]
+            )
+            if candidate is None:
+                raise ValueError(
+                    "A predicted closed pose requires a complete geometric proposal"
+                )
+            original = dict(
+                zip(
+                    candidate["joint_names"],
+                    candidate["finger_target_rad"],
+                    strict=True,
+                )
+            )
+            root_pose = np.r_[
+                candidate["hand_position_stage_m"],
+                candidate["hand_quaternion_stage_xyzw"],
+            ]
+            fk = kin.poses(root_pose, original)
         object_shapes = [
             v
             for c in cooked
@@ -56,15 +87,25 @@ def plan(run, urdfs, *, preload_m=0.00075, max_joint_delta_rad=0.15, side="right
             for v in world_convexes(c, row["object_root_state_stage_xyzw"][:7])
         ]
         anchors = []
-        for link in [f"{side}_hand_thumb_2_link", f"{side}_hand_index_1_link"]:
+        links = [f"{side}_hand_thumb_2_link", f"{side}_hand_index_1_link"]
+        if include_middle:
+            links.append(f"{side}_hand_middle_1_link")
+        for link in links:
             collider = next(
                 c
                 for c in cooked
                 if c["asset"] == f"hand-{i}" and c["body_name"] == link
             )
-            hand_shapes = world_convexes(
-                collider, initial["hand_body_link_pose_stage_xyzw"][link]
+            from scipy.spatial.transform import Rotation
+
+            pose = (
+                initial["hand_body_link_pose_stage_xyzw"][link]
+                if proposal is None
+                else np.r_[
+                    fk[link][:3, 3], Rotation.from_matrix(fk[link][:3, :3]).as_quat()
+                ]
             )
+            hand_shapes = world_convexes(collider, pose)
             gap, witness = minimum_distance(hand_shapes, object_shapes)
             if gap > 0.005:
                 raise ValueError(
@@ -132,7 +173,7 @@ def plan(run, urdfs, *, preload_m=0.00075, max_joint_delta_rad=0.15, side="right
         fit = least_squares(
             residual, start, bounds=(lower, upper), ftol=1e-11, xtol=1e-11, gtol=1e-11
         )
-        error = np.abs(residual(fit.x)[[0, 4]]) * preload_m
+        error = np.abs(residual(fit.x)[np.arange(len(anchors)) * 4]) * preload_m
         if not fit.success or error.max() > preload_m * 0.4:
             raise ValueError(
                 "Bounded finger motion could not reach the proposed pad preload"
@@ -142,6 +183,8 @@ def plan(run, urdfs, *, preload_m=0.00075, max_joint_delta_rad=0.15, side="right
                 "sample": initial["sample"],
                 "joint_names": names,
                 "source_finger_targets_rad": start.tolist(),
+                "closed_root_pose_stage_xyzw": np.asarray(root_pose).tolist(),
+                "closed_pose_is_fk_prediction": proposal is not None,
                 "preload_finger_targets_rad": fit.x.tolist(),
                 "maximum_joint_delta_rad": float(np.max(np.abs(fit.x - start))),
                 "maximum_anchor_normal_fit_error_m": float(error.max()),

@@ -1,0 +1,457 @@
+{
+  "schema": "v2d.dex3-pot-grip-result.v1",
+  "source_runtime_archive_sha256": "637a3a6bb2d7344d7cad4770602966586f931eb197befa97a5f9553e77a7fedc",
+  "seed_sha256": "de153d0ebc1a7814dd9773c083acaf3ab9fa0c907b2a2229316d3675ade8c599",
+  "scope": "e002 development: two isolated nominal 0.3 kg pot fixtures; not complete episode, trained policy or hidden evaluation",
+  "source_observations_changed": false,
+  "physical_task_accepted": false,
+  "runs": {
+    "acquisition": {
+      "files_sha256": {
+        "report.json": "367207b8c7508422c3d0f231c7f57d4865ae1d8ea1e78664bf3b7b1072b17bc1",
+        "states.json": "2f4292186590fdcad60531b868fa50e60a30b8650a675d523ec7f4f82425cd5d",
+        "cooked-colliders.json": "1f70cb2cced8cd4a9737fd376ed9f5b2da67100bf8486da0ccabba1d55d875b4",
+        "static-load-browser.mp4": "475b3a38c19efc971d7389f66bbd62756489fd20ae39a742996dfa0e69696f76"
+      },
+      "summaries": [
+        {
+          "sample": "left-object0-grasp0-position-only",
+          "source_frame": 47,
+          "variant": "position-only",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.0002796511849020842,
+          "final_displacement_m": 4.888609895049432,
+          "maximum_displacement_m": 4.888609895049432,
+          "maximum_orientation_change_deg": 48.640173001975064,
+          "maximum_contact_force_N": 0.20940475854654617,
+          "mean_vertical_contact_force_last_0_2s_N": 0.0,
+          "held_within_10mm_for_1s_diagnostic_only": false
+        },
+        {
+          "sample": "left-object0-grasp0-squeeze",
+          "source_frame": 47,
+          "variant": "squeeze",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.000315224778019506,
+          "final_displacement_m": 0.0034259357210527173,
+          "maximum_displacement_m": 0.0034401454055974414,
+          "maximum_orientation_change_deg": 1.8587773361745163,
+          "maximum_contact_force_N": 9.238783982998164,
+          "mean_vertical_contact_force_last_0_2s_N": -5.293257689476013,
+          "held_within_10mm_for_1s_diagnostic_only": true
+        },
+        {
+          "sample": "left-object0-grasp1-position-only",
+          "source_frame": 273,
+          "variant": "position-only",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.00020021736064597463,
+          "final_displacement_m": 4.927760430558099,
+          "maximum_displacement_m": 4.927760430558099,
+          "maximum_orientation_change_deg": 20.40705563414611,
+          "maximum_contact_force_N": 0.2191752439701177,
+          "mean_vertical_contact_force_last_0_2s_N": 0.0,
+          "held_within_10mm_for_1s_diagnostic_only": false
+        },
+        {
+          "sample": "left-object0-grasp1-squeeze",
+          "source_frame": 273,
+          "variant": "squeeze",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.00021078731139868176,
+          "final_displacement_m": 0.0019375868233580664,
+          "maximum_displacement_m": 0.002052487301838144,
+          "maximum_orientation_change_deg": 0.6576249012329868,
+          "maximum_contact_force_N": 10.963896418506023,
+          "mean_vertical_contact_force_last_0_2s_N": -4.81094776391983,
+          "held_within_10mm_for_1s_diagnostic_only": true
+        }
+      ],
+      "gravity_and_contact_controls_pass": true,
+      "paired_cooked_geometry": [
+        {
+          "samples": [
+            0,
+            1
+          ],
+          "hand": {
+            "body_count": 8,
+            "piece_count": 8,
+            "maximum_paired_convex_vertex_hausdorff_m": 4.515248951509534e-16,
+            "matches_within_1um": true
+          },
+          "object": {
+            "body_count": 1,
+            "piece_count": 32,
+            "maximum_paired_convex_vertex_hausdorff_m": 1.8044459848467814e-16,
+            "matches_within_1um": true
+          }
+        },
+        {
+          "samples": [
+            2,
+            3
+          ],
+          "hand": {
+            "body_count": 8,
+            "piece_count": 8,
+            "maximum_paired_convex_vertex_hausdorff_m": 2.51234198384743e-15,
+            "matches_within_1um": true
+          },
+          "object": {
+            "body_count": 1,
+            "piece_count": 32,
+            "maximum_paired_convex_vertex_hausdorff_m": 9.174047011527802e-16,
+            "matches_within_1um": true
+          }
+        }
+      ],
+      "initial_motor_readback": [
+        {
+          "sample": "left-object0-grasp0-position-only",
+          "stiffness": [
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0
+          ],
+          "effort_caps": [
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568
+          ]
+        },
+        {
+          "sample": "left-object0-grasp0-squeeze",
+          "stiffness": [
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0
+          ],
+          "effort_caps": [
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568
+          ]
+        },
+        {
+          "sample": "left-object0-grasp1-position-only",
+          "stiffness": [
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0
+          ],
+          "effort_caps": [
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568
+          ]
+        },
+        {
+          "sample": "left-object0-grasp1-squeeze",
+          "stiffness": [
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0
+          ],
+          "effort_caps": [
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568
+          ]
+        }
+      ],
+      "state_count": 604,
+      "control_state_count": 353,
+      "executed_max_abs_estimated_finger_effort_Nm": 0.6247729063034058
+    },
+    "lift": {
+      "files_sha256": {
+        "report.json": "24b7d0f34922f3783596d8921509dab7c77a553ac90220b4e513bcc167330dee",
+        "states.json": "1383ae018ec6b009fd1994fef79b245f0002620a076e4e961603c558567ca29a",
+        "cooked-colliders.json": "5f07816da06b5e3af2dc5feda34d940e6ae2f0ce8597a6fa779af22f347e279c",
+        "static-load-browser.mp4": "cd84550973f70ab1cccd88069ee103fcc039cadb70c9f27700d4ab2dab33ce1b"
+      },
+      "summaries": [
+        {
+          "sample": "left-object0-grasp0-position-only",
+          "source_frame": 47,
+          "variant": "position-only",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.00013017633685114785,
+          "final_displacement_m": 4.928844962712496,
+          "maximum_displacement_m": 4.928844962712496,
+          "maximum_orientation_change_deg": 18.942424215477313,
+          "maximum_contact_force_N": 0.14925718071930769,
+          "mean_vertical_contact_force_last_0_2s_N": 0.0,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "object_lift_m": -4.928843557834625,
+          "maximum_object_drift_relative_to_wrist_m": 4.9779979220080035,
+          "maximum_wrist_position_error_m": 0.0055966542732422695,
+          "maximum_wrist_rotation_error_deg": 0.4862005537010588,
+          "lifted_and_retained_diagnostic_only": false
+        },
+        {
+          "sample": "left-object0-grasp0-squeeze",
+          "source_frame": 47,
+          "variant": "squeeze",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.00012457458097092397,
+          "final_displacement_m": 0.05102708531186931,
+          "maximum_displacement_m": 0.058977495535183014,
+          "maximum_orientation_change_deg": 1.5540719974269792,
+          "maximum_contact_force_N": 8.244127766949507,
+          "mean_vertical_contact_force_last_0_2s_N": -5.596584916114807,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "object_lift_m": 0.05101791024208069,
+          "maximum_object_drift_relative_to_wrist_m": 0.001665720650116022,
+          "maximum_wrist_position_error_m": 0.008097278758727998,
+          "maximum_wrist_rotation_error_deg": 1.109847742325988,
+          "lifted_and_retained_diagnostic_only": true
+        },
+        {
+          "sample": "left-object0-grasp1-position-only",
+          "source_frame": 273,
+          "variant": "position-only",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.00013998972792184233,
+          "final_displacement_m": 4.930266191052302,
+          "maximum_displacement_m": 4.930266191052302,
+          "maximum_orientation_change_deg": 14.6312369079136,
+          "maximum_contact_force_N": 0.0943072241845596,
+          "mean_vertical_contact_force_last_0_2s_N": 0.0,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "object_lift_m": -4.930264055728912,
+          "maximum_object_drift_relative_to_wrist_m": 4.98079192712127,
+          "maximum_wrist_position_error_m": 0.006145524493438298,
+          "maximum_wrist_rotation_error_deg": 0.18043560083754862,
+          "lifted_and_retained_diagnostic_only": false
+        },
+        {
+          "sample": "left-object0-grasp1-squeeze",
+          "source_frame": 273,
+          "variant": "squeeze",
+          "load_interval_s": [
+            0.5,
+            1.5
+          ],
+          "displacement_during_supported_closure_m": 0.000353421741645594,
+          "final_displacement_m": 0.051438505072318286,
+          "maximum_displacement_m": 0.059101009689441965,
+          "maximum_orientation_change_deg": 1.1184488840163496,
+          "maximum_contact_force_N": 10.684923216974378,
+          "mean_vertical_contact_force_last_0_2s_N": -5.092377638816833,
+          "held_within_10mm_for_1s_diagnostic_only": false,
+          "object_lift_m": 0.051430344581604004,
+          "maximum_object_drift_relative_to_wrist_m": 0.0015461909746550542,
+          "maximum_wrist_position_error_m": 0.008758729567816672,
+          "maximum_wrist_rotation_error_deg": 1.1797992753517397,
+          "lifted_and_retained_diagnostic_only": true
+        }
+      ],
+      "gravity_and_contact_controls_pass": true,
+      "paired_cooked_geometry": [
+        {
+          "samples": [
+            0,
+            1
+          ],
+          "hand": {
+            "body_count": 8,
+            "piece_count": 8,
+            "maximum_paired_convex_vertex_hausdorff_m": 9.325435365197438e-16,
+            "matches_within_1um": true
+          },
+          "object": {
+            "body_count": 1,
+            "piece_count": 32,
+            "maximum_paired_convex_vertex_hausdorff_m": 2.459394992999531e-16,
+            "matches_within_1um": true
+          }
+        },
+        {
+          "samples": [
+            2,
+            3
+          ],
+          "hand": {
+            "body_count": 8,
+            "piece_count": 8,
+            "maximum_paired_convex_vertex_hausdorff_m": 2.9807225282294656e-15,
+            "matches_within_1um": true
+          },
+          "object": {
+            "body_count": 1,
+            "piece_count": 32,
+            "maximum_paired_convex_vertex_hausdorff_m": 8.935914062202246e-16,
+            "matches_within_1um": true
+          }
+        }
+      ],
+      "initial_motor_readback": [
+        {
+          "sample": "left-object0-grasp0-position-only",
+          "stiffness": [
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0
+          ],
+          "effort_caps": [
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568
+          ]
+        },
+        {
+          "sample": "left-object0-grasp0-squeeze",
+          "stiffness": [
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0
+          ],
+          "effort_caps": [
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568
+          ]
+        },
+        {
+          "sample": "left-object0-grasp1-position-only",
+          "stiffness": [
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0
+          ],
+          "effort_caps": [
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568
+          ]
+        },
+        {
+          "sample": "left-object0-grasp1-squeeze",
+          "stiffness": [
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0,
+            8.0
+          ],
+          "effort_caps": [
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568,
+            0.7599999904632568
+          ]
+        }
+      ],
+      "state_count": 604,
+      "control_state_count": 353,
+      "executed_max_abs_estimated_finger_effort_Nm": 0.5787776708602905
+    }
+  },
+  "lifecycle": {
+    "instance_id": "dngrtbldz",
+    "status": "STOPPED",
+    "confirmed_utc": "2026-10-16T02:56:44.838854+00:00",
+    "conservative_total_compute_bound_usd": 8.8173,
+    "not_an_invoice": true,
+    "backup_all_hashes_verified": true
+  },
+  "pregrasp_path_audit": {
+    "scope": "finite 11-sample geometry checks, not a continuous certificate",
+    "results": [
+      {
+        "sample": "left-object0-grasp0",
+        "finite_11_sample_peak_piece_penetration_m": 0.000867982668434273,
+        "initial_max_axis_overlap_m": -0.0020000082721585294
+      },
+      {
+        "sample": "left-object0-grasp1",
+        "finite_11_sample_peak_piece_penetration_m": 0.00043085776131671083,
+        "initial_max_axis_overlap_m": -4.637030142445875e-05
+      }
+    ]
+  }
+}

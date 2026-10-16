@@ -107,10 +107,13 @@ def apply_grasp_seeds(samples, proposal):
     result = copy.deepcopy(samples)
     translation_cap = float(proposal.get("wrist_translation_cap_m", 0.03))
     rotation_cap = float(proposal.get("wrist_rotation_cap_rad", 0.5))
-    if not (0 < translation_cap <= 0.05 and 0 < rotation_cap <= 0.8):
+    finger_cap = float(proposal.get("finger_delta_cap_rad", 0.6))
+    if not (0 < translation_cap <= 0.2 and 0 < rotation_cap <= np.pi):
         raise ValueError(
             "Experimental grasp seed wrist bounds exceed the permitted search"
         )
+    if not 0 < finger_cap <= 1.2:
+        raise ValueError("Experimental grasp finger correction exceeds 1.2 rad")
     changed = []
     for record in proposal["results"]:
         candidate = record["candidate"]
@@ -165,7 +168,7 @@ def apply_grasp_seeds(samples, proposal):
             np.max(np.abs(pos - sample["hand_position_stage_m"]))
             > translation_cap + 1e-6
             or angle > rotation_cap
-            or max(abs(new[n] - original[n]) for n in original) > 0.600001
+            or max(abs(new[n] - original[n]) for n in original) > finger_cap + 1e-6
             or candidate["pad_escape_direction_dot"] > -0.5
             or candidate["pad_escape_direction_dot"] < -1.000001
             or candidate["maximum_piece_penetration_lower_bound_m"] < 0
@@ -175,6 +178,18 @@ def apply_grasp_seeds(samples, proposal):
         sample["hand_position_stage_m"] = pos.tolist()
         sample["hand_quaternion_stage_xyzw"] = quat.tolist()
         sample["finger_target_rad"] = [new[n] for n in sample["joint_names"]]
+        if "required_contact_digits" in candidate:
+            digits = candidate["required_contact_digits"]
+            if len(digits) != 3 or set(digits) != {"thumb", "index", "middle"}:
+                raise ValueError(
+                    "A load-balanced grasp requires all three real finger contacts"
+                )
+            sample["required_contact_digits"] = list(digits)
+        if "finger_stiffness_Nm_per_rad" in candidate:
+            stiffness = float(candidate["finger_stiffness_Nm_per_rad"])
+            if not math.isfinite(stiffness) or not 2 <= stiffness <= 8:
+                raise ValueError("Candidate finger stiffness exceeds [2, 8] Nm/rad")
+            sample["finger_stiffness_Nm_per_rad"] = stiffness
         if "finger_feedforward_Nm" in candidate:
             effort = np.asarray(candidate["finger_feedforward_Nm"], dtype=float)
             if (
@@ -295,27 +310,34 @@ def cooked_acquisition_support(world_vertices, original):
     eligible = np.flatnonzero(hull.equations[:, 2] < -0.7)
     if not len(eligible):
         raise ValueError("Cooked object has no nearly horizontal lower support face")
-    normal = -hull.equations[eligible[np.argmax(areas[eligible])], :3]
-    rotation = Rotation.align_vectors(normal[None], np.array([[0.0, 0.0, 1.0]]))[0]
-    local = rotation.inv().apply(vertices)
-    lower, upper = local.min(0), local.max(0)
     dimensions = np.asarray(original["dimensions_m"])
-    if np.any(upper[:2] - lower[:2] >= dimensions[:2]):
-        raise ValueError("Diagnostic tray no longer covers cooked object footprint")
-    center = np.r_[(lower[:2] + upper[:2]) / 2, lower[2] - dimensions[2] / 2 - 0.0001]
-    position = rotation.apply(center)
     old_rotation = Rotation.from_quat(original["quaternion_stage_xyzw"])
-    if (
-        np.linalg.norm(position - original["position_stage_m"]) > 0.02
-        or (rotation * old_rotation.inv()).magnitude() > 0.3
-    ):
-        raise ValueError("Cooked support adjustment exceeds diagnostic bounds")
-    return {
-        **original,
-        "position_stage_m": position.tolist(),
-        "quaternion_stage_xyzw": rotation.as_quat().tolist(),
-        "support_uses_actual_cooked_lower_face": True,
-    }
+    # A long handle can make the largest global-hull face a steep bridge between
+    # disconnected bottom regions. Search the remaining faces within the same
+    # fixture bounds rather than rejecting the object after that single choice.
+    for index in eligible[np.argsort(-areas[eligible], kind="stable")]:
+        normal = -hull.equations[index, :3]
+        rotation = Rotation.align_vectors(normal[None], np.array([[0.0, 0.0, 1.0]]))[0]
+        if (rotation * old_rotation.inv()).magnitude() > 0.3:
+            continue
+        local = rotation.inv().apply(vertices)
+        lower, upper = local.min(0), local.max(0)
+        if np.any(upper[:2] - lower[:2] >= dimensions[:2]):
+            continue
+        center = np.r_[
+            (lower[:2] + upper[:2]) / 2, lower[2] - dimensions[2] / 2 - 0.0001
+        ]
+        position = rotation.apply(center)
+        if np.linalg.norm(position - original["position_stage_m"]) > 0.02:
+            continue
+        return {
+            **original,
+            "position_stage_m": position.tolist(),
+            "quaternion_stage_xyzw": rotation.as_quat().tolist(),
+            "support_uses_actual_cooked_lower_face": True,
+            "eligible_lower_faces_considered": len(eligible),
+        }
+    raise ValueError("No cooked support face fits the unchanged diagnostic bounds")
 
 
 def prepare(
@@ -914,7 +936,9 @@ def execute(
             cfg.init_state.joint_pos = target
             cfg.actuators["fingers"] = ImplicitActuatorCfg(
                 joint_names_expr=[".*"],
-                stiffness=motors["STIFFNESS_1515"],
+                stiffness=sample.get(
+                    "finger_stiffness_Nm_per_rad", motors["STIFFNESS_1515"]
+                ),
                 damping=motors["DAMPING_1515"],
                 armature=motors["ARMATURE_1515"],
                 effort_limit_sim={
@@ -1027,6 +1051,8 @@ def execute(
                 "hand_material": hand_material,
                 "object_material": object_material,
                 "motor_effort_caps_Nm": hand.cfg.actuators["fingers"].effort_limit_sim,
+                "finger_stiffness_Nm_per_rad": hand.cfg.actuators["fingers"].stiffness,
+                "finger_damping_Nm_s_per_rad": hand.cfg.actuators["fingers"].damping,
                 "sample": sample,
             }
         )
@@ -1341,6 +1367,27 @@ def execute(
         if joint_error > 1e-5:
             raise ValueError("Initial fingers differ from the frozen target")
         record["finger_maximum_error_rad"] = joint_error
+        expected_stiffness = sample.get(
+            "finger_stiffness_Nm_per_rad", motors["STIFFNESS_1515"]
+        )
+        actual_stiffness = hand.data.joint_stiffness[0].detach().cpu().numpy()
+        if not np.allclose(actual_stiffness, expected_stiffness, atol=1e-6, rtol=0):
+            raise ValueError(
+                "Imported joint stiffness differs from the declared controller"
+            )
+        record["finger_stiffness_Nm_per_rad_sim_order"] = actual_stiffness.tolist()
+        actual_caps = hand.data.joint_effort_limits[0].detach().cpu().numpy()
+        expected_caps = np.array(
+            [
+                hand.cfg.actuators["fingers"].effort_limit_sim[name]
+                for name in hand.joint_names
+            ]
+        )
+        if not np.allclose(actual_caps, expected_caps, atol=1e-6, rtol=0):
+            raise ValueError(
+                "Imported joint effort limits differ from the source motor caps"
+            )
+        record["finger_effort_caps_Nm_sim_order"] = actual_caps.tolist()
         body_poses = hand.data.body_link_pose_w[0].detach().cpu().numpy()
         record["hand_body_link_pose_stage_xyzw"] = {
             name: pose.tolist()
@@ -1541,6 +1588,7 @@ def execute(
                     static_contact_bindings[index]["hand_body_paths"],
                     payload_contact_timers[index],
                     dt,
+                    sample.get("required_contact_digits", ("thumb", "index")),
                 )
                 if step >= 50 and payload_contact_timers[index] > 0:
                     gravity += payload_gravity_wrench(

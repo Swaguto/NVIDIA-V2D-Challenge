@@ -21,6 +21,15 @@ def convex_escape(first, second):
     Include edge cross products: face normals alone miss edge/edge separation.
     """
     points = [np.asarray(v, dtype=np.float64) for v in (first, second)]
+    # A valid separating world axis is sufficient for the negative-depth case.
+    # Avoid rebuilding hulls and edge products for distant scene pieces during
+    # repeated whole-hand planning. Intersections still use the complete SAT.
+    gaps = np.r_[
+        points[0].min(0) - points[1].max(0), points[1].min(0) - points[0].max(0)
+    ]
+    index = int(np.argmax(gaps))
+    if gaps[index] > 0:
+        return -float(gaps[index]), np.eye(3)[index % 3] * (1 if index < 3 else -1)
     hulls = [ConvexHull(v) for v in points]
     edges = []
     for v, h in zip(points, hulls, strict=True):
