@@ -5,7 +5,12 @@ import numpy as np
 import pytest
 
 sys.path.insert(0, str(Path(__file__).parents[1]))
-from _dex3_grip_control import lift_summary, lift_target, payload_gravity_wrench
+from _dex3_grip_control import (
+    lift_summary,
+    lift_target,
+    payload_gravity_wrench,
+    payload_contact_hold,
+)
 
 
 def test_lift_reference_is_stationary_until_support_release_and_bounded():
@@ -23,6 +28,16 @@ def test_payload_compensation_includes_the_correct_lever_arm_torque():
     np.testing.assert_allclose(
         wrench, payload_gravity_wrench([3, 1, -2], [3.1, 1.2, -2.05], 0.3)
     )
+
+
+def test_payload_compensation_uses_two_digit_contacts_and_expires_after_loss():
+    paths = ["right_hand_thumb_2_link", "right_hand_index_1_link"]
+    forces = [[1, 0, 0], [-1, 0, 0]]
+    remaining = payload_contact_hold(forces, paths, 0, 0.01)
+    assert remaining == 0.03
+    for _ in range(4):
+        remaining = payload_contact_hold([[1, 0, 0], [0, 0, 0]], paths, remaining, 0.01)
+    assert remaining == 0
 
 
 def test_lift_gate_requires_actual_lift_retention_and_wrist_tracking():

@@ -1351,10 +1351,16 @@ def execute(
     load_start_step = 50 if acquisition_mode else 0
     release_readback = []
     applied_efforts = [torch.zeros_like(t) for t in effort_targets]
-    from _dex3_grip_control import lift_target, lift_summary, payload_gravity_wrench
+    from _dex3_grip_control import (
+        lift_target,
+        lift_summary,
+        payload_gravity_wrench,
+        payload_contact_hold,
+    )
     from _dex3_wrist_control import implicit_root_wrench
 
     wrist_wrenches = [np.zeros(6) for _ in hands]
+    payload_contact_timers = [0.0 for _ in hands]
     for step in range(last_step + 1):
         if acquisition_mode and step == 50:
             for support in acquisition_platforms + release_control_platforms:
@@ -1437,6 +1443,9 @@ def execute(
                     if lift_mode
                     else None,
                     "applied_wrist_wrench_world": wrist_wrenches[index].tolist()
+                    if lift_mode
+                    else None,
+                    "payload_contact_hold_remaining_s": payload_contact_timers[index]
                     if lift_mode
                     else None,
                 }
@@ -1525,7 +1534,15 @@ def execute(
                 ].copy()
                 # Expected payload weight is applied only through the wrist actuator.
                 # Objects receive no external force, attachment, or pose playback.
-                if step >= 50:
+                payload_contact_timers[index] = payload_contact_hold(
+                    static_contact_views[index]
+                    .get_contact_force_matrix(dt)
+                    .numpy()[:, 0, :],
+                    static_contact_bindings[index]["hand_body_paths"],
+                    payload_contact_timers[index],
+                    dt,
+                )
+                if step >= 50 and payload_contact_timers[index] > 0:
                     gravity += payload_gravity_wrench(
                         cpu(hand.data.root_com_pos_w)[0],
                         cpu(objects[index].data.root_com_pos_w)[0],
@@ -1681,6 +1698,7 @@ def execute(
                 "nominal_payload_mass_kg": prepared["nominal_object_mass_kg"],
                 "force_applied_to": "wrist only",
                 "includes_payload_lever_arm_moment": True,
+                "activation": "measured thumb and index contact >=0.5 N each; 30 ms dropout hold",
                 "force_cap_N": 60,
                 "torque_cap_Nm": 60,
             }
