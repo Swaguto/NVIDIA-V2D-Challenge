@@ -72,6 +72,38 @@ def registered_carry_gain_scale(feedback_weight, registered_carry):
     return 1 / max(0.1, 1 - feedback_weight)
 
 
+def hand_control_settings(spec, side):
+    """Resolve explicitly scoped hand settings; default historical globals stay valid."""
+    defaults = dict(
+        experimental_register_settled_grasp=False,
+        experimental_carry_compliance=False,
+        carry_object_feedback_weight=0.9,
+        wrist_payload_compensation="measured_primary_reaction",
+    )
+    overrides = spec.get("hand_control_overrides", {})
+    if not isinstance(overrides, dict) or set(overrides) - {"left", "right"}:
+        raise ValueError("Invalid hand controller override sides")
+    for settings in overrides.values():
+        if not isinstance(settings, dict) or set(settings) - set(defaults):
+            raise ValueError("Unknown scoped hand controller setting")
+    result = {key: spec.get(key, value) for key, value in defaults.items()}
+    result.update(overrides.get(side, {}))
+    if (
+        not isinstance(result["experimental_register_settled_grasp"], bool)
+        or not isinstance(result["experimental_carry_compliance"], bool)
+        or (
+            result["experimental_carry_compliance"]
+            and not result["experimental_register_settled_grasp"]
+        )
+        or not np.isfinite(result["carry_object_feedback_weight"])
+        or not 0 <= result["carry_object_feedback_weight"] <= 0.9
+        or result["wrist_payload_compensation"]
+        not in {"nominal_gravity", "measured_reaction", "measured_primary_reaction"}
+    ):
+        raise ValueError("Invalid scoped hand controller settings")
+    return result
+
+
 def aborted_hand_hold(anchor_pose, initial_fingers, open_fingers, elapsed_source_s):
     """Hold the measured wrist and open smoothly after unavailable reacquisition."""
     return np.asarray(anchor_pose, float).copy(), (
@@ -246,11 +278,14 @@ class TaskGripReference:
             int(oi): SmoothObjectReference(spec["source_times_s"], poses)
             for oi, poses in spec.get("smooth_robot_object_reference", {}).items()
         }
+        for side in spec["phases"]:
+            hand_control_settings(spec, side)
 
     def command(
         self, side, time_s, object_pose, measured_object_pose=None, *, commit=True
     ):
         phases = self.spec["phases"][side]
+        settings = hand_control_settings(self.spec, side)
         if not np.isfinite(time_s):
             raise ValueError("Nonfinite source time")
         object_pose = np.asarray(object_pose, float).copy()
@@ -272,7 +307,7 @@ class TaskGripReference:
             ]
             obj = np.asarray(object_pose, float).copy()
             registration = self.grasp_registrations.get(phase["sample"])
-            register = self.spec.get("experimental_register_settled_grasp", False)
+            register = settings["experimental_register_settled_grasp"]
             # Capture once at closure. Future command prediction must not mutate
             # feedback state or register a phase before the physical clock does.
             if (
@@ -318,15 +353,15 @@ class TaskGripReference:
             feedback = smooth((time_s - start) / 0.1) * (
                 1 - smooth((time_s - close) / 0.5)
             )
-            carry_compliance = registration is not None and self.spec.get(
-                "experimental_carry_compliance", False
+            carry_compliance = (
+                registration is not None and settings["experimental_carry_compliance"]
             )
             if registration is not None:
                 # Track the desired object motion through a compliant offset
                 # from the measured grasp. This attenuates target noise instead
                 # of imposing the complete pose error across millimetre pads.
                 feedback = (
-                    self.carry_feedback_weight
+                    settings["carry_object_feedback_weight"]
                     * smooth((time_s - close) / 0.1)
                     * (1 - smooth((time_s - end) / 0.25))
                     if carry_compliance and not parked

@@ -171,6 +171,42 @@ def test_reduced_carry_feedback_limits_measurement_noise_without_moving_source()
         TaskGripReference(dict(spec, carry_object_feedback_weight=float("nan")))
 
 
+def test_hand_overrides_do_not_change_the_other_hands_registration_or_feedback():
+    import copy
+    import pytest
+    from _dex3_task_grip import hand_control_settings
+
+    spec = copy.deepcopy(reference().spec)
+    spec["phases"]["right"] = copy.deepcopy(spec["phases"]["left"])
+    spec.update(
+        experimental_carry_compliance=True,
+        carry_object_feedback_weight=0.5,
+        wrist_payload_compensation="nominal_gravity",
+    )
+    spec["hand_control_overrides"] = {
+        "right": dict(
+            experimental_register_settled_grasp=False,
+            experimental_carry_compliance=False,
+            wrist_payload_compensation="measured_primary_reaction",
+        )
+    }
+    ref = TaskGripReference(spec)
+    pose = [0, 0, 0, 0, 0, 0, 1]
+    ref.command("right", 2, pose, pose)
+    assert not ref.grasp_registrations
+    left = ref.command("left", 2, pose, pose)
+    assert left["settled_grasp_registration"] is not None
+    assert hand_control_settings(spec, "left")["carry_object_feedback_weight"] == 0.5
+    assert (
+        hand_control_settings(spec, "right")["wrist_payload_compensation"]
+        == "measured_primary_reaction"
+    )
+    with pytest.raises(ValueError, match="Unknown"):
+        hand_control_settings(
+            dict(spec, hand_control_overrides={"left": {"typo": 1}}), "left"
+        )
+
+
 def test_compensated_carry_retains_world_tracking_in_rigid_grasp_limit_and_force_cap():
     import pytest
     from _dex3_task_grip import (

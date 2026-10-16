@@ -13,6 +13,7 @@ sys.path.insert(0, str(Path(__file__).parents[1] / "reproduction"))
 from _dex3_task_grip import (  # noqa: E402
     SmoothObjectReference,
     denoise_robot_reference,
+    hand_control_settings,
     relative_pose,
 )
 from _dex3_static_load import apply_grasp_seeds  # noqa: E402
@@ -87,6 +88,14 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
         raise ValueError("Live contact allocation requires an explicit posture mode")
     if not live_enabled and live_posture is not None:
         raise ValueError("A live posture mode requires live contact allocation")
+    for side in ["left", "right"]:
+        scoped = hand_control_settings(proposal, side)
+        if scoped["experimental_register_settled_grasp"] and (
+            interpolation != "cubic" or not bounded_reacquisition
+        ):
+            raise ValueError(
+                "Scoped registration needs cubic reference and bounded reacquisition"
+            )
     result = dict(
         schema="v2d.dex3-task-grips.v1",
         park_height_m=0.12,
@@ -113,6 +122,9 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
         experimental_register_settled_grasp=registration,
         experimental_carry_compliance=carry_compliance,
         carry_object_feedback_weight=carry_feedback_weight,
+        hand_control_overrides=copy.deepcopy(
+            proposal.get("hand_control_overrides", {})
+        ),
         live_contact_load_model=load_model,
         source_motion_speed=speed,
         experimental_bounded_reacquisition=bounded_reacquisition,

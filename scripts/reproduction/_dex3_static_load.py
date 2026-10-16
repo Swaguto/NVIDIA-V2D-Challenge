@@ -1969,6 +1969,7 @@ def run_supported_task(
         aborted_hand_hold,
         contact_wrench,
         filtered_reaction_compensation,
+        hand_control_settings,
         predict_measured_pose,
         registered_carry_gain_scale,
         seat_contact_pads,
@@ -2337,6 +2338,9 @@ def run_supported_task(
                 ]
                 grip_command, grip_next = None, None
                 if task_grip is not None:
+                    grip_settings = hand_control_settings(
+                        task_grip.spec, ("left", "right")[si]
+                    )
                     oi = prepared["samples"][si]["object"]
                     measured = (
                         controller_tensor(objects[si].data.root_link_pose_w)[0]
@@ -2344,9 +2348,12 @@ def run_supported_task(
                         .numpy()
                     )
                     measured_twist = (
-                        controller_tensor(objects[si].data.root_link_vel_w)[0].cpu().numpy()
-                        if task_grip.spec.get("experimental_carry_compliance", False)
-                        and not diagnostic.get("free_space") else None
+                        controller_tensor(objects[si].data.root_link_vel_w)[0]
+                        .cpu()
+                        .numpy()
+                        if grip_settings["experimental_carry_compliance"]
+                        and not diagnostic.get("free_space")
+                        else None
                     )
 
                     def grip_at(t):
@@ -2361,9 +2368,16 @@ def run_supported_task(
                             ("left", "right")[si],
                             t,
                             obj_pose,
-                            None if diagnostic.get("free_space") else (
-                                predict_measured_pose(measured, measured_twist, max(0, t - grip_time) / speed)
-                                if measured_twist is not None else measured
+                            None
+                            if diagnostic.get("free_space")
+                            else (
+                                predict_measured_pose(
+                                    measured,
+                                    measured_twist,
+                                    max(0, t - grip_time) / speed,
+                                )
+                                if measured_twist is not None
+                                else measured
                             ),
                             commit=t <= grip_time + 1e-10,
                         )
@@ -2464,7 +2478,7 @@ def run_supported_task(
                         grip_command["object_feedback_weight"] if grip_command else 0,
                         grip_command is not None
                         and grip_command.get("settled_grasp_registration") is not None
-                        and task_grip.spec.get("experimental_carry_compliance", False),
+                        and grip_settings["experimental_carry_compliance"],
                     )
                     wrench, control_details = implicit_root_wrench(
                         link_pose_xyzw=cpu(hand.data.root_link_pose_w)[0],
@@ -2502,12 +2516,14 @@ def run_supported_task(
                             hand.root_physx_view.get_gravity_compensation_forces()
                         )[0, :6],
                         dt=dt,
-                        linear_stiffness=feedback_gain_scale * gains["tracking_controller_linear_stiffness"],
-                        linear_damping=feedback_gain_scale * gains["tracking_controller_linear_damping"],
-                        angular_stiffness=gains[
-                            "tracking_controller_angular_stiffness"
-                        ] * feedback_gain_scale,
-                        angular_damping=feedback_gain_scale * gains["tracking_controller_angular_damping"],
+                        linear_stiffness=feedback_gain_scale
+                        * gains["tracking_controller_linear_stiffness"],
+                        linear_damping=feedback_gain_scale
+                        * gains["tracking_controller_linear_damping"],
+                        angular_stiffness=gains["tracking_controller_angular_stiffness"]
+                        * feedback_gain_scale,
+                        angular_damping=feedback_gain_scale
+                        * gains["tracking_controller_angular_damping"],
                         max_force=gains["max_force"],
                         max_torque=gains["max_torque"],
                     )
@@ -2548,7 +2564,7 @@ def run_supported_task(
                                 friction_data,
                                 com,
                                 filter_index=prepared["samples"][si]["object"]
-                                if task_grip.spec.get("wrist_payload_compensation")
+                                if grip_settings["wrist_payload_compensation"]
                                 == "measured_primary_reaction"
                                 else None,
                             )
@@ -2611,7 +2627,7 @@ def run_supported_task(
                                 cpu(objects[si].data.root_link_pose_w)[0, :3],
                                 prepared["nominal_object_mass_kg"],
                             )
-                            if task_grip.spec.get("wrist_payload_compensation")
+                            if grip_settings["wrist_payload_compensation"]
                             == "nominal_gravity"
                             else measured_wrench,
                             reaction_compensation[si],
@@ -2619,7 +2635,7 @@ def run_supported_task(
                             enabled
                             and (
                                 measured_reaction_hold[si] > 0
-                                if task_grip.spec.get("wrist_payload_compensation")
+                                if grip_settings["wrist_payload_compensation"]
                                 == "measured_primary_reaction"
                                 else contact_hold[si] > 0
                             )
@@ -2639,9 +2655,9 @@ def run_supported_task(
                             applied_reaction_compensation_world=reaction_compensation[
                                 si
                             ].tolist(),
-                            payload_compensation_mode=task_grip.spec.get(
+                            payload_compensation_mode=grip_settings[
                                 "wrist_payload_compensation"
-                            ),
+                            ],
                             contact_hold_remaining_s=contact_hold[si],
                             primary_reaction_hold_remaining_s=measured_reaction_hold[
                                 si
@@ -2901,7 +2917,9 @@ def run_supported_task(
                         else None,
                         "settled_grasp_registration": grip_command.get(
                             "settled_grasp_registration"
-                        ) if grip_command is not None else None,
+                        )
+                        if grip_command is not None
+                        else None,
                         "reacquisition_failure": grip_command.get(
                             "reacquisition_failure"
                         )
@@ -3186,15 +3204,28 @@ def run_supported_task(
             else None,
             "experimental_reference_denoising_enabled": task_grip.spec.get(
                 "experimental_reference_denoising", False
-            ) if task_grip is not None else False,
+            )
+            if task_grip is not None
+            else False,
             "experimental_settled_grasp_registration_enabled": task_grip.spec.get(
                 "experimental_register_settled_grasp", False
-            ) if task_grip is not None else False,
+            )
+            if task_grip is not None
+            else False,
             "settled_grasp_registrations": task_grip.grasp_registrations
-            if task_grip is not None else {},
+            if task_grip is not None
+            else {},
             "experimental_carry_compliance_enabled": task_grip.spec.get(
                 "experimental_carry_compliance", False
-            ) if task_grip is not None else False,
+            )
+            if task_grip is not None
+            else False,
+            "hand_control_settings": {
+                side: hand_control_settings(task_grip.spec, side)
+                for side in ["left", "right"]
+            }
+            if task_grip is not None
+            else {},
             "bounded_reacquisition_enabled": task_grip.spec.get(
                 "experimental_bounded_reacquisition", False
             )
