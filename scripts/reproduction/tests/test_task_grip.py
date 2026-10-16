@@ -141,3 +141,28 @@ def test_tactile_seating_closes_only_weak_pads_and_respects_limits_and_release()
     )
     np.testing.assert_allclose(integral, 0)
     np.testing.assert_allclose(delta, 0)
+
+
+def test_primary_reaction_excludes_other_object_and_preserves_buffer_offsets():
+    normal = [
+        np.array([[2.0], [3.0]]),
+        np.array([[0.1, 0, 0], [0, 0.2, 0]]),
+        np.array([[0, 0, -1.0], [1.0, 0, 0]]),
+        np.zeros((2, 1)),
+        np.array([[1, 1]]),
+        np.array([[0, 1]]),
+    ]
+    friction = [
+        np.array([[0, 1.0, 0], [0, 0, 4.0]]),
+        np.array([[0.1, 0, 0], [0, 0.2, 0]]),
+        np.array([[1, 1]]),
+        np.array([[0, 1]]),
+    ]
+    first = contact_wrench(normal, friction, [0, 0, 0], filter_index=0)
+    second = contact_wrench(normal, friction, [0, 0, 0], filter_index=1)
+    np.testing.assert_allclose(first, [0, 1, -2, 0, 0.2, 0.1])
+    np.testing.assert_allclose(
+        first + second, contact_wrench(normal, friction, [0, 0, 0])
+    )
+    with pytest.raises(ValueError, match="primary contact filter"):
+        contact_wrench(normal, friction, [0, 0, 0], filter_index=2)

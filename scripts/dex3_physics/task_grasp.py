@@ -36,12 +36,16 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
     live_posture = proposal.get("live_contact_posture_mode")
     interpolation = proposal.get("task_reference_interpolation", "piecewise")
     load_model = proposal.get("live_contact_load_model", "gravity")
+    bounded_reacquisition = proposal.get("experimental_bounded_reacquisition", False)
+    patch_minimum = float(proposal.get("minimum_live_patch_force_N", 0.5))
     speed = float(proposal.get("source_motion_speed", 0.5))
     if (
         interpolation not in {"piecewise", "cubic"}
         or load_model not in {"gravity", "reference_acceleration"}
         or not np.isfinite(speed)
         or not 0.1 <= speed <= 0.5
+        or not isinstance(bounded_reacquisition, bool)
+        or not 0.05 <= patch_minimum <= 0.5
         or (
             load_model == "reference_acceleration"
             and (not live_enabled or interpolation != "cubic")
@@ -51,6 +55,7 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
     if not 2 <= minimum_normal <= 5 or payload_mode not in {
         "nominal_gravity",
         "measured_reaction",
+        "measured_primary_reaction",
     }:
         raise ValueError("Unsupported explicit coupled controller configuration")
     if (
@@ -85,6 +90,8 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
         task_reference_interpolation=interpolation,
         live_contact_load_model=load_model,
         source_motion_speed=speed,
+        experimental_bounded_reacquisition=bounded_reacquisition,
+        minimum_live_patch_force_N=patch_minimum,
         planner_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         required_physical_materials="hand 2.0 / object 0.5, average combination = 1.25; explicit combine mode and coefficient readback required",
     )

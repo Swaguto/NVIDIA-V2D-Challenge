@@ -132,12 +132,15 @@ class TaskGripReference:
         if spec["schema"] != "v2d.dex3-task-grips.v1" or spec["physical_task_accepted"]:
             raise ValueError("Need an explicitly unaccepted task grasp reference")
         self.spec = spec
+        self.aborted_phases = {}
         self.object_references = {
             int(oi): SmoothObjectReference(spec["source_times_s"], poses)
             for oi, poses in spec.get("smooth_robot_object_reference", {}).items()
         }
 
-    def command(self, side, time_s, object_pose, measured_object_pose=None):
+    def command(
+        self, side, time_s, object_pose, measured_object_pose=None, *, commit=True
+    ):
         phases = self.spec["phases"][side]
         if not np.isfinite(time_s):
             raise ValueError("Nonfinite source time")
@@ -162,21 +165,52 @@ class TaskGripReference:
             feedback = smooth((time_s - start) / 0.1) * (
                 1 - smooth((time_s - close) / 0.5)
             )
+            rejection = None
+            proposed_abort = None
+            if (
+                self.spec.get("experimental_bounded_reacquisition", False)
+                and measured_object_pose is not None
+                and feedback > 0
+                and not parked
+            ):
+                measured = np.asarray(measured_object_pose, float)
+                distance = np.linalg.norm(measured[:3] - obj[:3])
+                angle = (
+                    Rotation.from_quat(measured[3:]) * Rotation.from_quat(obj[3:]).inv()
+                ).magnitude()
+                if distance > 0.06 or angle > np.deg2rad(20):
+                    proposed_abort = time_s
+                    if commit:
+                        self.aborted_phases.setdefault(phase["sample"], time_s)
+                # Fade settling feedback to zero before the rejection boundary.
+                feedback *= (1 - smooth((distance - 0.03) / 0.03)) * (
+                    1 - smooth((angle - np.deg2rad(10)) / np.deg2rad(10))
+                )
+            aborted_at = self.aborted_phases.get(phase["sample"], proposed_abort)
+            abort = (
+                smooth((time_s - aborted_at) / 0.25) if aborted_at is not None else 0.0
+            )
+            if aborted_at is not None:
+                feedback = 0.0
+                rejection = "Object outside bounded reacquisition window; phase aborted"
             if measured_object_pose is not None:
                 obj = blend_pose(obj, measured_object_pose, feedback)
             pose = compose_pose(obj, phase["hand_in_object_xyzw"])
             descend = smooth((time_s - start) / (close - 0.25 - start))
             retreat = smooth((time_s - end - 0.25) / 0.5)
             height = 1.0 if parked else 1 - descend + retreat
+            height = height + (1 - min(height, 1.0)) * abort
             pose[2] += self.spec["park_height_m"] * height
             closed = smooth((time_s - close + 0.25) / 0.125)
             opening = smooth((time_s - end) / 0.25)
             if parked:
                 closed, opening = 0.0, 0.0
-            closure = closed * (1 - opening)
+            closure = closed * (1 - opening) * (1 - abort)
             opened = np.asarray(phase["open_rad"])
             q = opened + closure * (np.asarray(phase["closed_rad"]) - opened)
-            squeeze = smooth((time_s - close + 0.125) / 0.125) * (1 - opening)
+            squeeze = (
+                smooth((time_s - close + 0.125) / 0.125) * (1 - opening) * (1 - abort)
+            )
             if parked:
                 squeeze = 0.0
             times = np.asarray(phase["effort_times_s"])
@@ -201,6 +235,7 @@ class TaskGripReference:
                 )
                 if self.spec.get("live_contact_load_model") == "reference_acceleration"
                 else None,
+                reacquisition_failure=rejection,
             )
 
         for phase in phases:
@@ -221,7 +256,7 @@ class TaskGripReference:
         raise ValueError("Overlapping or incomplete grasp schedule")
 
 
-def contact_wrench(normal_data, friction_data, wrist_com):
+def contact_wrench(normal_data, friction_data, wrist_com, filter_index=None):
     """Sum forces on sensor bodies and moments at the wrist COM.
 
     Buffers follow the PhysX RigidContactView contract, including per-pair counts
@@ -241,6 +276,11 @@ def contact_wrench(normal_data, friction_data, wrist_com):
     ):
         if sizes.shape != offsets.shape or np.any(sizes < 0):
             raise ValueError("Invalid contact count layout")
+        if filter_index is not None:
+            if sizes.ndim != 2 or not 0 <= filter_index < sizes.shape[1]:
+                raise ValueError("Invalid primary contact filter")
+            sizes = sizes[:, filter_index : filter_index + 1]
+            offsets = offsets[:, filter_index : filter_index + 1]
         for count, offset in zip(sizes.flat, offsets.flat, strict=True):
             count, offset = int(count), int(offset)
             if not count:

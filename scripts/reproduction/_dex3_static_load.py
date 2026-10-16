@@ -2168,6 +2168,7 @@ def run_supported_task(
     integral_force = [np.zeros(3), np.zeros(3)]
     reaction_compensation = [np.zeros(6), np.zeros(6)]
     contact_hold = [0.0, 0.0]
+    measured_reaction_hold = [0.0, 0.0]
     tactile_integrals = [np.zeros(3), np.zeros(3)]
     tactile_phase = [None, None]
     task_motor_readbacks = []
@@ -2288,6 +2289,7 @@ def run_supported_task(
                             t,
                             obj_pose,
                             None if diagnostic.get("free_space") else measured,
+                            commit=t <= grip_time + 1e-10,
                         )
 
                     grip_command = grip_at(grip_time)
@@ -2436,7 +2438,13 @@ def run_supported_task(
                                 current_pose[3:]
                             ).apply(cpu(com_positions[si])[0])
                             measured_wrench = contact_wrench(
-                                normal_data, friction_data, com
+                                normal_data,
+                                friction_data,
+                                com,
+                                filter_index=prepared["samples"][si]["object"]
+                                if task_grip.spec.get("wrist_payload_compensation")
+                                == "measured_primary_reaction"
+                                else None,
                             )
                             normal_sum = contact_wrench(
                                 normal_data,
@@ -2479,6 +2487,15 @@ def run_supported_task(
                                 dt,
                                 grip_command["required_digits"],
                             )
+                            primary_load = np.linalg.norm(
+                                normal_matrix[:, prepared["samples"][si]["object"], :],
+                                axis=-1,
+                            ).sum()
+                            measured_reaction_hold[si] = (
+                                0.03
+                                if primary_load >= 0.5
+                                else max(0.0, measured_reaction_hold[si] - dt)
+                            )
                         reaction_compensation[si] = filtered_reaction_compensation(
                             -payload_gravity_wrench(
                                 cpu(hand.data.root_link_pose_w)[0, :3]
@@ -2494,7 +2511,12 @@ def run_supported_task(
                             reaction_compensation[si],
                             dt,
                             enabled
-                            and contact_hold[si] > 0
+                            and (
+                                measured_reaction_hold[si] > 0
+                                if task_grip.spec.get("wrist_payload_compensation")
+                                == "measured_primary_reaction"
+                                else contact_hold[si] > 0
+                            )
                             and grip_command["squeeze_scale"] > 0,
                         )
                         wrench = np.clip(
@@ -2515,6 +2537,9 @@ def run_supported_task(
                                 "wrist_payload_compensation"
                             ),
                             contact_hold_remaining_s=contact_hold[si],
+                            primary_reaction_hold_remaining_s=measured_reaction_hold[
+                                si
+                            ],
                         )
                         if len(
                             grip_command["required_digits"]
@@ -2605,6 +2630,9 @@ def run_supported_task(
                                     desired_wrench_stage=grip_command[
                                         "desired_object_wrench_stage"
                                     ],
+                                    minimum_patch_force_N=task_grip.spec.get(
+                                        "minimum_live_patch_force_N", 0.5
+                                    ),
                                 )
                                 if (
                                     task_grip.spec["live_contact_posture_mode"]
@@ -2631,6 +2659,9 @@ def run_supported_task(
                             ]
                             live_details["load_model"] = task_grip.spec.get(
                                 "live_contact_load_model", "gravity"
+                            )
+                            live_details["minimum_patch_geometry_force_N"] = (
+                                task_grip.spec.get("minimum_live_patch_force_N", 0.5)
                             )
                             live_details["requested_object_wrench_stage"] = (
                                 grip_command["desired_object_wrench_stage"].tolist()
@@ -2742,6 +2773,11 @@ def run_supported_task(
                         "measured_object_feedback_weight": grip_command[
                             "object_feedback_weight"
                         ]
+                        if grip_command is not None
+                        else None,
+                        "reacquisition_failure": grip_command.get(
+                            "reacquisition_failure"
+                        )
                         if grip_command is not None
                         else None,
                         "finger_feedforward_Nm": grip_effort_sim.tolist()
@@ -2886,6 +2922,18 @@ def run_supported_task(
                     f"{'POSTROLL release/settle' if render_postroll else 'FREE SPACE' if diagnostic.get('free_space') else 'Dynamic objects'}; {controller_mode}; source frame {int(source['frame_indices'][camera_row])}; t={grip_time:.2f}s",
                     fill=(255, 255, 255),
                 )
+                unavailable = [
+                    row["side"]
+                    for row in hand_rows[-2:]
+                    if row.get("reacquisition_failure")
+                ]
+                if unavailable:
+                    draw.text(
+                        (10, 23),
+                        "Object unavailable; reacquisition aborted: "
+                        + ", ".join(unavailable),
+                        fill=(255, 190, 90),
+                    )
                 writer.append_data(np.asarray(rgb))
                 (postroll_frames if render_postroll else frames).append(
                     {
@@ -3005,6 +3053,14 @@ def run_supported_task(
             )
             if task_grip is not None
             else None,
+            "bounded_reacquisition_enabled": task_grip.spec.get(
+                "experimental_bounded_reacquisition", False
+            )
+            if task_grip is not None
+            else False,
+            "aborted_reacquisition_phases": task_grip.aborted_phases
+            if task_grip is not None
+            else {},
             "live_contact_load_model": task_grip.spec.get("live_contact_load_model")
             if task_grip is not None
             else None,

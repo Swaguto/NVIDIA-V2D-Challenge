@@ -72,3 +72,50 @@ def test_nominal_dynamic_force_obeys_newtons_law_with_physical_speed():
     np.testing.assert_allclose(
         ref.load_wrench(0.25, 0.5), [0.3 * 0.3 / 4, 0, 2.943, 0, 0, 0], atol=1e-10
     )
+
+
+def test_lost_object_cannot_pull_reacquisition_hand_out_of_scene_or_close_empty_grasp():
+    from _dex3_task_grip import TaskGripReference
+
+    phase = dict(
+        sample="first",
+        object=0,
+        approach_start_s=1,
+        close_s=2,
+        release_start_s=3,
+        hand_in_object_xyzw=[0, 0, 0.1, 0, 0, 0, 1],
+        open_rad=[0] * 7,
+        closed_rad=[0.2] * 7,
+        effort_times_s=[2, 3],
+        effort_Nm=[[0.3] * 7] * 2,
+        required_digits=["thumb", "index"],
+    )
+    second = dict(
+        phase, sample="second", approach_start_s=4, close_s=5, release_start_s=6
+    )
+    ref = TaskGripReference(
+        dict(
+            schema="v2d.dex3-task-grips.v1",
+            physical_task_accepted=False,
+            park_height_m=0.12,
+            phases={"left": [phase, second]},
+            experimental_bounded_reacquisition=True,
+        )
+    )
+    original = np.array([0, 0, 0, 0, 0, 0, 1.0], float)
+    lost = original.copy()
+    lost[2] = -1000
+    preview = ref.command("left", 1.01, original, lost, commit=False)
+    assert preview["reacquisition_failure"] is not None
+    assert ref.aborted_phases == {}
+    ref.command("left", 1.01, original, lost)
+    closed = ref.command("left", 2, original, original)
+    assert closed["reacquisition_failure"] is not None  # failed phase stays latched
+    assert closed["object_feedback_weight"] == 0
+    np.testing.assert_allclose(closed["pose"][:3], [0, 0, 0.22])
+    np.testing.assert_allclose(closed["fingers"], 0)
+    np.testing.assert_allclose(closed["effort"], 0)
+    recovered = ref.command("left", 5, original, original)
+    assert recovered["reacquisition_failure"] is None
+    np.testing.assert_allclose(recovered["fingers"], 0.2)
+    np.testing.assert_array_equal(original, [0, 0, 0, 0, 0, 0, 1])

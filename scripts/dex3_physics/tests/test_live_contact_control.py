@@ -91,3 +91,19 @@ def test_accelerating_payload_receives_force_and_moment_without_changing_motor_c
         solve_gravity_contacts(
             points, inward, jac, np.zeros(3), 0.3, desired_wrench_stage=[1, 2]
         )
+
+
+def test_weak_contact_geometry_can_remain_usable_below_payload_support_threshold():
+    data = [
+        np.array([[-0.1], [-0.2]]),
+        np.array([[0.0, 0, 0], [1.0, 0, 0]]),
+        np.array([[1.0, 0, 0], [-1.0, 0, 0]]),
+        np.zeros((2, 1)),
+        np.ones((2, 1), int),
+        np.array([[0], [1]]),
+    ]
+    with pytest.raises(ValueError, match="insufficient"):
+        contact_patches(data, [0, 1], 0)
+    points, inward = contact_patches(data, [0, 1], 0, minimum_force_N=0.05)
+    np.testing.assert_allclose(points, data[1])
+    np.testing.assert_allclose(inward, [[1, 0, 0], [-1, 0, 0]])

@@ -60,3 +60,34 @@ Brev. Inputs remain local under the user's existing publishing choice.
 
 Implementation references: [SciPy CubicSpline](https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.CubicSpline.html)
 and [SciPy RotationSpline](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.transform.RotationSpline.html).
+
+## Reacquisition and weakening-contact repair
+
+Later in the inspected failed replay, unbounded measured-object feedback pulls
+the hand reference toward the fallen pot: at source frame 273, the recorded
+hand target z is -1024.92 m and the hand itself is already at -174.35 m. This
+explains its later disappearance from the camera, rather than missing rendered
+frames.
+
+The new bounded-reacquisition option fades settling feedback between 3 and 6 cm
+(or 10 and 20 degrees). Beyond the outer bounds it latches a failed phase,
+opens the fingers and retreats to the source-relative parked reference over
+0.25 source seconds. A prediction query cannot mutate this latch. The video
+labels aborted reacquisition; original object errors and source frames remain
+recorded. This prevents a lost object from commanding an out-of-scene hand; it
+does not turn a failed grasp into success.
+
+The recovery comparison also separates measured-reaction compensation from the
+strict three-pad diagnostic. `measured_primary_reaction` uses only actual normal
+and friction reactions against the intended object, and can remain active while
+some intended fingers weaken. The all-declared-digit 0.5 N retention gate is
+still recorded independently. The same 30 ms dropout hold, 20 ms filter, 10 N /
+2 Nm compensation bounds and 60 N / 60 Nm total wrist caps are retained.
+
+`minimum_live_patch_force_N=0.05` permits reconstruction of a current contact
+patch at lower pressure so that the finger allocator can try to recover it.
+The prior 0.5 N threshold was also shutting off recovery at a weak pad. This
+changes geometric eligibility only; it does not lower the 2 N planned minimum
+or the 0.5 N measured support diagnostic. Missing, invalid or infeasible contacts
+still fall back explicitly. Every new option is bound in the private input and
+requires a fresh GPU check. 77 CPU tests pass.

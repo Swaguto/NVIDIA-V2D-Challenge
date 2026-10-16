@@ -33,7 +33,9 @@ def patch_readback(normal_data, sensor_indices, object_index):
     return result
 
 
-def contact_patches(normal_data, sensor_indices, object_index):
+def contact_patches(normal_data, sensor_indices, object_index, minimum_force_N=0.5):
+    if not 0.05 <= minimum_force_N <= 0.5:
+        raise ValueError("Invalid minimum force for live contact geometry")
     magnitudes, points, normals, _distances, counts, starts = [
         np.asarray(x) for x in normal_data
     ]
@@ -51,13 +53,13 @@ def contact_patches(normal_data, sensor_indices, object_index):
         p, n = points[start : start + count], normals[start : start + count]
         if (
             not np.isfinite(np.r_[weights, p.ravel(), n.ravel()]).all()
-            or weights.sum() < 0.5
+            or weights.sum() < minimum_force_N
         ):
             raise ValueError("Live pad pressure is insufficient or invalid")
         # The backend's signed scalar and normal jointly define force.  Use
         # magnitude only for the centroid, preserving the sign in the reaction.
         reaction = (n * signed[:, None]).sum(0)
-        if np.linalg.norm(reaction) < 0.5:
+        if np.linalg.norm(reaction) < minimum_force_N:
             raise ValueError("Live patch has cancelling or ambiguous normals")
         centers.append((p * weights[:, None]).sum(0) / weights.sum())
         # The reconstructed reaction acts on the sensor (hand).  Its opposite
@@ -113,13 +115,16 @@ def allocate(
     object_com,
     joint_gravity,
     desired_wrench_stage=None,
+    minimum_patch_force_N=0.5,
 ):
     """Return actual simulator joint order; no state or object force is written."""
     if set(simulator_names) != set(kin.names):
         raise ValueError("Live effort joint names differ from the original URDF")
     q = dict(zip(simulator_names, positions, strict=True))
     poses = kin.poses(root, q)
-    points, inward = contact_patches(normal_data, sensor_indices, object_index)
+    points, inward = contact_patches(
+        normal_data, sensor_indices, object_index, minimum_patch_force_N
+    )
     jacobians = []
     for pad, point in zip(pads, points, strict=True):
         pose = poses[pad["link"]]
