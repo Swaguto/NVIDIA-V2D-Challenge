@@ -41,6 +41,7 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
     interpolation = proposal.get("task_reference_interpolation", "piecewise")
     denoising = proposal.get("experimental_reference_denoising", False)
     registration = proposal.get("experimental_register_settled_grasp", False)
+    carry_compliance = proposal.get("experimental_carry_compliance", False)
     load_model = proposal.get("live_contact_load_model", "gravity")
     bounded_reacquisition = proposal.get("experimental_bounded_reacquisition", False)
     patch_minimum = float(proposal.get("minimum_live_patch_force_N", 0.5))
@@ -49,6 +50,8 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
         interpolation not in {"piecewise", "cubic"}
         or not isinstance(denoising, bool)
         or not isinstance(registration, bool)
+        or not isinstance(carry_compliance, bool)
+        or (carry_compliance and not registration)
         or ((denoising or registration) and interpolation != "cubic")
         or (registration and not bounded_reacquisition)
         or load_model not in {"gravity", "reference_acceleration"}
@@ -104,6 +107,7 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
         task_reference_interpolation=interpolation,
         experimental_reference_denoising=denoising,
         experimental_register_settled_grasp=registration,
+        experimental_carry_compliance=carry_compliance,
         live_contact_load_model=load_model,
         source_motion_speed=speed,
         experimental_bounded_reacquisition=bounded_reacquisition,

@@ -1969,6 +1969,7 @@ def run_supported_task(
         aborted_hand_hold,
         contact_wrench,
         filtered_reaction_compensation,
+        predict_measured_pose,
         seat_contact_pads,
     )
 
@@ -2341,6 +2342,11 @@ def run_supported_task(
                         .cpu()
                         .numpy()
                     )
+                    measured_twist = (
+                        controller_tensor(objects[si].data.root_link_vel_w)[0].cpu().numpy()
+                        if task_grip.spec.get("experimental_carry_compliance", False)
+                        and not diagnostic.get("free_space") else None
+                    )
 
                     def grip_at(t):
                         r, p, _scale = motion.object_pose(
@@ -2354,7 +2360,10 @@ def run_supported_task(
                             ("left", "right")[si],
                             t,
                             obj_pose,
-                            None if diagnostic.get("free_space") else measured,
+                            None if diagnostic.get("free_space") else (
+                                predict_measured_pose(measured, measured_twist, max(0, t - grip_time) / speed)
+                                if measured_twist is not None else measured
+                            ),
                             commit=t <= grip_time + 1e-10,
                         )
 
@@ -3175,6 +3184,9 @@ def run_supported_task(
             ) if task_grip is not None else False,
             "settled_grasp_registrations": task_grip.grasp_registrations
             if task_grip is not None else {},
+            "experimental_carry_compliance_enabled": task_grip.spec.get(
+                "experimental_carry_compliance", False
+            ) if task_grip is not None else False,
             "bounded_reacquisition_enabled": task_grip.spec.get(
                 "experimental_bounded_reacquisition", False
             )

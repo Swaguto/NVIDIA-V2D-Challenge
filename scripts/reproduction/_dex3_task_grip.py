@@ -39,6 +39,23 @@ def compose_pose(obj, relative):
     ]
 
 
+def predict_measured_pose(pose, link_twist_world, dt):
+    """One-step actor-frame prediction; never write the predicted object pose."""
+    pose, twist = np.asarray(pose, float), np.asarray(link_twist_world, float)
+    if (
+        pose.shape != (7,)
+        or twist.shape != (6,)
+        or not np.isfinite(np.r_[pose, twist, dt]).all()
+        or not 0 <= dt <= 0.02
+        or abs(np.linalg.norm(pose[3:]) - 1) > 1e-5
+    ):
+        raise ValueError("Invalid measured actor pose/twist prediction")
+    return np.r_[
+        pose[:3] + dt * twist[:3],
+        (Rotation.from_rotvec(dt * twist[3:]) * Rotation.from_quat(pose[3:])).as_quat(),
+    ]
+
+
 def aborted_hand_hold(anchor_pose, initial_fingers, open_fingers, elapsed_source_s):
     """Hold the measured wrist and open smoothly after unavailable reacquisition."""
     return np.asarray(anchor_pose, float).copy(), (
@@ -262,6 +279,20 @@ class TaskGripReference:
             feedback = smooth((time_s - start) / 0.1) * (
                 1 - smooth((time_s - close) / 0.5)
             )
+            carry_compliance = registration is not None and self.spec.get(
+                "experimental_carry_compliance", False
+            )
+            if registration is not None:
+                # Track the desired object motion through a compliant offset
+                # from the measured grasp. This attenuates target noise instead
+                # of imposing the complete pose error across millimetre pads.
+                feedback = (
+                    0.9
+                    * smooth((time_s - close) / 0.1)
+                    * (1 - smooth((time_s - end) / 0.25))
+                    if carry_compliance and not parked
+                    else 0.0
+                )
             rejection = None
             proposed_abort = None
             if (
@@ -290,7 +321,9 @@ class TaskGripReference:
             if aborted_at is not None:
                 feedback = 0.0
                 rejection = "Object outside bounded reacquisition window; phase aborted"
-            if measured_object_pose is not None and registration is None:
+            if measured_object_pose is not None and (
+                registration is None or carry_compliance
+            ):
                 obj = blend_pose(obj, measured_object_pose, feedback)
             pose = compose_pose(obj, phase["hand_in_object_xyzw"])
             descend = smooth((time_s - start) / (close - 0.25 - start))
@@ -339,7 +372,8 @@ class TaskGripReference:
                 pad_normal_jacobians=phase.get("pad_normal_jacobians", []),
                 joint_limits_rad=phase.get("joint_limits_rad"),
                 object_feedback_weight=float(feedback)
-                if measured_object_pose is not None and registration is None
+                if measured_object_pose is not None
+                and (registration is None or carry_compliance)
                 else 0.0,
                 desired_object_wrench_stage=desired_wrench,
                 settled_grasp_registration=registration,

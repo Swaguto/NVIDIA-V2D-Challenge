@@ -112,3 +112,37 @@ def test_registration_cannot_capture_a_late_or_fallen_object_or_revive_aborted_p
     command = ref.command("left", 2, pose, pose)
     assert command["reacquisition_failure"] is not None
     assert ref.grasp_registrations == {}
+
+
+def test_compliant_carry_attenuates_pose_mismatch_but_aborts_instead_of_chasing_a_drop():
+    ref = reference()
+    ref.spec["experimental_carry_compliance"] = True
+    obj = np.array([0, 0, 0, 0, 0, 0, 1.0])
+    ref.command("left", 2, obj, obj)
+    target = obj.copy()
+    target[0] = 0.01
+    command = ref.command("left", 3, target, obj)
+    np.testing.assert_allclose(command["pose"][:3], [0.101, 0, 0], atol=1e-12)
+    assert command["object_feedback_weight"] == 0.9
+    # The full source error remains available to the failure gate, even though
+    # the robot's compliant command applies only part of it across the grasp.
+    dropped = obj.copy()
+    dropped[2] = -1000
+    lost = ref.command("left", 3.1, target, dropped)
+    assert lost["reacquisition_failure"] is not None
+    assert lost["object_feedback_weight"] == 0
+    assert abs(lost["pose"][2]) < 1
+    after = ref.command("left", 3.4, target, obj)
+    assert after["reacquisition_failure"] is not None
+    np.testing.assert_allclose(after["effort"], 0)
+
+
+def test_measurement_prediction_uses_world_actor_twist_and_real_time():
+    from _dex3_task_grip import predict_measured_pose
+
+    pose = np.r_[[1, 2, 3], Rotation.from_euler("x", 0.7).as_quat()]
+    predicted = predict_measured_pose(pose, [0.2, -0.1, 0, 0, 0, 2], 0.0025)
+    np.testing.assert_allclose(predicted[:3], [1.0005, 1.99975, 3])
+    delta = Rotation.from_quat(predicted[3:]) * Rotation.from_quat(pose[3:]).inv()
+    np.testing.assert_allclose(delta.as_rotvec(), [0, 0, 0.005], atol=1e-12)
+    np.testing.assert_array_equal(pose[:3], [1, 2, 3])
