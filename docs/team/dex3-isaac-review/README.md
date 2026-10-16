@@ -4,6 +4,22 @@ This branch combines `codex/hand-continuity` at `9f93a50` with
 `Evc-r/dex3-motion-replay-baseline` at
 `3db10766bf09bca10fe1b452afe5c78e1649c870`. Both histories are retained.
 
+
+## Current e002 physics checkpoint
+
+The pot and lid each pass two isolated acquisition/lift fixtures. The complete
+two-hand carry remains unresolved; all four full controller candidates were
+rejected and PPO has not been retrained. See [pot evidence](POT_GRIP_FIX.md),
+[complete campaign and next candidate](COUPLED_TASK_DIAGNOSTIC.md), and
+[hash-bound measurements](coupled-physics-campaign-v1.json).
+
+The local private v2 input bundle is verified by
+[local-pot-task-input-receipt-v2.json](local-pot-task-input-receipt-v2.json).
+It contains exact source overlays for historical experiments and a disabled,
+CPU-prepared live contact torque candidate. It has not been published. The
+candidate has 69 passing CPU tests and still needs GPU validation. Reproducing a
+failed experiment is distinct from an accepted task or submission.
+
 ## Executed result
 
 Twelve episodes: e002, e011, e012, e013, e018, e021, e023, e024, e031,

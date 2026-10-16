@@ -185,3 +185,48 @@ All 34,242 saved files (9,881,583,857 bytes) are SHA-256 verified on the owner's
 Mac. Brev `dngrtbldz` is confirmed STOPPED. The conservative cumulative compute
 bound is $9.7755 of the approved $10, not an invoice. Another complete GPU run
 and backup needs a renewed compute allowance. Inputs remain local.
+
+## Exact local candidate reproduction
+
+Obtain the owner's private `dex3-pot-task-inputs-local-v2.tar.gz` through an
+approved private channel and verify it against
+`local-pot-task-input-receipt-v2.json`. Its 119,886,849 bytes have SHA-256
+`bba120e71b1abe71734d3567ac2b065698d1f03f847f902abea031737d9df869`.
+All members were individually hash-verified. The manifest distinguishes the
+verified isolated pot fixtures, rejected historical baseline, and next untested
+candidate. Input videos/geometry remain local; no package upload is performed.
+
+For the next candidate, extract `sources/physics-source-v22.tar.gz` into a fresh
+code directory and use `combined-task-grasps-live-contact-v6.json`. This overlay
+is based on commit `674910c`; archive SHA-256 is
+`43e62050e28713e534881062f058476001789cc18738825bddbec433efc46497`.
+Use the pinned Isaac digest and GPU/driver/EULA requirements in the existing
+container documentation. Set absolute paths for the extracted code and inputs:
+
+```bash
+export V2D_IMAGE=ghcr.io/swaguto/nvidia-v2d-challenge-dex3-review@sha256:8585588357d898929bf6f80f0011441cbcab07a3d95e2f5f4d0e24bc5c177190
+export V2D_CODE_DIR=/private/extracted-code-v22
+export V2D_DATA_DIR=/private/extracted-inputs-v2
+export V2D_PHYSICS_ARCHIVE="$V2D_DATA_DIR/input-pack.tar.gz"
+export V2D_GRIP_SEED="$V2D_DATA_DIR/combined-task-grasps-live-contact-v6.json"
+export V2D_OUTPUT_DIR=/private/new-contact-candidate-results
+mkdir -p "$V2D_OUTPUT_DIR"
+# Set ACCEPT_EULA=Y and OMNI_KIT_ACCEPT_EULA=YES after accepting NVIDIA's license.
+cd "$V2D_CODE_DIR"
+docker compose -f docker/dex3-review/compose.yaml \
+  -f docker/dex3-review/physics.compose.yaml \
+  -f docker/dex3-review/grip.compose.yaml run --rm physics \
+  --stage grip-task-free --candidate-controller implicit_pd_ff \
+  --grasp-seed /physics-inputs/grasp-seeds.json
+# Run only if that fresh gate passes; use the same output directory and sources.
+docker compose -f docker/dex3-review/compose.yaml \
+  -f docker/dex3-review/physics.compose.yaml \
+  -f docker/dex3-review/grip.compose.yaml run --rm physics \
+  --stage grip-task --candidate-controller implicit_pd_ff \
+  --grasp-seed /physics-inputs/grasp-seeds.json
+```
+
+The runtime enforces the free-space prerequisite again. Inspect
+`grip-task/review/index.html`, the grasp audit and wrist gate. Full task and
+learned policy acceptance remain false. Back up outputs and stop Brev after the
+run and whenever it is idle.
