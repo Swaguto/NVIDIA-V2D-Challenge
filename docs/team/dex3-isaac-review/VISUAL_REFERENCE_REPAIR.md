@@ -91,3 +91,24 @@ changes geometric eligibility only; it does not lower the 2 N planned minimum
 or the 0.5 N measured support diagnostic. Missing, invalid or infeasible contacts
 still fall back explicitly. Every new option is bound in the private input and
 requires a fresh GPU check. 77 CPU tests pass.
+
+## Force/posture isolation and integration check
+
+A further comparison projects posture spring torque into the nullspace of the
+current measured normal-contact Jacobians. This preserves finger configuration
+in unconstrained directions while releasing the position spring's opposition to
+normal loading. It retains joint damping, original joint limits and real effort
+caps. Rank-deficient or out-of-limit targets reject the allocation. Position and
+effort commands are committed together only after all candidate calculations
+succeed, so fallback restores both frozen commands. The older pure-torque and
+full frozen-posture modes remain reproducible. This hybrid mode is experimental.
+
+The container runner also accepts an explicit supported-task `--physics-dt` in
+[0.0005, 0.01]. The full-stage gate must match that timestep exactly. This permits
+a 400 Hz integration check against the previous 100 Hz contact simulation while
+preserving the source clock and video frames. No motor, material, mesh or source
+scale is increased. Static fixtures retain their original 0.01 s timestep.
+
+78 CPU tests pass, including hybrid posture torque orthogonality, retained
+configuration, rank rejection and joint-bound enforcement. Fresh simulator
+results, including failed variants, determine whether either change is useful.

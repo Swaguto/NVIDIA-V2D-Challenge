@@ -66,7 +66,11 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
         raise ValueError(
             "Experimental finger controllers need explicit mutually exclusive booleans"
         )
-    if live_enabled and live_posture not in {"current_position", "frozen_reference"}:
+    if live_enabled and live_posture not in {
+        "current_position",
+        "frozen_reference",
+        "normal_nullspace",
+    }:
         raise ValueError("Live contact allocation requires an explicit posture mode")
     if not live_enabled and live_posture is not None:
         raise ValueError("A live posture mode requires live contact allocation")

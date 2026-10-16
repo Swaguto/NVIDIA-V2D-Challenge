@@ -44,6 +44,7 @@ def main():
     )
     parser.add_argument("--prepare-only", action="store_true")
     parser.add_argument("--grasp-seed", type=Path)
+    parser.add_argument("--physics-dt", type=float, default=0.01)
     parser.add_argument(
         "--candidate-controller",
         choices=["implicit_pd", "implicit_pd_ff", "implicit_pid_ff"],
@@ -58,6 +59,12 @@ def main():
     }
     acquisition_stage = args.stage in {"grasp-acquisition", "grip-lift"}
     task_grip_stage = args.stage in {"grip-task-free", "grip-task"}
+    if not 0.0005 <= args.physics_dt <= 0.01 or (
+        static_stage and args.physics_dt != 0.01
+    ):
+        parser.error(
+            "--physics-dt must be in [0.0005, 0.01] for supported tasks; static stages retain 0.01"
+        )
     task_preparation = (
         {
             name: digest(ROOT / "scripts/dex3_physics" / name)
@@ -99,7 +106,7 @@ def main():
             or gate["report_sha256"] != digest(free / "run/simulator/report.json")
             or gate["wrist_diagnostic"]["candidate_controller_sha256"]
             != digest(candidate_file)
-            or gate["wrist_diagnostic"]["physics_dt_s"] != 0.01
+            or gate["wrist_diagnostic"]["physics_dt_s"] != args.physics_dt
             or gate["wrist_diagnostic"]["controller"] != args.candidate_controller
             or not gate["wrist_diagnostic"]["free_space"]
             or (
@@ -159,7 +166,7 @@ def main():
             if args.stage == "baseline-free"
             else args.candidate_controller,
             "--physics-dt",
-            "0.01",
+            str(args.physics_dt),
         ]
         if task_grip_stage:
             command += [

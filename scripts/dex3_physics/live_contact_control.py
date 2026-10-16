@@ -9,6 +9,39 @@ import numpy as np
 from grip_force import point_jacobian, solve_gravity_contacts
 
 
+def normal_nullspace_posture(reference, current, normal_jacobian, stiffness, limits):
+    """Retain posture spring only outside the normal-contact torque subspace."""
+    reference, current, jac, stiffness, limits = map(
+        lambda value: np.asarray(value, float),
+        (reference, current, normal_jacobian, stiffness, limits),
+    )
+    if (
+        reference.shape != (7,)
+        or current.shape != (7,)
+        or jac.shape != (3, 7)
+        or stiffness.shape != (7,)
+        or limits.shape != (7, 2)
+        or not np.isfinite(
+            np.r_[reference, current, jac.ravel(), stiffness, limits.ravel()]
+        ).all()
+        or np.any(stiffness <= 0)
+        or np.any(limits[:, 0] >= limits[:, 1])
+    ):
+        raise ValueError("Invalid hybrid posture inputs")
+    _, singular, basis = np.linalg.svd(jac, full_matrices=False)
+    if singular.min() < 1e-6:
+        raise ValueError("Contact normal Jacobians are rank deficient")
+    projector = np.eye(7) - basis.T @ basis
+    posture_torque = projector @ (stiffness * (reference - current))
+    target = current + posture_torque / stiffness
+    if np.any(target < limits[:, 0]) or np.any(target > limits[:, 1]):
+        raise ValueError("Hybrid posture target exceeds original joint limits")
+    return target, dict(
+        normal_torque_projection_residual=(jac @ posture_torque).tolist(),
+        retained_posture_torque_Nm=posture_torque.tolist(),
+    )
+
+
 def patch_readback(normal_data, sensor_indices, object_index):
     """Retain signed scalar evidence for selected patches, excluding capacity."""
     forces, _points, normals, _distances, counts, starts = map(np.asarray, normal_data)
@@ -142,6 +175,9 @@ def allocate(
     details.update(
         contact_points_world_m=points.tolist(),
         inward_normals_world=inward.tolist(),
+        normal_jacobian_in_simulator_order_m_per_rad=np.einsum(
+            "pi,pij->pj", inward, np.asarray(jacobians)
+        )[:, [kin.names.index(n) for n in simulator_names]].tolist(),
         command_scope="measured current contact geometry, nominal load, real joint torques; not accepted",
     )
     return effort[[kin.names.index(n) for n in simulator_names]], details

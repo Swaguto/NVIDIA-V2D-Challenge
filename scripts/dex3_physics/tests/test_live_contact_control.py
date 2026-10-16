@@ -107,3 +107,34 @@ def test_weak_contact_geometry_can_remain_usable_below_payload_support_threshold
     points, inward = contact_patches(data, [0, 1], 0, minimum_force_N=0.05)
     np.testing.assert_allclose(points, data[1])
     np.testing.assert_allclose(inward, [[1, 0, 0], [-1, 0, 0]])
+
+
+def test_hybrid_posture_keeps_spring_without_opposing_contact_normal_torque():
+    from live_contact_control import normal_nullspace_posture
+
+    jac = (
+        np.array(
+            [[1, 1, 0, 0, 0, 0, 0], [0, 0, 1, 1, 0, 0, 0], [0, 0, 0, 0, 1, 1, 0.0]]
+        )
+        * 0.02
+    )
+    current = np.zeros(7)
+    reference = np.array([0.2, -0.1, 0.1, 0.2, -0.1, 0.2, 0.3])
+    kp = np.arange(1, 8, dtype=float)
+    target, info = normal_nullspace_posture(
+        reference, current, jac, kp, np.tile([-1.0, 1], (7, 1))
+    )
+    assert np.linalg.norm(target - current) > 0.1  # retains posture unlike pure torque
+    assert (
+        np.linalg.norm(target - reference) > 0.01
+    )  # releases normal-axis position opposition
+    np.testing.assert_allclose(jac @ (kp * (target - current)), 0, atol=1e-12)
+    np.testing.assert_allclose(info["normal_torque_projection_residual"], 0, atol=1e-12)
+    with pytest.raises(ValueError, match="rank deficient"):
+        normal_nullspace_posture(
+            reference, current, jac * 0, kp, np.tile([-1.0, 1], (7, 1))
+        )
+    with pytest.raises(ValueError, match="joint limits"):
+        normal_nullspace_posture(
+            reference, current, jac, kp, np.tile([-0.001, 0.001], (7, 1))
+        )

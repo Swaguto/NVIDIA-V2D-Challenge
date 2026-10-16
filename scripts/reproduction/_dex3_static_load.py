@@ -1933,7 +1933,11 @@ def run_supported_task(
         "experimental_live_contact_wrench", False
     ):
         sys.path.insert(0, str(Path(__file__).parents[1] / "dex3_physics"))
-        from live_contact_control import allocate, patch_readback
+        from live_contact_control import (
+            allocate,
+            normal_nullspace_posture,
+            patch_readback,
+        )
         from grasp_preload import URDFKinematics
 
         live_kinematics = {
@@ -2614,7 +2618,7 @@ def run_supported_task(
                                     )
                                 indices.append(found[0])
                             try:
-                                grip_effort_sim, live_details = allocate(
+                                allocated_effort, live_details = allocate(
                                     live_kinematics[("left", "right")[si]],
                                     cpu(hand.data.root_link_pose_w)[0],
                                     hand.joint_names,
@@ -2634,15 +2638,36 @@ def run_supported_task(
                                         "minimum_live_patch_force_N", 0.5
                                     ),
                                 )
-                                if (
-                                    task_grip.spec["live_contact_posture_mode"]
-                                    == "current_position"
-                                ):
-                                    finger_target = torch.tensor(
-                                        cpu(hand.data.joint_pos).copy(),
-                                        dtype=torch.float32,
-                                        device=sim.device,
+                                posture_mode = task_grip.spec[
+                                    "live_contact_posture_mode"
+                                ]
+                                allocated_positions = cpu(finger_target).copy()
+                                if posture_mode == "current_position":
+                                    allocated_positions = cpu(
+                                        hand.data.joint_pos
+                                    ).copy()
+                                elif posture_mode == "normal_nullspace":
+                                    projected, projection = normal_nullspace_posture(
+                                        cpu(finger_target)[0],
+                                        cpu(hand.data.joint_pos)[0],
+                                        live_details[
+                                            "normal_jacobian_in_simulator_order_m_per_rad"
+                                        ],
+                                        cpu(hand.data.joint_stiffness)[0],
+                                        np.array(grip_command["joint_limits_rad"])[
+                                            order
+                                        ],
                                     )
+                                    allocated_positions = projected[None]
+                                    live_details["posture_projection"] = projection
+                                # Commit both commands only after every candidate
+                                # computation succeeds; fallback keeps both frozen.
+                                finger_target = torch.tensor(
+                                    allocated_positions,
+                                    dtype=torch.float32,
+                                    device=sim.device,
+                                )
+                                grip_effort_sim = allocated_effort
                                 live_details["active"] = True
                             except ValueError as error:
                                 live_details = dict(
