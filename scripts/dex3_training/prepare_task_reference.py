@@ -139,6 +139,12 @@ def prepare(base, case, task_spec, out):
         allows_inferred_robot_targets=True,
         selection="Every original source frame; source observation masks preserved separately",
         target_preparation_source_sha256=sha(Path(__file__)),
+        reference_planner_source_sha256=sha(
+            Path(sys.modules[TaskGripReference.__module__].__file__)
+        ),
+        kinematics_source_sha256=sha(
+            Path(sys.modules[URDFKinematics.__module__].__file__)
+        ),
         base_manifest_sha256=sha(base / "manifest.json"),
         task_grip_spec_sha256=sha(task_spec),
         reactive_isaac_wrist_controller_transferred=False,
@@ -152,7 +158,7 @@ def prepare(base, case, task_spec, out):
     manifest["files"] = {
         p.relative_to(out).as_posix(): sha(p)
         for p in sorted(out.rglob("*"))
-        if p.is_file() and p.name != "manifest.json"
+        if p.is_file() and p != out / "manifest.json"
     }
     (out / "manifest.json").write_text(
         json.dumps(manifest, indent=2, allow_nan=False) + "\n"

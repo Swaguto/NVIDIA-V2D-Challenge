@@ -10,3 +10,6 @@ embodiment:
       'wrist_rotvec$': {mode: effort, kp: 12.0, kd: 0.1, effort_limit: 60.0}
       'right_hand_(thumb|middle|index)_[012]_joint$': {kp: 2.0}
 output_dir: /outputs/repaired-baseline
+training:
+  network:
+    initial_noise_std: 0.1
