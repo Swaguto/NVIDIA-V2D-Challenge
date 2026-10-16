@@ -61,7 +61,12 @@ def main():
     task_preparation = (
         {
             name: digest(ROOT / "scripts/dex3_physics" / name)
-            for name in ["task_grasp.py", "grip_force.py", "scene_projection.py"]
+            for name in [
+                "task_grasp.py",
+                "grip_force.py",
+                "scene_projection.py",
+                "live_contact_control.py",
+            ]
         }
         if task_grip_stage
         else None

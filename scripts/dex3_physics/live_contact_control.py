@@ -1,0 +1,101 @@
+"""Experimental torque allocation from current physical contact patches.
+
+This candidate is disabled by default. It needs a new simulator comparison;
+analytic feasibility is not grasp or training acceptance.
+"""
+
+import numpy as np
+
+from grip_force import point_jacobian, solve_gravity_contacts
+
+
+def contact_patches(normal_data, sensor_indices, object_index):
+    magnitudes, points, normals, _distances, counts, starts = [
+        np.asarray(x) for x in normal_data
+    ]
+    magnitudes = magnitudes.reshape(-1)
+    centers, inward = [], []
+    for index in sensor_indices:
+        count, start = (
+            int(counts[index, object_index]),
+            int(starts[index, object_index]),
+        )
+        if count <= 0 or start < 0 or start + count > len(magnitudes):
+            raise ValueError("A required live pad contact is missing or truncated")
+        weights = np.maximum(magnitudes[start : start + count], 0)
+        p, n = points[start : start + count], normals[start : start + count]
+        if (
+            not np.isfinite(np.r_[weights, p.ravel(), n.ravel()]).all()
+            or weights.sum() < 0.5
+        ):
+            raise ValueError("Live pad pressure is insufficient or invalid")
+        reaction = (n * weights[:, None]).sum(0)
+        if np.linalg.norm(reaction) < 0.5:
+            raise ValueError("Live patch has cancelling or ambiguous normals")
+        centers.append((p * weights[:, None]).sum(0) / weights.sum())
+        # RigidContactView normals describe forces ON the hand body.
+        inward.append(-reaction / np.linalg.norm(reaction))
+    return np.asarray(centers), np.asarray(inward)
+
+
+def motor_effort(
+    points, inward, jacobians, object_com, gravity_compensation, mass_kg=0.3
+):
+    gravity = np.asarray(gravity_compensation, float)
+    if gravity.shape != (7,) or not np.isfinite(gravity).all():
+        raise ValueError("Expected seven intrinsic joint gravity efforts")
+    _forces, squeeze, plan = solve_gravity_contacts(
+        points,
+        inward,
+        jacobians,
+        object_com,
+        mass_kg,
+        normal_cap_N=10,
+        friction=1.25,
+        minimum_normal_N=2,
+    )
+    effort = squeeze + gravity
+    if np.max(abs(effort)) > 0.760001:
+        raise ValueError(
+            "Live contact allocation plus finger gravity exceeds the original motor limit"
+        )
+    return effort, dict(
+        plan,
+        joint_gravity_compensation_Nm=gravity.tolist(),
+        total_commanded_motor_effort_Nm=effort.tolist(),
+    )
+
+
+def allocate(
+    kin,
+    root,
+    simulator_names,
+    positions,
+    pads,
+    sensor_indices,
+    object_index,
+    normal_data,
+    object_com,
+    joint_gravity,
+):
+    """Return actual simulator joint order; no state or object force is written."""
+    if set(simulator_names) != set(kin.names):
+        raise ValueError("Live effort joint names differ from the original URDF")
+    q = dict(zip(simulator_names, positions, strict=True))
+    poses = kin.poses(root, q)
+    points, inward = contact_patches(normal_data, sensor_indices, object_index)
+    jacobians = []
+    for pad, point in zip(pads, points, strict=True):
+        pose = poses[pad["link"]]
+        local = pose[:3, :3].T @ (point - pose[:3, 3])
+        jacobians.append(point_jacobian(kin, root, q, pad["link"], local))
+    gravity = np.asarray(joint_gravity)[[simulator_names.index(n) for n in kin.names]]
+    effort, details = motor_effort(
+        points, inward, np.asarray(jacobians), object_com, gravity
+    )
+    details.update(
+        contact_points_world_m=points.tolist(),
+        inward_normals_world=inward.tolist(),
+        command_scope="measured current contact geometry, nominal load, real joint torques; not accepted",
+    )
+    return effort[[kin.names.index(n) for n in simulator_names]], details

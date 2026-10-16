@@ -30,15 +30,22 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
     stage = Rotation.from_matrix(stage_rotation)
     times = source["timestamps_s"]
     minimum_normal = float(proposal.get("task_minimum_pad_normal_N", 2.0))
-    payload_mode = proposal.get("wrist_payload_compensation", "nominal_gravity")
+    payload_mode = proposal.get("wrist_payload_compensation")
     tactile_enabled = proposal.get("experimental_tactile_seating", False)
+    live_enabled = proposal.get("experimental_live_contact_wrench", False)
     if not 2 <= minimum_normal <= 5 or payload_mode not in {
         "nominal_gravity",
         "measured_reaction",
     }:
         raise ValueError("Unsupported explicit coupled controller configuration")
-    if not isinstance(tactile_enabled, bool):
-        raise ValueError("Experimental tactile seating requires an explicit boolean")
+    if (
+        not isinstance(tactile_enabled, bool)
+        or not isinstance(live_enabled, bool)
+        or (tactile_enabled and live_enabled)
+    ):
+        raise ValueError(
+            "Experimental finger controllers need explicit mutually exclusive booleans"
+        )
     result = dict(
         schema="v2d.dex3-task-grips.v1",
         park_height_m=0.12,
@@ -54,6 +61,7 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
         minimum_planned_pad_normal_N=minimum_normal,
         wrist_payload_compensation=payload_mode,
         experimental_tactile_seating=tactile_enabled,
+        experimental_live_contact_wrench=live_enabled,
         planner_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         required_physical_materials="hand 2.0 / object 0.5, average combination = 1.25; explicit combine mode and coefficient readback required",
     )
@@ -216,4 +224,10 @@ def combine(paths):
     result["component_seed_sha256"] = [
         hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in paths
     ]
+    result.update(
+        task_minimum_pad_normal_N=2.0,
+        wrist_payload_compensation="measured_reaction",
+        experimental_tactile_seating=False,
+        experimental_live_contact_wrench=False,
+    )
     return result

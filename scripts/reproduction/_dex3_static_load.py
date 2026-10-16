@@ -1926,6 +1926,22 @@ def run_supported_task(
         ):
             raise ValueError("Task grasp commands or controller changed")
         task_grip = TaskGripReference(json.loads(spec_file.read_text()))
+    live_kinematics = None
+    if task_grip is not None and task_grip.spec.get(
+        "experimental_live_contact_wrench", False
+    ):
+        sys.path.insert(0, str(Path(__file__).parents[1] / "dex3_physics"))
+        from live_contact_control import allocate
+        from grasp_preload import URDFKinematics
+
+        live_kinematics = {
+            side: URDFKinematics(
+                case
+                / "source/robotic_grounding/source/robotic_grounding/robotic_grounding/assets/urdfs/g1"
+                / f"dex3_{side}.urdf"
+            )
+            for side in ("left", "right")
+        }
     candidate_file = Path(__file__).with_name("_dex3_wrist_control.py")
     if (
         diagnostic
@@ -2289,6 +2305,12 @@ def run_supported_task(
                 )
                 control_details = None
                 tactile_details = None
+                live_details = None
+                grip_effort_sim = (
+                    grip_command["effort"][order].copy()
+                    if grip_command is not None
+                    else None
+                )
                 if controller_mode == "project_pd":
                     force, torque, fingers = (
                         controller._compute_wrist_wrench_and_finger_target(
@@ -2542,6 +2564,54 @@ def run_supported_task(
                             finger_target = torch.tensor(
                                 seated[None], dtype=torch.float32, device=sim.device
                             )
+                        if (
+                            live_kinematics is not None
+                            and len(grip_command["required_digits"]) == 3
+                            and enabled
+                            and step > 0
+                            and grip_command["squeeze_scale"] >= 0.999
+                        ):
+                            pads = grip_command["pad_normal_jacobians"]
+                            indices = []
+                            for pad in pads:
+                                found = [
+                                    i
+                                    for i, path in enumerate(
+                                        contact_bindings[si]["hand_body_paths"]
+                                    )
+                                    if path.endswith("/" + pad["link"])
+                                ]
+                                if len(found) != 1:
+                                    raise ValueError(
+                                        "Live contact pad does not bind one physical body"
+                                    )
+                                indices.append(found[0])
+                            try:
+                                grip_effort_sim, live_details = allocate(
+                                    live_kinematics[("left", "right")[si]],
+                                    cpu(hand.data.root_link_pose_w)[0],
+                                    hand.joint_names,
+                                    cpu(hand.data.joint_pos)[0],
+                                    pads,
+                                    indices,
+                                    prepared["samples"][si]["object"],
+                                    normal_data,
+                                    cpu(objects[si].data.root_link_pose_w)[0, :3],
+                                    cpu(
+                                        hand.root_physx_view.get_gravity_compensation_forces()
+                                    )[0, 6:],
+                                )
+                                finger_target = torch.tensor(
+                                    cpu(hand.data.joint_pos).copy(),
+                                    dtype=torch.float32,
+                                    device=sim.device,
+                                )
+                                live_details["active"] = True
+                            except ValueError as error:
+                                live_details = dict(
+                                    active=False,
+                                    fallback_to_frozen_position_and_effort=str(error),
+                                )
                     force = torch.tensor(
                         wrench[None, :3], dtype=torch.float32, device=sim.device
                     )
@@ -2575,7 +2645,7 @@ def run_supported_task(
                 if grip_command is not None:
                     hand.set_joint_effort_target(
                         torch.tensor(
-                            grip_command["effort"][order][None],
+                            grip_effort_sim[None],
                             dtype=torch.float32,
                             device=sim.device,
                         )
@@ -2636,6 +2706,7 @@ def run_supported_task(
                         .tolist(),
                         "controller_details": control_details,
                         "tactile_seating": tactile_details,
+                        "live_contact_wrench_control": live_details,
                         "inferred_grasp_phase": grip_command["phase"]
                         if grip_command is not None
                         else None,
@@ -2647,7 +2718,7 @@ def run_supported_task(
                         ]
                         if grip_command is not None
                         else None,
-                        "finger_feedforward_Nm": grip_command["effort"][order].tolist()
+                        "finger_feedforward_Nm": grip_effort_sim.tolist()
                         if grip_command is not None
                         else None,
                         "actual_combined_finger_effort_Nm": controller_tensor(
@@ -2897,6 +2968,7 @@ def run_supported_task(
             )
             if task_grip is not None
             else False,
+            "experimental_live_contact_wrench_enabled": live_kinematics is not None,
             "source_frames": len(frames),
             "rendered_video_frames": len(frames) + len(postroll_frames),
             "inferred_postroll_source_seconds": postroll_s,

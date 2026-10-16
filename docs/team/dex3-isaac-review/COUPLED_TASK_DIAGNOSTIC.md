@@ -128,14 +128,14 @@ an official score or automatically accept a full task.
 
 The tactile candidate also failed during the first carry. It is retained for
 inspection and is **disabled by default**. Measured reaction cancellation is now
-an explicit experimental mode. The default payload controller uses the nominal
+an explicit experimental mode. The nominal payload comparison uses the nominal
 0.3 kg gravity force and lever-arm moment already checked in isolated lifts,
 with measured contact eligibility and filtered enable/disable. The current
 comparison explicitly selects a 4 N planned minimum and nominal compensation,
 without tactile target changes. The outcome is not yet accepted.
 
 Controller choices are bound in the private proposal: `task_minimum_pad_normal_N`
-(default 2), `wrist_payload_compensation` (`nominal_gravity`, or the experimental
+(default 2), explicit `wrist_payload_compensation` (`nominal_gravity` or
 `measured_reaction`), and boolean `experimental_tactile_seating` (default false).
 All source orientations are checked again for the selected force floor.
 
@@ -149,3 +149,39 @@ python scripts/dex3_physics/package_coupled_preview.py \
   --run /private/results/grip-task/run/simulator \
   --out /private/results/new-review
 ```
+
+## Recorded campaign outcome and prepared next candidate
+
+All four full carry candidates are rejected. `coupled-physics-campaign-v1.json`
+preserves their hashes and readback, including the failed pressure feedback and
+nominal-gravity variants. The 2 N measured-reaction baseline has the best complete
+local tracking among these attempts; it still loses the first pot grasp and is
+not a training reference. The nominal comparison also loses the lid. No PPO
+checkpoint is retrained, no hidden score is claimed, and no failed candidate is
+promoted to an accepted controller.
+
+The next disabled candidate is `experimental_live_contact_wrench`. It recomputes
+patch centroids and inward normals from current copied PhysX contact data for
+the primary object. Current finger FK supplies point Jacobians. A bounded nominal
+load allocation produces squeeze torques; actual simulator joint gravity
+compensation is added, with the original 0.76 Nm total command limit enforced.
+During valid allocation, finger position targets follow current joint positions,
+retaining drive damping while avoiding a competing geometric posture spring.
+Missing contacts, infeasible forces or invalid data fall back to the frozen
+position/effort candidate and are recorded. This mode cannot be combined with
+experimental tactile seating. It is **CPU prepared only; no GPU success is claimed**.
+
+The source now requires an explicit wrist payload mode for full task preparation.
+`combine()` writes an explicit 2 N measured-reaction diagnostic baseline. This
+prevents legacy inputs from silently selecting a different, failed comparison.
+The new live allocation is off unless explicitly enabled in the private proposal.
+
+69 CPU tests pass, including current contact buffer selection, normal sign,
+unused capacity, translation invariance, finger gravity addition and motor-cap
+rejection. A complete hash-checked e002 candidate is prepared locally for a fresh
+free-space gate and coupled rollout. It still needs simulator verification.
+
+All 34,242 saved files (9,881,583,857 bytes) are SHA-256 verified on the owner's
+Mac. Brev `dngrtbldz` is confirmed STOPPED. The conservative cumulative compute
+bound is $9.7755 of the approved $10, not an invoice. Another complete GPU run
+and backup needs a renewed compute allowance. Inputs remain local.
