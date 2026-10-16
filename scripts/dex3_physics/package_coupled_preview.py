@@ -74,9 +74,15 @@ def package(run, out):
     content += "<h2>Original-source object tracking</h2><p>Observed steps only; postroll excluded. These are local diagnostic metrics.</p><table><tr><th>Object</th><th>Mean</th><th>90th percentile</th><th>Maximum</th></tr>"
     for row in audit["objects"]:
         content += f"<tr><td>{row['object']}</td><td>{row['position_mean_m'] * 1000:.1f} mm</td><td>{row['position_p90_m'] * 1000:.1f} mm</td><td>{row['position_max_m'] * 1000:.1f} mm</td></tr>"
-    content += "</table><h2>Grasp readback</h2><p>Position retention is separate from rotation, contact coverage and task success.</p><table><tr><th>Grasp</th><th>Maximum relative position drift</th><th>Maximum relative rotation drift</th><th>Contact gate active</th></tr>"
+    content += "</table><h2>Grasp readback</h2><p>Position retention is separate from rotation, contact coverage and task success. The live allocation column reports actual activation, including fallback steps.</p><table><tr><th>Grasp</th><th>Maximum relative position drift</th><th>Maximum relative rotation drift</th><th>Contact gate active</th><th>Live allocation active</th></tr>"
     for row in audit["grasps"]:
-        content += f"<tr><td>{html.escape(row['sample'])}</td><td>{row['maximum_relative_position_drift_m'] * 1000:.1f} mm</td><td>{row['maximum_relative_rotation_drift_deg']:.1f}°</td><td>{row['contact_gate_coverage_fraction'] * 100:.1f}%</td></tr>"
+        live = row.get("live_contact_allocation")
+        activation = (
+            f"{live['active_fraction_of_load_steps'] * 100:.1f}%"
+            if live is not None
+            else "—"
+        )
+        content += f"<tr><td>{html.escape(row['sample'])}</td><td>{row['maximum_relative_position_drift_m'] * 1000:.1f} mm</td><td>{row['maximum_relative_rotation_drift_deg']:.1f}°</td><td>{row['contact_gate_coverage_fraction'] * 100:.1f}%</td><td>{activation}</td></tr>"
     content += '</table><p>The contact gate requires declared measured digits, with a 30 ms dropout hold. Planned pad force is not measured pad force. Initial clearance correction and any ongoing contact correction remain experimental; objects receive no external wrench, attachment or pose writes after initialization.</p><p><a href="grasp-audit.json">Hash-bound measured summary</a> · <a href="video-receipt.json">Video provenance</a></p></html>'
     (out / "index.html").write_text(content)
     return receipt

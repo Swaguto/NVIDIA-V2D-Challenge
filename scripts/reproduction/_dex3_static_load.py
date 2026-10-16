@@ -2601,11 +2601,15 @@ def run_supported_task(
                                         hand.root_physx_view.get_gravity_compensation_forces()
                                     )[0, 6:],
                                 )
-                                finger_target = torch.tensor(
-                                    cpu(hand.data.joint_pos).copy(),
-                                    dtype=torch.float32,
-                                    device=sim.device,
-                                )
+                                if (
+                                    task_grip.spec["live_contact_posture_mode"]
+                                    == "current_position"
+                                ):
+                                    finger_target = torch.tensor(
+                                        cpu(hand.data.joint_pos).copy(),
+                                        dtype=torch.float32,
+                                        device=sim.device,
+                                    )
                                 live_details["active"] = True
                             except ValueError as error:
                                 live_details = dict(
@@ -2617,6 +2621,9 @@ def run_supported_task(
                                 indices,
                                 prepared["samples"][si]["object"],
                             )
+                            live_details["posture_mode"] = task_grip.spec[
+                                "live_contact_posture_mode"
+                            ]
                     force = torch.tensor(
                         wrench[None, :3], dtype=torch.float32, device=sim.device
                     )
@@ -2974,6 +2981,11 @@ def run_supported_task(
             if task_grip is not None
             else False,
             "experimental_live_contact_wrench_enabled": live_kinematics is not None,
+            "live_contact_posture_mode": task_grip.spec.get(
+                "live_contact_posture_mode"
+            )
+            if task_grip is not None
+            else None,
             "source_frames": len(frames),
             "rendered_video_frames": len(frames) + len(postroll_frames),
             "inferred_postroll_source_seconds": postroll_s,

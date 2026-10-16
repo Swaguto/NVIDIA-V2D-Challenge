@@ -1,6 +1,7 @@
 """Summarize coupled readback without claiming policy or official evaluation success."""
 
 import argparse
+from collections import Counter
 import hashlib
 import json
 from pathlib import Path
@@ -11,6 +12,33 @@ from scipy.spatial.transform import Rotation
 
 def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def live_allocation_summary(rows):
+    details = [r.get("live_contact_wrench_control") for r in rows]
+    attempts = [d for d in details if d]
+    if not attempts:
+        return None
+    active = [d for d in attempts if d.get("active")]
+    patches = [p for d in attempts for p in d.get("input_patch_readback", [])]
+    return dict(
+        attempted_steps=len(attempts),
+        active_steps=len(active),
+        active_fraction_of_load_steps=len(active) / len(rows),
+        exercised_at_least_once=bool(active),
+        fallback_reasons=dict(
+            Counter(
+                d.get("fallback_to_frozen_position_and_effort", "unspecified")
+                for d in attempts
+                if not d.get("active")
+            )
+        ),
+        patch_readbacks=len(patches),
+        patches_with_negative_force_scalar=sum(
+            p.get("signed_scalar_min_N", 0) < 0 for p in patches
+        ),
+        acceptance_scope="Activation diagnostic only; exercising a controller does not accept a grasp",
+    )
 
 
 def summarize(run):
@@ -85,6 +113,9 @@ def summarize(run):
                 contact_gate_coverage_fraction=float(coverage),
                 retained_within_10mm_diagnostic=bool(drift.max() <= 0.01),
             )
+            live = live_allocation_summary(rows)
+            if live is not None:
+                item["live_contact_allocation"] = live
             if "normal_force_by_hand_body_and_object_world_N" in rows[0]:
                 binding = report["physical_contact_bindings"][
                     ("left", "right").index(side)

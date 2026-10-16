@@ -33,6 +33,7 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
     payload_mode = proposal.get("wrist_payload_compensation")
     tactile_enabled = proposal.get("experimental_tactile_seating", False)
     live_enabled = proposal.get("experimental_live_contact_wrench", False)
+    live_posture = proposal.get("live_contact_posture_mode")
     if not 2 <= minimum_normal <= 5 or payload_mode not in {
         "nominal_gravity",
         "measured_reaction",
@@ -46,6 +47,10 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
         raise ValueError(
             "Experimental finger controllers need explicit mutually exclusive booleans"
         )
+    if live_enabled and live_posture not in {"current_position", "frozen_reference"}:
+        raise ValueError("Live contact allocation requires an explicit posture mode")
+    if not live_enabled and live_posture is not None:
+        raise ValueError("A live posture mode requires live contact allocation")
     result = dict(
         schema="v2d.dex3-task-grips.v1",
         park_height_m=0.12,
@@ -62,6 +67,7 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
         wrist_payload_compensation=payload_mode,
         experimental_tactile_seating=tactile_enabled,
         experimental_live_contact_wrench=live_enabled,
+        live_contact_posture_mode=live_posture,
         planner_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         required_physical_materials="hand 2.0 / object 0.5, average combination = 1.25; explicit combine mode and coefficient readback required",
     )

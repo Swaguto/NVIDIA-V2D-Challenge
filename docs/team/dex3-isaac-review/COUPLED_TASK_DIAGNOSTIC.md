@@ -248,3 +248,27 @@ telemetry records signed ranges, magnitude sums and resultant force, including
 fallback cases, so the simulator's actual convention can be checked. The change
 still needs a fresh GPU run. All 69 CPU tests pass. Input publication and PPO
 training remain pending physical validation.
+
+## Signed-force readback and posture comparison
+
+Overlay v23 confirms negative contact-force scalars in this PhysX backend; their
+product with reported normals matches the independently checked aggregate force.
+The corrected allocator activates for 70/1830 first-pot load steps (3.83%), then
+contact weakens and fallback dominates. It never activates in the second pot
+phase. The full carry and wrist gate fail. Finger gravity compensation is at
+most 0.02684 Nm and the live commanded motor effort at most 0.54234 Nm; actual
+combined effort reaches the unchanged 0.76 Nm limit during the run. This variant
+is rejected.
+
+The next comparison keeps the frozen grasp position target when live allocation
+succeeds. This retains the existing posture spring instead of replacing its
+target with the current joint position. It isolates that change under the same
+2 N nominal force floor, measured-reaction wrist controller and live allocation.
+`live_contact_posture_mode` must now be explicit whenever live allocation is
+requested: `current_position` reproduces the removed-spring comparison;
+`frozen_reference` selects the new comparison. Old overlays remain reproducible.
+No new carry success is claimed. All 70 CPU tests pass.
+
+The measured grasp audit and preview now show the fraction of loaded steps with
+live allocation active, fallback reasons and signed-force evidence. A passing
+wrist gate or selected flag alone cannot demonstrate that a candidate ran.
