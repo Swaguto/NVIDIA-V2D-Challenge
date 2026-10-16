@@ -66,6 +66,7 @@ def main():
                     "hinge": ImplicitActuatorCfg(
                         joint_names_expr=["hinge"],
                         effort_limit_sim=0.76,
+                        velocity_limit_sim=10.0,
                         stiffness=8.0,
                         damping=0.0,
                     )
