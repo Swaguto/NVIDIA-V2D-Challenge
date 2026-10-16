@@ -1,5 +1,9 @@
 # Coupled e002 diagnostic: approach, grasp, transport and release
 
+**Current status:** seven complete e002 trials fail carrying. The signed-force
+handling bug is fixed; live allocation remains disabled. See the final validation
+section below and `coupled-physics-campaign-v2.json`. All 70 CPU tests pass.
+
 This is experimental robot-reference/controller code. No complete physical task,
 policy or official score is accepted by this document. The isolated pot/lid
 successes remain documented separately.
@@ -150,7 +154,7 @@ python scripts/dex3_physics/package_coupled_preview.py \
   --out /private/results/new-review
 ```
 
-## Recorded campaign outcome and prepared next candidate
+## Earlier four-run checkpoint and then-prepared candidate
 
 All four full carry candidates are rejected. `coupled-physics-campaign-v1.json`
 preserves their hashes and readback, including the failed pressure feedback and
@@ -183,10 +187,10 @@ free-space gate and coupled rollout. It still needs simulator verification.
 
 All 34,242 saved files (9,881,583,857 bytes) are SHA-256 verified on the owner's
 Mac. Brev `dngrtbldz` is confirmed STOPPED. The conservative cumulative compute
-bound is $9.7755 of the approved $10, not an invoice. Another complete GPU run
-and backup needs a renewed compute allowance. Inputs remain local.
+bound is $9.7755 of the approved $10, not an invoice. That earlier checkpoint required a renewed compute allowance, since approved
+and used for the three trials recorded below. Inputs remain local.
 
-## Exact local candidate reproduction
+## Historical v22 reproduction (failed activation check)
 
 Obtain the owner's private `dex3-pot-task-inputs-local-v2.tar.gz` through an
 approved private channel and verify it against
@@ -272,3 +276,69 @@ No new carry success is claimed. All 70 CPU tests pass.
 The measured grasp audit and preview now show the fraction of loaded steps with
 live allocation active, fallback reasons and signed-force evidence. A passing
 wrist gate or selected flag alone cannot demonstrate that a candidate ran.
+
+
+## Completed renewed-budget validation
+
+The same existing Brev L40S was started for each gated comparison, backed up and
+stopped after each run. All three fresh free-space gates passed. Every complete
+replay retains 343 source frames and 20 labelled inferred postroll frames.
+
+| Trial | Exact source overlay | First-pot live activation | Full wrist gate | Carry |
+| --- | --- | ---: | --- | --- |
+| `coupled-task-live-v1` | v22 / `674910c` | 0 / 1830 | Pass | Failed; allocator never exercised |
+| `coupled-task-live-v2` | v23 / `97d8e5b` | 70 / 1830 (3.83%) | Fail | Failed; posture spring removed |
+| `coupled-task-live-v3` | v24 / `02c94bb` | 627 / 1830 (34.26%) | Fail | Failed; posture spring retained |
+
+Both exercised variants have zero live activation in the second pot phase after
+losing the object. The latest trial keeps all three pads loaded at source frame
+120, but the middle pad falls to approximately 0.45 N at frame 122 and all three
+contacts are lost by frame 124. Wrist position error is approximately 4.6 and
+7.3 mm at those latter samples. The pot leaves the finite table and continues
+falling; the complete metre-scale errors remain in the receipt and video. The
+latest lid relative-position drifts remain approximately 6.4/6.8 mm, separately
+from its source errors. No failed variant is promoted over the frozen baseline.
+
+The allocator currently balances gravity only. Finite differences of the
+recorded original reference before the first loss show linear acceleration up
+to 4.42 m/s² at the already reduced source speed, corresponding to another
+1.33 N at nominal 0.3 kg, with nonzero angular acceleration as well. This suggests
+the next development target: replan and validate a grasp/reference with dynamic
+wrench reserve, clearance and stable measured pad loading. The evidence does
+not identify one exclusive cause. Increasing training steps cannot be assumed
+to repair this unvalidated reference. PPO remains deferred until physical
+reference validation passes.
+
+`coupled-physics-campaign-v2.json` binds all seven trials to source, report,
+video, state and grasp-spec hashes. `live-contact-failure-diagnosis-v1.json`
+records the sampled loss and reference-demand evidence. The grasp audit now
+reports actual live activation/fallback, even when the selected flag is true.
+
+All 44,985 result/log files (13,029,303,475 bytes) are SHA-256 verified locally.
+Brev `dngrtbldz` was confirmed **STOPPED** at
+`2026-10-16T04:55:08.973340+00:00`. The conservative cost of these three sessions
+is $0.6006 from the new $10 allowance; cumulative bound $10.3761 of the approved
+$20, not an invoice. No new VM, policy, public input upload or image publication
+was created in this validation.
+
+### Exact local v24 reproduction of the failed posture trial
+
+The private v3 archive is `dex3-pot-task-inputs-local-v3.tar.gz`, 131,936,310 bytes,
+SHA-256 `7fc0c15ddfc77ce28e82698ede9b062ad385c39fa08b36f17124eb851fb53cd7`.
+All members are individually verified by `local-pot-task-input-receipt-v3.json`.
+It remains on the owner's Mac. It contains unchanged frozen input data and exact
+historical source overlays; footage, geometry and inputs have not been uploaded.
+
+Use the earlier pinned-image command recipe with these substitutions:
+
+- Extract `sources/physics-source-v24.tar.gz` into a fresh `V2D_CODE_DIR`.
+- Its exact source commit is `02c94bb4b49c1ed627c1411120588e9fd37bdfa2` and archive
+  SHA-256 `1a1617041b5ddced08557e4cee74073a4f1ae6f89c65beea5aca717e51c78e50`.
+- Select `combined-task-grasps-live-posture-v7.json` as `V2D_GRIP_SEED`.
+- Run `grip-task-free`, then `grip-task` in the same new output directory.
+- Expect a rejected full wrist/carry result; inspect the complete preview,
+  activation audit and source-error measurements.
+- Back up results and stop the compute instance after the run.
+
+This is an exact diagnostic reproduction recipe, not a successful training or
+submission release. The verified isolated-lift recipe remains unchanged.

@@ -8,17 +8,20 @@ This branch combines `codex/hand-continuity` at `9f93a50` with
 ## Current e002 physics checkpoint
 
 The pot and lid each pass two isolated acquisition/lift fixtures. The complete
-two-hand carry remains unresolved; all four full controller candidates were
-rejected and PPO has not been retrained. See [pot evidence](POT_GRIP_FIX.md),
-[complete campaign and next candidate](COUPLED_TASK_DIAGNOSTIC.md), and
-[hash-bound measurements](coupled-physics-campaign-v1.json).
+two-hand carry remains unresolved after seven full controller trials. The live
+allocator's signed-force rejection bug is fixed, but both exercised posture
+variants lose the pot. They remain disabled by default. PPO has not been
+retrained. See [pot evidence](POT_GRIP_FIX.md), [complete diagnostic and next
+work](COUPLED_TASK_DIAGNOSTIC.md), [seven-run measurements](coupled-physics-campaign-v2.json)
+and [measured failure details](live-contact-failure-diagnosis-v1.json).
 
-The local private v2 input bundle is verified by
-[local-pot-task-input-receipt-v2.json](local-pot-task-input-receipt-v2.json).
-It contains exact source overlays for historical experiments and a disabled,
-CPU-prepared live contact torque candidate. It has not been published. The
-candidate has 69 passing CPU tests and still needs GPU validation. Reproducing a
-failed experiment is distinct from an accepted task or submission.
+All 70 CPU tests pass. The private v3 reproduction bundle includes the exact
+source overlays and inputs for these rejected trials; see
+[local-pot-task-input-receipt-v3.json](local-pot-task-input-receipt-v3.json).
+Inputs remain local. All 44,985 result files are SHA-256 verified on the owner's
+Mac and Brev is confirmed stopped. The renewed $10 validation allowance used a
+conservative $0.6006; cumulative compute bound is $10.3761 of $20, not an invoice.
+Reproducing a failed experiment is distinct from an accepted task or submission.
 
 ## Executed result
 

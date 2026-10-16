@@ -1,7 +1,7 @@
 """Experimental torque allocation from current physical contact patches.
 
-This candidate is disabled by default. It needs a new simulator comparison;
-analytic feasibility is not grasp or training acceptance.
+This candidate is disabled by default. Both tested posture modes failed the
+full e002 carry; analytic feasibility is not grasp or training acceptance.
 """
 
 import numpy as np
@@ -60,7 +60,8 @@ def contact_patches(normal_data, sensor_indices, object_index):
         if np.linalg.norm(reaction) < 0.5:
             raise ValueError("Live patch has cancelling or ambiguous normals")
         centers.append((p * weights[:, None]).sum(0) / weights.sum())
-        # RigidContactView normals describe forces ON the hand body.
+        # The reconstructed reaction acts on the sensor (hand).  Its opposite
+        # is the force on the object, regardless of scalar/normal sign convention.
         inward.append(-reaction / np.linalg.norm(reaction))
     return np.asarray(centers), np.asarray(inward)
 

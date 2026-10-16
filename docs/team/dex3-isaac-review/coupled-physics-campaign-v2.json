@@ -1,0 +1,1059 @@
+{
+  "schema": "v2d.coupled-physics-campaign.v2",
+  "runs": [
+    {
+      "name": "coupled-task-v2",
+      "description": "2 N measured-reaction baseline",
+      "source_commit": "950d98d4df8997a9eb9366c7399a30e7d8bdb622",
+      "source_archive_sha256": "e171ffaabfd7aa1f5053d6d93dc3b7794fda0a97b3a7ebf761a0835a6f5ddf1a",
+      "report_sha256": "9e8f420392873de8a69c6e91f3a9c87bdac461be05747a8d9c74f1e3d2fe7c06",
+      "video_sha256": "53b8e019a91379f163918f122959aa58a46336e24896f87aaed0b996f0634ea2",
+      "complete_source_episode": true,
+      "source_frames": 343,
+      "inferred_postroll_frames": 20,
+      "wrist_tracking_pass": true,
+      "wrist": {
+        "left": {
+          "position_p95_m": 0.018040968101602207,
+          "position_max_m": 0.021717617653290625,
+          "rotation_p95_deg": 1.6695641347990893,
+          "rotation_max_deg": 2.73281414867518
+        },
+        "right": {
+          "position_p95_m": 0.0053269675483536925,
+          "position_max_m": 0.019444363941954985,
+          "rotation_p95_deg": 0.6262720131393317,
+          "rotation_max_deg": 1.8014485149532435
+        }
+      },
+      "readback": {
+        "schema": "v2d.coupled-grasp-readback-audit.v1",
+        "report_sha256": "9e8f420392873de8a69c6e91f3a9c87bdac461be05747a8d9c74f1e3d2fe7c06",
+        "states_sha256": "5dbe33333c0f9bc18968b0be7339da7c5d0af698671cffbcda49a1591dcba5e0",
+        "task_grip_spec_sha256": "25bbb2a161ff47018d83ea359209a7fa5fff0462d260a94f440a19ebc47740f6",
+        "source_object_metrics_exclude_inferred_postroll": true,
+        "objects": [
+          {
+            "object": 0,
+            "observed_source_steps": 2850,
+            "position_mean_m": 0.0303154739274036,
+            "position_median_m": 0.018548015548173757,
+            "position_p90_m": 0.08292570426815989,
+            "position_max_m": 0.11224508172381266
+          },
+          {
+            "object": 1,
+            "observed_source_steps": 3421,
+            "position_mean_m": 0.010358992652739707,
+            "position_median_m": 0.0061427750772212915,
+            "position_p90_m": 0.02186612195904796,
+            "position_max_m": 0.03442367076935217
+          }
+        ],
+        "grasps": [
+          {
+            "sample": "left-object0-grasp0",
+            "source_interval_s": [
+              2.4,
+              11.55
+            ],
+            "load_steps": 1830,
+            "maximum_relative_position_drift_m": 0.11581559697841891,
+            "maximum_relative_rotation_drift_deg": 13.0371112013647,
+            "contact_gate_coverage_fraction": 0.32021857923497266,
+            "retained_within_10mm_diagnostic": false
+          },
+          {
+            "sample": "left-object0-grasp1",
+            "source_interval_s": [
+              13.700000000000001,
+              16.6
+            ],
+            "load_steps": 580,
+            "maximum_relative_position_drift_m": 0.005215279856163827,
+            "maximum_relative_rotation_drift_deg": 4.261321658545033,
+            "contact_gate_coverage_fraction": 0.06206896551724138,
+            "retained_within_10mm_diagnostic": true
+          },
+          {
+            "sample": "right-object1-grasp0",
+            "source_interval_s": [
+              2.4,
+              5.3999999999999995
+            ],
+            "load_steps": 600,
+            "maximum_relative_position_drift_m": 0.007563249094695885,
+            "maximum_relative_rotation_drift_deg": 15.839780162665223,
+            "contact_gate_coverage_fraction": 1.0,
+            "retained_within_10mm_diagnostic": true
+          },
+          {
+            "sample": "right-object1-grasp1",
+            "source_interval_s": [
+              11.850000000000001,
+              15.450000000000001
+            ],
+            "load_steps": 719,
+            "maximum_relative_position_drift_m": 0.007180071130754202,
+            "maximum_relative_rotation_drift_deg": 15.376649593050995,
+            "contact_gate_coverage_fraction": 1.0,
+            "retained_within_10mm_diagnostic": true
+          }
+        ],
+        "all_four_grasps_retained_within_10mm": false,
+        "physics_controls_pass": true,
+        "initial_scene_clearance": {
+          "maximum_cooked_shape_difference_m": 1.113606002252634e-16,
+          "minimum_initial_table_gap_m": 0.00020000480757409456,
+          "maximum_initial_object_piece_axis_depth_m": -0.0004995027049035095,
+          "independently_checked": true
+        },
+        "physical_task_accepted": false,
+        "policy_trained": false,
+        "official_score_claimed": false,
+        "scope": "Recorded simulated grasp retention and original inferred-source tracking only; no ground-truth contact, continuous collision, or official success certificate"
+      },
+      "full_carry_accepted": false
+    },
+    {
+      "name": "coupled-task-v3",
+      "description": "4 N measured-reaction",
+      "source_commit": "6c5b791b79871491c681787a87d1a5476463a323",
+      "source_archive_sha256": "74442ce394a155ab07c45bb7068f73223302ed6ea3388bb01c34e4f9b39b3160",
+      "report_sha256": "b79f0994e30d0b159a9601d0d07e9eaad09cc7f8a685f9ef4ba2e7cbfcb14c1f",
+      "video_sha256": "efdf2c2b9c6d91d1ad3418ed570c946a02bf801e546305043413f9f04d48ea61",
+      "complete_source_episode": true,
+      "source_frames": 343,
+      "inferred_postroll_frames": 20,
+      "wrist_tracking_pass": false,
+      "wrist": {
+        "left": {
+          "position_p95_m": 0.02020459892831525,
+          "position_max_m": 0.021854069515673227,
+          "rotation_p95_deg": 1.392731019320821,
+          "rotation_max_deg": 4.520236720515126
+        },
+        "right": {
+          "position_p95_m": 0.006249687949105104,
+          "position_max_m": 0.019475451054972292,
+          "rotation_p95_deg": 0.6918957865025094,
+          "rotation_max_deg": 1.8667235141770113
+        }
+      },
+      "readback": {
+        "schema": "v2d.coupled-grasp-readback-audit.v1",
+        "report_sha256": "b79f0994e30d0b159a9601d0d07e9eaad09cc7f8a685f9ef4ba2e7cbfcb14c1f",
+        "states_sha256": "4d70f760ead41aaf10183ffb9df2a78fd90f7649ffe71f49da278ff864173d02",
+        "task_grip_spec_sha256": "fb5cad655d2908d5ac4529a1ef41e77d693d20d2ec6c339bc4cd714c72bce3f5",
+        "source_object_metrics_exclude_inferred_postroll": true,
+        "objects": [
+          {
+            "object": 0,
+            "observed_source_steps": 2850,
+            "position_mean_m": 0.03863953535170847,
+            "position_median_m": 0.041249922604953845,
+            "position_p90_m": 0.09563797003931536,
+            "position_max_m": 0.12519890994622065
+          },
+          {
+            "object": 1,
+            "observed_source_steps": 3421,
+            "position_mean_m": 0.010786304158282104,
+            "position_median_m": 0.0062850537623789764,
+            "position_p90_m": 0.022112663017388144,
+            "position_max_m": 0.03442367076935217
+          }
+        ],
+        "grasps": [
+          {
+            "sample": "left-object0-grasp0",
+            "source_interval_s": [
+              2.4,
+              11.55
+            ],
+            "load_steps": 1830,
+            "maximum_relative_position_drift_m": 0.13006620722748358,
+            "maximum_relative_rotation_drift_deg": 13.905336251277811,
+            "contact_gate_coverage_fraction": 0.4092896174863388,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0,
+              "middle": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.37868852459016394,
+            "maximum_actual_combined_finger_effort_Nm": 0.6646762490272522
+          },
+          {
+            "sample": "left-object0-grasp1",
+            "source_interval_s": [
+              13.700000000000001,
+              16.6
+            ],
+            "load_steps": 580,
+            "maximum_relative_position_drift_m": 0.008890191721926908,
+            "maximum_relative_rotation_drift_deg": 7.4172540016453,
+            "contact_gate_coverage_fraction": 0.3275862068965517,
+            "retained_within_10mm_diagnostic": true,
+            "primary_digit_load_p10_N": {
+              "thumb": 2.091971500368204,
+              "index": 6.214305653350187,
+              "middle": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.32068965517241377,
+            "maximum_actual_combined_finger_effort_Nm": 0.7599999904632568
+          },
+          {
+            "sample": "right-object1-grasp0",
+            "source_interval_s": [
+              2.4,
+              5.3999999999999995
+            ],
+            "load_steps": 600,
+            "maximum_relative_position_drift_m": 0.006484475350937116,
+            "maximum_relative_rotation_drift_deg": 13.968566608864943,
+            "contact_gate_coverage_fraction": 1.0,
+            "retained_within_10mm_diagnostic": true,
+            "primary_digit_load_p10_N": {
+              "thumb": 5.75411792943248,
+              "index": 4.780236294209017
+            },
+            "all_primary_digits_above_0_5N_fraction": 1.0,
+            "maximum_actual_combined_finger_effort_Nm": 0.4413587152957916
+          },
+          {
+            "sample": "right-object1-grasp1",
+            "source_interval_s": [
+              11.850000000000001,
+              15.450000000000001
+            ],
+            "load_steps": 719,
+            "maximum_relative_position_drift_m": 0.011911845015370357,
+            "maximum_relative_rotation_drift_deg": 12.749274730048251,
+            "contact_gate_coverage_fraction": 0.9847009735744089,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 0.7991915733470709,
+              "index": 4.005663296463398
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.9429763560500696,
+            "maximum_actual_combined_finger_effort_Nm": 0.5045933127403259
+          }
+        ],
+        "all_four_grasps_retained_within_10mm": false,
+        "physics_controls_pass": true,
+        "initial_scene_clearance": {
+          "maximum_cooked_shape_difference_m": 1.113606002252634e-16,
+          "minimum_initial_table_gap_m": 0.00020000480757409456,
+          "maximum_initial_object_piece_axis_depth_m": -0.0004995027049035095,
+          "independently_checked": true
+        },
+        "physical_task_accepted": false,
+        "policy_trained": false,
+        "official_score_claimed": false,
+        "scope": "Recorded simulated grasp retention and original inferred-source tracking only; no ground-truth contact, continuous collision, or official success certificate"
+      },
+      "full_carry_accepted": false
+    },
+    {
+      "name": "coupled-task-v4",
+      "description": "4 N plus tactile seating",
+      "source_commit": "73d2f6d708f1c9ff1814f913018a97ae0c936483",
+      "source_archive_sha256": "c0a600263596505189f518827a90bc913510eacd90b56433fc52ffde1fb0a3b2",
+      "report_sha256": "fa4aedcd0dcd2ab5df303db7706f138344cd707cb0f40801aacc4876785a61bf",
+      "video_sha256": "71617f6dd1d3a38785c225087b4941a8dc1ca2e5de4882e4257abdf8691e37af",
+      "complete_source_episode": true,
+      "source_frames": 343,
+      "inferred_postroll_frames": 20,
+      "wrist_tracking_pass": false,
+      "wrist": {
+        "left": {
+          "position_p95_m": 794.7650578917281,
+          "position_max_m": 852.2757528396008,
+          "rotation_p95_deg": 164.17311720742535,
+          "rotation_max_deg": 179.99809067205967
+        },
+        "right": {
+          "position_p95_m": 0.004920760297340343,
+          "position_max_m": 0.02396718805255026,
+          "rotation_p95_deg": 0.7235915882095347,
+          "rotation_max_deg": 2.302791095320407
+        }
+      },
+      "readback": {
+        "schema": "v2d.coupled-grasp-readback-audit.v1",
+        "report_sha256": "fa4aedcd0dcd2ab5df303db7706f138344cd707cb0f40801aacc4876785a61bf",
+        "states_sha256": "182bebf1e8712e57396ca32b9247f00f532f7fec6a4136789e5ccf85b1120632",
+        "task_grip_spec_sha256": "e65887adec1b519abbc9f18812c809e09c77a1d8661280d85740f0bf88766523",
+        "source_object_metrics_exclude_inferred_postroll": true,
+        "objects": [
+          {
+            "object": 0,
+            "observed_source_steps": 2850,
+            "position_mean_m": 477.88765974919784,
+            "position_median_m": 194.76069234241783,
+            "position_p90_m": 1459.9042820816378,
+            "position_max_m": 1947.7595411979712
+          },
+          {
+            "object": 1,
+            "observed_source_steps": 3421,
+            "position_mean_m": 0.01614172684540841,
+            "position_median_m": 0.0062587075094514754,
+            "position_p90_m": 0.02320532178405713,
+            "position_max_m": 0.09045025925771966
+          }
+        ],
+        "grasps": [
+          {
+            "sample": "left-object0-grasp0",
+            "source_interval_s": [
+              2.4,
+              11.55
+            ],
+            "load_steps": 1830,
+            "maximum_relative_position_drift_m": 523.5236492775724,
+            "maximum_relative_rotation_drift_deg": 179.92294873977556,
+            "contact_gate_coverage_fraction": 0.4163934426229508,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0,
+              "middle": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.41530054644808745,
+            "maximum_actual_combined_finger_effort_Nm": 0.7501834630966187
+          },
+          {
+            "sample": "left-object0-grasp1",
+            "source_interval_s": [
+              13.700000000000001,
+              16.6
+            ],
+            "load_steps": 580,
+            "maximum_relative_position_drift_m": 2272.5351566043873,
+            "maximum_relative_rotation_drift_deg": 179.7196883842383,
+            "contact_gate_coverage_fraction": 0.0,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0,
+              "middle": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.0,
+            "maximum_actual_combined_finger_effort_Nm": 0.7599999904632568
+          },
+          {
+            "sample": "right-object1-grasp0",
+            "source_interval_s": [
+              2.4,
+              5.3999999999999995
+            ],
+            "load_steps": 600,
+            "maximum_relative_position_drift_m": 0.005722160043901219,
+            "maximum_relative_rotation_drift_deg": 12.432890489813797,
+            "contact_gate_coverage_fraction": 1.0,
+            "retained_within_10mm_diagnostic": true,
+            "primary_digit_load_p10_N": {
+              "thumb": 5.771250933037009,
+              "index": 4.852859256383762
+            },
+            "all_primary_digits_above_0_5N_fraction": 1.0,
+            "maximum_actual_combined_finger_effort_Nm": 0.4312876760959625
+          },
+          {
+            "sample": "right-object1-grasp1",
+            "source_interval_s": [
+              11.850000000000001,
+              15.450000000000001
+            ],
+            "load_steps": 719,
+            "maximum_relative_position_drift_m": 0.009946559672419066,
+            "maximum_relative_rotation_drift_deg": 21.48767666624669,
+            "contact_gate_coverage_fraction": 1.0,
+            "retained_within_10mm_diagnostic": true,
+            "primary_digit_load_p10_N": {
+              "thumb": 5.617713601704678,
+              "index": 3.9372635259755415
+            },
+            "all_primary_digits_above_0_5N_fraction": 1.0,
+            "maximum_actual_combined_finger_effort_Nm": 0.4595540761947632
+          }
+        ],
+        "all_four_grasps_retained_within_10mm": false,
+        "physics_controls_pass": true,
+        "initial_scene_clearance": {
+          "maximum_cooked_shape_difference_m": 1.113606002252634e-16,
+          "minimum_initial_table_gap_m": 0.00020000480757409456,
+          "maximum_initial_object_piece_axis_depth_m": -0.0004995027049035095,
+          "independently_checked": true
+        },
+        "physical_task_accepted": false,
+        "policy_trained": false,
+        "official_score_claimed": false,
+        "scope": "Recorded simulated grasp retention and original inferred-source tracking only; no ground-truth contact, continuous collision, or official success certificate"
+      },
+      "full_carry_accepted": false
+    },
+    {
+      "name": "coupled-task-v5",
+      "description": "4 N nominal gravity compensation",
+      "source_commit": "68ff414667cd087fca1eac65c869f695507db47b",
+      "source_archive_sha256": "b07ab40443e29e34cd8c2aad3136be13e4e5cbb598e72b29d8f36cbb20313f09",
+      "report_sha256": "c081bd7c69348e7228a6c0023d136110de22ac6439ccbe102a9c3ea3ab0f0bb6",
+      "video_sha256": "9a65ee3dbda481ff7ba4f5c3bdb4ed2af9028b54eb15a06f4ab9ad6cb19f03d3",
+      "complete_source_episode": true,
+      "source_frames": 343,
+      "inferred_postroll_frames": 20,
+      "wrist_tracking_pass": false,
+      "wrist": {
+        "left": {
+          "position_p95_m": 0.031537868186770346,
+          "position_max_m": 0.03335292907712539,
+          "rotation_p95_deg": 1.8825037335352972,
+          "rotation_max_deg": 5.300445275001927
+        },
+        "right": {
+          "position_p95_m": 0.029224089930186638,
+          "position_max_m": 0.12455739543190249,
+          "rotation_p95_deg": 0.8385277353485456,
+          "rotation_max_deg": 7.3205866495018395
+        }
+      },
+      "readback": {
+        "schema": "v2d.coupled-grasp-readback-audit.v1",
+        "report_sha256": "c081bd7c69348e7228a6c0023d136110de22ac6439ccbe102a9c3ea3ab0f0bb6",
+        "states_sha256": "7c0a462c1dfcb55f26f6821ced3d277c80c7f53bc7e95abd554d0f82be4c428f",
+        "task_grip_spec_sha256": "eb365313ab4797d12f3c403300eb1149a8363f1819b916a42fd9107c461330cd",
+        "source_object_metrics_exclude_inferred_postroll": true,
+        "objects": [
+          {
+            "object": 0,
+            "observed_source_steps": 2850,
+            "position_mean_m": 0.03846549915323428,
+            "position_median_m": 0.03831708061836897,
+            "position_p90_m": 0.08526221426003817,
+            "position_max_m": 0.12405271714102378
+          },
+          {
+            "object": 1,
+            "observed_source_steps": 3421,
+            "position_mean_m": 0.18781470003495226,
+            "position_median_m": 0.21443249261918307,
+            "position_p90_m": 0.2705827861794219,
+            "position_max_m": 0.27635438786591565
+          }
+        ],
+        "grasps": [
+          {
+            "sample": "left-object0-grasp0",
+            "source_interval_s": [
+              2.4,
+              11.55
+            ],
+            "load_steps": 1830,
+            "maximum_relative_position_drift_m": 0.12536194528354158,
+            "maximum_relative_rotation_drift_deg": 15.678940037859215,
+            "contact_gate_coverage_fraction": 0.3087431693989071,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0,
+              "middle": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.3076502732240437,
+            "maximum_actual_combined_finger_effort_Nm": 0.6267154812812805
+          },
+          {
+            "sample": "left-object0-grasp1",
+            "source_interval_s": [
+              13.700000000000001,
+              16.6
+            ],
+            "load_steps": 580,
+            "maximum_relative_position_drift_m": 0.0010456827324800324,
+            "maximum_relative_rotation_drift_deg": 0.84262189441366,
+            "contact_gate_coverage_fraction": 1.0,
+            "retained_within_10mm_diagnostic": true,
+            "primary_digit_load_p10_N": {
+              "thumb": 4.279143033005634,
+              "index": 4.324817711976056,
+              "middle": 4.054078246875849
+            },
+            "all_primary_digits_above_0_5N_fraction": 1.0,
+            "maximum_actual_combined_finger_effort_Nm": 0.5544695854187012
+          },
+          {
+            "sample": "right-object1-grasp0",
+            "source_interval_s": [
+              2.4,
+              5.3999999999999995
+            ],
+            "load_steps": 600,
+            "maximum_relative_position_drift_m": 0.2863291987980343,
+            "maximum_relative_rotation_drift_deg": 30.139557922655396,
+            "contact_gate_coverage_fraction": 0.0,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.0,
+            "maximum_actual_combined_finger_effort_Nm": 0.2216181606054306
+          },
+          {
+            "sample": "right-object1-grasp1",
+            "source_interval_s": [
+              11.850000000000001,
+              15.450000000000001
+            ],
+            "load_steps": 719,
+            "maximum_relative_position_drift_m": 0.17844518929203776,
+            "maximum_relative_rotation_drift_deg": 61.974184135559966,
+            "contact_gate_coverage_fraction": 0.02642559109874826,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.009735744089012517,
+            "maximum_actual_combined_finger_effort_Nm": 0.2705744504928589
+          }
+        ],
+        "all_four_grasps_retained_within_10mm": false,
+        "physics_controls_pass": true,
+        "initial_scene_clearance": {
+          "maximum_cooked_shape_difference_m": 1.113606002252634e-16,
+          "minimum_initial_table_gap_m": 0.00020000480757409456,
+          "maximum_initial_object_piece_axis_depth_m": -0.0004995027049035095,
+          "independently_checked": true
+        },
+        "physical_task_accepted": false,
+        "policy_trained": false,
+        "official_score_claimed": false,
+        "scope": "Recorded simulated grasp retention and original inferred-source tracking only; no ground-truth contact, continuous collision, or official success certificate"
+      },
+      "full_carry_accepted": false
+    },
+    {
+      "name": "coupled-task-live-v1",
+      "description": "Live allocation, unsigned rejection (inactive)",
+      "source_commit": "674910c167ce850e3da23eb205726ea8368787f1",
+      "source_archive_sha256": "43e62050e28713e534881062f058476001789cc18738825bddbec433efc46497",
+      "report_sha256": "1a587da5a9f16052b63c5260677ede4618d0731920f57cc2f73d2d9231dd3789",
+      "video_sha256": "53b8e019a91379f163918f122959aa58a46336e24896f87aaed0b996f0634ea2",
+      "complete_source_episode": true,
+      "source_frames": 343,
+      "inferred_postroll_frames": 20,
+      "wrist_tracking_pass": true,
+      "wrist": {
+        "left": {
+          "position_p95_m": 0.018040968101602207,
+          "position_max_m": 0.021717617653290625,
+          "rotation_p95_deg": 1.6695641347990893,
+          "rotation_max_deg": 2.73281414867518
+        },
+        "right": {
+          "position_p95_m": 0.0053269675483536925,
+          "position_max_m": 0.019444363941954985,
+          "rotation_p95_deg": 0.6262720131393317,
+          "rotation_max_deg": 1.8014485149532435
+        }
+      },
+      "readback": {
+        "schema": "v2d.coupled-grasp-readback-audit.v1",
+        "report_sha256": "1a587da5a9f16052b63c5260677ede4618d0731920f57cc2f73d2d9231dd3789",
+        "states_sha256": "03a900f5ea78da3d81cb07d2a3d6072f6315f665c6d45ce4f14614e3c4cd9a4f",
+        "task_grip_spec_sha256": "985567be5e317b4be5e9baf1ce283b83195617adbef6c38065bc6c8642395d7d",
+        "source_object_metrics_exclude_inferred_postroll": true,
+        "objects": [
+          {
+            "object": 0,
+            "observed_source_steps": 2850,
+            "position_mean_m": 0.0303154739274036,
+            "position_median_m": 0.018548015548173757,
+            "position_p90_m": 0.08292570426815989,
+            "position_max_m": 0.11224508172381266
+          },
+          {
+            "object": 1,
+            "observed_source_steps": 3421,
+            "position_mean_m": 0.010358992652739707,
+            "position_median_m": 0.0061427750772212915,
+            "position_p90_m": 0.02186612195904796,
+            "position_max_m": 0.03442367076935217
+          }
+        ],
+        "grasps": [
+          {
+            "sample": "left-object0-grasp0",
+            "source_interval_s": [
+              2.4,
+              11.55
+            ],
+            "load_steps": 1830,
+            "maximum_relative_position_drift_m": 0.11581559697841891,
+            "maximum_relative_rotation_drift_deg": 13.0371112013647,
+            "contact_gate_coverage_fraction": 0.32021857923497266,
+            "retained_within_10mm_diagnostic": false,
+            "live_contact_allocation": {
+              "attempted_steps": 1830,
+              "active_steps": 0,
+              "active_fraction_of_load_steps": 0.0,
+              "exercised_at_least_once": false,
+              "fallback_reasons": {
+                "Live pad pressure is insufficient or invalid": 1035,
+                "A required live pad contact is missing or truncated": 795
+              },
+              "patch_readbacks": 0,
+              "patches_with_negative_force_scalar": 0,
+              "acceptance_scope": "Activation diagnostic only; exercising a controller does not accept a grasp"
+            },
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0,
+              "middle": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.2994535519125683,
+            "maximum_actual_combined_finger_effort_Nm": 0.5161204934120178
+          },
+          {
+            "sample": "left-object0-grasp1",
+            "source_interval_s": [
+              13.700000000000001,
+              16.6
+            ],
+            "load_steps": 580,
+            "maximum_relative_position_drift_m": 0.005215279856163827,
+            "maximum_relative_rotation_drift_deg": 4.261321658545033,
+            "contact_gate_coverage_fraction": 0.06206896551724138,
+            "retained_within_10mm_diagnostic": true,
+            "live_contact_allocation": {
+              "attempted_steps": 580,
+              "active_steps": 0,
+              "active_fraction_of_load_steps": 0.0,
+              "exercised_at_least_once": false,
+              "fallback_reasons": {
+                "Live pad pressure is insufficient or invalid": 580
+              },
+              "patch_readbacks": 0,
+              "patches_with_negative_force_scalar": 0,
+              "acceptance_scope": "Activation diagnostic only; exercising a controller does not accept a grasp"
+            },
+            "primary_digit_load_p10_N": {
+              "thumb": 4.462518033346794,
+              "index": 4.936654291236499,
+              "middle": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.056896551724137934,
+            "maximum_actual_combined_finger_effort_Nm": 0.5855163931846619
+          },
+          {
+            "sample": "right-object1-grasp0",
+            "source_interval_s": [
+              2.4,
+              5.3999999999999995
+            ],
+            "load_steps": 600,
+            "maximum_relative_position_drift_m": 0.007563249094695885,
+            "maximum_relative_rotation_drift_deg": 15.839780162665223,
+            "contact_gate_coverage_fraction": 1.0,
+            "retained_within_10mm_diagnostic": true,
+            "primary_digit_load_p10_N": {
+              "thumb": 5.759830785429883,
+              "index": 4.844211797446935
+            },
+            "all_primary_digits_above_0_5N_fraction": 1.0,
+            "maximum_actual_combined_finger_effort_Nm": 0.44215911626815796
+          },
+          {
+            "sample": "right-object1-grasp1",
+            "source_interval_s": [
+              11.850000000000001,
+              15.450000000000001
+            ],
+            "load_steps": 719,
+            "maximum_relative_position_drift_m": 0.007180071130754202,
+            "maximum_relative_rotation_drift_deg": 15.376649593050995,
+            "contact_gate_coverage_fraction": 1.0,
+            "retained_within_10mm_diagnostic": true,
+            "primary_digit_load_p10_N": {
+              "thumb": 3.847269066680765,
+              "index": 4.0459593474984095
+            },
+            "all_primary_digits_above_0_5N_fraction": 1.0,
+            "maximum_actual_combined_finger_effort_Nm": 0.47680193185806274
+          }
+        ],
+        "all_four_grasps_retained_within_10mm": false,
+        "physics_controls_pass": true,
+        "initial_scene_clearance": {
+          "maximum_cooked_shape_difference_m": 1.113606002252634e-16,
+          "minimum_initial_table_gap_m": 0.00020000480757409456,
+          "maximum_initial_object_piece_axis_depth_m": -0.0004995027049035095,
+          "independently_checked": true
+        },
+        "physical_task_accepted": false,
+        "policy_trained": false,
+        "official_score_claimed": false,
+        "scope": "Recorded simulated grasp retention and original inferred-source tracking only; no ground-truth contact, continuous collision, or official success certificate"
+      },
+      "full_carry_accepted": false
+    },
+    {
+      "name": "coupled-task-live-v2",
+      "description": "Signed live allocation, posture spring removed",
+      "source_commit": "97d8e5b46952cd1c4ab4a7543db44445edabfbc0",
+      "source_archive_sha256": "30cf93e0296dce8f7810b3e4f2a500b820f8e3ea51244b5f181f9d848b5903eb",
+      "report_sha256": "5c5dc129501d5b4ccbe7330f76a5dd273048a2668443dc52ee64455042e68ef6",
+      "video_sha256": "de8ec52f2726a4729ce105213536e979d23cd696a81287d4e8a4e2b578a4aa4a",
+      "complete_source_episode": true,
+      "source_frames": 343,
+      "inferred_postroll_frames": 20,
+      "wrist_tracking_pass": false,
+      "wrist": {
+        "left": {
+          "position_p95_m": 0.12881075079649507,
+          "position_max_m": 1.4351516394301407,
+          "rotation_p95_deg": 1.764135251572056,
+          "rotation_max_deg": 53.4182518283368
+        },
+        "right": {
+          "position_p95_m": 0.005609342509761662,
+          "position_max_m": 0.035803973660923145,
+          "rotation_p95_deg": 0.7334164145355078,
+          "rotation_max_deg": 9.497877555721043
+        }
+      },
+      "readback": {
+        "schema": "v2d.coupled-grasp-readback-audit.v1",
+        "report_sha256": "5c5dc129501d5b4ccbe7330f76a5dd273048a2668443dc52ee64455042e68ef6",
+        "states_sha256": "41a52b34f9d38a8dcec7ba72c6d8bf1517ad5382bfe83285557458e1196d313f",
+        "task_grip_spec_sha256": "985567be5e317b4be5e9baf1ce283b83195617adbef6c38065bc6c8642395d7d",
+        "source_object_metrics_exclude_inferred_postroll": true,
+        "objects": [
+          {
+            "object": 0,
+            "observed_source_steps": 2850,
+            "position_mean_m": 16.35116352302628,
+            "position_median_m": 0.052683449723453096,
+            "position_p90_m": 68.42744648885197,
+            "position_max_m": 209.47618042509964
+          },
+          {
+            "object": 1,
+            "observed_source_steps": 3421,
+            "position_mean_m": 8.52943220996442,
+            "position_median_m": 0.00667452342333969,
+            "position_p90_m": 24.223039757256377,
+            "position_max_m": 153.57329012923037
+          }
+        ],
+        "grasps": [
+          {
+            "sample": "left-object0-grasp0",
+            "source_interval_s": [
+              2.4,
+              11.55
+            ],
+            "load_steps": 1830,
+            "maximum_relative_position_drift_m": 0.12522844679657155,
+            "maximum_relative_rotation_drift_deg": 20.294044111874854,
+            "contact_gate_coverage_fraction": 0.040437158469945354,
+            "retained_within_10mm_diagnostic": false,
+            "live_contact_allocation": {
+              "attempted_steps": 1830,
+              "active_steps": 70,
+              "active_fraction_of_load_steps": 0.03825136612021858,
+              "exercised_at_least_once": true,
+              "fallback_reasons": {
+                "No contact load plan within the unchanged force/motor bounds: The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)": 1,
+                "Live pad pressure is insufficient or invalid": 552,
+                "A required live pad contact is missing or truncated": 1207
+              },
+              "patch_readbacks": 5490,
+              "patches_with_negative_force_scalar": 1088,
+              "acceptance_scope": "Activation diagnostic only; exercising a controller does not accept a grasp"
+            },
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0,
+              "middle": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.03879781420765027,
+            "maximum_actual_combined_finger_effort_Nm": 0.7599999904632568
+          },
+          {
+            "sample": "left-object0-grasp1",
+            "source_interval_s": [
+              13.700000000000001,
+              16.6
+            ],
+            "load_steps": 580,
+            "maximum_relative_position_drift_m": 208.19635881508572,
+            "maximum_relative_rotation_drift_deg": 179.65887841054248,
+            "contact_gate_coverage_fraction": 0.0,
+            "retained_within_10mm_diagnostic": false,
+            "live_contact_allocation": {
+              "attempted_steps": 580,
+              "active_steps": 0,
+              "active_fraction_of_load_steps": 0.0,
+              "exercised_at_least_once": false,
+              "fallback_reasons": {
+                "A required live pad contact is missing or truncated": 580
+              },
+              "patch_readbacks": 1740,
+              "patches_with_negative_force_scalar": 0,
+              "acceptance_scope": "Activation diagnostic only; exercising a controller does not accept a grasp"
+            },
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0,
+              "middle": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.0,
+            "maximum_actual_combined_finger_effort_Nm": 0.7032563090324402
+          },
+          {
+            "sample": "right-object1-grasp0",
+            "source_interval_s": [
+              2.4,
+              5.3999999999999995
+            ],
+            "load_steps": 600,
+            "maximum_relative_position_drift_m": 0.008231948916138944,
+            "maximum_relative_rotation_drift_deg": 17.295266555606965,
+            "contact_gate_coverage_fraction": 1.0,
+            "retained_within_10mm_diagnostic": true,
+            "primary_digit_load_p10_N": {
+              "thumb": 5.728998542361035,
+              "index": 4.766730659870332
+            },
+            "all_primary_digits_above_0_5N_fraction": 1.0,
+            "maximum_actual_combined_finger_effort_Nm": 0.4481276869773865
+          },
+          {
+            "sample": "right-object1-grasp1",
+            "source_interval_s": [
+              11.850000000000001,
+              15.450000000000001
+            ],
+            "load_steps": 719,
+            "maximum_relative_position_drift_m": 26.676364348140943,
+            "maximum_relative_rotation_drift_deg": 179.2225675579288,
+            "contact_gate_coverage_fraction": 0.6342141863699583,
+            "retained_within_10mm_diagnostic": false,
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.6286509040333796,
+            "maximum_actual_combined_finger_effort_Nm": 0.6432574987411499
+          }
+        ],
+        "all_four_grasps_retained_within_10mm": false,
+        "physics_controls_pass": true,
+        "initial_scene_clearance": {
+          "maximum_cooked_shape_difference_m": 1.113606002252634e-16,
+          "minimum_initial_table_gap_m": 0.00020000480757409456,
+          "maximum_initial_object_piece_axis_depth_m": -0.0004995027049035095,
+          "independently_checked": true
+        },
+        "physical_task_accepted": false,
+        "policy_trained": false,
+        "official_score_claimed": false,
+        "scope": "Recorded simulated grasp retention and original inferred-source tracking only; no ground-truth contact, continuous collision, or official success certificate"
+      },
+      "full_carry_accepted": false
+    },
+    {
+      "name": "coupled-task-live-v3",
+      "description": "Signed live allocation, grasp posture retained",
+      "source_commit": "02c94bb4b49c1ed627c1411120588e9fd37bdfa2",
+      "source_archive_sha256": "1a1617041b5ddced08557e4cee74073a4f1ae6f89c65beea5aca717e51c78e50",
+      "report_sha256": "99b1e2af831f8886f398da0029de07421bb7ca96881566aa4e5fb7466a79bdab",
+      "video_sha256": "6e8c34d05d067b83887095dd842c88a94cd518cc602515606635e87348dc1708",
+      "complete_source_episode": true,
+      "source_frames": 343,
+      "inferred_postroll_frames": 20,
+      "wrist_tracking_pass": false,
+      "wrist": {
+        "left": {
+          "position_p95_m": 805.3946332147455,
+          "position_max_m": 863.8187347622539,
+          "rotation_p95_deg": 163.56145605083162,
+          "rotation_max_deg": 179.96898707511414
+        },
+        "right": {
+          "position_p95_m": 0.004926968376479066,
+          "position_max_m": 0.018760585824175384,
+          "rotation_p95_deg": 0.7937791305500053,
+          "rotation_max_deg": 1.8014485149532435
+        }
+      },
+      "readback": {
+        "schema": "v2d.coupled-grasp-readback-audit.v1",
+        "report_sha256": "99b1e2af831f8886f398da0029de07421bb7ca96881566aa4e5fb7466a79bdab",
+        "states_sha256": "2d9e45071679aaf71f46622998f74fc218487e0e1f0486a4f8b2491e27e8adb6",
+        "task_grip_spec_sha256": "f52a5cce663f95ba63bde18203672a457fd179ed8ac08eba5acd9f0ccf3e2d87",
+        "source_object_metrics_exclude_inferred_postroll": true,
+        "objects": [
+          {
+            "object": 0,
+            "observed_source_steps": 2850,
+            "position_mean_m": 483.86142702166325,
+            "position_median_m": 200.05976766070523,
+            "position_p90_m": 1473.8268904315496,
+            "position_max_m": 1963.6932099985825
+          },
+          {
+            "object": 1,
+            "observed_source_steps": 3421,
+            "position_mean_m": 0.015967741473232704,
+            "position_median_m": 0.0060609788053279075,
+            "position_p90_m": 0.023023331838633292,
+            "position_max_m": 0.08928880749316935
+          }
+        ],
+        "grasps": [
+          {
+            "sample": "left-object0-grasp0",
+            "source_interval_s": [
+              2.4,
+              11.55
+            ],
+            "load_steps": 1830,
+            "maximum_relative_position_drift_m": 532.0741362711644,
+            "maximum_relative_rotation_drift_deg": 179.88627213640487,
+            "contact_gate_coverage_fraction": 0.3923497267759563,
+            "retained_within_10mm_diagnostic": false,
+            "live_contact_allocation": {
+              "attempted_steps": 1830,
+              "active_steps": 627,
+              "active_fraction_of_load_steps": 0.34262295081967215,
+              "exercised_at_least_once": true,
+              "fallback_reasons": {
+                "Live pad pressure is insufficient or invalid": 108,
+                "A required live pad contact is missing or truncated": 1081,
+                "No contact load plan within the unchanged force/motor bounds: The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)": 14
+              },
+              "patch_readbacks": 5490,
+              "patches_with_negative_force_scalar": 2236,
+              "acceptance_scope": "Activation diagnostic only; exercising a controller does not accept a grasp"
+            },
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0,
+              "middle": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.35027322404371586,
+            "maximum_actual_combined_finger_effort_Nm": 0.572811484336853
+          },
+          {
+            "sample": "left-object0-grasp1",
+            "source_interval_s": [
+              13.700000000000001,
+              16.6
+            ],
+            "load_steps": 580,
+            "maximum_relative_position_drift_m": 2364.8324182861093,
+            "maximum_relative_rotation_drift_deg": 179.55278608338037,
+            "contact_gate_coverage_fraction": 0.0,
+            "retained_within_10mm_diagnostic": false,
+            "live_contact_allocation": {
+              "attempted_steps": 580,
+              "active_steps": 0,
+              "active_fraction_of_load_steps": 0.0,
+              "exercised_at_least_once": false,
+              "fallback_reasons": {
+                "A required live pad contact is missing or truncated": 580
+              },
+              "patch_readbacks": 1740,
+              "patches_with_negative_force_scalar": 0,
+              "acceptance_scope": "Activation diagnostic only; exercising a controller does not accept a grasp"
+            },
+            "primary_digit_load_p10_N": {
+              "thumb": 0.0,
+              "index": 0.0,
+              "middle": 0.0
+            },
+            "all_primary_digits_above_0_5N_fraction": 0.0,
+            "maximum_actual_combined_finger_effort_Nm": 0.7599999904632568
+          },
+          {
+            "sample": "right-object1-grasp0",
+            "source_interval_s": [
+              2.4,
+              5.3999999999999995
+            ],
+            "load_steps": 600,
+            "maximum_relative_position_drift_m": 0.006423880769348366,
+            "maximum_relative_rotation_drift_deg": 13.676372614460837,
+            "contact_gate_coverage_fraction": 1.0,
+            "retained_within_10mm_diagnostic": true,
+            "primary_digit_load_p10_N": {
+              "thumb": 5.723019795525308,
+              "index": 4.875790589289009
+            },
+            "all_primary_digits_above_0_5N_fraction": 1.0,
+            "maximum_actual_combined_finger_effort_Nm": 0.43344926834106445
+          },
+          {
+            "sample": "right-object1-grasp1",
+            "source_interval_s": [
+              11.850000000000001,
+              15.450000000000001
+            ],
+            "load_steps": 719,
+            "maximum_relative_position_drift_m": 0.006788803434832771,
+            "maximum_relative_rotation_drift_deg": 14.208507851837691,
+            "contact_gate_coverage_fraction": 1.0,
+            "retained_within_10mm_diagnostic": true,
+            "primary_digit_load_p10_N": {
+              "thumb": 5.246885366823447,
+              "index": 3.6627557821723893
+            },
+            "all_primary_digits_above_0_5N_fraction": 1.0,
+            "maximum_actual_combined_finger_effort_Nm": 0.4053460955619812
+          }
+        ],
+        "all_four_grasps_retained_within_10mm": false,
+        "physics_controls_pass": true,
+        "initial_scene_clearance": {
+          "maximum_cooked_shape_difference_m": 1.113606002252634e-16,
+          "minimum_initial_table_gap_m": 0.00020000480757409456,
+          "maximum_initial_object_piece_axis_depth_m": -0.0004995027049035095,
+          "independently_checked": true
+        },
+        "physical_task_accepted": false,
+        "policy_trained": false,
+        "official_score_claimed": false,
+        "scope": "Recorded simulated grasp retention and original inferred-source tracking only; no ground-truth contact, continuous collision, or official success certificate"
+      },
+      "full_carry_accepted": false
+    }
+  ],
+  "physical_task_accepted": false,
+  "previous_isolated_pot_and_lid_lifts_unchanged": true,
+  "policy_retrained": false,
+  "hidden_evaluation_claimed": false,
+  "latest_lifecycle": {
+    "instance_id": "dngrtbldz",
+    "status": "STOPPED",
+    "confirmed_utc": "2026-10-16T04:55:08.973340+00:00",
+    "conservative_total_compute_bound_usd": 10.3761,
+    "not_an_invoice": true,
+    "backup_all_hashes_verified": true
+  },
+  "latest_backup": {
+    "file_count": 44985,
+    "bytes": 13029303475,
+    "hash_mismatches": [],
+    "all_verified": true
+  },
+  "approved_total_compute_cap_usd": 20,
+  "additional_approval_usd": 10,
+  "prior_bound_at_additional_approval_usd": 9.7755,
+  "new_allowance_conservative_spend_usd": 0.6006,
+  "inputs_published": false
+}

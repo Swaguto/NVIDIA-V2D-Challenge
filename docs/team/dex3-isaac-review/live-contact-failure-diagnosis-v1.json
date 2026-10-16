@@ -1,0 +1,42 @@
+{
+  "schema": "v2d.live-contact-failure-diagnosis.v1",
+  "experiment": "coupled-task-live-v3",
+  "report_sha256": "99b1e2af831f8886f398da0029de07421bb7ca96881566aa4e5fb7466a79bdab",
+  "source_archive_sha256": "1a1617041b5ddced08557e4cee74073a4f1ae6f89c65beea5aca717e51c78e50",
+  "first_pot_live_active_steps": 627,
+  "first_pot_load_steps": 1830,
+  "first_pot_active_fraction": 0.34262295081967215,
+  "first_pot_maximum_actual_motor_effort_Nm": 0.572811484336853,
+  "sampled_readback": [
+    {
+      "source_frame": 120,
+      "middle_distal_normal_N": 3.84,
+      "wrist_position_error_m": 0.0019
+    },
+    {
+      "source_frame": 122,
+      "middle_distal_normal_N": 0.45,
+      "wrist_position_error_m": 0.0046
+    },
+    {
+      "source_frame": 124,
+      "all_primary_contact_lost": true,
+      "wrist_position_error_m": 0.0073
+    }
+  ],
+  "reference_demand": {
+    "source_motion_speed": 0.5,
+    "peak_linear_acceleration_m_s2_before_first_loss": 4.41756366328876,
+    "nominal_mass_kg": 0.3,
+    "corresponding_inertial_force_magnitude_N": 1.325269098986628,
+    "derivative_method": "central finite differences on recorded original-source reference poses at physics dt=0.01; excludes inferred clearance corrections"
+  },
+  "findings": [
+    "Negative scalar contact forces are confirmed; discarding their sign convention prevented first candidate activation.",
+    "Keeping posture increases activation but does not retain the pot.",
+    "The solver currently balances nominal gravity only; the source motion also demands nonzero linear/angular acceleration."
+  ],
+  "inference": "The reference/grasp should be replanned for measured contact stability, collision clearance and dynamic wrench reserve; these diagnostics do not establish one exclusive cause.",
+  "physical_task_accepted": false,
+  "policy_trained": false
+}

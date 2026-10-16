@@ -1,0 +1,158 @@
+{
+  "schema": "v2d.local-input-pack-receipt.v3",
+  "local_archive": "/Users/rohithiruku/dex3_pot_grasp_20261015/dex3-pot-task-inputs-local-v3.tar.gz",
+  "archive_bytes": 131936310,
+  "archive_sha256": "7fc0c15ddfc77ce28e82698ede9b062ad385c39fa08b36f17124eb851fb53cd7",
+  "all_member_hashes_verified": true,
+  "manifest": {
+    "schema": "v2d.local-pot-task-inputs.v3",
+    "files": {
+      "input-pack.tar.gz": {
+        "bytes": 83764720,
+        "sha256": "759b6e9fa642b47ec24306969688cc1ce15ead4cb0b80e4f8d086b727b93c680"
+      },
+      "pot-three-pad-effort-v3.json": {
+        "bytes": 38076,
+        "sha256": "de153d0ebc1a7814dd9773c083acaf3ab9fa0c907b2a2229316d3675ade8c599"
+      },
+      "lid-grip-effort.json": {
+        "bytes": 12675,
+        "sha256": "ef60d82709133fccc0f6e8a51e5f343a67f5abfbc4c71d26fa812363a9bccbd5"
+      },
+      "combined-task-grasps-v1.json": {
+        "bytes": 49522,
+        "sha256": "45cf4de3bcd2b2a10b88be354f0008b19aaeecc05ef056da5ba371d7b602e2a2"
+      },
+      "combined-task-grasps-scene-v2.json": {
+        "bytes": 298184,
+        "sha256": "a14dbac79beec0975caf7e07e8b17cdba66741dfaeda894119ebfd1abca879cc"
+      },
+      "combined-task-grasps-nominal-v5.json": {
+        "bytes": 298312,
+        "sha256": "ca49b88e07f36b9452f6005d442fa7024c6c204361bf2b2c5319a66e96a77b7b"
+      },
+      "combined-task-grasps-baseline-v6.json": {
+        "bytes": 298359,
+        "sha256": "6f60ddb691ce63f8d7dc9e65cc3264ed034bc8f67ac2ca1d03355846e8612ed1"
+      },
+      "combined-task-grasps-live-contact-v6.json": {
+        "bytes": 298358,
+        "sha256": "7c8d7284549df2d4da7bcf0b26d547a66f066a6791b158fe7c037aca3352a4dc"
+      },
+      "sources/physics-source-v16.tar.gz": {
+        "bytes": 6008792,
+        "sha256": "637a3a6bb2d7344d7cad4770602966586f931eb197befa97a5f9553e77a7fedc"
+      },
+      "sources/physics-source-v16.json": {
+        "bytes": 26233,
+        "sha256": "3d014e6850306a6092cacc52081e92e148bd3cb9143a29c0639471e1eb20d9b1"
+      },
+      "sources/physics-source-v18.tar.gz": {
+        "bytes": 6020207,
+        "sha256": "e171ffaabfd7aa1f5053d6d93dc3b7794fda0a97b3a7ebf761a0835a6f5ddf1a"
+      },
+      "sources/physics-source-v18.json": {
+        "bytes": 26822,
+        "sha256": "1faeac2c9d2bc12c52e64e390170c1e556324095e0bc34ea715ee3432dd863b8"
+      },
+      "sources/physics-source-v19.tar.gz": {
+        "bytes": 6020402,
+        "sha256": "74442ce394a155ab07c45bb7068f73223302ed6ea3388bb01c34e4f9b39b3160"
+      },
+      "sources/physics-source-v19.json": {
+        "bytes": 26822,
+        "sha256": "8f41c95e529ddfafaaa6b186ff69bd044c8360753497d85f0fce1afbdf2e6d52"
+      },
+      "sources/physics-source-v20.tar.gz": {
+        "bytes": 6023388,
+        "sha256": "c0a600263596505189f518827a90bc913510eacd90b56433fc52ffde1fb0a3b2"
+      },
+      "sources/physics-source-v20.json": {
+        "bytes": 26940,
+        "sha256": "f8c0acb11ec6d5c6423ffaa4d5db52a8270dcffc6548e19389921f9d23bfca26"
+      },
+      "sources/physics-source-v21.tar.gz": {
+        "bytes": 6025344,
+        "sha256": "b07ab40443e29e34cd8c2aad3136be13e4e5cbb598e72b29d8f36cbb20313f09"
+      },
+      "sources/physics-source-v21.json": {
+        "bytes": 27063,
+        "sha256": "d3f714944d6d6cc00524bb84b55007e33f8e1af0bc4cc58bc2b70c4e7a5b60bc"
+      },
+      "sources/physics-source-v22.tar.gz": {
+        "bytes": 6027705,
+        "sha256": "43e62050e28713e534881062f058476001789cc18738825bddbec433efc46497"
+      },
+      "sources/physics-source-v22.json": {
+        "bytes": 27314,
+        "sha256": "c6aa5c0ada4b44eff7e49fc0a5dc4af5aa8712034b68824029ce73d7541bd562"
+      },
+      "combined-task-grasps-live-posture-v7.json": {
+        "bytes": 298409,
+        "sha256": "a42afe54c45c37353837e80cfa983b31b4dddfb084089a7067afaf5d728cea12"
+      },
+      "sources/physics-source-v23.tar.gz": {
+        "bytes": 6027569,
+        "sha256": "30cf93e0296dce8f7810b3e4f2a500b820f8e3ea51244b5f181f9d848b5903eb"
+      },
+      "sources/physics-source-v23.json": {
+        "bytes": 27314,
+        "sha256": "025021900fb245b90cdd5b8f278df71e7f71adf6c5c306e7d02ba1e4ee13fc85"
+      },
+      "sources/physics-source-v24.tar.gz": {
+        "bytes": 6028588,
+        "sha256": "1a1617041b5ddced08557e4cee74073a4f1ae6f89c65beea5aca717e51c78e50"
+      },
+      "sources/physics-source-v24.json": {
+        "bytes": 27446,
+        "sha256": "d96a0ef82705ca45c6673b6ac4ccb9d3f1279aedf8503ea2f08c7488b798c5b2"
+      }
+    },
+    "recipes": {
+      "verified_isolated_pot": {
+        "source": "sources/physics-source-v16.tar.gz",
+        "seed": "pot-three-pad-effort-v3.json",
+        "stages": [
+          "grasp-acquisition",
+          "grip-lift"
+        ]
+      },
+      "recorded_failed_baseline": {
+        "source": "sources/physics-source-v18.tar.gz",
+        "seed": "combined-task-grasps-scene-v2.json",
+        "stages": [
+          "grip-task-free",
+          "grip-task"
+        ]
+      },
+      "recorded_inactive_live_trial": {
+        "source": "sources/physics-source-v22.tar.gz",
+        "seed": "combined-task-grasps-live-contact-v6.json",
+        "gpu_tested": true,
+        "accepted": false,
+        "activation_fraction": 0.0
+      },
+      "recorded_removed_spring_trial": {
+        "source": "sources/physics-source-v23.tar.gz",
+        "seed": "combined-task-grasps-live-contact-v6.json",
+        "gpu_tested": true,
+        "accepted": false
+      },
+      "recorded_posture_retention_trial": {
+        "source": "sources/physics-source-v24.tar.gz",
+        "seed": "combined-task-grasps-live-posture-v7.json",
+        "stages": [
+          "grip-task-free",
+          "grip-task"
+        ],
+        "gpu_tested": true,
+        "accepted": false,
+        "result_receipt": "See coupled-physics-campaign-v2.json; diagnostic reproduction only"
+      }
+    },
+    "published": false,
+    "excludes_MANO_weights_and_credentials": true,
+    "full_carry_or_policy_accepted": false
+  },
+  "published": false
+}
