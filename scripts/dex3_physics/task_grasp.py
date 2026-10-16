@@ -157,6 +157,17 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
                 required_digits=sample.get(
                     "required_contact_digits", ["thumb", "index"]
                 ),
+                pad_normal_jacobians=[
+                    dict(
+                        link=p["link"],
+                        normal_jacobian_m_per_rad=[
+                            p["normal_jacobian_m_per_rad"][kin.names.index(n)]
+                            for n in sample["joint_names"]
+                        ],
+                    )
+                    for p in controls[sample["prefix"]]["pads"]
+                ],
+                joint_limits_rad=[list(kin.limits[n]) for n in sample["joint_names"]],
                 approach_start_s=start,
                 close_s=close,
                 release_start_s=end,

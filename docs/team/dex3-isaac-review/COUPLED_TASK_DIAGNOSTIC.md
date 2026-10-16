@@ -101,3 +101,25 @@ feasible and at most 0.511 Nm feedforward, below the unchanged 0.55 Nm cap.
 Per-body/per-object normal forces and actual combined finger effort are now
 recorded. Compensation contact eligibility uses the primary object only.
 The 4 N version still requires a new simulator run; no policy is retrained yet.
+
+## Tactile seating follow-up
+
+The 4 N open-loop minimum delayed the first pot loss but did not prevent it.
+Per-pad readback identifies the middle pad: its actual load falls below 0.5 N
+while the opposing pads remain strongly loaded. Planned force is insufficient
+as a contact guarantee. The 4 N run is retained as a failed candidate, and its
+wrist tracking gate also fails.
+
+The next candidate adds bounded unilateral pressure feedback for the three-pad
+pot grasp. A weak distal pad receives a normal-direction finger target correction
+using its recorded Jacobian, seeking a 4 N floor. The integral unwinds above 6 N.
+Predicted extension is capped at 4 mm and each joint correction at 0.08 rad,
+within the original URDF limits. Strong pads are not deliberately opened. State
+resets outside the squeeze interval and between phases. All original motor and
+wrist effort caps remain unchanged. This is diagnostic measured-contact feedback;
+its compatibility with the learned actor contract is not established.
+
+`audit_coupled_grip.py` verifies state/spec hashes, excludes inferred postroll from
+source-object metrics, reports each grasp's relative drift and contact coverage,
+and records actual combined finger effort when available. It does not certify
+an official score or automatically accept a full task.

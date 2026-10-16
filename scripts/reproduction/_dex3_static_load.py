@@ -1909,6 +1909,7 @@ def run_supported_task(
         TaskGripReference,
         contact_wrench,
         filtered_reaction_compensation,
+        seat_contact_pads,
     )
 
     diagnostic = prepared.get("wrist_diagnostic", {})
@@ -2149,6 +2150,8 @@ def run_supported_task(
     integral_force = [np.zeros(3), np.zeros(3)]
     reaction_compensation = [np.zeros(6), np.zeros(6)]
     contact_hold = [0.0, 0.0]
+    tactile_integrals = [np.zeros(3), np.zeros(3)]
+    tactile_phase = [None, None]
     task_motor_readbacks = []
     for hand, sample in zip(hands, prepared["samples"], strict=True):
         stiffness = controller_tensor(hand.data.joint_stiffness)[0].cpu().numpy()
@@ -2285,6 +2288,7 @@ def run_supported_task(
                     device=sim.device,
                 )
                 control_details = None
+                tactile_details = None
                 if controller_mode == "project_pd":
                     force, torque, fingers = (
                         controller._compute_wrist_wrench_and_finger_target(
@@ -2381,6 +2385,13 @@ def run_supported_task(
                     )
                     if grip_command is not None:
                         measured_wrench = np.zeros(6)
+                        normal_matrix = np.zeros(
+                            (
+                                len(contact_bindings[si]["hand_body_paths"]),
+                                len(objects),
+                                3,
+                            )
+                        )
                         if step > 0 and enabled:
                             normal_matrix = (
                                 contact_views[si]
@@ -2468,6 +2479,52 @@ def run_supported_task(
                             ].tolist(),
                             contact_hold_remaining_s=contact_hold[si],
                         )
+                        if len(grip_command["required_digits"]) == 3:
+                            pads = grip_command["pad_normal_jacobians"]
+                            if tactile_phase[si] != grip_command["phase"]:
+                                tactile_integrals[si] = np.zeros(len(pads))
+                                tactile_phase[si] = grip_command["phase"]
+                            pad_indices = []
+                            for pad in pads:
+                                matches = [
+                                    i
+                                    for i, path in enumerate(
+                                        contact_bindings[si]["hand_body_paths"]
+                                    )
+                                    if path.endswith("/" + pad["link"])
+                                ]
+                                if len(matches) != 1:
+                                    raise ValueError(
+                                        "Tactile pad does not identify one actual collision body"
+                                    )
+                                pad_indices.append(matches[0])
+                            loads = np.linalg.norm(
+                                normal_matrix[
+                                    pad_indices, prepared["samples"][si]["object"]
+                                ],
+                                axis=-1,
+                            )
+                            seated, tactile_integrals[si], delta = seat_contact_pads(
+                                cpu(finger_target)[0],
+                                np.array(
+                                    [p["normal_jacobian_m_per_rad"] for p in pads]
+                                )[:, order],
+                                loads,
+                                tactile_integrals[si],
+                                np.array(grip_command["joint_limits_rad"])[order],
+                                dt,
+                                enabled and grip_command["squeeze_scale"] >= 0.999,
+                            )
+                            tactile_details = dict(
+                                measured_distal_pad_normal_N=loads.tolist(),
+                                normal_extension_integral_m=tactile_integrals[
+                                    si
+                                ].tolist(),
+                                joint_target_adjustment_rad=delta.tolist(),
+                            )
+                            finger_target = torch.tensor(
+                                seated[None], dtype=torch.float32, device=sim.device
+                            )
                     force = torch.tensor(
                         wrench[None, :3], dtype=torch.float32, device=sim.device
                     )
@@ -2561,6 +2618,7 @@ def run_supported_task(
                         .numpy()
                         .tolist(),
                         "controller_details": control_details,
+                        "tactile_seating": tactile_details,
                         "inferred_grasp_phase": grip_command["phase"]
                         if grip_command is not None
                         else None,

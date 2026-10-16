@@ -100,6 +100,8 @@ class TaskGripReference:
                 squeeze_scale=float(squeeze),
                 phase=phase["sample"],
                 required_digits=phase["required_digits"],
+                pad_normal_jacobians=phase.get("pad_normal_jacobians", []),
+                joint_limits_rad=phase.get("joint_limits_rad"),
                 object_feedback_weight=float(feedback)
                 if measured_object_pose is not None
                 else 0.0,
@@ -172,3 +174,47 @@ def filtered_reaction_compensation(measured, previous, dt, enabled):
         desired, -np.array([10] * 3 + [2] * 3), np.array([10] * 3 + [2] * 3)
     )
     return previous + (1 - np.exp(-dt / 0.02)) * (desired - previous)
+
+
+def seat_contact_pads(
+    base_q, pad_jacobians, measured_normals_N, integral_m, limits, dt, enabled
+):
+    """Close a missing pad with bounded normal extension, preserving motor caps.
+
+    Nominal forces alone do not guarantee actual contact. A small unilateral PI
+    adjustment seeks 4 N on each distal pad; above 6 N the integral unwinds.
+    It adds at most 4 mm predicted normal extension / 0.08 rad per joint and
+    never opens past the original target or exceeds a declared URDF limit.
+    """
+    q, jac, loads, state, bounds = [
+        np.asarray(x, float)
+        for x in (base_q, pad_jacobians, measured_normals_N, integral_m, limits)
+    ]
+    if (
+        q.shape != (7,)
+        or jac.ndim != 2
+        or jac.shape[1] != 7
+        or loads.shape != (len(jac),)
+        or state.shape != loads.shape
+        or bounds.shape != (7, 2)
+        or not np.isfinite(
+            np.r_[q, jac.ravel(), loads, state, bounds.ravel(), dt]
+        ).all()
+        or dt <= 0
+        or np.any(loads < 0)
+        or np.any(bounds[:, 0] >= bounds[:, 1])
+    ):
+        raise ValueError("Invalid tactile seating inputs")
+    if not enabled:
+        return q.copy(), np.zeros_like(state), np.zeros(7)
+    error = 4.0 - loads
+    change = np.maximum(error, 0) - np.maximum(loads - 6.0, 0)
+    state = np.clip(state + 0.002 * change * dt, 0, 0.003)
+    extension = np.clip(state + 0.00025 * np.maximum(error, 0), 0, 0.004)
+    norm2 = np.einsum("ij,ij->i", jac, jac)
+    if np.any(norm2 < 1e-8):
+        raise ValueError("Degenerate pad seating Jacobian")
+    delta = np.sum(jac * (extension / norm2)[:, None], axis=0)
+    delta = np.clip(delta, -0.08, 0.08)
+    adjusted = np.clip(q + delta, bounds[:, 0] + 1e-5, bounds[:, 1] - 1e-5)
+    return adjusted, state, adjusted - q

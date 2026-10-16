@@ -11,6 +11,7 @@ from _dex3_task_grip import (  # noqa: E402
     TaskGripReference,
     contact_wrench,
     filtered_reaction_compensation,
+    seat_contact_pads,
 )
 
 
@@ -88,8 +89,10 @@ def test_grasp_schedule_closes_before_loading_and_opens_before_retreat():
     )
     ref = TaskGripReference(spec)
     obj = [0, 0, 0, 0, 0, 0, 1]
+
     def command(t):
         return ref.command("left", t, obj)
+
     assert command(1)["pose"][2] == pytest.approx(0.22)
     assert command(1.75)["pose"][2] == pytest.approx(0.1)
     np.testing.assert_allclose(command(1.875)["fingers"], 0.2)
@@ -109,3 +112,32 @@ def test_grasp_schedule_closes_before_loading_and_opens_before_retreat():
     assert settled["pose"][2] == pytest.approx(0.09)
     carried = ref.command("left", 2.5, obj, [0, 0, -0.01, 0, 0, 0, 1])
     assert carried["pose"][2] == pytest.approx(0.1)
+
+
+def test_tactile_seating_closes_only_weak_pads_and_respects_limits_and_release():
+    jac = np.zeros((3, 7))
+    jac[0, 0], jac[1, 1], jac[2, 2] = 0.05, 0.04, -0.05
+    bounds = np.tile([-0.1, 0.1], (7, 1))
+    bounds[1, 1] = 0.03
+    integral = np.zeros(3)
+    for _ in range(100):
+        q, integral, delta = seat_contact_pads(
+            np.zeros(7), jac, [8, 0, 4], integral, bounds, 0.01, True
+        )
+        assert np.max(abs(delta)) <= 0.08
+        assert np.all(q >= bounds[:, 0]) and np.all(q <= bounds[:, 1])
+    assert delta[0] == 0 and delta[2] == 0
+    assert 0 < delta[1] < 0.03
+    assert np.all(jac @ delta >= 0)
+    assert integral[1] == pytest.approx(0.003)
+    for _ in range(100):
+        q, integral, delta = seat_contact_pads(
+            np.zeros(7), jac, [8, 8, 8], integral, bounds, 0.01, True
+        )
+    np.testing.assert_allclose(integral, 0)
+    np.testing.assert_allclose(delta, 0)
+    _, integral, delta = seat_contact_pads(
+        np.zeros(7), jac, [0, 0, 0], np.ones(3) * 0.003, bounds, 0.01, False
+    )
+    np.testing.assert_allclose(integral, 0)
+    np.testing.assert_allclose(delta, 0)
