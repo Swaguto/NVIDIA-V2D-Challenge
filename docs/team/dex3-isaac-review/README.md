@@ -7,37 +7,48 @@ This branch combines `codex/hand-continuity` at `9f93a50` with
 
 ## Current e002 physics checkpoint
 
-Complete e002 transport remains unresolved; no full physical task or official policy is accepted.
-The motor feedforward bug is repaired: posture and feedforward now share the
-native implicit drive cap. The inertia-based simulator probe verifies signed
-0.76 Nm saturation and unsaturated command scaling. Historical clipped torque
-telemetry cannot certify the combined budget of the older separate-effort runs.
+Complete e002 transport remains unresolved; no full physical task or official
+policy is accepted. Reference jitter is bounded, settled-grasp registration
+preserves the table frame, and compliant carry retains its world tracking gains.
+Original observations, geometry, timestamps, masks and source-error references
+are preserved. Motor and wrist force limits, mass, friction and gravity remain.
 
-Both fresh pot lift fixtures pass at 400 Hz with the optional grip solver profile:
-49.6 / 51.2 mm lift and 1.86 / 1.42 mm relative slip. The hand runaway after object
-loss is repaired. Aborted or unsupported stationary phases fail the corrected
-retention audit. Full replays preserve all 343 source frames and 20 labelled
-settling frames; their losses remain in the measurements.
+Five new full comparisons preserve all 343 original frames and 20 labelled
+settling frames, with fresh passing wrist gates and gravity/contact controls.
+The compensated fixed-posture grasp remains tight through source time 7 s, then
+loses the pot near 7.9 s. The smoothing-only comparison improves lid position
+drift to 5.26 / 6.07 mm with full required-digit contact coverage; rotation still
+drifts 10.31 / 11.24°. These partial diagnostics do not accept the full task.
+A bounded underside search fitted 44 proposals; none passed all contact,
+upward-support, collision and floor checks. No rejected pose was GPU-tested.
 
-See [latest measured results](motor-contact-repair-results-v1.json),
-[video findings and implementation](VISUAL_REFERENCE_REPAIR.md), and
-[earlier campaign](COUPLED_TASK_DIAGNOSTIC.md). 87 CPU tests pass. The grip solver
-profile differs from the default diagnostic solver; compatibility with official
-evaluation settings has not been established. No hidden-episode result or PPO
-training is claimed.
+The shared native motor cap repair and both isolated lift successes remain:
+49.6 / 51.2 mm lift with 1.86 / 1.42 mm relative slip at 400 Hz. The isolated
+probe verifies signed 0.76 Nm saturation and unsaturated command scaling.
+Historical clipped torque telemetry does not certify older separate-effort runs.
 
-The private [v4 reproduction receipt](local-pot-task-input-receipt-v4.json)
-binds exact inputs, source overlays and run receipts. The 180,579,458-byte
-archive is retained locally and has not been published. The newest recipes use
-source33, the pinned simulator image, `--physics-dt 0.0025` and
-`--contact-solver grip`. A full episode requires a fresh matching free-space gate.
-An input recipient must receive the private pack separately.
+See [new measurements](grasp-reference-repair-results-v1.json),
+[implementation and remaining work](GRASP_REFERENCE_REPAIR.md),
+[grasp search](geometry-search-results-v1.json), and
+[earlier motor/lift checks](motor-contact-repair-results-v1.json).
+95 CPU tests pass. The optional grip solver differs from default settings;
+official evaluation compatibility and hidden-episode performance are unverified.
+No policy training is accepted from these failures.
 
-All 79,097 result/log files (23,795,980,176 bytes)
-are backed up and hash-verified through the immutable inventory chain. Brev is
-confirmed stopped. Conservative cumulative compute bound:
-$12.5618 of the approved $20; not an invoice.
-Reproducing a diagnostic does not establish an accepted submission.
+The private [v5 reproduction receipt](local-pot-task-input-receipt-v5.json)
+binds the 205,469,974-byte local input pack, exact source overlays, seeds and
+run receipts. Nothing in that pack has been published. New physics comparisons
+use source37, source39 or source40 as specified in each recipe, the pinned
+simulator image, `--physics-dt 0.0025`, and `--contact-solver grip`.
+Source41 contains the final CPU grasp-search tools and rejection records.
+The [URDF frame check](geometry-urdf-equivalence-v1.json) verifies the archived
+search asset against 22 recorded SDK link poses. A complete episode requires
+a fresh matching free-space gate. Team members must receive the private pack
+separately; reproducing a diagnostic does not establish a successful submission.
+
+All 97,002 result/log files (30,048,003,316 bytes) are backed up and hash-verified
+through the immutable inventory chain. Brev is confirmed stopped. Conservative
+cumulative compute bound: $14.1958 of the approved $20; not an invoice.
 
 ## Executed result
 

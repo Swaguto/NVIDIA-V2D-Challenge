@@ -328,3 +328,27 @@ tracking; inspect the separate grasp diagnostics for object retention.
 The optional grip solver differs
 from the default diagnostic settings; official evaluation compatibility remains
 unverified. Inputs are local and are not included in GHCR images or Git.
+
+## Reference and carry repair comparisons
+
+The local v5 pack adds exact source37/source39/source40 physics recipes and
+source41 CPU grasp-search tools. See the
+[private receipt](../../docs/team/dex3-isaac-review/local-pot-task-input-receipt-v5.json)
+and [measured checkpoint](../../docs/team/dex3-isaac-review/GRASP_REFERENCE_REPAIR.md).
+The pinned runtime image is unchanged; mount the recipe's source overlay with
+`V2D_CODE_DIR`, bind its exact seed through `V2D_GRIP_SEED`, and use a new output
+directory. Run `grip-task-free` followed by `grip-task`, both with
+`--candidate-controller implicit_pd_ff --physics-dt 0.0025 --contact-solver grip`.
+
+`combined-task-grasps-filtered-v12.json` enables bounded reference denoising.
+The source37 spatial-registration trial uses `registered-v13`; it is retained as
+a rejected comparison. Source39 uses corrected table-frame registration and
+uncompensated carry in `compliant-v14`. Source40 corrects the world tracking gain
+loss: `compensated-frozen-v16` disables live allocation, while
+`compensated-live-v15` enables it with the same nominal acceleration-aware plan.
+All these seed names have the `combined-task-grasps-` prefix and `.json` suffix.
+
+Every complete carry remains unaccepted. Inspect phase aborts, contact coverage,
+relative position and rotation drift, and original-source object errors; a zero
+command exit status does not accept the grasp. Failed underside search proposals
+are archived for diagnosis and must not be used as validated grasp inputs.

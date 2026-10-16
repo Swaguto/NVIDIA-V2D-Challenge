@@ -1,0 +1,667 @@
+{
+  "schema": "v2d.local-input-pack-receipt.v5",
+  "local_archive": "/Users/rohithiruku/dex3_pot_grasp_20261015/dex3-pot-task-inputs-local-v5.tar.gz",
+  "archive_bytes": 205469974,
+  "archive_sha256": "1d5d34989f15e87f2420b59622041878c70fc74d80ddd09a96a988c7e40f7060",
+  "all_member_hashes_verified": true,
+  "manifest": {
+    "schema": "v2d.local-pot-task-inputs.v5",
+    "files": {
+      "input-pack.tar.gz": {
+        "bytes": 83764720,
+        "sha256": "759b6e9fa642b47ec24306969688cc1ce15ead4cb0b80e4f8d086b727b93c680"
+      },
+      "pot-three-pad-effort-v3.json": {
+        "bytes": 38076,
+        "sha256": "de153d0ebc1a7814dd9773c083acaf3ab9fa0c907b2a2229316d3675ade8c599"
+      },
+      "lid-grip-effort.json": {
+        "bytes": 12675,
+        "sha256": "ef60d82709133fccc0f6e8a51e5f343a67f5abfbc4c71d26fa812363a9bccbd5"
+      },
+      "combined-task-grasps-v1.json": {
+        "bytes": 49522,
+        "sha256": "45cf4de3bcd2b2a10b88be354f0008b19aaeecc05ef056da5ba371d7b602e2a2"
+      },
+      "combined-task-grasps-scene-v2.json": {
+        "bytes": 298184,
+        "sha256": "a14dbac79beec0975caf7e07e8b17cdba66741dfaeda894119ebfd1abca879cc"
+      },
+      "combined-task-grasps-nominal-v5.json": {
+        "bytes": 298312,
+        "sha256": "ca49b88e07f36b9452f6005d442fa7024c6c204361bf2b2c5319a66e96a77b7b"
+      },
+      "combined-task-grasps-baseline-v6.json": {
+        "bytes": 298359,
+        "sha256": "6f60ddb691ce63f8d7dc9e65cc3264ed034bc8f67ac2ca1d03355846e8612ed1"
+      },
+      "combined-task-grasps-live-contact-v6.json": {
+        "bytes": 298358,
+        "sha256": "7c8d7284549df2d4da7bcf0b26d547a66f066a6791b158fe7c037aca3352a4dc"
+      },
+      "sources/physics-source-v16.tar.gz": {
+        "bytes": 6008792,
+        "sha256": "637a3a6bb2d7344d7cad4770602966586f931eb197befa97a5f9553e77a7fedc"
+      },
+      "sources/physics-source-v16.json": {
+        "bytes": 26233,
+        "sha256": "3d014e6850306a6092cacc52081e92e148bd3cb9143a29c0639471e1eb20d9b1"
+      },
+      "sources/physics-source-v18.tar.gz": {
+        "bytes": 6020207,
+        "sha256": "e171ffaabfd7aa1f5053d6d93dc3b7794fda0a97b3a7ebf761a0835a6f5ddf1a"
+      },
+      "sources/physics-source-v18.json": {
+        "bytes": 26822,
+        "sha256": "1faeac2c9d2bc12c52e64e390170c1e556324095e0bc34ea715ee3432dd863b8"
+      },
+      "sources/physics-source-v19.tar.gz": {
+        "bytes": 6020402,
+        "sha256": "74442ce394a155ab07c45bb7068f73223302ed6ea3388bb01c34e4f9b39b3160"
+      },
+      "sources/physics-source-v19.json": {
+        "bytes": 26822,
+        "sha256": "8f41c95e529ddfafaaa6b186ff69bd044c8360753497d85f0fce1afbdf2e6d52"
+      },
+      "sources/physics-source-v20.tar.gz": {
+        "bytes": 6023388,
+        "sha256": "c0a600263596505189f518827a90bc913510eacd90b56433fc52ffde1fb0a3b2"
+      },
+      "sources/physics-source-v20.json": {
+        "bytes": 26940,
+        "sha256": "f8c0acb11ec6d5c6423ffaa4d5db52a8270dcffc6548e19389921f9d23bfca26"
+      },
+      "sources/physics-source-v21.tar.gz": {
+        "bytes": 6025344,
+        "sha256": "b07ab40443e29e34cd8c2aad3136be13e4e5cbb598e72b29d8f36cbb20313f09"
+      },
+      "sources/physics-source-v21.json": {
+        "bytes": 27063,
+        "sha256": "d3f714944d6d6cc00524bb84b55007e33f8e1af0bc4cc58bc2b70c4e7a5b60bc"
+      },
+      "sources/physics-source-v22.tar.gz": {
+        "bytes": 6027705,
+        "sha256": "43e62050e28713e534881062f058476001789cc18738825bddbec433efc46497"
+      },
+      "sources/physics-source-v22.json": {
+        "bytes": 27314,
+        "sha256": "c6aa5c0ada4b44eff7e49fc0a5dc4af5aa8712034b68824029ce73d7541bd562"
+      },
+      "combined-task-grasps-live-posture-v7.json": {
+        "bytes": 298409,
+        "sha256": "a42afe54c45c37353837e80cfa983b31b4dddfb084089a7067afaf5d728cea12"
+      },
+      "sources/physics-source-v23.tar.gz": {
+        "bytes": 6027569,
+        "sha256": "30cf93e0296dce8f7810b3e4f2a500b820f8e3ea51244b5f181f9d848b5903eb"
+      },
+      "sources/physics-source-v23.json": {
+        "bytes": 27314,
+        "sha256": "025021900fb245b90cdd5b8f278df71e7f71adf6c5c306e7d02ba1e4ee13fc85"
+      },
+      "sources/physics-source-v24.tar.gz": {
+        "bytes": 6028588,
+        "sha256": "1a1617041b5ddced08557e4cee74073a4f1ae6f89c65beea5aca717e51c78e50"
+      },
+      "sources/physics-source-v24.json": {
+        "bytes": 27446,
+        "sha256": "d96a0ef82705ca45c6673b6ac4ccb9d3f1279aedf8503ea2f08c7488b798c5b2"
+      },
+      "sources/physics-source-v25.tar.gz": {
+        "bytes": 6033456,
+        "sha256": "ad167ff570368fd9135f4f481ee12d63d45171d0320f982584cb296da0d85a79"
+      },
+      "sources/physics-source-v25.json": {
+        "bytes": 27710,
+        "sha256": "8d597e6b3d69d674d29c2d376474414c0f8446ef85035bcc8c01d8fc50487528"
+      },
+      "sources/physics-source-v26.tar.gz": {
+        "bytes": 6035955,
+        "sha256": "304306b0e892ad5170bee6b695a29981da1a0ea10fb41bb48d4b3792b2fd3da0"
+      },
+      "sources/physics-source-v26.json": {
+        "bytes": 27710,
+        "sha256": "141ed3dee668e47242c1b017f9d51d05a80550bbe67bdb9531af6dd1c034cd93"
+      },
+      "sources/physics-source-v28.tar.gz": {
+        "bytes": 6040723,
+        "sha256": "2d20e8db8cae1c160510601b985240cd138ceb045d84050479db4b27d9e8e342"
+      },
+      "sources/physics-source-v28.json": {
+        "bytes": 27838,
+        "sha256": "1fe5f7bc21f7fb902ff7f56cdabadf44b79fd927160fa091ecdc3a02f3f023a5"
+      },
+      "sources/physics-source-v29.tar.gz": {
+        "bytes": 6042419,
+        "sha256": "e8d7f8ffc5c2c4d6dd4365e746564b49b224f789eb6f2ee0dd34178c90509630"
+      },
+      "sources/physics-source-v29.json": {
+        "bytes": 27838,
+        "sha256": "0b826601668cff0ef22af8f1b3b0056ff8b3f8e54e1740b9341e71591155779d"
+      },
+      "sources/physics-source-v30.tar.gz": {
+        "bytes": 6042741,
+        "sha256": "a20c7a153e585030563ece03ddc8ba2fde5bb0e783e24033fb5256b0ee49c8d4"
+      },
+      "sources/physics-source-v30.json": {
+        "bytes": 27838,
+        "sha256": "99d07247c0d4b77dd20a080955a7990a04ba9b9410301993e0fa0923bd5531a7"
+      },
+      "sources/physics-source-v31.tar.gz": {
+        "bytes": 6043760,
+        "sha256": "3eb5cd0688d330b73d6d15b28cca4c8ed091f3be5691b7b4139a2bb0b0003149"
+      },
+      "sources/physics-source-v31.json": {
+        "bytes": 27838,
+        "sha256": "4153d7dfaf2f39ebf69de6dfb69a69024223db1a5bee4aacd340c6bd398dea4b"
+      },
+      "sources/physics-source-v32.tar.gz": {
+        "bytes": 6044183,
+        "sha256": "bc9cb606cc9cf6eca3d0fe06e1f14bfd63e492a353dbe4ca5915363a97624706"
+      },
+      "sources/physics-source-v32.json": {
+        "bytes": 27838,
+        "sha256": "144ddda8a2fb4261a69e978ad73746c8389006fbe61bfaca58332d6ab10b9482"
+      },
+      "sources/physics-source-v33.tar.gz": {
+        "bytes": 6045942,
+        "sha256": "2d7ee08f8a42ffd6bf2640fd2f39e05696d2a3ed0d7fa15e8d9b57ecb592e756"
+      },
+      "sources/physics-source-v33.json": {
+        "bytes": 27838,
+        "sha256": "19efce240a41cb6606e687b9d5460197ac6413a8f540a7839a40ac92b1309679"
+      },
+      "combined-task-grasps-smooth-baseline-v8.json": {
+        "bytes": 298472,
+        "sha256": "d7fe93646d2f782407fbf76deda56a957d2be0845c55474d798311f71b8f55f1"
+      },
+      "combined-task-grasps-smooth-dynamic-v8.json": {
+        "bytes": 298537,
+        "sha256": "580c2a8a6223750e7bed0c153302eda2d7fabe9b9447bf8374c664178ddeecc0"
+      },
+      "combined-task-grasps-primary-baseline-v9.json": {
+        "bytes": 298526,
+        "sha256": "539f0141a292af301fc9176ccdd0f60f356f90190fc8315d20ad13b4947bb2d6"
+      },
+      "combined-task-grasps-recovery-v9.json": {
+        "bytes": 298629,
+        "sha256": "7c4d7b057357d630154c510e5177d2eb5a555f4b25843233eba6a109a343a9b0"
+      },
+      "combined-task-grasps-hybrid-v10.json": {
+        "bytes": 298629,
+        "sha256": "aa14454b8a8233bfd2a671f50d4149915c434bfd289095c14bd512ec1d68a45f"
+      },
+      "combined-task-grasps-grip4N-v11.json": {
+        "bytes": 298526,
+        "sha256": "6b5b6f0ef97afe29a8789aa5c6a371977b3abcd69d2ad9921d2dc8b6f39fd00c"
+      },
+      "receipts/ordered-run-session19-receipt.json": {
+        "bytes": 1655,
+        "sha256": "0fe42b762164fb431a65bc4988b8d46b070d3d9d5299a0eb4368788620d3fdd8"
+      },
+      "receipts/session19-stopped-confirmed.json": {
+        "bytes": 226,
+        "sha256": "13f6749003875ac27452e9b6966137dbdd633e0e5bd7903949eff1b8501bd1a7"
+      },
+      "receipts/ordered-run-session20-receipt.json": {
+        "bytes": 3099,
+        "sha256": "ff791fae0d7eebdbfef340034012a2a7f6d6cd0d3b7b02b58b8ef2882f5eef6f"
+      },
+      "receipts/session20-stopped-confirmed.json": {
+        "bytes": 226,
+        "sha256": "b42819131fa60489371ac59ccafd356dd07abf03ce476a3cd31e463cd94ae73b"
+      },
+      "receipts/ordered-run-session21-receipt.json": {
+        "bytes": 3593,
+        "sha256": "250422a59683915721cddac44c1855715a66ee4f0c31fdf16f85f6485b273d41"
+      },
+      "receipts/session21-stopped-confirmed.json": {
+        "bytes": 226,
+        "sha256": "e0be15e86beebee80514f39605bb19f7b64744cff9c2d190bacb0b0018b0ac3c"
+      },
+      "receipts/ordered-run-session22-receipt.json": {
+        "bytes": 3757,
+        "sha256": "165938a935efb8c34ab26deacf22951ae89286ef9fe419c2e353e8cfac5f4be2"
+      },
+      "receipts/session22-stopped-confirmed.json": {
+        "bytes": 226,
+        "sha256": "7cd2492f574a1f7b22594dd25c89e25458357a85117fd8c1df2795cf960b5133"
+      },
+      "receipts/ordered-run-session23-receipt.json": {
+        "bytes": 4379,
+        "sha256": "cd13a4ab206d8aba42d7664b0fd0fa5a8a0e0317504adc73f22377f02d99b065"
+      },
+      "receipts/session23-stopped-confirmed.json": {
+        "bytes": 226,
+        "sha256": "b928ed0ddfb159c705517f8222159e7482419878c37febf83c45de54f795867d"
+      },
+      "receipts/ordered-run-session24-receipt.json": {
+        "bytes": 4076,
+        "sha256": "21c1edff7dac4d3fb6bc16815ad6848e23669ecd8670ce89fdd1c9531965afae"
+      },
+      "receipts/session24-stopped-confirmed.json": {
+        "bytes": 226,
+        "sha256": "e87be1690b81ea32350b64fd895d931f112dcd3fd188c346e40dd80874349f63"
+      },
+      "receipts/ordered-run-session25-receipt.json": {
+        "bytes": 4019,
+        "sha256": "61e8b40154dc7aca0d85450c97dfcd4b1ec6fb760fce3af5f6142f369ab77c9b"
+      },
+      "receipts/session25-stopped-confirmed.json": {
+        "bytes": 226,
+        "sha256": "769ee2f4b40af9948e762d7fa9a49254526aa88b83bc10762708f80309d9bf8c"
+      },
+      "sources/physics-source-v37.tar.gz": {
+        "bytes": 6049879,
+        "sha256": "51cf0385d0b45e45e79e73f96fc7c4ba3f2a37ceb69f5580cd2581ebd0fa730c"
+      },
+      "sources/physics-source-v37.json": {
+        "bytes": 27971,
+        "sha256": "8962b17f50dc750fd0bfd54c4af209067e7ea1d053a111bf1b810c7d9c09282d"
+      },
+      "sources/physics-source-v39.tar.gz": {
+        "bytes": 6051892,
+        "sha256": "b4046e4d8d99d060e4193d7f4182ba70e6474cb09b37aa2e0413693800689342"
+      },
+      "sources/physics-source-v39.json": {
+        "bytes": 28100,
+        "sha256": "2d784b42693b22b7b8d7298a0c5fcb7a0f62d3cbe01c024231a97c6159775ef6"
+      },
+      "sources/physics-source-v40.tar.gz": {
+        "bytes": 6052940,
+        "sha256": "c65f8281a79356abb3b55d0c5128b1a3543d9cfeedeb614253060e1f1696e4a8"
+      },
+      "sources/physics-source-v40.json": {
+        "bytes": 28100,
+        "sha256": "7e77f79a644d98b65dc1b435d4ce58533ce4465b918e8b97da5960e2e114fb0a"
+      },
+      "combined-task-grasps-filtered-v12.json": {
+        "bytes": 298721,
+        "sha256": "88bf53a4ed9def7c6082e6aaae4e43a268158216cba7c7e4f8269df08131c678"
+      },
+      "combined-task-grasps-registered-v13.json": {
+        "bytes": 298720,
+        "sha256": "a46f30a4dcf7146d51f838ef18b79d52b2f6384f9cdb7acca88dc67b56ee0bc6"
+      },
+      "combined-task-grasps-compliant-v14.json": {
+        "bytes": 298761,
+        "sha256": "13f09d98b0a1a727944d12943e1bae2fe8bd0bc6b9639862a5307500a32d1d5b"
+      },
+      "combined-task-grasps-compensated-frozen-v16.json": {
+        "bytes": 298711,
+        "sha256": "ae8aa4a7be8db23ed3b2825949d780d2defff483e389dc0e1b1d37997f6ae106"
+      },
+      "combined-task-grasps-compensated-live-v15.json": {
+        "bytes": 298761,
+        "sha256": "13f09d98b0a1a727944d12943e1bae2fe8bd0bc6b9639862a5307500a32d1d5b"
+      },
+      "receipts/ordered-run-session26-receipt.json": {
+        "bytes": 4364,
+        "sha256": "5511348e033f3b5b3405e0b19e767563f01c33a1f90bc853bf5fe4c2209c6ea4"
+      },
+      "receipts/session26-stopped-confirmed.json": {
+        "bytes": 226,
+        "sha256": "a72c9baf814dbd10647143cad9868e8b9a4f09710c2c1d27ece9297d318f4e69"
+      },
+      "receipts/compute-session26.json": {
+        "bytes": 369,
+        "sha256": "158c11dbb7742fa0a5a2d92fddc574ad3da7d9e0438d6ea1c7801e5776e89367"
+      },
+      "receipts/ordered-run-session27-receipt.json": {
+        "bytes": 4168,
+        "sha256": "9fd99218c8df29bbda55a90bf672134abf6f7daa071dbfd1ad57f5bf293033de"
+      },
+      "receipts/session27-stopped-confirmed.json": {
+        "bytes": 226,
+        "sha256": "b054d39ace77fb434127f6e4cb365c7665dc7caf0fde5f23e6ccbe15cb0b4390"
+      },
+      "receipts/compute-session27.json": {
+        "bytes": 479,
+        "sha256": "93114b391538c45041acf9bb19f5a1db23c6ad621c958c8ad469a8cf66059c42"
+      },
+      "receipts/ordered-run-session28-receipt.json": {
+        "bytes": 4528,
+        "sha256": "b7555a088a926951acc73e8570899a2b3f1dc6c3cb8aa9d0beb9b028ae3d5a4c"
+      },
+      "receipts/session28-stopped-confirmed.json": {
+        "bytes": 226,
+        "sha256": "58c3372274e581bc7ef96f96c495c66c7c217a0f2b374106e07537038662d1f5"
+      },
+      "receipts/compute-session28.json": {
+        "bytes": 369,
+        "sha256": "789969f49df4ddccb80957e1e78f05d08d1744e15abe31bc4447a2605f5f0d28"
+      },
+      "analysis/reference-repair-diagnosis-v1.json": {
+        "bytes": 2493,
+        "sha256": "d82a1797d14f25ee31b4f132e4b4f2ed0f49dc4e3b8d7a2c7f6ef05068da8c6e"
+      },
+      "analysis/grasp-reference-repair-results-v1.json": {
+        "bytes": 61647,
+        "sha256": "40d3ff589ca10eee2c24da581598453c6108cc555d8e4a1f5ec2752ec9ce0cf7"
+      },
+      "sources/physics-source-v41.tar.gz": {
+        "bytes": 6061589,
+        "sha256": "446d18b173ada70b0a06728eab39fa617e41168de9cb404358da4eae911ba612"
+      },
+      "sources/physics-source-v41.json": {
+        "bytes": 28487,
+        "sha256": "452f23c6b48d21b97cd525c8939b9cdc04dbd5a47c548effd07f3d2a941e91db"
+      },
+      "analysis/geometry-search-results-v1.json": {
+        "bytes": 8005,
+        "sha256": "4e8f82b81ffb2131abc132d4c33991db7b2aaf3825b9bd6ead52bfbc9130f283"
+      },
+      "geometry-search/pot-under-support-roll-120-floor-v3.json": {
+        "bytes": 16698,
+        "sha256": "c8e74018b340decff07c5bc47a8c1a73619c6b8f2b7811eda5b4b7d920db0576"
+      },
+      "geometry-search/pot-under-support-roll-120-wide-v2.json": {
+        "bytes": 15851,
+        "sha256": "2bf7719162666c6cc063490a6a26a2dd8ddc9463178178b6bc2f57451dad73ce"
+      },
+      "geometry-search/pot-under-support-roll-135-floor-v3.json": {
+        "bytes": 16703,
+        "sha256": "810819909b5f2f4a3f24f9ef967750194ef2184afca7a07373715defeae8ff2f"
+      },
+      "geometry-search/pot-under-support-roll-150-v1.json": {
+        "bytes": 15810,
+        "sha256": "d305a7aa0aa0e9ff87b7555125f8a503e8d7371697b0b949794cf61714325da3"
+      },
+      "geometry-search/pot-under-support-roll-150-wide-v2.json": {
+        "bytes": 15846,
+        "sha256": "6043b2f63a59efc3e403ef708fd863380d556b57d9aac48a98d75f60730a5dab"
+      },
+      "geometry-search/pot-under-support-roll120-v1.json": {
+        "bytes": 15805,
+        "sha256": "ac3009a87d1f30305694fe6591a40f73180fc8bf552cadd2a278cb20b61ac87f"
+      },
+      "geometry-search/pot-under-support-roll120-wide-v2.json": {
+        "bytes": 15840,
+        "sha256": "a5502a9c94251822b86d6e41d70acd9577b64e3149ce6a977e9dbe73efd80b65"
+      },
+      "geometry-search/pot-under-support-roll150-v1.json": {
+        "bytes": 15811,
+        "sha256": "eca37e5943e5b56d2e176011df7a27f394439b4256ea308b38c7599cbe1b91a6"
+      },
+      "geometry-search/pot-under-support-roll150-wide-v2.json": {
+        "bytes": 15841,
+        "sha256": "33ac1d15ceeb56620eb5ef8551eac4b47b0467fa09a58f9aff253508c2ff09fe"
+      },
+      "geometry-source/report.json": {
+        "bytes": 51592,
+        "sha256": "fa86a3856b53b205e5ab0400864e9b0a9a987d6cd2fea87f34db6fa8ebf2cd43"
+      },
+      "geometry-source/states.json": {
+        "bytes": 658194,
+        "sha256": "029462f4f5657316cca436d2d3636082c80dd0eaca4b1b936b624a7f93f56f2c"
+      },
+      "geometry-source/cooked-colliders.json": {
+        "bytes": 2426266,
+        "sha256": "1e0c5819042633d368f3db298375115b70c007267e70c22d2439d84ee8a1cbd4"
+      },
+      "geometry-source/urdfs/dex3_left.urdf": {
+        "bytes": 10865,
+        "sha256": "2e55003b8b5f50bbc81a14566a733c85faf2108c41f32cf8a2824992aeddf155"
+      },
+      "geometry-source/urdfs/dex3_right.urdf": {
+        "bytes": 10913,
+        "sha256": "a60b8c5ed8be4fe8a065f9ad8e854d6f46efd673261335bcde15481a32f2165f"
+      }
+    },
+    "recipes": {
+      "verified_isolated_pot": {
+        "source": "sources/physics-source-v16.tar.gz",
+        "seed": "pot-three-pad-effort-v3.json",
+        "stages": [
+          "grasp-acquisition",
+          "grip-lift"
+        ],
+        "motor_budget_certified": false
+      },
+      "recorded_failed_baseline": {
+        "source": "sources/physics-source-v18.tar.gz",
+        "seed": "combined-task-grasps-scene-v2.json",
+        "stages": [
+          "grip-task-free",
+          "grip-task"
+        ]
+      },
+      "recorded_inactive_live_trial": {
+        "source": "sources/physics-source-v22.tar.gz",
+        "seed": "combined-task-grasps-live-contact-v6.json",
+        "gpu_tested": true,
+        "accepted": false,
+        "activation_fraction": 0.0
+      },
+      "recorded_removed_spring_trial": {
+        "source": "sources/physics-source-v23.tar.gz",
+        "seed": "combined-task-grasps-live-contact-v6.json",
+        "gpu_tested": true,
+        "accepted": false
+      },
+      "recorded_posture_retention_trial": {
+        "source": "sources/physics-source-v24.tar.gz",
+        "seed": "combined-task-grasps-live-posture-v7.json",
+        "stages": [
+          "grip-task-free",
+          "grip-task"
+        ],
+        "gpu_tested": true,
+        "accepted": false,
+        "result_receipt": "See coupled-physics-campaign-v2.json; diagnostic reproduction only"
+      },
+      "repaired_motor_probe": {
+        "source": "sources/physics-source-v30.tar.gz",
+        "entrypoint": "/opt/sim/bin/python",
+        "script": "/code/scripts/dex3_physics/check_implicit_torque_budget.py",
+        "args": [
+          "--out",
+          "/outputs/probe.json",
+          "--encode-in-drive"
+        ],
+        "measured_probe": "motor-budget-v3",
+        "source_episode_loaded": false
+      },
+      "bounded_pot_lift": {
+        "source": "sources/physics-source-v32.tar.gz",
+        "seed": "pot-three-pad-effort-v3.json",
+        "physics_dt_s": 0.0025,
+        "stages": [
+          "grip-lift"
+        ],
+        "controller": "implicit_pd_ff",
+        "experiment": "pot-lift-bounded-fine-v1",
+        "accepted": false,
+        "scope": "Diagnostic reproduction; consult campaign receipt for executed result",
+        "recorded_source": "sources/physics-source-v31.tar.gz",
+        "reproduction_source_scope": "Identical physics executor/controller; corrected record-count postprocessor in source32"
+      },
+      "bounded_hybrid": {
+        "source": "sources/physics-source-v32.tar.gz",
+        "seed": "combined-task-grasps-hybrid-v10.json",
+        "physics_dt_s": 0.0025,
+        "stages": [
+          "grip-task-free",
+          "grip-task"
+        ],
+        "controller": "implicit_pd_ff",
+        "experiment": "coupled-task-hybrid-fine-v4",
+        "accepted": false,
+        "scope": "Diagnostic reproduction; consult campaign receipt for executed result"
+      },
+      "bounded_fine": {
+        "source": "sources/physics-source-v32.tar.gz",
+        "seed": "combined-task-grasps-recovery-v9.json",
+        "physics_dt_s": 0.0025,
+        "stages": [
+          "grip-task-free",
+          "grip-task"
+        ],
+        "controller": "implicit_pd_ff",
+        "experiment": "coupled-task-fine-v4",
+        "accepted": false,
+        "scope": "Diagnostic reproduction; consult campaign receipt for executed result"
+      },
+      "grip_solver_probe": {
+        "source": "sources/physics-source-v33.tar.gz",
+        "entrypoint": "/opt/sim/bin/python",
+        "script": "/code/scripts/dex3_physics/check_implicit_torque_budget.py",
+        "args": [
+          "--out",
+          "/outputs/probe.json",
+          "--encode-in-drive",
+          "--contact-solver",
+          "grip"
+        ],
+        "experiment": "motor-budget-grip-v1",
+        "accepted": false
+      },
+      "grip_solver_lift": {
+        "source": "sources/physics-source-v33.tar.gz",
+        "seed": "pot-three-pad-effort-v3.json",
+        "physics_dt_s": 0.0025,
+        "contact_solver": "grip",
+        "stages": [
+          "grip-lift"
+        ],
+        "experiment": "pot-lift-grip-fine-v1",
+        "accepted": false
+      },
+      "grip_solver_episode": {
+        "source": "sources/physics-source-v33.tar.gz",
+        "seed": "combined-task-grasps-hybrid-v10.json",
+        "physics_dt_s": 0.0025,
+        "contact_solver": "grip",
+        "stages": [
+          "grip-task-free",
+          "grip-task"
+        ],
+        "controller": "implicit_pd_ff",
+        "experiment": "coupled-task-grip-solver-v1",
+        "accepted": false
+      },
+      "grip4N_episode": {
+        "source": "sources/physics-source-v33.tar.gz",
+        "seed": "combined-task-grasps-grip4N-v11.json",
+        "physics_dt_s": 0.0025,
+        "contact_solver": "grip",
+        "stages": [
+          "grip-task-free",
+          "grip-task"
+        ],
+        "controller": "implicit_pd_ff",
+        "experiment": "coupled-task-grip4N-v1",
+        "minimum_planned_pad_normal_N": 4.0,
+        "maximum_planned_feedforward_Nm": 0.5100098215410123,
+        "accepted": false
+      },
+      "bounded_reference": {
+        "source": "sources/physics-source-v37.tar.gz",
+        "seed": "combined-task-grasps-filtered-v12.json",
+        "physics_dt_s": 0.0025,
+        "contact_solver": "grip",
+        "stages": [
+          "grip-task-free",
+          "grip-task"
+        ],
+        "controller": "implicit_pd_ff",
+        "experiment": "coupled-task-filtered-v1",
+        "accepted": false,
+        "scope": "Complete unaccepted diagnostic; retain source errors, failed phases and all frames"
+      },
+      "registered_reference": {
+        "source": "sources/physics-source-v37.tar.gz",
+        "seed": "combined-task-grasps-registered-v13.json",
+        "physics_dt_s": 0.0025,
+        "contact_solver": "grip",
+        "stages": [
+          "grip-task-free",
+          "grip-task"
+        ],
+        "controller": "implicit_pd_ff",
+        "experiment": "coupled-task-registered-v1",
+        "accepted": false,
+        "scope": "Complete unaccepted diagnostic; retain source errors, failed phases and all frames"
+      },
+      "compliant_reference": {
+        "source": "sources/physics-source-v39.tar.gz",
+        "seed": "combined-task-grasps-compliant-v14.json",
+        "physics_dt_s": 0.0025,
+        "contact_solver": "grip",
+        "stages": [
+          "grip-task-free",
+          "grip-task"
+        ],
+        "controller": "implicit_pd_ff",
+        "experiment": "coupled-task-compliant-v1",
+        "accepted": false,
+        "scope": "Complete unaccepted diagnostic; retain source errors, failed phases and all frames"
+      },
+      "compensated_frozen": {
+        "source": "sources/physics-source-v40.tar.gz",
+        "seed": "combined-task-grasps-compensated-frozen-v16.json",
+        "physics_dt_s": 0.0025,
+        "contact_solver": "grip",
+        "stages": [
+          "grip-task-free",
+          "grip-task"
+        ],
+        "controller": "implicit_pd_ff",
+        "experiment": "coupled-task-compensated-frozen-v1",
+        "accepted": false,
+        "scope": "Complete unaccepted diagnostic; retain source errors, failed phases and all frames"
+      },
+      "compensated_live": {
+        "source": "sources/physics-source-v40.tar.gz",
+        "seed": "combined-task-grasps-compensated-live-v15.json",
+        "physics_dt_s": 0.0025,
+        "contact_solver": "grip",
+        "stages": [
+          "grip-task-free",
+          "grip-task"
+        ],
+        "controller": "implicit_pd_ff",
+        "experiment": "coupled-task-compensated-live-v1",
+        "accepted": false,
+        "scope": "Complete unaccepted diagnostic; retain source errors, failed phases and all frames"
+      }
+    },
+    "published": false,
+    "excludes_MANO_weights_and_credentials": true,
+    "full_carry_or_policy_accepted": false,
+    "historical_torque_scope": "Legacy applied_torque is a clipped model estimate; separate feedforward exceeded native drive cap in measured isolated probe",
+    "geometry_planning": {
+      "source": "sources/physics-source-v41.tar.gz",
+      "source_directory": "geometry-source",
+      "seed": "pot-three-pad-effort-v3.json",
+      "latest_mode": "floor-constrained underside search with source-relative joint reconfiguration",
+      "physical_candidates_accepted": 0,
+      "prior_preflight_records_are_historical": true
+    }
+  },
+  "published": false,
+  "supplemental_geometry_urdf_equivalence": {
+    "schema": "v2d.geometry-urdf-frame-equivalence.v1",
+    "source_report_sha256": "fa86a3856b53b205e5ab0400864e9b0a9a987d6cd2fea87f34db6fa8ebf2cd43",
+    "source_states_sha256": "029462f4f5657316cca436d2d3636082c80dd0eaca4b1b936b624a7f93f56f2c",
+    "variants": [
+      {
+        "variant": "source_asset",
+        "urdf_sha256": "2e55003b8b5f50bbc81a14566a733c85faf2108c41f32cf8a2824992aeddf155",
+        "sdk_links_checked": 22,
+        "maximum_sdk_fk_position_error_m": 2.8499948411295534e-07,
+        "maximum_sdk_fk_rotation_error_rad": 4.66394647023059e-07
+      },
+      {
+        "variant": "recorded_import",
+        "urdf_sha256": "5ef9ad8c2ac2a775ea149987dd70ec9e7d3b07c77aec75eb4a56ddd637905f69",
+        "sdk_links_checked": 22,
+        "maximum_sdk_fk_position_error_m": 2.8499948411295534e-07,
+        "maximum_sdk_fk_rotation_error_rad": 4.66394647023059e-07
+      }
+    ],
+    "all_checked_links_match": true,
+    "scope": "Both supplied URDF variants match recorded SDK link frames; the source asset variant was used for the CPU geometry search. The original seed retains its historical URDF hash. No physical grasp accepted."
+  },
+  "archived_case_measurements_match_latest_review": true
+}

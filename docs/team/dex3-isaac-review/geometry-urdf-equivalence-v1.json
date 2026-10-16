@@ -1,0 +1,23 @@
+{
+  "schema": "v2d.geometry-urdf-frame-equivalence.v1",
+  "source_report_sha256": "fa86a3856b53b205e5ab0400864e9b0a9a987d6cd2fea87f34db6fa8ebf2cd43",
+  "source_states_sha256": "029462f4f5657316cca436d2d3636082c80dd0eaca4b1b936b624a7f93f56f2c",
+  "variants": [
+    {
+      "variant": "source_asset",
+      "urdf_sha256": "2e55003b8b5f50bbc81a14566a733c85faf2108c41f32cf8a2824992aeddf155",
+      "sdk_links_checked": 22,
+      "maximum_sdk_fk_position_error_m": 2.8499948411295534e-07,
+      "maximum_sdk_fk_rotation_error_rad": 4.66394647023059e-07
+    },
+    {
+      "variant": "recorded_import",
+      "urdf_sha256": "5ef9ad8c2ac2a775ea149987dd70ec9e7d3b07c77aec75eb4a56ddd637905f69",
+      "sdk_links_checked": 22,
+      "maximum_sdk_fk_position_error_m": 2.8499948411295534e-07,
+      "maximum_sdk_fk_rotation_error_rad": 4.66394647023059e-07
+    }
+  ],
+  "all_checked_links_match": true,
+  "scope": "Both supplied URDF variants match recorded SDK link frames; the source asset variant was used for the CPU geometry search. The original seed retains its historical URDF hash. No physical grasp accepted."
+}
