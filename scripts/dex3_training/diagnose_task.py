@@ -275,6 +275,15 @@ def main(cfg):
         phase_policy = None
         plan_path = cfg.get("residual_plan")
         plan_sha = None
+        embedded = cfg.action.get("phase_policy_prior")
+        if embedded:
+            plan_sha = hashlib.sha256(
+                (manifest_path.parent / embedded).read_bytes()
+            ).hexdigest()
+        if embedded and plan_path:
+            raise ValueError(
+                "Independent replay cannot apply the same phase prior twice"
+            )
         if plan_path:
             from v2d_dex3_flashchord.phase_prior import schedule
             from v2d_dex3_flashchord.sampling import resample_targets

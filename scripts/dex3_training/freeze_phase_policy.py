@@ -11,7 +11,7 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def freeze(inputs, plan_path, replay_audit, out):
+def validate(inputs, plan_path, replay_audit):
     manifest = json.loads((inputs / "manifest.json").read_text())
     plan = json.loads(plan_path.read_text())
     audit = json.loads(replay_audit.read_text())
@@ -50,6 +50,12 @@ def freeze(inputs, plan_path, replay_audit, out):
         path = (inputs / name).resolve()
         if not path.is_relative_to(inputs.resolve()) or sha(path) != expected:
             raise ValueError("Private source inputs changed")
+    return manifest
+
+
+def freeze(inputs, plan_path, replay_audit, out):
+    manifest = validate(inputs, plan_path, replay_audit)
+    source_sha = sha(inputs / "manifest.json")
     if out.exists():
         raise FileExistsError(out)
     shutil.copytree(inputs, out)
@@ -67,7 +73,15 @@ def freeze(inputs, plan_path, replay_audit, out):
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
-    for name in ("inputs", "plan", "replay-audit", "out"):
+    for name in ("inputs", "plan", "replay-audit"):
         p.add_argument("--" + name, type=Path, required=True)
+    p.add_argument("--out", type=Path)
+    p.add_argument("--validate-only", action="store_true")
     a = p.parse_args()
-    freeze(a.inputs, a.plan, a.replay_audit, a.out)
+    if a.validate_only:
+        validate(a.inputs, a.plan, a.replay_audit)
+        print("Independent native phase policy verification passed")
+    elif a.out is not None:
+        freeze(a.inputs, a.plan, a.replay_audit, a.out)
+    else:
+        p.error("--out is required unless --validate-only is used")
