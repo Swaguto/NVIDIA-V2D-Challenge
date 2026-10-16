@@ -263,3 +263,22 @@ def test_compensated_carry_retains_world_tracking_in_rigid_grasp_limit_and_force
         linear_damping=100,
     )
     assert saturated[0] == 60
+
+
+def test_staggered_parking_changes_idle_clearance_without_changing_loaded_grasp():
+    import copy
+    import pytest
+
+    base = reference()
+    changed = copy.deepcopy(base.spec)
+    changed["park_height_by_hand_m"] = {"left": 0.21}
+    ref = TaskGripReference(changed)
+    obj = [0, 0, 0, 0, 0, 0, 1]
+    idle = ref.command("left", 0, obj)["pose"] - base.command("left", 0, obj)["pose"]
+    np.testing.assert_allclose(idle, [0, 0, 0.09, 0, 0, 0, 0], atol=1e-12)
+    np.testing.assert_allclose(
+        ref.command("left", 3, obj)["pose"], base.command("left", 3, obj)["pose"]
+    )
+    changed["park_height_by_hand_m"] = {"left": float("nan")}
+    with pytest.raises(ValueError, match="parking heights"):
+        TaskGripReference(changed)

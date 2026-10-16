@@ -1,0 +1,12 @@
+# @package _global_
+# Match the accepted Isaac seed's per-hand finger stiffness; native wrist control.
+defaults:
+  - dex3_repaired
+  - _self_
+embodiment:
+  config:
+    joint_overrides:
+      'wrist_[xyz]$': {kp: 50.0, kd: 10.0, effort_limit: 60.0}
+      'wrist_rotvec$': {mode: effort, kp: 12.0, kd: 0.1, effort_limit: 60.0}
+      'right_hand_(thumb|middle|index)_[012]_joint$': {kp: 2.0}
+output_dir: /outputs/repaired-baseline

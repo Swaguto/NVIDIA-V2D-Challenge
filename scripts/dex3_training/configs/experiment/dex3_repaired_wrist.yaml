@@ -1,0 +1,12 @@
+# @package _global_
+# A 0.3 kg payload deflects a 50 N/m wrist by about 59 mm before dynamics.
+# 400 N/m reduces that static deflection to about 7.4 mm; damping is near
+# critical for the nominal 0.7 kg hand. All motor force/torque caps are retained.
+defaults:
+  - dex3_repaired_baseline
+  - _self_
+embodiment:
+  config:
+    joint_overrides:
+      'wrist_[xyz]$': {kp: 400.0, kd: 35.0, effort_limit: 60.0}
+output_dir: /outputs/repaired-wrist

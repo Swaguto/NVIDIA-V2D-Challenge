@@ -264,6 +264,15 @@ class TaskGripReference:
         if spec["schema"] != "v2d.dex3-task-grips.v1" or spec["physical_task_accepted"]:
             raise ValueError("Need an explicitly unaccepted task grasp reference")
         self.spec = spec
+        heights = spec.get("park_height_by_hand_m", {})
+        if (
+            not isinstance(heights, dict)
+            or set(heights) - {"left", "right"}
+            or any(
+                not np.isfinite(v) or not 0.12 <= v <= 0.25 for v in heights.values()
+            )
+        ):
+            raise ValueError("Per-hand parking heights must be in [0.12, 0.25] m")
         self.carry_feedback_weight = float(
             spec.get("carry_object_feedback_weight", 0.9)
         )
@@ -404,7 +413,12 @@ class TaskGripReference:
             retreat = smooth((time_s - end - 0.25) / 0.5)
             height = 1.0 if parked else 1 - descend + retreat
             height = height + (1 - min(height, 1.0)) * abort
-            pose[2] += self.spec["park_height_m"] * height
+            pose[2] += (
+                self.spec.get("park_height_by_hand_m", {}).get(
+                    side, self.spec["park_height_m"]
+                )
+                * height
+            )
             closed = smooth((time_s - close + 0.25) / 0.125)
             opening = smooth((time_s - end) / 0.25)
             if parked:

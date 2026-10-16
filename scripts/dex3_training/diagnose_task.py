@@ -11,6 +11,7 @@ from pathlib import Path
 
 import hydra
 import jax.numpy as jnp
+import numpy as np
 from omegaconf import OmegaConf
 import warp as wp
 
@@ -32,6 +33,70 @@ from flash_chord.scene.collision import CollisionPolicy
 from flash_chord.scene.setup import setup_scene
 from flash_chord.training.environment import WarpRLEnv
 from train import audit_scene
+
+
+class ReadbackEnv:
+    """Record native solver state without changing actions, contacts or reset rules."""
+
+    def __init__(self, wrapped, env):
+        self.wrapped, self.env = wrapped, env
+        self.body, self.joints, self.motor = [], [], []
+        model = getattr(env.solver, "mj_model", None)
+        self.ranges = getattr(model, "actuator_forcerange", None)
+        self.limited = getattr(model, "actuator_forcelimited", None)
+
+    def step(self, action):
+        result = self.wrapped.step(action)
+        self.body.append(self.env.state_0.body_q.numpy().copy())
+        self.joints.append(self.env.state_0.joint_q.numpy().copy())
+        data = getattr(self.env.solver, "mjw_data", None)
+        force = getattr(data, "actuator_force", None)
+        if force is not None:
+            self.motor.append(force.numpy().copy())
+        return result
+
+    def save(self, output):
+        arrays = dict(
+            body_poses=np.asarray(self.body), joint_positions=np.asarray(self.joints)
+        )
+        verification = dict(
+            native_actuator_force_readback_available=bool(self.motor),
+            native_capped_drive_verified=False,
+        )
+        if self.motor and self.ranges is not None and self.limited is not None:
+            force = np.asarray(self.motor)
+            ranges, limited = np.asarray(self.ranges), np.asarray(self.limited, bool)
+            arrays.update(
+                native_actuator_force=force,
+                native_actuator_forcerange=ranges,
+                native_actuator_forcelimited=limited,
+            )
+            flat = force.reshape(-1, ranges.shape[0])
+            within = bool(
+                np.isfinite(flat).all()
+                and np.all(flat[:, limited] >= ranges[limited, 0] - 1e-5)
+                and np.all(flat[:, limited] <= ranges[limited, 1] + 1e-5)
+            )
+            finger = (
+                limited
+                & np.isclose(ranges[:, 0], -0.76)
+                & np.isclose(ranges[:, 1], 0.76)
+            )
+            verification.update(
+                limited_finger_actuators=int(finger.sum()),
+                all_limited_actuator_forces_within_native_bounds=within,
+                maximum_actual_finger_actuator_force_Nm=float(
+                    abs(flat[:, finger]).max()
+                )
+                if finger.any()
+                else None,
+                native_capped_drive_verified=bool(within and finger.sum() >= 14),
+            )
+        np.savez_compressed(output / "native-state-readback.npz", **arrays)
+        (output / "body-labels.json").write_text(
+            json.dumps(list(self.env.model.body_label), indent=2) + "\n"
+        )
+        return verification
 
 
 @hydra.main(
@@ -78,6 +143,7 @@ def main(cfg):
         env.reset(frame_id=0)
         audit_scene(env, setup.scene, output)
         jax_env = WarpRLEnv(env, publish_diagnostics=True, publish_step_metrics=True)
+        readback = ReadbackEnv(jax_env, env)
         observation = jnp.asarray(
             env.observation.numpy().reshape(env.world_count, env.observation_dim)
         )
@@ -88,7 +154,7 @@ def main(cfg):
 
         rollout = record_object_pose_rollout(
             env,
-            jax_env,
+            readback,
             policy,
             None,
             None,
@@ -121,6 +187,7 @@ def main(cfg):
             source_motion_speed=float(cfg.task.motion_speed),
             physical_task_accepted=False,
             official_evaluation_score_claimed=False,
+            native_motor_verification=readback.save(output),
         )
         (output / "report.json").write_text(
             json.dumps(report, indent=2, allow_nan=False) + "\n"
