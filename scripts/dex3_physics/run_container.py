@@ -58,6 +58,14 @@ def main():
     }
     acquisition_stage = args.stage in {"grasp-acquisition", "grip-lift"}
     task_grip_stage = args.stage in {"grip-task-free", "grip-task"}
+    task_preparation = (
+        {
+            name: digest(ROOT / "scripts/dex3_physics" / name)
+            for name in ["task_grasp.py", "grip_force.py", "scene_projection.py"]
+        }
+        if task_grip_stage
+        else None
+    )
     if (
         args.stage in {"grasp-seed", "grasp-acquisition", "grip-lift"}
         or task_grip_stage
@@ -93,6 +101,7 @@ def main():
                 task_grip_stage
                 and (
                     invocation.get("task_grasp_seed_sha256") != digest(args.grasp_seed)
+                    or invocation.get("task_preparation_sha256") != task_preparation
                     or invocation.get("task_grip_controller_sha256")
                     != digest(ROOT / "scripts/reproduction/_dex3_task_grip.py")
                 )
@@ -175,6 +184,7 @@ def main():
         "executor_sha256": digest(ROOT / "scripts/reproduction/_dex3_static_load.py"),
         "physical_task_accepted": False,
         "task_grasp_seed_sha256": digest(args.grasp_seed) if task_grip_stage else None,
+        "task_preparation_sha256": task_preparation,
         "task_grip_controller_sha256": digest(
             ROOT / "scripts/reproduction/_dex3_task_grip.py"
         )

@@ -2438,7 +2438,7 @@ def run_supported_task(
                                     f"Detailed normal-force buffer differs from aggregate hand forces: step {step}, side {si}, detailed {normal_sum.tolist()}, aggregate {normal_matrix.sum(axis=(0, 1)).tolist()}"
                                 )
                             contact_hold[si] = payload_contact_hold(
-                                normal_matrix.sum(axis=1),
+                                normal_matrix[:, prepared["samples"][si]["object"], :],
                                 contact_bindings[si]["hand_body_paths"],
                                 contact_hold[si],
                                 dt,
@@ -2573,6 +2573,22 @@ def run_supported_task(
                         if grip_command is not None
                         else None,
                         "finger_feedforward_Nm": grip_command["effort"][order].tolist()
+                        if grip_command is not None
+                        else None,
+                        "actual_combined_finger_effort_Nm": controller_tensor(
+                            hand.data.applied_torque
+                        )[0]
+                        .cpu()
+                        .numpy()
+                        .tolist()
+                        if grip_command is not None
+                        else None,
+                        "normal_force_by_hand_body_and_object_world_N": contact_views[
+                            si
+                        ]
+                        .get_contact_force_matrix(dt)
+                        .numpy()
+                        .tolist()
                         if grip_command is not None
                         else None,
                         "object_normal_contact_force_N": contact_views[si]

@@ -41,6 +41,8 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
         phases={"left": [], "right": []},
         observation_contract="source object reference plus measured object pose during approach; measured hand-object reaction for wrist feedback; diagnostic only",
         contact_model_friction=1.25,
+        minimum_planned_pad_normal_N=4.0,
+        planner_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         required_physical_materials="hand 2.0 / object 0.5, average combination = 1.25; explicit combine mode and coefficient readback required",
     )
     controls = {r["sample"]: r for r in proposal["grip_effort"]["controls"]}
@@ -128,6 +130,7 @@ def build(case, original_samples, proposal, stage_rotation, urdfs):
                         0.3,
                         10.0,
                         friction=1.25,
+                        minimum_normal_N=4.0,
                     )
                 except ValueError as error:
                     raise ValueError(

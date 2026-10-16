@@ -35,7 +35,14 @@ def point_jacobian(kin, root, positions, link, point, epsilon=1e-5):
 
 
 def solve_gravity_contacts(
-    points, inward, jacobians, com, mass_kg, normal_cap_N=10.0, friction=1.0
+    points,
+    inward,
+    jacobians,
+    com,
+    mass_kg,
+    normal_cap_N=10.0,
+    friction=1.0,
+    minimum_normal_N=2.0,
 ):
     """Plan motor forces under a point-contact Coulomb model; not a physical certificate."""
     points, inward, jacobians, com = [
@@ -56,6 +63,7 @@ def solve_gravity_contacts(
         not 0 < mass_kg <= 1
         or not 0 < friction <= 1.25
         or not 2 <= normal_cap_N <= 10
+        or not 2 <= minimum_normal_N <= normal_cap_N
         or not np.allclose(np.linalg.norm(inward, axis=1), 1, atol=1e-6)
     ):
         raise ValueError("Invalid nominal load or contact force bounds")
@@ -66,7 +74,7 @@ def solve_gravity_contacts(
         wrench[:3, sl] = np.eye(3)
         x, y, z = point - com
         wrench[3:, sl] = [[0, -z, y], [z, 0, -x], [-y, x, 0]]
-        for sign, bound in [(1, normal_cap_N), (-1, -2.0)]:
+        for sign, bound in [(1, normal_cap_N), (-1, -minimum_normal_N)]:
             row = np.zeros(3 * count)
             row[sl] = sign * axis
             inequalities.append(row)
@@ -114,7 +122,7 @@ def solve_gravity_contacts(
         dict(
             nominal_mass_kg=mass_kg,
             friction_lower_bound=friction,
-            minimum_normal_N=2.0,
+            minimum_normal_N=minimum_normal_N,
             normal_cap_N=normal_cap_N,
             normal_forces_N=np.einsum("ij,ij->i", forces, inward).tolist(),
             forces_stage_N=forces.tolist(),

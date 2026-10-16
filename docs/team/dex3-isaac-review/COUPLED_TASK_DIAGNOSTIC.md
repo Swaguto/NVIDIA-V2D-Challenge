@@ -30,7 +30,7 @@ It is not an approved learned actor observation contract.
 Three-pad force plans are recomputed at every original pot orientation. The
 original extra-conservative coefficient 1 model becomes infeasible for the
 second phase at source row 274, despite the static lift passing. The task model
-uses coefficient 1.25, matching the nominal average of unchanged hand friction
+uses a 4 N minimum normal force at each pot pad and coefficient 1.25, matching the nominal average of unchanged hand friction
 2.0 and object friction 0.5. The inscribed friction octagon remains inside that
 cone. The runtime explicitly authors and reads back the average combine mode
 and coefficients. Motor feedforward remains capped at 0.55 Nm and the real
@@ -83,3 +83,21 @@ CPU tests cover phase continuity, closure/loading/release order, contact buffer
 offsets and unused capacity, wrench moment/sign, compensation limits/decay,
 vertical clearance, and bounded smoothing. They do not substitute for simulator
 validation. Finite reference collision checks are not continuous clearance proofs.
+
+## Complete coupled attempt, before the 4 N minimum
+
+Source `950d98d` completed all 343 original frames plus 20 inferred postroll
+frames. Initial scene clearance and the fresh wrist tracking gate passed.
+The scene no longer ejects objects before grasping. The lid position error was
+7.6 mm median / 21.8 mm p90; the pot was 18.5 mm median / 82.9 mm p90, peaking at
+112.2 mm. These are local raw-source tracking measurements, not official scores.
+
+The pot loses a required measured pad contact around source frame 105 and then
+slips away, while wrist error stays only a few millimetres. No contact with the
+other object is recorded at the sampled failure times. The 2 N minimum nominal
+force plan therefore remains unsuitable as a training reference. The follow-up
+raises the planned minimum to 4 N for every pot pad, with all source orientations
+feasible and at most 0.511 Nm feedforward, below the unchanged 0.55 Nm cap.
+Per-body/per-object normal forces and actual combined finger effort are now
+recorded. Compensation contact eligibility uses the primary object only.
+The 4 N version still requires a new simulator run; no policy is retrained yet.
