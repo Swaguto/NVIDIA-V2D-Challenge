@@ -151,6 +151,26 @@ def test_measurement_prediction_uses_world_actor_twist_and_real_time():
     np.testing.assert_array_equal(pose[:3], [1, 2, 3])
 
 
+def test_reduced_carry_feedback_limits_measurement_noise_without_moving_source():
+    import pytest
+
+    ref = reference()
+    spec = dict(
+        ref.spec, experimental_carry_compliance=True, carry_object_feedback_weight=0.5
+    )
+    ref = TaskGripReference(spec)
+    obj = np.array([0, 0, 0, 0, 0, 0, 1.0])
+    ref.command("left", 2, obj, obj)
+    noisy = obj.copy()
+    noisy[1] = 0.002
+    command = ref.command("left", 3, obj, noisy)
+    assert command["object_feedback_weight"] == 0.5
+    np.testing.assert_allclose(command["pose"][:3], [0.1, 0.001, 0])
+    np.testing.assert_array_equal(obj, [0, 0, 0, 0, 0, 0, 1])
+    with pytest.raises(ValueError, match="feedback"):
+        TaskGripReference(dict(spec, carry_object_feedback_weight=float("nan")))
+
+
 def test_compensated_carry_retains_world_tracking_in_rigid_grasp_limit_and_force_cap():
     import pytest
     from _dex3_task_grip import (

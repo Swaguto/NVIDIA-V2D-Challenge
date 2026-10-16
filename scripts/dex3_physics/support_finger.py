@@ -22,6 +22,39 @@ from grip_force import point_jacobian, solve_gravity_contacts
 from grasp_roll import roll_about_contacts
 
 
+def support_patch(vertices, world_rotation, object_normal):
+    """Choose a real pad face, rather than a single extreme mesh vertex.
+
+    Return its centroid, outward normal and area. Coplanar triangles are joined
+    so triangulation does not change the face ranking. The fitter must rotate
+    this face toward the object; a point touching the requested plane alone
+    does not establish a supporting contact normal.
+    """
+    vertices = np.asarray(vertices, float)
+    hull = ConvexHull(vertices)
+    faces = {}
+    for tri, equation in zip(hull.simplices, hull.equations, strict=True):
+        key = tuple(np.round(equation, 7))
+        normal = equation[:3]
+        points = vertices[tri]
+        area = (
+            np.linalg.norm(np.cross(points[1] - points[0], points[2] - points[0])) / 2
+        )
+        if key not in faces:
+            faces[key] = [np.zeros(3), normal, 0.0]
+        faces[key][0] += area * points.mean(0)
+        faces[key][2] += area
+    candidates = [
+        (center / area, normal, area) for center, normal, area in faces.values()
+    ]
+    desired = -np.asarray(object_normal)
+    # Prefer an already reachable, broad face; area breaks near-alignment ties.
+    return max(
+        candidates,
+        key=lambda f: float((world_rotation @ f[1]) @ desired) + 0.05 * np.log(f[2]),
+    )
+
+
 def refine_tripod(
     kin,
     root,
@@ -35,11 +68,13 @@ def refine_tripod(
     initial_middle,
     joint_reference=None,
     support_height_stage_m=None,
+    middle_patch_normal=None,
+    pinch_targets=None,
 ):
     """Keep the first two contacts while moving the wrist slightly for the third."""
     original = kin.poses(root, q)
     fixed = []
-    for name in links[:2]:
+    for index, name in enumerate(links[:2]):
         world = [
             v @ original[name][:3, :3].T + original[name][:3, 3] for v in local[name]
         ]
@@ -50,7 +85,14 @@ def refine_tripod(
             key=lambda x: x[0],
         )
         anchor = original[name][:3, :3].T @ (point - original[name][:3, 3])
-        fixed.append((name, anchor, point, normal, np.max(piece @ normal)))
+        patch_normal = None
+        plane = np.max(piece @ normal)
+        if pinch_targets is not None:
+            point, normal, plane = pinch_targets[index]
+            anchor, patch_normal, _area = support_patch(
+                np.concatenate(local[name]), original[name][:3, :3], normal
+            )
+        fixed.append((name, anchor, point, normal, plane, patch_normal))
     hand_collision = {
         name: [(v, ConvexHull(v).equations[:, :3]) for v in pieces]
         for name, pieces in local.items()
@@ -95,12 +137,14 @@ def refine_tripod(
     def residual(x):
         _, _, poses = decode(x)
         errors = []
-        for name, anchor, point, normal, plane in fixed:
+        for name, anchor, point, normal, plane, patch_normal in fixed:
             pose = poses[name]
             actual = pose[:3, :3] @ anchor + pose[:3, 3]
             world = np.concatenate(local[name]) @ pose[:3, :3].T + pose[:3, 3]
             errors.extend((actual - point) / 0.003)
             errors.append(2 * (np.min(world @ normal) - plane + 0.00075) / 0.001)
+            if patch_normal is not None:
+                errors.extend((pose[:3, :3] @ patch_normal + normal) / 0.2)
         pose = poses[links[2]]
         world = np.concatenate(local[links[2]]) @ pose[:3, :3].T + pose[:3, 3]
         actual = pose[:3, :3] @ middle_anchor + pose[:3, 3]
@@ -110,6 +154,11 @@ def refine_tripod(
         )
         tangent_scale = 1 / 0.003 if joint_reference is not None else 0.2 / 0.01
         errors.extend(tangent_scale * (delta - (delta @ middle_normal) * middle_normal))
+        if middle_patch_normal is not None:
+            # An aligned pad face is needed for a stable area contact. Without
+            # this term the optimizer can touch an underside target using a
+            # side edge, while the actual SAT/contact normal stays horizontal.
+            errors.extend((pose[:3, :3] @ middle_patch_normal + middle_normal) / 0.15)
         if support_height_stage_m is not None:
             bottom = min(
                 np.min(np.einsum("ij,j->i", v, poses[name][:3, :3][2]))
@@ -149,12 +198,20 @@ def add_middle(
     support_height_stage_m=None,
     maximum_candidates=48,
     reconfigure_fingers=False,
+    orient_support_patch=False,
+    side_support=False,
+    orient_pinch_patches=False,
 ):
     if (
         not np.isfinite(wrist_roll_deg)
         or not -180 <= wrist_roll_deg <= 180
         or not isinstance(support_from_below, bool)
         or not isinstance(reconfigure_fingers, bool)
+        or not isinstance(orient_support_patch, bool)
+        or not isinstance(side_support, bool)
+        or not isinstance(orient_pinch_patches, bool)
+        or (orient_pinch_patches and not orient_support_patch)
+        or (side_support and support_from_below)
         or not 1 <= maximum_candidates <= 48
         or (
             support_height_stage_m is not None
@@ -201,12 +258,20 @@ def add_middle(
         f"{side}_hand_{digit}_{distal}_link"
         for digit, distal in [("thumb", 2), ("index", 1), ("middle", 1)]
     ]
-    if wrist_roll_deg or support_from_below:
+    pinch_targets = []
+    if wrist_roll_deg or support_from_below or orient_support_patch:
         contacts = []
         for name in links[:2]:
             world = [v @ fk[name][:3, :3].T + fk[name][:3, 3] for v in local[name]]
             _, witness = minimum_distance(world, shapes)
             contacts.append(witness["points_world_m"][0])
+            _, normal, piece = max(
+                ((*convex_escape(a, b), b) for a in world for b in shapes),
+                key=lambda x: x[0],
+            )
+            pinch_targets.append(
+                (np.array(witness["points_world_m"][0]), normal, np.max(piece @ normal))
+            )
         if wrist_roll_deg:
             root = roll_about_contacts(root, contacts, wrist_roll_deg)
             fk = kin.poses(root, q)
@@ -222,6 +287,8 @@ def add_middle(
         distance = distance + 0.5 * np.linalg.norm(
             points - np.mean(contacts, axis=0), axis=1
         )
+    if side_support:
+        pool = pool[np.abs(normals[pool, 2]) <= 0.35]
     chosen = []
     top = pool[normals[pool, 2] > 0.5]
     other = pool[normals[pool, 2] <= 0.5]
@@ -250,6 +317,11 @@ def add_middle(
         direction = fk[middle][:3, :3].T @ -normals[j]
         projection = vertices @ direction
         anchor = vertices[projection > projection.max() - 0.001].mean(0)
+        patch_normal = None
+        if orient_support_patch:
+            anchor, patch_normal, _area = support_patch(
+                vertices, fk[middle][:3, :3], normals[j]
+            )
         target = points[j] - 0.00075 * normals[j]
 
         def positions(values):
@@ -289,6 +361,8 @@ def add_middle(
             if reconfigure_fingers
             else None,
             support_height_stage_m=support_height_stage_m,
+            middle_patch_normal=patch_normal,
+            pinch_targets=pinch_targets if orient_pinch_patches else None,
         )
         if not fit_all.success:
             rejected["fit"] += 1
@@ -307,6 +381,7 @@ def add_middle(
             or max(depths.values()) > 0.0015
             or escapes[links[0]] @ escapes[links[1]] > -0.5
             or (support_from_below and -escapes[links[2]][2] < 0.5)
+            or (side_support and abs(escapes[links[2]][2]) > 0.35)
             or (
                 support_height_stage_m is not None
                 and min(v[:, 2].min() for pieces in hand.values() for v in pieces)
@@ -409,6 +484,9 @@ def add_middle(
         support_from_below=support_from_below,
         support_height_stage_m=support_height_stage_m,
         reconfigure_fingers=reconfigure_fingers,
+        orient_support_patch=orient_support_patch,
+        side_support=side_support,
+        orient_pinch_patches=orient_pinch_patches,
         physical_task_accepted=False,
     )
     return proposal
@@ -424,6 +502,9 @@ if __name__ == "__main__":
     parser.add_argument("--support-height-stage-m", type=float)
     parser.add_argument("--maximum-candidates", type=int, default=48)
     parser.add_argument("--reconfigure-fingers", action="store_true")
+    parser.add_argument("--orient-support-patch", action="store_true")
+    parser.add_argument("--side-support", action="store_true")
+    parser.add_argument("--orient-pinch-patches", action="store_true")
     args = parser.parse_args()
     result = add_middle(
         args.run,
@@ -435,6 +516,9 @@ if __name__ == "__main__":
         support_height_stage_m=args.support_height_stage_m,
         maximum_candidates=args.maximum_candidates,
         reconfigure_fingers=args.reconfigure_fingers,
+        orient_support_patch=args.orient_support_patch,
+        side_support=args.side_support,
+        orient_pinch_patches=args.orient_pinch_patches,
     )
     with args.out.open("x") as stream:
         json.dump(result, stream, indent=2, allow_nan=False)

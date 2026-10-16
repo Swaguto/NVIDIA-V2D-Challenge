@@ -25,6 +25,21 @@ def cube(half=0.01):
     return np.array(list(product([-half, half], repeat=3)))
 
 
+def test_support_patch_uses_a_face_centroid_and_is_rigid_rotation_equivariant():
+    from support_finger import support_patch
+
+    v = cube()
+    center, normal, area = support_patch(v, np.eye(3), [0, 0, -1])
+    np.testing.assert_allclose(center, [0, 0, 0.01], atol=1e-12)
+    np.testing.assert_allclose(normal, [0, 0, 1], atol=1e-12)
+    assert area == pytest.approx(0.0004)
+    rotation = Rotation.from_euler("xyz", [0.3, -0.2, 0.1]).as_matrix()
+    c2, n2, a2 = support_patch(v, rotation, rotation @ [0, 0, -1])
+    np.testing.assert_allclose(c2, center, atol=1e-12)
+    np.testing.assert_allclose(n2, normal, atol=1e-12)
+    assert a2 == pytest.approx(area)
+
+
 def test_pinch_roll_keeps_both_fk_contact_anchors_fixed_and_changes_support_direction():
     from grasp_roll import roll_about_contacts
 

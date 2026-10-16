@@ -232,6 +232,14 @@ class TaskGripReference:
         if spec["schema"] != "v2d.dex3-task-grips.v1" or spec["physical_task_accepted"]:
             raise ValueError("Need an explicitly unaccepted task grasp reference")
         self.spec = spec
+        self.carry_feedback_weight = float(
+            spec.get("carry_object_feedback_weight", 0.9)
+        )
+        if (
+            not np.isfinite(self.carry_feedback_weight)
+            or not 0 <= self.carry_feedback_weight <= 0.9
+        ):
+            raise ValueError("Carry object feedback must be in [0, 0.9]")
         self.aborted_phases = {}
         self.grasp_registrations = {}
         self.object_references = {
@@ -318,7 +326,7 @@ class TaskGripReference:
                 # from the measured grasp. This attenuates target noise instead
                 # of imposing the complete pose error across millimetre pads.
                 feedback = (
-                    0.9
+                    self.carry_feedback_weight
                     * smooth((time_s - close) / 0.1)
                     * (1 - smooth((time_s - end) / 0.25))
                     if carry_compliance and not parked
