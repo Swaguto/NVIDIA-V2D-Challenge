@@ -352,6 +352,7 @@ def prepare(
     free_space: bool = False,
     source_duration_s: float | None = None,
     physics_dt: float = 0.01,
+    contact_solver: str = "default",
     grasp_seed: Path | None = None,
     grasp_seed_sha256: str | None = None,
     controlled_acquisition: bool = False,
@@ -363,6 +364,9 @@ def prepare(
     import numpy as np
     import trimesh
     from scipy.spatial.transform import Rotation
+    from _dex3_grip_control import contact_solver_options
+
+    contact_solver_options(contact_solver)
 
     if controller_mode not in {
         "project_pd",
@@ -639,6 +643,7 @@ def prepare(
     result = {
         "schema": "v2d.dex3-static-load-inputs.v1",
         "simulation_dt_s": physics_dt,
+        "contact_solver": contact_solver,
         "case_manifest_sha256": digest(case / "file-manifest.json"),
         "source_bundle_payload_sha256": digest(case / "bundle/episode.npz"),
         "motion_payload_sha256": digest(case / "proposal/robot-motion-proposal.npz"),
@@ -704,6 +709,7 @@ def prepare(
                 "free_space": free_space,
                 "source_duration_s": source_duration_s,
                 "physics_dt_s": physics_dt,
+                "contact_solver": contact_solver,
                 "linear_integral_gain_N_per_m_s": 50.0
                 if controller_mode == "implicit_pid_ff"
                 else 0.0,
@@ -862,15 +868,39 @@ def execute(
     preset = namespace["RIGID_OBJECT_CFG"]
     diagnostic = prepared.get("wrist_diagnostic", {})
     dt = diagnostic.get("physics_dt_s", prepared.get("simulation_dt_s", 0.01))
+    from _dex3_grip_control import contact_solver_options
+
+    solver_options = contact_solver_options(prepared.get("contact_solver", "default"))
     sim_cfg = sim_utils.SimulationCfg(
         dt=dt,
         device=device,
         use_fabric=device != "cpu",
         gravity=tuple(prepared["gravity_stage_m_s2"]),
         render_interval=max(1, round(0.05 / dt)),
-        physics=PhysxCfg(bounce_threshold_velocity=0.2),
+        physics=PhysxCfg(bounce_threshold_velocity=0.2, **solver_options),
     )
     sim = sim_utils.SimulationContext(sim_cfg)
+    scene = sim.stage.GetPrimAtPath(sim_cfg.physics_prim_path)
+    solver_readback = {
+        "profile": prepared.get("contact_solver", "default"),
+        "scene": str(scene.GetPath()),
+        "attributes": {
+            name: scene.GetAttribute("physxScene:" + name).Get()
+            for name in (
+                "enableExternalForcesEveryIteration",
+                "solveArticulationContactLast",
+                "minVelocityIterationCount",
+            )
+        },
+    }
+    if solver_options and solver_readback["attributes"] != {
+        "enableExternalForcesEveryIteration": True,
+        "solveArticulationContactLast": True,
+        "minVelocityIterationCount": 4,
+    }:
+        raise ValueError(
+            "Authored contact solver settings differ from requested profile"
+        )
     light = sim_utils.DomeLightCfg(intensity=1800.0)
     light.func("/World/Light", light)
     hands, objects, sensors, cameras, provenance = [], [], [], [], []
@@ -1357,6 +1387,7 @@ def execute(
             control_objects,
             control_sensors,
             provenance,
+            solver_readback,
         )
         return
     from isaaclab_physx.physics import PhysxManager
@@ -1851,6 +1882,7 @@ def execute(
             "platform": runtime_platform.platform(),
             "device": device,
             "simulation_dt_s": dt,
+            "physics_solver_readback": solver_readback,
             "duration_s": last_step * dt,
             "controlled_acquisition": acquisition_mode,
             "controlled_grip_lift": lift_mode,
@@ -1914,6 +1946,7 @@ def run_supported_task(
     controls,
     control_sensors,
     provenance,
+    solver_readback,
 ):
     """Execute the full locked motion through the existing wrist controller with zero policy residual."""
     import importlib.util
@@ -3086,6 +3119,7 @@ def run_supported_task(
             "full_source_frames": original_source_frames,
             "complete_source_episode": len(frames) == original_source_frames,
             "physics_dt_s": dt,
+            "physics_solver_readback": solver_readback,
             "initial_hand_root_reset_performed": True,
             "collision_evidence_source_sha256": digest(
                 Path(__file__).with_name("_dex3_collision_evidence.py")

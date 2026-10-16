@@ -192,3 +192,24 @@ live force/posture controller at 400 Hz, each with a fresh free-space gate.
 The fixture uses frozen finger efforts and nominal payload compensation;
 the full candidate uses current contact allocation and measured wrist reaction.
 Neither fixture failure nor a passing wrist gate certifies the full controller.
+
+## Audit rejection of aborted phases and grip solver profile
+
+An aborted reacquisition can leave both hand and object stationary. Zero
+relative drift in that case is not retention. The updated auditor marks an
+aborted phase as failed and requires measured support to have been exercised.
+A hash-bound synthetic simulator record reproduces this false-positive case.
+Historical raw reports remain unchanged; new summaries apply the corrected rule.
+
+The runtime warns that default TGS force integration can produce noisy velocities.
+An optional `--contact-solver grip` profile enables external force updates every
+position iteration, resolves articulation contact later, and requests at least
+four velocity iterations. It changes solver accuracy and ordering; motor caps,
+mass, friction, source observations and geometry are unchanged. Preparation,
+invocation and reports bind the profile, and the full-stage gate must match it.
+USD scene attributes are read back and checked against the requested values.
+The default profile remains available for the recorded comparisons. The motor
+probe accepts the same option. 87 CPU tests pass; simulator checks are required.
+
+Sources: [pinned PhysxCfg](https://github.com/isaac-sim/IsaacLab/blob/28a37cecdd433c22d9eabd6a5954add9f13a8951/source/isaaclab_physx/isaaclab_physx/physics/physx_manager_cfg.py)
+and [NVIDIA articulation stability guide](https://docs.omniverse.nvidia.com/kit/docs/omni_physics/107.3/dev_guide/guides/articulation_stability_guide.html#articulation-solver-order).

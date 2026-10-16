@@ -16,6 +16,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--encode-in-drive", action="store_true")
+    parser.add_argument(
+        "--contact-solver", choices=["default", "grip"], default="default"
+    )
     args = parser.parse_args()
     from isaaclab.app import AppLauncher
 
@@ -30,11 +33,17 @@ def main():
 
         sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "reproduction"))
         from _dex3_wrist_control import encode_finger_feedforward
+        from _dex3_grip_control import contact_solver_options
+        from isaaclab_physx.physics import PhysxCfg
 
         dt = 0.001
         sim = sim_utils.SimulationContext(
             sim_utils.SimulationCfg(
-                dt=dt, device="cpu", use_fabric=False, gravity=(0, 0, 0)
+                dt=dt,
+                device="cpu",
+                use_fabric=False,
+                gravity=(0, 0, 0),
+                physics=PhysxCfg(**contact_solver_options(args.contact_solver)),
             )
         )
         stage = sim.stage
@@ -170,6 +179,7 @@ def main():
                 )
             ),
             source_episode_loaded=False,
+            contact_solver=args.contact_solver,
             implicit_actuator_estimate_is_direct_measurement=False,
             unsaturated_control_law_verified=None
             if equivalence is None

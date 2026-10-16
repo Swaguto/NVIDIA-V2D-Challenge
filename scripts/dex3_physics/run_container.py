@@ -47,6 +47,9 @@ def main():
     parser.add_argument("--grasp-seed", type=Path)
     parser.add_argument("--physics-dt", type=float, default=0.01)
     parser.add_argument(
+        "--contact-solver", choices=["default", "grip"], default="default"
+    )
+    parser.add_argument(
         "--candidate-controller",
         choices=["implicit_pd", "implicit_pd_ff", "implicit_pid_ff"],
         default="implicit_pd",
@@ -104,6 +107,7 @@ def main():
             or gate["wrist_diagnostic"]["candidate_controller_sha256"]
             != digest(candidate_file)
             or gate["wrist_diagnostic"]["physics_dt_s"] != args.physics_dt
+            or invocation.get("contact_solver", "default") != args.contact_solver
             or gate["wrist_diagnostic"]["controller"] != args.candidate_controller
             or not gate["wrist_diagnostic"]["free_space"]
             or (
@@ -139,6 +143,8 @@ def main():
         str(evidence / "support-inferred-support-plane-report-v1.json"),
         "--support-plane-sha256",
         PLANE_SHA,
+        "--contact-solver",
+        args.contact_solver,
     ]
     if static_stage:
         command += ["--static-load-check", "--physics-dt", str(args.physics_dt)]
@@ -188,6 +194,7 @@ def main():
     receipt = {
         "stage": args.stage,
         "prepare_only": args.prepare_only,
+        "contact_solver": args.contact_solver,
         "command": command,
         "candidate_controller_sha256": digest(candidate_file),
         "executor_sha256": digest(ROOT / "scripts/reproduction/_dex3_static_load.py"),

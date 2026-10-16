@@ -83,6 +83,9 @@ def main():
         help="Explicit partial diagnostic duration; never full-task acceptance",
     )
     parser.add_argument("--physics-dt", type=float, default=0.01)
+    parser.add_argument(
+        "--contact-solver", choices=["default", "grip"], default="default"
+    )
     parser.add_argument("--static-grasp-seed", type=Path)
     parser.add_argument("--static-grasp-seed-sha256")
     parser.add_argument("--controlled-acquisition", action="store_true")
@@ -124,6 +127,10 @@ def main():
         args.supported_task_check or args.static_load_check
     ):
         parser.error("--physics-dt requires a physics diagnostic")
+    if args.contact_solver != "default" and not (
+        args.supported_task_check or args.static_load_check
+    ):
+        parser.error("--contact-solver requires a physics diagnostic")
     if (args.archive is None) == (args.verified_case is None):
         parser.error("Provide exactly one --archive or --verified-case")
     if args.archive is not None and args.sha256 is None:
@@ -190,6 +197,7 @@ def main():
             free_space=args.free_space,
             source_duration_s=args.source_duration_s,
             physics_dt=args.physics_dt,
+            contact_solver=args.contact_solver,
             grasp_seed=args.static_grasp_seed,
             grasp_seed_sha256=args.static_grasp_seed_sha256,
             controlled_acquisition=args.controlled_acquisition,

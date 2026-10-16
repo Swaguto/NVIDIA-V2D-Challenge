@@ -97,6 +97,8 @@ def summarize(run):
             coverage = np.mean(
                 [r["controller_details"]["contact_hold_remaining_s"] > 0 for r in rows]
             )
+            aborted = phase["sample"] in report.get("aborted_reacquisition_phases", {})
+            aborted = aborted or any(r.get("reacquisition_failure") for r in rows)
             item = dict(
                 sample=phase["sample"],
                 source_interval_s=[phase["close_s"] + 0.05, phase["release_start_s"]],
@@ -111,7 +113,11 @@ def summarize(run):
                     ).max()
                 ),
                 contact_gate_coverage_fraction=float(coverage),
-                retained_within_10mm_diagnostic=bool(drift.max() <= 0.01),
+                phase_aborted=bool(aborted),
+                measured_support_exercised=bool(coverage > 0),
+                retained_within_10mm_diagnostic=bool(
+                    drift.max() <= 0.01 and coverage > 0 and not aborted
+                ),
             )
             live = live_allocation_summary(rows)
             if live is not None:

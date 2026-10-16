@@ -4,6 +4,18 @@ import numpy as np
 from scipy.spatial.transform import Rotation
 
 
+def contact_solver_options(profile):
+    if profile == "default":
+        return {}
+    if profile != "grip":
+        raise ValueError("Unknown contact solver profile")
+    return dict(
+        enable_external_forces_every_iteration=True,
+        solve_articulation_contact_last=True,
+        min_velocity_iteration_count=4,
+    )
+
+
 def static_load_schedule(dt, acquisition):
     """Keep fixture event times and 20 fps rendering invariant under substeps."""
     if not np.isfinite(dt) or not 0.0005 <= dt <= 0.01:
