@@ -1,0 +1,10 @@
+# @package _global_
+# Same physical motors, action scale and rewards; widen only the position clip.
+defaults:
+  - dex3_grip_action_baseline
+  - _self_
+action:
+  wrist_pos_clip: 0.035
+logging:
+  run_name: grip-reachable-residual
+output_dir: /outputs/grip-reachable

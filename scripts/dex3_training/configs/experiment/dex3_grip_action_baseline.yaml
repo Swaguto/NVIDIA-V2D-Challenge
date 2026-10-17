@@ -1,0 +1,11 @@
+# @package _global_
+# Fresh matched control for the residual-reachability / VOC comparison.
+defaults:
+  - dex3_grip_wrench_learning
+  - _self_
+training:
+  max_iterations: 2000
+  save_interval: 500
+logging:
+  run_name: grip-action-baseline
+output_dir: /outputs/grip-action-baseline

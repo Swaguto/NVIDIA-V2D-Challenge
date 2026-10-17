@@ -21,9 +21,27 @@ def record(checkpoint, out, world_count=2):
     out.mkdir(parents=True)
     original = harness.record_object_pose_rollout
     captured = []
+    assistance_checks = []
 
     def instrument(env, jax_env, *args, **kwargs):
         readback = ReadbackEnv(jax_env, env)
+        if env.config.voc.max_force != 0 or env.config.voc.max_torque != 0:
+            raise ValueError("Policy readback must disable virtual object actuators")
+        if env.config.reset.voc_decay_steps != 0:
+            raise ValueError("Policy readback must disable training reset stabilization")
+        step = readback.step
+
+        def unassisted_step(action):
+            for scales in (env.voc_scale, env.object_control_scale):
+                if np.any(scales.numpy() != 0):
+                    raise ValueError("Nonzero object assistance during policy evaluation")
+            result = step(action)
+            if np.any(env.object_control_scale.numpy() != 0):
+                raise ValueError("Nonzero object assistance after policy evaluation step")
+            assistance_checks.append(True)
+            return result
+
+        readback.step = unassisted_step
         captured.append((readback, kwargs["reference"]))
         return original(env, readback, *args, **kwargs)
 
@@ -60,6 +78,9 @@ def record(checkpoint, out, world_count=2):
         ).hexdigest(),
         learned_policy=True,
         virtual_object_assistance=0.0,
+        zero_assistance_control_steps_verified=len(assistance_checks),
+        virtual_object_actuator_caps_zero=True,
+        evaluation_reset_stabilization_steps=0,
         source_motion_speed=1.0,
         native_motor_verification=readback.save(out),
         physical_task_accepted=False,

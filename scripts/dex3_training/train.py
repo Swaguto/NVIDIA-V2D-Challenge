@@ -31,6 +31,7 @@ from flash_chord.training.ppo.learner import create_learner
 from flash_chord.training.checkpoint import save_checkpoint, read_checkpoint_metadata
 from flash_chord.training.progress import ConsoleTrainingProgress
 from v2d_dex3_flashchord.reset_curriculum import validate as validate_reset_curriculum
+from v2d_dex3_flashchord.reset_curriculum import assistance_contract
 from v2d_dex3_flashchord.training_metrics import nonfinite_fields
 from v2d_dex3_flashchord.resume_contract import validate as validate_resume_contract
 
@@ -38,6 +39,12 @@ from v2d_dex3_flashchord.resume_contract import validate as validate_resume_cont
 class LocalMetricLogger:
     def __init__(self, output, definitions, env=None):
         self.output, self.env = output, env
+        definitions = dict(definitions)
+        if env is not None:
+            definitions.update({
+                "assistance/applied_scale_mean_at_log_boundary": "Mean actual per-world VOC scale at the logger boundary; includes reset settling, not a rollout average.",
+                "assistance/nonzero_world_fraction_at_log_boundary": "Fraction of worlds with nonzero actual VOC at the logger boundary; includes reset settling.",
+            })
         self.failure_policy = getattr(env, "numerical_failure_policy", "abort")
         if self.failure_policy == "terminate":
             definitions = dict(definitions)
@@ -145,6 +152,11 @@ class LocalMetricLogger:
                 metrics,
                 **{"numerical_failures/cumulative_world_transitions": trace_count},
             )
+        if self.env is not None:
+            metrics = dict(metrics)
+            scales = self.env.reset_policy.applied_voc_scale.numpy()
+            metrics["assistance/applied_scale_mean_at_log_boundary"] = float(scales.mean())
+            metrics["assistance/nonzero_world_fraction_at_log_boundary"] = float(np.mean(scales > 0))
         self.stream.write(
             json.dumps(dict(environment_steps=step, **metrics), allow_nan=False) + "\n"
         )
@@ -163,9 +175,9 @@ class LocalMetricLogger:
         self.stream.close()
 
 
-def audit_scene(env, scene, output, manifest=None):
+def audit_scene(env, scene, output, manifest=None, training_assistance=None):
     applied_voc = env.reset_policy.applied_voc_scale.numpy()
-    if not np.all(applied_voc == 0):
+    if training_assistance is None and not np.all(applied_voc == 0):
         raise ValueError("Unassisted pilot has nonzero object assistance")
     model = scene.model
     audit = dict(
@@ -186,6 +198,7 @@ def audit_scene(env, scene, output, manifest=None):
             for h in scene.layout.hands
         ],
         actual_applied_object_assistance=applied_voc.tolist(),
+        training_assistance=training_assistance,
         support_shape_count=scene.support_shape_count,
         geometry_scope=(
             manifest.get(
@@ -227,12 +240,7 @@ def audit_scene(env, scene, output, manifest=None):
     config_name="train",
 )
 def main(cfg: DictConfig):
-    if (
-        cfg.logging.mode != "disabled"
-        or cfg.env.voc_scale != 0
-        or cfg.voc_scale_override != 0
-    ):
-        raise ValueError("Training requires local logging and no object assistance")
+    assist = assistance_contract(resolved_dict(cfg))
     output = Path(cfg.output_dir)
     output.mkdir(parents=True, exist_ok=False)
     input_manifest_path = Path(cfg.task.parquet).parent / "manifest.json"
@@ -279,13 +287,20 @@ def main(cfg: DictConfig):
                     strict=True,
                 )
             ),
+            allow_training_assistance=assist is not None,
         )
+        if assist is not None:
+            # Bind stage zero before reset/capture and learner initialization.
+            WarpRLEnv(env).set_curriculum(training.curriculum.stage_at(0))
+            (output / "training-assistance-contract.json").write_text(
+                json.dumps(assist, indent=2) + "\n"
+            )
         env.reset()
         env.capture_step()
         env.reset()
         if hasattr(env, "transition_trace"):
             env.transition_trace.clear()
-        audit_scene(env, setup.scene, output, input_manifest)
+        audit_scene(env, setup.scene, output, input_manifest, assist)
         jax_env = WarpRLEnv(env)
         config = resolved_dict(cfg)
         config["task"]["parquet"] = str(setup.parquet_path)
@@ -312,7 +327,11 @@ def main(cfg: DictConfig):
         if cfg.curriculum is not None:
             metadata["dex3_pilot_scope"] = (
                 "Reference-state initialization during training with zero VOC; final stage uses only frame-zero starts. Full-task success requires separate complete evaluation from frame zero."
+                if assist is None else
+                "Training-only decaying VOC with reset stabilization; final target scale zero, reset assistance remains training-only. Evaluation must start at frame zero with zero VOC and no settling."
             )
+        if assist is not None:
+            metadata["dex3_training_assistance_json"] = json.dumps(assist, sort_keys=True)
         actor_checkpoint = cfg.get("actor_initialization_checkpoint")
         if actor_checkpoint and training.resume:
             raise ValueError("Actor initialization is a new experiment, not a resume")
@@ -371,7 +390,7 @@ def main(cfg: DictConfig):
             logger=logger,
             checkpoint_dir=output,
             log_interval=1,
-            voc_scale_override=0.0,
+            voc_scale_override=cfg.voc_scale_override,
             checkpoint_metadata=metadata,
             progress=ConsoleTrainingProgress(
                 training.max_iterations * training.world_count * training.rollout_steps,
