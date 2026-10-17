@@ -288,6 +288,7 @@ def main(cfg: DictConfig):
                 )
             ),
             allow_training_assistance=assist is not None,
+            allow_estimated_contact_guidance=bool(cfg.objective.get("estimated_contact_guidance", False)),
         )
         if assist is not None:
             # Bind stage zero before reset/capture and learner initialization.
@@ -324,6 +325,17 @@ def main(cfg: DictConfig):
             if input_manifest["schema"] == "v2d.dex3-training-task.v3"
             else "confident development window; unassisted; not full episode acceptance"
         )
+        if input_manifest.get("estimated_contact_reference") is not None:
+            estimated_contract = dict(
+                reference=input_manifest["estimated_contact_reference"],
+                enabled=bool(cfg.objective.get("estimated_contact_guidance", False)),
+                measured_contacts_known=False,
+                source_measured_contact_labels_unchanged=True,
+                reference_hints_are_geometric_estimates=True,
+                source_bundle_sha256=input_manifest["source_files_sha256"]["bundle/episode.npz"],
+            )
+            metadata["dex3_estimated_contact_reference_json"] = json.dumps(estimated_contract, sort_keys=True)
+            (output / "estimated-contact-guidance.json").write_text(json.dumps(estimated_contract, indent=2) + "\n")
         if cfg.curriculum is not None:
             metadata["dex3_pilot_scope"] = (
                 "Reference-state initialization during training with zero VOC; final stage uses only frame-zero starts. Full-task success requires separate complete evaluation from frame zero."

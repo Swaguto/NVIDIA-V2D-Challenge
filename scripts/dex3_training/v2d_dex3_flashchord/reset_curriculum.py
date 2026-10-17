@@ -86,7 +86,7 @@ def assistance_contract(config):
     )
 
 
-def validate(curriculum, weights, *, allow_training_assistance=False):
+def validate(curriculum, weights, *, allow_training_assistance=False, allow_estimated_contact_guidance=False):
     if curriculum is None:
         return
     if curriculum.get("_target_") != "flash_chord.lifecycle.curriculum.FixedCurriculum":
@@ -124,6 +124,8 @@ def validate(curriculum, weights, *, allow_training_assistance=False):
             "unintended_contact",
             "force_closure",
         ):
+            if name == "contact_wrench_support" and allow_estimated_contact_guidance:
+                continue
             if declared.get(name, 0) != 0:
                 raise ValueError("Unknown human contact labels remain disabled")
     if probabilities != sorted(probabilities) or probabilities[-1] != 1.0:

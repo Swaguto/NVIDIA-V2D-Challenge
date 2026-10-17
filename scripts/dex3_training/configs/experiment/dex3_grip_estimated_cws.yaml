@@ -1,0 +1,53 @@
+# @package _global_
+# Experimental CWS support on explicitly estimated observed-mesh hints.
+# No measured contact labels, missed-contact or unintended-contact penalties.
+defaults:
+  - dex3_grip_assisted
+  - _self_
+objective:
+  estimated_contact_guidance: true
+  contact_wrench_support:
+    enabled: true
+    weight: 10.0
+curriculum:
+  thresholds: [250, 500, 750, 1000, 2000]
+  stages:
+    - _target_: flash_chord.lifecycle.curriculum.CurriculumStage
+      voc_scale: 0.75
+      reset_to_first_frame_probability: 0.25
+      objective_weights: &weights
+        object_keypoints: 8.0
+        hand_keypoints: 0.25
+        hand_joint_pos: 0.02
+        contact_wrench_support: 10.0
+        missed_contact: 0.0
+        unintended_contact: 0.0
+        termination: -100.0
+        action_rate_l2: -0.01
+        action_l2: -0.002
+        contact_force_l2: 0.0
+        force_closure: 0.0
+        robot_pad_support: 3.0
+        robot_grip_stability: 1.0
+        robot_carried_load: 4.0
+        robot_carried_height: 6.0
+        robot_excess_pad_force: -0.1
+    - _target_: flash_chord.lifecycle.curriculum.CurriculumStage
+      voc_scale: 0.5
+      reset_to_first_frame_probability: 0.25
+      objective_weights: *weights
+    - _target_: flash_chord.lifecycle.curriculum.CurriculumStage
+      voc_scale: 0.2
+      reset_to_first_frame_probability: 0.6
+      objective_weights: *weights
+    - _target_: flash_chord.lifecycle.curriculum.CurriculumStage
+      voc_scale: 0.05
+      reset_to_first_frame_probability: 0.6
+      objective_weights: *weights
+    - _target_: flash_chord.lifecycle.curriculum.CurriculumStage
+      voc_scale: 0.0
+      reset_to_first_frame_probability: 1.0
+      objective_weights: *weights
+logging:
+  run_name: grip-estimated-cws
+output_dir: /outputs/grip-estimated-cws

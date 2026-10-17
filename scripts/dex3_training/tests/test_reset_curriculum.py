@@ -113,3 +113,16 @@ def test_default_mode_still_rejects_reset_assistance():
     config["voc_scale_override"] = 0
     with pytest.raises(ValueError, match="reset assistance"):
         assistance_contract(config)
+
+
+def test_estimated_cws_opt_in_never_enables_unknown_contact_penalties():
+    config, weights = fixture()
+    weights["contact_wrench_support"] = 10
+    for stage in config["stages"]:
+        stage["objective_weights"]["contact_wrench_support"] = 10
+    validate(config, weights, allow_estimated_contact_guidance=True)
+    weights["unintended_contact"] = 1
+    for stage in config["stages"]:
+        stage["objective_weights"]["unintended_contact"] = 1
+    with pytest.raises(ValueError, match="Unknown human contact"):
+        validate(config, weights, allow_estimated_contact_guidance=True)

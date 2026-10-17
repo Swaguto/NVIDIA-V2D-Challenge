@@ -122,6 +122,18 @@ def load_dex3(
     data = resample_targets(data, count)
     sides = ("left", "right")
     objects = manifest["objects"]
+    estimated = manifest.get("estimated_contact_reference") is not None
+    contact_points = {s: np.zeros((count, 1, 3), dtype=np.float32) for s in sides}
+    contact_normals = {s: np.zeros((count, 1, 3), dtype=np.float32) for s in sides}
+    contact_parts = {s: np.zeros((count, 1), dtype=np.int32) for s in sides}
+    if estimated:
+        if target_fps != fps:
+            raise ValueError("Estimated contact hints require the unchanged source clock")
+        from .estimated_reference import contacts
+        positions, normals, ids = contacts(root, manifest, data)
+        contact_points = {s: positions[:, i] for i, s in enumerate(sides)}
+        contact_normals = {s: normals[:, i] for i, s in enumerate(sides)}
+        contact_parts = {s: ids[:, i] for i, s in enumerate(sides)}
     assets = tuple(
         ObjectAssetSpec(
             name=o["name"],
@@ -139,11 +151,11 @@ def load_dex3(
         _metadata=ReferenceMetadata(
             source_path=str(path),
             source_fps=fps,
-            schema_version="dex3_dual_hand_v1",
+            schema_version="dex3_dual_hand_estimated_surface_v1" if estimated else "dex3_dual_hand_v1",
             motion_kind="dual_hand",
             robot_name="dex3",
             sequence_id=manifest["sequence_id"],
-            source_dataset="local_development",
+            source_dataset="local_development_estimated_surface" if estimated else "local_development",
             coord_frame="inferred support aligned world; metres; wxyz",
         ),
         _fps=target_fps,
@@ -156,9 +168,9 @@ def load_dex3(
         _object_body_pos_w=data["object_poses"][:, :, :3],
         _object_body_quat_w=quat(data["object_poses"]),
         _object_articulation=np.zeros((count, 0), dtype=np.float32),
-        _contact_pos_w={s: np.zeros((count, 1, 3), dtype=np.float32) for s in sides},
-        _contact_normal_w={s: np.zeros((count, 1, 3), dtype=np.float32) for s in sides},
-        _contact_part_ids={s: np.zeros((count, 1), dtype=np.int32) for s in sides},
+        _contact_pos_w=contact_points,
+        _contact_normal_w=contact_normals,
+        _contact_part_ids=contact_parts,
         _object_name="+".join(o["name"] for o in objects),
         _object_body_names=[o["name"] for o in objects],
         _object_mesh_paths=[str(root / o["mesh"]) for o in objects],

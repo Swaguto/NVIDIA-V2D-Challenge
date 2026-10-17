@@ -1,0 +1,5 @@
+# Optional CPU-only estimated-contact preparation, tested versions.
+numpy==2.2.6
+scipy==1.15.3
+trimesh==4.5.1
+rtree==1.4.1
