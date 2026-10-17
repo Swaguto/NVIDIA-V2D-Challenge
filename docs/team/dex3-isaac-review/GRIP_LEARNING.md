@@ -154,3 +154,18 @@ the simulated worlds. It is not bit-exact continuation. The GPU smoke continuati
 from iteration 8 to 10 completed 512 new steps, retained the 2,560 cumulative-step
 counter, emitted no false `model_0`, and loaded through the actual official wrapper.
 That verifies checkpoint mechanics, not physical task success.
+
+## Contact-model sensitivity
+
+`prepare_physics_probe.py` can fork a checkpoint for evaluation with a finer
+timestep or the existing `default_patch` hand profile. It preserves every tensor
+byte and the original training configuration/counter in provenance, and marks
+the result evaluation-only. Training resumption rejects these probes.
+
+The patch profile changes `condim` from 3 to 4. MuJoCo documents the additional
+degree as friction torque about the contact normal, representing finite contact
+patches. Its torsional coefficient has units of length.
+[MuJoCo contact documentation](https://mujoco.readthedocs.io/en/stable/computation/#contact).
+The existing model coefficient is nominal, not a hardware measurement. Runtime
+readback must verify the actual profile, other material parameters and motor caps;
+passing with this profile does not validate a policy under point contacts.

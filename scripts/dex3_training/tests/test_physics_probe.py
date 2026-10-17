@@ -12,7 +12,12 @@ from v2d_dex3_flashchord.resume_contract import validate
 
 def fixture(path, fps=20):
     sim = dict(fps=fps, substeps=20, integrator="implicitfast")
-    config = dict(sim=sim, env=dict(sim=sim), action=dict(effort_limit=0.76))
+    config = dict(
+        sim=sim,
+        env=dict(sim=sim),
+        action=dict(effort_limit=0.76),
+        embodiment=dict(config=dict(hand_contact_profile="default")),
+    )
     header = {
         "__metadata__": dict(
             format="learner_state",
@@ -68,3 +73,29 @@ def test_probe_cannot_change_the_control_timeline_or_overwrite_a_checkpoint(tmp_
 def test_deployment_probe_is_not_an_exact_training_resume(tmp_path):
     with pytest.raises(ValueError, match="evaluation-only"):
         validate({PROBE_KEY: "{}"}, {}, None, None, None)
+
+
+def test_contact_probe_changes_only_the_explicit_profile_and_keeps_tensor_bytes(
+    tmp_path,
+):
+    source, out = tmp_path / "trained.safetensors", tmp_path / "patch.safetensors"
+    _, payload, original = fixture(source)
+    result = prepare(source, out, contact_profile="default_patch")
+    data = out.read_bytes()
+    size = struct.unpack("<Q", data[:8])[0]
+    config = json.loads(
+        json.loads(data[8 : size + 8])["__metadata__"]["user.resolved_config_json"]
+    )
+    assert data[size + 8 :] == payload
+    assert (
+        result["original_training_physics_fps"]
+        == result["evaluation_physics_fps"]
+        == 400
+    )
+    assert config["embodiment"]["config"].pop("hand_contact_profile") == "default_patch"
+    original["embodiment"]["config"].pop("hand_contact_profile")
+    assert config == original
+    with pytest.raises(ValueError, match="exactly one"):
+        prepare(
+            source, tmp_path / "bad.safetensors", 40, contact_profile="default_patch"
+        )

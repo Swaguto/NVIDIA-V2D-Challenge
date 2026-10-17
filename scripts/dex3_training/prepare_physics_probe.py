@@ -1,4 +1,4 @@
-"""Fork deployment metadata for a finer-timestep evaluation, preserving all tensors.
+"""Fork one explicit deployment-physics setting, preserving all learned tensors.
 
 The output is marked evaluation-only and is rejected by the training resume guard.
 Original training configuration and counters remain recorded in its provenance.
@@ -15,7 +15,9 @@ import struct
 PROBE_KEY = "dex3_evaluation_physics_probe_json"
 
 
-def prepare(source, out, substeps):
+def prepare(source, out, substeps=None, *, contact_profile=None):
+    if (substeps is None) == (contact_profile is None):
+        raise ValueError("Choose exactly one explicit physics probe")
     data = source.read_bytes()
     if len(data) < 8:
         raise ValueError("Truncated checkpoint")
@@ -31,17 +33,34 @@ def prepare(source, out, substeps):
     original = json.loads(meta["user.resolved_config_json"])
     config = deepcopy(original)
     old = config["sim"]["substeps"]
-    if (
-        config["sim"] != config["env"]["sim"]
-        or config["sim"]["fps"] != 20
-        or not isinstance(substeps, int)
-        or substeps not in (2 * old, 4 * old)
-    ):
+    if config["sim"] != config["env"]["sim"] or config["sim"]["fps"] != 20:
+        raise ValueError("Physics probes require the same20Hz control timeline")
+    modification = {}
+    if contact_profile is not None:
+        embodiment = config.get("embodiment", {}).get("config")
+        if (
+            contact_profile != "default_patch"
+            or embodiment is None
+            or embodiment.get("hand_contact_profile", "default") != "default"
+        ):
+            raise ValueError(
+                "Only the existing point-to-torsional-patch profile is supported"
+            )
+        embodiment["hand_contact_profile"] = contact_profile
+        modification = dict(
+            kind="contact_profile",
+            before="default",
+            after="default_patch",
+            existing_coefficients_unchanged=True,
+        )
+    elif not isinstance(substeps, int) or substeps not in (2 * old, 4 * old):
         raise ValueError(
             "Only a twofold or fourfold finer timestep at the same20Hz is allowed"
         )
-    config["sim"]["substeps"] = substeps
-    config["env"]["sim"]["substeps"] = substeps
+    else:
+        config["sim"]["substeps"] = substeps
+        config["env"]["sim"]["substeps"] = substeps
+        modification = dict(kind="physics_substeps", before=old, after=substeps)
     payload = data[8 + size :]
     for name, tensor in header.items():
         if name == "__metadata__":
@@ -55,10 +74,12 @@ def prepare(source, out, substeps):
         original_training_resolved_config_json=meta["user.resolved_config_json"],
         original_training_environment_steps=int(meta["user.environment_steps"]),
         original_training_physics_fps=20 * old,
-        evaluation_physics_fps=20 * substeps,
+        evaluation_physics_fps=20 * config["sim"]["substeps"],
+        physics_modification=modification,
         control_fps=20,
         all_tensor_bytes_unchanged=True,
         tensor_payload_sha256=hashlib.sha256(payload).hexdigest(),
+        preparation_source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         evaluation_only=True,
         physical_task_accepted=False,
     )
@@ -78,10 +99,14 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--checkpoint", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
-    parser.add_argument("--substeps", type=int, required=True)
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument("--substeps", type=int)
+    group.add_argument("--contact-profile", choices=["default_patch"])
     parser.add_argument("--receipt", type=Path, required=True)
     args = parser.parse_args()
-    result = prepare(args.checkpoint, args.out, args.substeps)
+    result = prepare(
+        args.checkpoint, args.out, args.substeps, contact_profile=args.contact_profile
+    )
     with args.receipt.open("x") as stream:
         json.dump(result, stream, indent=2, allow_nan=False)
         stream.write("\n")
