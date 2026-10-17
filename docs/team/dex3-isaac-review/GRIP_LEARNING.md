@@ -231,10 +231,15 @@ wrapper and independent physical evaluation before promotion.
 
 The vendor conversion also distinguishes two surface points from the force
 application point. Newton offsets those surfaces by half the signed gap on
-either side of MuJoCo's contact midpoint. The corrected wrench uses their
-midpoint. Its real-scene check now compares against MuJoCo's native contact
-positions and inertial COM positions, independently of that reconstruction.
-A gap plus tangential-force regression detects use of either surface point.
+either side of MuJoCo's contact midpoint. There is also a timing difference:
+native contact positions and inertial COM positions precede integration, while
+the returned Newton state follows integration. Reconstructing either quantity
+from that returned state mixes times. The candidate now uses an explicit read-only
+binding to native `contact.pos` and `xipos`, with a validated native/body mapping.
+Its real-scene check decodes the wrench independently on the CPU and checks that
+the readout leaves native inputs unchanged. A nonzero resultant with a displaced
+COM exercises the moment origin; the different-time COM displacement is reported
+as a diagnostic. This direct-buffer candidate still requires GPU validation.
 The early surface-point pilot was stopped and preserved before longer training.
 New diagnostics retain both the archived surface-point convention and the native
 force application positions, together with measured assigned-hand wrenches.

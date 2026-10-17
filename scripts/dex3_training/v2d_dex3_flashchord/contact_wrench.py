@@ -5,6 +5,7 @@ preserves distributed contact couples and native torsional/rolling moments.
 """
 
 import warp as wp
+from .native_contact_binding import invert_body_mapping
 
 
 @wp.kernel
@@ -12,8 +13,7 @@ def accumulate_contact_wrench(
     count: wp.array(dtype=wp.int32),
     shape0: wp.array(dtype=wp.int32),
     shape1: wp.array(dtype=wp.int32),
-    point0: wp.array(dtype=wp.vec3),
-    point1: wp.array(dtype=wp.vec3),
+    contact_position: wp.array(dtype=wp.vec3),
     force: wp.array(dtype=wp.spatial_vector),
     shape_body: wp.array(dtype=wp.int32),
     shape_hand: wp.array(dtype=wp.int32),
@@ -21,8 +21,8 @@ def accumulate_contact_wrench(
     bodies_per_world: int,
     hands: int,
     assigned_objects: wp.array(dtype=wp.int32),
-    poses: wp.array(dtype=wp.transform),
-    body_com: wp.array(dtype=wp.vec3),
+    object_to_native: wp.array(dtype=wp.int32),
+    native_com: wp.array2d(dtype=wp.vec3),
     result_force: wp.array(dtype=wp.vec3),
     result_moment: wp.array(dtype=wp.vec3),
 ):
@@ -43,7 +43,7 @@ def accumulate_contact_wrench(
     h0 = int(shape_hand[s0 % shapes_per_world])
     h1 = int(shape_hand[s1 % shapes_per_world])
     hand, obj = int(-1), int(-1)
-    position, f, moment = wp.vec3(), wp.vec3(), wp.vec3()
+    f, moment = wp.vec3(), wp.vec3()
     if h0 >= 0 and b1 % bodies_per_world == assigned_objects[h0]:
         hand = h0
         obj = b1
@@ -55,14 +55,11 @@ def accumulate_contact_wrench(
         f = wp.spatial_top(force[i])
         moment = wp.spatial_bottom(force[i])
     if hand >= 0:
-        # Newton 1.2.0 offsets the two surface points by +/- dist/2.
-        # MuJoCo's contact force and torsional moment act at contact.pos,
-        # their midpoint, rather than at either separated surface point.
-        position = 0.5 * (
-            wp.transform_point(poses[b0], point0[i])
-            + wp.transform_point(poses[b1], point1[i])
-        )
-        center = wp.transform_point(poses[obj], body_com[obj])
+        # Read both quantities at the force solve's time. Newton's returned
+        # state is post-integration; its local surface points plus that state
+        # cannot recover the native force application point at the earlier time.
+        position = contact_position[i]
+        center = native_com[world, object_to_native[obj]]
         slot = world * hands + hand
         wp.atomic_add(result_force, slot, f)
         wp.atomic_add(result_moment, slot, moment + wp.cross(position - center, f))
@@ -72,6 +69,20 @@ class RawContactWrench:
     def __init__(self, contact, model, assigned_objects, hands, device):
         self.contact, self.model = contact, model
         self.assigned_objects, self.hands = assigned_objects, hands
+        binding = getattr(model, "dex3_native_contact_readout", None)
+        if binding is None:
+            raise ValueError("Raw wrench rewards require native contact-time readout")
+        self.native = binding.data
+        inverse = invert_body_mapping(
+            binding.body_to_newton.numpy(), contact.bodies_per_world
+        )
+        for world in range(contact.world_count):
+            for obj in assigned_objects.numpy():
+                if not 0 <= obj < contact.bodies_per_world or inverse[
+                    world * contact.bodies_per_world + obj
+                ] < 0:
+                    raise ValueError("Assigned grip object has no native COM mapping")
+        self.object_to_native = wp.array(inverse, dtype=wp.int32, device=device)
         self.force = wp.zeros(contact.world_count * hands, dtype=wp.vec3, device=device)
         self.moment = wp.zeros_like(self.force)
         original_update = contact.update
@@ -94,8 +105,7 @@ class RawContactWrench:
                 contacts.rigid_contact_count,
                 contacts.rigid_contact_shape0,
                 contacts.rigid_contact_shape1,
-                contacts.rigid_contact_point0,
-                contacts.rigid_contact_point1,
+                self.native.contact.pos,
                 contacts.force,
                 self.model.shape_body,
                 self.contact.shape_hand_ids,
@@ -103,8 +113,8 @@ class RawContactWrench:
                 self.contact.bodies_per_world,
                 self.hands,
                 self.assigned_objects,
-                state.body_q,
-                self.model.body_com,
+                self.object_to_native,
+                self.native.xipos,
                 self.force,
                 self.moment,
             ],

@@ -60,6 +60,7 @@ def main(cfg):
         bodies = env.model.body_count // 2
         contacts_seen = 0
         largest_error = 0.0
+        largest_com_time_offset = 0.0
         for _ in range(6):
             env.step(wp.zeros_like(env.action_input))
             pose = env.state_0.body_q.numpy()
@@ -74,7 +75,16 @@ def main(cfg):
                 for native_body, newton_body in enumerate(body_map[world]):
                     if newton_body >= 0:
                         com[newton_body] = native_com[world, native_body]
-            np.testing.assert_allclose(com, reconstructed_com, atol=2e-5, rtol=2e-5)
+            # Native contacts/COM precede integration; returned Newton poses
+            # follow integration. This displacement is diagnostic, not an
+            # equality gate between different times.
+            valid_com = np.isfinite(com).all(axis=1)
+            largest_com_time_offset = max(
+                largest_com_time_offset,
+                float(np.max(np.linalg.norm(
+                    com[valid_com] - reconstructed_com[valid_com], axis=1
+                ))),
+            )
             c = env.contacts
             count = int(c.rigid_contact_count.numpy()[0])
             a, b = (np.full(count, -1, dtype=int) for _ in range(2))
@@ -114,6 +124,17 @@ def main(cfg):
                         )
                         contacts_seen += 1
             actual = env.objective.measured_wrench
+            # Run the readout once more and prove its native input buffers did
+            # not change. It must only clear/write its own resultant arrays.
+            native_buffers = [
+                env.solver.mjw_data.contact.pos, env.solver.mjw_data.xipos,
+                env.solver.mjw_data.qpos, env.solver.mjw_data.qvel,
+                env.solver.mjw_data.efc.force, c.force,
+            ]
+            before = [buffer.numpy() for buffer in native_buffers]
+            actual.compute(env.state_0, c)
+            for buffer, saved in zip(native_buffers, before):
+                np.testing.assert_array_equal(buffer.numpy(), saved)
             for observed, expected in [
                 (actual.force.numpy(), expected_force),
                 (actual.moment.numpy(), expected_moment),
@@ -131,6 +152,8 @@ def main(cfg):
                     maximum_absolute_force_or_moment_difference=largest_error,
                     independent_CPU_decode_matches_GPU_wrench=True,
                     independent_native_contact_midpoint_and_inertial_COM_used=True,
+                    native_input_buffers_unchanged_by_readout=True,
+                    maximum_force_time_to_returned_state_COM_displacement_m=largest_com_time_offset,
                     support_and_other_object_contacts_excluded=True,
                     evaluation_auto_reset=False,
                     physics_modified=False,

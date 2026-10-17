@@ -3,6 +3,7 @@
 from dataclasses import dataclass
 import newton
 from flash_chord.runtime.sim import SimConfig
+from .native_contact_binding import NativeContactReadout
 
 
 @dataclass
@@ -15,7 +16,7 @@ class NativeContactSimConfig(SimConfig):
 
 
 def build_solver(model, cfg):
-    return newton.solvers.SolverMuJoCo(
+    solver = newton.solvers.SolverMuJoCo(
         model,
         solver=cfg.solver,
         integrator=cfg.integrator,
@@ -28,3 +29,10 @@ def build_solver(model, cfg):
         use_mujoco_contacts=cfg.use_mujoco_contacts,
         enable_multiccd=cfg.enable_multiccd,
     )
+    # Contacts and xipos are both from the force solve, before integration.
+    # Returned Newton body poses have already been integrated and cannot be
+    # used to reconstruct the COM for that earlier contact wrench.
+    model.dex3_native_contact_readout = NativeContactReadout(
+        solver.mjw_data, solver.mjc_body_to_newton
+    )
+    return solver

@@ -15,14 +15,13 @@ def main():
         # Two unequal-location opposing forces have zero resultant and a
         # nonzero couple. Averaging positions before summing would erase it.
         # World 1 reverses shape order and adds an explicit native contact torque.
-        identity = [0, 0, 0, 0, 0, 0, 1]
         count = arr([4], wp.int32)
         shapes0 = arr([0, 0, 3, 3], wp.int32)
         shapes1 = arr([1, 1, 2, 2], wp.int32)
-        # Unequal gaps plus tangential forces distinguish the actual midpoint
-        # moment from an incorrect moment about either body's surface point.
-        p0 = arr([[0, 0.1, -0.002], [0, -0.1, -0.004]] * 2, wp.vec3)
-        p1 = arr([[0, 0.1, 0.002], [0, -0.1, 0.004]] * 2, wp.vec3)
+        position = arr([[0, 0.1, 0], [0, -0.1, 0]] * 2, wp.vec3)
+        # Native bodies are deliberately permuted relative to Newton bodies.
+        # The second world's COM differs from the first world's.
+        native_com = arr([[[0, 0, 0]] * 3, [[0, 0.2, 0]] * 3], wp.vec3)
         raw = arr(
             [
                 [-2, 0, 0, 0, 0, 0],
@@ -38,8 +37,7 @@ def main():
             count,
             shapes0,
             shapes1,
-            p0,
-            p1,
+            position,
             raw,
             arr([0, 1, 2, 3], wp.int32),
             arr([0, -1], wp.int32),
@@ -47,8 +45,8 @@ def main():
             2,
             1,
             arr([1], wp.int32),
-            arr([identity] * 4, wp.transform),
-            arr([[0, 0, 0]] * 4, wp.vec3),
+            arr([2, 1, 1, 2], wp.int32),
+            native_com,
             force,
             moment,
         ]
@@ -65,6 +63,13 @@ def main():
         wp.capture_launch(capture.graph)
         np.testing.assert_allclose(
             moment.numpy(), [[0, 0, -0.4], [0, 0, -0.35]], atol=1e-7
+        )
+        # Nonzero resultant makes the COM matter, including its world index.
+        count.assign(np.array([3], dtype=np.int32))
+        wp.capture_launch(capture.graph)
+        np.testing.assert_allclose(force.numpy(), [[0, 0, 0], [2, 0, 0]], atol=1e-7)
+        np.testing.assert_allclose(
+            moment.numpy(), [[0, 0, -0.4], [0, 0, 0.23]], atol=1e-7
         )
         # Stale entries beyond active count are ignored; a reset/empty buffer
         # produces exactly zero force and moment.
@@ -86,7 +91,8 @@ def main():
                     opposing_contact_couple_preserved=True,
                     object_reaction_sign_and_reversed_shape_order_verified=True,
                     native_torsional_moment_included=True,
-                    native_force_application_midpoint_verified_with_unequal_gaps=True,
+                    native_contact_position_and_contact_time_COM_used=True,
+                    nonzero_resultant_with_world_specific_COM_offset_verified=True,
                     world_isolation_verified=True,
                     captured_step_does_not_accumulate=True,
                     zero_contacts_clear_previous_wrench=True,
