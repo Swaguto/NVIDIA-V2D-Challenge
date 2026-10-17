@@ -6,6 +6,14 @@ import json
 from pathlib import Path
 
 PATCHES = {
+    "runtime/sim.py": (
+        "4ede920bd4b07a231b31ab9e122029977fe46217797944c900f0bc60582dcf6f",
+        "    return newton.solvers.SolverMuJoCo(\n",
+        "    from v2d_dex3_flashchord.sim import NativeContactSimConfig, build_solver as build_native\n"
+        "    if isinstance(cfg, NativeContactSimConfig):\n"
+        "        return build_native(model, cfg)\n"
+        "    return newton.solvers.SolverMuJoCo(\n",
+    ),
     "scene/support.py": (
         "8d82f6008f2310667bef6862dfa3f453d3bdd188c79c7283a26e288a5a19e1c2",
         "    if not path.is_file():\n",
@@ -35,12 +43,23 @@ PATCHES = {
 }
 
 
-def install(runtime):
+def install(runtime, extend_existing=False):
     receipt = {}
     replacements = []
+    existing_path = runtime / "dex3-extension-patches.json"
+    existing = json.loads(existing_path.read_text()) if existing_path.exists() else {}
     for relative, (expected, old, new) in PATCHES.items():
         path = runtime / "src/flash_chord" / relative
         source = path.read_bytes()
+        current = hashlib.sha256(source).hexdigest()
+        prior = existing.get(relative, {})
+        if (
+            extend_existing
+            and prior.get("before_sha256") == expected
+            and current == prior.get("after_sha256")
+        ):
+            receipt[relative] = prior
+            continue
         if (
             hashlib.sha256(source).hexdigest() != expected
             or source.decode().count(old) != 1
@@ -63,4 +82,6 @@ def install(runtime):
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--runtime", required=True, type=Path)
-    print(json.dumps(install(p.parse_args().runtime), indent=2))
+    p.add_argument("--extend-existing", action="store_true")
+    args = p.parse_args()
+    print(json.dumps(install(args.runtime, args.extend_existing), indent=2))

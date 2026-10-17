@@ -1,0 +1,8 @@
+# @package _global_
+defaults:
+  - dex3_repaired_grasp_contact
+  - _self_
+sim:
+  _target_: v2d_dex3_flashchord.sim.NativeContactSimConfig
+  enable_multiccd: true
+output_dir: /outputs/repaired-multicontact
