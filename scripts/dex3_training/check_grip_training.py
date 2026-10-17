@@ -76,6 +76,8 @@ def check():
                 2,
                 3,
                 arr([0, 2], wp.int32),
+                arr([1, 1], wp.int32),
+                arr([0, 1], wp.int32),
                 arr([1], wp.int32),
                 arr([0], wp.int32),
                 arr(q, wp.transform),
@@ -89,6 +91,33 @@ def check():
             [[11, 12, 1, 0, 0, 0], [21, 22, 2, 0, 0, 1]],
             atol=1e-6,
         )
+        reset_output = wp.zeros(2 * 6)
+        wp.launch(
+            append_force_observation,
+            dim=2,
+            inputs=[
+                arr([11, 12, 21, 22]),
+                2,
+                6,
+                1,
+                2,
+                3,
+                arr([0, 2], wp.int32),
+                arr([0, 1], wp.int32),
+                arr([0, 1], wp.int32),
+                arr([1], wp.int32),
+                arr([0], wp.int32),
+                arr(q, wp.transform),
+                arr([[0, 20, 0], [40, 0, 0]], wp.vec3),
+                20.0,
+                reset_output,
+            ],
+        )
+        np.testing.assert_allclose(
+            reset_output.numpy().reshape(2, 6),
+            [[11, 0, 0, 0, 0, 0], [21, 22, 2, 0, 0, 1]],
+            atol=1e-6,
+        )
         return dict(
             schema="v2d.grip-training-gpu-contract.v1",
             balanced_loaded_grip_reward_verified=True,
@@ -97,6 +126,7 @@ def check():
             angular_slip_reduces_stability=True,
             reward_has_no_accumulated_state=True,
             force_observation_object_frame_and_world_isolation_verified=True,
+            reset_world_has_no_stale_contact_observations=True,
             physical_task_accepted=False,
         )
 

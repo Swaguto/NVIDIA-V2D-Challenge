@@ -27,6 +27,8 @@ def append_force_observation(
     bodies: int,
     frames: int,
     timestep: wp.array(dtype=wp.int32),
+    episode_step: wp.array(dtype=wp.int32),
+    contact_axis: wp.array(dtype=wp.int32),
     object_ids: wp.array(dtype=wp.int32),
     slot_objects: wp.array(dtype=wp.int32),
     poses: wp.array(dtype=wp.transform),
@@ -37,11 +39,15 @@ def append_force_observation(
     world = wp.tid()
     for axis in range(base_dim):
         output[world * total_dim + axis] = base[world * base_dim + axis]
+        if episode_step[world] == 0 and contact_axis[axis] != 0:
+            output[world * total_dim + axis] = 0.0
     for slot in range(slots):
         obj = world * bodies + object_ids[slot_objects[slot]]
         local_force = wp.quat_rotate_inv(
             wp.transform_get_rotation(poses[obj]), force[world * slots + slot]
         )
+        if episode_step[world] == 0:
+            local_force = wp.vec3()
         for axis in range(3):
             output[world * total_dim + base_dim + slot * 3 + axis] = wp.clamp(
                 local_force[axis] / force_scale, -5.0, 5.0
@@ -91,6 +97,7 @@ class GripObservationConfig(PolicyObservationConfig):
             scene,
             contact,
             timestep,
+            episode_step,
             action.buffers.reference.num_frames,
             self.contact_force_scale_N,
             device,
@@ -98,8 +105,16 @@ class GripObservationConfig(PolicyObservationConfig):
 
 
 class GripObservation:
-    def __init__(self, base, scene, contact, timestep, frames, scale, device):
+    def __init__(
+        self, base, scene, contact, timestep, episode_step, frames, scale, device
+    ):
         self.base, self.contact, self.timestep = base, contact, timestep
+        self.episode_step = episode_step
+        contact_axis = np.zeros(base.observation_dim, dtype=np.int32)
+        for name, (start, end) in zip(base.block_names, base.block_ranges, strict=True):
+            if name.startswith("contact_"):
+                contact_axis[start:end] = 1
+        self.contact_axis = wp.array(contact_axis, dtype=wp.int32, device=device)
         self.worlds, self.bodies = (
             scene.world_count,
             scene.model.body_count // scene.world_count,
@@ -135,6 +150,8 @@ class GripObservation:
                 self.bodies,
                 self.frames,
                 self.timestep,
+                self.episode_step,
+                self.contact_axis,
                 self.contact.object_body_ids,
                 self.contact.slot_object_ids,
                 state.body_q,
@@ -260,9 +277,9 @@ def evaluate_grip(
             accumulated += value
     total = base_score[world]
     for ti in range(5):
-        value = accumulated[ti] / wp.max(1.0, count)
-        terms[world * total_count + base_count + ti] = value
-        total += frame_dt * weights[base_count + ti] * value
+        component = accumulated[ti] / wp.max(1.0, count)
+        terms[world * total_count + base_count + ti] = component
+        total += frame_dt * weights[base_count + ti] * component
     score[world] = total
 
 
