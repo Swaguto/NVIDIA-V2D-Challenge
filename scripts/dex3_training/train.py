@@ -7,7 +7,7 @@ This composition adds a JSONL logger and an untouched initial-policy checkpoint.
 import hashlib
 import json
 from pathlib import Path
-from dataclasses import asdict
+from dataclasses import asdict, replace
 
 import hydra
 import numpy as np
@@ -313,6 +313,10 @@ def main(cfg: DictConfig):
             metadata["dex3_pilot_scope"] = (
                 "Reference-state initialization during training with zero VOC; final stage uses only frame-zero starts. Full-task success requires separate complete evaluation from frame zero."
             )
+        actor_checkpoint = cfg.get("actor_initialization_checkpoint")
+        if actor_checkpoint and training.resume:
+            raise ValueError("Actor initialization is a new experiment, not a resume")
+        runner_training = training
         if training.resume:
             context = cfg.get("resume_context_manifest")
             if not context:
@@ -335,15 +339,35 @@ def main(cfg: DictConfig):
             metadata["dex3_resume_lineage_json"] = json.dumps(lineage, sort_keys=True)
         else:
             initial = create_learner(jax_env, training)
+            if actor_checkpoint:
+                from v2d_dex3_flashchord.actor_initialization import (
+                    initialize, validate as validate_actor_initialization,
+                )
+
+                context = cfg.get("actor_initialization_context_manifest")
+                if not context:
+                    raise ValueError("Actor initialization requires its parent code context")
+                lineage = validate_actor_initialization(
+                    read_checkpoint_metadata(actor_checkpoint), metadata, Path(context),
+                    Path("/opt/dex3-extension/image-context-manifest.json"), Path(actor_checkpoint),
+                )
+                initial = initialize(initial, actor_checkpoint, len(training.network.actor_hidden_dims))
+                (output / "actor-initialization.json").write_text(json.dumps(lineage, indent=2) + "\n")
+                metadata["dex3_actor_initialization_json"] = json.dumps(lineage, sort_keys=True)
             save_checkpoint(
                 output / "model_0.safetensors",
                 initial,
                 metadata={**metadata, "iteration": 0, "environment_steps": 0},
             )
+            if actor_checkpoint:
+                # The upstream loop loads this new, zero-counter learner. Its
+                # optimizer, critic and RNG remain fresh; no parent step count
+                # is presented as work performed by the new experiment.
+                runner_training = replace(training, resume=True, checkpoint=str(output / "model_0.safetensors"))
         logger = LocalMetricLogger(output, metric_definitions(jax_env), env)
         learner = run_training(
             jax_env,
-            training,
+            runner_training,
             logger=logger,
             checkpoint_dir=output,
             log_interval=1,

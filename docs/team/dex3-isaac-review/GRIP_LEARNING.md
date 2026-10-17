@@ -243,3 +243,25 @@ as a diagnostic. This direct-buffer candidate still requires GPU validation.
 The early surface-point pilot was stopped and preserved before longer training.
 New diagnostics retain both the archived surface-point convention and the native
 force application positions, together with measured assigned-hand wrenches.
+
+### Actor initialization for a new reward experiment
+
+`dex3_grip_wrench_finetune` is an explicit new experiment. It can initialize the
+actor mean and observation normalization from the measured 2,000-iteration
+staged policy. It retains a fresh critic, optimizer, RNG, exploration noise,
+learning rate, simulator state and zero training counters. This avoids discarding
+the earlier actor's stronger contact behavior when correcting the reward.
+
+Initialization rejects changed input hashes, policy schemas, action/observation
+semantics, embodiment, geometry, physics, reset behavior or network structure.
+The native read-only solver config with `enable_multiccd=false` is equivalent to
+the pinned upstream solver default for this check. Reward changes are allowed
+and recorded as a new experiment. Parent and current build contexts must be
+clean, hash bound and use the same pinned runtime.
+
+The parent checkpoint and its context manifest must be mounted privately at
+`/initial-policy/ppo/model_2000.safetensors` and
+`/initial-context/context-manifest.json`. Initialization lineage records the
+parent training count separately. Its steps are never added to the new run's
+counter. `check_actor_initialization.py` compares a real new `model_0` with the
+parent and a fresh upstream learner; GPU verification is required before use.

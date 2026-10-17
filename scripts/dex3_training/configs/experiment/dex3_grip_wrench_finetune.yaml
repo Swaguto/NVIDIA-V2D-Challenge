@@ -1,0 +1,10 @@
+# @package _global_
+# New experiment: reuse a measured actor; critic/optimizer/counters start fresh.
+defaults:
+  - dex3_grip_wrench_learning
+  - _self_
+actor_initialization_checkpoint: /initial-policy/ppo/model_2000.safetensors
+actor_initialization_context_manifest: /initial-context/context-manifest.json
+logging:
+  run_name: grip-wrench-actor-initialization
+output_dir: /outputs/grip-wrench-finetune
