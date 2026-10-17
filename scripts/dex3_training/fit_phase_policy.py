@@ -32,6 +32,7 @@ from v2d_dex3_flashchord.phase_prior import (
     phase_envelope,
     position_basis,
     carry_height_envelope,
+    pose_refit_baseline,
 )
 from v2d_dex3_flashchord.sampling import resample_targets
 from v2d_dex3_flashchord.native_depth import maximum_assigned_depth
@@ -228,7 +229,7 @@ def main(cfg):
         ]
         baseline = deepcopy(plan)
         if fit_mode == "pose":
-            baseline["phase_actions"].pop(phase["sample"], None)
+            baseline = pose_refit_baseline(plan, phase["sample"])
         else:
             if not (prior_path or prior_journal) or phase["sample"] not in baseline["phase_actions"]:
                 raise ValueError("Carry height sweep needs an existing grasp candidate")

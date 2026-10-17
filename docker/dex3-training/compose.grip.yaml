@@ -3,7 +3,13 @@
 services:
   grip:
     image: ${DEX3_GRIP_IMAGE:?Set the verified grip experiment image digest}
-    gpus: all
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     shm_size: 8gb
     mem_limit: 24g
     memswap_limit: 24g

@@ -2,12 +2,22 @@
 
 import hashlib
 import json
+from copy import deepcopy
 from dataclasses import asdict
 import numpy as np
 from scipy.spatial.transform import Rotation
 from .sampling import interpolate_quaternions
 
 BOUNDS = np.array([0.1] * 3 + [0.35] * 3 + [0.65] * 7)
+
+
+def pose_refit_baseline(plan, sample):
+    """Remove only the pose being refit, retaining its independent carry program."""
+    baseline = deepcopy(plan)
+    if sample in baseline["phase_actions"]:
+        # Keep the named phase so its validated carry gate remains schedulable.
+        baseline["phase_actions"][sample] = [0.0] * 13
+    return baseline
 
 
 def parameter_bounds(profile="local"):

@@ -2,7 +2,13 @@
 services:
   diagnostic:
     image: ${DEX3_EXPERIMENTAL_IMAGE:?Set the verified experimental image digest}
-    gpus: all
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     shm_size: 8gb
     environment:
       WANDB_MODE: disabled

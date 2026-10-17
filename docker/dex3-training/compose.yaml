@@ -1,7 +1,13 @@
 services:
   pilot:
     image: ${DEX3_TRAINING_IMAGE:-v2d-dex3-training:local}
-    gpus: all
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     shm_size: 8gb
     environment:
       WANDB_MODE: disabled

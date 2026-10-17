@@ -10,7 +10,7 @@ import numpy as np
 import pytest
 
 sys.path.insert(0, str(Path(__file__).parents[1]))
-from v2d_dex3_flashchord.phase_prior import project, schedule, model_signature
+from v2d_dex3_flashchord.phase_prior import project, schedule, model_signature, pose_refit_baseline
 from freeze_phase_policy import freeze
 
 
@@ -145,3 +145,24 @@ def test_carry_height_bias_rejects_invalid_motor_offsets(height):
     plan["carry_height_bias_m"] = {"grasp": height}
     with pytest.raises(ValueError):
         schedule(spec, plan, ["right", "left"], names, np.arange(6.))
+
+
+def test_pose_refitting_preserves_carry_height_without_double_applying_the_pose():
+    spec, plan, names = fixture()
+    spec["phases"]["left"][0]["object"] = 0
+    spec["source_times_s"] = [0., 2., 3., 5.]
+    spec["smooth_robot_object_reference"] = {"0": [
+        [0, 0, z, 0, 0, 0, 1] for z in [0, 0, .02, 0]
+    ]}
+    plan["carry_height_bias_m"] = {"grasp": .02}
+    original = deepcopy(plan)
+    baseline = pose_refit_baseline(plan, "grasp")
+    times = np.array([0., 2., 3., 5.])
+    fixed = schedule(spec, baseline, ["right", "left"], names, times)
+    expected = np.zeros((4, 26))
+    expected[2, 15] = .4
+    np.testing.assert_allclose(fixed, expected)
+    assert plan == original
+    # Removing the optional carry program leaves the original pose-only fit.
+    baseline.pop("carry_height_bias_m")
+    np.testing.assert_array_equal(schedule(spec, baseline, ["right", "left"], names, times), 0)
