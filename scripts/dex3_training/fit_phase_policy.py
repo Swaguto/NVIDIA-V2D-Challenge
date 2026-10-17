@@ -31,6 +31,7 @@ from v2d_dex3_flashchord.phase_prior import (
     schedule,
     phase_envelope,
     position_basis,
+    carry_height_envelope,
 )
 from v2d_dex3_flashchord.sampling import resample_targets
 from v2d_dex3_flashchord.native_depth import maximum_assigned_depth
@@ -149,6 +150,9 @@ def main(cfg):
         if not np.isfinite(support_weight) or not 2 <= support_weight <= 50:
             raise ValueError("Unsupported sampled-support objective weight")
         prior_path = cfg.fit.get("prior")
+        fit_mode = str(cfg.fit.get("mode", "pose"))
+        if fit_mode not in ("pose", "carry_height_sweep"):
+            raise ValueError("Unknown grasp fitting mode")
         plan = (
             json.loads(Path(prior_path).read_text())
             if prior_path
@@ -193,7 +197,12 @@ def main(cfg):
             if row["robust_phase_pass"] and name != phase["sample"]
         ]
         baseline = deepcopy(plan)
-        baseline["phase_actions"].pop(phase["sample"], None)
+        if fit_mode == "pose":
+            baseline["phase_actions"].pop(phase["sample"], None)
+        else:
+            if not prior_path or phase["sample"] not in baseline["phase_actions"]:
+                raise ValueError("Carry height sweep needs an existing grasp candidate")
+            baseline.setdefault("carry_height_bias_m", {}).pop(phase["sample"], None)
         fixed = schedule(spec, baseline, sides, names, times)
         manifest["_root"] = str(root)
         layouts = {}
@@ -206,6 +215,9 @@ def main(cfg):
         bounds = parameter_bounds(bounds_profile)
         lower, upper = -bounds.copy(), bounds.copy()
         for i, name in enumerate(names[side]):
+            if fit_mode == "carry_height_sweep":
+                lower[6 + i] = upper[6 + i] = 0
+                continue
             if not any(d in name for d in phase["required_digits"]):
                 lower[6 + i] = upper[6 + i] = 0
             else:
@@ -246,35 +258,47 @@ def main(cfg):
         )
         slot_count = env.contact.layout.slots_per_world
         wrist_envelope = phase_envelope(phase, times)
+        carry_gate = carry_height_envelope(spec, phase, times) if fit_mode == "carry_height_sweep" else None
         basis = position_basis(spec, phase, times, position_frame)
         start = sides.index(side) * 13
         rng = np.random.default_rng(int(cfg.fit.get("seed", 42)))
         population = worlds // 2
         mu = np.asarray(plan["phase_actions"].get(phase["sample"], np.zeros(13)), float)
+        if fit_mode == "carry_height_sweep":
+            mu = np.zeros(13)
         sigma_scale = float(cfg.fit.get("initial_sigma_scale", 1.0))
         sigma = initial_sigma(bounds_profile, sigma_scale)
         best_cost, best_raw, best_metrics = float("inf"), mu.copy(), None
         journal = (out / "iterations.jsonl").open("x")
         maximum_iterations = int(cfg.fit.iterations)
+        if fit_mode == "carry_height_sweep" and (maximum_iterations != 1 or curriculum_step != 0 or population < 6):
+            raise ValueError("Carry height sweep uses one complete-window grid with at least6 paired candidates")
         for iteration in range(maximum_iterations):
-            candidates = project(
-                rng.normal(mu, sigma, (population, 13)),
-                lower,
-                upper,
-                profile=bounds_profile,
-            )
-            candidates[0] = project(best_raw, lower, upper, profile=bounds_profile)
+            if fit_mode == "carry_height_sweep":
+                candidates = np.zeros((population, 13))
+                candidates[:, 2] = np.linspace(0, 0.025, population)
+            else:
+                candidates = project(
+                    rng.normal(mu, sigma, (population, 13)),
+                    lower,
+                    upper,
+                    profile=bounds_profile,
+                )
+                candidates[0] = project(best_raw, lower, upper, profile=bounds_profile)
             actions = np.repeat(candidates, 2, axis=0)
             env.reset(frame_id=0)
             bodies, joints, contacts, depths = [], [], [], []
             cap_verified = True
             for frame in range(setup.reference.num_frames):
                 raw = np.broadcast_to(fixed[frame], (worlds, 26)).copy()
-                rotated_actions = actions.copy()
-                rotated_actions[:, :3] = np.einsum(
-                    "ij,wj->wi", basis[frame], actions[:, :3]
-                )
-                raw[:, start : start + 13] += rotated_actions * wrist_envelope[frame]
+                if fit_mode == "carry_height_sweep":
+                    raw[:, start + 2] += actions[:, 2] / 0.05 * carry_gate[frame]
+                else:
+                    rotated_actions = actions.copy()
+                    rotated_actions[:, :3] = np.einsum(
+                        "ij,wj->wi", basis[frame], actions[:, :3]
+                    )
+                    raw[:, start : start + 13] += rotated_actions * wrist_envelope[frame]
                 env.step(wp.array(raw.ravel(), dtype=wp.float32, device=env.device))
                 bodies.append(
                     env.state_0.body_q.numpy().reshape(worlds, stride, 7).copy()
@@ -314,7 +338,8 @@ def main(cfg):
                     and np.all(actual >= ranges[:, 0] - 1e-5)
                     and np.all(actual <= ranges[:, 1] + 1e-5)
                 )
-            if not cap_verified:
+            finite_cohort = all(np.isfinite(np.asarray(v)).all() for v in (bodies, joints, contacts, depths))
+            if not cap_verified or not finite_cohort:
                 evidence = out / f"failed-cohort-{iteration + 1}.npz"
                 np.savez_compressed(
                     evidence,
@@ -452,6 +477,13 @@ def main(cfg):
                 iteration=iteration + 1,
                 best_cost=best_cost,
                 best_raw_action=best_raw.tolist(),
+                fit_mode=fit_mode,
+                best_carry_height_bias_m=float(best_raw[2]) if fit_mode == "carry_height_sweep" else None,
+                carry_height_grid_results=[
+                    dict(height_bias_m=float(candidates[i, 2]), worst_pair_cost=float(pair_cost[i]),
+                         pair_metrics=metrics[2 * i:2 * i + 2])
+                    for i in range(population)
+                ] if fit_mode == "carry_height_sweep" else None,
                 best_pair_metrics=best_metrics,
                 native_motor_caps_verified=True,
                 source_frames_per_world=setup.reference.num_frames,
@@ -479,18 +511,22 @@ def main(cfg):
             and best_metrics
             and all(m["phase_pass"] for rows in best_metrics for m in rows)
         )
-        plan["phase_actions"][phase["sample"]] = best_raw.tolist()
+        if fit_mode == "carry_height_sweep":
+            plan.setdefault("carry_height_bias_m", {})[phase["sample"]] = float(best_raw[2])
+        else:
+            plan["phase_actions"][phase["sample"]] = best_raw.tolist()
         plan.setdefault("fit_reports", {})[phase["sample"]] = dict(
             robust_phase_pass=robust,
             best_cost=best_cost,
             best_pair_metrics=best_metrics,
             candidates_repeated_worlds=2,
             iterations=iteration + 1,
+            fit_mode=fit_mode,
             selected_phase_objective_end_source_s=prefix_end,
             selected_phase_full_window_covered=complete(phase, prefix_end),
         )
         plan.update(
-            optimizer="bounded_CEM_native_physics",
+            optimizer="bounded_carry_height_grid_native_physics" if fit_mode == "carry_height_sweep" else "bounded_CEM_native_physics",
             no_achieved_trajectory_used_as_reference=True,
             original_source_arrays_changed=False,
             physical_task_accepted=False,

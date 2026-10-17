@@ -119,3 +119,29 @@ def test_object_frame_position_prior_rotates_with_the_grasped_object():
     plan["position_frame"] = "object_reference"
     actions = schedule(spec, plan, ["right", "left"], names, np.array([0.0, 2.0, 5.0]))
     np.testing.assert_allclose(actions[1, 13:16], [0.0, 0.05, 0.0], atol=1e-8)
+
+
+def test_carry_height_bias_preserves_acquisition_and_named_hand_order():
+    spec, plan, names = fixture()
+    spec["phases"]["left"][0]["object"] = 0
+    spec["source_times_s"] = [0., 1., 2., 3., 4., 5.]
+    q = [0., 0., 0., 1.]
+    spec["smooth_robot_object_reference"] = {"0": [[0, 0, z] + q for z in [0, 0.02, 0, 0.02, 0.02, 0]]}
+    times = np.asarray(spec["source_times_s"])
+    original = deepcopy((spec, plan))
+    baseline = schedule(spec, plan, ["right", "left"], names, times)
+    plan["carry_height_bias_m"] = {"grasp": 0.02}
+    result = schedule(spec, plan, ["right", "left"], names, times)
+    difference = result - baseline
+    np.testing.assert_allclose(difference[:, 15], [0, 0, 0, .4, .4, 0])
+    difference[:, 15] = 0
+    np.testing.assert_array_equal(difference, 0)
+    assert spec == original[0]
+
+
+@pytest.mark.parametrize("height", [-.001, .026, float("nan"), [0.02]])
+def test_carry_height_bias_rejects_invalid_motor_offsets(height):
+    spec, plan, names = fixture()
+    plan["carry_height_bias_m"] = {"grasp": height}
+    with pytest.raises(ValueError):
+        schedule(spec, plan, ["right", "left"], names, np.arange(6.))

@@ -119,6 +119,24 @@ def position_basis(spec, phase, times, frame="world"):
     return Rotation.from_quat(quats).as_matrix()
 
 
+def carry_height_envelope(spec, phase, times):
+    """Smooth motor-bias gate from requested lift, after closure, on the source clock."""
+    source_times = np.asarray(spec["source_times_s"], float)
+    poses = np.asarray(spec["smooth_robot_object_reference"][str(phase["object"])] , float)
+    times = np.asarray(times, float)
+    if (source_times.ndim != 1 or len(source_times) < 2
+        or poses.shape != (len(source_times), 7) or np.any(np.diff(source_times) <= 0)
+        or not np.isfinite(np.r_[source_times, poses.ravel(), times]).all()):
+        raise ValueError("Carry height needs finite ordered source poses and times")
+    height = np.interp(times, source_times, poses[:, 2])
+    initial = np.interp(phase["close_s"], source_times, poses[:, 2])
+    return (
+        smooth((height - initial) / 0.01)
+        * smooth((times - phase["close_s"]) / 0.15)
+        * phase_envelope(phase, times)[:, 0]
+    )
+
+
 def schedule(spec, plan, sides, finger_names, times):
     if plan.get("schema") != "v2d.native-phase-policy-prior.v1":
         raise ValueError("Unsupported phase-policy plan")
@@ -153,4 +171,15 @@ def schedule(spec, plan, sides, finger_names, times):
             arranged[:3],
         )
         out[:, start : start + 13] += phase_envelope(phase, times) * values
+    for name, height in plan.get("carry_height_bias_m", {}).items():
+        if name not in phases or name not in plan["phase_actions"]:
+            raise ValueError("Carry bias needs a known fitted grasp phase")
+        if not np.isscalar(height) or not np.isfinite(height) or not 0 <= height <= 0.025:
+            raise ValueError("Carry motor height bias must be between zero and25mm")
+        side, phase = phases[name]
+        # The loader binds this program to the measured .05 m/action scale.
+        # Only robot wrist targets change. The object's reference is retained.
+        out[:, sides.index(side) * 13 + 2] += (
+            height / 0.05 * carry_height_envelope(spec, phase, times)
+        )
     return out
