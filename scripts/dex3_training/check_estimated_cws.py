@@ -81,7 +81,7 @@ def main(cfg):
             raise AssertionError("Default unknown-contact guard was bypassed")
         bad_reference = replace(setup.reference, _metadata=replace(setup.reference.metadata, schema_version="dex3_dual_hand_v1", source_dataset="local_development"))
         try:
-            env.config.objective.build(None, None, None, bad_reference)
+            env.config.objective.build(None, None, None, bad_reference, None, None, None, 4, 0.05)
         except ValueError:
             pass
         else:
