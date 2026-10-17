@@ -51,6 +51,23 @@ class ReadbackEnv:
         self.applied_motor_target, self.direct_effort = [], []
         self.native_model = {}
         model = getattr(env.solver, "mj_model", None)
+        self.solver_options = {}
+        option = getattr(model, "opt", None)
+        for name in (
+            "cone",
+            "impratio",
+            "solver",
+            "integrator",
+            "iterations",
+            "ls_iterations",
+            "timestep",
+            "enableflags",
+            "disableflags",
+        ):
+            value = getattr(option, name, None)
+            if value is not None:
+                self.native_model["option_" + name] = np.asarray(value).copy()
+                self.solver_options[name] = np.asarray(value).item()
         for name in (
             "geom_type",
             "geom_condim",
@@ -127,6 +144,7 @@ class ReadbackEnv:
         verification = dict(
             native_actuator_force_readback_available=bool(self.motor),
             native_capped_drive_verified=False,
+            native_solver_options=self.solver_options,
         )
         direct = np.asarray(self.direct_effort).reshape(
             len(self.direct_effort), self.env.world_count, -1

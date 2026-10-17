@@ -1,0 +1,12 @@
+# @package _global_
+# Isolate friction regularization without changing friction coefficients or caps.
+defaults:
+  - dex3_repaired_payload_carry
+  - _self_
+embodiment:
+  config:
+    hand_contact_profile: default_patch
+sim:
+  cone: elliptic
+  impratio: 100.0
+output_dir: /outputs/repaired-grasp-contact
