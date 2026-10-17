@@ -49,6 +49,7 @@ class ReadbackEnv:
         self.motor_target, self.feedback_weight = [], []
         self.velocity_target = []
         self.applied_motor_target, self.direct_effort = [], []
+        self.objective_terms, self.objective_score = [], []
         self.native_model = {}
         model = getattr(env.solver, "mj_model", None)
         self.solver_options = {}
@@ -112,6 +113,8 @@ class ReadbackEnv:
             self.env.control.joint_target_pos.numpy().copy()
         )
         self.direct_effort.append(self.env.control.joint_f.numpy().copy())
+        self.objective_terms.append(self.env.objective.terms.numpy().copy())
+        self.objective_score.append(self.env.objective.score.numpy().copy())
         feedback = getattr(self.env.action, "actual_feedback", None)
         if feedback is not None:
             self.feedback_weight.append(feedback.numpy().copy())
@@ -155,6 +158,8 @@ class ReadbackEnv:
             motor_velocity_target=np.asarray(self.velocity_target),
             applied_motor_position_target=np.asarray(self.applied_motor_target),
             direct_joint_effort=np.asarray(self.direct_effort),
+            objective_terms=np.asarray(self.objective_terms),
+            objective_score=np.asarray(self.objective_score),
         )
         if self.feedback_weight:
             arrays["measured_feedback_weight"] = np.asarray(self.feedback_weight)
@@ -273,6 +278,9 @@ class ReadbackEnv:
         )
         (output / "body-labels.json").write_text(
             json.dumps(list(self.env.model.body_label), indent=2) + "\n"
+        )
+        (output / "objective-term-labels.json").write_text(
+            json.dumps(list(self.env.objective.term_names), indent=2) + "\n"
         )
         return verification
 

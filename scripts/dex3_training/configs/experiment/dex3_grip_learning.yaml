@@ -1,0 +1,39 @@
+# @package _global_
+# Robot contact rewards; unknown human contact labels remain disabled.
+defaults:
+  - dex3_repaired_payload
+  - _self_
+action:
+  wrist_payload_gain: 0.5
+  wrist_ori_scale: 0.4
+  finger_joint_pos_scale: 0.45
+observation:
+  _target_: v2d_dex3_flashchord.grip_training.GripObservationConfig
+  object_body_velocity:
+    enabled: true
+objective:
+  _target_: v2d_dex3_flashchord.grip_training.GripObjectiveConfig
+  object_keypoints:
+    weight: 2.0
+  hand_keypoints:
+    weight: 0.05
+  hand_joint_pos:
+    weight: 0.005
+  action_rate_l2:
+    weight: -0.01
+training:
+  rollout_steps: 64
+  max_iterations: 2000
+  save_interval: 500
+  network:
+    actor_hidden_dims: [256, 256, 128]
+    critic_hidden_dims: [256, 256, 128]
+    initial_noise_std: 0.5
+  ppo:
+    learning_rate: 0.0003
+    learning_epochs: 5
+    mini_batches: 4
+    entropy_coefficient: 0.003
+logging:
+  run_name: measured-grip-learning
+output_dir: /outputs/grip-learning
