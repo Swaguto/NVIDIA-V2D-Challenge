@@ -1,0 +1,14 @@
+# @package _global_
+defaults:
+  - dex3_grip_wrench_learning
+
+action:
+  wrist_angular_reference_velocity: true
+  wrist_angular_kd: 0.4
+  maximum_reference_wrist_angular_speed_rad_s: 10.0
+
+embodiment:
+  config:
+    joint_overrides:
+      wrist_rotvec$:
+        kd: 0.0

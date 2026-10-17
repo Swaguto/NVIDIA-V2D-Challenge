@@ -71,6 +71,9 @@ class GraspActionConfig(ActionConfig):
     input_root: str = "/data"
     wrist_reference_velocity: bool = False
     maximum_reference_wrist_speed_m_s: float = 1.0
+    wrist_angular_reference_velocity: bool = False
+    wrist_angular_kd: float = 0.4
+    maximum_reference_wrist_angular_speed_rad_s: float = 10.0
     phase_policy_prior: str | None = None
     phase_policy_physics_substeps: int = 20
     wrist_payload_compensation: bool = False
@@ -137,6 +140,12 @@ class GraspActionConfig(ActionConfig):
             scene.model, scene.world_count
         )
         result.policy_control_contract_sha256 = control_signature(self)
+        if self.wrist_angular_reference_velocity:
+            from .angular_servo import AngularReferenceServo
+            result.angular_servo = AngularReferenceServo(
+                result, scene, sampled, self.wrist_angular_kd,
+                self.maximum_reference_wrist_angular_speed_rad_s,
+            )
         if self.wrist_reference_velocity:
             velocity = np.gradient(
                 sampled["robot_qpos"][:, :, :3], sampled["timestamps_s"], axis=0
@@ -223,6 +232,7 @@ class GraspActionConfig(ActionConfig):
 class GripResidualAction(ResidualHandPoseAction):
     def __init__(self, base, feedforward, stiffness, device):
         super().__init__(base.buffers, base.wrist, base.delay)
+        self.angular_servo = None
         self.grip_feedforward = wp.array(
             feedforward.ravel(), dtype=wp.float32, device=device
         )
@@ -246,6 +256,8 @@ class GripResidualAction(ResidualHandPoseAction):
             )
             action = self.combined_actor_action
         super().process(action, timestep, state)
+        if self.angular_servo is not None:
+            self.angular_servo.process(timestep)
         layout = self.buffers.layout
         wp.launch(
             add_grip_motor_bias,
@@ -279,3 +291,13 @@ class GripResidualAction(ResidualHandPoseAction):
         super().prepare_control(control)
         if self.reference_velocity is not None:
             wp.copy(control.joint_target_vel, self.motor_velocity_target)
+
+    def reset(self, mask):
+        super().reset(mask)
+        if self.angular_servo is not None:
+            self.angular_servo.reset(mask)
+
+    def apply_control(self, state, control):
+        super().apply_control(state, control)
+        if self.angular_servo is not None:
+            self.angular_servo.apply(state, control)

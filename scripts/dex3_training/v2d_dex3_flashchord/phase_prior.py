@@ -82,6 +82,10 @@ def control_signature(config):
     fields = asdict(config)
     for key in ("input_root", "phase_policy_prior", "phase_policy_physics_substeps"):
         fields.pop(key, None)
+    if not fields.get("wrist_angular_reference_velocity", False):
+        for key in ("wrist_angular_reference_velocity", "wrist_angular_kd",
+                    "maximum_reference_wrist_angular_speed_rad_s"):
+            fields.pop(key, None)
     fields["type"] = type(config).__module__ + "." + type(config).__name__
     return hashlib.sha256(json.dumps(fields, sort_keys=True).encode()).hexdigest()
 

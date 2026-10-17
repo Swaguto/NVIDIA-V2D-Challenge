@@ -318,6 +318,14 @@ def main(cfg):
         best_cost, best_raw, best_metrics = float("inf"), mu.copy(), None
         journal = (out / "iterations.jsonl").open("x")
         maximum_iterations = int(cfg.fit.iterations)
+        fixed_parameters = bool(cfg.fit.get("fixed_parameters", False))
+        if fixed_parameters and (
+            maximum_iterations != 1 or curriculum_step != 0
+            or not complete(phase, prefix_end) or fit_mode == "carry_height_sweep"
+            or bool(cfg.fit.get("retry_failed_cohorts", False))
+            or not np.allclose(bounded(mu), mu, atol=1e-12, rtol=0)
+        ):
+            raise ValueError("Fixed controller probes require one full clean window and unchanged bounded parameters")
         if fit_mode == "carry_height_sweep" and (maximum_iterations != 1 or curriculum_step != 0 or population < 6):
             raise ValueError("Carry height sweep uses one complete-window grid with at least6 paired candidates")
         simulated_steps = 0
@@ -326,7 +334,9 @@ def main(cfg):
         if int(native.na) != 0:
             raise ValueError("Native fitting requires stateless actuators")
         for iteration in range(maximum_iterations):
-            if fit_mode == "carry_height_sweep":
+            if fixed_parameters:
+                candidates = np.broadcast_to(mu, (population, len(mu))).copy()
+            elif fit_mode == "carry_height_sweep":
                 candidates = np.zeros((population, 13))
                 candidates[:, 2] = np.linspace(0, 0.025, population)
             else:
@@ -530,7 +540,7 @@ def main(cfg):
             if pair_cost[winner] < best_cost:
                 best_cost = float(pair_cost[winner])
                 best_raw = candidates[winner].copy()
-                best_metrics = metrics[2 * winner : 2 * winner + 2]
+                best_metrics = metrics if fixed_parameters else metrics[2 * winner : 2 * winner + 2]
             elite = candidates[order[: max(4, population // 5)]]
             mu = bounded(0.3 * mu + 0.7 * elite.mean(0))
             sigma_floor = [0.005] * 6 + [0.02] * 7
@@ -545,6 +555,7 @@ def main(cfg):
                 best_raw_action=best_raw[:13].tolist(),
                 fit_mode=fit_mode,
                 objective=objective,
+                fixed_parameters=fixed_parameters,
                 best_carry_height_bias_m=(float(best_raw[2]) if fit_mode == "carry_height_sweep" else float(best_raw[13]) if fit_mode == "pose_and_carry_height" else None),
                 carry_height_grid_results=[
                     dict(height_bias_m=float(candidates[i, 2]), worst_pair_cost=float(pair_cost[i]) if np.isfinite(pair_cost[i]) else None,
@@ -591,14 +602,14 @@ def main(cfg):
             robust_phase_pass=robust,
             best_cost=best_cost,
             best_pair_metrics=best_metrics,
-            candidates_repeated_worlds=2,
+            candidates_repeated_worlds=worlds if fixed_parameters else 2,
             iterations=iteration + 1,
             fit_mode=fit_mode,
             selected_phase_objective_end_source_s=prefix_end,
             selected_phase_full_window_covered=complete(phase, prefix_end),
         )
         plan.update(
-            optimizer="bounded_carry_height_grid_native_physics" if fit_mode == "carry_height_sweep" else "bounded_CEM_native_physics",
+            optimizer="fixed_native_controller_probe" if fixed_parameters else "bounded_carry_height_grid_native_physics" if fit_mode == "carry_height_sweep" else "bounded_CEM_native_physics",
             objective=objective,
             no_achieved_trajectory_used_as_reference=True,
             original_source_arrays_changed=False,

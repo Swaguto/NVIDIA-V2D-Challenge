@@ -261,6 +261,7 @@ class FeedbackGripAction(GripResidualAction):
             base.grip_stiffness,
         )
         self.reference_velocity = base.reference_velocity
+        self.angular_servo = base.angular_servo
         self.phase_policy_prior = base.phase_policy_prior
         self.native_physics_model_sha256 = base.native_physics_model_sha256
         self.policy_control_contract_sha256 = base.policy_control_contract_sha256
