@@ -1,0 +1,79 @@
+{
+  "scope": "Descriptive diagnostics; different reset curricula confound causal attribution",
+  "runs": {
+    "CWS_parent": [
+      {
+        "iteration": 2000,
+        "sample": "last",
+        "ppo/learning_rate": 9.999999747378752e-06,
+        "ppo/value_loss_mean_per_minibatch_update": 121.9918441772461,
+        "ppo/explained_variance_per_rollout": 0.6933894157409668,
+        "ppo/kl_mean_per_optimizer_sample": 0.005416701082140207,
+        "policy/action_std_mean_per_action": 0.11136055737733841
+      }
+    ],
+    "actor_only_control": [
+      {
+        "iteration": 1,
+        "sample": "first",
+        "ppo/learning_rate": 9.999999747378752e-06,
+        "ppo/value_loss_mean_per_minibatch_update": 17.826892852783203,
+        "ppo/explained_variance_per_rollout": 0.07948195934295654,
+        "ppo/kl_mean_per_optimizer_sample": 2.096933364868164,
+        "policy/action_std_mean_per_action": 0.14999999105930328
+      },
+      {
+        "iteration": 8,
+        "sample": "eight",
+        "ppo/learning_rate": 2.2500002160086296e-05,
+        "ppo/value_loss_mean_per_minibatch_update": 65.15193176269531,
+        "ppo/explained_variance_per_rollout": 0.17692071199417114,
+        "ppo/kl_mean_per_optimizer_sample": 0.007335206028074026,
+        "policy/action_std_mean_per_action": 0.1501336544752121
+      },
+      {
+        "iteration": 1500,
+        "sample": "last",
+        "ppo/learning_rate": 9.999999747378752e-06,
+        "ppo/value_loss_mean_per_minibatch_update": 172.54641723632812,
+        "ppo/explained_variance_per_rollout": 0.5707005858421326,
+        "ppo/kl_mean_per_optimizer_sample": 0.009614172391593456,
+        "policy/action_std_mean_per_action": 0.15427827835083008
+      }
+    ],
+    "retention_weight8": [
+      {
+        "iteration": 1,
+        "sample": "first",
+        "ppo/learning_rate": 9.999999747378752e-06,
+        "ppo/value_loss_mean_per_minibatch_update": 17.832483291625977,
+        "ppo/explained_variance_per_rollout": 0.0793885588645935,
+        "ppo/kl_mean_per_optimizer_sample": 2.1039950847625732,
+        "policy/action_std_mean_per_action": 0.14999999105930328
+      },
+      {
+        "iteration": 8,
+        "sample": "eight",
+        "ppo/learning_rate": 2.2500002160086296e-05,
+        "ppo/value_loss_mean_per_minibatch_update": 77.78255462646484,
+        "ppo/explained_variance_per_rollout": 0.16894996166229248,
+        "ppo/kl_mean_per_optimizer_sample": 0.007754247635602951,
+        "policy/action_std_mean_per_action": 0.15014202892780304
+      },
+      {
+        "iteration": 1500,
+        "sample": "last",
+        "ppo/learning_rate": 9.999999747378752e-06,
+        "ppo/value_loss_mean_per_minibatch_update": 112.42323303222656,
+        "ppo/explained_variance_per_rollout": 0.7527784705162048,
+        "ppo/kl_mean_per_optimizer_sample": 0.007146230433136225,
+        "policy/action_std_mean_per_action": 0.15317168831825256
+      }
+    ]
+  },
+  "parent_final_checkpoint_learning_rate": 1e-05,
+  "actor_only_initial_learning_rate": 0.0003,
+  "initial_learning_rate_reset_factor": 30,
+  "configured_desired_KL": 0.005,
+  "actor_only_first_iteration_KL_over_target": 419.3866729736328
+}

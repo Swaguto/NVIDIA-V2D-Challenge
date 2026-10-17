@@ -1,0 +1,21 @@
+# Original immutable runtime and complete learned PPO state. Default: 8 new iterations.
+services:
+  cws-resume:
+    extends:
+      file: compose.cws-unassisted.yaml
+      service: cws-unassisted
+    volumes:
+      - ${DEX3_RESUME_CHECKER:?Set the absolute check_exact_resume.py file path}:/checks/check_exact_resume.py:ro
+    command:
+      - /opt/dex3-extension/train.py
+      - --config-dir
+      - /opt/dex3-extension/configs
+      - experiment=dex3_grip_estimated_cws
+      - training.resume=true
+      - training.checkpoint=/initial-policy/ppo/model_${DEX3_RESUME_PARENT_ITERATION:-2000}.safetensors
+      - training.max_iterations=${DEX3_RESUME_END_ITERATION:-2008}
+      - training.save_interval=${DEX3_RESUME_SAVE_INTERVAL:-8}
+      - +resume_context_manifest=/initial-context/context-manifest.json
+      - output_dir=/outputs/ppo
+volumes:
+  dex3-training-cache:

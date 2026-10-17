@@ -1,5 +1,10 @@
 # Dex3 development training
 
+For the latest complete-state contact-guided continuation, use
+[the exact PPO resume recipe](../../docs/team/dex3-isaac-review/EXACT_PPO_RESUME.md).
+The actor-only continuation and retention-weight-8 experiments regressed; their
+recipes remain available as recorded experiments. Full physical grasp is unresolved.
+
 For measured-contact force observations, lift/load rewards and the staged reset
 experiment, see [grip learning](../../docs/team/dex3-isaac-review/GRIP_LEARNING.md).
 `compose.grip.yaml` defaults to the GPU reward/observation contract check; training
