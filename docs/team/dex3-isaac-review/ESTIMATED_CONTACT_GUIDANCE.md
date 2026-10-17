@@ -46,3 +46,12 @@ The source bundle is the existing private `bundle/episode.npz` with its adjacent
 Enabling CWS requires both an explicit configuration flag and a verified estimated-surface reference. Default experiments retain the unknown-contact guard. A previous image digest does not contain this new feature; use its separately validated image once published.
 
 The GPU gate must compare reference supports against an independent CPU calculation, verify zero reward for absent robot contact and one for identical active support, reject unbound references, and exercise the captured unassisted evaluator. Then train a fresh controlled experiment and audit the complete frame-zero replay in all worlds. No full-task or generalization claim follows from prepared contact hints.
+# Scene compatibility
+
+Estimated contacts retain the `dex3_dual_hand_v1` scene schema so the runtime
+resolves the unchanged support table. Their separate
+`local_development_estimated_surface` provenance tag and hash-validated contact
+receipt distinguish them from references with unknown contacts. Session 87
+stopped during scene setup before any training because the initial integration
+changed the scene schema. Its logs were backed up and the VM was stopped.
+

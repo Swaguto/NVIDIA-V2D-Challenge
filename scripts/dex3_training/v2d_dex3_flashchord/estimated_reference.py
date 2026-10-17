@@ -7,7 +7,9 @@ import numpy as np
 from scipy.spatial.transform import Rotation
 
 KIND = "observed_mesh_surface_estimate.v1"
-SCHEMA = "dex3_dual_hand_estimated_surface_v1"
+# Surface hints augment the contact arrays, not the parquet or scene schema.
+# The runtime uses this schema to resolve the colocated physical support table.
+SCHEMA = "dex3_dual_hand_v1"
 
 
 def contacts(root, manifest, data):

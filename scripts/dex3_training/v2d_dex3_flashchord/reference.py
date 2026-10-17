@@ -151,7 +151,7 @@ def load_dex3(
         _metadata=ReferenceMetadata(
             source_path=str(path),
             source_fps=fps,
-            schema_version="dex3_dual_hand_estimated_surface_v1" if estimated else "dex3_dual_hand_v1",
+            schema_version="dex3_dual_hand_v1",
             motion_kind="dual_hand",
             robot_name="dex3",
             sequence_id=manifest["sequence_id"],
