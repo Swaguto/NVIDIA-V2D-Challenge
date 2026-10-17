@@ -1,0 +1,94 @@
+{
+  "schema": "v2d.saved-policy-reward-balance.v1",
+  "source_report_sha256": "d6be5207a6fa1ceb38c9f6e215eabe0184551ebf1fd23530dd40895a5b7596c1",
+  "state_sha256": "92d3867fd869a9c2cc4f9df02afaf05848f68a8e660e8f127d95469822ab148f",
+  "checkpoint_sha256": "4d91fd4164b043a41a390ee7fbb904a3f3aa6a0bb724e19fc1f2342e3f108a40",
+  "analysis_source_sha256": "d4334f7a337eac2872c4719c8f0bd97755a2e2a190389118b3025960b3f64cb9",
+  "selected_time_window_s": [
+    2.4,
+    11.5
+  ],
+  "averages_all_worlds_and_active_hands": true,
+  "saved_rewards_reconstructed": true,
+  "reward_balance_is_not_physical_acceptance_or_causal_proof": true,
+  "windows": {
+    "full_rollout": {
+      "frames": 343,
+      "weighted_reward_mean_per_env_step": {
+        "object_keypoints": 0.2508869326931391,
+        "hand_keypoints": 0.010757946887164886,
+        "hand_joint_pos": 0.000838757937790353,
+        "contact_wrench_support": 0.2786372314606394,
+        "missed_contact": 0.0,
+        "unintended_contact": 0.0,
+        "termination": 0.0,
+        "action_rate_l2": -4.9501030577458845e-05,
+        "action_l2": -0.00017199880578731635,
+        "contact_force_l2": 0.0,
+        "force_closure": 0.0,
+        "robot_pad_support": 0.11743914290784868,
+        "robot_grip_stability": 0.019372198502831804,
+        "robot_carried_load": 0.047198315860369974,
+        "robot_carried_height": 0.10313640679170423,
+        "robot_excess_pad_force": -0.0013925232745669767
+      },
+      "share_of_positive_mean_reward": {
+        "object_keypoints": 0.30290589022050457,
+        "hand_keypoints": 0.012988502206239849,
+        "hand_joint_pos": 0.001012666212220184,
+        "contact_wrench_support": 0.33640994267083973,
+        "missed_contact": 0.0,
+        "unintended_contact": 0.0,
+        "termination": 0.0,
+        "action_rate_l2": 0.0,
+        "action_l2": 0.0,
+        "contact_force_l2": 0.0,
+        "force_closure": 0.0,
+        "robot_pad_support": 0.14178900330669855,
+        "robot_grip_stability": 0.023388834843007595,
+        "robot_carried_load": 0.056984426128244066,
+        "robot_carried_height": 0.1245207344122454,
+        "robot_excess_pad_force": 0.0
+      }
+    },
+    "selected_time_window": {
+      "frames": 182,
+      "weighted_reward_mean_per_env_step": {
+        "object_keypoints": 0.23097647516937042,
+        "hand_keypoints": 0.010626481230892652,
+        "hand_joint_pos": 0.0008252768094068044,
+        "contact_wrench_support": 0.34701564815918823,
+        "missed_contact": 0.0,
+        "unintended_contact": 0.0,
+        "termination": 0.0,
+        "action_rate_l2": -3.084785474001678e-05,
+        "action_l2": -0.00018152439446485313,
+        "contact_force_l2": 0.0,
+        "force_closure": 0.0,
+        "robot_pad_support": 0.1432734120882811,
+        "robot_grip_stability": 0.019378222664690234,
+        "robot_carried_load": 0.06154700894225138,
+        "robot_carried_height": 0.13053190986994276,
+        "robot_excess_pad_force": -0.002323524305277286
+      },
+      "share_of_positive_mean_reward": {
+        "object_keypoints": 0.24463326544687736,
+        "hand_keypoints": 0.011254786020165016,
+        "hand_joint_pos": 0.00087407239475243,
+        "contact_wrench_support": 0.36753340836159876,
+        "missed_contact": 0.0,
+        "unintended_contact": 0.0,
+        "termination": 0.0,
+        "action_rate_l2": 0.0,
+        "action_l2": 0.0,
+        "contact_force_l2": 0.0,
+        "force_closure": 0.0,
+        "robot_pad_support": 0.1517446425016715,
+        "robot_grip_stability": 0.02052398576757094,
+        "robot_carried_load": 0.06518605743286422,
+        "robot_carried_height": 0.1382497820744998,
+        "robot_excess_pad_force": 0.0
+      }
+    }
+  }
+}

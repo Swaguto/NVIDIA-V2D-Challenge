@@ -1,0 +1,11 @@
+# @package _global_
+# Matched actor continuation: only the reference-pose retention weight changes.
+# Run only after comparing the zero-assistance control. Quality gates unchanged.
+defaults:
+  - dex3_grip_cws_unassisted
+  - _self_
+objective:
+  grip_stability_weight: 8.0
+logging:
+  run_name: grip-cws-unassisted-retention-weight
+output_dir: /outputs/grip-cws-retention

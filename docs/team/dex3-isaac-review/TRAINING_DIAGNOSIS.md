@@ -34,6 +34,10 @@ Existing acceptance still requires retention≤10mm/5°, every required pad≥0.
 
 Earlier contact-normal audits show a weak third-finger opposition and twist about the thumb/index pinch. Broad tracking rewards and reported success rates can coexist with inadequate lift or slip. Current robot-wrench/support rewards do not reproduce the paper’s human contact-wrench-space guidance; human contact labels remain unknown. Multi-object relative-pose reward and the issue’s literal IsaacLab/RSL-RL entry point are also missing. A reward curve cannot certify physical grasping or hidden-episode generalization.
 
-The next decision must follow the measured comparison below, rather than increasing training steps without evidence.
+The completed [estimated-contact follow-up](ESTIMATED_CWS_RESULTS.md) improves the grip. The next trials remove reset assistance and, if needed, isolate the retention reward weight.
 
 [Complete per-world measurements and hashes](grip-training-curriculum-comparison-v1.json) · [issue10 requirements](ISSUE_10_STATUS.md) · [earlier training and inputs](GRIP_LEARNING.md)
+
+## Training scale
+
+These are bounded development experiments. The pinned upstream Sharpa reference recipe uses 4,096 worlds, 24-step rollouts and 20,000 PPO iterations (1,966,080,000 environment steps), with a much longer assistance schedule. Our fresh Dex3 comparison uses 256 worlds, 32-step rollouts and 2,000 iterations (16,384,000 steps). The robots, network settings and playback rate also differ. These totals are not equivalent, and the comparison does not establish that more steps alone will solve the grip. Reference/collider compatibility, contact guidance and removal of reset assistance must be checked before scaling training.

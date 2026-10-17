@@ -1,6 +1,8 @@
 # Estimated contact guidance: development experiment
 
-**CPU mechanics, GPU contract checks and actual PPO smoke pass. Full policy quality is pending.** This adds the official pinned FlashCHORD contact-wrench-space support term using explicitly estimated human surface contacts. It does not establish a complete CHORD reproduction, successful grasp, or hidden-episode performance.
+**CPU/GPU mechanics and PPO pass. The completed CWS policy improves the grip but still fails retention.** This adds the official pinned FlashCHORD contact-wrench-space support term using explicitly estimated human surface contacts. It does not establish a complete CHORD reproduction, successful grasp, or hidden-episode performance.
+
+[Measured policy comparison](ESTIMATED_CWS_RESULTS.md). The entirely unassisted actor continuation is being evaluated separately.
 
 ## Why this change
 
@@ -41,7 +43,7 @@ The source bundle is the existing private `bundle/episode.npz` with its adjacent
 
 ## Runtime and validation
 
-`dex3_grip_estimated_cws` inherits the wider-action assisted experiment and adds a CWS reward weight of 10. The term compares wrench-support functions using the pinned implementation's 512 basis directions and 8-ray friction cones. Missed-contact, unintended-contact and force-closure terms remain disabled. Unobserved frames have no estimated support target and receive no label-based contact penalty.
+`dex3_grip_estimated_cws` inherits the wider-action assisted experiment and adds a CWS reward weight of 10. The term compares wrench-support functions using the pinned implementation's 512 basis directions and 8-ray friction cones. The guidance uses the upstream surrogate cone coefficient 0.1; the physical material friction remains 1.25. Missed-contact, unintended-contact and force-closure terms remain disabled. Unobserved frames have no estimated support target and receive no label-based contact penalty.
 
 Enabling CWS requires both an explicit configuration flag and a verified estimated-surface reference. Default experiments retain the unknown-contact guard. A previous image digest does not contain this new feature; use its separately validated image once published.
 
@@ -75,8 +77,49 @@ actor mean parameters and observation normalization while starting a fresh
 critic, optimizer, exploration noise and training counters. The input, physical
 model, action space and observation schema must match the parent. The validator
 permits only this declared removal of reset settling; other reset changes still
-fail. This continuation is not present in the source-31c0d89 image above and
-requires its own GPU validation and image before reproduction.
+fail. The source-8f659bf image in
+[registry.cws-unassisted.env.example](../../../docker/dex3-training/registry.cws-unassisted.env.example)
+passed the sampled/captured zero-assistance GPU check, an actual 8-iteration PPO
+smoke, and exact actor-parameter/forward-output checks with fresh critic and
+optimizer state. All logged assistance in the smoke was zero. Its physical model
+matches the controls. A full policy result is recorded separately; mechanics
+validation alone does not establish a successful grasp.
+
+Set private input, parent-policy, parent-context and fresh output paths in a local
+copy of that environment file. Run the default GPU check, training and replay:
+
+```bash
+docker compose --env-file /path/to/local-unassisted.env \
+  -f docker/dex3-training/compose.cws-unassisted.yaml run --rm cws-unassisted
+docker compose --env-file /path/to/local-unassisted.env \
+  -f docker/dex3-training/compose.cws-unassisted.yaml run --rm cws-unassisted \
+  /opt/dex3-extension/train.py --config-dir /opt/dex3-extension/configs \
+  experiment=dex3_grip_cws_unassisted output_dir=/outputs/ppo
+docker compose --env-file /path/to/local-unassisted.env \
+  -f docker/dex3-training/compose.cws-unassisted.yaml run --rm cws-unassisted \
+  /opt/dex3-extension/check_actor_initialization.py \
+  --parent /initial-policy/ppo/model_2000.safetensors \
+  --child /outputs/ppo/model_0.safetensors \
+  --parent-context /initial-context/context-manifest.json
+docker compose --env-file /path/to/local-unassisted.env \
+  -f docker/dex3-training/compose.cws-unassisted.yaml run --rm cws-unassisted \
+  /opt/dex3-extension/record_policy_readback.py \
+  --checkpoint /outputs/ppo/model_1500.safetensors --out /outputs/diagnostic \
+  --world-count 4
+docker compose --env-file /path/to/local-unassisted.env \
+  -f docker/dex3-training/compose.cws-unassisted.yaml run --rm cws-unassisted \
+  /opt/dex3-extension/audit_native_task.py \
+  --run /outputs/diagnostic --inputs /data --out /outputs/audit.json
+```
+
+The continuation adds 12,288,000 new steps to a parent trained for 16,384,000
+steps. GPU training and physics are not promised bit-exact across runs or hosts.
+Input packs and weights must be transferred privately; they are not in GHCR.
+
+`dex3_grip_cws_retention` is a prepared candidate that raises the existing
+reference-pose retention reward from 1 to 8 while preserving the other controls.
+Its use depends on the zero-assistance comparison. The image above does not
+contain this later candidate, and it is not validated by those image checks.
 
 ## Scene compatibility
 

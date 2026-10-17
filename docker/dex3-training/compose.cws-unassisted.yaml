@@ -1,0 +1,18 @@
+# Parent policy and code context are read-only; new optimizer and counters.
+services:
+  cws-unassisted:
+    extends:
+      file: compose.grip.yaml
+      service: grip
+    volumes:
+      - ${DEX3_PARENT_POLICY_ROOT:?Set the private estimated-CWS parent policy directory}:/initial-policy:ro
+      - ${DEX3_PARENT_CONTEXT:?Set the matching parent code context}:/initial-context:ro
+    command:
+      - /opt/dex3-extension/check_unassisted_reset.py
+      - --config-dir
+      - /opt/dex3-extension/configs
+      - experiment=dex3_grip_cws_unassisted
+      - scene.world_count=4
+      - training.world_count=4
+volumes:
+  dex3-training-cache:

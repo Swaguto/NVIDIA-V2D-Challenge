@@ -29,7 +29,7 @@ curriculum:
         contact_force_l2: 0.0
         force_closure: 0.0
         robot_pad_support: 3.0
-        robot_grip_stability: 1.0
+        robot_grip_stability: ${objective.grip_stability_weight}
         robot_carried_load: 4.0
         robot_carried_height: 6.0
         robot_excess_pad_force: -0.1

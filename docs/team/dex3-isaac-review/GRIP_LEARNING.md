@@ -16,13 +16,13 @@ forces; it does not certify motor feasibility, dynamic stability or task success
 
 Three fresh experiments compare the12mm wrist residual clip, a35mm clip, and the35mm clip with decaying training VOC and20-step reset settling. Each completed 2,000 iterations / 16,384,000 new environment steps. All three failed the full grasp gates. The assisted arm reached the required lift but still slipped and rotated. [Measured comparison](TRAINING_DIAGNOSIS.md). Final evaluation starts at frame0 with zero assistance and no settling. [Reproduction commands](CURRICULUM_REPRODUCTION.md).
 
-A separate estimated CWS path addresses the newly measured mismatch between reconstructed contact surfaces and native convex colliders. It has 267 passing CPU tests; GPU validation and policy training are pending. [Method and limits](ESTIMATED_CONTACT_GUIDANCE.md). Inputs, contact estimates and checkpoints remain private.
+A separate estimated CWS path addresses the newly measured mismatch between reconstructed contact surfaces and native convex colliders. GPU contracts and a fresh 2,000-iteration / 16,384,000-step trial passed. The first carry improved from 74.9 mm to 33.2 mm worst slip, with 99.5% required-pad support; full retention still fails. [Measured comparison](ESTIMATED_CWS_RESULTS.md). The zero-assistance actor continuation is running. [Method and limits](ESTIMATED_CONTACT_GUIDANCE.md). Inputs, contact estimates and checkpoints remain private.
 
 ## Earlier actor-initialized PPO run — October 17
 
 The actor-initialized native-wrench run logged **3,000 new iterations / 24,576,000 new environment steps**, separately from its parent actor’s 16,384,000 steps. Logged steps include explicitly failed numerical transitions where reported. Full frame-zero readbacks and fixed grasp gates are in [the measured report](grip-learning-results-v1.json). **Full physical grasp remains unresolved**; no hidden-set readiness is claimed.
 
-Session 87 was **STOPPED** after hash-verified backups at a conservative cumulative compute bound of **$31.2011 of the approved $40**, not an invoice. Session 88 is validating estimated contact guidance under a 90-minute stop guard. Session 86 completed the matched controlled comparison. Inputs and checkpoints stay in the local v8 pack for private transfer. The image contains code only. GPU training and contact physics are not bit-exact.
+Session 87 was **STOPPED** after hash-verified backups at a conservative cumulative compute bound of **$31.2011 of the approved $40**, not an invoice. Session 88 completed and stopped after hash-verified backups at a conservative cumulative bound of $32.0532. Session 89 is testing the zero-assistance actor continuation under a 90-minute stop guard. Session 86 completed the matched controlled comparison. Inputs and checkpoints stay in the local v8 pack for private transfer. The image contains code only. GPU training and contact physics are not bit-exact.
 
 ## Earlier unassisted training changes
 
