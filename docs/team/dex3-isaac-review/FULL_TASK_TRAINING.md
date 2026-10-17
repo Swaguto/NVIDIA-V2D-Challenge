@@ -1,7 +1,9 @@
 # Full-task training transfer
 
-Status: implemented; runtime validation is in progress. The previous 1,000-iteration
-checkpoint has zero success. It is not a successful full-task policy.
+Status: the native transfer and full-episode evaluation run. The controlled
+1,000-iteration / 1,536,000-step full-343-frame experiment has zero success,
+before and after learning. See [the current measured checkpoint](ORDERED_FIXES.md).
+Complete physical grasp retention is still required before further PPO training.
 
 ## Private input preparation
 
@@ -30,6 +32,14 @@ Current scope: two Dex3 hands, one assigned object per hand, complete inferred
 phase plans. Unsupported assignments are rejected. This is not yet an automatic
 planner for every hidden scene.
 
+The force plan must explicitly use physical source speed **1.0**. The archived
+Isaac recipe used 0.5; reusing its inertial terms at native speed underestimates
+acceleration terms by a factor of four. The adapter now rejects that mismatch.
+For the archived full-task pack, use `recompute_native_force_plan.py`; it
+recomputes only finger feedforward and preserves every other NPZ target array
+exactly. Its receipt records alignment checks and source hashes. The local
+pack includes the verified result as `native/e002-speed1-v8`.
+
 ## Build the code layer
 
 The repaired Dockerfile reuses the verified dependency/runtime image and replaces
@@ -52,7 +62,7 @@ zero-residual diagnostic:
 
 ```bash
 /opt/dex3-extension/diagnose_task.py \
-  --config-dir /opt/dex3-extension/configs experiment=dex3_repaired \
+  --config-dir /opt/dex3-extension/configs experiment=dex3_repaired_velocity \
   scene.world_count=2 output_dir=/outputs/diagnostic
 ```
 
@@ -62,9 +72,11 @@ Newton runs at source speed 1.0; the archived Isaac diagnostic used speed 0.5.
 The contact engine and wrist controller differ. Verify this baseline independently
 before expecting the Isaac result to transfer.
 
-After a viable baseline, run `train.py` with `experiment=dex3_repaired` in a fresh
-output directory. The initial checkpoint and 25/50/75/100-iteration checkpoints
-are preserved. Evaluate initial and trained policies using the same exact inputs,
+After a viable baseline, run `train.py` in a fresh output directory. The recorded
+full-task recipe in `compose.repaired.yaml` preserves checkpoints at iterations
+0/250/500/750/1000. That recipe reproduces the legacy experiment with its own
+matching image and inputs; do not mix it with the corrected force-plan pack.
+Evaluate initial and trained policies using the same exact inputs,
 geometry and official kit runner; compare task success and achieved object poses.
 Reward improvement alone does not accept the policy. No new successful training
 result is claimed by these commands.

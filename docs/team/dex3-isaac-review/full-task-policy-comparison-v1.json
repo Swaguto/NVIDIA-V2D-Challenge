@@ -1,0 +1,55 @@
+{
+  "schema": "v2d.dex3-controlled-policy-comparison.v1",
+  "scope": "full development episode with inferred robot targets and original source confidence masks; not an official scored roster",
+  "comparison_source_sha256": "03fc5be87da679fcb41b8ba6f0ccf38845efa0a8f6ce74a58fbcea07e04c1eae",
+  "input_manifest_sha256": "28e7d07a7d63c5b4a3b8b80e15640463eda17caf353592016f6452bc66d6f3cc",
+  "runtime_controls_sha256": "341b0564cfbee936559e55b350401459287f751a9752b33cb63c2b90b3a38ff6",
+  "image_context_sha256": "31ca368c63f8263e0b183153fc86f5dd3aa31c0afd5c17a782d00c437be0ae83",
+  "frozen_collision_files_sha256": {
+    "collision-cache/convex/2511207f3006d7d8.npz": "b5bddc4ae503d8270126a9520a26dce8824ede7497fbdee447e6fb138d3baea6",
+    "collision-cache/convex/cb3b7ee675bc4424.npz": "2de206248215a987ab30e117bddb3af576a6390837e1679c65b742d1a6a20447"
+  },
+  "same_saved_experiment_config": true,
+  "collision_geometry_identical": true,
+  "controlled_comparison": true,
+  "virtual_object_assistance": 0,
+  "rows": [
+    {
+      "iteration": 0,
+      "environment_steps": 0,
+      "checkpoint_sha256": "ec7d0cfd78bc4a82d14f96d552f528b71071a63b2038d8a2bf3fef5813520d55",
+      "report_sha256": "250453a2cf3801d9333e1898126bb780cfa8e7c2a3a50dba7784e2f99005a7f4",
+      "success_rate": 0.0,
+      "chord_sr": 0.0,
+      "mppe_cm": 10.105738992808009,
+      "mean_add_m": 0.0694590555161358,
+      "object_position_error_per_body_m": [
+        0.0422395345655439,
+        0.09118431839681695
+      ],
+      "world_count": 4,
+      "step_count": 343
+    },
+    {
+      "iteration": 1000,
+      "environment_steps": 1536000,
+      "checkpoint_sha256": "a1c5c5965607b1cd514b7b25a84085a462d9f27eb8343abb54f8fa7a785a58e5",
+      "report_sha256": "39b95e570de134a35872c7c99193fa82d550fa9774407d6026489482badd0aec",
+      "success_rate": 0.0,
+      "chord_sr": 0.0,
+      "mppe_cm": 9.356286846929914,
+      "mean_add_m": 0.0623700932776883,
+      "object_position_error_per_body_m": [
+        0.0346888961603342,
+        0.07869827559481794
+      ],
+      "world_count": 4,
+      "step_count": 343
+    }
+  ],
+  "primary_success_improved": false,
+  "bit_exact_training_reproducibility_claimed": false,
+  "checkpoint_compatibility_verified_with_installed_extension": true,
+  "unmodified_stock_runtime_compatibility_claimed": false,
+  "physical_task_accepted": false
+}

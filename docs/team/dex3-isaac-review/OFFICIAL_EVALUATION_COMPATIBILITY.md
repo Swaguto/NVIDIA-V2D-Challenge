@@ -12,6 +12,12 @@ entry point is `examples/run_policy_evaluation.py`, followed by
 
 ## Verified development checkpoint
 
+Scope: the wrapper checks below cover the archived three-hook extension and its
+matching full-task checkpoints. The newest multi-contact image adds a fourth
+solver dispatch hook. Its installed loader and actual physics have been checked,
+but a fresh checkpoint from that image has not been tested through the kit
+wrapper. See [current results and matching images](ORDERED_FIXES.md).
+
 All 54 kit manifest members, the runtime's evaluator source, the saved checkpoint,
 its complete private input manifest and frozen collision geometry passed the
 new offline `scripts/dex3_training/audit_official_contract.py` check.
@@ -31,7 +37,10 @@ part of reproduction. No evaluator or score threshold was patched.
 
 ## Development data and scored data
 
-The saved pilot covers 75 of e002's 343 frames. e002 is not a scored episode.
+The historical pilot covers 75 of e002's 343 frames. The later controlled
+full-task experiment covers all 343 frames and has separate initial/trained
+kit-evaluator outputs with four worlds each. Both have zero success; see
+[the measured comparison](full-task-policy-comparison-v1.json). e002 is not a scored episode.
 The current scored roster is:
 
 `1, 3, 5, 6, 8, 10, 14, 15, 16, 19, 20, 25, 28, 30, 32, 33, 35, 36, 37, 38`.
@@ -57,7 +66,9 @@ retention diagnostic and the official success metrics.
 The new full-task reference adapter retains all original frames and source
 confidence masks. Inferred robot commands are explicitly marked. Its action
 extension adds finger feedforward inside the native capped drive target, preserving
-geometric reference poses and policy residual semantics. The reactive Isaac wrist
-controller has not been ported by that adapter. Newton retention, native actuator
+geometric reference poses and policy residual semantics. Later extensions add
+bounded measured-object acquisition, reference velocity and optional robot wrist
+payload compensation. These do not make the two engines' controllers or contact
+response identical. Newton retention, native actuator
 readback, learned-policy improvement, other-episode validation and final packaging
 remain independent acceptance gates.

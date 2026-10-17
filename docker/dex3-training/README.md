@@ -6,6 +6,11 @@ results, corrected force-plan clock and local reproduction pack, start with
 The 75-frame experiment below is retained as historical evidence. Neither
 experiment has achieved successful complete-task retention.
 
+For the latest failed multi-contact diagnostic, use `compose.current.yaml` and
+`registry.experimental.env.example` with the local corrected-clock v8 inputs.
+It runs four diagnostic worlds by default. Archived PPO checkpoints require
+their matching image and inputs; see the ordered-fixes guide for both paths.
+
 This is a short unassisted training path for two floating Dex3 hands. It uses the
 submission kit's FlashCHORD runtime at
 `8c778f905cb35f76f8e6cd6e2ea486da4fb9e0ef`, Newton/MuJoCo-Warp physics,

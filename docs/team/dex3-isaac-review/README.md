@@ -1,11 +1,21 @@
 # Hand continuity and twelve-episode Dex3 checkpoint
 
+## Latest ordered implementation and evaluation
+
+See [ordered fixes and reproduction](ORDERED_FIXES.md) for the current full-task
+checkpoint. The actual official kit wrapper runs, the native input/geometry/motor
+contracts are checked, and a complete 343-frame PPO comparison is recorded.
+Both initial and trained policies still have zero full-task success. The
+source-speed force plan is corrected in a separate frozen input pack; bounded
+grasp-fitting candidates remain rejected by independent physical checks.
+The results below describe the earlier scoped Isaac replay and remain archived.
+
 This branch combines `codex/hand-continuity` at `9f93a50` with
 `Evc-r/dex3-motion-replay-baseline` at
 `3db10766bf09bca10fe1b452afe5c78e1649c870`. Both histories are retained.
 
 
-## Current e002 left-hand repair
+## Archived e002 left-hand repair at source speed 0.5
 
 The new side-bracing handle grasp completes both pot grasps with **2.040 / 3.042 mm**
 maximum relative slip, **1.034 / 1.656°** rotation drift, full required-digit
