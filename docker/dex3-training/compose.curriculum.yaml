@@ -1,0 +1,9 @@
+# Same GPU/memory/private-input contract as the verified grip service.
+services:
+  curriculum:
+    extends:
+      file: compose.grip.yaml
+      service: grip
+    command: [/opt/dex3-extension/check_training_curriculum.py]
+volumes:
+  dex3-training-cache:
