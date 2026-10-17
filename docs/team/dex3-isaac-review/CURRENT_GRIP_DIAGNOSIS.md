@@ -23,11 +23,11 @@ The original training recipe also uses 20-step reset assistance while independen
 
 ## Wrist-reference fidelity
 
-A new decomposition finds a 109.84° median left-wrist difference between the fitted training target and the earlier calibrated source-aligned Dex3 retargeting during the first carry. The actual wrist tracks the fitted target within roughly 3° median. Repair this reference mismatch before another long training run. [Measurements and repair order](WRIST_ORIENTATION_FIDELITY.md).
+A new decomposition finds a 109.84° median left-wrist difference between the fitted training target and the earlier calibrated source-aligned Dex3 retargeting during the first carry. The actual wrist tracks the fitted target within roughly 3° median. For the leaderboard objective, test a source-oriented candidate only if it improves official object-tracking metrics; exact wrist imitation is not a scored requirement. [Measurements and repair order](WRIST_ORIENTATION_FIDELITY.md).
 
 ## Next experiment
 
-Keep the 2,000-iteration CWS parent. Isolate carry retention and rotation under the existing motor and friction limits, then test a deliberate gradual removal of training reset assistance with preserved learner state. Validate any objective change against the existing full-task gates before spending on another long run. A new recipe must record its changed contract; it must not be called an unchanged exact resume.
+Keep the 2,000-iteration CWS parent as the strongest e002 development checkpoint. Prioritize a complete valid official baseline on the scored roster. Use short carry-retention and rotation tests to diagnose failures that degrade object-tracking metrics, then test a deliberate gradual removal of training reset assistance with preserved learner state. Validate any objective change against the existing full-task gates before spending on another long run. A new recipe must record its changed contract; it must not be called an unchanged exact resume.
 
 After a secure e002 grasp, repeat independently and on separately prepared episodes before training the scored roster. e002 is outside that roster. No hidden-episode success is established. The backend here is FlashCHORD/Newton/MuJoCo-Warp plus JAX PPO; the offline readback videos are not Isaac Sim renders.
 
