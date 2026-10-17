@@ -19,8 +19,10 @@ def main():
         count = arr([4], wp.int32)
         shapes0 = arr([0, 0, 3, 3], wp.int32)
         shapes1 = arr([1, 1, 2, 2], wp.int32)
-        p0 = arr([[0, 0.1, 0], [0, -0.1, 0]] * 2, wp.vec3)
-        p1 = arr([[0, 0.1, 0], [0, -0.1, 0]] * 2, wp.vec3)
+        # Unequal gaps plus tangential forces distinguish the actual midpoint
+        # moment from an incorrect moment about either body's surface point.
+        p0 = arr([[0, 0.1, -0.002], [0, -0.1, -0.004]] * 2, wp.vec3)
+        p1 = arr([[0, 0.1, 0.002], [0, -0.1, 0.004]] * 2, wp.vec3)
         raw = arr(
             [
                 [-2, 0, 0, 0, 0, 0],
@@ -84,6 +86,7 @@ def main():
                     opposing_contact_couple_preserved=True,
                     object_reaction_sign_and_reversed_shape_order_verified=True,
                     native_torsional_moment_included=True,
+                    native_force_application_midpoint_verified_with_unequal_gaps=True,
                     world_isolation_verified=True,
                     captured_step_does_not_accumulate=True,
                     zero_contacts_clear_previous_wrench=True,

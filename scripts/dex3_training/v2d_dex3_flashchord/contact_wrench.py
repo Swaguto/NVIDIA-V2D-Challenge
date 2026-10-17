@@ -47,16 +47,21 @@ def accumulate_contact_wrench(
     if h0 >= 0 and b1 % bodies_per_world == assigned_objects[h0]:
         hand = h0
         obj = b1
-        position = wp.transform_point(poses[b1], point1[i])
         f = -wp.spatial_top(force[i])
         moment = -wp.spatial_bottom(force[i])
     elif h1 >= 0 and b0 % bodies_per_world == assigned_objects[h1]:
         hand = h1
         obj = b0
-        position = wp.transform_point(poses[b0], point0[i])
         f = wp.spatial_top(force[i])
         moment = wp.spatial_bottom(force[i])
     if hand >= 0:
+        # Newton 1.2.0 offsets the two surface points by +/- dist/2.
+        # MuJoCo's contact force and torsional moment act at contact.pos,
+        # their midpoint, rather than at either separated surface point.
+        position = 0.5 * (
+            wp.transform_point(poses[b0], point0[i])
+            + wp.transform_point(poses[b1], point1[i])
+        )
         center = wp.transform_point(poses[obj], body_com[obj])
         slot = world * hands + hand
         wp.atomic_add(result_force, slot, f)

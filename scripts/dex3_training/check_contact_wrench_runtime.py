@@ -63,9 +63,18 @@ def main(cfg):
         for _ in range(6):
             env.step(wp.zeros_like(env.action_input))
             pose = env.state_0.body_q.numpy()
-            com = pose[:, :3] + Rotation.from_quat(pose[:, 3:]).apply(
+            reconstructed_com = pose[:, :3] + Rotation.from_quat(pose[:, 3:]).apply(
                 env.model.body_com.numpy()
             )
+            # Use native inertial-frame positions as an independent COM source.
+            native_com = env.solver.mjw_data.xipos.numpy()
+            body_map = env.solver.mjc_body_to_newton.numpy()
+            com = np.full_like(reconstructed_com, np.nan)
+            for world in range(2):
+                for native_body, newton_body in enumerate(body_map[world]):
+                    if newton_body >= 0:
+                        com[newton_body] = native_com[world, native_body]
+            np.testing.assert_allclose(com, reconstructed_com, atol=2e-5, rtol=2e-5)
             c = env.contacts
             count = int(c.rigid_contact_count.numpy()[0])
             a, b = (np.full(count, -1, dtype=int) for _ in range(2))
@@ -75,17 +84,16 @@ def main(cfg):
             ]:
                 valid = (shape >= 0) & (shape < len(mapped))
                 body[valid] = mapped[shape[valid]]
-            p0, p1, raw = (
-                c.rigid_contact_point0.numpy()[:count],
-                c.rigid_contact_point1.numpy()[:count],
-                c.force.numpy()[:count],
-            )
+            raw = c.force.numpy()[:count]
+            # Independent force application point from MuJoCo itself, not a
+            # reconstruction using the GPU helper's Newton surface points.
+            contact_position = env.solver.mjw_data.contact.pos.numpy()[:count]
             expected_force = np.zeros((4, 3))
             expected_moment = np.zeros((4, 3))
             for i in range(count):
-                for obj, hand, point, sign in [
-                    (a[i], b[i], p0[i], 1),
-                    (b[i], a[i], p1[i], -1),
+                for obj, hand, sign in [
+                    (a[i], b[i], 1),
+                    (b[i], a[i], -1),
                 ]:
                     if obj < 0 or hand < 0:
                         continue
@@ -98,9 +106,7 @@ def main(cfg):
                         if (side, local_name) not in active_pairs:
                             continue
                         world = obj // bodies
-                        position = pose[obj, :3] + Rotation.from_quat(
-                            pose[obj, 3:]
-                        ).apply(point)
+                        position = contact_position[i]
                         force = sign * raw[i, :3]
                         expected_force[world * 2 + hi] += force
                         expected_moment[world * 2 + hi] += (
@@ -124,6 +130,7 @@ def main(cfg):
                     actual_assigned_contacts_decoded=contacts_seen,
                     maximum_absolute_force_or_moment_difference=largest_error,
                     independent_CPU_decode_matches_GPU_wrench=True,
+                    independent_native_contact_midpoint_and_inertial_COM_used=True,
                     support_and_other_object_contacts_excluded=True,
                     evaluation_auto_reset=False,
                     physics_modified=False,

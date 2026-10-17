@@ -45,6 +45,8 @@ class ReadbackEnv:
         self.body, self.joints, self.motor = [], [], []
         self.joint_motor = []
         self.contacts = []
+        self.force_application_pos = []
+        self.measured_hand_wrench = []
         self.contact_gaps = []
         self.motor_target, self.feedback_weight = [], []
         self.velocity_target = []
@@ -128,6 +130,16 @@ class ReadbackEnv:
         self.contacts.append(
             read_contacts_w(self.env.model, self.env.state_0, self.env.contacts)
         )
+        point = getattr(getattr(data, "contact", None), "pos", None)
+        if point is not None:
+            self.force_application_pos.append(
+                point.numpy()[: len(self.contacts[-1])].copy()
+            )
+        wrench = getattr(self.env.objective, "measured_wrench", None)
+        if wrench is not None:
+            self.measured_hand_wrench.append(
+                np.concatenate([wrench.force.numpy(), wrench.moment.numpy()], axis=1)
+            )
         self.contact_gaps.append(
             contact_gaps_w(self.env.model, self.env.state_0, self.env.contacts)
         )
@@ -163,6 +175,10 @@ class ReadbackEnv:
         )
         if self.feedback_weight:
             arrays["measured_feedback_weight"] = np.asarray(self.feedback_weight)
+        if self.measured_hand_wrench:
+            arrays["measured_assigned_hand_wrench_about_object_com"] = np.asarray(
+                self.measured_hand_wrench
+            )
         verification = dict(
             native_actuator_force_readback_available=bool(self.motor),
             native_capped_drive_verified=False,
@@ -266,6 +282,13 @@ class ReadbackEnv:
                 "contact_torque_w",
             )
         }
+        if len(self.force_application_pos) == len(self.contacts):
+            contact_arrays["force_application_pos_w"] = np.concatenate(
+                self.force_application_pos, axis=0
+            )
+            verification["force_application_position_source"] = (
+                "Native MuJoCo-Warp Data.contact.pos; separate from surface point0"
+            )
         np.savez_compressed(
             output / "native-contacts-readback.npz",
             frame_offsets=np.cumsum([0] + [len(c) for c in self.contacts]),

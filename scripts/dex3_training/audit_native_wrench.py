@@ -44,7 +44,11 @@ def audit(run, out, side="left", object_name="white_pot", stride_frames=5):
     for frame in range(0, len(poses), stride_frames):
         start, end = contacts["frame_offsets"][frame : frame + 2]
         a, b = contacts["body0_ids"][start:end], contacts["body1_ids"][start:end]
-        point = contacts["contact_pos_w"][start:end]
+        point = contacts[
+            "force_application_pos_w"
+            if "force_application_pos_w" in contacts
+            else "contact_pos_w"
+        ][start:end]
         force = contacts["contact_force_w"][start:end]
         normal = contacts["contact_normal_w"][start:end]
         torque = contacts["contact_torque_w"][start:end]
@@ -112,6 +116,11 @@ def audit(run, out, side="left", object_name="white_pot", stride_frames=5):
             (run / "report.json").read_bytes()
         ).hexdigest(),
         scope="Offline inscribed 8-edge point-contact friction pyramids with measured normal budgets; support excluded; no motor, compliance, torsional friction or dynamic feasibility certificate",
+        force_application_position_source=(
+            "Native MuJoCo contact midpoint"
+            if "force_application_pos_w" in contacts
+            else "Archived Newton surface point0 approximation"
+        ),
         source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         physical_task_accepted=False,
     )

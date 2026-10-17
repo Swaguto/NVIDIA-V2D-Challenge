@@ -228,3 +228,13 @@ The existing slot approximation remains the default for archived configurations.
 This objective change must not be used as an unchanged training resume. It needs
 its own GPU couple/sign/isolation/NaN tests, actual reset, fresh smoke, official
 wrapper and independent physical evaluation before promotion.
+
+The vendor conversion also distinguishes two surface points from the force
+application point. Newton offsets those surfaces by half the signed gap on
+either side of MuJoCo's contact midpoint. The corrected wrench uses their
+midpoint. Its real-scene check now compares against MuJoCo's native contact
+positions and inertial COM positions, independently of that reconstruction.
+A gap plus tangential-force regression detects use of either surface point.
+The early surface-point pilot was stopped and preserved before longer training.
+New diagnostics retain both the archived surface-point convention and the native
+force application positions, together with measured assigned-hand wrenches.
