@@ -3,6 +3,10 @@
 defaults:
   - dex3_grip_carry_learning
   - _self_
+sim:
+  _target_: v2d_dex3_flashchord.sim.NativeContactSimConfig
+  # Match the archived carry recipe's Newton default; only add read access.
+  enable_multiccd: false
 objective:
   load_wrench_source: raw_contacts
 logging:
