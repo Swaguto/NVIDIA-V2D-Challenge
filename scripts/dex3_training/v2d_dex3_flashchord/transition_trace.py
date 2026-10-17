@@ -44,6 +44,7 @@ def record_first_failure(
     episode_step: wp.array(dtype=wp.int32),
     counts: wp.array(dtype=wp.int32),
     flags: wp.array(dtype=wp.int32),
+    latest_flags: wp.array(dtype=wp.int32),
     first_frame: wp.array(dtype=wp.int32),
     first_age: wp.array(dtype=wp.int32),
     saved_poses: wp.array(dtype=wp.transform),
@@ -90,6 +91,7 @@ def record_first_failure(
     for axis in range(diagnostics):
         if not wp.isfinite(tracking[world * diagnostics + axis]):
             bad = bad | 64
+    latest_flags[world] = bad
     if bad == 0:
         return
     counts[world] += 1
@@ -149,6 +151,7 @@ class TransitionTrace:
         self.arrays = {k: wp.zeros_like(a) for k, a in source.items()}
         self.counts = wp.zeros(worlds, dtype=wp.int32, device=env.device)
         self.flags = wp.zeros_like(self.counts)
+        self.latest_flags = wp.zeros_like(self.counts)
         self.first_frame, self.first_age = (
             wp.zeros_like(self.counts),
             wp.zeros_like(self.counts),
@@ -174,6 +177,7 @@ class TransitionTrace:
                 e.episode_step,
                 self.counts,
                 self.flags,
+                self.latest_flags,
                 self.first_frame,
                 self.first_age,
                 *self.arrays.values(),
@@ -184,6 +188,7 @@ class TransitionTrace:
         for array in (
             self.counts,
             self.flags,
+            self.latest_flags,
             self.first_frame,
             self.first_age,
             *self.arrays.values(),

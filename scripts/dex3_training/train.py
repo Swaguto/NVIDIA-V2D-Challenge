@@ -38,6 +38,28 @@ from v2d_dex3_flashchord.resume_contract import validate as validate_resume_cont
 class LocalMetricLogger:
     def __init__(self, output, definitions, env=None):
         self.output, self.env = output, env
+        self.failure_policy = getattr(env, "numerical_failure_policy", "abort")
+        if self.failure_policy == "terminate":
+            definitions = dict(definitions)
+            definitions["numerical_failures/cumulative_world_transitions"] = (
+                "Invalid simulated world-transitions ended as numerical failures, with raw evidence retained."
+            )
+            (output / "numerical-failure-contract.json").write_text(
+                json.dumps(
+                    dict(
+                        training_only=True,
+                        policy="terminate",
+                        raw_failure_evidence_preserved=True,
+                        invalid_transition_reward="Existing termination penalty only",
+                        invalid_tracking_diagnostic_sentinel_m_rad=1000.0,
+                        training_tracking_means_include_conservative_invalid_state_sentinel=True,
+                        physics_states_repaired=False,
+                        evaluation_behavior_changed=False,
+                    ),
+                    indent=2,
+                )
+                + "\n"
+            )
         self.stream = (output / "metrics.jsonl").open("x")
         (output / "metric-definitions.json").write_text(
             json.dumps(definitions, indent=2) + "\n"
@@ -47,7 +69,7 @@ class LocalMetricLogger:
         invalid = nonfinite_fields(metrics)
         trace = getattr(self.env, "transition_trace", None)
         trace_count = int(trace.counts.numpy().sum()) if trace is not None else 0
-        if invalid or trace_count:
+        if invalid or (trace_count and self.failure_policy != "terminate"):
             counts = {}
             trace_report = trace.save(self.output) if trace is not None else None
             if self.env is not None:
@@ -88,12 +110,23 @@ class LocalMetricLogger:
                 if invalid
                 else "Nonfinite transition captured before automatic reset"
             )
+        if self.failure_policy == "terminate":
+            metrics = dict(
+                metrics,
+                **{"numerical_failures/cumulative_world_transitions": trace_count},
+            )
         self.stream.write(
             json.dumps(dict(environment_steps=step, **metrics), allow_nan=False) + "\n"
         )
         self.stream.flush()
 
     def close(self):
+        trace = getattr(self.env, "transition_trace", None)
+        if (
+            trace is not None
+            and not (self.output / "first-nonfinite-transitions.json").exists()
+        ):
+            trace.save(self.output)
         self.stream.close()
 
 
@@ -192,7 +225,14 @@ def main(cfg: DictConfig):
             contact_friction=cfg.scene.contact_friction,
         )
         env_type = RLEnv
-        if cfg.get("trace_training_transitions", False):
+        failure_policy = cfg.get("numerical_failure_policy", "abort")
+        if failure_policy not in ("abort", "terminate"):
+            raise ValueError("Unknown explicit numerical-failure policy")
+        if failure_policy == "terminate":
+            from v2d_dex3_flashchord.numerical_failure import NumericalFailureRLEnv
+
+            env_type = NumericalFailureRLEnv
+        elif cfg.get("trace_training_transitions", False):
             from v2d_dex3_flashchord.transition_trace import TracedRLEnv
 
             env_type = TracedRLEnv
@@ -251,6 +291,11 @@ def main(cfg: DictConfig):
                 Path("/opt/dex3-extension/image-context-manifest.json"),
                 Path(training.checkpoint),
             )
+            if training.curriculum is not None:
+                jax_env.set_curriculum(
+                    training.curriculum.stage_at(lineage["parent_iteration"])
+                )
+            lineage["initial_reset_matches_active_curriculum"] = True
             (output / "resume-lineage.json").write_text(
                 json.dumps(lineage, indent=2) + "\n"
             )

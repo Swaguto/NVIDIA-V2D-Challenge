@@ -110,3 +110,14 @@ def test_wrong_counters_and_parent_context_cannot_resume(tmp_path):
     args[2].write_text("{}")
     with pytest.raises(ValueError, match="Parent build context"):
         validate(*args)
+
+
+def test_numerical_failure_handling_change_is_declared_in_lineage(tmp_path):
+    args = fixture(tmp_path)
+    config = json.loads(args[1]["resolved_config_json"])
+    config["numerical_failure_policy"] = "terminate"
+    args[1]["resolved_config_json"] = json.dumps(config)
+    lineage = validate(*args)
+    assert lineage["parent_numerical_failure_policy"] == "abort"
+    assert lineage["current_numerical_failure_policy"] == "terminate"
+    assert not lineage["invalid_transition_handling_unchanged"]

@@ -19,6 +19,7 @@ def experiment_contract(config):
     result.pop("output_dir", None)
     result.pop("resume_context_manifest", None)
     result.pop("trace_training_transitions", None)
+    result.pop("numerical_failure_policy", None)
     for name in ("resume", "checkpoint", "max_iterations", "save_interval"):
         result["training"].pop(name, None)
     return result
@@ -36,6 +37,11 @@ def validate(parent, current, parent_context_path, current_context_path, checkpo
             raise ValueError(f"Resume contract differs: {key}")
     old = json.loads(parent["resolved_config_json"])
     new = json.loads(current["resolved_config_json"])
+    if any(
+        c.get("numerical_failure_policy", "abort") not in ("abort", "terminate")
+        for c in (old, new)
+    ):
+        raise ValueError("Unknown numerical-failure policy in resume lineage")
     if experiment_contract(old) != experiment_contract(new):
         raise ValueError("Resume requires the same resolved experiment")
     iteration = int(parent["iteration"])
@@ -86,6 +92,9 @@ def validate(parent, current, parent_context_path, current_context_path, checkpo
             "extension/v2d_dex3_flashchord/resume_contract.py",
             "extension/v2d_dex3_flashchord/transition_trace.py",
             "extension/check_transition_trace.py",
+            "extension/v2d_dex3_flashchord/numerical_failure.py",
+            "extension/check_numerical_failure.py",
+            "extension/prepare_physics_probe.py",
         }
     }
     if unexpected:
@@ -97,4 +106,10 @@ def validate(parent, current, parent_context_path, current_context_path, checkpo
         parent_image_context_sha256=sha256(parent_context_path),
         continuation_resets_simulator=True,
         bit_exact_continuation_claimed=False,
+        parent_numerical_failure_policy=old.get("numerical_failure_policy", "abort"),
+        current_numerical_failure_policy=new.get("numerical_failure_policy", "abort"),
+        invalid_transition_handling_unchanged=(
+            old.get("numerical_failure_policy", "abort")
+            == new.get("numerical_failure_policy", "abort")
+        ),
     )
