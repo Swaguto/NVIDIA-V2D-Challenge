@@ -301,3 +301,24 @@ docker compose --env-file /private/actor.env \
 Readbacks label the measured wrench's side order explicitly. The pinned contact
 tracker orders hands right then left; this differs from the target file's hand
 axis. Use the saved labels and assigned object IDs when interpreting those arrays.
+
+### Bounded carry motor calibration
+
+The native grasp fitter also supports `fit.mode=carry_height_sweep`. It retains
+an existing acquisition pose and tests wrist-height command offsets from 0 to
+25 mm, only after closure and while the source asks the object to rise. The gate
+is smooth on the original source clock; it fades out with the grasp. Object
+poses, gravity, geometry, mass, friction and actuator caps remain unchanged.
+
+This is a robot motor program, scored through actual physics. It is not an
+object trajectory edit or PPO training. Every candidate runs all source frames;
+the selected grasp must cover its complete window. The fitter reports every
+paired grid result and retains raw non-finite or motor-bound failures. A fitting
+pass still needs fresh independent replay before `freeze_phase_policy.py` can
+promote the exact program.
+
+`fit.prior_journal` can seed the sweep from an incomplete recorded search. It
+checks input hashes and matching action, embodiment, task, physics and geometry
+configuration, records the journal/configuration hashes, and marks the recovered
+candidate unaccepted. Incomplete search results do not become accepted priors.
+The new carry sweep still requires GPU validation.

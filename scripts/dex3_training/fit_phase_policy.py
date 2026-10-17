@@ -150,6 +150,9 @@ def main(cfg):
         if not np.isfinite(support_weight) or not 2 <= support_weight <= 50:
             raise ValueError("Unsupported sampled-support objective weight")
         prior_path = cfg.fit.get("prior")
+        prior_journal = cfg.fit.get("prior_journal")
+        if prior_path and prior_journal:
+            raise ValueError("Use a saved plan or a recorded search journal, not both")
         fit_mode = str(cfg.fit.get("mode", "pose"))
         if fit_mode not in ("pose", "carry_height_sweep"):
             raise ValueError("Unknown grasp fitting mode")
@@ -164,6 +167,33 @@ def main(cfg):
                 fit_reports={},
             )
         )
+        if prior_journal:
+            journal_path = Path(prior_journal)
+            source_config_path = journal_path.parent / "config.json"
+            source_config = json.loads(source_config_path.read_text())
+            if source_config["embodiment"]["config"]["reference_manifest_sha256"] != input_sha:
+                raise ValueError("Recovered search used other input bytes")
+            for key in ("action", "embodiment", "task", "sim"):
+                if source_config[key] != config[key]:
+                    raise ValueError(f"Recovered search changes {key}")
+            scenes = [deepcopy(c["scene"]) for c in (source_config, config)]
+            for scene in scenes:
+                scene.pop("world_count", None)
+            if scenes[0] != scenes[1]:
+                raise ValueError("Recovered search changes scene geometry or materials")
+            rows = journal_path.read_text().splitlines()
+            last = json.loads(rows[-1])
+            if not last.get("native_motor_caps_verified"):
+                raise ValueError("Recovered search has no native motor verification")
+            plan["phase_actions"][phase["sample"]] = last["best_raw_action"]
+            plan["fit_reports"][phase["sample"]] = dict(
+                robust_phase_pass=False,
+                recovered_from_incomplete_search=True,
+                selected_phase_objective_end_source_s=last["selected_phase_objective_end_source_s"],
+                selected_phase_full_window_covered=last["selected_phase_full_window_covered"],
+            )
+            plan["recovered_prior_journal_sha256"] = hashlib.sha256(journal_path.read_bytes()).hexdigest()
+            plan["recovered_prior_config_sha256"] = hashlib.sha256(source_config_path.read_bytes()).hexdigest()
         if plan["input_manifest_sha256"] != input_sha:
             raise ValueError("Existing policy parameters belong to other inputs")
         if (
@@ -200,7 +230,7 @@ def main(cfg):
         if fit_mode == "pose":
             baseline["phase_actions"].pop(phase["sample"], None)
         else:
-            if not prior_path or phase["sample"] not in baseline["phase_actions"]:
+            if not (prior_path or prior_journal) or phase["sample"] not in baseline["phase_actions"]:
                 raise ValueError("Carry height sweep needs an existing grasp candidate")
             baseline.setdefault("carry_height_bias_m", {}).pop(phase["sample"], None)
         fixed = schedule(spec, baseline, sides, names, times)
