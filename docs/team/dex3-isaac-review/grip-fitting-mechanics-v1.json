@@ -1,0 +1,31 @@
+{
+  "schema": "v2d.native-repeated-fit-replay-contract.v1",
+  "image_source_commit": "c32267dba64baf59a61c5eba18dd7f1be3b23310",
+  "four_world_recovery_contract": true,
+  "independent_replay_simulator_hash_matches": true,
+  "independently_recomputed_resolved_solver_hash_matches": true,
+  "changed_solver_settings_rejected": true,
+  "physical_task_accepted": false,
+  "physics_state_repaired": false,
+  "raw_remote_receipt_write_permission_failure_recovered_locally": true,
+  "source_sha256": {
+    "grip-four-world-recovery-contract-v3/fit/phase-policy.json": "5aec511e53aaab65eb34ba9dd4850a477e8474f91269a434f87a8043174bfb6a",
+    "grip-four-world-recovery-contract-v3/fit/report.json": "5d92cca87947ab1e9f3c30cb0301c9c70e0211ea4c5e722918eb908408b4df30",
+    "grip-four-world-recovery-contract-v3/fit/recovery-contract.json": "66da05ac3709f65774c80bdf34e1ad0ceb8f81c7e19edbc303b1b0c2fccdd2f3",
+    "grip-four-world-recovery-contract-v3/fit/config.json": "9e7c8dec43522c72c222db81ddcf25f8e7e6dd32891c2d38d0cc614ca4222925",
+    "grip-four-world-contract-replay-v3/audit.json": "0e557e439712d31c56f6c89c587c5312fd0378881770bb12361ebea4f0135757",
+    "grip-four-world-contract-replay-v3/diagnostic/report.json": "9b2ebde10d60ca2c6a0e4f4419bbfa4cae5ad3c596a802e22ef62050e588d6c0",
+    "s84-grip-four-world-mismatched-solver-v3/console.log": "5f331990a87ae6f2604a83617a14eb25095b70684cd440948fa00101f9c421e6"
+  },
+  "image_publication": {
+    "source": "ghcr.io/swaguto/nvidia-v3d-challenge-dex3-review@sha256:4ddf09b804dd72b80a6ac76c763511cca2106d3ef5d651769ee2b8dc575e9710",
+    "target": "ghcr.io/swaguto/nvidia-v2d-challenge-dex3-review:grip-repeat-contract-experimental-c32267d",
+    "canonical_image": "ghcr.io/swaguto/nvidia-v2d-challenge-dex3-review@sha256:4ddf09b804dd72b80a6ac76c763511cca2106d3ef5d651769ee2b8dc575e9710",
+    "manifest_digest_identical": true,
+    "visibility": "private",
+    "repository": "Swaguto/NVIDIA-V2D-Challenge",
+    "used_Brev_compute": false,
+    "credentials_in_receipt": false,
+    "physical_task_accepted": false
+  }
+}

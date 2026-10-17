@@ -1,7 +1,7 @@
 # Measured-contact grip learning
 
-**Experimental: full physical grasp has not passed.** Current carry recipe:
-3,000 iterations / 24,576,000 planned environment steps.
+**Experimental: full physical grasp has not passed.** Current contact-time wrench recipe:
+3,000 iterations / 24,576,000 logged environment steps for the fresh-run control. Actor-initialized training is recorded separately below.
 Use the private, pushed-and-pulled digest in
 [registry.grip.env.example](../../../docker/dex3-training/registry.grip.env.example).
 
@@ -11,6 +11,12 @@ its base. Reaching the handle alone does not establish a load-bearing grasp.
 The offline wrench audit uses measured normal-force budgets and an inscribed
 eight-edge friction pyramid. Its gravity-load capacity is conditional on those
 forces; it does not certify motor feasibility, dynamic stability or task success.
+
+## Latest measured PPO run — October 17
+
+The actor-initialized native-wrench run logged **3,000 new iterations / 24,576,000 new environment steps**, separately from its parent actor’s 16,384,000 steps. Logged steps include explicitly failed numerical transitions where reported. Full frame-zero readbacks and fixed grasp gates are in [the measured report](grip-learning-results-v1.json). **Full physical grasp remains unresolved**; no hidden-set readiness is claimed.
+
+Brev is **STOPPED** after hash-verified backups. Conservative cumulative compute bound: **$28.9614 of the approved $40**, not an invoice. Inputs and checkpoints stay in the local v8 pack for private transfer. The image contains code only. GPU training and contact physics are not bit-exact.
 
 ## Training changes
 
@@ -33,7 +39,7 @@ finger residuals are bounded to 0.5 rad per joint. These are component limits,
 not vector-magnitude limits. Finger drive effort remains capped at 0.76 Nm.
 
 The earlier staged pilot used 256 worlds, 32 rollout steps and 2,000 PPO iterations:
-**16,384,000 planned environment steps**. Checkpoints are saved every 100
+**16,384,000 logged environment steps**. Checkpoints are saved every 100
 iterations. Training reset probabilities are:
 
 | Iterations | Starts from frame zero | Other starts |
@@ -65,7 +71,7 @@ your shell. The tested host is one L40S 48 GB; RAM is capped at 24 GB with
 docker compose -f docker/dex3-training/compose.grip.yaml run --rm grip \
   /opt/dex3-extension/check_numerical_failure.py \
   --config-dir /opt/dex3-extension/configs \
-  experiment=dex3_grip_carry_learning scene.world_count=2 training.world_count=2
+  experiment=dex3_grip_wrench_learning scene.world_count=2 training.world_count=2
 ```
 
 Set `DEX3_GRIP_IMAGE`, `DEX3_TRAINING_INPUTS` and `DEX3_TRAINING_OUTPUTS`, then run:
@@ -77,7 +83,7 @@ docker compose -f docker/dex3-training/compose.grip.yaml run --rm grip \
   --reference /data/reference.parquet --out /outputs/runtime-controls.json
 docker compose -f docker/dex3-training/compose.grip.yaml run --rm grip \
   /opt/dex3-extension/train.py --config-dir /opt/dex3-extension/configs \
-  experiment=dex3_grip_carry_learning scene.world_count=8 training.world_count=8 \
+  experiment=dex3_grip_wrench_learning scene.world_count=8 training.world_count=8 \
   training.max_iterations=8 training.save_interval=4 output_dir=/outputs/smoke
 ```
 
@@ -86,8 +92,8 @@ For the full pilot, use a fresh output directory:
 ```bash
 docker compose -f docker/dex3-training/compose.grip.yaml run --rm grip \
   /opt/dex3-extension/train.py --config-dir /opt/dex3-extension/configs \
-  experiment=dex3_grip_carry_learning scene.world_count=256 training.world_count=256 \
-  training.max_iterations=3000 training.save_interval=500 output_dir=/outputs/ppo
+  experiment=dex3_grip_wrench_learning scene.world_count=256 training.world_count=256 \
+  training.max_iterations=3000 training.save_interval=250 output_dir=/outputs/ppo
 ```
 
 Record achieved hand/object poses, contacts, motor readback and reward terms:
@@ -113,7 +119,7 @@ score. No bit-exact GPU training or physics reproducibility is claimed.
 The previous full-start force-aware pilot stopped after 716 healthy iterations
 (2,932,736 environment steps) when a metric became nonfinite. Its last saved
 checkpoint at iteration 500 independently failed the full replay and was rejected.
-The staged pilot's results must be measured separately. Passing CPU/GPU contracts
+Later staged and actor-initialized results are measured separately in the linked report. Passing CPU/GPU contracts
 or loading a checkpoint through the official wrapper does not pass physical grip.
 e002 is an unscored development episode; scored-roster and hidden-episode performance
 remain unverified. See [ordered results](ORDERED_FIXES.md) for measured outcomes.
@@ -225,9 +231,7 @@ hand/object contact force and moment about the assigned object's COM. It include
 native torsional/rolling contact moments, handles either shape ordering and
 excludes the table and other objects. Required-pad observations remain unchanged.
 The existing slot approximation remains the default for archived configurations.
-This objective change must not be used as an unchanged training resume. It needs
-its own GPU couple/sign/isolation/NaN tests, actual reset, fresh smoke, official
-wrapper and independent physical evaluation before promotion.
+This objective change is a new experiment. Its GPU couple/sign/isolation/NaN, actual reset, fresh smoke and official wrapper checks passed. Independent physical evaluation remains required.
 
 The vendor conversion also distinguishes two surface points from the force
 application point. Newton offsets those surfaces by half the signed gap on
@@ -239,7 +243,7 @@ binding to native `contact.pos` and `xipos`, with a validated native/body mappin
 Its real-scene check decodes the wrench independently on the CPU and checks that
 the readout leaves native inputs unchanged. A nonzero resultant with a displaced
 COM exercises the moment origin; the different-time COM displacement is reported
-as a diagnostic. This direct-buffer candidate still requires GPU validation.
+as a diagnostic. The direct-buffer GPU check passed: 48 assigned contacts over six captured steps matched an independent CPU decode within 7.16e-7; native input buffers remained unchanged. Synthetic couple/sign/COM/world/NaN, reward, actual numerical-reset and fresh eight-iteration official-wrapper checks also passed. See [the mechanics receipt](grip-learning-mechanics-v1.json).
 The early surface-point pilot was stopped and preserved before longer training.
 New diagnostics retain both the archived surface-point convention and the native
 force application positions, together with measured assigned-hand wrenches.
@@ -268,7 +272,7 @@ parent and a fresh upstream learner. That GPU check, an eight-iteration smoke,
 the actual official wrapper and complete four-world initial/smoke replays passed
 their mechanics checks. Initial pot lift was 27.1–28.2 mm; after eight updates it
 was 26.1–27.8 mm with at least 97.8% required-pad support. Both still fail the
-99 mm lift and fixed retention criteria. The longer comparison is in progress.
+99 mm lift and fixed retention criteria. The longer run completed 3,000 new iterations / 24,576,000 new steps with zero numerical failures. Broad reference tracking reached 100%, but pot lift was only 31.9–33.3 mm, with up to 67.8 mm slip and 31.5° relative rotation; strict grasp checks failed.
 
 The actor image is pinned separately in
 [registry.actor.env.example](../../../docker/dex3-training/registry.actor.env.example).
@@ -321,4 +325,58 @@ promote the exact program.
 checks input hashes and matching action, embodiment, task, physics and geometry
 configuration, records the journal/configuration hashes, and marks the recovered
 candidate unaccepted. Incomplete search results do not become accepted priors.
-The new carry sweep still requires GPU validation.
+GPU sweeps and joint fits ran; all current candidates remain rejected by the independent grasp checks.
+
+## Carry-transition parameter fitting
+
+The current bounded native-physics searches preserve acquisition, source arrays, masses, friction, gravity, and native torque limits. A motor-only height correction can reach the requested pot lift but loses the grip during the carry reversal. This candidate is rejected. Pose refitting retains that separate carry program. The new `pose_and_carry_height` mode jointly fits thirteen motor-pose parameters and a separate 0–25 mm carry-height parameter; exported phase actions remain thirteen-dimensional. Original source motion and hardware limits remain fixed. The opt-in `constraint_violation` ranking prioritizes failed physical constraints so an already-safe rotation cannot buy worse slip. The pass/fail auditor remains unchanged. Native fitting clears acceleration warm starts after resetting all worlds. With explicit retry enabled, an invalid proposal is retained as raw evidence and excluded; every remaining proposal is replayed from frame zero in an entirely finite batch before scoring. Only one replay is allowed per iteration, and more than 10% invalid candidate pairs aborts the search. Evaluation is unchanged. Each candidate executes all 343 frames from frame zero; growing-prefix results cannot accept a complete grasp.
+
+The measured JSON lists parameter-search iterations and simulated steps separately from PPO. Promotion requires the full fixed grasp window and independent four-world replay; a visually higher pot alone cannot pass. See `native_parameter_searches` and `motor_program_readbacks` in [the measured report](grip-learning-results-v1.json).
+
+## Docker Compose compatibility
+
+Training Compose files request GPUs through device reservations, compatible with the Brev host’s Compose 2.29.7. The actor overlay retains read-only parent/input mounts. Use the supplied Compose files and the corresponding pinned image; the GPU contract check must pass before training. The device reservation follows [Docker’s GPU Compose documentation](https://docs.docker.com/compose/how-tos/gpu-support/).
+
+## Issue 10 and current physical status
+
+[Issue 10 remains incomplete](ISSUE_10_STATUS.md). Recent controller/contact searches are physics diagnostics, with **zero new PPO steps**. They do not implement the missing decaying-assistance curriculum or deliver the requested Scorekeeper report. FlashCHORD/Newton/MuJoCo-Warp with JAX PPO is the backend of these readbacks. The earlier Isaac render is a separate artifact.
+
+The joint pose/height fit reached the requested lift, but its independent carry still failed. A four-world contact-model comparison also failed: its best multi-contact/angular case reached approximately 12.3 mm slip, 5.4 degrees rotation and 86.9% required-pad support. Acceptance still requires 10 mm, 5 degrees and 95% support, along with the unchanged lift, penetration and source-tracking checks. Other variants include severe finite trajectory failures; all worlds remain in the measured report. None is promoted.
+
+The optional angular-reference wrist servo is separately capped and requires zero native passive wrist damping. It changes controller semantics and is not an unchanged policy resume. Contact-model experiments retain the recorded material coefficients; neither soft-finger contact nor multiple collision contacts has established a secure full-task grasp.
+
+## Verified repeated-world fitting recipe
+
+The latest fitting image supports `fit.worlds_per_candidate=2`, `4` or `8`; each proposal is ranked by its worst world. A failed world excludes the complete proposal group. Raw failed states are preserved, and the entire clean cohort must replay from frame zero before scoring. This improves candidate screening; it does not guarantee robustness to physical perturbations or hidden episodes.
+
+Native fitting now requires `NativeContactSimConfig`. Its plan binds all resolved solver and timing settings, as well as model and action contracts. Changing collision-manifold settings, solver iterations, friction cone or timing invalidates the bound plan. The GPU check exercised four-world grouping, injected a native failure, completed the clean replay, matched a fresh independent replay's solver hash, and verified that changed solver iterations are rejected. Physical acceptance was not asserted by that mechanics check. The remote receipt-writing job lacked permission to write into a Docker-owned output folder; a local verifier recovered the successful checks from hash-verified reports and logs. [Mechanics evidence](grip-fitting-mechanics-v1.json) preserves that distinction.
+
+For the exact short recovery check, privately extract local v8, copy `docker/dex3-training/registry.fit.env.example` to `registry.fit.env`, and set its absolute paths. Use a fresh output directory. From `docker/dex3-training`:
+
+```bash
+docker compose --env-file registry.fit.env -f compose.grip.yaml -f compose.fit.yaml run --rm grip
+docker compose --env-file registry.fit.env -f compose.grip.yaml -f compose.fit.yaml run --rm grip \
+  /opt/dex3-extension/check_fit_recovery.py --config-dir /opt/dex3-extension/configs \
+  experiment=dex3_repaired_payload action.wrist_payload_gain=0.5 \
+  sim._target_=v2d_dex3_flashchord.sim.NativeContactSimConfig ++sim.enable_multiccd=false \
+  scene.world_count=16 +fit.worlds_per_candidate=4 +fit.side=left +fit.phase=0 \
+  +fit.iterations=1 +fit.mode=pose_and_carry_height +fit.retry_failed_cohorts=true \
+  +fit.prior=/fit-prior/phase-policy.json +fit.initial_sigma_scale=0.05 +fit.objective=constraint_violation \
+  +fit.bounds_profile=grasp_refit +fit.position_frame=object_reference output_dir=/outputs/fit
+```
+
+The default command checks reward mechanics. The second command deliberately injects a numerical failure to test rejection and recovery. It is not a trained policy or a successful task. Its `fit/recovery-contract.json` records the check. Normal parameter searches call `fit_phase_policy.py`, retain full-window independent acceptance, and must have their own output directory and compute allowance. Do not use the injected-failure checker for learning.
+
+For fresh replay, point `DEX3_FIT_PRIOR_DIRECTORY` at the resulting output `fit` directory and run:
+
+```bash
+docker compose --env-file registry.fit.env -f compose.grip.yaml -f compose.fit.yaml run --rm grip \
+  /opt/dex3-extension/diagnose_task.py --config-dir /opt/dex3-extension/configs \
+  experiment=dex3_repaired_payload action.wrist_payload_gain=0.5 \
+  sim._target_=v2d_dex3_flashchord.sim.NativeContactSimConfig ++sim.enable_multiccd=false \
+  scene.world_count=4 +residual_plan=/fit-prior/phase-policy.json output_dir=/outputs/replay/diagnostic
+docker compose --env-file registry.fit.env -f compose.grip.yaml -f compose.fit.yaml run --rm grip \
+  /opt/dex3-extension/audit_native_task.py --run /outputs/replay/diagnostic --inputs /data --out /outputs/replay/audit.json
+```
+
+GPU physics and training are not bit-exact across runs. The team can reproduce the pinned procedure, contracts and failure diagnosis; a secure full grasp has not been produced. The archived actor fine-tuning recipe uses its separate matching actor image and parent checkpoint. Episode inputs and checkpoint weights remain local for private transfer, never in GHCR.

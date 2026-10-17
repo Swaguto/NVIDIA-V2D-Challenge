@@ -1,6 +1,12 @@
-# Ordered fixes: October 16 development checkpoint
+# Ordered fixes: development checkpoints
 
-## Current result
+## Latest grip-learning checkpoint — October 17
+
+[Current recipe and reproduction](GRIP_LEARNING.md) · [measured results](grip-learning-results-v1.json) · [native mechanics proof](grip-learning-mechanics-v1.json).
+
+233 CPU tests pass. The actor-initialized contact-time wrench run logged 3,000 iterations / 24,576,000 steps. Actual official-wrapper compatibility passed; independent physical grasp acceptance remains unresolved. Brev is **STOPPED** after hash-verified backups. Conservative cumulative compute bound **$28.9614 / $40**, not an invoice. Use the local v8 pack for the latest frozen inputs and code/measurement lineage. Older recipes below use their matching archived packs and images.
+
+## Archived session55 result
 
 The evaluation adapter, native controller extensions, controlled PPO experiment
 and local reproduction package are implemented. **The physical task is still

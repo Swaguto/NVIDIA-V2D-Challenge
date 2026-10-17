@@ -1,0 +1,162 @@
+{
+  "compose_gpu_check": {
+    "result": {
+      "compose_version": "Docker Compose version v2.29.7",
+      "checks": {
+        "base": {
+          "returncode": 0,
+          "stderr": ""
+        },
+        "actor_overlay": {
+          "returncode": 0,
+          "stderr": ""
+        },
+        "legacy_gpus": {
+          "returncode": 15,
+          "stderr": "validating /home/ubuntu/v2d-pot-grasp/outputs/grip-carry-refit-compose-v1/legacy-gpus.yaml: services.grip Additional property gpus is not allowed\n"
+        },
+        "gpu_contract_returncode": 0
+      }
+    },
+    "sha256": "1c0e1236686453abf7d673992ee851d53cd83a8fdc02e011676e9802e6f94925"
+  },
+  "schema": "v2d.native-contact-time-wrench-mechanics.v1",
+  "source_commit": "b5b448c23840655f9f1f690823884b0f3566e396",
+  "cpu_tests_passed": 233,
+  "checks": {
+    "real-wrench-check.log": {
+      "result": {
+        "actual_scene_captured_steps": 6,
+        "actual_assigned_contacts_decoded": 48,
+        "maximum_absolute_force_or_moment_difference": 7.152557373046875e-07,
+        "independent_CPU_decode_matches_GPU_wrench": true,
+        "independent_native_contact_midpoint_and_inertial_COM_used": true,
+        "native_input_buffers_unchanged_by_readout": true,
+        "maximum_force_time_to_returned_state_COM_displacement_m": 0.0009189397453342124,
+        "support_and_other_object_contacts_excluded": true,
+        "evaluation_auto_reset": false,
+        "physics_modified": false
+      },
+      "sha256": "cf984ad7f2aa8a1cca23337c2ab904d8b7a433c42058cea2790dcbe9d69de1e6"
+    },
+    "raw-wrench-check.log": {
+      "result": {
+        "opposing_contact_couple_preserved": true,
+        "object_reaction_sign_and_reversed_shape_order_verified": true,
+        "native_torsional_moment_included": true,
+        "native_contact_position_and_contact_time_COM_used": true,
+        "nonzero_resultant_with_world_specific_COM_offset_verified": true,
+        "world_isolation_verified": true,
+        "captured_step_does_not_accumulate": true,
+        "zero_contacts_clear_previous_wrench": true,
+        "nonfinite_contact_evidence_not_clamped": true,
+        "physics_state_or_object_forces_modified": false
+      },
+      "sha256": "b2ef440ce837dd733cccfcf136515f5b57f8d37ba25237983475eef7813bf750"
+    },
+    "reward-check.log": {
+      "result": {
+        "schema": "v2d.grip-training-gpu-contract.v1",
+        "balanced_loaded_grip_reward_verified": true,
+        "missed_grasp_has_no_contact_or_carry_reward": true,
+        "stationary_missed_lift_not_rewarded": true,
+        "angular_slip_reduces_stability": true,
+        "reward_has_no_accumulated_state": true,
+        "force_observation_object_frame_and_world_isolation_verified": true,
+        "reset_world_has_no_stale_contact_observations": true,
+        "finite_observation_outliers_bounded_and_nan_not_hidden": true,
+        "optional_carry_support_and_load_require_actual_lift_progress": true,
+        "partial_lift_has_dense_bounded_progress_reward": true,
+        "optional_stability_penalizes_static_relative_pose_error": true,
+        "physical_task_accepted": false
+      },
+      "sha256": "c70165dddbf1558aa54c9a4e00a885330b271ceea6c8b51e1292c6a5abf331ba"
+    },
+    "numerical-reset-check.log": {
+      "result": {
+        "invalid_transition_is_failure_not_reference_end": true,
+        "only_existing_negative_termination_reward_used": true,
+        "valid_world_kernel_values_unchanged": true,
+        "actual_rl_auto_reset_returns_finite_observations": true,
+        "raw_invalid_reward_preserved_before_reset": true,
+        "actual_native_warmstart_nan_causes_failed_transition": true,
+        "six_subsequent_captured_steps_healthy_after_reset": true,
+        "masked_reset_preserves_other_world_cache_and_packed_contacts": true,
+        "consecutive_failure_guard_gpu_counters_verified": true,
+        "no_object_assistance_during_reset": true,
+        "undefined_training_tracking_diagnostic_sentinel_m_rad": 1000.0,
+        "evaluation_behavior_changed": false
+      },
+      "sha256": "66437dce04eee39e593208c1cacd77b9f5cc6ee54e900b38378bc354cf7aa7b4"
+    }
+  },
+  "actual_official_wrapper_smoke": {
+    "label": "official-grip-native-time-wrench-smoke-v2",
+    "report_sha256": "dd12a1d105120987737a5dbbfd5d1a547f531a018a2704027a0ee7f6166dba91",
+    "checkpoint_sha256": "d5d96fd4cfc026e6b499881bd942c9931a4cc86042f697d7f6aa5d84957bb902",
+    "environment_steps": 2048,
+    "non_finite_worlds": [],
+    "reference_tracking": {
+      "failure_cause_fraction": {
+        "object": 1.0,
+        "wrist": 0.0
+      },
+      "reference_end_fraction": 1.0,
+      "success_rate": 0.0
+    },
+    "metrics": {
+      "add_auc": 0.5600400874635568,
+      "add_auc_per_body": [
+        0.5816326530612245,
+        0.5384475218658892
+      ],
+      "add_std_m": 0.06424523468704457,
+      "add_std_per_body_m": [
+        0.03890854384510403,
+        0.08027631855833996
+      ],
+      "chord_sr": 0.0,
+      "gated_causes": [
+        "wrist",
+        "object"
+      ],
+      "maniptrans_sr": 0.0,
+      "mean_add_m": 0.06018092388786352,
+      "mean_per_point_error_cm": 5.6159706377889265,
+      "mppe_cm": 8.203450283754933,
+      "object_body_names": [
+        "white_pot",
+        "white_pot_lid"
+      ],
+      "object_orientation_error_deg": 19.54107398792443,
+      "object_orientation_error_per_body_rad": [
+        0.2859196306701124,
+        0.3961925302600874
+      ],
+      "object_orientation_error_rad": 0.34105608046509994,
+      "object_orientation_error_std_deg": 5.498511083232493,
+      "object_orientation_error_std_rad": 0.09596712235980696,
+      "object_position_error_m": 0.05414124743643446,
+      "object_position_error_per_body_m": [
+        0.04115472580730324,
+        0.06712776906556568
+      ],
+      "object_position_error_std_m": 0.018723870675072602,
+      "position_mean_centered": false,
+      "relative_position_error_cm": 10.150551451306706,
+      "spider_position_error_centered_m": 0.05006240126857844,
+      "spider_sr_uncentered": 1.0,
+      "step_count": 343,
+      "termination_cause_fraction": {
+        "object": 1.0,
+        "wrist": 0.0
+      },
+      "world_count": 4
+    },
+    "reset_mode": "explicit",
+    "start_frame": 0,
+    "settling_steps": 0
+  },
+  "physics_modified": false,
+  "physical_task_accepted": false
+}

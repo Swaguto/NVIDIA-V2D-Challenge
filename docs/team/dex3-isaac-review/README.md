@@ -2,13 +2,11 @@
 
 ## Latest ordered implementation and evaluation
 
-See [ordered fixes and reproduction](ORDERED_FIXES.md) for the current full-task
-checkpoint. The actual official kit wrapper runs, the native input/geometry/motor
-contracts are checked, and a complete 343-frame PPO comparison is recorded.
-Both initial and trained policies still have zero full-task success. The
-source-speed force plan is corrected in a separate frozen input pack; bounded
-grasp-fitting candidates remain rejected by independent physical checks.
-The results below describe the earlier scoped Isaac replay and remain archived.
+[Issue 10 scope and remaining work](ISSUE_10_STATUS.md): the CHORD baseline is incomplete. Current grip searches are separate from PPO training.
+
+See [measured grip learning and reproduction](GRIP_LEARNING.md) and [all measurements](grip-learning-results-v1.json). The contact-time wrench readout, numerical reset recovery, fresh PPO run and actual official kit wrapper were checked. The latest run logged 3,000 iterations / 24,576,000 environment steps. **The full physical grasp remains unresolved.** e002 is development data outside the scored roster; hidden performance is unverified.
+
+Brev is **STOPPED**, backups are hash verified, and the conservative cumulative compute bound is $28.9614 of $40 (not an invoice). The local v8 input pack must be transferred privately. Earlier Isaac replays and rejected comparisons below remain archived.
 
 This branch combines `codex/hand-continuity` at `9f93a50` with
 `Evc-r/dex3-motion-replay-baseline` at

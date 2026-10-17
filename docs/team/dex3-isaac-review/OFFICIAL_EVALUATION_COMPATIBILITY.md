@@ -1,4 +1,4 @@
-# Official evaluation compatibility — 2026-10-16
+# Official evaluation compatibility — 2026-10-17
 
 The current downloaded submission kit has SHA-256
 `8d2bce64ecab6da4eee938fe2859bd60e767535af30068b386e2dc20a72cf43e`.
@@ -12,11 +12,9 @@ entry point is `examples/run_policy_evaluation.py`, followed by
 
 ## Verified development checkpoint
 
-Scope: the wrapper checks below cover the archived three-hook extension and its
-matching full-task checkpoints. The newest multi-contact image adds a fourth
-solver dispatch hook. Its installed loader and actual physics have been checked,
-but a fresh checkpoint from that image has not been tested through the kit
-wrapper. See [current results and matching images](ORDERED_FIXES.md).
+The actual kit wrapper has now loaded fresh checkpoints from the four-hook runtime, including the native contact-time wrench experiment and numerical-reset smoke. [Measured wrapper runs](grip-learning-results-v1.json) preserve the checkpoint/report hashes and evaluation settings. No evaluator or score threshold was patched. These checks establish loading and execution compatibility; physical grasp and scored/hidden performance remain unaccepted.
+
+Archived first-checkpoint verification follows.
 
 All 54 kit manifest members, the runtime's evaluator source, the saved checkpoint,
 its complete private input manifest and frozen collision geometry passed the
