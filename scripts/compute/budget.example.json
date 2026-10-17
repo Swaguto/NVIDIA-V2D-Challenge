@@ -1,0 +1,21 @@
+{
+  "freeze_file": "/private/operator/budget-reconciliation-required.json",
+  "billing_reconciled": false,
+  "billing_rules_verified": false,
+  "paid_execution_approved": false,
+  "approval_reference": null,
+  "billing_source_reference": null,
+  "instance_id": null,
+  "usage_verified_utc": null,
+  "approval_expires_utc": null,
+  "currency": null,
+  "observed_account_usage": null,
+  "approved_account_usage_ceiling": null,
+  "compute_hourly_rate": null,
+  "storage_hourly_rate": null,
+  "minimum_session_seconds": null,
+  "billing_quantum_seconds": null,
+  "fixed_session_charge": null,
+  "stop_latency_reserve_seconds": null,
+  "verified_backup_and_stop_wrapper": null
+}

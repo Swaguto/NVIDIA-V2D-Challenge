@@ -13,6 +13,7 @@ services:
     environment:
       WANDB_MODE: disabled
       XLA_PYTHON_CLIENT_PREALLOCATE: "false"
+      JAX_COMPILATION_CACHE_DIR: /root/.cache/jax
       FLASH_CHORD_CACHE_DIR: /data/collision-cache
     volumes:
       - ${DEX3_TRAINING_INPUTS:?Set the private full-task input directory}:/data:ro

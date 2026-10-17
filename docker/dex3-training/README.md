@@ -1,5 +1,10 @@
 # Dex3 development training
 
+For offline preflight, persistent compilation caching, bounded batches and
+evaluation gates before longer GPU runs, see
+[compute efficiency](../../docs/team/dex3-isaac-review/COMPUTE_EFFICIENCY.md).
+New paid runs are currently frozen pending provider billing reconciliation.
+
 For the latest complete-state contact-guided continuation, use
 [the exact PPO resume recipe](../../docs/team/dex3-isaac-review/EXACT_PPO_RESUME.md).
 The actor-only continuation and retention-weight-8 experiments regressed; their

@@ -1,0 +1,78 @@
+{
+  "schema": "v2d.compute-controls-verification.v1",
+  "verification_date": "2026-10-17",
+  "cpu_suite_tests_passed": 263,
+  "compute_control_tests_passed": 19,
+  "compose_configs_verified": [
+    "compose.yaml",
+    "compose.grip.yaml",
+    "compose.repaired.yaml",
+    "compose.current.yaml",
+    "compose.estimated-cws.yaml",
+    "compose.cws-resume.yaml",
+    "compose.cws-unassisted.yaml",
+    "compose.cws-retention.yaml",
+    "compose.curriculum.yaml"
+  ],
+  "local_frozen_input_files_verified": 120,
+  "profile_batch_max_wall_seconds": 330,
+  "profile_new_training_steps": 0,
+  "staged_training_batch_max_wall_seconds": 1170,
+  "paid_execution_freeze_rejection_verified": true,
+  "saved_regressed_policy_gate": {
+    "schema": "v2d.compute-evaluation-gate.v1",
+    "continue_training": false,
+    "reasons": [
+      "add_auc regressed",
+      "maniptrans_sr regressed",
+      "relative_position_error_cm regressed",
+      "mppe_cm regressed",
+      "AUC improvement below the configured allocation threshold"
+    ],
+    "min_auc_gain": 0.005,
+    "metrics": {
+      "add_auc": {
+        "baseline": 0.8701485058309038,
+        "candidate": 0.7732552842565598,
+        "delta": -0.09689322157434399
+      },
+      "chord_sr": {
+        "baseline": 1.0,
+        "candidate": 1.0,
+        "delta": 0.0
+      },
+      "spider_sr_uncentered": {
+        "baseline": 1.0,
+        "candidate": 1.0,
+        "delta": 0.0
+      },
+      "maniptrans_sr": {
+        "baseline": 1.0,
+        "candidate": 0.0,
+        "delta": -1.0
+      },
+      "relative_position_error_cm": {
+        "baseline": 4.895371323151633,
+        "candidate": 6.023035505374576,
+        "delta": 1.1276641822229427
+      },
+      "mppe_cm": {
+        "baseline": 2.6614225563883376,
+        "candidate": 3.4861212436789644,
+        "delta": 0.8246986872906268
+      }
+    },
+    "baseline_checkpoint_sha256": "4d91fd4164b043a41a390ee7fbb904a3f3aa6a0bb724e19fc1f2342e3f108a40",
+    "candidate_checkpoint_sha256": "ba3afe7a291585af8ec607a9f0b02b4344b80e966671a21d109b95e16ae52f9a",
+    "input_manifest_sha256": "7cfb37e61e070dac916d78b869ea644e577c786167391c0a8267325763961b89",
+    "baseline_report_sha256": "84e41c0aa7505d4bfdccf6ff410aa57493cb84b14c34ef878643240d505e905e",
+    "candidate_report_sha256": "70dbca979773afdf807cead0cf40df6395cd64eae28ffba879f70ba5664888a3",
+    "independent_confirmation_required": true,
+    "official_score_claimed": false,
+    "physical_task_accepted": false
+  },
+  "gpu_cache_hits_verified": false,
+  "gpu_throughput_savings_measured": false,
+  "provider_billing_reconciled": false,
+  "new_gpu_work_executed": false
+}
