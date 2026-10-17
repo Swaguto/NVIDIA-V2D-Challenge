@@ -315,6 +315,28 @@ def main(cfg):
                     and np.all(actual <= ranges[:, 1] + 1e-5)
                 )
             if not cap_verified:
+                evidence = out / f"failed-cohort-{iteration + 1}.npz"
+                np.savez_compressed(
+                    evidence,
+                    candidate_parameters=candidates,
+                    repeated_world_actions=actions,
+                    body_poses=np.asarray(bodies),
+                    joint_positions=np.asarray(joints),
+                    contact_forces=np.asarray(contacts),
+                    sampled_depths=np.asarray(depths),
+                    final_native_limited_motor_force=actual,
+                    native_limited_motor_ranges=ranges,
+                )
+                (out / f"failed-cohort-{iteration + 1}.json").write_text(
+                    json.dumps(dict(
+                        iteration=iteration + 1,
+                        raw_evidence_sha256=hashlib.sha256(evidence.read_bytes()).hexdigest(),
+                        native_motor_or_finiteness_gate_failed=True,
+                        candidate_cohort_rejected=True,
+                        failed_states_repaired=False,
+                        physical_task_accepted=False,
+                    ), indent=2) + "\n"
+                )
                 raise RuntimeError(
                     "Candidate cohort failed native motor readback bounds"
                 )
