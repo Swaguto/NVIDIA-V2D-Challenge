@@ -82,3 +82,12 @@ def test_wrong_input_bytes_reject_transfer(contract):
     parent, current, *paths = contract
     with pytest.raises(ValueError):
         validate(parent, {**current, "dex3_input_manifest_sha256": "other"}, *paths)
+
+
+def test_replication_count_can_change_for_a_small_smoke(contract):
+    parent, current, *paths = contract
+    config = json.loads(current["resolved_config_json"])
+    config["scene"]["world_count"] = 8
+    config["training"]["world_count"] = 8
+    result = validate(parent, {**current, "resolved_config_json": json.dumps(config)}, *paths)
+    assert result["current_world_count"] == 8 and result["parent_world_count"] == 2

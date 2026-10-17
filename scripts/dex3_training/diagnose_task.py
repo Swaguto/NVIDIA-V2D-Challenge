@@ -179,6 +179,12 @@ class ReadbackEnv:
             arrays["measured_assigned_hand_wrench_about_object_com"] = np.asarray(
                 self.measured_hand_wrench
             )
+            arrays["measured_assigned_hand_wrench_side_order"] = np.asarray(
+                self.env.contact.layout.sides
+            )
+            arrays["measured_assigned_object_local_body_ids"] = (
+                self.env.objective.object_ids.numpy()
+            )
         verification = dict(
             native_actuator_force_readback_available=bool(self.motor),
             native_capped_drive_verified=False,

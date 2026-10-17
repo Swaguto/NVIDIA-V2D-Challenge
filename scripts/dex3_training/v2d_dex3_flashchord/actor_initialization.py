@@ -32,9 +32,14 @@ def validate(parent, current, parent_context, current_context, checkpoint):
     iteration, steps = int(parent["iteration"]), int(parent["environment_steps"])
     if iteration <= 0 or steps != iteration * old["training"]["world_count"] * old["training"]["rollout_steps"]:
         raise ValueError("Invalid actor parent training counters")
-    for key in ("action", "observation", "embodiment", "task", "scene", "reset"):
+    for key in ("action", "observation", "embodiment", "task", "reset"):
         if old[key] != new[key]:
             raise ValueError(f"Actor initialization changes {key}")
+    scenes = [deepcopy(c["scene"]) for c in (old, new)]
+    for scene in scenes:
+        scene.pop("world_count", None)
+    if scenes[0] != scenes[1]:
+        raise ValueError("Actor initialization changes scene geometry or materials")
     if physics_config(old["sim"]) != physics_config(new["sim"]):
         raise ValueError("Actor initialization changes physics")
     for key in ("observation_normalization", "observation_normalization_epsilon"):
@@ -59,6 +64,8 @@ def validate(parent, current, parent_context, current_context, checkpoint):
         parent_checkpoint_sha256=sha256(checkpoint),
         parent_iteration=int(parent["iteration"]),
         parent_environment_steps=int(parent["environment_steps"]),
+        parent_world_count=old["training"]["world_count"],
+        current_world_count=new["training"]["world_count"],
         parent_context_sha256=sha256(parent_context),
         current_context_sha256=sha256(current_context),
         transferred="Actor mean parameters and observation normalization only",
