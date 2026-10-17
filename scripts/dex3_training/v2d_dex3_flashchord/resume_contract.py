@@ -25,6 +25,8 @@ def experiment_contract(config):
 
 
 def validate(parent, current, parent_context_path, current_context_path, checkpoint):
+    if "dex3_evaluation_physics_probe_json" in parent:
+        raise ValueError("An evaluation-only physics probe cannot resume training")
     for key in (
         "dex3_input_manifest_sha256",
         "dex3_runtime_patches_sha256",

@@ -100,3 +100,38 @@ The staged pilot's results must be measured separately. Passing CPU/GPU contract
 or loading a checkpoint through the official wrapper does not pass physical grip.
 e002 is an unscored development episode; scored-roster and hidden-episode performance
 remain unverified. See [ordered results](ORDERED_FIXES.md) for measured outcomes.
+
+### Staged pilot: numerical failure retained
+
+The staged run recorded **1,601 healthy iterations / 13,115,392 steps**, then
+aborted on nonfinite metrics at attempted step 13,123,584. Its last saved model is
+iteration 1,600 / 13,107,200 steps. End-of-rollout arrays were finite after automatic
+resets; that snapshot alone cannot identify the failed transition. A training-only,
+read-only observer now retains the first nonfinite state, reward, contact and
+tracking arrays **before reset**. It aborts learning when it observes a failure;
+it does not repair physics, clamp NaNs, rewrite rewards or affect evaluation.
+
+The 500-iteration independent replay still fails. First-pot lift is 42.8–53.1 mm
+versus approximately 99.0 mm in the reference; required-pad support is 84.2–86.9%.
+The second lid lifts in all four worlds but twists by 22.4–35.8 degrees. These
+intermediate observations do not establish the final saved checkpoint's quality.
+
+The optional `dex3_grip_pose_tracking` configuration is a separate hypothesis,
+not a validated repair. It broadens the existing unit-axis keypoint Laplacian
+scale from 0.02 to 0.15 and raises its training weight from 2 to 8. Offline reward
+sensitivity on checkpoint 500 increases, but new physical evaluation is required.
+It does not change the grip, penetration, tracking or evaluation thresholds.
+
+### Continue an unchanged experiment
+
+`training.resume=true` requires a fresh output directory and the parent image's
+context manifest, mounted read-only with the parent checkpoint. The validator binds
+input bytes, observation schema, resolved experiment, upstream patches and runtime
+payload. It allows a longer horizon and different output/checkpoint save locations;
+changes to the action, objective, physics or selected experiment are rejected.
+
+The upstream restore retains optimizer, normalization and RNG state, then resets
+the simulated worlds. It is not bit-exact continuation. The GPU smoke continuation
+from iteration 8 to 10 completed 512 new steps, retained the 2,560 cumulative-step
+counter, emitted no false `model_0`, and loaded through the actual official wrapper.
+That verifies checkpoint mechanics, not physical task success.
