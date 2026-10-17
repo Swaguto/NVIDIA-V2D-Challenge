@@ -1,0 +1,44 @@
+{
+  "schema": "v2d.estimated-cws-static-capacity-summary.v1",
+  "scope": "Offline inscribed 8-edge point-contact friction pyramids with measured normal budgets; support excluded; no motor, compliance, torsional friction or dynamic feasibility certificate",
+  "source_audit_sha256": "78015e91bf632f0b33526191a3b6d25b77425306934c9f51c508a63c879bd33d",
+  "first_carry_window_source_seconds": [
+    2.4,
+    11.5
+  ],
+  "worlds": [
+    {
+      "world": 0,
+      "non_support_carry_samples": 92,
+      "fraction_gravity_capacity_at_least_one": 1.0,
+      "minimum": 1.2065803844294447,
+      "median": 2.655524193784096,
+      "maximum": 5.881545184898832
+    },
+    {
+      "world": 1,
+      "non_support_carry_samples": 81,
+      "fraction_gravity_capacity_at_least_one": 0.9876543209876543,
+      "minimum": -0.0,
+      "median": 2.763348196944256,
+      "maximum": 4.622360570737209
+    },
+    {
+      "world": 2,
+      "non_support_carry_samples": 91,
+      "fraction_gravity_capacity_at_least_one": 0.978021978021978,
+      "minimum": -0.0,
+      "median": 2.573882839801886,
+      "maximum": 3.4365361862273955
+    },
+    {
+      "world": 3,
+      "non_support_carry_samples": 84,
+      "fraction_gravity_capacity_at_least_one": 0.9880952380952381,
+      "minimum": -0.0,
+      "median": 2.757168102092464,
+      "maximum": 3.607151466661984
+    }
+  ],
+  "physical_task_accepted": false
+}

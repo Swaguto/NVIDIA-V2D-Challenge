@@ -4,9 +4,9 @@
 
 [Issue 10 scope and remaining work](ISSUE_10_STATUS.md): the CHORD baseline is incomplete. Current grip searches are separate from PPO training.
 
-See [measured grip learning and reproduction](GRIP_LEARNING.md) and [all measurements](grip-learning-results-v1.json). The contact-time wrench readout, numerical reset recovery, fresh PPO run and actual official kit wrapper were checked. The latest run logged 3,000 iterations / 24,576,000 environment steps. **The full physical grasp remains unresolved.** e002 is development data outside the scored roster; hidden performance is unverified.
+See [current grip diagnosis](CURRENT_GRIP_DIAGNOSIS.md), [measured contact-guided policies](ESTIMATED_CWS_RESULTS.md), and [retained checkpoint screening](RETAINED_PPO_CHECKPOINTS.md). Contact-guided training improved the first pot carry, but **full physical grasp remains unresolved**. Actor-only, higher-retention-weight and complete-state continuations were evaluated and rejected as replacements. The complete continuation added 1,500 iterations / 12,288,000 new steps; its parent had 16,384,000 steps. e002 is development data outside the scored roster; hidden performance remains unverified.
 
-Brev is **STOPPED**, backups are hash verified, and the conservative cumulative compute bound is $28.9614 of $40 (not an invoice). The local v8 input pack must be transferred privately. Earlier Isaac replays and rejected comparisons below remain archived.
+Sessions 86–93 are stopped with hash-verified backups. Latest confirmation: 2026-10-17T22:41:27.756047+00:00. Conservative cumulative compute bound **$34.3920 of $40**, not an invoice. No restart is scheduled. Inputs, videos and checkpoints remain local for private transfer.
 
 This branch combines `codex/hand-continuity` at `9f93a50` with
 `Evc-r/dex3-motion-replay-baseline` at

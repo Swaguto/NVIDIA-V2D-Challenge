@@ -69,3 +69,31 @@ All four inherited Compose services were resolved by Docker Compose on the Brev
 host. That check verified GPU reservation, read-only input and parent mounts,
 writable output mounts, a 24 GiB memory limit and 8 GiB shared memory. It did not
 start another training container.
+
+## Select by recorded physical quality
+
+Evaluate retained checkpoints with the same readback and audit commands, using
+a separate fresh output folder for each. Rank those folders on the host with:
+
+```bash
+python scripts/dex3_training/select_grasp_checkpoint.py \
+  --candidate /private/results/policy-grip-estimated-cws-2000-v2 \
+  --candidate /private/results/policy-grip-cws-exact-resume-3500-v1 \
+  --out /private/fresh-checkpoint-selection.json
+```
+
+The helper verifies each audit's report hash and unassisted replay settings.
+Its worst normalized gate violation is a development diagnostic, not an official
+score. Selecting the least failing checkpoint does not accept the grasp. A
+passing candidate still requires an independent repeat and wider validation.
+
+## Measured outcome
+
+The full continuation completed 1,500 new iterations / 12,288,000 steps, ending
+at global iteration 3,500 / 28,672,000 cumulative steps. It logged three failed
+numerical transitions, retained in the record. The final full four-world replay
+still failed: first-pot worst slip 42.1 mm, rotation 26.1°, required-pad support
+97.8%, sampled depth 1.55 mm. The first full-run mean KL was 0.02075; the smoke's
+was 0.02020. Complete learner restoration fixed the restart protocol, not the
+physical grasp. Intermediate checkpoints also failed; the original 2,000-iteration
+CWS parent remains selected. [All retained checkpoints](RETAINED_PPO_CHECKPOINTS.md).

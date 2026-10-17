@@ -69,11 +69,59 @@
         "ppo/kl_mean_per_optimizer_sample": 0.007146230433136225,
         "policy/action_std_mean_per_action": 0.15317168831825256
       }
+    ],
+    "complete_state_smoke": [
+      {
+        "iteration": 2001,
+        "sample": "first",
+        "ppo/learning_rate": 9.999999747378752e-06,
+        "ppo/value_loss_mean_per_minibatch_update": 0.995282769203186,
+        "ppo/explained_variance_per_rollout": 0.8364185690879822,
+        "ppo/kl_mean_per_optimizer_sample": 0.02019803784787655,
+        "policy/action_std_mean_per_action": 0.11136077344417572,
+        "numerical_failures/cumulative_world_transitions": 0
+      },
+      {
+        "iteration": 2008,
+        "sample": "last",
+        "ppo/learning_rate": 9.999999747378752e-06,
+        "ppo/value_loss_mean_per_minibatch_update": 15.487078666687012,
+        "ppo/explained_variance_per_rollout": 0.8959358334541321,
+        "ppo/kl_mean_per_optimizer_sample": 0.006774254143238068,
+        "policy/action_std_mean_per_action": 0.11139922589063644,
+        "numerical_failures/cumulative_world_transitions": 0
+      }
+    ],
+    "complete_state_continuation": [
+      {
+        "iteration": 2001,
+        "sample": "first",
+        "ppo/learning_rate": 9.999999747378752e-06,
+        "ppo/value_loss_mean_per_minibatch_update": 1.009442687034607,
+        "ppo/explained_variance_per_rollout": 0.8356145024299622,
+        "ppo/kl_mean_per_optimizer_sample": 0.02074948512017727,
+        "policy/action_std_mean_per_action": 0.11136077344417572,
+        "numerical_failures/cumulative_world_transitions": 0
+      },
+      {
+        "iteration": 3500,
+        "sample": "last",
+        "ppo/learning_rate": 9.999999747378752e-06,
+        "ppo/value_loss_mean_per_minibatch_update": 57.91582107543945,
+        "ppo/explained_variance_per_rollout": 0.7377089262008667,
+        "ppo/kl_mean_per_optimizer_sample": 0.009075254201889038,
+        "policy/action_std_mean_per_action": 0.11836236715316772,
+        "numerical_failures/cumulative_world_transitions": 3
+      }
     ]
   },
   "parent_final_checkpoint_learning_rate": 1e-05,
   "actor_only_initial_learning_rate": 0.0003,
   "initial_learning_rate_reset_factor": 30,
   "configured_desired_KL": 0.005,
-  "actor_only_first_iteration_KL_over_target": 419.3866729736328
+  "actor_only_first_iteration_KL_over_target": 419.3866729736328,
+  "metric_journal_hashes": {
+    "complete_state_smoke": "7525e32f74f53909a5d8bf8c10d2aeedd40ae6821f8c1cdca9b527d29c2debf9",
+    "complete_state_continuation": "2268c7838156f6358c7cc3248dc7668c46ec420a25ac3c38db470a4d61d21a2d"
+  }
 }
