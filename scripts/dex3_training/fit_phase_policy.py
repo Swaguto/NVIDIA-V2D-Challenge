@@ -127,6 +127,8 @@ def main(cfg):
             contact_friction=cfg.scene.contact_friction,
         )
         env = RLEnv(setup.scene, setup.reference, config=ec)
+        if not env.action.simulator_contract_sha256:
+            raise ValueError("Native fitting requires NativeContactSimConfig to bind all solver settings")
         env.reset()
         env.capture_step()
         env.reset(frame_id=0)

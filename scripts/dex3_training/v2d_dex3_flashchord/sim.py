@@ -4,6 +4,7 @@ from dataclasses import dataclass
 import newton
 from flash_chord.runtime.sim import SimConfig
 from .native_contact_binding import NativeContactReadout
+from .phase_prior import simulator_signature
 
 
 @dataclass
@@ -16,6 +17,7 @@ class NativeContactSimConfig(SimConfig):
 
 
 def build_solver(model, cfg):
+    model.dex3_simulator_contract_sha256 = simulator_signature(cfg)
     solver = newton.solvers.SolverMuJoCo(
         model,
         solver=cfg.solver,

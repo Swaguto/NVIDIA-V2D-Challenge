@@ -7,3 +7,6 @@ defaults:
 action:
   phase_policy_prior: phase-policy.json
   phase_policy_physics_substeps: ${sim.substeps}
+sim:
+  _target_: v2d_dex3_flashchord.sim.NativeContactSimConfig
+  enable_multiccd: false
