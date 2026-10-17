@@ -53,6 +53,12 @@ grasp acquisition. Separate evaluation starts at frame zero, has no auto resets
 or settling assistance, and covers the entire source sequence. Training metrics,
 including reference-end fractions from sampled starts, are not evaluation success.
 
+## Local input and checkpoint archive
+
+The owner has the verified `dex3-pot-task-inputs-local-v8.tar.gz` archive (1,062,953,182 bytes). [Its receipt](local-pot-task-input-receipt-v8.json) records the archive SHA256 and every member hash. Inputs, checkpoint weights and derived footage remain local; obtain the archive by private transfer. Repository and GHCR access alone do not provide these inputs.
+
+On the Linux GPU host, compare the archive SHA256 with the receipt, extract into a private directory, and use its `native/e002-speed1-v8` directory for `DEX3_TRAINING_INPUTS`. Parent results, recorded fit candidates, code contexts and validation receipts are included under the paths used by the recipes. The archive preserves rejected experiments as evidence; use the matching pinned image and recipe, not an arbitrary historical context.
+
 ## Reproduce the experiment
 
 Use a Linux NVIDIA GPU host, the verified grip image digest, and the privately
