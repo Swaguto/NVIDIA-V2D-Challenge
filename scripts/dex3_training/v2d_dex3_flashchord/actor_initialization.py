@@ -21,6 +21,36 @@ def physics_config(config):
     return result
 
 
+def reset_transition(old, new):
+    """Permit only an explicitly declared removal of reset VOC assistance."""
+    mode = new.get("actor_initialization_reset_transition", "unchanged")
+    if mode == "unchanged":
+        if old["reset"] != new["reset"]:
+            raise ValueError("Actor initialization changes reset")
+        return dict(mode=mode)
+    if mode != "remove_training_settling":
+        raise ValueError("Unknown actor reset transition")
+    before, after = deepcopy(old["reset"]), deepcopy(new["reset"])
+    old_steps, new_steps = before.pop("voc_decay_steps", None), after.pop("voc_decay_steps", None)
+    stages = new.get("curriculum", {}).get("stages", [])
+    if (
+        before != after
+        or before.get("_target_") != "flash_chord.lifecycle.reset.ReferenceResetConfig"
+        or type(old_steps) is not int or not 0 < old_steps <= 20
+        or type(new_steps) is not int or new_steps != 0
+        or old.get("training_assistance") != "decaying_voc"
+        or new.get("training_assistance") != "disabled"
+        or new.get("voc_scale_override") != 0
+        or new.get("env", {}).get("voc_scale") != 0
+        or not stages
+        or any(s["voc_scale"] != 0 or s.get("reset_to_first_frame_probability") != 1.0
+               or s.get("immediate_first_frame_probability") is not None for s in stages)
+    ):
+        raise ValueError("Reset transition may only remove settling for zero-assistance frame-zero practice")
+    return dict(mode=mode, parent_settling_steps=old_steps, new_settling_steps=0,
+                all_stages_zero_VOC=True, all_stages_frame_zero=True)
+
+
 def validate(parent, current, parent_context, current_context, checkpoint):
     if "dex3_evaluation_physics_probe_json" in parent:
         raise ValueError("Evaluation-only probes cannot initialize training")
@@ -32,7 +62,8 @@ def validate(parent, current, parent_context, current_context, checkpoint):
     iteration, steps = int(parent["iteration"]), int(parent["environment_steps"])
     if iteration <= 0 or steps != iteration * old["training"]["world_count"] * old["training"]["rollout_steps"]:
         raise ValueError("Invalid actor parent training counters")
-    for key in ("action", "observation", "embodiment", "task", "reset"):
+    reset_change = reset_transition(old, new)
+    for key in ("action", "observation", "embodiment", "task"):
         if old[key] != new[key]:
             raise ValueError(f"Actor initialization changes {key}")
     scenes = [deepcopy(c["scene"]) for c in (old, new)]
@@ -73,6 +104,7 @@ def validate(parent, current, parent_context, current_context, checkpoint):
         new_run_iteration=0,
         new_run_environment_steps=0,
         unchanged_resume=False,
+        reset_transition=reset_change,
         physical_task_accepted=False,
     )
 

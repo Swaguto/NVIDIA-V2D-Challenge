@@ -1,0 +1,15 @@
+# Code-only image; estimated contact data remains a private read-only mount.
+services:
+  estimated-cws:
+    extends:
+      file: compose.grip.yaml
+      service: grip
+    command:
+      - /opt/dex3-extension/check_estimated_cws.py
+      - --config-dir
+      - /opt/dex3-extension/configs
+      - experiment=dex3_grip_estimated_cws
+      - scene.world_count=4
+      - training.world_count=4
+volumes:
+  dex3-training-cache:

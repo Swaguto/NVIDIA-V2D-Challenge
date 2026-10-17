@@ -290,9 +290,11 @@ def main(cfg: DictConfig):
             allow_training_assistance=assist is not None,
             allow_estimated_contact_guidance=bool(cfg.objective.get("estimated_contact_guidance", False)),
         )
-        if assist is not None:
-            # Bind stage zero before reset/capture and learner initialization.
+        if training.curriculum is not None:
+            # Bind reset distribution and VOC before reset/capture, including
+            # fully unassisted frame-zero actor continuations.
             WarpRLEnv(env).set_curriculum(training.curriculum.stage_at(0))
+        if assist is not None:
             (output / "training-assistance-contract.json").write_text(
                 json.dumps(assist, indent=2) + "\n"
             )

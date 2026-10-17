@@ -91,3 +91,50 @@ def test_replication_count_can_change_for_a_small_smoke(contract):
     config["training"]["world_count"] = 8
     result = validate(parent, {**current, "resolved_config_json": json.dumps(config)}, *paths)
     assert result["current_world_count"] == 8 and result["parent_world_count"] == 2
+
+
+def unassisted_continuation(contract):
+    parent, current, *paths = deepcopy(contract)
+    old = json.loads(parent["resolved_config_json"])
+    new = json.loads(current["resolved_config_json"])
+    old.update(training_assistance="decaying_voc", reset=dict(
+        _target_="flash_chord.lifecycle.reset.ReferenceResetConfig", voc_decay_steps=20,
+        voc_decay_mode="linear", reset_finger_openness=1.0))
+    new.update(training_assistance="disabled", voc_scale_override=0.0, env=dict(voc_scale=0.0),
+               actor_initialization_reset_transition="remove_training_settling",
+               reset={**old["reset"], "voc_decay_steps": 0},
+               curriculum=dict(stages=[dict(voc_scale=0.0, reset_to_first_frame_probability=1.0)]))
+    parent["resolved_config_json"] = json.dumps(old)
+    current["resolved_config_json"] = json.dumps(new)
+    return parent, current, paths, new
+
+
+def test_explicit_reset_removal_records_a_new_unassisted_run(contract):
+    parent, current, paths, _ = unassisted_continuation(contract)
+    result = validate(parent, current, *paths)
+    assert result["reset_transition"] == dict(mode="remove_training_settling",
+        parent_settling_steps=20, new_settling_steps=0, all_stages_zero_VOC=True,
+        all_stages_frame_zero=True)
+    assert result["new_run_environment_steps"] == 0 and not result["unchanged_resume"]
+
+
+@pytest.mark.parametrize("change", ["undeclared", "settling", "fingers", "target", "VOC", "random_frame", "other_mode"])
+def test_reset_removal_cannot_hide_other_reset_or_assistance_changes(contract, change):
+    parent, current, paths, config = unassisted_continuation(contract)
+    if change == "undeclared":
+        config.pop("actor_initialization_reset_transition")
+    if change == "settling":
+        config["reset"]["voc_decay_steps"] = 1
+    if change == "fingers":
+        config["reset"]["reset_finger_openness"] = 0.2
+    if change == "target":
+        config["reset"]["_target_"] = "another.reset"
+    if change == "VOC":
+        config["curriculum"]["stages"][0]["voc_scale"] = 0.01
+    if change == "random_frame":
+        config["curriculum"]["stages"][0]["reset_to_first_frame_probability"] = 0.5
+    if change == "other_mode":
+        config["actor_initialization_reset_transition"] = "anything"
+    current["resolved_config_json"] = json.dumps(config)
+    with pytest.raises(ValueError):
+        validate(parent, current, *paths)

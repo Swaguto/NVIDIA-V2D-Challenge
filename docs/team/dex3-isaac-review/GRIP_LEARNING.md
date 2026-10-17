@@ -14,15 +14,15 @@ forces; it does not certify motor feasibility, dynamic stability or task success
 
 ## Active matched comparison — October17
 
-Three fresh experiments compare the12mm wrist residual clip, a35mm clip, and the35mm clip with decaying training VOC and20-step reset settling. Each plans2,000iterations/16,384,000new environment steps. The first two have finished and failed the complete first pot carry; the assisted arm is running. Final evaluation starts at frame0 with zero assistance and no settling. [Reproduction commands](CURRICULUM_REPRODUCTION.md).
+Three fresh experiments compare the12mm wrist residual clip, a35mm clip, and the35mm clip with decaying training VOC and20-step reset settling. Each completed 2,000 iterations / 16,384,000 new environment steps. All three failed the full grasp gates. The assisted arm reached the required lift but still slipped and rotated. [Measured comparison](TRAINING_DIAGNOSIS.md). Final evaluation starts at frame0 with zero assistance and no settling. [Reproduction commands](CURRICULUM_REPRODUCTION.md).
 
-A separate estimated CWS path addresses the newly measured mismatch between reconstructed contact surfaces and native convex colliders. It has266passing CPU tests; GPU validation and policy training are pending. [Method and limits](ESTIMATED_CONTACT_GUIDANCE.md). Inputs, contact estimates and checkpoints remain private.
+A separate estimated CWS path addresses the newly measured mismatch between reconstructed contact surfaces and native convex colliders. It has 267 passing CPU tests; GPU validation and policy training are pending. [Method and limits](ESTIMATED_CONTACT_GUIDANCE.md). Inputs, contact estimates and checkpoints remain private.
 
 ## Earlier actor-initialized PPO run — October 17
 
 The actor-initialized native-wrench run logged **3,000 new iterations / 24,576,000 new environment steps**, separately from its parent actor’s 16,384,000 steps. Logged steps include explicitly failed numerical transitions where reported. Full frame-zero readbacks and fixed grasp gates are in [the measured report](grip-learning-results-v1.json). **Full physical grasp remains unresolved**; no hidden-set readiness is claimed.
 
-Session85 was **STOPPED** after hash-verified backups at a conservative cumulative compute bound of **$28.9614 of the approved $40**, not an invoice. Session86 is running the matched controlled comparison under a90-minute stop guard. Inputs and checkpoints stay in the local v8 pack for private transfer. The image contains code only. GPU training and contact physics are not bit-exact.
+Session 87 was **STOPPED** after hash-verified backups at a conservative cumulative compute bound of **$31.2011 of the approved $40**, not an invoice. Session 88 is validating estimated contact guidance under a 90-minute stop guard. Session 86 completed the matched controlled comparison. Inputs and checkpoints stay in the local v8 pack for private transfer. The image contains code only. GPU training and contact physics are not bit-exact.
 
 ## Earlier unassisted training changes
 
@@ -351,7 +351,7 @@ Training Compose files request GPUs through device reservations, compatible with
 
 ## Issue 10 and current physical status
 
-[Issue 10 remains incomplete](ISSUE_10_STATUS.md). Recent controller/contact searches are physics diagnostics, with **zero new PPO steps**. They do not implement the missing decaying-assistance curriculum or deliver the requested Scorekeeper report. FlashCHORD/Newton/MuJoCo-Warp with JAX PPO is the backend of these readbacks. The earlier Isaac render is a separate artifact.
+[Issue 10 remains incomplete](ISSUE_10_STATUS.md). Recent controller/contact searches are physics diagnostics, with **zero new PPO steps**. The later session 86 PPO comparison implements decaying assistance and has a local accuracy report; nothing has been posted to Scorekeeper. FlashCHORD/Newton/MuJoCo-Warp with JAX PPO is the backend of these readbacks. The earlier Isaac render is a separate artifact.
 
 The joint pose/height fit reached the requested lift, but its independent carry still failed. A four-world contact-model comparison also failed: its best multi-contact/angular case reached approximately 12.3 mm slip, 5.4 degrees rotation and 86.9% required-pad support. Acceptance still requires 10 mm, 5 degrees and 95% support, along with the unchanged lift, penetration and source-tracking checks. Other variants include severe finite trajectory failures; all worlds remain in the measured report. None is promoted.
 
