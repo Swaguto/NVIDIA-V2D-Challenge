@@ -75,6 +75,7 @@ class GraspActionConfig(ActionConfig):
     phase_policy_physics_substeps: int = 20
     wrist_payload_compensation: bool = False
     wrist_payload_gain: float = 1.0
+    wrist_payload_carry_gain: float | None = None
 
     def build(self, scene, device=None):
         if self.delay.max_steps != 0:

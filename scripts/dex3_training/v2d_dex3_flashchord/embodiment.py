@@ -26,6 +26,7 @@ from flash_chord.embodiments.g1_dex3 import (
     _hand_link_names,
 )
 from flash_chord.embodiments.sharpa_hands import SharpaHands
+from .contact_profiles import parameters as contact_parameters
 
 SIDES = ("left", "right")
 DIGITS = ("thumb", "middle", "index")
@@ -125,35 +126,27 @@ class Dex3Hands(SharpaHands):
             ids.update(self._add_dex3(builder, side, path))
         geometry = _capture_hand_geometry(builder, ids)
         profile = self.config.hand_contact_profile
-        if profile not in {
-            "default",
-            "firm_point",
-            "firm_patch",
-            "constraint_point",
-            "constraint_patch",
-        }:
-            raise ValueError("Unknown explicit native hand contact profile")
-        if profile != "default":
+        settings = contact_parameters(profile)
+        if settings:
             hand_bodies = set(ids.values())
             for shape, body in enumerate(builder.shape_body):
                 if body not in hand_bodies:
                     continue
                 # Newton converts k=1/tau^2, d=2/tau at unit normalized mass
                 # to MuJoCo solref=(tau,1). tau=5 ms matches two 400 Hz steps.
-                if profile in {"firm_point", "firm_patch"}:
-                    builder.shape_material_ke[shape] = 40000.0
-                    builder.shape_material_kd[shape] = 400.0
-                builder.custom_attributes["mujoco:geom_priority"].values[shape] = 1
-                builder.custom_attributes["mujoco:geom_solimp"].values[shape] = (
-                    0.99,
-                    0.999,
-                    0.001,
-                    0.5,
-                    2.0,
-                )
-                builder.custom_attributes["mujoco:condim"].values[shape] = (
-                    4 if profile.endswith("patch") else 3
-                )
+                if "ke" in settings:
+                    builder.shape_material_ke[shape] = settings["ke"]
+                    builder.shape_material_kd[shape] = settings["kd"]
+                if "priority" in settings:
+                    builder.custom_attributes["mujoco:geom_priority"].values[shape] = (
+                        settings["priority"]
+                    )
+                    builder.custom_attributes["mujoco:geom_solimp"].values[shape] = (
+                        settings["solimp"]
+                    )
+                builder.custom_attributes["mujoco:condim"].values[shape] = settings[
+                    "condim"
+                ]
                 # Existing sliding/torsional/rolling friction coefficients,
                 # geometry, inertias and native motor caps stay unchanged.
         self._apply_control_config(builder)

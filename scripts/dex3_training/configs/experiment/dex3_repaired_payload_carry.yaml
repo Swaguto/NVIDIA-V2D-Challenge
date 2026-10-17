@@ -1,0 +1,8 @@
+# @package _global_
+defaults:
+  - dex3_repaired_payload
+  - _self_
+action:
+  wrist_payload_gain: 0.5
+  wrist_payload_carry_gain: 1.0
+output_dir: /outputs/repaired-payload-carry

@@ -5,9 +5,13 @@ from scipy.spatial.transform import Rotation
 from _dex3_task_grip import SmoothObjectReference
 
 
-def payload_plan(times, poses, phases, mass, inertia, com, gain=1.0):
+def payload_plan(times, poses, phases, mass, inertia, com, gain=1.0, carry_gain=None):
     if not np.isfinite(gain) or not 0 < gain <= 1:
         raise ValueError("Payload gain must be in (0, 1]")
+    if carry_gain is None:
+        carry_gain = gain
+    if not np.isfinite(carry_gain) or not gain <= carry_gain <= 1:
+        raise ValueError("Carry gain must be between acquisition gain and one")
     poses = np.asarray(poses).copy()
     poses[:, :3] += Rotation.from_quat(poses[:, 3:]).apply(
         np.broadcast_to(com, (len(times), 3))
@@ -23,9 +27,12 @@ def payload_plan(times, poses, phases, mass, inertia, com, gain=1.0):
         # Start after acquisition begins, fade out as the hand opens.
         w = smooth((times - phase["close_s"] + 0.15) / 0.3)
         w *= 1 - smooth((times - phase["release_start_s"]) / 0.2)
-        weights = np.maximum(weights, w)
+        initial_height = np.interp(phase["close_s"], times, poses[:, 2])
+        carrying = smooth((poses[:, 2] - initial_height) / 0.01)
+        phase_gain = gain + (carry_gain - gain) * carrying
+        weights = np.maximum(weights, w * phase_gain)
     wrench = np.array([reference.load_wrench(t, 1.0, mass, inertia) for t in times])
-    wrench *= (gain * weights)[:, None]
+    wrench *= weights[:, None]
     if not np.isfinite(wrench).all() or abs(wrench).max() > 60:
         raise ValueError("Nominal payload wrench exceeds the declared wrist budget")
     return wrench

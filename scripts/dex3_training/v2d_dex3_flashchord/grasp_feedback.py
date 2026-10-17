@@ -237,6 +237,7 @@ class FeedbackGraspActionConfig(GraspActionConfig):
                         inertias[body],
                         com[body],
                         self.wrist_payload_gain,
+                        self.wrist_payload_carry_gain,
                     )
                 )
             result.payload_wrench = wp.array(
