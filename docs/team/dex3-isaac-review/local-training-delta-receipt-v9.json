@@ -1,0 +1,14 @@
+{
+  "schema": "v2d.local-input-delta-receipt.v9",
+  "local_archive": "/Users/rohithiruku/dex3_pot_grasp_20261015/dex3-pot-training-delta-local-v9.tar.gz",
+  "archive_bytes": 403258675,
+  "archive_sha256": "1ec573727364c3ffab14161291bccb16c9b6b3429cbc53ec6c71d14c34d05c64",
+  "base_archive_sha256": "03d712803c5c50278268120c2e999faa3185cd3081fa61d8ccf6dc87c301f3ea",
+  "files": 8655,
+  "all_member_hashes_verified": true,
+  "source_bundle_sha256": "4de1b9507e42ed66e4341b93cc38563885fc2eda43db72935a546967671b6277",
+  "estimated_input_manifest_sha256": "7cfb37e61e070dac916d78b869ea644e577c786167391c0a8267325763961b89",
+  "latest_gpu_session": 93,
+  "private_inputs_published": false,
+  "physical_task_accepted": false
+}

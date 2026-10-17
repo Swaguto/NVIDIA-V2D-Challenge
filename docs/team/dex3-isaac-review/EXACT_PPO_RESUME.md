@@ -24,6 +24,13 @@ requires the complete replay and grasp gates.
 
 ## Reproduction
 
+Transfer the private v8 base pack and v9 training delta directly from the owner.
+Their hashes are in the [base receipt](local-pot-task-input-receipt-v8.json) and
+[delta receipt](local-training-delta-receipt-v9.json). Extract both into the same
+private directory, base first. The delta includes the estimated-contact inputs,
+parent checkpoints, code contexts and measured outputs. Neither archive is a
+GitHub download. The private input pack and GHCR access are both required.
+
 Use the parent checkpoint's original immutable image, supplied in
 [registry.cws-resume.env.example](../../../docker/dex3-training/registry.cws-resume.env.example).
 Set private input, parent-policy, parent-context and fresh output paths, plus the
