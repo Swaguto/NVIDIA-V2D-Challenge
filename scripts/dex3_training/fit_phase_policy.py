@@ -38,6 +38,7 @@ from v2d_dex3_flashchord.sampling import resample_targets
 from v2d_dex3_flashchord.native_depth import maximum_assigned_depth
 from v2d_dex3_flashchord.fit_curriculum import window_end, complete, initial_sigma
 from v2d_dex3_flashchord.fit_objective import constraint_cost
+from v2d_dex3_flashchord.fit_recovery import failed_worlds, retry_candidates
 
 
 def phase_layout(env, scene, manifest, spec, names, side, phase):
@@ -308,6 +309,11 @@ def main(cfg):
         maximum_iterations = int(cfg.fit.iterations)
         if fit_mode == "carry_height_sweep" and (maximum_iterations != 1 or curriculum_step != 0 or population < 6):
             raise ValueError("Carry height sweep uses one complete-window grid with at least6 paired candidates")
+        simulated_steps = 0
+        discarded_steps = 0
+        allow_retry = bool(cfg.fit.get("retry_failed_cohorts", False))
+        if int(native.na) != 0:
+            raise ValueError("Native fitting requires stateless actuators")
         for iteration in range(maximum_iterations):
             if fit_mode == "carry_height_sweep":
                 candidates = np.zeros((population, 13))
@@ -320,86 +326,94 @@ def main(cfg):
                     profile=bounds_profile,
                 )
                 candidates[0] = project(best_raw, lower, upper, profile=bounds_profile)
-            actions = np.repeat(candidates, 2, axis=0)
-            env.reset(frame_id=0)
-            bodies, joints, contacts, depths = [], [], [], []
-            cap_verified = True
-            for frame in range(setup.reference.num_frames):
-                raw = np.broadcast_to(fixed[frame], (worlds, 26)).copy()
-                if fit_mode == "carry_height_sweep":
-                    raw[:, start + 2] += actions[:, 2] / 0.05 * carry_gate[frame]
-                else:
-                    rotated_actions = actions.copy()
-                    rotated_actions[:, :3] = np.einsum(
-                        "ij,wj->wi", basis[frame], actions[:, :3]
+            replay_candidates = candidates
+            excluded_pairs = np.array([], dtype=int)
+            failed_evidence = []
+            for attempt in range(2 if allow_retry else 1):
+                actions = np.repeat(replay_candidates, 2, axis=0)
+                env.reset(frame_id=0)
+                env.solver.mjw_data.qacc_warmstart.zero_()
+                bodies, joints, contacts, depths = [], [], [], []
+                cap_ok = np.ones(worlds, bool)
+                for frame in range(setup.reference.num_frames):
+                    raw = np.broadcast_to(fixed[frame], (worlds, 26)).copy()
+                    if fit_mode == "carry_height_sweep":
+                        raw[:, start + 2] += actions[:, 2] / 0.05 * carry_gate[frame]
+                    else:
+                        rotated_actions = actions.copy()
+                        rotated_actions[:, :3] = np.einsum(
+                            "ij,wj->wi", basis[frame], actions[:, :3]
+                        )
+                        raw[:, start : start + 13] += rotated_actions * wrist_envelope[frame]
+                    env.step(wp.array(raw.ravel(), dtype=wp.float32, device=env.device))
+                    bodies.append(
+                        env.state_0.body_q.numpy().reshape(worlds, stride, 7).copy()
                     )
-                    raw[:, start : start + 13] += rotated_actions * wrist_envelope[frame]
-                env.step(wp.array(raw.ravel(), dtype=wp.float32, device=env.device))
-                bodies.append(
-                    env.state_0.body_q.numpy().reshape(worlds, stride, 7).copy()
-                )
-                joints.append(env.state_0.joint_q.numpy().reshape(worlds, -1).copy())
-                contacts.append(
-                    env.contact.contact_force_w.numpy()
-                    .reshape(worlds, slot_count, 3)
-                    .copy()
-                )
-                sampled_depth.zero_()
-                c = env.contacts
-                wp.launch(
-                    maximum_assigned_depth,
-                    dim=c.rigid_contact_shape0.shape[0],
-                    inputs=[
-                        c.rigid_contact_count,
-                        c.rigid_contact_shape0,
-                        c.rigid_contact_shape1,
-                        c.rigid_contact_point0,
-                        c.rigid_contact_point1,
-                        c.rigid_contact_normal,
-                        env.model.shape_body,
-                        env.state_0.body_q,
-                        stride,
-                        len(sides),
-                        owners,
-                        object_ids,
-                        sampled_depth,
-                    ],
-                    device=env.device,
-                )
-                depths.append(sampled_depth.numpy().reshape(worlds, len(sides)).copy())
-                actual = env.solver.mjw_data.qfrc_actuator.numpy()[:, addresses]
-                cap_verified &= bool(
-                    np.isfinite(actual).all()
-                    and np.all(actual >= ranges[:, 0] - 1e-5)
-                    and np.all(actual <= ranges[:, 1] + 1e-5)
-                )
-            finite_cohort = all(np.isfinite(np.asarray(v)).all() for v in (bodies, joints, contacts, depths))
-            if not cap_verified or not finite_cohort:
-                evidence = out / f"failed-cohort-{iteration + 1}.npz"
+                    joints.append(env.state_0.joint_q.numpy().reshape(worlds, -1).copy())
+                    contacts.append(
+                        env.contact.contact_force_w.numpy()
+                        .reshape(worlds, slot_count, 3)
+                        .copy()
+                    )
+                    sampled_depth.zero_()
+                    c = env.contacts
+                    wp.launch(
+                        maximum_assigned_depth,
+                        dim=c.rigid_contact_shape0.shape[0],
+                        inputs=[
+                            c.rigid_contact_count,
+                            c.rigid_contact_shape0,
+                            c.rigid_contact_shape1,
+                            c.rigid_contact_point0,
+                            c.rigid_contact_point1,
+                            c.rigid_contact_normal,
+                            env.model.shape_body,
+                            env.state_0.body_q,
+                            stride,
+                            len(sides),
+                            owners,
+                            object_ids,
+                            sampled_depth,
+                        ],
+                        device=env.device,
+                    )
+                    depths.append(sampled_depth.numpy().reshape(worlds, len(sides)).copy())
+                    actual = env.solver.mjw_data.qfrc_actuator.numpy()[:, addresses]
+                    cap_ok &= (
+                        np.isfinite(actual).all(axis=1)
+                        & np.all(actual >= ranges[:, 0] - 1e-5, axis=1)
+                        & np.all(actual <= ranges[:, 1] + 1e-5, axis=1)
+                    )
+                simulated_steps += worlds * setup.reference.num_frames
+                invalid = failed_worlds([bodies, joints, contacts, depths], cap_ok)
+                if not len(invalid):
+                    break
+                discarded_steps += worlds * setup.reference.num_frames
+                suffix = "" if attempt == 0 else "-retry"
+                evidence = out / f"failed-cohort-{iteration + 1}{suffix}.npz"
                 np.savez_compressed(
-                    evidence,
-                    candidate_parameters=candidates,
-                    repeated_world_actions=actions,
-                    body_poses=np.asarray(bodies),
-                    joint_positions=np.asarray(joints),
-                    contact_forces=np.asarray(contacts),
+                    evidence, candidate_parameters=candidates,
+                    repeated_world_actions=actions, body_poses=np.asarray(bodies),
+                    joint_positions=np.asarray(joints), contact_forces=np.asarray(contacts),
                     sampled_depths=np.asarray(depths),
                     final_native_limited_motor_force=actual,
-                    native_limited_motor_ranges=ranges,
+                    native_limited_motor_ranges=ranges, native_cap_ok=cap_ok,
+                    invalid_world_indices=invalid,
                 )
-                (out / f"failed-cohort-{iteration + 1}.json").write_text(
-                    json.dumps(dict(
-                        iteration=iteration + 1,
-                        raw_evidence_sha256=hashlib.sha256(evidence.read_bytes()).hexdigest(),
-                        native_motor_or_finiteness_gate_failed=True,
-                        candidate_cohort_rejected=True,
-                        failed_states_repaired=False,
-                        physical_task_accepted=False,
-                    ), indent=2) + "\n"
-                )
-                raise RuntimeError(
-                    "Candidate cohort failed native motor readback bounds"
-                )
+                evidence_sha = hashlib.sha256(evidence.read_bytes()).hexdigest()
+                failed_evidence.append(dict(path=evidence.name, sha256=evidence_sha))
+                evidence.with_suffix(".json").write_text(json.dumps(dict(
+                    iteration=iteration + 1, attempt=attempt,
+                    raw_evidence_sha256=evidence_sha, invalid_world_indices=invalid.tolist(),
+                    native_motor_or_finiteness_gate_failed=True,
+                    candidate_cohort_rejected=True, failed_states_repaired=False,
+                    original_cohort_used_for_scoring=False, physical_task_accepted=False,
+                ), indent=2) + "\n")
+                if not allow_retry or attempt != 0:
+                    raise RuntimeError("Candidate cohort failed native motor/finiteness gates")
+                replay_candidates, excluded_pairs = retry_candidates(candidates, invalid, best_raw)
+            else:
+                raise RuntimeError("No fully clean candidate cohort")
             bodies, joints, contacts = (
                 np.asarray(bodies),
                 np.asarray(joints),
@@ -499,7 +513,11 @@ def main(cfg):
                     costs[world] += cost
                     metrics[world].append(row)
             pair_cost = costs.reshape(population, 2).max(axis=1)
-            order = np.argsort(pair_cost)
+            pair_cost[excluded_pairs] = np.inf
+            order = np.flatnonzero(np.isfinite(pair_cost))
+            order = order[np.argsort(pair_cost[order])]
+            if not len(order):
+                raise RuntimeError("No eligible finite proposals")
             winner = int(order[0])
             if pair_cost[winner] < best_cost:
                 best_cost = float(pair_cost[winner])
@@ -520,18 +538,21 @@ def main(cfg):
                 objective=objective,
                 best_carry_height_bias_m=float(best_raw[2]) if fit_mode == "carry_height_sweep" else None,
                 carry_height_grid_results=[
-                    dict(height_bias_m=float(candidates[i, 2]), worst_pair_cost=float(pair_cost[i]),
+                    dict(height_bias_m=float(candidates[i, 2]), worst_pair_cost=float(pair_cost[i]) if np.isfinite(pair_cost[i]) else None,
                          pair_metrics=metrics[2 * i:2 * i + 2])
                     for i in range(population)
                 ] if fit_mode == "carry_height_sweep" else None,
                 best_pair_metrics=best_metrics,
                 native_motor_caps_verified=True,
+                scored_cohort_all_finite=True,
+                reset_native_warmstart_cleared=True,
+                discarded_proposal_indices=excluded_pairs.tolist(),
+                failed_cohort_evidence=failed_evidence,
+                discarded_cohort_environment_steps=discarded_steps,
                 source_frames_per_world=setup.reference.num_frames,
                 selected_phase_objective_end_source_s=prefix_end,
                 selected_phase_full_window_covered=complete(phase, prefix_end),
-                simulated_environment_steps=(iteration + 1)
-                * worlds
-                * setup.reference.num_frames,
+                simulated_environment_steps=simulated_steps,
             )
             journal.write(json.dumps(report, allow_nan=False) + "\n")
             journal.flush()
@@ -593,6 +614,11 @@ def main(cfg):
                     * setup.reference.num_frames,
                     PPO_training_steps=0,
                     native_motor_caps_verified=True,
+                scored_cohort_all_finite=True,
+                reset_native_warmstart_cleared=True,
+                discarded_proposal_indices=excluded_pairs.tolist(),
+                failed_cohort_evidence=failed_evidence,
+                discarded_cohort_environment_steps=discarded_steps,
                     physical_task_accepted=False,
                     selected_phase_objective_end_source_s=prefix_end,
                     selected_phase_full_window_covered=complete(phase, prefix_end),
