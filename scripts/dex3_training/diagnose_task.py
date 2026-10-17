@@ -131,6 +131,23 @@ class ReadbackEnv:
         return result
 
     def save(self, output):
+        # Newton updates the GPU step size during step(), independently of the
+        # CPU construction model's default timestep.
+        gpu_model = getattr(self.env.solver, "mjw_model", None)
+        timestep = getattr(getattr(gpu_model, "opt", None), "timestep", None)
+        if timestep is not None:
+            dt = (
+                timestep.numpy() if hasattr(timestep, "numpy") else np.asarray(timestep)
+            )
+            dt = np.asarray(dt).ravel()
+            self.solver_options["runtime_gpu_timestep_s"] = dt.tolist()
+            self.solver_options["runtime_step_matches_config"] = bool(
+                np.isfinite(dt).all() and np.allclose(dt, self.env.sim_dt)
+            )
+        if "timestep" in self.solver_options:
+            self.solver_options["construction_timestep_s"] = self.solver_options.pop(
+                "timestep"
+            )
         arrays = dict(
             body_poses=np.asarray(self.body),
             joint_positions=np.asarray(self.joints),
