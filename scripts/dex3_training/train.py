@@ -54,6 +54,8 @@ class LocalMetricLogger:
                         invalid_tracking_diagnostic_sentinel_m_rad=1000.0,
                         training_tracking_means_include_conservative_invalid_state_sentinel=True,
                         physics_states_repaired=False,
+                        reset_discards_previous_episode_native_acceleration_warmstart=True,
+                        repeated_failure_after_reset_aborts_at_next_logger_boundary=True,
                         evaluation_behavior_changed=False,
                     ),
                     indent=2,
@@ -69,9 +71,34 @@ class LocalMetricLogger:
         invalid = nonfinite_fields(metrics)
         trace = getattr(self.env, "transition_trace", None)
         trace_count = int(trace.counts.numpy().sum()) if trace is not None else 0
-        if invalid or (trace_count and self.failure_policy != "terminate"):
+        trace_report = None
+        if (
+            trace_count
+            and not (self.output / "first-nonfinite-transitions.json").exists()
+        ):
+            # Persist at the first logger boundary, rather than relying on a
+            # clean process shutdown after a potentially hours-long run.
+            trace_report = trace.save(self.output)
+        repeated = (
+            int(self.env.maximum_failure_streak.numpy().max())
+            if self.failure_policy == "terminate"
+            else 0
+        )
+        if (
+            invalid
+            or (trace_count and self.failure_policy != "terminate")
+            or repeated >= 2
+        ):
             counts = {}
-            trace_report = trace.save(self.output) if trace is not None else None
+            if trace is not None and trace_report is None:
+                trace_report = trace.save(
+                    self.output,
+                    stem=(
+                        "final-nonfinite-transitions"
+                        if (self.output / "first-nonfinite-transitions.json").exists()
+                        else "first-nonfinite-transitions"
+                    ),
+                )
             if self.env is not None:
                 env = self.env
                 arrays = dict(
@@ -99,6 +126,7 @@ class LocalMetricLogger:
                         nonfinite_metrics=invalid,
                         nonfinite_state_counts=counts,
                         first_failed_transitions=trace_report,
+                        maximum_consecutive_failed_transitions=repeated,
                         training_aborted=True,
                     ),
                     indent=2,
@@ -108,6 +136,8 @@ class LocalMetricLogger:
             raise FloatingPointError(
                 "Nonfinite training metrics: " + ", ".join(invalid)
                 if invalid
+                else "Repeated numerical failure immediately after reset"
+                if repeated >= 2
                 else "Nonfinite transition captured before automatic reset"
             )
         if self.failure_policy == "terminate":
@@ -122,11 +152,14 @@ class LocalMetricLogger:
 
     def close(self):
         trace = getattr(self.env, "transition_trace", None)
-        if (
-            trace is not None
-            and not (self.output / "first-nonfinite-transitions.json").exists()
-        ):
-            trace.save(self.output)
+        if trace is not None:
+            stem = (
+                "final-nonfinite-transitions"
+                if (self.output / "first-nonfinite-transitions.json").exists()
+                else "first-nonfinite-transitions"
+            )
+            if not (self.output / (stem + ".json")).exists():
+                trace.save(self.output, stem=stem)
         self.stream.close()
 
 

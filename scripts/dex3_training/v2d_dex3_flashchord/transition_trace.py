@@ -195,7 +195,7 @@ class TransitionTrace:
         ):
             array.zero_()
 
-    def save(self, output):
+    def save(self, output, stem="first-nonfinite-transitions"):
         output = Path(output)
         flags, counts = self.flags.numpy(), self.counts.numpy()
         arrays = {k: a.numpy() for k, a in self.arrays.items()}
@@ -205,7 +205,7 @@ class TransitionTrace:
             first_source_frame=self.first_frame.numpy(),
             first_episode_step=self.first_age.numpy(),
         )
-        with (output / "first-nonfinite-transitions.npz").open("xb") as stream:
+        with (output / (stem + ".npz")).open("xb") as stream:
             np.savez_compressed(stream, **arrays)
         report = dict(
             scope="Read-only snapshot before automatic reset; no failed states or rewards repaired",
@@ -221,9 +221,7 @@ class TransitionTrace:
                 for i in np.flatnonzero(flags)
             ],
         )
-        (output / "first-nonfinite-transitions.json").write_text(
-            json.dumps(report, indent=2) + "\n"
-        )
+        (output / (stem + ".json")).write_text(json.dumps(report, indent=2) + "\n")
         return report
 
 

@@ -169,3 +169,25 @@ patches. Its torsional coefficient has units of length.
 The existing model coefficient is nominal, not a hardware measurement. Runtime
 readback must verify the actual profile, other material parameters and motor caps;
 passing with this profile does not validate a policy under point contacts.
+
+### Native warm-start reset correction
+
+The terminate-on-numerical-failure experiment encountered 9,244 invalid world
+transitions. After the first affected rollout, one world failed every subsequent
+control step. The run was stopped by the operator; exit 137 was the stop timeout,
+not evidence of an out-of-memory failure. This run is not accepted training.
+
+Pinned MuJoCo-Warp 3.8.1 initializes its constraint solve from
+`Data.qacc_warmstart`. Newton 1.2.0 updates reset positions and velocities but does
+not clear that acceleration cache. The training-only environment now clears the
+cache for selected reset worlds, including automatic resets inside the captured
+step. It does not call `reset_data`, alter packed contact membership, repair a
+failed transition, or change stock evaluation. It rejects stateful actuators,
+which would require a separate reset contract.
+
+The first raw failure is written at the next metrics boundary. Two consecutive
+invalid transitions in any world abort training at that boundary, rather than
+allowing a poisoned world to consume the remaining budget. The GPU regression
+must inject NaNs into the actual native warm-start buffer, observe a failed
+transition and reset, then verify six healthy captured steps and unchanged
+unselected-world cache/contact membership before further training.
