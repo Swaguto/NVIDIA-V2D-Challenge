@@ -28,10 +28,11 @@ from flash_chord.training.environment import WarpRLEnv
 from flash_chord.training.ppo.config import TrainingConfig
 from flash_chord.training.ppo.runner import metric_definitions, run_training
 from flash_chord.training.ppo.learner import create_learner
-from flash_chord.training.checkpoint import save_checkpoint
+from flash_chord.training.checkpoint import save_checkpoint, read_checkpoint_metadata
 from flash_chord.training.progress import ConsoleTrainingProgress
 from v2d_dex3_flashchord.reset_curriculum import validate as validate_reset_curriculum
 from v2d_dex3_flashchord.training_metrics import nonfinite_fields
+from v2d_dex3_flashchord.resume_contract import validate as validate_resume_contract
 
 
 class LocalMetricLogger:
@@ -172,8 +173,6 @@ def main(cfg: DictConfig):
     embodiment = instantiate_typed(cfg.embodiment, Embodiment)
     collision = instantiate_typed(cfg.collision, CollisionPolicy)
     training = instantiate_typed(cfg.training, TrainingConfig)
-    if training.resume:
-        raise ValueError("Use a fresh output for the initial controlled pilot")
     with wp.ScopedDevice(training.device):
         setup = setup_scene(
             parquet=cfg.task.parquet,
@@ -228,12 +227,28 @@ def main(cfg: DictConfig):
             metadata["dex3_pilot_scope"] = (
                 "Reference-state initialization during training with zero VOC; final stage uses only frame-zero starts. Full-task success requires separate complete evaluation from frame zero."
             )
-        initial = create_learner(jax_env, training)
-        save_checkpoint(
-            output / "model_0.safetensors",
-            initial,
-            metadata={**metadata, "iteration": 0, "environment_steps": 0},
-        )
+        if training.resume:
+            context = cfg.get("resume_context_manifest")
+            if not context:
+                raise ValueError("Resume requires the parent code context manifest")
+            lineage = validate_resume_contract(
+                read_checkpoint_metadata(training.checkpoint),
+                metadata,
+                Path(context),
+                Path("/opt/dex3-extension/image-context-manifest.json"),
+                Path(training.checkpoint),
+            )
+            (output / "resume-lineage.json").write_text(
+                json.dumps(lineage, indent=2) + "\n"
+            )
+            metadata["dex3_resume_lineage_json"] = json.dumps(lineage, sort_keys=True)
+        else:
+            initial = create_learner(jax_env, training)
+            save_checkpoint(
+                output / "model_0.safetensors",
+                initial,
+                metadata={**metadata, "iteration": 0, "environment_steps": 0},
+            )
         logger = LocalMetricLogger(output, metric_definitions(jax_env), env)
         learner = run_training(
             jax_env,
