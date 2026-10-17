@@ -37,6 +37,7 @@ from v2d_dex3_flashchord.phase_prior import (
 from v2d_dex3_flashchord.sampling import resample_targets
 from v2d_dex3_flashchord.native_depth import maximum_assigned_depth
 from v2d_dex3_flashchord.fit_curriculum import window_end, complete, initial_sigma
+from v2d_dex3_flashchord.fit_objective import constraint_cost
 
 
 def phase_layout(env, scene, manifest, spec, names, side, phase):
@@ -150,6 +151,9 @@ def main(cfg):
         support_weight = float(cfg.fit.get("support_penalty_weight", 2))
         if not np.isfinite(support_weight) or not 2 <= support_weight <= 50:
             raise ValueError("Unsupported sampled-support objective weight")
+        objective = str(cfg.fit.get("objective", "legacy"))
+        if objective not in ("legacy", "constraint_violation"):
+            raise ValueError("Unknown native grasp search objective")
         prior_path = cfg.fit.get("prior")
         prior_journal = cfg.fit.get("prior_journal")
         if prior_path and prior_journal:
@@ -474,6 +478,10 @@ def main(cfg):
                         )
                         if not passed:
                             cost += 1000
+                        if objective == "constraint_violation":
+                            cost = constraint_cost(m, margin, float(depths[
+                                indices, world, sides.index(layout["side"])
+                            ].max()))
                         row = dict(
                             sample=name,
                             **m,
@@ -509,6 +517,7 @@ def main(cfg):
                 best_cost=best_cost,
                 best_raw_action=best_raw.tolist(),
                 fit_mode=fit_mode,
+                objective=objective,
                 best_carry_height_bias_m=float(best_raw[2]) if fit_mode == "carry_height_sweep" else None,
                 carry_height_grid_results=[
                     dict(height_bias_m=float(candidates[i, 2]), worst_pair_cost=float(pair_cost[i]),
@@ -558,6 +567,7 @@ def main(cfg):
         )
         plan.update(
             optimizer="bounded_carry_height_grid_native_physics" if fit_mode == "carry_height_sweep" else "bounded_CEM_native_physics",
+            objective=objective,
             no_achieved_trajectory_used_as_reference=True,
             original_source_arrays_changed=False,
             physical_task_accepted=False,
