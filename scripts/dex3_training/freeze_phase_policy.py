@@ -38,6 +38,10 @@ def validate(inputs, plan_path, replay_audit):
         "action_control_contract_sha256"
     ] != audit.get("action_control_contract_sha256"):
         raise ValueError("Fitted policy and independent replay controller differ")
+    if not plan.get("simulator_contract_sha256") or plan[
+        "simulator_contract_sha256"
+    ] != audit.get("simulator_contract_sha256"):
+        raise ValueError("Fitted policy and independent replay solver settings differ")
     for name, row in plan["fit_reports"].items():
         measured = [g for g in audit["grasps"] if g["sample"] == name]
         if (

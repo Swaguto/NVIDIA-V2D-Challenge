@@ -38,7 +38,7 @@ from v2d_dex3_flashchord.sampling import resample_targets
 from v2d_dex3_flashchord.native_depth import maximum_assigned_depth
 from v2d_dex3_flashchord.fit_curriculum import window_end, complete, initial_sigma, project_pose_and_height
 from v2d_dex3_flashchord.fit_objective import constraint_cost
-from v2d_dex3_flashchord.fit_recovery import failed_worlds, retry_candidates
+from v2d_dex3_flashchord.fit_recovery import failed_worlds, retry_candidates, repeat_count
 
 
 def phase_layout(env, scene, manifest, spec, names, side, phase):
@@ -131,7 +131,8 @@ def main(cfg):
         env.capture_step()
         env.reset(frame_id=0)
         worlds = env.world_count
-        if worlds < 8 or worlds % 2 or env.action.action_dim != 26:
+        repeats = repeat_count(cfg.fit.get("worlds_per_candidate", 2), worlds)
+        if env.action.action_dim != 26:
             raise ValueError(
                 "Need paired candidate worlds and the measured dual-Dex3 action schema"
             )
@@ -204,8 +205,12 @@ def main(cfg):
             raise ValueError("Existing policy parameters belong to other inputs")
         if (
             any(r["robust_phase_pass"] for r in plan.get("fit_reports", {}).values())
-            and plan.get("native_physics_model_sha256")
-            != env.action.native_physics_model_sha256
+            and (
+                plan.get("native_physics_model_sha256") != env.action.native_physics_model_sha256
+                or plan.get("action_control_contract_sha256") != env.action.policy_control_contract_sha256
+                or not plan.get("simulator_contract_sha256")
+                or plan["simulator_contract_sha256"] != env.action.simulator_contract_sha256
+            )
         ):
             raise ValueError(
                 "Previously accepted phases need refitting after a physics change"
@@ -226,6 +231,7 @@ def main(cfg):
             control_fps=float(ec.sim.fps),
             physics_substeps=int(ec.sim.substeps),
             action_control_contract_sha256=env.action.policy_control_contract_sha256,
+            simulator_contract_sha256=env.action.simulator_contract_sha256,
         )
         previous = [
             name
@@ -300,7 +306,7 @@ def main(cfg):
         basis = position_basis(spec, phase, times, position_frame)
         start = sides.index(side) * 13
         rng = np.random.default_rng(int(cfg.fit.get("seed", 42)))
-        population = worlds // 2
+        population = worlds // repeats
         mu = np.asarray(plan["phase_actions"].get(phase["sample"], np.zeros(13)), float)
         if fit_mode == "carry_height_sweep":
             mu = np.zeros(13)
@@ -346,7 +352,7 @@ def main(cfg):
             excluded_pairs = np.array([], dtype=int)
             failed_evidence = []
             for attempt in range(2 if allow_retry else 1):
-                actions = np.repeat(replay_candidates, 2, axis=0)
+                actions = np.repeat(replay_candidates, repeats, axis=0)
                 env.reset(frame_id=0)
                 env.solver.mjw_data.qacc_warmstart.zero_()
                 bodies, joints, contacts, depths = [], [], [], []
@@ -429,7 +435,7 @@ def main(cfg):
                 ), indent=2) + "\n")
                 if not allow_retry or attempt != 0:
                     raise RuntimeError("Candidate cohort failed native motor/finiteness gates")
-                replay_candidates, excluded_pairs = retry_candidates(candidates, invalid, best_raw)
+                replay_candidates, excluded_pairs = retry_candidates(candidates, invalid, best_raw, repeats)
             else:
                 raise RuntimeError("No fully clean candidate cohort")
             bodies, joints, contacts = (
@@ -530,7 +536,7 @@ def main(cfg):
                         row = dict(sample=name, phase_pass=False, nonfinite=True)
                     costs[world] += cost
                     metrics[world].append(row)
-            pair_cost = costs.reshape(population, 2).max(axis=1)
+            pair_cost = costs.reshape(population, repeats).max(axis=1)
             pair_cost[excluded_pairs] = np.inf
             order = np.flatnonzero(np.isfinite(pair_cost))
             order = order[np.argsort(pair_cost[order])]
@@ -541,7 +547,7 @@ def main(cfg):
             if candidate_cost < best_cost:
                 best_cost = candidate_cost
                 best_raw = candidates[winner].copy()
-                best_metrics = metrics if fixed_parameters else metrics[2 * winner : 2 * winner + 2]
+                best_metrics = metrics if fixed_parameters else metrics[repeats * winner : repeats * (winner + 1)]
             elite = candidates[order[: max(4, population // 5)]]
             mu = bounded(0.3 * mu + 0.7 * elite.mean(0))
             sigma_floor = [0.005] * 6 + [0.02] * 7
@@ -560,10 +566,11 @@ def main(cfg):
                 best_carry_height_bias_m=(float(best_raw[2]) if fit_mode == "carry_height_sweep" else float(best_raw[13]) if fit_mode == "pose_and_carry_height" else None),
                 carry_height_grid_results=[
                     dict(height_bias_m=float(candidates[i, 2]), worst_pair_cost=float(pair_cost[i]) if np.isfinite(pair_cost[i]) else None,
-                         pair_metrics=metrics[2 * i:2 * i + 2])
+                         pair_metrics=metrics[repeats * i:repeats * (i + 1)])
                     for i in range(population)
                 ] if fit_mode == "carry_height_sweep" else None,
                 best_pair_metrics=best_metrics,
+                worlds_per_candidate=repeats,
                 native_motor_caps_verified=True,
                 scored_cohort_all_finite=True,
                 reset_native_warmstart_cleared=True,
@@ -603,7 +610,7 @@ def main(cfg):
             robust_phase_pass=robust,
             best_cost=best_cost,
             best_pair_metrics=best_metrics,
-            candidates_repeated_worlds=worlds if fixed_parameters else 2,
+            candidates_repeated_worlds=worlds if fixed_parameters else repeats,
             iterations=iteration + 1,
             fit_mode=fit_mode,
             selected_phase_objective_end_source_s=prefix_end,
@@ -631,7 +638,7 @@ def main(cfg):
                     source_frames_per_world=setup.reference.num_frames,
                     iterations=iteration + 1,
                     population=population,
-                    repeated_worlds=2,
+                    repeated_worlds=repeats,
                     simulated_environment_steps=simulated_steps,
                     PPO_training_steps=0,
                     native_motor_caps_verified=True,

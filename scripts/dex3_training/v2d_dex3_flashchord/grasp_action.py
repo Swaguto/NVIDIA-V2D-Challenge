@@ -140,6 +140,7 @@ class GraspActionConfig(ActionConfig):
             scene.model, scene.world_count
         )
         result.policy_control_contract_sha256 = control_signature(self)
+        result.simulator_contract_sha256 = getattr(scene.model, "dex3_simulator_contract_sha256", None)
         if self.wrist_angular_reference_velocity:
             from .angular_servo import AngularReferenceServo
             result.angular_servo = AngularReferenceServo(
@@ -193,6 +194,8 @@ class GraspActionConfig(ActionConfig):
                 plan.get("native_physics_model_sha256")
                 != model_signature(scene.model, scene.world_count)
                 or plan.get("physics_substeps") != self.phase_policy_physics_substeps
+                or not plan.get("simulator_contract_sha256")
+                or plan["simulator_contract_sha256"] != result.simulator_contract_sha256
             ):
                 raise ValueError(
                     "Fitted phase policy physics differs from the loaded scene"

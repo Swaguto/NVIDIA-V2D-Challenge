@@ -40,23 +40,30 @@ if __name__ == "__main__":
     fitting.RLEnv = InjectedSearchEnv
     fitting.main()
     env = InjectedSearchEnv.instance
-    assert env.contract_injected and env.world_count == 8
+    assert env.contract_injected
     out = Path("/outputs/fit")
     rows = [json.loads(line) for line in (out / "iterations.jsonl").read_text().splitlines()]
     assert len(rows) == 1
     row = rows[0]
+    repeats = row["worlds_per_candidate"]
+    assert (env.world_count, repeats) in ((8, 2), (16, 4), (32, 8))
     assert row["discarded_proposal_indices"] == [3]
     assert row["native_motor_caps_verified"] and row["scored_cohort_all_finite"]
     assert row["reset_native_warmstart_cleared"]
-    assert row["simulated_environment_steps"] == 2 * 8 * 343
-    assert row["discarded_cohort_environment_steps"] == 8 * 343
+    assert row["simulated_environment_steps"] == 2 * env.world_count * 343
+    assert row["discarded_cohort_environment_steps"] == env.world_count * 343
     assert np.isfinite(env.state_0.body_q.numpy()).all()
     with np.load(out / "failed-cohort-1.npz") as raw:
-        assert not np.isfinite(raw["body_poses"][:, 7]).all()
+        assert not np.isfinite(raw["body_poses"][:, env.world_count - 1]).all()
+        actions = raw["repeated_world_actions"]
+        for begin in range(0, env.world_count, repeats):
+            np.testing.assert_array_equal(actions[begin:begin + repeats],
+                                          np.broadcast_to(actions[begin], (repeats, actions.shape[1])))
     result = dict(schema="v2d.native-fit-recovery-contract.v1",
                   injected_native_failure_observed=True,
                   failed_batch_scored=False, discarded_candidate_pair=3,
-                  complete_clean_replay_frames=343, clean_worlds=8,
+                  complete_clean_replay_frames=343, clean_worlds=env.world_count,
+                  worlds_per_candidate=repeats,
                   native_caps_verified=True, failed_states_repaired=False,
                   physical_task_accepted=False)
     (out / "recovery-contract.json").write_text(json.dumps(result, indent=2) + "\n")

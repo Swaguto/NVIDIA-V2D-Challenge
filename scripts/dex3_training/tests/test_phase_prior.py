@@ -10,7 +10,7 @@ import numpy as np
 import pytest
 
 sys.path.insert(0, str(Path(__file__).parents[1]))
-from v2d_dex3_flashchord.phase_prior import project, schedule, model_signature, pose_refit_baseline
+from v2d_dex3_flashchord.phase_prior import project, schedule, model_signature, pose_refit_baseline, simulator_signature
 from freeze_phase_policy import freeze
 
 
@@ -108,6 +108,46 @@ def test_physics_signature_survives_cohort_size_but_detects_friction_change():
 
     assert model_signature(model(2, 1.25), 2) == model_signature(model(64, 1.25), 64)
     assert model_signature(model(2, 1.25), 2) != model_signature(model(2, 0.5), 2)
+
+
+def test_solver_contract_detects_manifold_cone_iterations_and_clock_changes():
+    from dataclasses import make_dataclass
+    config = dict(fps=20., substeps=20, solver="newton", integrator="implicitfast",
+                  cone="pyramidal", iterations=100, nconmax=512)
+    dataclass_config = make_dataclass("Sim", [(k, type(v)) for k, v in config.items()])(**config)
+    signature = simulator_signature(config)
+    assert signature == simulator_signature(dataclass_config)
+    assert signature == simulator_signature(dict(config, enable_multiccd=False))
+    for key, value in dict(enable_multiccd=True, cone="elliptic", iterations=200,
+                           substeps=40, fps=40., nconmax=1024).items():
+        assert signature != simulator_signature(dict(config, **{key: value}))
+    with pytest.raises(ValueError):
+        simulator_signature(dict(config, fps=float("nan")))
+
+
+@pytest.mark.parametrize("replay_signature", [None, "other-solver-settings"])
+def test_frozen_plan_requires_independently_matching_solver_settings(tmp_path, replay_signature):
+    inputs = tmp_path / "inputs"
+    inputs.mkdir()
+    (inputs / "manifest.json").write_text(json.dumps({"files": {}}))
+    source_sha = hashlib.sha256((inputs / "manifest.json").read_bytes()).hexdigest()
+    plan = tmp_path / "plan.json"
+    plan.write_text(json.dumps(dict(input_manifest_sha256=source_sha,
+                                   phase_actions={"grasp": [0.] * 13},
+                                   fit_reports={"grasp": {"robust_phase_pass": True}},
+                                   native_physics_model_sha256="physics",
+                                   action_control_contract_sha256="controller",
+                                   simulator_contract_sha256="solver-settings")))
+    audit = tmp_path / "audit.json"
+    audit.write_text(json.dumps(dict(source_manifest_sha256=source_sha,
+                                    fitted_phase_policy_sha256=hashlib.sha256(plan.read_bytes()).hexdigest(),
+                                    native_motor_caps_verified=True,
+                                    native_physics_model_sha256="physics",
+                                    action_control_contract_sha256="controller",
+                                    simulator_contract_sha256=replay_signature)))
+    with pytest.raises(ValueError, match="solver settings differ"):
+        freeze(inputs, plan, audit, tmp_path / "out")
+    assert not (tmp_path / "out").exists()
 
 
 def test_object_frame_position_prior_rotates_with_the_grasped_object():

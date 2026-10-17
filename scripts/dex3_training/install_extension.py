@@ -9,6 +9,8 @@ PATCHES = {
     "runtime/sim.py": (
         "4ede920bd4b07a231b31ab9e122029977fe46217797944c900f0bc60582dcf6f",
         "    return newton.solvers.SolverMuJoCo(\n",
+        "    from v2d_dex3_flashchord.phase_prior import simulator_signature\n"
+        "    model.dex3_simulator_contract_sha256 = simulator_signature(cfg)\n"
         "    from v2d_dex3_flashchord.sim import NativeContactSimConfig, build_solver as build_native\n"
         "    if isinstance(cfg, NativeContactSimConfig):\n"
         "        return build_native(model, cfg)\n"

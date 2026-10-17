@@ -3,12 +3,23 @@
 import hashlib
 import json
 from copy import deepcopy
-from dataclasses import asdict
+from dataclasses import asdict, is_dataclass
 import numpy as np
 from scipy.spatial.transform import Rotation
 from .sampling import interpolate_quaternions
 
 BOUNDS = np.array([0.1] * 3 + [0.35] * 3 + [0.65] * 7)
+
+
+def simulator_signature(config):
+    """Bind all resolved solver/timing fields, independently of cohort size."""
+    fields = asdict(config) if is_dataclass(config) else deepcopy(dict(config))
+    fields.pop("_target_", None)
+    # The read-only native contact wrapper preserves the upstream default.
+    fields.setdefault("enable_multiccd", False)
+    if not {"fps", "substeps", "solver", "integrator", "cone"} <= fields.keys():
+        raise ValueError("Need the complete resolved simulator configuration")
+    return hashlib.sha256(json.dumps(fields, sort_keys=True, allow_nan=False).encode()).hexdigest()
 
 
 def pose_refit_baseline(plan, sample):

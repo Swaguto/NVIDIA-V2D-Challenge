@@ -196,6 +196,7 @@ def audit(run, inputs):
         fitted_phase_policy_sha256=report.get("fitted_phase_policy_sha256"),
         native_physics_model_sha256=report.get("native_physics_model_sha256"),
         action_control_contract_sha256=report.get("action_control_contract_sha256"),
+        simulator_contract_sha256=report.get("simulator_contract_sha256"),
     )
 
 

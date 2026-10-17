@@ -15,14 +15,21 @@ def failed_worlds(arrays, cap_ok):
     return np.flatnonzero(~valid)
 
 
-def retry_candidates(candidates, invalid_worlds, incumbent):
+def repeat_count(value, worlds):
+    if isinstance(value, bool) or value not in (2, 4, 8) or worlds % value or worlds // value < 4:
+        raise ValueError("Need 2, 4 or 8 worlds per candidate and at least four candidates")
+    return int(value)
+
+
+def retry_candidates(candidates, invalid_worlds, incumbent, worlds_per_candidate=2):
     candidates = np.asarray(candidates)
     worlds = np.asarray(invalid_worlds, int)
     if candidates.ndim != 2 or not np.isfinite(candidates).all() or worlds.ndim != 1:
         raise ValueError("Invalid candidate recovery inputs")
-    if not len(worlds) or worlds.min() < 0 or worlds.max() >= 2 * len(candidates):
-        raise ValueError("Invalid paired-world indices")
-    pairs = np.unique(worlds // 2)
+    repeats = repeat_count(worlds_per_candidate, worlds_per_candidate * len(candidates))
+    if not len(worlds) or worlds.min() < 0 or worlds.max() >= repeats * len(candidates):
+        raise ValueError("Invalid repeated-world indices")
+    pairs = np.unique(worlds // repeats)
     if len(pairs) > max(1, int(len(candidates) * .1)) or len(pairs) >= len(candidates):
         raise ValueError("Too many invalid proposals; search aborted")
     incumbent = np.asarray(incumbent)

@@ -381,6 +381,15 @@ def main(cfg):
 
             path = Path(plan_path)
             plan = json.loads(path.read_text())
+            if plan.get("simulator_contract_sha256"):
+                expected = dict(
+                    simulator_contract_sha256=env.action.simulator_contract_sha256,
+                    native_physics_model_sha256=env.action.native_physics_model_sha256,
+                    action_control_contract_sha256=env.action.policy_control_contract_sha256,
+                    control_fps=float(env_config.sim.fps), physics_substeps=int(env_config.sim.substeps),
+                )
+                if any(plan.get(k) != v for k, v in expected.items()):
+                    raise ValueError("Diagnostic policy simulator/controller contract differs")
             if (
                 plan["input_manifest_sha256"]
                 != hashlib.sha256(manifest_path.read_bytes()).hexdigest()
@@ -459,6 +468,7 @@ def main(cfg):
                 model_signature(env.model, env.world_count),
             ),
             fitted_phase_policy_sha256=plan_sha,
+            simulator_contract_sha256=getattr(env.model, "dex3_simulator_contract_sha256", None),
             virtual_object_assistance=0.0,
             source_motion_speed=float(cfg.task.motion_speed),
             physical_task_accepted=False,
