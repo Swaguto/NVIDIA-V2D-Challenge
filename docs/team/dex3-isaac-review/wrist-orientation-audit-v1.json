@@ -1,0 +1,131 @@
+{
+  "schema": "v2d.wrist-orientation-decomposition.v2",
+  "hands": [
+    {
+      "side": "left",
+      "observed_frames": 272,
+      "target_vs_source_aligned_robot_wrist_median_deg": 107.8141669449008,
+      "target_vs_source_aligned_robot_wrist_max_deg": 117.6768959499017,
+      "first_pot_carry_target_vs_source_aligned_robot_wrist_median_deg": 109.8410198968751,
+      "baseline_retarget_wrist_orientation_error_median_deg": 7.836859801360457,
+      "actual_vs_training_target": [
+        {
+          "world": 0,
+          "all_frames_median_deg": 2.9963442444255017,
+          "all_frames_max_deg": 10.772054827234019,
+          "first_pot_carry_median_deg": 3.0354648147992727,
+          "first_pot_carry_max_deg": 6.423326994272597
+        },
+        {
+          "world": 1,
+          "all_frames_median_deg": 3.0784180036243027,
+          "all_frames_max_deg": 10.407921794303501,
+          "first_pot_carry_median_deg": 3.247600937033219,
+          "first_pot_carry_max_deg": 7.996432011922846
+        },
+        {
+          "world": 2,
+          "all_frames_median_deg": 3.2687372984533307,
+          "all_frames_max_deg": 11.231037734065287,
+          "first_pot_carry_median_deg": 3.0409489850161395,
+          "first_pot_carry_max_deg": 5.947210532891965
+        },
+        {
+          "world": 3,
+          "all_frames_median_deg": 2.9017962274155873,
+          "all_frames_max_deg": 10.399170865049552,
+          "first_pot_carry_median_deg": 2.980695123765124,
+          "first_pot_carry_max_deg": 7.211775577463312
+        }
+      ]
+    },
+    {
+      "side": "right",
+      "observed_frames": 284,
+      "target_vs_source_aligned_robot_wrist_median_deg": 32.140898320786945,
+      "target_vs_source_aligned_robot_wrist_max_deg": 50.996712554019076,
+      "first_pot_carry_target_vs_source_aligned_robot_wrist_median_deg": 25.202051182578614,
+      "baseline_retarget_wrist_orientation_error_median_deg": 3.727499851296442,
+      "actual_vs_training_target": [
+        {
+          "world": 0,
+          "all_frames_median_deg": 3.9301839767147952,
+          "all_frames_max_deg": 12.162499905494919,
+          "first_pot_carry_median_deg": 3.7750044061208627,
+          "first_pot_carry_max_deg": 10.1588900399211
+        },
+        {
+          "world": 1,
+          "all_frames_median_deg": 3.995077483423283,
+          "all_frames_max_deg": 12.244630906380428,
+          "first_pot_carry_median_deg": 3.5429968724857894,
+          "first_pot_carry_max_deg": 9.936501958149679
+        },
+        {
+          "world": 2,
+          "all_frames_median_deg": 3.8426355772582568,
+          "all_frames_max_deg": 13.369596940277873,
+          "first_pot_carry_median_deg": 3.788316759680604,
+          "first_pot_carry_max_deg": 10.049494150433135
+        },
+        {
+          "world": 3,
+          "all_frames_median_deg": 3.9601674415978656,
+          "all_frames_max_deg": 12.127142977325123,
+          "first_pot_carry_median_deg": 3.7570190124812934,
+          "first_pot_carry_max_deg": 10.78224006729129
+        }
+      ]
+    }
+  ],
+  "scope": "e002; observed source frames; calibrated Dex3 retarget vs fitted commands vs measured palm; no raw human/robot quaternion comparison",
+  "source_frame_count": 343,
+  "world_count": 4,
+  "stage_rotation_from_inferred_support_normal": [
+    [
+      0.9794090162476184,
+      -0.18487881143161342,
+      0.08110366191798295
+    ],
+    [
+      -0.18487881143161342,
+      -0.6599583258091083,
+      0.7281997207352343
+    ],
+    [
+      -0.08110366191798295,
+      -0.7281997207352343,
+      -0.68054930956149
+    ]
+  ],
+  "source_palm_calibration": "mirrored refinement left frame uses identity; right uses upstream Z-180 correction",
+  "first_pot_carry_window_s": [
+    2.4,
+    11.5
+  ],
+  "source_object_stage_correspondence": [
+    {
+      "object": 0,
+      "median_deg": 0.27413489558178794,
+      "maximum_deg": 1.8392660780980437
+    },
+    {
+      "object": 1,
+      "median_deg": 0.2545679196756617,
+      "maximum_deg": 1.7824102613934492
+    }
+  ],
+  "input_hashes": {
+    "source_bundle": "4de1b9507e42ed66e4341b93cc38563885fc2eda43db72935a546967671b6277",
+    "source_retarget": "ca011c10673425ad25cc5badc445fe953905bbb84585ea5a3cbcb2d6fe9def09",
+    "retarget_manifest": "984f76c3172386256c7df1addfc9b99edcd27cf9a0ea72a2f1e17a1dbe25c0b7",
+    "targets": "eb8cce81a8a667671f3348fbf535691781f78d99a73457158f25dd14e45700fa",
+    "input_manifest": "7cfb37e61e070dac916d78b869ea644e577c786167391c0a8267325763961b89",
+    "stage_manifest": "a57c9f53b833f00299ff141dee3d7778420563927c254beda0cb0cf406913612",
+    "state": "92d3867fd869a9c2cc4f9df02afaf05848f68a8e660e8f127d95469822ab148f",
+    "report": "d6be5207a6fa1ceb38c9f6e215eabe0184551ebf1fd23530dd40895a5b7596c1",
+    "body_labels": "56ebd2df19975ce3a6efc59f3aa6e16971746996f0618b2463482bf9cfa282e4"
+  },
+  "source_sha256": "631926245de11bb85381fe54b20d7ce9aaca94a2acfea1da86071a185a21b5f5",
+  "physical_task_accepted": false
+}

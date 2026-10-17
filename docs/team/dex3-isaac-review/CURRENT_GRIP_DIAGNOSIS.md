@@ -21,6 +21,10 @@ The original training recipe also uses 20-step reset assistance while independen
 
 [Static-capacity diagnostic and limits](grip-estimated-cws-static-capacity-summary-v1.json) · [saved reward balance](grip-estimated-cws-reward-balance-v1.json) · [contact method and limits](ESTIMATED_CONTACT_GUIDANCE.md).
 
+## Wrist-reference fidelity
+
+A new decomposition finds a 109.84° median left-wrist difference between the fitted training target and the earlier calibrated source-aligned Dex3 retargeting during the first carry. The actual wrist tracks the fitted target within roughly 3° median. Repair this reference mismatch before another long training run. [Measurements and repair order](WRIST_ORIENTATION_FIDELITY.md).
+
 ## Next experiment
 
 Keep the 2,000-iteration CWS parent. Isolate carry retention and rotation under the existing motor and friction limits, then test a deliberate gradual removal of training reset assistance with preserved learner state. Validate any objective change against the existing full-task gates before spending on another long run. A new recipe must record its changed contract; it must not be called an unchanged exact resume.
