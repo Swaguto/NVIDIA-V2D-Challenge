@@ -12,13 +12,19 @@ The offline wrench audit uses measured normal-force budgets and an inscribed
 eight-edge friction pyramid. Its gravity-load capacity is conditional on those
 forces; it does not certify motor feasibility, dynamic stability or task success.
 
-## Latest measured PPO run — October 17
+## Active matched comparison — October17
+
+Three fresh experiments compare the12mm wrist residual clip, a35mm clip, and the35mm clip with decaying training VOC and20-step reset settling. Each plans2,000iterations/16,384,000new environment steps. The first two have finished and failed the complete first pot carry; the assisted arm is running. Final evaluation starts at frame0 with zero assistance and no settling. [Reproduction commands](CURRICULUM_REPRODUCTION.md).
+
+A separate estimated CWS path addresses the newly measured mismatch between reconstructed contact surfaces and native convex colliders. It has266passing CPU tests; GPU validation and policy training are pending. [Method and limits](ESTIMATED_CONTACT_GUIDANCE.md). Inputs, contact estimates and checkpoints remain private.
+
+## Earlier actor-initialized PPO run — October 17
 
 The actor-initialized native-wrench run logged **3,000 new iterations / 24,576,000 new environment steps**, separately from its parent actor’s 16,384,000 steps. Logged steps include explicitly failed numerical transitions where reported. Full frame-zero readbacks and fixed grasp gates are in [the measured report](grip-learning-results-v1.json). **Full physical grasp remains unresolved**; no hidden-set readiness is claimed.
 
-Brev is **STOPPED** after hash-verified backups. Conservative cumulative compute bound: **$28.9614 of the approved $40**, not an invoice. Inputs and checkpoints stay in the local v8 pack for private transfer. The image contains code only. GPU training and contact physics are not bit-exact.
+Session85 was **STOPPED** after hash-verified backups at a conservative cumulative compute bound of **$28.9614 of the approved $40**, not an invoice. Session86 is running the matched controlled comparison under a90-minute stop guard. Inputs and checkpoints stay in the local v8 pack for private transfer. The image contains code only. GPU training and contact physics are not bit-exact.
 
-## Training changes
+## Earlier unassisted training changes
 
 The `dex3_grip_curriculum` experiment adds measured object-frame contact forces,
 object velocity and reference phase to the policy observations. Rewards use the
