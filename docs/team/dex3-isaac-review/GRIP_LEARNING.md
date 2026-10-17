@@ -1,5 +1,10 @@
 # Measured-contact grip learning
 
+**Experimental: full physical grasp has not passed.** Current carry recipe:
+3,000 iterations / 24,576,000 planned environment steps.
+Use the private, pushed-and-pulled digest in
+[registry.grip.env.example](../../../docker/dex3-training/registry.grip.env.example).
+
 This experiment addresses the pot rotating within a contacting hand. Contact
 geometry readback places the failed contacts on the saucepan handle shaft near
 its base. Reaching the handle alone does not establish a load-bearing grasp.
@@ -27,7 +32,7 @@ Wrist residual bounds are 12 mm per position axis and 0.35 rad per Euler axis;
 finger residuals are bounded to 0.5 rad per joint. These are component limits,
 not vector-magnitude limits. Finger drive effort remains capped at 0.76 Nm.
 
-The staged pilot uses 256 worlds, 32 rollout steps and 2,000 PPO iterations:
+The earlier staged pilot used 256 worlds, 32 rollout steps and 2,000 PPO iterations:
 **16,384,000 planned environment steps**. Checkpoints are saved every 100
 iterations. Training reset probabilities are:
 
@@ -51,6 +56,18 @@ The image contains no episode pack, footage, checkpoints, MANO weights or creden
 These observations differ from the older PPO policies: use the matching image
 and saved experiment for each checkpoint.
 
+Copy the example environment file, set its two absolute paths, authenticate to
+private GHCR with your own GitHub account, and load its three variables into
+your shell. The tested host is one L40S 48 GB; RAM is capped at 24 GB with
+8 GB shared memory. Check the actual reset as well as rewards and loader:
+
+```bash
+docker compose -f docker/dex3-training/compose.grip.yaml run --rm grip \
+  /opt/dex3-extension/check_numerical_failure.py \
+  --config-dir /opt/dex3-extension/configs \
+  experiment=dex3_grip_carry_learning scene.world_count=2 training.world_count=2
+```
+
 Set `DEX3_GRIP_IMAGE`, `DEX3_TRAINING_INPUTS` and `DEX3_TRAINING_OUTPUTS`, then run:
 
 ```bash
@@ -60,7 +77,7 @@ docker compose -f docker/dex3-training/compose.grip.yaml run --rm grip \
   --reference /data/reference.parquet --out /outputs/runtime-controls.json
 docker compose -f docker/dex3-training/compose.grip.yaml run --rm grip \
   /opt/dex3-extension/train.py --config-dir /opt/dex3-extension/configs \
-  experiment=dex3_grip_curriculum scene.world_count=8 training.world_count=8 \
+  experiment=dex3_grip_carry_learning scene.world_count=8 training.world_count=8 \
   training.max_iterations=8 training.save_interval=4 output_dir=/outputs/smoke
 ```
 
@@ -69,8 +86,8 @@ For the full pilot, use a fresh output directory:
 ```bash
 docker compose -f docker/dex3-training/compose.grip.yaml run --rm grip \
   /opt/dex3-extension/train.py --config-dir /opt/dex3-extension/configs \
-  experiment=dex3_grip_curriculum scene.world_count=256 training.world_count=256 \
-  training.max_iterations=2000 training.save_interval=100 output_dir=/outputs/ppo
+  experiment=dex3_grip_carry_learning scene.world_count=256 training.world_count=256 \
+  training.max_iterations=3000 training.save_interval=500 output_dir=/outputs/ppo
 ```
 
 Record achieved hand/object poses, contacts, motor readback and reward terms:
@@ -78,7 +95,7 @@ Record achieved hand/object poses, contacts, motor readback and reward terms:
 ```bash
 docker compose -f docker/dex3-training/compose.grip.yaml run --rm grip \
   /opt/dex3-extension/record_policy_readback.py \
-  --checkpoint /outputs/ppo/model_2000.safetensors \
+  --checkpoint /outputs/ppo/model_3000.safetensors \
   --out /outputs/trained-readback --world-count 4
 docker compose -f docker/dex3-training/compose.grip.yaml run --rm grip \
   /opt/dex3-extension/audit_native_task.py --run /outputs/trained-readback \
@@ -137,8 +154,9 @@ corresponds to 0.6 Nm of target-torque variation before native saturation; noise
 not measured actuator efforts. The hardware limit remains 0.76 Nm.
 
 This candidate starts a fresh training comparison; it changes the objective and
-must not be presented as an unchanged resumption of an older policy. Its GPU
-contracts and full physical performance require separate validation. The
+must not be presented as an unchanged resumption of an older policy. Its GPU reward and actual native-reset contracts, eight-iteration smoke and
+fresh-checkpoint official-wrapper checks passed. Full physical performance
+requires independent validation. The
 10 mm / 5 degree retention and other independent acceptance checks are unchanged.
 
 ### Continue an unchanged experiment
@@ -187,7 +205,26 @@ which would require a separate reset contract.
 
 The first raw failure is written at the next metrics boundary. Two consecutive
 invalid transitions in any world abort training at that boundary, rather than
-allowing a poisoned world to consume the remaining budget. The GPU regression
-must inject NaNs into the actual native warm-start buffer, observe a failed
-transition and reset, then verify six healthy captured steps and unchanged
-unselected-world cache/contact membership before further training.
+allowing a poisoned world to consume the remaining budget. The GPU regression passed: it injected NaNs into the actual native warm-start buffer, observed a failed
+transition and reset, then verified six healthy captured steps and unchanged
+unselected-world cache/contact membership before further training. All four
+inspected installed vendor sources match verified PyPI wheel source hashes.
+
+### Distributed-contact wrench candidate
+
+The slot-only load reward approximates the moment by crossing each link's mean
+contact position with its summed force. This loses contact couples. An offline
+reconstruction from the recorded 2,000-iteration policy found a median pot moment
+difference of 0.094 Nm and a 95th percentile of 0.222 Nm over its grasp window
+(four worlds). These differences exceed the reward's 0.08 Nm moment scale.
+The reconstruction uses recorded contact points; small differences between the
+two bodies' contact points are not included in that comparison.
+
+The separate fresh experiment `dex3_grip_wrench_learning` sums every actual native
+hand/object contact force and moment about the assigned object's COM. It includes
+native torsional/rolling contact moments, handles either shape ordering and
+excludes the table and other objects. Required-pad observations remain unchanged.
+The existing slot approximation remains the default for archived configurations.
+This objective change must not be used as an unchanged training resume. It needs
+its own GPU couple/sign/isolation/NaN tests, actual reset, fresh smoke, official
+wrapper and independent physical evaluation before promotion.

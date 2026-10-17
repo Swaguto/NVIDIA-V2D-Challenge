@@ -1,0 +1,10 @@
+# @package _global_
+# Correct distributed-contact wrench rewards; fresh experiment, not a resume.
+defaults:
+  - dex3_grip_carry_learning
+  - _self_
+objective:
+  load_wrench_source: raw_contacts
+logging:
+  run_name: grip-wrench-learning
+output_dir: /outputs/grip-wrench-learning

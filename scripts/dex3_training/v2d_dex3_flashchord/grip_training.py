@@ -17,6 +17,7 @@ from flash_chord.utils.quat import quat_inv_xyzw, quat_mul_xyzw, quat_geodesic_a
 from .objective import Dex3ObjectiveConfig
 from .payload import payload_plan
 from .sampling import resample_targets
+from .contact_wrench import RawContactWrench
 
 
 @wp.kernel
@@ -247,6 +248,9 @@ def evaluate_grip(
     target_rotation: wp.array(dtype=wp.quat),
     target_com: wp.array(dtype=wp.vec3),
     load: wp.array(dtype=wp.spatial_vector),
+    raw_wrench: int,
+    measured_force: wp.array(dtype=wp.vec3),
+    measured_moment: wp.array(dtype=wp.vec3),
     contact_pos: wp.array(dtype=wp.vec3),
     contact_force: wp.array(dtype=wp.vec3),
     weights: wp.array(dtype=wp.float32),
@@ -279,6 +283,9 @@ def evaluate_grip(
                 moment += wp.cross(contact_pos[slot] - center, measured)
                 above = wp.max(0.0, wp.length(measured) - 20.0) / 20.0
                 excess += wp.min(above * above, 100.0)
+            if raw_wrench != 0:
+                f = measured_force[world * hands + hand]
+                moment = measured_moment[world * hands + hand]
             support = float(1.0)
             for pad in range(3):
                 slot = required[ri * 3 + pad]
@@ -380,9 +387,12 @@ class GripObjectiveConfig(Dex3ObjectiveConfig):
     lift_reward_tolerance_m: float = 0.01
     support_shaping: str = "raw"
     stability_shaping: str = "velocity"
+    load_wrench_source: str = "slot_resultants"
 
     def __post_init__(self):
         super().__post_init__()
+        if self.load_wrench_source not in ("slot_resultants", "raw_contacts"):
+            raise ValueError("Unknown measured load-wrench source")
         if self.load_shaping not in ("gaussian", "rational_lift"):
             raise ValueError("Unknown explicit grip shaping mode")
         if self.support_shaping not in (
@@ -605,6 +615,13 @@ class GripObjective:
             worlds * len(self.term_names), dtype=wp.float32, device=device
         )
         self.score = wp.zeros(worlds, dtype=wp.float32, device=device)
+        self.raw_wrench = int(config.load_wrench_source == "raw_contacts")
+        self.measured_wrench = (
+            RawContactWrench(contact, model, self.object_ids, self.hands, device)
+            if self.raw_wrench
+            else None
+        )
+        self.zero_wrench = wp.zeros(worlds * self.hands, dtype=wp.vec3, device=device)
 
     def reset(self, mask):
         self.base.reset(mask)
@@ -651,6 +668,9 @@ class GripObjective:
                 self.target_rotation,
                 self.target_com,
                 self.load,
+                self.raw_wrench,
+                self.measured_wrench.force if self.raw_wrench else self.zero_wrench,
+                self.measured_wrench.moment if self.raw_wrench else self.zero_wrench,
                 self.contact.contact_pos_w,
                 self.contact.contact_force_w,
                 self.weights,

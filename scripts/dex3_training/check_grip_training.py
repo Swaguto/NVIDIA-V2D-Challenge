@@ -51,6 +51,9 @@ def check():
             arr([[0, 0, 0, 1]], wp.quat),
             arr([[0, 0, 0.05]], wp.vec3),
             arr([[0, 0, 2.943, 0, 0, 0]], wp.spatial_vector),
+            0,
+            arr([[0, 0, 0]] * worlds, wp.vec3),
+            arr([[0, 0, 0]] * worlds, wp.vec3),
             arr([[0, 0, 0]] * (worlds * slots), wp.vec3),
             arr(force, wp.vec3),
             arr([0, 1, 1, 1, 1, -0.02]),
@@ -99,6 +102,16 @@ def check():
         assert (
             stable[3, 2] < 0.21
         )  # static but30degrees wrong is not a stable target grip
+        # The raw wrench branch must use the actual distributed-contact
+        # resultant, not the slot-position approximation.
+        inputs[28] = 1
+        inputs[29] = arr([[0, 0, 2.943]] * worlds, wp.vec3)
+        inputs[30] = arr([[0, 0, 0]] * worlds, wp.vec3)
+        wp.launch(evaluate_grip, dim=worlds, inputs=inputs)
+        correct = terms.numpy().reshape(worlds, 6).copy()
+        inputs[30] = arr([[0, 0, 0.2]] * worlds, wp.vec3)
+        wp.launch(evaluate_grip, dim=worlds, inputs=inputs)
+        assert correct[0, 3] > 5 * terms.numpy().reshape(worlds, 6)[0, 3]
 
         q = np.tile([0, 0, 0, 0, 0, 0, 1.0], (4, 1))
         q[1, 3:] = [0, 0, np.sqrt(0.5), np.sqrt(0.5)]
