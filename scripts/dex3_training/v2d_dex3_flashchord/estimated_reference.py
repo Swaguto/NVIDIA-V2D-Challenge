@@ -35,6 +35,7 @@ def contacts(root, manifest, data):
         or not 0 < surface.get("maximum_reprojection_m", 0) <= 0.012
         or not 0 <= surface.get("maximum_normal_change_deg", -1) <= 30
         or surface.get("all_kept_points_rechecked_after_float32_storage") is not True
+        or surface.get("outward_free_space_probe_m") != 5e-5
         or surface.get("robot_grasp_gates_changed") is not False
         or receipt["source_object_names"] != [o["name"] for o in manifest["objects"]]
     ):

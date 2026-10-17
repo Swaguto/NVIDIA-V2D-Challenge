@@ -43,8 +43,10 @@ def exposed_projection(points, force_directions, meshes, radius=0.002, maximum_n
             continue
         # Faces buried inside another collider are not an exposed union surface.
         outside = np.ones(len(indices), bool)
+        outward_probe = closest[indices] + 5e-5 * normals[indices]
         for other in equations:
             outside &= margin(closest[indices], other) >= -1e-7
+            outside &= margin(outward_probe, other) >= -1e-7
         indices = indices[outside]
         chosen = selected[indices]
         best[chosen] = distance[indices]
@@ -93,6 +95,10 @@ def filter_contacts(native, estimate, out, maximum_reference_projection_m=0.002)
             if len(q):
                 margins = (np.einsum("pi,fi->pf", q, eq[:, :3]) + eq[:, 3]).max(-1)
                 maximum_inward_residual = max(maximum_inward_residual, float(max(0, -margins.min())))
+                probe = q - 5e-5 * normals[kept].astype(np.float32).astype(float)
+                probe_margin = (np.einsum("pi,fi->pf", probe, eq[:, :3]) + eq[:, 3]).max(-1)
+                if probe_margin.min() < -1e-7:
+                    raise ValueError("Estimated normal points into a neighbouring collider")
         if maximum_inward_residual > 1e-7:
             raise ValueError("Projected estimate is buried inside a native collider")
         arrays["points_object_m"][selected] = projected
@@ -110,7 +116,7 @@ def filter_contacts(native, estimate, out, maximum_reference_projection_m=0.002)
     receipt["collision_filter_source_sha256"] = sha(Path(__file__))
     receipt["native_collision_surface_validated"] = True
     receipt["native_collision_contract_sha256"] = sha(geometry_path)
-    receipt["native_surface_filter"] = dict(maximum_reprojection_m=maximum_reference_projection_m, maximum_normal_change_deg=30, exposed_outside_all_parts_tolerance_m=1e-7, all_kept_points_rechecked_after_float32_storage=True, reference_projection_is_not_robot_penetration_tolerance=True,robot_grasp_gates_changed=False,objects=statistics)
+    receipt["native_surface_filter"] = dict(maximum_reprojection_m=maximum_reference_projection_m, maximum_normal_change_deg=30, exposed_outside_all_parts_tolerance_m=1e-7, outward_free_space_probe_m=5e-5, all_kept_points_rechecked_after_float32_storage=True, reference_projection_is_not_robot_penetration_tolerance=True,robot_grasp_gates_changed=False,objects=statistics)
     receipt["raw_surface_candidate_summary"] = receipt["summary"]
     receipt["summary"] = {}
     for hand, side in enumerate(["left", "right"]):

@@ -39,7 +39,7 @@ def fixture(root, change=None):
     collision.write_text('{}')
     receipt["native_collision_surface_validated"] = change != "unvalidated_collision"
     receipt["native_collision_contract_sha256"] = hashlib.sha256(collision.read_bytes()).hexdigest()
-    receipt["native_surface_filter"] = dict(maximum_reprojection_m=0.012, maximum_normal_change_deg=30, all_kept_points_rechecked_after_float32_storage=True, robot_grasp_gates_changed=False)
+    receipt["native_surface_filter"] = dict(maximum_reprojection_m=0.012, maximum_normal_change_deg=30, all_kept_points_rechecked_after_float32_storage=True, outward_free_space_probe_m=5e-5, robot_grasp_gates_changed=False)
     if change == "object_order":
         receipt["source_object_names"].reverse()
     receipt_path = folder / "receipt.json"

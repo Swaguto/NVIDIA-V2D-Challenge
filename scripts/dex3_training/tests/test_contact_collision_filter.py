@@ -42,3 +42,11 @@ def test_reference_uncertainty_correction_still_targets_exposed_zero_depth_surfa
     assert distance[0] == pytest.approx(0.01)
     np.testing.assert_allclose(projected[0], [0.1, 0, 0.01], atol=1e-9)
     np.testing.assert_allclose(normals[0], [-1, 0, 0])
+
+
+def test_abutting_internal_interface_is_not_exposed_contact_surface():
+    first = trimesh.creation.box(extents=[0.2, 0.2, 0.2])
+    second = first.copy()
+    second.apply_translation([0.2, 0, 0])
+    _, _, kept, _, _ = exposed_projection(np.array([[0.099, 0, 0.01]]), np.array([[-1, 0, 0]]), [first, second])
+    assert not kept[0]

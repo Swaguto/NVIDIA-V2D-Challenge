@@ -8,7 +8,7 @@ Previous grip learning used measured robot load/support rewards with unknown hum
 
 The preserved source bundle contains observed MANO meshes. At the raw estimated contact points, a convex-halfspace audit found that58.84%of pot points and51.89%of lid points lie more than2mm inside at least one native collision piece. This is a mismatch between reconstructed surface estimates and the current32-piece colliders, not a measurement of robot penetration. Raw estimated guidance would contain targets that cannot be touched at their original locations.
 
-Keeping only hints that project at most2mm onto an exposed collider removed every opposing normal pair in the first pot-carry window. A separately bounded reference-estimation correction of at most12mm recovered opposing directions in all172observed frames of that182-frame window. The largest actual projection was9.59mm for the pot and11.85mm for the lid. Every stored point was rechecked against the complete convex union after float32 storage; the largest inward roundoff was below3nanometres.
+Keeping only hints that project at most2mm onto an exposed collider removed every opposing normal pair in the first pot-carry window. A separately bounded reference-estimation correction of at most12mm recovered opposing directions in all172observed frames of that182-frame window. The largest actual projection was9.59mm for the pot and11.85mm for the lid. Every stored point and a50µmoutward probe were rechecked against the complete convex union after float32 storage; the largest inward roundoff was below3nanometres.
 
 The robot's existing2mm sampled-penetration gate is unchanged. The12mm bound applies only to constructing approximate reference hints from uncertain reconstructed geometry. It changes neither source observations nor the frozen robot/object trajectories, masses, gravity or motor limits. Collider fidelity remains a separate question.
 
@@ -37,7 +37,7 @@ python scripts/dex3_training/attach_estimated_contacts.py \
   --out "$V2D_CWS_INPUTS"
 ```
 
-The source bundle is the existing private `bundle/episode.npz` with its adjacent manifest. For this e002 experiment its SHA256 is `4de1b9507e42ed66e4341b93cc38563885fc2eda43db72935a546967671b6277`; the unchanged base task manifest is `c4d95304f28b1c484059a10c2f5bd19412f5f468b003769f9ef1f1882bb82da4`. The prepared, collision-compatible input manifest is `b0a072632f93f273da1cb85deb3c3ed83545d996b6e1ec8594dbe9ec64e4b17f`.
+The source bundle is the existing private `bundle/episode.npz` with its adjacent manifest. For this e002 experiment its SHA256 is `4de1b9507e42ed66e4341b93cc38563885fc2eda43db72935a546967671b6277`; the unchanged base task manifest is `c4d95304f28b1c484059a10c2f5bd19412f5f468b003769f9ef1f1882bb82da4`. The prepared, collision-compatible input manifest is `7cfb37e61e070dac916d78b869ea644e577c786167391c0a8267325763961b89`.
 
 ## Runtime and validation
 
