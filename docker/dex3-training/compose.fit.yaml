@@ -1,0 +1,6 @@
+# Add to compose.grip.yaml to mount a recorded native motor-policy candidate.
+# The inherited default checks the GPU contract; fitting is an explicit command.
+services:
+  grip:
+    volumes:
+      - ${DEX3_FIT_PRIOR_DIRECTORY:?Set the private recorded candidate directory}:/fit-prior:ro

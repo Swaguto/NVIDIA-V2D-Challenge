@@ -2,6 +2,17 @@
 
 import math
 import numpy as np
+from .phase_prior import project
+
+
+def project_pose_and_height(values, lower, upper, profile):
+    """Thirteen raw motor parameters plus one independent height in metres."""
+    values = np.asarray(values, float)
+    if values.shape[-1] != 14 or not np.isfinite(values).all():
+        raise ValueError("Need thirteen finite pose parameters and one carry height")
+    pose = project(values[..., :13], lower, upper, profile=profile)
+    height = np.clip(values[..., 13:14], 0, .025)
+    return np.concatenate([pose, height], axis=-1)
 
 
 def window_end(phase, step_s, previous=None, requested=None):
