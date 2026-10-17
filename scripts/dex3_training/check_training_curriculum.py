@@ -1,6 +1,7 @@
 """GPU gate for training assistance, residual reach and evaluation composition."""
 
 import json
+import hashlib
 from pathlib import Path
 
 from hydra import compose, initialize_config_dir
@@ -41,6 +42,9 @@ def main():
                 "hydra.searchpath=[file:///opt/dex3-extension/configs]",
                 "experiment=" + name, "scene.world_count=4", "training.world_count=4",
             ])
+            OmegaConf.update(cfg, "embodiment.config.reference_manifest_sha256", hashlib.sha256(
+                (Path(cfg.task.parquet).parent / "manifest.json").read_bytes()
+            ).hexdigest(), force_add=True)
             assist = assistance_contract(resolved_dict(cfg))
             env, setup = build(cfg)
             training = instantiate_typed(cfg.training, TrainingConfig)
