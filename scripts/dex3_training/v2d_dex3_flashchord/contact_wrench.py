@@ -29,26 +29,30 @@ def accumulate_contact_wrench(
     i = wp.tid()
     if i >= count[0]:
         return
-    s0, s1 = shape0[i], shape1[i]
+    s0 = int(shape0[i])
+    s1 = int(shape1[i])
     if s0 < 0 or s1 < 0 or s0 >= shape_body.shape[0] or s1 >= shape_body.shape[0]:
         return
     world = s0 // shapes_per_world
     if s1 // shapes_per_world != world:
         return
-    b0, b1 = shape_body[s0], shape_body[s1]
+    b0 = int(shape_body[s0])
+    b1 = int(shape_body[s1])
     if b0 < 0 or b1 < 0:
         return
-    h0 = shape_hand[s0 % shapes_per_world]
-    h1 = shape_hand[s1 % shapes_per_world]
+    h0 = int(shape_hand[s0 % shapes_per_world])
+    h1 = int(shape_hand[s1 % shapes_per_world])
     hand, obj = int(-1), int(-1)
     position, f, moment = wp.vec3(), wp.vec3(), wp.vec3()
     if h0 >= 0 and b1 % bodies_per_world == assigned_objects[h0]:
-        hand, obj = h0, b1
+        hand = h0
+        obj = b1
         position = wp.transform_point(poses[b1], point1[i])
         f = -wp.spatial_top(force[i])
         moment = -wp.spatial_bottom(force[i])
     elif h1 >= 0 and b0 % bodies_per_world == assigned_objects[h1]:
-        hand, obj = h1, b0
+        hand = h1
+        obj = b0
         position = wp.transform_point(poses[b0], point0[i])
         f = wp.spatial_top(force[i])
         moment = wp.spatial_bottom(force[i])
