@@ -18,6 +18,7 @@ def experiment_contract(config):
     result = deepcopy(config)
     result.pop("output_dir", None)
     result.pop("resume_context_manifest", None)
+    result.pop("trace_training_transitions", None)
     for name in ("resume", "checkpoint", "max_iterations", "save_interval"):
         result["training"].pop(name, None)
     return result
@@ -78,7 +79,12 @@ def validate(parent, current, parent_context_path, current_context_path, checkpo
         and not (
             name.startswith("extension/configs/experiment/") and name.endswith(".yaml")
         )
-        and name != "extension/v2d_dex3_flashchord/resume_contract.py"
+        and name
+        not in {
+            "extension/v2d_dex3_flashchord/resume_contract.py",
+            "extension/v2d_dex3_flashchord/transition_trace.py",
+            "extension/check_transition_trace.py",
+        }
     }
     if unexpected:
         raise ValueError("Unexpected runtime files in the resume image")

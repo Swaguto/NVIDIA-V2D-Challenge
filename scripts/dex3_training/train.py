@@ -45,8 +45,11 @@ class LocalMetricLogger:
 
     def log(self, metrics, step):
         invalid = nonfinite_fields(metrics)
-        if invalid:
+        trace = getattr(self.env, "transition_trace", None)
+        trace_count = int(trace.counts.numpy().sum()) if trace is not None else 0
+        if invalid or trace_count:
             counts = {}
+            trace_report = trace.save(self.output) if trace is not None else None
             if self.env is not None:
                 env = self.env
                 arrays = dict(
@@ -73,6 +76,7 @@ class LocalMetricLogger:
                         environment_steps=step,
                         nonfinite_metrics=invalid,
                         nonfinite_state_counts=counts,
+                        first_failed_transitions=trace_report,
                         training_aborted=True,
                     ),
                     indent=2,
@@ -81,6 +85,8 @@ class LocalMetricLogger:
             )
             raise FloatingPointError(
                 "Nonfinite training metrics: " + ", ".join(invalid)
+                if invalid
+                else "Nonfinite transition captured before automatic reset"
             )
         self.stream.write(
             json.dumps(dict(environment_steps=step, **metrics), allow_nan=False) + "\n"
@@ -185,7 +191,12 @@ def main(cfg: DictConfig):
             decompose_objects=cfg.scene.decompose_objects,
             contact_friction=cfg.scene.contact_friction,
         )
-        env = RLEnv(setup.scene, setup.reference, config=env_config)
+        env_type = RLEnv
+        if cfg.get("trace_training_transitions", False):
+            from v2d_dex3_flashchord.transition_trace import TracedRLEnv
+
+            env_type = TracedRLEnv
+        env = env_type(setup.scene, setup.reference, config=env_config)
         validate_reset_curriculum(
             resolved_dict(cfg).get("curriculum"),
             dict(
@@ -199,6 +210,8 @@ def main(cfg: DictConfig):
         env.reset()
         env.capture_step()
         env.reset()
+        if hasattr(env, "transition_trace"):
+            env.transition_trace.clear()
         audit_scene(env, setup.scene, output, input_manifest)
         jax_env = WarpRLEnv(env)
         config = resolved_dict(cfg)
