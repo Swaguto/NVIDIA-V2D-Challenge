@@ -107,6 +107,12 @@ def main(cfg):
     )
     cfg = OmegaConf.create(config)
     (out / "config.json").write_text(json.dumps(config, indent=2) + "\n")
+    if cfg.action.input_mode != "raw" or (
+        cfg.action.wrist_pos_scale,
+        cfg.action.wrist_ori_scale,
+        cfg.action.finger_joint_pos_scale,
+    ) != (0.05, 0.15, 0.15):
+        raise ValueError("Native fitting requires the raw replay action scales (.05, .15, .15)")
     with wp.ScopedDevice("cuda:0"):
         ec = instantiate_typed(cfg.env, RLEnvConfig)
         setup = setup_scene(
@@ -129,12 +135,6 @@ def main(cfg):
             raise ValueError(
                 "Need paired candidate worlds and the measured dual-Dex3 action schema"
             )
-        if cfg.action.input_mode != "raw" or (
-            cfg.action.wrist_pos_scale,
-            cfg.action.wrist_ori_scale,
-            cfg.action.finger_joint_pos_scale,
-        ) != (0.05, 0.15, 0.15):
-            raise ValueError("Unexpected residual action scales")
         sides = list(env.action.sides)
         names = {s: list(setup.scene.layout.hand(s).finger_joint_names) for s in sides}
         spec = json.loads((root / "task-grips.json").read_text())
@@ -537,8 +537,9 @@ def main(cfg):
             if not len(order):
                 raise RuntimeError("No eligible finite proposals")
             winner = int(order[0])
-            if pair_cost[winner] < best_cost:
-                best_cost = float(pair_cost[winner])
+            candidate_cost = float(pair_cost[order].max()) if fixed_parameters else float(pair_cost[winner])
+            if candidate_cost < best_cost:
+                best_cost = candidate_cost
                 best_raw = candidates[winner].copy()
                 best_metrics = metrics if fixed_parameters else metrics[2 * winner : 2 * winner + 2]
             elite = candidates[order[: max(4, population // 5)]]

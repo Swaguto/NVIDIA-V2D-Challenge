@@ -1,0 +1,16 @@
+# @package _global_
+# Preserve the exact raw action contract used by fixed-program physics probes.
+defaults:
+  - dex3_repaired_payload
+  - _self_
+
+action:
+  wrist_angular_reference_velocity: true
+  wrist_angular_kd: 0.4
+  maximum_reference_wrist_angular_speed_rad_s: 10.0
+
+embodiment:
+  config:
+    joint_overrides:
+      wrist_rotvec$:
+        kd: 0.0
