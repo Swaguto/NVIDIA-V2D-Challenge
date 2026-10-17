@@ -130,6 +130,12 @@ stability term includes relative hand/object pose error as well as relative
 velocity. A motionless grip in the wrong relative pose can no longer receive
 the maximum stability reward. All reward terms remain bounded.
 
+The carry candidate starts with Gaussian action noise 0.1. At the fixed left
+finger stiffness of 8 Nm/rad and position scale 0.25 rad/action, noise 0.3
+corresponds to 0.6 Nm of target-torque variation before native saturation; noise
+0.1 reduces that component to 0.2 Nm. These are unsaturated target contributions,
+not measured actuator efforts. The hardware limit remains 0.76 Nm.
+
 This candidate starts a fresh training comparison; it changes the objective and
 must not be presented as an unchanged resumption of an older policy. Its GPU
 contracts and full physical performance require separate validation. The

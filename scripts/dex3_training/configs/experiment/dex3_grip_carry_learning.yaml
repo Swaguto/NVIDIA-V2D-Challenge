@@ -11,6 +11,8 @@ numerical_failure_policy: terminate
 training:
   max_iterations: 3000
   save_interval: 500
+  network:
+    initial_noise_std: 0.1
 logging:
   run_name: grip-carry-learning
 output_dir: /outputs/grip-carry-learning
