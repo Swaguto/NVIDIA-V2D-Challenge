@@ -264,4 +264,40 @@ The parent checkpoint and its context manifest must be mounted privately at
 `/initial-context/context-manifest.json`. Initialization lineage records the
 parent training count separately. Its steps are never added to the new run's
 counter. `check_actor_initialization.py` compares a real new `model_0` with the
-parent and a fresh upstream learner; GPU verification is required before use.
+parent and a fresh upstream learner. That GPU check, an eight-iteration smoke,
+the actual official wrapper and complete four-world initial/smoke replays passed
+their mechanics checks. Initial pot lift was 27.1–28.2 mm; after eight updates it
+was 26.1–27.8 mm with at least 97.8% required-pad support. Both still fail the
+99 mm lift and fixed retention criteria. The longer comparison is in progress.
+
+The actor image is pinned separately in
+[registry.actor.env.example](../../../docker/dex3-training/registry.actor.env.example).
+The parent paths refer to files retained for private transfer in the local v8
+pack. The earlier v7 pack does not contain these later training artifacts.
+Copy the example to a private environment file and set all five paths/variables.
+The following commands use that file and the two Compose files from this branch:
+
+```bash
+docker compose --env-file /private/actor.env \
+  -f docker/dex3-training/compose.grip.yaml \
+  -f docker/dex3-training/compose.actor-init.yaml run --rm grip
+
+docker compose --env-file /private/actor.env \
+  -f docker/dex3-training/compose.grip.yaml \
+  -f docker/dex3-training/compose.actor-init.yaml run --rm grip \
+  /opt/dex3-extension/check_actor_initialization.py \
+  --parent /initial-policy/ppo/model_2000.safetensors \
+  --child /outputs/actor-smoke/model_0.safetensors \
+  --parent-context /initial-context/context-manifest.json
+
+docker compose --env-file /private/actor.env \
+  -f docker/dex3-training/compose.grip.yaml \
+  -f docker/dex3-training/compose.actor-init.yaml run --rm grip \
+  /opt/dex3-extension/train.py --config-dir /opt/dex3-extension/configs \
+  experiment=dex3_grip_wrench_finetune scene.world_count=256 training.world_count=256 \
+  training.max_iterations=3000 training.save_interval=250 output_dir=/outputs/actor-ppo
+```
+
+Readbacks label the measured wrench's side order explicitly. The pinned contact
+tracker orders hands right then left; this differs from the target file's hand
+axis. Use the saved labels and assigned object IDs when interpreting those arrays.

@@ -1,0 +1,16 @@
+# Opt-in actor initialization. The base compose file supplies the GPU limits.
+services:
+  grip:
+    volumes:
+      - ${DEX3_ACTOR_PARENT_RESULTS:?Set the private parent results directory}:/initial-policy:ro
+      - ${DEX3_ACTOR_PARENT_CONTEXT:?Set the matching private parent build context}:/initial-context:ro
+    command:
+      - /opt/dex3-extension/train.py
+      - --config-dir
+      - /opt/dex3-extension/configs
+      - experiment=dex3_grip_wrench_finetune
+      - scene.world_count=8
+      - training.world_count=8
+      - training.max_iterations=8
+      - training.save_interval=4
+      - output_dir=/outputs/actor-smoke
