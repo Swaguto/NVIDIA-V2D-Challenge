@@ -4,9 +4,9 @@ The upstream learner restores optimizer, RNG and normalization state, then reset
 the physics environment. This is a continuation, not bit-exact simulator replay.
 """
 
-from copy import deepcopy
 import hashlib
 import json
+from copy import deepcopy
 from pathlib import Path
 
 
@@ -37,12 +37,18 @@ def validate(parent, current, parent_context_path, current_context_path, checkpo
             raise ValueError(f"Resume contract differs: {key}")
     old = json.loads(parent["resolved_config_json"])
     new = json.loads(current["resolved_config_json"])
+    factor = None
+    comparison = new
+    if new.get("controlled_experiment") != old.get("controlled_experiment"):
+        from .controlled_experiment import normalize
+
+        comparison, factor = normalize(old, new)
     if any(
         c.get("numerical_failure_policy", "abort") not in ("abort", "terminate")
         for c in (old, new)
     ):
         raise ValueError("Unknown numerical-failure policy in resume lineage")
-    if experiment_contract(old) != experiment_contract(new):
+    if experiment_contract(old) != experiment_contract(comparison):
         raise ValueError("Resume requires the same resolved experiment")
     iteration = int(parent["iteration"])
     steps = int(parent["environment_steps"])
@@ -72,6 +78,8 @@ def validate(parent, current, parent_context_path, current_context_path, checkpo
     # The training entry point adds lineage checks. Every existing runtime,
     # config, action, objective, observation and physics file stays identical.
     mutable = {"extension/train.py"}
+    if factor is not None:
+        mutable.add("extension/v2d_dex3_flashchord/resume_contract.py")
     for name, digest in previous["files"].items():
         if (
             name not in mutable
@@ -95,21 +103,33 @@ def validate(parent, current, parent_context_path, current_context_path, checkpo
             "extension/v2d_dex3_flashchord/numerical_failure.py",
             "extension/check_numerical_failure.py",
             "extension/prepare_physics_probe.py",
+            *(
+                {
+                    "extension/v2d_dex3_flashchord/controlled_experiment.py",
+                    "extension/prepare_controlled_experiments.py",
+                }
+                if factor is not None
+                else set()
+            ),
         }
     }
     if unexpected:
         raise ValueError("Unexpected runtime files in the resume image")
-    return dict(
-        parent_checkpoint_sha256=sha256(checkpoint),
-        parent_iteration=iteration,
-        parent_environment_steps=steps,
-        parent_image_context_sha256=sha256(parent_context_path),
-        continuation_resets_simulator=True,
-        bit_exact_continuation_claimed=False,
-        parent_numerical_failure_policy=old.get("numerical_failure_policy", "abort"),
-        current_numerical_failure_policy=new.get("numerical_failure_policy", "abort"),
-        invalid_transition_handling_unchanged=(
+    return {
+        "parent_checkpoint_sha256": sha256(checkpoint),
+        "parent_iteration": iteration,
+        "parent_environment_steps": steps,
+        "parent_image_context_sha256": sha256(parent_context_path),
+        "continuation_resets_simulator": True,
+        "bit_exact_continuation_claimed": False,
+        "parent_numerical_failure_policy": old.get("numerical_failure_policy", "abort"),
+        "current_numerical_failure_policy": new.get(
+            "numerical_failure_policy", "abort"
+        ),
+        "invalid_transition_handling_unchanged": (
             old.get("numerical_failure_policy", "abort")
             == new.get("numerical_failure_policy", "abort")
         ),
-    )
+        "controlled_experiment": factor,
+        "unchanged_experiment": factor is None,
+    }

@@ -1,9 +1,9 @@
 name: Dex3 physics and reference controls
 on:
   push:
-    paths: ['scripts/compute/**', 'scripts/dex3_physics/**', 'scripts/dex3_training/**', 'scripts/reproduction/**', 'docker/dex3-training/**', 'docker/dex3-review/physics.compose.yaml', '.github/workflows/dex3-physics-controls.yml']
+    paths: ['scripts/track3/**', 'scripts/compute/**', 'scripts/dex3_physics/**', 'scripts/dex3_training/**', 'scripts/reproduction/**', 'docker/dex3-training/**', 'docker/dex3-review/physics.compose.yaml', '.github/workflows/dex3-physics-controls.yml']
   pull_request:
-    paths: ['scripts/compute/**', 'scripts/dex3_physics/**', 'scripts/dex3_training/**', 'scripts/reproduction/**', 'docker/dex3-training/**', 'docker/dex3-review/physics.compose.yaml', '.github/workflows/dex3-physics-controls.yml']
+    paths: ['scripts/track3/**', 'scripts/compute/**', 'scripts/dex3_physics/**', 'scripts/dex3_training/**', 'scripts/reproduction/**', 'docker/dex3-training/**', 'docker/dex3-review/physics.compose.yaml', '.github/workflows/dex3-physics-controls.yml']
 jobs:
   cpu-controls:
     runs-on: ubuntu-latest
@@ -13,7 +13,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install pytest==8.4.2 numpy==2.2.6 scipy==1.15.3 trimesh==4.5.1 pyarrow==18.1.0
-      - run: python -m pytest scripts/compute/tests scripts/reproduction/tests scripts/dex3_physics/tests scripts/dex3_training/tests -q
+      - run: python -m pytest scripts/compute/tests scripts/reproduction/tests scripts/dex3_physics/tests scripts/dex3_training/tests scripts/track3/tests/test_scored_inputs.py -q
       - name: Verify persistent cache in training Compose services
         run: python scripts/compute/check_compose_cache.py
       - name: Check physics Compose overlay

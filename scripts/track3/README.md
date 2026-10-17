@@ -1,5 +1,11 @@
 # Track 3 public CAD tracking
 
+For the scored episode input contract and current end-to-end baseline work, see
+[scored baseline](../../docs/team/dex3-isaac-review/SCORED_BASELINE.md).
+Use `--roster /kit/data/track_3_evaluation_objects.json` to process scored video
+inputs without public pose tables. Scored world conversion is a separate
+`--phase world`; hidden ground-truth scoring is unavailable locally.
+
 This pipeline tracks the public CAD objects in rectified left camera video and
 estimates the camera trajectory independently from stereo video. It uses the
 reference object poses only in the final scoring step.

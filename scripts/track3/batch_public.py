@@ -14,15 +14,23 @@ import sys
 import traceback
 from pathlib import Path
 
-import cv2
-import pyarrow.parquet as pq
-
 HERE = Path(__file__).resolve()
 ROOT = HERE.parents[2]
 DATA_DEFAULT = Path(os.environ.get("V2D_PUBLIC", "/home/ubuntu/v2d_track3/data/hf/track_3/public"))
 
 
-def roster(data: Path):
+def roster(data: Path, official_roster: Path | None = None):
+    if official_roster is not None:
+        episodes = json.loads(official_roster.read_text())["episodes"]
+        if not episodes:
+            raise ValueError("Empty official episode roster")
+        for episode, names in sorted(episodes.items(), key=lambda item: int(item[0])):
+            if not names or len(names) != len(set(names)):
+                raise ValueError("Object slots must be distinct and nonempty")
+            yield int(episode), list(names)
+        return
+    import pyarrow.parquet as pq
+
     for path in sorted((data / "data/chunk-000").glob("episode_*.parquet")):
         episode = int(path.stem.removeprefix("episode_"))
         metadata = pq.ParquetFile(path).schema_arrow.metadata
@@ -41,6 +49,8 @@ def run_command(command: list[str], log: Path, env=None):
 
 
 def frame_count(data: Path, episode: int) -> int:
+    import cv2
+
     path = data / "videos/chunk-000/observation.images.ego_cam_c" / f"episode_{episode:06d}.mp4"
     video = cv2.VideoCapture(str(path))
     count = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -98,7 +108,7 @@ def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,
                          "--data", str(data), "--masks", str(masks), "--out", str(out),
                          "--reinit-every", str(reinit_every)],
                         logs / f"pose_{name}.log", env)
-    elif phase == "scores":
+    elif phase in ("world", "scores"):
         camera, poses = item / "camera", item / "poses"
         if not (camera / "report.json").is_file():
             raise FileNotFoundError(f"camera missing: {camera}")
@@ -108,8 +118,8 @@ def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,
         rectification = item / "rectification.json"
         if not rectification.exists():
             sys.path.insert(0, str(ROOT / "reconstruction/modules/v2d_stereo_depth/lib"))
-            from stereo_depth import load_rig
             import numpy as np
+            from stereo_depth import load_rig
             rig = load_rig()
             rectification.write_text(json.dumps({"episode": episode,
                 "camera_frame": rig.left, "coordinate_frame": "rectified_camera",
@@ -127,7 +137,8 @@ def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,
                          "--episode", str(episode), "--objects", names_arg,
                          "--frames", str(count), "--predictions", str(world),
                          "--out", str(inferred)], logs / "infer.log")
-        for label, candidate in (("observed", world), ("inferred", inferred)):
+        for label, candidate in (() if phase == "world" else
+                                 (("observed", world), ("inferred", inferred))):
             report = item / f"scores_{label}.json"
             if report.is_file():
                 continue
@@ -150,10 +161,12 @@ def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--phase", choices=["cameras", "masks", "poses", "scores", "overlays"],
+    parser.add_argument("--phase", choices=["cameras", "masks", "poses", "world", "scores", "overlays"],
                         required=True)
     parser.add_argument("--data", type=Path, default=DATA_DEFAULT)
     parser.add_argument("--root", type=Path, required=True)
+    parser.add_argument("--roster", type=Path,
+                        help="Official scored object slots; no pose tables are read")
     parser.add_argument("--episodes", default="", help="comma list; default is all public episodes")
     parser.add_argument("--python", default=sys.executable)
     parser.add_argument("--reinit-every", type=int, default=0,
@@ -161,9 +174,18 @@ def main():
     parser.add_argument("--fp-python", default=os.environ.get(
         "V2D_FP_PYTHON", "/home/ubuntu/fp_venv/bin/python"))
     args = parser.parse_args()
+    if args.roster and args.phase == "scores":
+        parser.error("Scored ground truth is unavailable; use --phase world, then evaluate the policy with the official kit")
+    calibration = args.data / "meta/camera_calibration.json"
+    if calibration.is_file():
+        os.environ["V2D_CALIB"] = str(calibration.resolve())
     requested = {int(x) for x in args.episodes.split(",") if x.strip()} or None
+    available = list(roster(args.data, args.roster))
+    if requested and not requested.issubset({ep for ep, _ in available}):
+        parser.error("Requested episode is outside the selected roster")
+    args.root.mkdir(parents=True, exist_ok=True)
     results = {}
-    for episode, names in roster(args.data):
+    for episode, names in available:
         if requested is not None and episode not in requested:
             continue
         try:
@@ -176,6 +198,8 @@ def main():
         manifest.write_text(json.dumps(results, indent=2))
         print(f"{args.phase} episode {episode}: {results[str(episode)]}", flush=True)
     print(json.dumps(results, indent=2))
+    if any(result.startswith("failed:") for result in results.values()):
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

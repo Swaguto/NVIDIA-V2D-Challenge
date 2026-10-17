@@ -370,6 +370,12 @@ def main(cfg: DictConfig):
                 json.dumps(lineage, indent=2) + "\n"
             )
             metadata["dex3_resume_lineage_json"] = json.dumps(lineage, sort_keys=True)
+            if lineage.get("controlled_experiment") is not None:
+                factor = lineage["controlled_experiment"]
+                metadata["dex3_controlled_experiment_json"] = json.dumps(factor, sort_keys=True)
+                (output / "controlled-experiment.json").write_text(
+                    json.dumps(factor, indent=2) + "\n"
+                )
         else:
             initial = create_learner(jax_env, training)
             if actor_checkpoint:
