@@ -58,25 +58,24 @@ def terminate_invalid_transition(
     world = wp.tid()
     if flags[world] == 0:
         return
-    terminated[world], truncated[world] = 1, 0
-    wrist[world], objects[world], numerical[world] = 0, 0, 1
+    terminated[world] = 1
+    truncated[world] = 0
+    wrist[world] = 0
+    objects[world] = 0
+    numerical[world] = 1
     for term in range(terms):
         objective[world * terms + term] = 0.0
     objective[world * terms + termination_index] = 1.0
     score[world] = dt * weights[termination_index]
-    diagnostics[world * 7], diagnostics[world * 7 + 1], diagnostics[world * 7 + 2] = (
-        0.0,
-        0.0,
-        1.0,
-    )
+    diagnostics[world * 7] = 0.0
+    diagnostics[world * 7 + 1] = 0.0
+    diagnostics[world * 7 + 2] = 1.0
     for axis in range(4):
         diagnostics[world * 7 + 3 + axis] = 1000.0
-    errors0[world], errors1[world], errors2[world], errors3[world] = (
-        1000.0,
-        1000.0,
-        1000.0,
-        1000.0,
-    )
+    errors0[world] = 1000.0
+    errors1[world] = 1000.0
+    errors2[world] = 1000.0
+    errors3[world] = 1000.0
 
 
 class TrainingTermination:
