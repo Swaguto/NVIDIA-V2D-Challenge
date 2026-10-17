@@ -1,0 +1,15 @@
+# Matched candidate: identical parent, physics and actions; retention weight 8.
+services:
+  cws-retention:
+    extends:
+      file: compose.cws-unassisted.yaml
+      service: cws-unassisted
+    command:
+      - /opt/dex3-extension/check_unassisted_reset.py
+      - --config-dir
+      - /opt/dex3-extension/configs
+      - experiment=dex3_grip_cws_retention
+      - scene.world_count=4
+      - training.world_count=4
+volumes:
+  dex3-training-cache:

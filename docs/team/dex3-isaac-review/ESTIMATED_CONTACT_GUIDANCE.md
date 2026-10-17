@@ -116,10 +116,24 @@ The continuation adds 12,288,000 new steps to a parent trained for 16,384,000
 steps. GPU training and physics are not promised bit-exact across runs or hosts.
 Input packs and weights must be transferred privately; they are not in GHCR.
 
-`dex3_grip_cws_retention` is a prepared candidate that raises the existing
-reference-pose retention reward from 1 to 8 while preserving the other controls.
-Its use depends on the zero-assistance comparison. The image above does not
-contain this later candidate, and it is not validated by those image checks.
+`dex3_grip_cws_retention` raises the existing reference-pose retention reward from
+1 to 8. Its GPU reset, actual PPO smoke, zero-assistance and actor-transfer checks
+passed using the same parent as the weight-1 control. Actual initial-checkpoint
+comparison confirms identical actor tensors and configuration differences limited
+to the retention weight, its aliases, and run labels. A verifier command-format
+error stopped session 90 before the long run; its corrected check passed locally
+and in session 91, which reuses those verified GPU preflights.
+
+Use [registry.cws-retention.env.example](../../../docker/dex3-training/registry.cws-retention.env.example)
+with [compose.cws-retention.yaml](../../../docker/dex3-training/compose.cws-retention.yaml).
+Run the same commands above with service `cws-retention`, that Compose file, and
+`experiment=dex3_grip_cws_retention`. Keep the **same estimated-CWS parent** for
+both arms. The retained actor was trained for 16,384,000 steps; each arm adds
+12,288,000 steps with fresh critic, optimizer and exploration noise. This is one
+seed per arm, not a statistical generalization result.
+
+The source-dd533b6 image contains this candidate. Its registry package is private
+and linked to this repository. It excludes private inputs and checkpoints.
 
 ## Scene compatibility
 
