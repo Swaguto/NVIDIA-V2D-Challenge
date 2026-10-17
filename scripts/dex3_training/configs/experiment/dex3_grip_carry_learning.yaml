@@ -1,0 +1,16 @@
+# @package _global_
+# A fresh training comparison: close the contact-only reward shortcut.
+defaults:
+  - dex3_grip_pose_tracking
+  - _self_
+objective:
+  support_shaping: carry_progress
+  stability_shaping: reference_pose
+  lift_reward_tolerance_m: 0.05
+numerical_failure_policy: terminate
+training:
+  max_iterations: 3000
+  save_interval: 500
+logging:
+  run_name: grip-carry-learning
+output_dir: /outputs/grip-carry-learning

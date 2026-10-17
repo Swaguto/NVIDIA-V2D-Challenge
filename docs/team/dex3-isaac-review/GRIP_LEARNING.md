@@ -122,6 +122,19 @@ scale from 0.02 to 0.15 and raises its training weight from 2 to 8. Offline rewa
 sensitivity on checkpoint 500 increases, but new physical evaluation is required.
 It does not change the grip, penetration, tracking or evaluation thresholds.
 
+The separate `dex3_grip_carry_learning` candidate also requires actual lift
+progress before paying the support and carried-load rewards during a requested
+carry. Acquisition before lift retains its contact reward. A 50 mm rational
+height scale gives partial lifts a useful training signal, and the optional
+stability term includes relative hand/object pose error as well as relative
+velocity. A motionless grip in the wrong relative pose can no longer receive
+the maximum stability reward. All reward terms remain bounded.
+
+This candidate starts a fresh training comparison; it changes the objective and
+must not be presented as an unchanged resumption of an older policy. Its GPU
+contracts and full physical performance require separate validation. The
+10 mm / 5 degree retention and other independent acceptance checks are unchanged.
+
 ### Continue an unchanged experiment
 
 `training.resume=true` requires a fresh output directory and the parent image's

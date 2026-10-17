@@ -13,6 +13,7 @@ import numpy as np
 import warp as wp
 from scipy.spatial.transform import Rotation
 from flash_chord.envs.observation import PolicyObservationConfig
+from flash_chord.utils.quat import quat_inv_xyzw, quat_mul_xyzw, quat_geodesic_angle
 from .objective import Dex3ObjectiveConfig
 from .payload import payload_plan
 from .sampling import resample_targets
@@ -239,6 +240,11 @@ def evaluate_grip(
     carry: wp.array(dtype=wp.float32),
     lift_origin: wp.array(dtype=wp.float32),
     shaping: int,
+    height_variance: float,
+    support_shaping: int,
+    stability_shaping: int,
+    target_hand: wp.array(dtype=wp.transform),
+    target_rotation: wp.array(dtype=wp.quat),
     target_com: wp.array(dtype=wp.vec3),
     load: wp.array(dtype=wp.spatial_vector),
     contact_pos: wp.array(dtype=wp.vec3),
@@ -293,6 +299,9 @@ def evaluate_grip(
             )
             relative_omega = wp.spatial_bottom(ov) - wp.spatial_bottom(hv)
             desired = load[ri]
+            wanted_lift = wp.max(0.001, target_com[ri][2] - lift_origin[ri])
+            achieved_lift = wp.max(0.0, center[2] - lift_origin[ri])
+            progress = wp.clamp(achieved_lift / wanted_lift, 0.0, 1.0)
             value = grip_components(
                 support,
                 f - wp.spatial_top(desired),
@@ -315,18 +324,40 @@ def evaluate_grip(
                         + wp.length_sq(moment_error) / 0.0064
                     )
                 )
-                wanted_lift = wp.max(0.001, target_com[ri][2] - lift_origin[ri])
-                achieved_lift = wp.max(0.0, center[2] - lift_origin[ri])
-                progress = wp.clamp(achieved_lift / wanted_lift, 0.0, 1.0)
                 height_error = center[2] - target_com[ri][2]
                 height_value = (
                     carry[ri]
                     * support
                     * progress
-                    / (1.0 + height_error * height_error / 0.0001)
+                    / (1.0 + height_error * height_error / height_variance)
                 )
                 value = wp.spatial_vector(
                     value[0], value[1], load_value, height_value, value[4], 0.0
+                )
+            if support_shaping == 1:
+                value[0] = support * (1.0 - carry[ri] + carry[ri] * progress)
+                value[2] = value[2] * progress
+            if stability_shaping == 1:
+                wrist_q = wp.transform_get_rotation(poses[wrist])
+                ref_q = wp.transform_get_rotation(target_hand[ri])
+                ref_wrist_com = wp.transform_point(target_hand[ri], body_com[wrist])
+                actual_relative = wp.quat_rotate_inv(wrist_q, center - wrist_com)
+                wanted_relative = wp.quat_rotate_inv(
+                    ref_q, target_com[ri] - ref_wrist_com
+                )
+                relative_q = quat_mul_xyzw(
+                    quat_inv_xyzw(wrist_q), wp.transform_get_rotation(poses[obj])
+                )
+                reference_relative_q = quat_mul_xyzw(
+                    quat_inv_xyzw(ref_q), target_rotation[ri]
+                )
+                angle_error = quat_geodesic_angle(relative_q, reference_relative_q)
+                value[1] = support / (
+                    1.0
+                    + wp.length_sq(relative_velocity) / 0.0025
+                    + wp.length_sq(relative_omega)
+                    + wp.length_sq(actual_relative - wanted_relative) / 0.0009
+                    + angle_error * angle_error / 0.06853891945
                 )
             accumulated += value
     total = base_score[world]
@@ -346,11 +377,32 @@ class GripObjectiveConfig(Dex3ObjectiveConfig):
     carried_height_weight: float = 6.0
     excess_pad_force_weight: float = -0.02
     load_shaping: str = "gaussian"
+    lift_reward_tolerance_m: float = 0.01
+    support_shaping: str = "raw"
+    stability_shaping: str = "velocity"
 
     def __post_init__(self):
         super().__post_init__()
         if self.load_shaping not in ("gaussian", "rational_lift"):
             raise ValueError("Unknown explicit grip shaping mode")
+        if self.support_shaping not in (
+            "raw",
+            "carry_progress",
+        ) or self.stability_shaping not in ("velocity", "reference_pose"):
+            raise ValueError("Unknown task grip support or stability shaping")
+        if (
+            not np.isfinite(self.lift_reward_tolerance_m)
+            or not 0.005 <= self.lift_reward_tolerance_m <= 0.1
+        ):
+            raise ValueError(
+                "Lift reward tolerance must be finite and between5and100mm"
+            )
+        if self.load_shaping != "rational_lift" and (
+            self.support_shaping != "raw" or self.lift_reward_tolerance_m != 0.01
+        ):
+            raise ValueError(
+                "Carry progress and lift tolerance require rational lift shaping"
+            )
         values = self.grip_weights
         if (
             not np.isfinite(values).all()
@@ -447,6 +499,7 @@ class GripObjective:
         labels = list(model.body_label[: self.bodies])
         hand_ids, object_ids, starts, counts = [], [], [], []
         active, carry, target_com, load, required, origin = [], [], [], [], [], []
+        target_hand, target_rotation = [], []
         mass, inertia, com = (
             model.body_mass.numpy(),
             model.body_inertia.numpy(),
@@ -472,6 +525,8 @@ class GripObjective:
                 np.broadcast_to(com[obj], (self.frames, 3))
             )
             target_com.append(positions[:, :3])
+            target_hand.append(data["robot_qpos"][:, ("left", "right").index(side), :7])
+            target_rotation.append(data["object_poses"][:, oi, 3:])
             load.append(
                 payload_plan(
                     data["timestamps_s"],
@@ -522,6 +577,11 @@ class GripObjective:
         self.carry = array(carry, wp.float32)
         self.lift_origin = array(origin, wp.float32)
         self.shaping = int(config.load_shaping == "rational_lift")
+        self.height_variance = config.lift_reward_tolerance_m**2
+        self.support_shaping = int(config.support_shaping == "carry_progress")
+        self.stability_shaping = int(config.stability_shaping == "reference_pose")
+        self.target_hand = array(target_hand, wp.transform, 7)
+        self.target_rotation = array(target_rotation, wp.quat, 4)
         self.target_com = array(target_com, wp.vec3, 3)
         self.load = array(load, wp.spatial_vector, 6)
         self.required = array(required, wp.int32)
@@ -584,6 +644,11 @@ class GripObjective:
                 self.carry,
                 self.lift_origin,
                 self.shaping,
+                self.height_variance,
+                self.support_shaping,
+                self.stability_shaping,
+                self.target_hand,
+                self.target_rotation,
                 self.target_com,
                 self.load,
                 self.contact.contact_pos_w,

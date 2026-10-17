@@ -44,6 +44,11 @@ def check():
             arr([1]),
             arr([0]),
             1,
+            0.0001,
+            0,
+            0,
+            arr([[0, 0, 0, 0, 0, 0, 1]], wp.transform),
+            arr([[0, 0, 0, 1]], wp.quat),
             arr([[0, 0, 0.05]], wp.vec3),
             arr([[0, 0, 2.943, 0, 0, 0]], wp.spatial_vector),
             arr([[0, 0, 0]] * (worlds * slots), wp.vec3),
@@ -64,6 +69,36 @@ def check():
         wp.launch(evaluate_grip, dim=worlds, inputs=inputs)
         assert not terms.numpy().reshape(worlds, 6)[:, 1:].any()
         assert before[0, 1] == 1  # independent snapshot, no shared world state
+
+        # New optional carry shaping must not pay for merely touching an object
+        # that stays on the support while the reference requests a lift.
+        inputs[-4] = arr(force, wp.vec3)
+        inputs[21], inputs[22] = 0.0025, 1
+        wp.launch(evaluate_grip, dim=worlds, inputs=inputs)
+        carried = terms.numpy().reshape(worlds, 6)
+        assert carried[0, 1] == 1 and carried[0, 3] == 1 and carried[0, 4] == 1
+        assert carried[2, 1] == 0 and carried[2, 3] == 0 and carried[2, 4] == 0
+        partial_pose = pose.copy()
+        partial_pose[1, 2] = 0.015
+        inputs[9] = arr(partial_pose, wp.transform)
+        wp.launch(evaluate_grip, dim=worlds, inputs=inputs)
+        partial = terms.numpy().reshape(worlds, 6).copy()
+        np.testing.assert_allclose(partial[0, 1], 0.3, atol=1e-6)
+        assert 0 < partial[0, 4] < 1
+        inputs[21], inputs[22] = 0.0001, 0
+        wp.launch(evaluate_grip, dim=worlds, inputs=inputs)
+        assert partial[0, 4] > 5 * terms.numpy().reshape(worlds, 6)[0, 4]
+        rotated = pose.copy()
+        rotated[7, 3:] = [0, 0, np.sin(np.pi / 12), np.cos(np.pi / 12)]
+        inputs[9] = arr(rotated, wp.transform)
+        inputs[10] = arr(np.zeros_like(velocity), wp.spatial_vector)
+        inputs[23] = 1
+        wp.launch(evaluate_grip, dim=worlds, inputs=inputs)
+        stable = terms.numpy().reshape(worlds, 6)
+        np.testing.assert_allclose(stable[0, 2], 1.0, atol=1e-6)
+        assert (
+            stable[3, 2] < 0.21
+        )  # static but30degrees wrong is not a stable target grip
 
         q = np.tile([0, 0, 0, 0, 0, 0, 1.0], (4, 1))
         q[1, 3:] = [0, 0, np.sqrt(0.5), np.sqrt(0.5)]
@@ -157,6 +192,9 @@ def check():
             force_observation_object_frame_and_world_isolation_verified=True,
             reset_world_has_no_stale_contact_observations=True,
             finite_observation_outliers_bounded_and_nan_not_hidden=True,
+            optional_carry_support_and_load_require_actual_lift_progress=True,
+            partial_lift_has_dense_bounded_progress_reward=True,
+            optional_stability_penalizes_static_relative_pose_error=True,
             physical_task_accepted=False,
         )
 
