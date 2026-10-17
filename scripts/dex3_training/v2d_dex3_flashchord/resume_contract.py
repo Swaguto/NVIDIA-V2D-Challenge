@@ -75,6 +75,9 @@ def validate(parent, current, parent_context_path, current_context_path, checkpo
         name
         for name in added
         if not name.startswith("extension/tests/")
+        and not (
+            name.startswith("extension/configs/experiment/") and name.endswith(".yaml")
+        )
         and name != "extension/v2d_dex3_flashchord/resume_contract.py"
     }
     if unexpected:

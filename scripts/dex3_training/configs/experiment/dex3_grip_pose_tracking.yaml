@@ -1,0 +1,44 @@
+# @package _global_
+# Broaden the training pose signal after measured lid twist; acceptance unchanged.
+defaults:
+  - dex3_grip_curriculum
+  - _self_
+objective:
+  object_keypoints:
+    weight: 8.0
+    shape: LAPLACIAN
+    var: 0.15
+curriculum:
+  thresholds: [500, 1000, 2000]
+  stages:
+    - _target_: flash_chord.lifecycle.curriculum.CurriculumStage
+      voc_scale: 0.0
+      reset_to_first_frame_probability: 0.25
+      objective_weights: &pose_weights
+        object_keypoints: 8.0
+        hand_keypoints: 0.25
+        hand_joint_pos: 0.02
+        contact_wrench_support: 0.0
+        missed_contact: 0.0
+        unintended_contact: 0.0
+        termination: -100.0
+        action_rate_l2: -0.01
+        action_l2: -0.002
+        contact_force_l2: 0.0
+        force_closure: 0.0
+        robot_pad_support: 3.0
+        robot_grip_stability: 1.0
+        robot_carried_load: 4.0
+        robot_carried_height: 6.0
+        robot_excess_pad_force: -0.1
+    - _target_: flash_chord.lifecycle.curriculum.CurriculumStage
+      voc_scale: 0.0
+      reset_to_first_frame_probability: 0.6
+      objective_weights: *pose_weights
+    - _target_: flash_chord.lifecycle.curriculum.CurriculumStage
+      voc_scale: 0.0
+      reset_to_first_frame_probability: 1.0
+      objective_weights: *pose_weights
+logging:
+  run_name: grip-pose-tracking
+output_dir: /outputs/grip-pose-tracking
