@@ -3,7 +3,10 @@
 Status: the native transfer and full-episode evaluation run. The controlled
 1,000-iteration / 1,536,000-step full-343-frame experiment has zero success,
 before and after learning. See [the current measured checkpoint](ORDERED_FIXES.md).
-Complete physical grasp retention is still required before further PPO training.
+Complete physical grasp retention is still required for policy acceptance.
+The newer [measured-contact grip curriculum](GRIP_LEARNING.md) is an experimental
+attempt to learn load-bearing retention; it has a separate observation schema,
+image, checkpoints and independent full-start evaluations.
 
 ## Private input preparation
 

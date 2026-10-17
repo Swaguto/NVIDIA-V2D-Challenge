@@ -1,0 +1,20 @@
+# Experimental grip training; default command only checks the GPU reward contract.
+# Use the matching code image and native/e002-speed1-v8 private input directory.
+services:
+  grip:
+    image: ${DEX3_GRIP_IMAGE:?Set the verified grip experiment image digest}
+    gpus: all
+    shm_size: 8gb
+    mem_limit: 24g
+    memswap_limit: 24g
+    environment:
+      WANDB_MODE: disabled
+      XLA_PYTHON_CLIENT_PREALLOCATE: "false"
+      FLASH_CHORD_CACHE_DIR: /data/collision-cache
+    volumes:
+      - ${DEX3_TRAINING_INPUTS:?Set the private corrected-clock input directory}:/data:ro
+      - ${DEX3_TRAINING_OUTPUTS:?Set a writable results parent}:/outputs
+      - dex3-training-cache:/root/.cache
+    command: [/opt/dex3-extension/check_grip_training.py]
+volumes:
+  dex3-training-cache:

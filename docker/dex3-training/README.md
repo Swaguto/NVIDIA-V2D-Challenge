@@ -1,5 +1,10 @@
 # Dex3 development training
 
+For measured-contact force observations, lift/load rewards and the staged reset
+experiment, see [grip learning](../../docs/team/dex3-isaac-review/GRIP_LEARNING.md).
+`compose.grip.yaml` defaults to the GPU reward/observation contract check; training
+is an explicit command. Complete physical task acceptance is still required.
+
 For the newer **343-frame full-task experiment**, measured initial/trained
 results, corrected force-plan clock and local reproduction pack, start with
 [the ordered fixes checkpoint](../../docs/team/dex3-isaac-review/ORDERED_FIXES.md).
