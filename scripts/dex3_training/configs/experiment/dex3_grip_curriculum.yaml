@@ -1,0 +1,75 @@
+# @package _global_
+# Reference-state practice is training-only; final evaluation always starts at0.
+defaults:
+  - dex3_grip_learning
+  - _self_
+scene:
+  world_count: 256
+action:
+  wrist_pos_scale: 0.01
+  wrist_pos_clip: 0.012
+  wrist_ori_scale: 0.2
+  wrist_ori_clip: 0.35
+  finger_joint_pos_scale: 0.25
+  finger_joint_pos_clip: 0.5
+observation:
+  maximum_observation_abs: 100.0
+objective:
+  input_root: /data
+  pad_support_weight: 3.0
+  grip_stability_weight: 1.0
+  carried_load_weight: 4.0
+  carried_height_weight: 6.0
+  load_shaping: rational_lift
+  hand_keypoints:
+    weight: 0.25
+  hand_joint_pos:
+    weight: 0.02
+  excess_pad_force_weight: -0.1
+reset:
+  always_reset_to_first_frame: false
+  reset_to_first_frame_probability: 0.25
+curriculum:
+  _target_: flash_chord.lifecycle.curriculum.FixedCurriculum
+  thresholds: [500, 1000, 2000]
+  stages:
+    - _target_: flash_chord.lifecycle.curriculum.CurriculumStage
+      voc_scale: 0.0
+      reset_to_first_frame_probability: 0.25
+      objective_weights: &grip_weights
+        object_keypoints: 2.0
+        hand_keypoints: 0.25
+        hand_joint_pos: 0.02
+        contact_wrench_support: 0.0
+        missed_contact: 0.0
+        unintended_contact: 0.0
+        termination: -100.0
+        action_rate_l2: -0.01
+        action_l2: -0.002
+        contact_force_l2: 0.0
+        force_closure: 0.0
+        robot_pad_support: 3.0
+        robot_grip_stability: 1.0
+        robot_carried_load: 4.0
+        robot_carried_height: 6.0
+        robot_excess_pad_force: -0.1
+    - _target_: flash_chord.lifecycle.curriculum.CurriculumStage
+      voc_scale: 0.0
+      reset_to_first_frame_probability: 0.6
+      objective_weights: *grip_weights
+    - _target_: flash_chord.lifecycle.curriculum.CurriculumStage
+      voc_scale: 0.0
+      reset_to_first_frame_probability: 1.0
+      objective_weights: *grip_weights
+training:
+  world_count: 256
+  rollout_steps: 32
+  max_iterations: 2000
+  save_interval: 100
+  network:
+    initial_noise_std: 0.3
+  ppo:
+    mini_batches: 8
+logging:
+  run_name: staged-grip-learning
+output_dir: /outputs/grip-curriculum

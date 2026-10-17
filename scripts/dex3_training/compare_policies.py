@@ -5,6 +5,10 @@ import hashlib
 import json
 from pathlib import Path
 import struct
+from v2d_dex3_flashchord.reset_curriculum import (
+    validate as validate_reset_curriculum,
+    objective_weights,
+)
 
 
 def digest(path):
@@ -59,10 +63,13 @@ def compare(inputs, checkpoints, reports, controls):
     if (
         config["env"]["voc_scale"] != 0
         or config["voc_scale_override"] != 0
-        or config["curriculum"] is not None
         or config["reset"]["voc_decay_steps"] != 0
     ):
         raise ValueError("Comparison requires unassisted policies")
+    if config["curriculum"] is not None:
+        validate_reset_curriculum(
+            config["curriculum"], objective_weights(config["objective"])
+        )
     for name in (
         "contact_wrench_support",
         "missed_contact",

@@ -34,11 +34,17 @@ def append_force_observation(
     poses: wp.array(dtype=wp.transform),
     force: wp.array(dtype=wp.vec3),
     force_scale: float,
+    maximum_observation_abs: float,
     output: wp.array(dtype=wp.float32),
 ):
     world = wp.tid()
     for axis in range(base_dim):
-        output[world * total_dim + axis] = base[world * base_dim + axis]
+        observed = base[world * base_dim + axis]
+        if maximum_observation_abs > 0.0 and wp.isfinite(observed):
+            observed = wp.clamp(
+                observed, -maximum_observation_abs, maximum_observation_abs
+            )
+        output[world * total_dim + axis] = observed
         if episode_step[world] == 0 and contact_axis[axis] != 0:
             output[world * total_dim + axis] = 0.0
     for slot in range(slots):
@@ -49,9 +55,10 @@ def append_force_observation(
         if episode_step[world] == 0:
             local_force = wp.vec3()
         for axis in range(3):
-            output[world * total_dim + base_dim + slot * 3 + axis] = wp.clamp(
-                local_force[axis] / force_scale, -5.0, 5.0
-            )
+            force_value = local_force[axis] / force_scale
+            if wp.isfinite(force_value):
+                force_value = wp.clamp(force_value, -5.0, 5.0)
+            output[world * total_dim + base_dim + slot * 3 + axis] = force_value
     output[world * total_dim + total_dim - 1] = wp.clamp(
         float(timestep[world]) / float(wp.max(1, frames - 1)), 0.0, 1.0
     )
@@ -60,6 +67,7 @@ def append_force_observation(
 @dataclass(frozen=True)
 class GripObservationConfig(PolicyObservationConfig):
     contact_force_scale_N: float = 20.0
+    maximum_observation_abs: float | None = None
 
     def __post_init__(self):
         super().__post_init__()
@@ -68,6 +76,13 @@ class GripObservationConfig(PolicyObservationConfig):
             or self.contact_force_scale_N <= 0
         ):
             raise ValueError("Need a positive contact force observation scale")
+        if self.maximum_observation_abs is not None and (
+            not np.isfinite(self.maximum_observation_abs)
+            or self.maximum_observation_abs < 10
+        ):
+            raise ValueError(
+                "Observation magnitude bound must be finite and at least10"
+            )
 
     def build(
         self,
@@ -100,15 +115,26 @@ class GripObservationConfig(PolicyObservationConfig):
             episode_step,
             action.buffers.reference.num_frames,
             self.contact_force_scale_N,
+            self.maximum_observation_abs or 0.0,
             device,
         )
 
 
 class GripObservation:
     def __init__(
-        self, base, scene, contact, timestep, episode_step, frames, scale, device
+        self,
+        base,
+        scene,
+        contact,
+        timestep,
+        episode_step,
+        frames,
+        scale,
+        maximum_observation_abs,
+        device,
     ):
         self.base, self.contact, self.timestep = base, contact, timestep
+        self.maximum_observation_abs = maximum_observation_abs
         self.episode_step = episode_step
         contact_axis = np.zeros(base.observation_dim, dtype=np.int32)
         for name, (start, end) in zip(base.block_names, base.block_ranges, strict=True):
@@ -157,6 +183,7 @@ class GripObservation:
                 state.body_q,
                 self.contact.contact_force_w,
                 self.scale,
+                self.maximum_observation_abs,
                 output,
             ],
         )
@@ -210,6 +237,8 @@ def evaluate_grip(
     required: wp.array(dtype=wp.int32),
     active: wp.array(dtype=wp.float32),
     carry: wp.array(dtype=wp.float32),
+    lift_origin: wp.array(dtype=wp.float32),
+    shaping: int,
     target_com: wp.array(dtype=wp.vec3),
     load: wp.array(dtype=wp.spatial_vector),
     contact_pos: wp.array(dtype=wp.vec3),
@@ -274,6 +303,31 @@ def evaluate_grip(
                 carry[ri],
                 excess,
             )
+            if shaping == 1:
+                force_error = f - wp.spatial_top(desired)
+                moment_error = moment - wp.spatial_bottom(desired)
+                load_value = (
+                    carry[ri]
+                    * support
+                    / (
+                        1.0
+                        + wp.length_sq(force_error) / 9.0
+                        + wp.length_sq(moment_error) / 0.0064
+                    )
+                )
+                wanted_lift = wp.max(0.001, target_com[ri][2] - lift_origin[ri])
+                achieved_lift = wp.max(0.0, center[2] - lift_origin[ri])
+                progress = wp.clamp(achieved_lift / wanted_lift, 0.0, 1.0)
+                height_error = center[2] - target_com[ri][2]
+                height_value = (
+                    carry[ri]
+                    * support
+                    * progress
+                    / (1.0 + height_error * height_error / 0.0001)
+                )
+                value = wp.spatial_vector(
+                    value[0], value[1], load_value, height_value, value[4], 0.0
+                )
             accumulated += value
     total = base_score[world]
     for ti in range(5):
@@ -291,9 +345,12 @@ class GripObjectiveConfig(Dex3ObjectiveConfig):
     carried_load_weight: float = 4.0
     carried_height_weight: float = 6.0
     excess_pad_force_weight: float = -0.02
+    load_shaping: str = "gaussian"
 
     def __post_init__(self):
         super().__post_init__()
+        if self.load_shaping not in ("gaussian", "rational_lift"):
+            raise ValueError("Unknown explicit grip shaping mode")
         values = self.grip_weights
         if (
             not np.isfinite(values).all()
@@ -389,7 +446,7 @@ class GripObjective:
         self.bodies = model.body_count // worlds
         labels = list(model.body_label[: self.bodies])
         hand_ids, object_ids, starts, counts = [], [], [], []
-        active, carry, target_com, load, required = [], [], [], [], []
+        active, carry, target_com, load, required, origin = [], [], [], [], [], []
         mass, inertia, com = (
             model.body_mass.numpy(),
             model.body_inertia.numpy(),
@@ -426,6 +483,7 @@ class GripObjective:
                 )
             )
             a, c = np.zeros(self.frames), np.zeros(self.frames)
+            phase_origin = np.zeros(self.frames)
             req = np.full((self.frames, 3), -1, dtype=np.int32)
             for phase in phases:
                 indices = np.flatnonzero(
@@ -443,6 +501,7 @@ class GripObjective:
                     raise ValueError("Incomplete robot pad objective mapping")
                 a[indices] = 1
                 z0 = np.interp(phase["close_s"], data["timestamps_s"], positions[:, 2])
+                phase_origin[indices] = z0
                 c[indices] = np.clip((positions[indices, 2] - z0) / 0.01, 0, 1)
                 req[np.ix_(indices, range(len(pads)))] = [
                     start + links.index(p) for p in pads
@@ -450,6 +509,7 @@ class GripObjective:
             active.append(a)
             carry.append(c)
             required.append(req)
+            origin.append(phase_origin)
 
         def array(values, dtype, components=1):
             values = np.stack(values, axis=1)
@@ -460,6 +520,8 @@ class GripObjective:
 
         self.active = array(active, wp.float32)
         self.carry = array(carry, wp.float32)
+        self.lift_origin = array(origin, wp.float32)
+        self.shaping = int(config.load_shaping == "rational_lift")
         self.target_com = array(target_com, wp.vec3, 3)
         self.load = array(load, wp.spatial_vector, 6)
         self.required = array(required, wp.int32)
@@ -487,6 +549,14 @@ class GripObjective:
     def reset(self, mask):
         self.base.reset(mask)
 
+    def set_weights(self, weights):
+        if set(weights) != set(self.term_names) or not all(
+            np.isfinite(float(v)) for v in weights.values()
+        ):
+            raise ValueError("Grip curriculum objective mapping differs")
+        self.base.set_weights({name: weights[name] for name in self.base.term_names})
+        self.weights.assign([weights[name] for name in self.term_names])
+
     def evaluate(self, state, timestep, terminated):
         self.base.evaluate(state, timestep, terminated)
         wp.launch(
@@ -512,6 +582,8 @@ class GripObjective:
                 self.required,
                 self.active,
                 self.carry,
+                self.lift_origin,
+                self.shaping,
                 self.target_com,
                 self.load,
                 self.contact.contact_pos_w,

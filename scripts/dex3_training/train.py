@@ -30,16 +30,57 @@ from flash_chord.training.ppo.runner import metric_definitions, run_training
 from flash_chord.training.ppo.learner import create_learner
 from flash_chord.training.checkpoint import save_checkpoint
 from flash_chord.training.progress import ConsoleTrainingProgress
+from v2d_dex3_flashchord.reset_curriculum import validate as validate_reset_curriculum
+from v2d_dex3_flashchord.training_metrics import nonfinite_fields
 
 
 class LocalMetricLogger:
-    def __init__(self, output, definitions):
+    def __init__(self, output, definitions, env=None):
+        self.output, self.env = output, env
         self.stream = (output / "metrics.jsonl").open("x")
         (output / "metric-definitions.json").write_text(
             json.dumps(definitions, indent=2) + "\n"
         )
 
     def log(self, metrics, step):
+        invalid = nonfinite_fields(metrics)
+        if invalid:
+            counts = {}
+            if self.env is not None:
+                env = self.env
+                arrays = dict(
+                    body_q=env.state_0.body_q.numpy(),
+                    body_qd=env.state_0.body_qd.numpy(),
+                    joint_q=env.state_0.joint_q.numpy(),
+                    joint_qd=env.state_0.joint_qd.numpy(),
+                    raw_action=env.action.buffers.raw_action.numpy(),
+                    observation=env.observation.numpy(),
+                    objective_terms=env.objective.terms.numpy(),
+                    objective_score=env.objective.score.numpy(),
+                    timestep=env.timestep.numpy(),
+                )
+                counts = {
+                    name: int(np.sum(~np.isfinite(a))) for name, a in arrays.items()
+                }
+                with (self.output / "nonfinite-training-state.npz").open(
+                    "xb"
+                ) as stream:
+                    np.savez_compressed(stream, **arrays)
+            (self.output / "nonfinite-training-metrics.json").write_text(
+                json.dumps(
+                    dict(
+                        environment_steps=step,
+                        nonfinite_metrics=invalid,
+                        nonfinite_state_counts=counts,
+                        training_aborted=True,
+                    ),
+                    indent=2,
+                )
+                + "\n"
+            )
+            raise FloatingPointError(
+                "Nonfinite training metrics: " + ", ".join(invalid)
+            )
         self.stream.write(
             json.dumps(dict(environment_steps=step, **metrics), allow_nan=False) + "\n"
         )
@@ -117,11 +158,8 @@ def main(cfg: DictConfig):
         cfg.logging.mode != "disabled"
         or cfg.env.voc_scale != 0
         or cfg.voc_scale_override != 0
-        or cfg.curriculum is not None
     ):
-        raise ValueError(
-            "Pilot requires local logging, no object assistance, and no curriculum"
-        )
+        raise ValueError("Training requires local logging and no object assistance")
     output = Path(cfg.output_dir)
     output.mkdir(parents=True, exist_ok=False)
     input_manifest_path = Path(cfg.task.parquet).parent / "manifest.json"
@@ -149,6 +187,16 @@ def main(cfg: DictConfig):
             contact_friction=cfg.scene.contact_friction,
         )
         env = RLEnv(setup.scene, setup.reference, config=env_config)
+        validate_reset_curriculum(
+            resolved_dict(cfg).get("curriculum"),
+            dict(
+                zip(
+                    env.objective.term_names,
+                    env.objective.weights.numpy().tolist(),
+                    strict=True,
+                )
+            ),
+        )
         env.reset()
         env.capture_step()
         env.reset()
@@ -176,13 +224,17 @@ def main(cfg: DictConfig):
             if input_manifest["schema"] == "v2d.dex3-training-task.v3"
             else "confident development window; unassisted; not full episode acceptance"
         )
+        if cfg.curriculum is not None:
+            metadata["dex3_pilot_scope"] = (
+                "Reference-state initialization during training with zero VOC; final stage uses only frame-zero starts. Full-task success requires separate complete evaluation from frame zero."
+            )
         initial = create_learner(jax_env, training)
         save_checkpoint(
             output / "model_0.safetensors",
             initial,
             metadata={**metadata, "iteration": 0, "environment_steps": 0},
         )
-        logger = LocalMetricLogger(output, metric_definitions(jax_env))
+        logger = LocalMetricLogger(output, metric_definitions(jax_env), env)
         learner = run_training(
             jax_env,
             training,

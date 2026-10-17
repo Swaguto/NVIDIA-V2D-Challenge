@@ -15,7 +15,8 @@ def check():
 
         worlds, bodies, slots = 4, 2, 3
         pose = np.tile([0, 0, 0, 0, 0, 0, 1.0], (worlds * bodies, 1))
-        pose[5, 2] = -0.03
+        pose[1::2, 2] = 0.05
+        pose[5, 2] = 0.0
         velocity = np.zeros((worlds * bodies, 6))
         velocity[7, 5] = 2.0
         force = np.tile([0, 0, 0.981], (worlds * slots, 1))
@@ -41,7 +42,9 @@ def check():
             arr([0, 1, 2], wp.int32),
             arr([1]),
             arr([1]),
-            arr([[0, 0, 0]], wp.vec3),
+            arr([0]),
+            1,
+            arr([[0, 0, 0.05]], wp.vec3),
             arr([[0, 0, 2.943, 0, 0, 0]], wp.spatial_vector),
             arr([[0, 0, 0]] * (worlds * slots), wp.vec3),
             arr(force, wp.vec3),
@@ -83,6 +86,7 @@ def check():
                 arr(q, wp.transform),
                 arr([[0, 20, 0], [40, 0, 0]], wp.vec3),
                 20.0,
+                100.0,
                 output,
             ],
         )
@@ -110,6 +114,7 @@ def check():
                 arr(q, wp.transform),
                 arr([[0, 20, 0], [40, 0, 0]], wp.vec3),
                 20.0,
+                100.0,
                 reset_output,
             ],
         )
@@ -118,6 +123,30 @@ def check():
             [[11, 0, 0, 0, 0, 0], [21, 22, 2, 0, 0, 1]],
             atol=1e-6,
         )
+        bounded = wp.zeros(6)
+        wp.launch(
+            append_force_observation,
+            dim=1,
+            inputs=[
+                arr([1e20, float("nan")]),
+                2,
+                6,
+                1,
+                2,
+                3,
+                arr([0], wp.int32),
+                arr([1], wp.int32),
+                arr([0, 0], wp.int32),
+                arr([1], wp.int32),
+                arr([0], wp.int32),
+                arr(q[:2], wp.transform),
+                arr([[0, 0, 0]], wp.vec3),
+                20.0,
+                100.0,
+                bounded,
+            ],
+        )
+        assert bounded.numpy()[0] == 100 and np.isnan(bounded.numpy()[1])
         return dict(
             schema="v2d.grip-training-gpu-contract.v1",
             balanced_loaded_grip_reward_verified=True,
@@ -127,6 +156,7 @@ def check():
             reward_has_no_accumulated_state=True,
             force_observation_object_frame_and_world_isolation_verified=True,
             reset_world_has_no_stale_contact_observations=True,
+            finite_observation_outliers_bounded_and_nan_not_hidden=True,
             physical_task_accepted=False,
         )
 
