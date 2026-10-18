@@ -131,3 +131,43 @@ def test_geometry_view_rejects_wrong_episode_and_path_names(tmp_path):
         prepare(data, geometry, 2, ["pot"], tmp_path / "bad")
     with pytest.raises(ValueError):
         prepare(data, geometry, 1, ["../outside"], tmp_path / "bad")
+
+
+def test_sam3d_view_binds_metric_image_sources_without_calling_them_observed_geometry(
+    tmp_path,
+):
+    data, geometry = fixture(tmp_path)
+    folder = geometry / "pot"
+    p = folder / "manifest.json"
+    m = json.loads(p.read_text())
+    m.update(
+        stage="sam3d_metric_depth",
+        model_revision="2e73555018d2741ccd486e56c24fac41155a1dc6",
+        unseen_surfaces_are_inferred=True,
+        anchor_pose_is_inferred=True,
+        measured_pointmap_pixels=1000,
+        coordinate_frame="rectified_camera",
+        source_files_sha256={},
+    )
+    for name in [
+        "input.png",
+        "mask.png",
+        "pointmap.npy",
+        "input-intrinsics.json",
+        "raw.glb",
+        "raw-transform.json",
+    ]:
+        (folder / name).write_bytes(("verified model source " + name).encode())
+        m["source_files_sha256"][name] = hashlib.sha256(
+            (folder / name).read_bytes()
+        ).hexdigest()
+    p.write_text(json.dumps(m))
+    out = tmp_path / "sam-view"
+    prepare(data, geometry, 1, ["pot"], out)
+    assert (
+        verify_geometry(out, 1, ["pot"])["objects"]["pot"]["stage"]
+        == "sam3d_metric_depth"
+    )
+    (folder / "pointmap.npy").write_bytes(b"changed measured depth")
+    with pytest.raises(ValueError, match="source reconstruction input changed"):
+        verify_geometry(out, 1, ["pot"])

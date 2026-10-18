@@ -50,9 +50,9 @@ def export(ep):
     scored_proof = None
     if scored:
         sys.path.insert(0, str(CODE / 'scripts/track3'))
-        from reconstructed_view import verify_geometry
+        from reconstructed_view import verify_geometry, FINAL_STAGES
         scored_proof = verify_geometry(args.scored_reconstructed_view, ep, names)
-        if any(item['stage'] != 'multi_view_tsdf' for item in scored_proof['objects'].values()):
+        if any(item['stage'] not in FINAL_STAGES for item in scored_proof['objects'].values()):
             raise ValueError('Scored training bundles require refined geometry; bootstrap seeds are insufficient')
         proof_path = args.scored_reconstructed_view / 'geometry-provenance.json'
         if digest(proof_path) != m['input_contract'].get('reconstructed_geometry_provenance_sha256'):
@@ -109,7 +109,11 @@ def export(ep):
         frozen['geometry-provenance.json'] = proof_path
         for obj in m['objects']:
             item = scored_proof['objects'][obj['id']]
-            frozen['geometry/' + obj['id'] + '/manifest.json'] = args.scored_reconstructed_view / item['manifest']
+            geometry_manifest = args.scored_reconstructed_view / item['manifest']
+            frozen['geometry/' + obj['id'] + '/manifest.json'] = geometry_manifest
+            if item['stage'] == 'sam3d_metric_depth':
+                for name in json.loads(geometry_manifest.read_text())['source_files_sha256']:
+                    frozen['geometry/' + obj['id'] + '/' + name] = geometry_manifest.parent / name
         for name, frame, path in target_files:
             frozen[f'object-targets/{name}/{frame:06d}.json'] = path
         for frame in frames:

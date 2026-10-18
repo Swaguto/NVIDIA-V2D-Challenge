@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "reconstruction/modules/v2d_issue6"))
 from issue6.manifest import PATH_KEYS, load
 from issue6.track3_adapter import observed_object_state
-from reconstructed_view import verify_geometry
+from reconstructed_view import verify_geometry, FINAL_STAGES
 
 
 def sha(path):
@@ -34,9 +34,9 @@ def bind(manifest, data, results, out):
         )
     names = contract["official_object_slot_names"]
     proof = verify_geometry(data, m["episode"], names)
-    if any(row["stage"] != "multi_view_tsdf" for row in proof["objects"].values()):
+    if any(row["stage"] not in FINAL_STAGES for row in proof["objects"].values()):
         raise ValueError(
-            "Final object integration requires refined reconstructed geometry"
+            "Final object integration requires completed participant reconstruction"
         )
     meshes = {
         name: (data / "mesh" / name / (name + ".glb")).resolve() for name in names

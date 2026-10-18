@@ -7,6 +7,8 @@ import os
 import re
 from pathlib import Path
 
+FINAL_STAGES = {"multi_view_tsdf", "sam3d_metric_depth"}
+
 
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -42,10 +44,37 @@ def verify_geometry(data, episode, names):
             or m["object"] != name
             or m["units"] != "metres"
             or m.get("body_origin_frozen") is not True
-            or m["stage"] not in ("depth_seed", "multi_view_tsdf")
+            or m["stage"] not in ({"depth_seed"} | FINAL_STAGES)
             or sha(data / "mesh" / name / f"{name}.glb") != m["mesh_sha256"]
         ):
             raise ValueError("Scored mesh is not bound to its video reconstruction")
+        if m["stage"] == "sam3d_metric_depth":
+            required = {
+                "input.png",
+                "mask.png",
+                "pointmap.npy",
+                "input-intrinsics.json",
+                "raw.glb",
+                "raw-transform.json",
+            }
+            if (
+                m.get("model_revision") != "2e73555018d2741ccd486e56c24fac41155a1dc6"
+                or m.get("unseen_surfaces_are_inferred") is not True
+                or m.get("anchor_pose_is_inferred") is not True
+                or m.get("measured_pointmap_pixels", 0) < 200
+                or m.get("coordinate_frame") != "rectified_camera"
+                or not required.issubset(m.get("source_files_sha256", {}))
+            ):
+                raise ValueError(
+                    "SAM3D mesh lacks its metric source and inferred-pose contract"
+                )
+            for relative, digest in m["source_files_sha256"].items():
+                source = (manifest.parent / relative).resolve()
+                if (
+                    not source.is_relative_to(manifest.parent.resolve())
+                    or sha(source) != digest
+                ):
+                    raise ValueError("SAM3D source reconstruction input changed")
     return proof
 
 

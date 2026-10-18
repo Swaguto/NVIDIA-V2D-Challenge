@@ -167,8 +167,13 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
             if anchor is not None:
                 tracker.pose_last = torch.as_tensor(centered_tracker_pose(prior_pose, tracker.model_center), device='cuda', dtype=torch.float)
                 if frame == anchor:
-                    pose = anchor_pose.copy()
-                    method = 'stereo_seed_anchor'
+                    if proof.get('stage') == 'sam3d_metric_depth':
+                        pose = tracker.track_one(rgb=rgb, depth=depth, K=K,
+                                                 iteration=max(register_iterations, track_iterations))
+                        method = 'refine_sam3d_anchor'
+                    else:
+                        pose = anchor_pose.copy()
+                        method = 'stereo_seed_anchor'
                 else:
                     pose = tracker.track_one(rgb=rgb, depth=depth, K=K, iteration=track_iterations)
                     method = 'track_from_reconstructed_seed' if last_frame is not None else 'reacquire_from_seed_prior'
