@@ -158,3 +158,28 @@ Each episode needs a new output directory. A complete baseline can still fail
 every grasp: inspect evaluator metrics, full native motion and the task audit.
 These scores compare against reconstructed references and are not leaderboard
 ground truth. The command does not upload or select a submission automatically.
+
+### Start from videos, without saved hand fits
+
+`run_scored_hands.py --config <config.json>` estimates independent stereo camera
+motion, builds video/depth observations, exports calibrated optimizer cameras,
+runs hand inference and masks, and fits the complete episode. The config uses
+`episode`, `split` (`evaluation` or `public`), `source_root`, `data_subdir`,
+`models`, `overlay`, `roster`, `out`, `max_seconds`, and `perception_image`.
+Scored inference additionally requires `kit`; public validation requires the
+explicit roster produced by `make_public_validation_roster.py`. An optional
+`cameras` root reuses an existing independent camera sequence and records its
+report hash. `docker_host` optionally selects a separate Docker daemon.
+
+The entire `source_root` mount must contain only videos and calibration metadata,
+including files outside `data_subdir`. Keep reference pose tables and provided
+CAD elsewhere. The hand runtime weights and licensed MANO files remain separate
+private mounts. The resulting `observations`, `temporal-hands`, and `perception`
+directories supply the reconstruction runner's corresponding config paths.
+All three runners need a surrounding timed compute lease and result backup.
+
+For an offline native replay, run
+`scripts/dex3_training/render_native_readback_fast.py --run <readback> --inputs <frozen-pack> --out <new-preview>`.
+It retains every source knot at source speed, draws the actual recorded collision
+surfaces with a fixed view, and warns when an object leaves that view. Triangle
+visibility is approximate. It does not run new physics or render Isaac Sim.

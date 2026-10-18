@@ -87,3 +87,46 @@ def test_changed_overlay_and_unbounded_run_fail_before_launch(config):
     p.write_text(json.dumps(m))
     with pytest.raises(FileNotFoundError):
         validate(config)
+
+
+@pytest.mark.parametrize("relative", ["other/labels.parquet", "hidden/object.glb"])
+def test_entire_parent_mount_is_checked_for_reference_assets(config, relative):
+    path = Path(config["source_root"]) / relative
+    path.parent.mkdir()
+    path.touch()
+    with pytest.raises(ValueError, match="Common inference mount"):
+        validate(config)
+
+
+def hand_config(config):
+    config["split"] = "public"
+    roster = Path(config["roster"])
+    metadata = json.loads(roster.read_text())
+    metadata.update(schema="v2d.public-video-validation-roster.v1", split="public")
+    roster.write_text(json.dumps(metadata))
+    for name in ["hand-runtime-v1/hamer/_DATA/data/mano", "hand-runtime-v1/public"]:
+        (Path(config["models"]) / name).mkdir(parents=True)
+    return config
+
+
+def test_public_hand_driver_never_requires_reference_parquets_or_a_scored_kit(config):
+    from run_scored_hands import validate as validate_hands
+
+    c = hand_config(config)
+    assert validate_hands(c) == "test"
+    c["split"] = "evaluation"
+    c["kit"] = "/does-not-exist"
+    with pytest.raises(ValueError, match="official kit"):
+        validate_hands(c)
+
+
+def test_public_hand_driver_requires_its_explicit_split_contract(config):
+    from run_scored_hands import validate as validate_hands
+
+    c = hand_config(config)
+    path = Path(c["roster"])
+    roster = json.loads(path.read_text())
+    roster.pop("schema")
+    path.write_text(json.dumps(roster))
+    with pytest.raises(ValueError, match="explicit video-only roster"):
+        validate_hands(c)

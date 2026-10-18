@@ -28,6 +28,24 @@ def image_digest(value):
     return value
 
 
+def validate_video_mount(root, data):
+    """Check the entire common mount, including files outside its video view."""
+    root = root.resolve()
+    if any((data / name).exists() for name in ("mesh", "urdf", "data")):
+        raise ValueError(
+            "Inference data view must expose only videos and calibration metadata"
+        )
+    for path in root.rglob("*"):
+        if path.is_symlink() and not path.resolve().is_relative_to(root):
+            raise ValueError("Source links escape the common video mount")
+        if (path.is_dir() and path.name in {"mesh", "urdf", "data"}) or (
+            path.is_file() and path.suffix not in {".mp4", ".json", ".txt"}
+        ):
+            raise ValueError(
+                "Common inference mount must contain only videos and calibration metadata"
+            )
+
+
 def validate(config):
     if type(config["max_seconds"]) is not int or not 0 < config["max_seconds"] <= 7200:
         raise ValueError(
@@ -62,10 +80,7 @@ def validate(config):
     ):
         raise ValueError("Video/calibration links escape the common source mount")
     # The inference view must not expose reference meshes or pose tables.
-    if any((data / name).exists() for name in ("mesh", "urdf", "data")):
-        raise ValueError(
-            "Inference data view must expose only videos and calibration metadata"
-        )
+    validate_video_mount(Path(config["source_root"]), data)
     roster = json.loads(Path(config["roster"]).read_text())["episodes"]
     names = roster[str(config["episode"])]
     if (
