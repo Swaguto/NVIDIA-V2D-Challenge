@@ -1,0 +1,771 @@
+{
+  "schema": "v2d.current-scored-coverage.v2",
+  "verified_utc": "2026-10-18T09:29:05.682695+00:00",
+  "official_roster_sha256": "be92ef6db25aa60cefcdfb44f0acfdc6fbdfa26bb249f6890e1963c659b79272",
+  "episodes": [
+    {
+      "episode": 1,
+      "source_frames": 335,
+      "official_object_order": [
+        "white_pot",
+        "white_pot_lid"
+      ],
+      "verified_video_frame_axis": true,
+      "calibrated_camera_and_hand_fit_verified": true,
+      "observed_hand_frames": {
+        "left": 332,
+        "right": 305
+      },
+      "policy_status": "short baseline complete; physical task fails",
+      "reserved_post_freeze_validation": false,
+      "geometry": [
+        {
+          "slot": 0,
+          "object": "white_pot",
+          "owner": "Codex implementation",
+          "status": "SHA-verified own candidate; physical task fails",
+          "physical_task_accepted": false,
+          "manifest_sha256": "f1ee599c7d94e33a603b7094e30cdf53edf8db275ac9b1c5d04d603728eaffc1",
+          "mesh_sha256": "51646281ccde77c5d70fd72f1a7ae0ae574797a14c49a7d2b0e616eeee66544b",
+          "units": "metres",
+          "body_origin_frozen": true,
+          "seed_frame": 168,
+          "source_file_closure_verified": true,
+          "vertices": 6004,
+          "triangles": 12000,
+          "watertight": true,
+          "full_bundle_frame_axis_verified": true,
+          "bundle_manifest_sha256": "5cd20832d036199d596075540ff43ec6ebcc882f59235749d51b10223e12f0a9"
+        },
+        {
+          "slot": 1,
+          "object": "white_pot_lid",
+          "owner": "Codex implementation",
+          "status": "SHA-verified own candidate; physical task fails",
+          "physical_task_accepted": false,
+          "manifest_sha256": "52429940366f2f9f04ecf7cfa14c05071c8211cda81bf20063bb950f7b54d428",
+          "mesh_sha256": "fe90ae931910ee6cf68b8b226d1198ebf0e14da395c6a9a277569fd1476bb067",
+          "units": "metres",
+          "body_origin_frozen": true,
+          "seed_frame": 103,
+          "source_file_closure_verified": true,
+          "vertices": 6036,
+          "triangles": 12000,
+          "watertight": true,
+          "full_bundle_frame_axis_verified": true,
+          "bundle_manifest_sha256": "5cd20832d036199d596075540ff43ec6ebcc882f59235749d51b10223e12f0a9"
+        }
+      ]
+    },
+    {
+      "episode": 3,
+      "source_frames": 313,
+      "official_object_order": [
+        "white_pot",
+        "wooden_spoon"
+      ],
+      "verified_video_frame_axis": true,
+      "calibrated_camera_and_hand_fit_verified": true,
+      "observed_hand_frames": {
+        "left": 261,
+        "right": 222
+      },
+      "policy_status": "short baseline complete; physical task fails",
+      "reserved_post_freeze_validation": false,
+      "geometry": [
+        {
+          "slot": 0,
+          "object": "white_pot",
+          "owner": "Codex implementation",
+          "status": "SHA-verified own candidate; physical task fails",
+          "physical_task_accepted": false,
+          "manifest_sha256": "e146c86d3f7619761143bfd0d80e480f913a36aa2474d5d76694f0e0716cd2bd",
+          "mesh_sha256": "e30fde87b2f6071bf4e7e82aba708de3e10468dd494da54c08ca9ba2b7469c5b",
+          "units": "metres",
+          "body_origin_frozen": true,
+          "seed_frame": 0,
+          "source_file_closure_verified": true,
+          "vertices": 6010,
+          "triangles": 12000,
+          "watertight": true,
+          "full_bundle_frame_axis_verified": true,
+          "bundle_manifest_sha256": "5589dfa4d6b27ea9337b0d2e3e4de54fff523460d5f13abf801dd6c565aa33c6"
+        },
+        {
+          "slot": 1,
+          "object": "wooden_spoon",
+          "owner": "Codex implementation",
+          "status": "SHA-verified own candidate; physical task fails",
+          "physical_task_accepted": false,
+          "manifest_sha256": "51c6f23ac39860b121bfcfed241451e105c452e0050448c4648e93bdbc7674a0",
+          "mesh_sha256": "0a476ab96c1ea2e0072f67bac7b15fcf6b8a11484d71abd5871ea6c5f06c09ec",
+          "units": "metres",
+          "body_origin_frozen": true,
+          "seed_frame": 136,
+          "source_file_closure_verified": true,
+          "vertices": 6014,
+          "triangles": 12000,
+          "watertight": false,
+          "full_bundle_frame_axis_verified": true,
+          "bundle_manifest_sha256": "5589dfa4d6b27ea9337b0d2e3e4de54fff523460d5f13abf801dd6c565aa33c6"
+        }
+      ]
+    },
+    {
+      "episode": 5,
+      "source_frames": 288,
+      "official_object_order": [
+        "white_pot",
+        "wooden_spoon"
+      ],
+      "verified_video_frame_axis": true,
+      "calibrated_camera_and_hand_fit_verified": true,
+      "observed_hand_frames": {
+        "left": 249,
+        "right": 241
+      },
+      "policy_status": "short baseline complete; physical task fails",
+      "reserved_post_freeze_validation": false,
+      "geometry": [
+        {
+          "slot": 0,
+          "object": "white_pot",
+          "owner": "Codex implementation",
+          "status": "SHA-verified own candidate; physical task fails",
+          "physical_task_accepted": false,
+          "manifest_sha256": "a3d3ad3fc8e13e29083206f713ca4f505f7ff6f8caaa7f03c77cbd1571d41f02",
+          "mesh_sha256": "8b5a86c8daf652409118b6a7c918b348407cb0d220d84ffd0c7ac736f99b58d9",
+          "units": "metres",
+          "body_origin_frozen": true,
+          "seed_frame": 1,
+          "source_file_closure_verified": true,
+          "vertices": 6008,
+          "triangles": 12000,
+          "watertight": true,
+          "full_bundle_frame_axis_verified": true,
+          "bundle_manifest_sha256": "df28ab8995fd271df9e9912e9b6879549cb94f6352da23a643dec76354c87b3e"
+        },
+        {
+          "slot": 1,
+          "object": "wooden_spoon",
+          "owner": "Codex implementation",
+          "status": "SHA-verified own candidate; physical task fails",
+          "physical_task_accepted": false,
+          "manifest_sha256": "96bf24c8a384224bf029514e92401d6838715e8eb4bc919c3e9378132468bd16",
+          "mesh_sha256": "8e849cf389190de380387ea12511763c7d5d80f26171afa6cea73b7876d2eebc",
+          "units": "metres",
+          "body_origin_frozen": true,
+          "seed_frame": 22,
+          "source_file_closure_verified": true,
+          "vertices": 6014,
+          "triangles": 12000,
+          "watertight": true,
+          "full_bundle_frame_axis_verified": true,
+          "bundle_manifest_sha256": "df28ab8995fd271df9e9912e9b6879549cb94f6352da23a643dec76354c87b3e"
+        }
+      ]
+    },
+    {
+      "episode": 6,
+      "source_frames": 243,
+      "official_object_order": [
+        "white_pot",
+        "wooden_spoon"
+      ],
+      "verified_video_frame_axis": true,
+      "calibrated_camera_and_hand_fit_verified": true,
+      "observed_hand_frames": {
+        "left": 207,
+        "right": 225
+      },
+      "policy_status": "short baseline complete; physical task fails",
+      "reserved_post_freeze_validation": false,
+      "geometry": [
+        {
+          "slot": 0,
+          "object": "white_pot",
+          "owner": "Codex implementation",
+          "status": "SHA-verified own candidate; physical task fails",
+          "physical_task_accepted": false,
+          "manifest_sha256": "6da908246b5085c6bfd7e0c83f5c745d38f63e46f92609ce61b9167a675f87c6",
+          "mesh_sha256": "c9b30fb380caa98ffc256f00239c61eb506a0b442cb918f41ae950c07086db37",
+          "units": "metres",
+          "body_origin_frozen": true,
+          "seed_frame": 0,
+          "source_file_closure_verified": true,
+          "vertices": 6014,
+          "triangles": 12000,
+          "watertight": true,
+          "full_bundle_frame_axis_verified": true,
+          "bundle_manifest_sha256": "23febaf230b59faac4f3938eab9f038a5714334242520fe21347eb37f8fca741"
+        },
+        {
+          "slot": 1,
+          "object": "wooden_spoon",
+          "owner": "Codex implementation",
+          "status": "SHA-verified own candidate; physical task fails",
+          "physical_task_accepted": false,
+          "manifest_sha256": "82d8852072da981b48e7bf20c7d4102b51156d81d06e26384ee67cddb8edb026",
+          "mesh_sha256": "0e1752bba4c5572b7b06b117a7a7e128aee5c1021baf407a49f676d2165a8319",
+          "units": "metres",
+          "body_origin_frozen": true,
+          "seed_frame": 0,
+          "source_file_closure_verified": true,
+          "vertices": 6010,
+          "triangles": 12000,
+          "watertight": true,
+          "full_bundle_frame_axis_verified": true,
+          "bundle_manifest_sha256": "23febaf230b59faac4f3938eab9f038a5714334242520fe21347eb37f8fca741"
+        }
+      ]
+    },
+    {
+      "episode": 8,
+      "source_frames": 219,
+      "official_object_order": [
+        "beige_cup",
+        "white_pot"
+      ],
+      "verified_video_frame_axis": true,
+      "calibrated_camera_and_hand_fit_verified": true,
+      "observed_hand_frames": {
+        "left": 184,
+        "right": 196
+      },
+      "policy_status": "short baseline complete; physical task fails",
+      "reserved_post_freeze_validation": false,
+      "geometry": [
+        {
+          "slot": 0,
+          "object": "beige_cup",
+          "owner": "Codex implementation",
+          "status": "SHA-verified own candidate; physical task fails",
+          "physical_task_accepted": false,
+          "manifest_sha256": "22a650d5619dae8c2f82cad1f25bdf58ddfc8e0372cf0f64156b464ec87550d6",
+          "mesh_sha256": "edc760c68adf084ffe45e2fa7ac440e87d6cc47ceee471108aeac173b1704511",
+          "units": "metres",
+          "body_origin_frozen": true,
+          "seed_frame": 0,
+          "source_file_closure_verified": true,
+          "vertices": 6016,
+          "triangles": 12000,
+          "watertight": true,
+          "full_bundle_frame_axis_verified": true,
+          "bundle_manifest_sha256": "1af465c45a6e889cab7894fee27b2cc333c729b5d6b88063f4d0e7a4a26c67ee"
+        },
+        {
+          "slot": 1,
+          "object": "white_pot",
+          "owner": "Codex implementation",
+          "status": "SHA-verified own candidate; physical task fails",
+          "physical_task_accepted": false,
+          "manifest_sha256": "8c24b31c3f2bc8d48e6c913d509e8201a2eb5b3e5c5dc077210491c497a4b02e",
+          "mesh_sha256": "3d3e4bea47e9703dd50abe3b3d54b0b961f279105d181d02b7934e6015ebabfd",
+          "units": "metres",
+          "body_origin_frozen": true,
+          "seed_frame": 0,
+          "source_file_closure_verified": true,
+          "vertices": 6002,
+          "triangles": 12000,
+          "watertight": true,
+          "full_bundle_frame_axis_verified": true,
+          "bundle_manifest_sha256": "1af465c45a6e889cab7894fee27b2cc333c729b5d6b88063f4d0e7a4a26c67ee"
+        }
+      ]
+    },
+    {
+      "episode": 10,
+      "source_frames": 161,
+      "official_object_order": [
+        "blue_cup",
+        "beige_cup"
+      ],
+      "verified_video_frame_axis": true,
+      "calibrated_camera_and_hand_fit_verified": true,
+      "observed_hand_frames": {
+        "left": 118,
+        "right": 108
+      },
+      "policy_status": "short baseline complete; physical task fails",
+      "reserved_post_freeze_validation": false,
+      "geometry": [
+        {
+          "slot": 0,
+          "object": "blue_cup",
+          "owner": "Codex implementation",
+          "status": "SHA-verified own candidate; physical task fails",
+          "physical_task_accepted": false,
+          "manifest_sha256": "398dc9f19d32a925566200dbe644e75d7dba751b1b74fa53b007a0a07a1b0b23",
+          "mesh_sha256": "9a56bb3aaa1b758f20a59f1f068b5670b66ff06e7335c357b52e86ebc621da0f",
+          "units": "metres",
+          "body_origin_frozen": true,
+          "seed_frame": 0,
+          "source_file_closure_verified": true,
+          "vertices": 6006,
+          "triangles": 12000,
+          "watertight": true,
+          "full_bundle_frame_axis_verified": true,
+          "bundle_manifest_sha256": "0392e9eb667b9a697de7ba142c4ed90fa01539adda1b142636c41ed4e2ce1aaf"
+        },
+        {
+          "slot": 1,
+          "object": "beige_cup",
+          "owner": "Codex implementation",
+          "status": "SHA-verified own candidate; physical task fails",
+          "physical_task_accepted": false,
+          "manifest_sha256": "846df83fdea38ebbd9fd27c5045293830b74ec1562419ca3d8c99f81a8ed44c1",
+          "mesh_sha256": "20de2336f9967f9ce615604d1d06863202abd2a2bb9dddab85153396fdeef21c",
+          "units": "metres",
+          "body_origin_frozen": true,
+          "seed_frame": 0,
+          "source_file_closure_verified": true,
+          "vertices": 6014,
+          "triangles": 12000,
+          "watertight": true,
+          "full_bundle_frame_axis_verified": true,
+          "bundle_manifest_sha256": "0392e9eb667b9a697de7ba142c4ed90fa01539adda1b142636c41ed4e2ce1aaf"
+        }
+      ]
+    },
+    {
+      "episode": 14,
+      "source_frames": 158,
+      "official_object_order": [
+        "blue_cup",
+        "plastic_dish_rack"
+      ],
+      "verified_video_frame_axis": true,
+      "calibrated_camera_and_hand_fit_verified": true,
+      "observed_hand_frames": {
+        "left": 100,
+        "right": 64
+      },
+      "policy_status": "pending",
+      "reserved_post_freeze_validation": true,
+      "geometry": [
+        {
+          "slot": 0,
+          "object": "blue_cup",
+          "owner": "Codex implementation",
+          "status": "pending own reconstruction",
+          "physical_task_accepted": false
+        },
+        {
+          "slot": 1,
+          "object": "plastic_dish_rack",
+          "owner": "Codex implementation",
+          "status": "pending own reconstruction",
+          "physical_task_accepted": false
+        }
+      ]
+    },
+    {
+      "episode": 15,
+      "source_frames": 166,
+      "official_object_order": [
+        "plastic_dish_rack",
+        "wooden_spoon"
+      ],
+      "verified_video_frame_axis": true,
+      "calibrated_camera_and_hand_fit_verified": true,
+      "observed_hand_frames": {
+        "left": 145,
+        "right": 68
+      },
+      "policy_status": "pending",
+      "reserved_post_freeze_validation": false,
+      "geometry": [
+        {
+          "slot": 0,
+          "object": "plastic_dish_rack",
+          "owner": "Codex implementation",
+          "status": "pending own reconstruction",
+          "physical_task_accepted": false
+        },
+        {
+          "slot": 1,
+          "object": "wooden_spoon",
+          "owner": "Codex implementation",
+          "status": "pending own reconstruction",
+          "physical_task_accepted": false
+        }
+      ]
+    },
+    {
+      "episode": 16,
+      "source_frames": 173,
+      "official_object_order": [
+        "plastic_dish_rack",
+        "wooden_spoon"
+      ],
+      "verified_video_frame_axis": true,
+      "calibrated_camera_and_hand_fit_verified": true,
+      "observed_hand_frames": {
+        "left": 109,
+        "right": 144
+      },
+      "policy_status": "pending",
+      "reserved_post_freeze_validation": false,
+      "geometry": [
+        {
+          "slot": 0,
+          "object": "plastic_dish_rack",
+          "owner": "Codex implementation",
+          "status": "pending own reconstruction",
+          "physical_task_accepted": false
+        },
+        {
+          "slot": 1,
+          "object": "wooden_spoon",
+          "owner": "Codex implementation",
+          "status": "pending own reconstruction",
+          "physical_task_accepted": false
+        }
+      ]
+    },
+    {
+      "episode": 19,
+      "source_frames": 235,
+      "official_object_order": [
+        "mini_sweeper",
+        "mini_dust_pan"
+      ],
+      "verified_video_frame_axis": true,
+      "calibrated_camera_and_hand_fit_verified": true,
+      "observed_hand_frames": {
+        "left": 178,
+        "right": 235
+      },
+      "policy_status": "pending",
+      "reserved_post_freeze_validation": false,
+      "geometry": [
+        {
+          "slot": 0,
+          "object": "mini_sweeper",
+          "owner": "Codex implementation",
+          "status": "pending own reconstruction",
+          "physical_task_accepted": false
+        },
+        {
+          "slot": 1,
+          "object": "mini_dust_pan",
+          "owner": "Codex implementation",
+          "status": "pending own reconstruction",
+          "physical_task_accepted": false
+        }
+      ]
+    },
+    {
+      "episode": 20,
+      "source_frames": 202,
+      "official_object_order": [
+        "blue_cup",
+        "water_pitcher"
+      ],
+      "verified_video_frame_axis": true,
+      "calibrated_camera_and_hand_fit_verified": true,
+      "observed_hand_frames": {
+        "left": 202,
+        "right": 92
+      },
+      "policy_status": "pending",
+      "reserved_post_freeze_validation": false,
+      "geometry": [
+        {
+          "slot": 0,
+          "object": "blue_cup",
+          "owner": "Codex implementation",
+          "status": "pending own reconstruction",
+          "physical_task_accepted": false
+        },
+        {
+          "slot": 1,
+          "object": "water_pitcher",
+          "owner": "Codex implementation",
+          "status": "pending own reconstruction",
+          "physical_task_accepted": false
+        }
+      ]
+    },
+    {
+      "episode": 25,
+      "source_frames": 356,
+      "official_object_order": [
+        "wooden_piece_1",
+        "wooden_piece_2"
+      ],
+      "verified_video_frame_axis": true,
+      "calibrated_camera_and_hand_fit_verified": true,
+      "observed_hand_frames": {
+        "left": 331,
+        "right": 317
+      },
+      "policy_status": "pending",
+      "reserved_post_freeze_validation": false,
+      "geometry": [
+        {
+          "slot": 0,
+          "object": "wooden_piece_1",
+          "owner": "Codex implementation",
+          "status": "pending own reconstruction",
+          "physical_task_accepted": false
+        },
+        {
+          "slot": 1,
+          "object": "wooden_piece_2",
+          "owner": "Codex implementation",
+          "status": "pending own reconstruction",
+          "physical_task_accepted": false
+        }
+      ]
+    },
+    {
+      "episode": 28,
+      "source_frames": 220,
+      "official_object_order": [
+        "plastic_dish_rack",
+        "white_pot"
+      ],
+      "verified_video_frame_axis": true,
+      "calibrated_camera_and_hand_fit_verified": true,
+      "observed_hand_frames": {
+        "left": 206,
+        "right": 186
+      },
+      "policy_status": "pending",
+      "reserved_post_freeze_validation": false,
+      "geometry": [
+        {
+          "slot": 0,
+          "object": "plastic_dish_rack",
+          "owner": "Codex implementation",
+          "status": "pending own reconstruction",
+          "physical_task_accepted": false
+        },
+        {
+          "slot": 1,
+          "object": "white_pot",
+          "owner": "Codex implementation",
+          "status": "pending own reconstruction",
+          "physical_task_accepted": false
+        }
+      ]
+    },
+    {
+      "episode": 30,
+      "source_frames": 263,
+      "official_object_order": [
+        "mini_sweeper",
+        "plastic_dish_rack"
+      ],
+      "verified_video_frame_axis": true,
+      "calibrated_camera_and_hand_fit_verified": true,
+      "observed_hand_frames": {
+        "left": 243,
+        "right": 249
+      },
+      "policy_status": "pending",
+      "reserved_post_freeze_validation": false,
+      "geometry": [
+        {
+          "slot": 0,
+          "object": "mini_sweeper",
+          "owner": "Codex implementation",
+          "status": "pending own reconstruction",
+          "physical_task_accepted": false
+        },
+        {
+          "slot": 1,
+          "object": "plastic_dish_rack",
+          "owner": "Codex implementation",
+          "status": "pending own reconstruction",
+          "physical_task_accepted": false
+        }
+      ]
+    },
+    {
+      "episode": 32,
+      "source_frames": 259,
+      "official_object_order": [
+        "blue_cup",
+        "wooden_spoon"
+      ],
+      "verified_video_frame_axis": true,
+      "calibrated_camera_and_hand_fit_verified": true,
+      "observed_hand_frames": {
+        "left": 148,
+        "right": 259
+      },
+      "policy_status": "pending",
+      "reserved_post_freeze_validation": true,
+      "geometry": [
+        {
+          "slot": 0,
+          "object": "blue_cup",
+          "owner": "Codex implementation",
+          "status": "pending own reconstruction",
+          "physical_task_accepted": false
+        },
+        {
+          "slot": 1,
+          "object": "wooden_spoon",
+          "owner": "Codex implementation",
+          "status": "pending own reconstruction",
+          "physical_task_accepted": false
+        }
+      ]
+    },
+    {
+      "episode": 33,
+      "source_frames": 348,
+      "official_object_order": [
+        "blue_cup",
+        "wooden_spoon"
+      ],
+      "verified_video_frame_axis": true,
+      "calibrated_camera_and_hand_fit_verified": true,
+      "observed_hand_frames": {
+        "left": 309,
+        "right": 332
+      },
+      "policy_status": "pending",
+      "reserved_post_freeze_validation": false,
+      "geometry": [
+        {
+          "slot": 0,
+          "object": "blue_cup",
+          "owner": "Codex implementation",
+          "status": "pending own reconstruction",
+          "physical_task_accepted": false
+        },
+        {
+          "slot": 1,
+          "object": "wooden_spoon",
+          "owner": "Codex implementation",
+          "status": "pending own reconstruction",
+          "physical_task_accepted": false
+        }
+      ]
+    },
+    {
+      "episode": 35,
+      "source_frames": 421,
+      "official_object_order": [
+        "wooden_spoon"
+      ],
+      "verified_video_frame_axis": true,
+      "calibrated_camera_and_hand_fit_verified": true,
+      "observed_hand_frames": {
+        "left": 379,
+        "right": 406
+      },
+      "policy_status": "pending",
+      "reserved_post_freeze_validation": false,
+      "geometry": [
+        {
+          "slot": 0,
+          "object": "wooden_spoon",
+          "owner": "Codex implementation",
+          "status": "pending own reconstruction",
+          "physical_task_accepted": false
+        }
+      ]
+    },
+    {
+      "episode": 36,
+      "source_frames": 407,
+      "official_object_order": [
+        "wooden_spoon"
+      ],
+      "verified_video_frame_axis": true,
+      "calibrated_camera_and_hand_fit_verified": true,
+      "observed_hand_frames": {
+        "left": 390,
+        "right": 371
+      },
+      "policy_status": "pending",
+      "reserved_post_freeze_validation": true,
+      "geometry": [
+        {
+          "slot": 0,
+          "object": "wooden_spoon",
+          "owner": "Codex implementation",
+          "status": "pending own reconstruction",
+          "physical_task_accepted": false
+        }
+      ]
+    },
+    {
+      "episode": 37,
+      "source_frames": 151,
+      "official_object_order": [
+        "wooden_spoon"
+      ],
+      "verified_video_frame_axis": true,
+      "calibrated_camera_and_hand_fit_verified": true,
+      "observed_hand_frames": {
+        "left": 151,
+        "right": 75
+      },
+      "policy_status": "pending",
+      "reserved_post_freeze_validation": false,
+      "geometry": [
+        {
+          "slot": 0,
+          "object": "wooden_spoon",
+          "owner": "Codex implementation",
+          "status": "pending own reconstruction",
+          "physical_task_accepted": false
+        }
+      ]
+    },
+    {
+      "episode": 38,
+      "source_frames": 263,
+      "official_object_order": [
+        "mini_dust_pan"
+      ],
+      "verified_video_frame_axis": true,
+      "calibrated_camera_and_hand_fit_verified": true,
+      "observed_hand_frames": {
+        "left": 263,
+        "right": 239
+      },
+      "policy_status": "short baseline complete; physical task fails",
+      "reserved_post_freeze_validation": false,
+      "geometry": [
+        {
+          "slot": 0,
+          "object": "mini_dust_pan",
+          "owner": "Codex implementation",
+          "status": "SHA-verified own candidate; physical task fails",
+          "physical_task_accepted": false,
+          "manifest_sha256": "43fccd66bbcb3e5303d459d1cce0c13decd375a3a81c03320dca2bb6db613d9a",
+          "mesh_sha256": "7d8394c1046fb05a99b3e8a87c9a5b8d8b18f033c8476b14d664a04927b6bcf1",
+          "units": "metres",
+          "body_origin_frozen": true,
+          "seed_frame": 0,
+          "source_file_closure_verified": true,
+          "vertices": 6016,
+          "triangles": 12000,
+          "watertight": true,
+          "full_bundle_frame_axis_verified": true,
+          "bundle_manifest_sha256": "e1445a2f464a519db22c29e17a7601b633f629aa100b0f85c695e39553d83c95"
+        }
+      ]
+    }
+  ],
+  "required_episodes": 20,
+  "required_mesh_slots": 36,
+  "source_frames": 5181,
+  "completed_short_baseline_episodes": 7,
+  "verified_own_candidate_slots": 13,
+  "pending_mesh_slots": 23,
+  "physically_accepted_episodes": 0,
+  "all_assets_have_status_and_owner": true,
+  "official_packer_passed": false,
+  "submission_ready": false,
+  "private_asset_bytes_included": false,
+  "provided_meshes_used_for_reconstruction": false,
+  "reference_pose_labels_used_for_reconstruction": false
+}

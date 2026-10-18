@@ -4,12 +4,26 @@ The complete Track 3 release is **not ready**. Development runs use reconstructe
 
 ## Current coverage
 
+The latest [slot-by-slot inventory](scored-coverage-progress-20261018.json)
+accounts for all 20 episodes, 36 mesh slots and 5,181 source frames. Seven
+episodes (e001/e003/e005/e006/e008/e010/e038) have completed short baselines and
+13 own candidate mesh slots have verified source closures, metric units, fixed
+body origins, object ordering and full bundle frame axes. The other 23 mesh
+slots remain pending with an explicit implementation owner. **No physical task
+has passed.** e008 contains both a beige cup and a pot.
+
+The latest [measured-geometry experiments](MEASURED_GEOMETRY_20261018.md) repair
+the calibrated pot seed but expose later native reference collisions. Future
+policy preparation audits every reference knot before PPO. A first-frame spoon
+diagnostic and an e008 pot-transfer comparison remain experiments; they are not
+accepted geometry or generalization results.
+
 - All 20 scored episodes' 60 source videos and the shared camera calibration were downloaded at a pinned dataset revision and hash-verified. No scored object pose tables were read.
 - Independent stereo camera trajectories and hand observation inputs are prepared for all 20 episodes.
 - Three pilot episodes (e001 pot/lid, e010 cups, e038 dustpan) have complete hand fits, own SAM3D meshes, object tracks, native hand alignment, full-episode retargeting, portable inputs, and six short trained policies.
 - Each of those six policies ran 100 PPO iterations, 153,600 environment steps, seed 42. Visual/metric anchor variants preserve identical object targets, clock, confidence, geometry and robot assets. The robot commands and their derived FK targets are the changed factor.
 - All 20 neural hand fits now exist, covering all 5,181 source frames with fixed stereo cameras and fixed sequence hand shape verified. The remaining batch's 35,317 retained files were hash-verified on the operator's Mac before provider STOPPED was confirmed. Observation gaps remain unknown; finishing a fit does not establish tracking accuracy. See `all-scored-hand-fit-coverage-v1.json`.
-- e003 additionally has its own pot and wooden-spoon mesh candidates. Their review reports retain substantial silhouette/depth errors. Export recovery and its first policy baseline are in progress; these are not accepted geometry or grasp results. A complete 20-episode/36-mesh submission has not been packed.
+- e003 additionally has its own pot and wooden-spoon mesh candidates. Export and hand-prior recovery, short training and full native evaluation are complete; these are not accepted geometry or grasp results. e005/e006/e008 also completed the complete automatic driver. A complete 20-episode/36-mesh submission has not been packed.
 
 ## First failures found
 
@@ -29,7 +43,7 @@ The recovered e001 visual/metric 100-iteration policies both have local MP-SR ze
 
 The committed host runners are `run_scored_hands.py`, `run_scored_reconstruction.py`, and `run_scored_policy.py`. They cover video observations through complete hand fitting, own object reconstruction, calibrated alignment, retargeting, portable collision assets, a short PPO baseline, official evaluation, and separate unassisted native readback. They use immutable images and explicit private mounts; operational compute guards remain outside these runners. See the Track 3 scripts README for configuration.
 
-Fresh CPU cloud IK matches all three Mac pilots numerically (maximum robot-position difference approximately 1.24e-12). Integer/confidence arrays are exact. Cloud case and portable-pack preparation also passed. The new complete GPU driver integration is queued in the active bounded validation session, not yet established by these CPU tests.
+Fresh CPU cloud IK matches all three Mac pilots numerically (maximum robot-position difference approximately 1.24e-12). Integer/confidence arrays are exact. Cloud case and portable-pack preparation also passed. Subsequent complete GPU driver runs on e005/e006/e008 validated execution of reconstruction through short policy evaluation, while all three physical tasks failed.
 
 The e002 checkpoint-2000 control is retained. Two distinct exploration-key forks (101 and 202) preserve every other learner array and counter exactly, and pair control versus short training-reset settling. All four 100-iteration continuations and three eight-world unassisted readbacks per case are complete: 3,276,800 new environment steps. Short settling shows a modest paired MP-SR benefit and avoids one large-error repeat, but its AUC improvement does not exceed observed repeat variability or consistently beat the retained parent. No candidate is promoted. These are distinct exploration streams from the same learner state, not independent actor initializations. [Results](RESET_CONFIRMATION_20261018.md).
 
@@ -37,7 +51,7 @@ The complete hand runner passed a fresh e010 GPU integration. The reconstruction
 
 The e003 end-to-end audit then found a second integration defect: native alignment had 252/125 metric hand frames, but continuity repair looked in a missing default conversion directory. It silently loaded no priors, erased both hands, and produced a parked-hand policy. That policy is disqualified. The fix passes the actual raw conversion directory explicitly and preserves the cropped frame mapping (310 fitted indices map to source frames 3–312). Missing/empty priors now fail immediately; policy training refuses zero command anchors.
 
-The GPU repair completed: 310 left and 309 right visual frames and command anchors, complete exports, 100 PPO iterations / 153,600 environment steps, initial/final official evaluations and an eight-world native readback. Its 5,795 retained files were hash-verified before STOPPED at 07:48:58 UTC. The next non-reserved cohort (e005/e006/e008) started only after that closure. It tests the complete three-hypothesis tracking driver with the same source snapshot, `848f408178e4d7e3b1bcbdcc1404a64325303307`.
+The GPU repair completed: 310 left and 309 right visual frames and command anchors, complete exports, 100 PPO iterations / 153,600 environment steps, initial/final official evaluations and an eight-world native readback. Its 5,795 retained files were hash-verified before STOPPED at 07:48:58 UTC. The next non-reserved cohort (e005/e006/e008) started only after that closure. It completed the three-hypothesis tracking driver with source `848f408178e4d7e3b1bcbdcc1404a64325303307`; all 35,383 retained files were verified before STOPPED at 08:36:51 UTC. All three MP-SR results are zero.
 
 The repaired e003 policy still fails: initial/final AUC is 0.01505/0.01493, MP-SR remains zero, and training repeatedly terminates for object error after one step. The native convex hull envelope lies 28.4 mm (pot) and 34.6 mm (spoon) below the inferred horizontal support top at the reference start. This is an envelope diagnostic, not an exact intersection test. The first recorded native spoon pose is 97.7 mm and 66.7 degrees from its reference. Its complete readback retains nonfinite late objective terms/scores, although body/contact arrays, checkpoint tensors and training metrics are finite. The reward-balance audit correctly refuses to summarize that nonfinite rollout. Source geometry/contact initialization needs investigation before a longer run; the checkpoint is not promoted.
 
@@ -53,7 +67,7 @@ point-to-mesh-vertex distance from 53.2 to 10.7 mm, with 2 mm seed clearance abo
 the unchanged support plane. It has not passed full-sequence tracking or physics;
 its above-table constraint currently applies to this diagnosed pilot only.
 
-An experimental whole-track selector compares the control, foreground-depth and foreground-motion trajectories against the same measured source masks/depth. It selects one entire unchanged trajectory per object; missing observations score zero. On the two inspected pilots it selected the original pot control, the foreground-motion lid/beige cup, and the foreground-depth blue cup. Both cups now retain 161 observed frames and the lid 335. Video review still shows silhouette/orientation errors. This is evidence for a baseline procedure, not a physical acceptance or hidden-accuracy claim. The selector and full GPU runner need integration validation before the method is frozen for the reserved episodes.
+An experimental whole-track selector compares the control, foreground-depth and foreground-motion trajectories against the same measured source masks/depth. It selects one entire unchanged trajectory per object; missing observations score zero. On the two inspected pilots it selected the original pot control, the foreground-motion lid/beige cup, and the foreground-depth blue cup. Both cups now retain 161 observed frames and the lid 335. Video review still shows silhouette/orientation errors. Its complete driver integration passed on the next three episodes, but this establishes execution rather than physical acceptance or hidden accuracy. Tuning choices remain unfrozen for the reserved episodes.
 
 Public development episodes 11, 22 and 42 were selected before inspecting new metadata or outcomes. A subsequent history audit found that all three were reviewed in the earlier continuity work, and e022 has a legacy manual object-box override. They are therefore retrospective regression cases, not untouched end-to-end holdouts. Their reference pose tables remain isolated outside inference mounts. Rostered video runs now exclude per-episode manual object prompts and reject annotated mask caches.
 
