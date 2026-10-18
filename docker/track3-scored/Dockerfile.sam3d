@@ -14,6 +14,7 @@ RUN python -m venv --system-site-packages /workspace/sam3d-runtime \
        git+https://github.com/facebookresearch/sam-3d-objects.git@f91db411c50efee93d8db7aeb323885650f6f722
 COPY code/ /workspace/pr32/
 COPY context-manifest.json /opt/locks/scored-sam3d-context.json
+ENV LIDRA_SKIP_INIT=1
 RUN /workspace/sam3d-runtime/bin/python -m pip install --no-deps \
        -e /workspace/pr32/reconstruction/modules/v2d_common \
        -e /workspace/pr32/reconstruction/modules/v2d_sam3d/lib \

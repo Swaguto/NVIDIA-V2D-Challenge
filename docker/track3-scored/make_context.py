@@ -78,7 +78,13 @@ def create(out):
             target = out / "code" / path
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_bytes(archive.extractfile(member).read())
-    for name in ["Dockerfile", "Dockerfile.geometry", "Dockerfile.sam3d", "hand-requirements.txt", "sam3d-requirements.txt"]:
+    for name in [
+        "Dockerfile",
+        "Dockerfile.geometry",
+        "Dockerfile.sam3d",
+        "hand-requirements.txt",
+        "sam3d-requirements.txt",
+    ]:
         (out / name).write_bytes(
             subprocess.check_output(
                 [
