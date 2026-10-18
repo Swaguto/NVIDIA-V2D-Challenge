@@ -45,6 +45,16 @@
       "file": "spoon_support_fit_probe_v1.py",
       "sha256": "b4f717ad3ff6cca1afe44bb00ec20680be3feb4437114ea28017cfb9b39e0f3b",
       "exact_executed_producer": true
+    },
+    {
+      "file": "spoon_thickness_grid_v1.py",
+      "sha256": "99f91b4a3d205a3a4cbf9eea3a1e3f147ff40d61cc01566b70b207886ef4c4c5",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "spoon_thickness_grid_v2.py",
+      "sha256": "776aab87b8ecbe57dfa11b7e5906837825591b13dd41b9e2bba28e468d89f90a",
+      "exact_executed_producer": true
     }
   ],
   "input_assets_included": false,

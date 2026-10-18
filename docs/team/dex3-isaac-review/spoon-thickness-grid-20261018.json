@@ -1,0 +1,16 @@
+{
+  "schema": "v2d.spoon-thickness-grid-comparison.v1",
+  "hypotheses": 30,
+  "source_frames": 7,
+  "variants_clear_of_sampled_visual_support_intersections": 0,
+  "maximum_aggregate_difference_between_blas_and_explicit_einsum": 4.85722573273506e-16,
+  "v1_numpy_runtime_warnings_observed": true,
+  "v2_numpy_runtime_warnings_observed": false,
+  "warning_cause_isolated": false,
+  "baseline_control_score_matches_prior": true,
+  "full_native_collision_validation_performed": false,
+  "candidate_promoted": false,
+  "physics_stepped": false,
+  "source_inputs_modified": false,
+  "brev_started": false
+}

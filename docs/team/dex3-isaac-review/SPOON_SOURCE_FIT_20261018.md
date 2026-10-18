@@ -42,3 +42,18 @@ The next geometry experiment must satisfy full-sequence source evidence and
 native collision checks together, then repair hand/object alignment and motion
 limits before training. A seed-only fit or a visually clear first frame cannot
 qualify the entire task.
+
+## Thickness sensitivity
+
+A subsequent CPU grid separated size along the table from thickness along its
+normal, with and without a fixed seed clearance offset. None of the 30
+hypotheses cleared the visual finite-support intersections across all seven
+sampled e037 frames. The best source-fit variant still intersected at three
+samples. A fixed size/thickness correction does not resolve this trajectory.
+
+The original grid emitted NumPy floating-point warnings despite finite values.
+A second run used explicit finite-checked `einsum` for its matrix products and
+matched aggregate scores within 1e-12 and all intersection counts, without those
+warnings. The warning's cause is not isolated and is not evidence about GPU
+replay variability. [Comparison receipt](spoon-thickness-grid-20261018.json).
+No candidate was promoted or sent to PPO; Brev remained stopped.
