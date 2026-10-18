@@ -23,6 +23,7 @@ PREFIXES = [
     "scripts/dex3_training/check_native_scene.py",
     "scripts/dex3_training/audit_initial_contacts.py",
     "scripts/dex3_training/audit_reference_contacts.py",
+    "scripts/dex3_training/audit_hand_reference_contacts.py",
     "robotic_grounding/scripts/retarget/track3_to_dex3.py",
     "robotic_grounding/scripts/generate_rigid_urdfs.py",
     "robotic_grounding/source/robotic_grounding/robotic_grounding",

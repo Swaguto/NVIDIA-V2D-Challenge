@@ -1,0 +1,46 @@
+{
+  "schema": "v2d.frozen-scored-baseline-method.v1",
+  "frozen_utc": "2026-10-18T12:55:50.564211+00:00",
+  "purpose": "Measure transfer of a complete but unsolved episode-specific reconstruction/training baseline before inspecting reserved task outcomes",
+  "reserved_episodes": [
+    14,
+    32,
+    36
+  ],
+  "selection_receipt_sha256": "f0d747a616ddceb42d6c528439dce5f6a4b9c2e2006d1abfb444feaa8f842b91",
+  "reserved_object_reconstruction_and_ppo_outcomes_consulted": false,
+  "source_cameras_and_human_fits_already_prepared": true,
+  "untouched_pixels_claimed": false,
+  "unseen_object_category_validation_claimed": false,
+  "universal_zero_shot_policy_claimed": false,
+  "perception_source_commit": "e9046c9de1f1bc89267b057b915f1cd01e677c01",
+  "perception_context_manifest_sha256": "880401a825f5b6341717669a24d38275faf71d2843224f55140ea6d53fc7bea9",
+  "policy_source_commit": "1308616588214a4fbb9de8541f1225c5c1ff12c8",
+  "policy_context_manifest_sha256": "e081c625285da1b65345bc2fc39285648076c61b90cdcdd71ddcba3c9a226b20",
+  "images": {
+    "perception": "ghcr.io/swaguto/nvidia-v2d-challenge-dex3-review@sha256:6e2039d0a54e14a188a1798efe57c3465d002f063c782c827b791e4418d2dce6",
+    "sam3d": "ghcr.io/swaguto/nvidia-v2d-challenge-dex3-review@sha256:dc9d0aedd2c6d50f53ce2d0677eca6f96e9631806d2bc12a7da4396629ce5357",
+    "training": "ghcr.io/swaguto/nvidia-v2d-challenge-dex3-review@sha256:bcde4a54c47743564d65f95725c4891e814077962b3f1b0a4a522ecb7d576922"
+  },
+  "native_runtime_commit": "8c778f905cb35f76f8e6cd6e2ea486da4fb9e0ef",
+  "settings": {
+    "pose_hypothesis_selection": true,
+    "foreground_translation_fallback": false,
+    "preserve_model_seed": false,
+    "anchor_policy": "visual",
+    "gap_policy": "world",
+    "per_episode_box_or_seed_overrides": false,
+    "training_iterations": 100,
+    "training_worlds": 64,
+    "rollout_steps": 24,
+    "training_seed": 42,
+    "evaluation_worlds": 8,
+    "source_speed": 1.0,
+    "virtual_object_assistance": 0,
+    "evaluation_settling_steps": 0
+  },
+  "candidate_scope": "Optional raw-SAM-seed, metric-anchor and object-relative-gap experiments are not promoted. Reserved baselines retain the same source/command choices as nonreserved comparable cohorts.",
+  "post_freeze_policy": "Record failures and metrics without changing these choices after viewing the reserved outcomes. A later revision must be labeled a new retrospective test.",
+  "physical_task_accepted": false,
+  "leaderboard_success_claimed": false
+}

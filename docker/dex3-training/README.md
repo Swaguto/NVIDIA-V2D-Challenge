@@ -3,7 +3,11 @@
 For offline preflight, persistent compilation caching, bounded batches and
 evaluation gates before longer GPU runs, see
 [compute efficiency](../../docs/team/dex3-isaac-review/COMPUTE_EFFICIENCY.md).
-New paid runs are currently frozen pending provider billing reconciliation.
+The owner resumed project validation on October 17 after the billing audit.
+Billing reconciliation remains open; that authorization does not establish
+actual billed savings. Use bounded sessions, verify private backups and stop
+the VM whenever idle. See the current [scored baseline status](../../docs/team/dex3-isaac-review/BASELINE_PROGRESS_20261018.md)
+for the active pipeline and its unresolved physical failures.
 
 For the latest complete-state contact-guided continuation, use
 [the exact PPO resume recipe](../../docs/team/dex3-isaac-review/EXACT_PPO_RESUME.md).

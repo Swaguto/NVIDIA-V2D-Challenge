@@ -52,3 +52,17 @@ bounded CPU feasibility probe can reduce some intersections below 1 mm, but
 one sampled left-hand frame remains above 6 mm and other fingers remain far
 from the object. Neither a favorable optimizer status nor small penetration
 alone qualifies as a grip.
+
+The revised analytic native-Jacobian projection clears all five sampled poses.
+Its full-trajectory check still fails **44 of 404 hand/frame slots**, with a
+worst remaining intersection of 23.02 mm. All 44 failures lie in source slots
+without metric hand support. Source metric support covers only the last 32
+left-hand frames and right-hand frames 0–16 and 165–201 in this episode.
+This is a source-depth/retargeting problem during the interaction; it cannot be
+declared fixed from favorable sampled poses. No projected trajectory is promoted
+and no additional PPO is run on this candidate.
+
+The complete native audit of the original references finds left cup
+penetrations above 1 mm in 156 frames and right can penetrations in 73 frames.
+The object-relative candidate increases the right can count to 130 frames.
+Its native geometry and source confidence remain identical to the control.

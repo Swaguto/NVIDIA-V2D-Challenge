@@ -115,6 +115,9 @@ use the native finite support and convex collision shapes. They do not advance
 physics, assess robot contacts, modify targets, or certify a grasp. Inspect
 `initial-contacts.json` and `reference-contacts.json` before spending time on
 longer training; an impossible reference needs reconstruction repair first.
+New contexts separately audit native hand/object and hand/support intersections
+in `hand-reference-contacts.json`, with every robot body checked against URDF FK.
+An object-only clearance result does not establish hand clearance or a grip.
 Finishing a fit or a training process does not certify reconstruction accuracy,
 grasp retention or leaderboard performance. Re-running PPO/physics need not be
 bit-identical; compare pinned inputs, contracts, full coverage and repeated

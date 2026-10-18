@@ -77,6 +77,7 @@ def config(tmp_path):
         "check_native_scene.py",
         "audit_initial_contacts.py",
         "audit_reference_contacts.py",
+        "audit_hand_reference_contacts.py",
     ):
         path = Path(c["context"]) / "code/scripts/dex3_training" / name
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -109,6 +110,15 @@ def test_locked_label_free_case_is_ready_for_bounded_training(config):
     ):
         with pytest.raises(ValueError):
             validate(dict(config, **changed))
+
+
+def test_old_context_cannot_silently_omit_full_hand_contact_diagnostics(config):
+    p = Path(config["context"]) / "context-manifest.json"
+    source = json.loads(p.read_text())
+    del source["files"]["code/scripts/dex3_training/audit_hand_reference_contacts.py"]
+    p.write_text(json.dumps(source))
+    with pytest.raises(ValueError, match="native contact diagnostic"):
+        validate(config)
 
 
 @pytest.mark.parametrize("kind", ["robot", "code"])

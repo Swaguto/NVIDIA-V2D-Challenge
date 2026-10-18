@@ -147,6 +147,15 @@ an immutable `training_image` digest. The lock uses the existing
 `v2d.dex3.robot-assets.v1` contract and its `files_sha256` closure. Real retrieved
 robot meshes are required. `anchor_policy` defaults to `visual`; `metric` remains
 an explicit experimental alternative. Keep the same choice across comparisons.
+`gap_policy` defaults to `world`; `object-relative` is an unpromoted command
+hypothesis. It retains source observation flags and observed IK commands.
+
+Fresh policy contexts also run `audit_hand_reference_contacts.py` on CPU before
+PPO. It explicitly resets both hands and objects at every source knot and
+checks all native hand-body poses against independent URDF FK. Its report
+separates hand/object and hand/support intersections. The older object-only
+audits deliberately exclude hands; an empty object/table report never certifies
+a valid grip. These diagnostics do not advance physics or measure grasp forces.
 
 The runner uses `/opt/ik/bin/python` from the existing training image for IK and
 case preparation. Portable preparation and PPO use that image's pinned training

@@ -2,12 +2,16 @@
 
 ## Current status
 
-The local operator has frozen new paid runs pending reconciliation of Brev's
-actual usage and a revised all-in budget. Available account credits do not
-authorize spending. Keep that freeze until the metering discrepancy is resolved.
+The owner explicitly resumed as-needed project validation on October 17 after
+the billing audit. The original historical billing discrepancy is unresolved.
+Each current session records that renewed authorization separately, keeps a
+wall-clock deadline and independent provider-stop guard, verifies private
+backups, and confirms provider STOPPED. This is not a provider spending cap or
+evidence of reconciled billing. Account credits alone do not authorize work.
 
-The controls in this change have CPU and saved-artifact verification. GPU cache
-hits, throughput, memory headroom, and actual billed savings remain unmeasured.
+The original profile controls have CPU and saved-artifact verification. New
+scored runs retain stage timings and use the existing pinned images and caches;
+there is no controlled estimate of actual billed savings from those caches.
 The original physical grasp is still unresolved. These controls govern allocation
 of compute; they do not establish policy quality or hidden-episode performance.
 

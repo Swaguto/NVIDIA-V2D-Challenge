@@ -136,11 +136,14 @@ def validate(config):
     if config.get("gap_policy", "world") == "object-relative" and (
         "code/scripts/track3/object_relative_gaps.py" not in source["files"]
     ):
-        raise ValueError("Object-relative commands need a fresh committed policy context")
+        raise ValueError(
+            "Object-relative commands need a fresh committed policy context"
+        )
     for name in (
         "check_native_scene.py",
         "audit_initial_contacts.py",
         "audit_reference_contacts.py",
+        "audit_hand_reference_contacts.py",
     ):
         if "code/scripts/dex3_training/" + name not in source["files"]:
             raise ValueError(
@@ -424,6 +427,22 @@ def run(config):
         receipt["reference_object_contact_diagnostic"] = {
             "reference_knots": reference_contacts["reference_knots"],
             "summary": reference_contacts["summary"],
+            "physics_stepped": False,
+            "quality_gate_pass_claimed": False,
+        }
+        save()
+        container(
+            "/project/scripts/dex3_training/audit_hand_reference_contacts.py",
+            ["--inputs", "/data", "--out", "/outputs/hand-reference-contacts.json"],
+            "hand-reference-contacts",
+            pack="frozen",
+            limit=180,
+        )
+        hand_contacts = json.loads((out / "hand-reference-contacts.json").read_text())
+        receipt["reference_hand_contact_diagnostic"] = {
+            "reference_knots": hand_contacts["reference_knots"],
+            "summary": hand_contacts["summary"],
+            "all_native_hand_body_fk_verified": True,
             "physics_stepped": False,
             "quality_gate_pass_claimed": False,
         }
