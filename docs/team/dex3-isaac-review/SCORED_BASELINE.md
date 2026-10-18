@@ -299,3 +299,16 @@ Objects reuse the existing nominal URDF generator (0.3 kg and diagonal
 0.001 kg m² inertia); these are modelling defaults, not recovered physical
 measurements. This baseline prescribes no hand/object assignment or contact
 labels and does not establish grasp or collision acceptance.
+
+### SAM3D candidate experiment
+
+`Dockerfile.sam3d` adds an isolated runtime to the pinned perception image,
+reusing its compiled CUDA libraries. SAM3D source is pinned to
+`f91db411c50efee93d8db7aeb323885650f6f722`; gated model revision is
+`2e73555018d2741ccd486e56c24fac41155a1dc6`. Weights remain private mounts.
+`sam3d_candidate.py` calls the repository's existing image-to-mesh backend on
+RGB appearance projected into calibrated stereo pixels, a foreground mask and
+a measured metric pointmap. Missing depth stays NaN. It bakes model scale into
+the mesh once and keeps a rigid body pose; unobserved surfaces and the anchor
+pose are explicitly inferred. It produces candidates pending rendered review
+and tracking, not automatic submission or physical acceptance.
