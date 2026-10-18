@@ -84,7 +84,22 @@ def complete_commands(qpos, valid, times, limits, parking):
     return result, interpolation, parked
 
 
-def prepare(bundle, retarget, support, out):
+def command_anchors(ik_valid, metric_valid, policy):
+    ik_valid, metric_valid = np.asarray(ik_valid), np.asarray(metric_valid)
+    if (
+        ik_valid.shape != metric_valid.shape
+        or ik_valid.ndim != 2
+        or ik_valid.shape[1] != 2
+        or ik_valid.dtype != bool
+        or metric_valid.dtype != bool
+    ):
+        raise ValueError("Need matching dual-hand IK and metric observation flags")
+    if policy not in {"visual", "metric"}:
+        raise ValueError("Unknown command anchor policy")
+    return ik_valid.copy() if policy == "visual" else ik_valid & metric_valid
+
+
+def prepare(bundle, retarget, support, out, anchor_policy="visual"):
     validate_bundle(bundle)
     metadata = json.loads((bundle / "manifest.json").read_text())
     if (
@@ -138,8 +153,9 @@ def prepare(bundle, retarget, support, out):
         side: np.r_[center + sign * 0.7 * right + 0.35 * up, stage.inv().as_quat()]
         for side, sign in [("left", -1), ("right", 1)]
     }
+    anchors = command_anchors(valid, source["hand_metric_valid"], anchor_policy)
     q, inferred, parked = complete_commands(
-        q, valid, source["timestamps_s"], contract["joints"], parking
+        q, anchors, source["timestamps_s"], contract["joints"], parking
     )
     if out.exists():
         raise FileExistsError(out)
@@ -161,8 +177,9 @@ def prepare(bundle, retarget, support, out):
         robot_pose_is_inferred=np.ones(valid.shape, bool),
         robot_motion_target_validated=np.zeros(valid.shape, bool),
         robot_interpolated_from_supported_ik=inferred,
-        robot_always_unobserved_parked=parked,
+        robot_no_selected_anchors_parked=parked,
         source_robot_valid=valid,
+        command_anchor_valid=anchors,
     )
     static = out / "static-inputs"
     static.mkdir()
@@ -207,6 +224,9 @@ def prepare(bundle, retarget, support, out):
         object_generator_ast_sha256=signature,
         interpolated_hand_slots=inferred.sum(axis=0).tolist(),
         parked_hand_slots=parked.sum(axis=0).tolist(),
+        command_anchor_policy=anchor_policy,
+        selected_anchor_slots=anchors.sum(axis=0).tolist(),
+        original_ik_valid_slots=valid.sum(axis=0).tolist(),
         original_source_confidence_preserved=True,
         contact_labels_fabricated=False,
         robot_motion_is_inferred=True,
@@ -237,5 +257,15 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     for name in ["bundle", "retarget", "support", "out"]:
         p.add_argument("--" + name, type=Path, required=True)
+    p.add_argument(
+        "--anchor-policy",
+        choices=["visual", "metric"],
+        default="visual",
+        help="Optional controlled hypothesis: complete commands from metric-supported IK only",
+    )
     a = p.parse_args()
-    print(json.dumps(prepare(a.bundle, a.retarget, a.support, a.out), indent=2))
+    print(
+        json.dumps(
+            prepare(a.bundle, a.retarget, a.support, a.out, a.anchor_policy), indent=2
+        )
+    )

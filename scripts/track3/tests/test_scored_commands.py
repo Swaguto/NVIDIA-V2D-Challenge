@@ -6,7 +6,27 @@ import pytest
 from scipy.spatial.transform import Rotation
 
 sys.path.insert(0, str(Path(__file__).parents[1]))
-from prepare_scored_case import complete_commands
+from prepare_scored_case import command_anchors, complete_commands
+
+
+def test_metric_anchor_trial_excludes_unmeasured_initial_depth_without_relabeling_it():
+    q, valid, times, limits, parking = inputs()
+    q[:] = [0, 0, -0.1, 0, 0, 0, 1, *([0.0] * 7)]
+    valid[:] = True
+    metric = np.zeros_like(valid)
+    metric[[1, 3], 0] = True
+    q[[1, 3], 0, 2] = 0.2
+    original_valid, original_metric, original_q = valid.copy(), metric.copy(), q.copy()
+    anchors = command_anchors(valid, metric, "metric")
+    completed, interpolated, parked = complete_commands(
+        q, anchors, times, limits, parking
+    )
+    assert completed[0, 0, 2] == 0.2 and interpolated[0, 0]
+    assert parked[:, 1].all()  # A visible estimate alone is not a metric anchor.
+    np.testing.assert_array_equal(valid, original_valid)
+    np.testing.assert_array_equal(metric, original_metric)
+    np.testing.assert_array_equal(q, original_q)
+    np.testing.assert_array_equal(command_anchors(valid, metric, "visual"), valid)
 
 
 def inputs():
