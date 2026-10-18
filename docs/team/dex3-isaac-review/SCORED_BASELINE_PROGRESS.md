@@ -8,7 +8,8 @@ The complete Track 3 release is **not ready**. Development runs use reconstructe
 - Independent stereo camera trajectories and hand observation inputs are prepared for all 20 episodes.
 - Three pilot episodes (e001 pot/lid, e010 cups, e038 dustpan) have complete hand fits, own SAM3D meshes, object tracks, native hand alignment, full-episode retargeting, portable inputs, and six short trained policies.
 - Each of those six policies ran 100 PPO iterations, 153,600 environment steps, seed 42. Visual/metric anchor variants preserve identical object targets, clock, confidence, geometry and robot assets. The robot commands and their derived FK targets are the changed factor.
-- The other 17 neural hand fits and the remaining 31 own mesh slots are still in progress. A complete 20-episode/36-mesh submission has not been packed.
+- All 20 neural hand fits now exist, covering all 5,181 source frames with fixed stereo cameras and fixed sequence hand shape verified. The remaining batch's 35,317 retained files were hash-verified on the operator's Mac before provider STOPPED was confirmed. Observation gaps remain unknown; finishing a fit does not establish tracking accuracy. See `all-scored-hand-fit-coverage-v1.json`.
+- The remaining 31 own mesh slots and 17 policy baselines are still in progress. A complete 20-episode/36-mesh submission has not been packed.
 
 ## First failures found
 
@@ -19,6 +20,20 @@ The clean e010 beige-cup track loses measured support at frame 45. Its report co
 Restricting robot command anchors to metric hand observations changes initial poses and parks unsupported hands, but is not a universal improvement. It remains an opt-in experiment. Source observations and contact unknowns stay unchanged.
 
 `foundationpose_track.py --foreground-depth-only` is a new **unvalidated** single-factor experiment: retain only the measured target-mask depth for pose refinement. The independent depth-support and pose-jump acceptance gates still use the original data. The default behavior is unchanged. Tracking caches record and bind this choice so experimental results cannot silently reuse the old trajectory.
+
+`--foreground-translation-prior` is a separate **unvalidated** initialization experiment. It uses changes in measured foreground surface position to help the tracker follow object motion and reacquire it after a rejection. The median surface point is not declared to be the body origin. It retains the original jump-check reference, the original measured-depth acceptance data, and the reconstructed body gauge. Neither experiment is promoted merely by increasing the count of accepted poses; source overlays must improve.
+
+The recovered e001 visual/metric 100-iteration policies both have local MP-SR zero. Their AUC values are approximately 0.0213 and 0.1047 respectively against their reconstructed targets. These do not establish successful pot handling or hidden-ground-truth improvement.
+
+## Reproduction work and controlled repeats
+
+The committed host runners are `run_scored_hands.py`, `run_scored_reconstruction.py`, and `run_scored_policy.py`. They cover video observations through complete hand fitting, own object reconstruction, calibrated alignment, retargeting, portable collision assets, a short PPO baseline, official evaluation, and separate unassisted native readback. They use immutable images and explicit private mounts; operational compute guards remain outside these runners. See the Track 3 scripts README for configuration.
+
+Fresh CPU cloud IK matches all three Mac pilots numerically (maximum robot-position difference approximately 1.24e-12). Integer/confidence arrays are exact. Cloud case and portable-pack preparation also passed. The new complete GPU driver integration is queued in the active bounded validation session, not yet established by these CPU tests.
+
+The e002 checkpoint-2000 control is retained. Two distinct exploration-key forks (101 and 202) preserve every other learner array and counter exactly, and pair control versus short training-reset settling. Four 100-iteration continuations with repeated unassisted evaluation are queued. The earlier settling improvement remains unqualified; no seed-confirmed improvement is claimed yet.
+
+Public development episodes 11, 22 and 42 were selected before inspecting their metadata or outcomes. Their videos and calibration have been acquired, while reference pose tables are isolated outside inference mounts. The method is not frozen and these held-out episodes have not been evaluated. This will test a reconstruction/training procedure on new episodes, not a single zero-shot policy across arbitrary episodes.
 
 ## Diagnostics and interpretation
 

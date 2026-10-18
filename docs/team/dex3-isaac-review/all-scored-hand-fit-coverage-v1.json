@@ -1,0 +1,408 @@
+{
+  "schema": "v2d.scored-all-hand-fit-coverage.v1",
+  "verified_utc": "2026-10-18T06:20:06.840694+00:00",
+  "episodes": [
+    {
+      "episode": 1,
+      "source_frames": 335,
+      "objects": [
+        "white_pot",
+        "white_pot_lid"
+      ],
+      "directly_observed_hand_frames": {
+        "left": 332,
+        "right": 305
+      },
+      "root_iterations": 50,
+      "smooth_iterations": 300,
+      "fixed_camera": true,
+      "fixed_shape": true,
+      "fit_receipt_sha256": "4e28e4097ea038602f27d53188463463bd15e9531f4fa55eb6a4ba01c9b0d1e5",
+      "checkpoint_sha256": "64a1123660d0ec52f525d28bc33d87bf785bf531a85aac34f5146d62306b300c",
+      "runtime_camera_loader_sha256": "38c86c4b61b35b6272b4998b084bef359bded3bd0f0eb384d2327737509663c5",
+      "physical_task_accepted": false
+    },
+    {
+      "episode": 3,
+      "source_frames": 313,
+      "objects": [
+        "white_pot",
+        "wooden_spoon"
+      ],
+      "directly_observed_hand_frames": {
+        "left": 261,
+        "right": 222
+      },
+      "root_iterations": 50,
+      "smooth_iterations": 300,
+      "fixed_camera": true,
+      "fixed_shape": true,
+      "fit_receipt_sha256": "b6d115f4f044207b14008189ee3350c12e113ecefb15c6d1b709f08bf46c3e08",
+      "checkpoint_sha256": "9e3cab3dc96d029edbea34fab303d79a3862bb169976356d945b776a3a29efba",
+      "runtime_camera_loader_sha256": "38c86c4b61b35b6272b4998b084bef359bded3bd0f0eb384d2327737509663c5",
+      "physical_task_accepted": false
+    },
+    {
+      "episode": 5,
+      "source_frames": 288,
+      "objects": [
+        "white_pot",
+        "wooden_spoon"
+      ],
+      "directly_observed_hand_frames": {
+        "left": 249,
+        "right": 241
+      },
+      "root_iterations": 50,
+      "smooth_iterations": 300,
+      "fixed_camera": true,
+      "fixed_shape": true,
+      "fit_receipt_sha256": "a1cb84fb659e05269e593459382bfa9900a89f7936cf06ad8cb6bdc7d1c35329",
+      "checkpoint_sha256": "309f4861b8a7de76bf2f687ba64e4dd66b20eef97e09b74a9582233e0924a703",
+      "runtime_camera_loader_sha256": "38c86c4b61b35b6272b4998b084bef359bded3bd0f0eb384d2327737509663c5",
+      "physical_task_accepted": false
+    },
+    {
+      "episode": 6,
+      "source_frames": 243,
+      "objects": [
+        "white_pot",
+        "wooden_spoon"
+      ],
+      "directly_observed_hand_frames": {
+        "left": 207,
+        "right": 225
+      },
+      "root_iterations": 50,
+      "smooth_iterations": 300,
+      "fixed_camera": true,
+      "fixed_shape": true,
+      "fit_receipt_sha256": "b134541fe0f6f52ce417e1d59c875f581992c11432820161ca09880f2675ab99",
+      "checkpoint_sha256": "bdff584e4360e45753d2e87221d59e155c9461d31969278ab183eb952367fdf3",
+      "runtime_camera_loader_sha256": "38c86c4b61b35b6272b4998b084bef359bded3bd0f0eb384d2327737509663c5",
+      "physical_task_accepted": false
+    },
+    {
+      "episode": 8,
+      "source_frames": 219,
+      "objects": [
+        "beige_cup",
+        "white_pot"
+      ],
+      "directly_observed_hand_frames": {
+        "left": 184,
+        "right": 196
+      },
+      "root_iterations": 50,
+      "smooth_iterations": 300,
+      "fixed_camera": true,
+      "fixed_shape": true,
+      "fit_receipt_sha256": "3237b8ec4979ce8521e03551e1d4b1c4c8a2f84292e9d5255f350214cad8444d",
+      "checkpoint_sha256": "0596ca258c78b712d0ade0414e9a3063f0c9db346187c3164c684963ea3a8450",
+      "runtime_camera_loader_sha256": "38c86c4b61b35b6272b4998b084bef359bded3bd0f0eb384d2327737509663c5",
+      "physical_task_accepted": false
+    },
+    {
+      "episode": 10,
+      "source_frames": 161,
+      "objects": [
+        "blue_cup",
+        "beige_cup"
+      ],
+      "directly_observed_hand_frames": {
+        "left": 118,
+        "right": 108
+      },
+      "root_iterations": 50,
+      "smooth_iterations": 300,
+      "fixed_camera": true,
+      "fixed_shape": true,
+      "fit_receipt_sha256": "2131ac780951f84a1049191c954e095371117339cada9da04455ba9543d5fb4a",
+      "checkpoint_sha256": "a6466bdef5ab7fa36fa4cecd8b17e58891550e3233ccf64d586fff314fe092e7",
+      "runtime_camera_loader_sha256": "38c86c4b61b35b6272b4998b084bef359bded3bd0f0eb384d2327737509663c5",
+      "physical_task_accepted": false
+    },
+    {
+      "episode": 14,
+      "source_frames": 158,
+      "objects": [
+        "blue_cup",
+        "plastic_dish_rack"
+      ],
+      "directly_observed_hand_frames": {
+        "left": 100,
+        "right": 64
+      },
+      "root_iterations": 50,
+      "smooth_iterations": 300,
+      "fixed_camera": true,
+      "fixed_shape": true,
+      "fit_receipt_sha256": "05e33a8570a06856bbbc0bed34325f6b500eb0f35829961c7ac8e523856da679",
+      "checkpoint_sha256": "bdaff3606ee30ea4359a53e3d542ece07bae15a546fa1cbdebd634576393bd4f",
+      "runtime_camera_loader_sha256": "38c86c4b61b35b6272b4998b084bef359bded3bd0f0eb384d2327737509663c5",
+      "physical_task_accepted": false
+    },
+    {
+      "episode": 15,
+      "source_frames": 166,
+      "objects": [
+        "plastic_dish_rack",
+        "wooden_spoon"
+      ],
+      "directly_observed_hand_frames": {
+        "left": 145,
+        "right": 68
+      },
+      "root_iterations": 50,
+      "smooth_iterations": 300,
+      "fixed_camera": true,
+      "fixed_shape": true,
+      "fit_receipt_sha256": "1af2fbee9c598666f12e58ac90b5d475e21586a8b19e138d6881097faa4b9350",
+      "checkpoint_sha256": "55e2820ac0b2348248a26adff39f7f4dc7bdc0ef2fa403726e1bd28cdc96a221",
+      "runtime_camera_loader_sha256": "38c86c4b61b35b6272b4998b084bef359bded3bd0f0eb384d2327737509663c5",
+      "physical_task_accepted": false
+    },
+    {
+      "episode": 16,
+      "source_frames": 173,
+      "objects": [
+        "plastic_dish_rack",
+        "wooden_spoon"
+      ],
+      "directly_observed_hand_frames": {
+        "left": 109,
+        "right": 144
+      },
+      "root_iterations": 50,
+      "smooth_iterations": 300,
+      "fixed_camera": true,
+      "fixed_shape": true,
+      "fit_receipt_sha256": "7fdb7bbfe07e155787940b2b33fe007f31232b33aa28ca0952b0327760c6a62e",
+      "checkpoint_sha256": "1f7d8988c7f119cab09e209e984fb5c572ba3e172c4109028f28a7252795cb7d",
+      "runtime_camera_loader_sha256": "38c86c4b61b35b6272b4998b084bef359bded3bd0f0eb384d2327737509663c5",
+      "physical_task_accepted": false
+    },
+    {
+      "episode": 19,
+      "source_frames": 235,
+      "objects": [
+        "mini_sweeper",
+        "mini_dust_pan"
+      ],
+      "directly_observed_hand_frames": {
+        "left": 178,
+        "right": 235
+      },
+      "root_iterations": 50,
+      "smooth_iterations": 300,
+      "fixed_camera": true,
+      "fixed_shape": true,
+      "fit_receipt_sha256": "ea4cb0db17b63a9c81d5c0d38579944bda9eb84ae6d86a3fec6ffe0c7d4e6f29",
+      "checkpoint_sha256": "d6250d190dd85d3d3582d0c61456659d019e39d0520c33a7e77e4f1607283672",
+      "runtime_camera_loader_sha256": "38c86c4b61b35b6272b4998b084bef359bded3bd0f0eb384d2327737509663c5",
+      "physical_task_accepted": false
+    },
+    {
+      "episode": 20,
+      "source_frames": 202,
+      "objects": [
+        "blue_cup",
+        "water_pitcher"
+      ],
+      "directly_observed_hand_frames": {
+        "left": 202,
+        "right": 92
+      },
+      "root_iterations": 50,
+      "smooth_iterations": 300,
+      "fixed_camera": true,
+      "fixed_shape": true,
+      "fit_receipt_sha256": "b118ed5ea1e7c3be6fc328c09698e13ecb497ddc6abd51447f9da710792d81b2",
+      "checkpoint_sha256": "8acf6c0a0aa1332953dca6627ce1ff74ebfe62d027accbc0e58cdc8e4e0da110",
+      "runtime_camera_loader_sha256": "38c86c4b61b35b6272b4998b084bef359bded3bd0f0eb384d2327737509663c5",
+      "physical_task_accepted": false
+    },
+    {
+      "episode": 25,
+      "source_frames": 356,
+      "objects": [
+        "wooden_piece_1",
+        "wooden_piece_2"
+      ],
+      "directly_observed_hand_frames": {
+        "left": 331,
+        "right": 317
+      },
+      "root_iterations": 50,
+      "smooth_iterations": 300,
+      "fixed_camera": true,
+      "fixed_shape": true,
+      "fit_receipt_sha256": "a9ef16efa105462d40fc525ef7e4696b9486a9a8d2ea5128958c881c948744ab",
+      "checkpoint_sha256": "3379d46960ef45dd4cd659c1360dcca138de69124232586426f3ac189200cda2",
+      "runtime_camera_loader_sha256": "38c86c4b61b35b6272b4998b084bef359bded3bd0f0eb384d2327737509663c5",
+      "physical_task_accepted": false
+    },
+    {
+      "episode": 28,
+      "source_frames": 220,
+      "objects": [
+        "plastic_dish_rack",
+        "white_pot"
+      ],
+      "directly_observed_hand_frames": {
+        "left": 206,
+        "right": 186
+      },
+      "root_iterations": 50,
+      "smooth_iterations": 300,
+      "fixed_camera": true,
+      "fixed_shape": true,
+      "fit_receipt_sha256": "7759be71cafbd502e2716ada6aeefe483c4430e180691f3d12902ce56a410ed8",
+      "checkpoint_sha256": "de90d8fb8a7450c37a208b85b47e5fa60df68fa6624658a2911417873c83f819",
+      "runtime_camera_loader_sha256": "38c86c4b61b35b6272b4998b084bef359bded3bd0f0eb384d2327737509663c5",
+      "physical_task_accepted": false
+    },
+    {
+      "episode": 30,
+      "source_frames": 263,
+      "objects": [
+        "mini_sweeper",
+        "plastic_dish_rack"
+      ],
+      "directly_observed_hand_frames": {
+        "left": 243,
+        "right": 249
+      },
+      "root_iterations": 50,
+      "smooth_iterations": 300,
+      "fixed_camera": true,
+      "fixed_shape": true,
+      "fit_receipt_sha256": "9c6ff9ff49467fbc77cdeeec2d830b6df1eff1d8831f0cfe3554f465948dbee2",
+      "checkpoint_sha256": "9e7c98c63c1c057c61c444ec8c4d3a798535199582a9779e893aa6d6effbe603",
+      "runtime_camera_loader_sha256": "38c86c4b61b35b6272b4998b084bef359bded3bd0f0eb384d2327737509663c5",
+      "physical_task_accepted": false
+    },
+    {
+      "episode": 32,
+      "source_frames": 259,
+      "objects": [
+        "blue_cup",
+        "wooden_spoon"
+      ],
+      "directly_observed_hand_frames": {
+        "left": 148,
+        "right": 259
+      },
+      "root_iterations": 50,
+      "smooth_iterations": 300,
+      "fixed_camera": true,
+      "fixed_shape": true,
+      "fit_receipt_sha256": "1a6c9a85e4efb10ad01df76713213e53200b98e93e78ea54173b3597c1852e47",
+      "checkpoint_sha256": "84c4f337830f6ef47a38977166bc3ce7e59b1928c08d93b3c6d2febe55dacae1",
+      "runtime_camera_loader_sha256": "38c86c4b61b35b6272b4998b084bef359bded3bd0f0eb384d2327737509663c5",
+      "physical_task_accepted": false
+    },
+    {
+      "episode": 33,
+      "source_frames": 348,
+      "objects": [
+        "blue_cup",
+        "wooden_spoon"
+      ],
+      "directly_observed_hand_frames": {
+        "left": 309,
+        "right": 332
+      },
+      "root_iterations": 50,
+      "smooth_iterations": 300,
+      "fixed_camera": true,
+      "fixed_shape": true,
+      "fit_receipt_sha256": "5684fd9eb898c8ddb0a5ffab23c3b502077bfe7c69cb2f542f13a1dd57fddf8b",
+      "checkpoint_sha256": "1700e93d6153c0b27dbccbf39b6626e30b4833a166c43c29e7ddaecbf4b93c80",
+      "runtime_camera_loader_sha256": "38c86c4b61b35b6272b4998b084bef359bded3bd0f0eb384d2327737509663c5",
+      "physical_task_accepted": false
+    },
+    {
+      "episode": 35,
+      "source_frames": 421,
+      "objects": [
+        "wooden_spoon"
+      ],
+      "directly_observed_hand_frames": {
+        "left": 379,
+        "right": 406
+      },
+      "root_iterations": 50,
+      "smooth_iterations": 300,
+      "fixed_camera": true,
+      "fixed_shape": true,
+      "fit_receipt_sha256": "29772bcd5986a46ca08a631efaeca236d200d02a53936f98e89348334830d99c",
+      "checkpoint_sha256": "9ff4ab7cc024506abfd06c0e61b089dc4acbb4ecd05a8d22a3501ecb38f4c33d",
+      "runtime_camera_loader_sha256": "38c86c4b61b35b6272b4998b084bef359bded3bd0f0eb384d2327737509663c5",
+      "physical_task_accepted": false
+    },
+    {
+      "episode": 36,
+      "source_frames": 407,
+      "objects": [
+        "wooden_spoon"
+      ],
+      "directly_observed_hand_frames": {
+        "left": 390,
+        "right": 371
+      },
+      "root_iterations": 50,
+      "smooth_iterations": 300,
+      "fixed_camera": true,
+      "fixed_shape": true,
+      "fit_receipt_sha256": "65123aac6ae117f38c26d8ccd46e8045dbb151a9e8072a65099fd10902dff943",
+      "checkpoint_sha256": "116c38268ca926a85a37e4b4e315e00134b181b7e8235ec0b197e3a49ed8d910",
+      "runtime_camera_loader_sha256": "38c86c4b61b35b6272b4998b084bef359bded3bd0f0eb384d2327737509663c5",
+      "physical_task_accepted": false
+    },
+    {
+      "episode": 37,
+      "source_frames": 151,
+      "objects": [
+        "wooden_spoon"
+      ],
+      "directly_observed_hand_frames": {
+        "left": 151,
+        "right": 75
+      },
+      "root_iterations": 50,
+      "smooth_iterations": 300,
+      "fixed_camera": true,
+      "fixed_shape": true,
+      "fit_receipt_sha256": "09ffff5800cc5ba068dd959f7dfa652fb257d6c22e149a539f2f59e14af630ad",
+      "checkpoint_sha256": "4d62089e8967ecc0f96b00a0f42824f629f9a355c317d9df56d0b2446ff65fa8",
+      "runtime_camera_loader_sha256": "38c86c4b61b35b6272b4998b084bef359bded3bd0f0eb384d2327737509663c5",
+      "physical_task_accepted": false
+    },
+    {
+      "episode": 38,
+      "source_frames": 263,
+      "objects": [
+        "mini_dust_pan"
+      ],
+      "directly_observed_hand_frames": {
+        "left": 263,
+        "right": 239
+      },
+      "root_iterations": 50,
+      "smooth_iterations": 300,
+      "fixed_camera": true,
+      "fixed_shape": true,
+      "fit_receipt_sha256": "a1a1a041a2bc37f563440fb4678195a8cf0f06dc5734fd92e1b0e342495628c3",
+      "checkpoint_sha256": "9c839c3158529395587b72b370ebacde41516d1ea2bdff2e44a2cbfb0ba4531b",
+      "runtime_camera_loader_sha256": "38c86c4b61b35b6272b4998b084bef359bded3bd0f0eb384d2327737509663c5",
+      "physical_task_accepted": false
+    }
+  ],
+  "episode_count": 20,
+  "source_frames": 5181,
+  "required_mesh_slots": 36,
+  "unobserved_hand_frames_not_promoted": true,
+  "model_fit_completion_is_not_tracking_accuracy": true,
+  "submission_ready": false
+}
