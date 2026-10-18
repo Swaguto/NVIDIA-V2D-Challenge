@@ -106,15 +106,18 @@ Inspect and retrack refined geometry before creating final robot bundles. A
 depth seed, TSDF output or passing format check alone does not establish geometry
 quality, correct collision behavior or submission readiness.
 
-The first GPU perception pilot exposed two failures before any scored training:
-the monochrome detector swapped pot/lid identities, and the inherited Open3D
-0.20.0 scalable TSDF returned empty geometry. The latter also reproduces with an
+The first GPU perception pilot exposed incomplete handle coverage and an
+inherited Open3D 0.20.0 scalable TSDF that returned empty geometry. An initial
+pot/lid identity-swap diagnosis was incorrect: the preview's colour legend was
+reversed. The original detector's seed coordinates and mask directories assigned
+the pot and lid correctly. The empty-geometry failure also reproduces with an
 isolated 0.5-metre synthetic plane, independently of episode poses, matching
 [Open3D #7592](https://github.com/isl-org/Open3D/issues/7592). The repaired image
 pins Open3D 0.19.0 and must pass `check_geometry_runtime.py` before reconstruction.
 Its incremental `Dockerfile.geometry` reuses the already compiled GPU libraries.
 Scored semantic seeding now uses the calibrated colour camera projected through
-measured stereo depth, with distinct saucepan/lid prompts. Colour-only depth
+measured stereo depth, with distinct saucepan/lid prompts including the long
+handle. Colour is needed to distinguish the blue/beige cup names. Colour-only depth
 hole filling changes appearance for seeding; metric observations remain unchanged.
 The stereo propagation remains at the original frame rate. Identity and geometry
 quality still require actual pilot inspection; this code change alone is not a pass.
