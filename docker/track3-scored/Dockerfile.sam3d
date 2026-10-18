@@ -15,7 +15,10 @@ RUN python -m venv --system-site-packages /workspace/sam3d-runtime \
 COPY code/ /workspace/pr32/
 COPY context-manifest.json /opt/locks/scored-sam3d-context.json
 ENV LIDRA_SKIP_INIT=1
-RUN /workspace/sam3d-runtime/bin/python -m pip install --no-deps \
+RUN /workspace/sam3d-runtime/bin/python -m pip install --no-cache-dir \
+       -c /opt/locks/scored-sam3d-constraints.txt kaolin==0.18.0 \
+       -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/torch-2.5.1_cu124.html \
+    && /workspace/sam3d-runtime/bin/python -m pip install --no-deps \
        -e /workspace/pr32/reconstruction/modules/v2d_common \
        -e /workspace/pr32/reconstruction/modules/v2d_sam3d/lib \
     && /workspace/sam3d-runtime/bin/python -c \
