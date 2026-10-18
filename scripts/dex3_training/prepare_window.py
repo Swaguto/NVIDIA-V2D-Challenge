@@ -89,7 +89,9 @@ def prepare(case, static_inputs, robot_assets, out, *, full_episode=False):
             or data["robot_motion_target_validated"].any()
             or not np.array_equal(data["frame_indices"], source["frame_indices"])
         ):
-            raise ValueError("Full-episode proposal must retain its inferred robot provenance and complete frame axis")
+            raise ValueError(
+                "Full-episode proposal must retain its inferred robot provenance and complete frame axis"
+            )
     hand_mask_key = (
         "hand_metric_valid" if "hand_metric_valid" in source else "hand_valid"
     )
@@ -106,7 +108,9 @@ def prepare(case, static_inputs, robot_assets, out, *, full_episode=False):
         valid &= source[key]
     valid &= np.isfinite(qpos).all(axis=(1, 2))
     start, stop = select_rows(valid, qpos, full_episode=full_episode)
-    if full_episode and not np.array_equal(source["frame_indices"], np.arange(len(valid))):
+    if full_episode and not np.array_equal(
+        source["frame_indices"], np.arange(len(valid))
+    ):
         raise ValueError(
             "Full-episode commands must cover every original frame and remain inferred"
         )
@@ -129,6 +133,11 @@ def prepare(case, static_inputs, robot_assets, out, *, full_episode=False):
     if out.exists():
         raise FileExistsError(out)
     out.mkdir(parents=True)
+    if full_episode:
+        report = case / "proposal/report.json"
+        if sha(report) != declared.get("proposal/report.json"):
+            raise ValueError("Command proposal report changed or is undeclared")
+        shutil.copyfile(report, out / "command-proposal-report.json")
     # Copy only the private robot asset closure; dataset inputs stay out of images.
     robot_sources = {}
     for side in ("left", "right"):
@@ -305,6 +314,9 @@ def prepare(case, static_inputs, robot_assets, out, *, full_episode=False):
             hand_object_assignment="not prescribed; generic retargeted motion baseline",
             grasp_plan_used=False,
             source_motion_speed=1.0,
+            command_anchor_policy=static.get("command_anchor_policy", "visual"),
+            command_selected_anchor_slots=static.get("selected_anchor_slots"),
+            command_source_report_sha256=sha(out / "command-proposal-report.json"),
             target_preparation_source_sha256=sha(Path(__file__)),
         )
     (out / "manifest.json").write_text(

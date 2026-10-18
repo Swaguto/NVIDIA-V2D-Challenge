@@ -24,7 +24,7 @@ from robotic_grounding.retarget.track3_bundle import digest, validate_bundle
 
 
 def complete_commands(qpos, valid, times, limits, parking):
-    """Interpolate available IK; park a hand only when no fit exists for it."""
+    """Interpolate selected IK anchors; park a hand when no anchor was selected."""
     qpos = np.asarray(qpos, float)
     valid = np.asarray(valid)
     times = np.asarray(times, float)
