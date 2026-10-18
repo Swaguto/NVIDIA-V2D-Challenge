@@ -876,13 +876,153 @@
       "exact_executed_producer": true,
       "preparation_only": false,
       "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "extract_partial_hand_stereo_evidence_v1.py",
+      "sha256": "8a4e010c4c9033332618c60fda29d49155babf72682a0156398f57763f164b75",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_extract_partial_hand_stereo_evidence_v1.py",
+      "sha256": "5afcee528670635812db6a2fd48e9955f0b42e246d80cc95727365059821996e",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "recover_carry_hand_image_motion_v1.py",
+      "sha256": "7aa50307f131191f4fd04503b1a02477b134475545005ee872b0f1ae71efc5af",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_recover_carry_hand_image_motion_v1.py",
+      "sha256": "c00d417dfd8dfbc312fd5eeaf611806ba883d47aa0a61952a81a0e343447f8cd",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "recover_carry_hand_image_motion_v2.py",
+      "sha256": "108325e4ba5be136314c374bc7ef21796694f7d1c160cd1abf33a626f74f17d4",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_recover_carry_hand_image_motion_v2.py",
+      "sha256": "720876011993e9975d705f9e0775e2d7751dc456f0395a1f5b461e277e378299",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "recover_carry_hand_image_motion_v3.py",
+      "sha256": "20451c52474be426c88293a5141f284773ee29737a1b0cac0cb663c1a722936d",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_recover_carry_hand_image_motion_v3.py",
+      "sha256": "016da480e98233287813a402f5e1583e28233139996e1b6930494810ae8633c0",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "export_one_sided_hand_image_evidence_v1.py",
+      "sha256": "bfc763aa0fdc9a176973be71397f0d5b7515408a364df7d2d68292e089d4accb",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "fit_source_supported_hand_motion_v1.py",
+      "sha256": "f9575ee5b833af2569d2b2f96b01fc168f5a099ec2b4667a7b0a2577f1d13eed",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_fit_source_supported_hand_motion_v1.py",
+      "sha256": "ca961f537b581e0b68d3302fe0b6a1d9dd170e8a9611f975610cc93b5b02cad0",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "numpy_mano_source_geometry_v1.py",
+      "sha256": "4113b7c26921005ee189bc5ffd33d2817b315d9c67157c3500b3449dfb62aeb4",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "numpy_mano_source_geometry_v2.py",
+      "sha256": "de18fdb344ba105ae0fc708fc0dbd7385d619b954a811aa50902933e6876097a",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "audit_source_hand_surface_depth_v1.py",
+      "sha256": "ad4735ee43221b280df699d591778cbdcc072cfa654d7ab860c2f1b8b94ad0d7",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "fit_articulated_source_hand_v1.py",
+      "sha256": "8e922b2306e1bdca65fce714791cecf2e919e2ee74b32224aa5d7b121a59fab4",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_fit_articulated_source_hand_v1.py",
+      "sha256": "a91f5a3d7b93ba1fc46cada04a9e29f762bcbb7c5f880de8d9eebf7786159e02",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "fit_articulated_source_hand_v2.py",
+      "sha256": "8207d4937f9199317fa4de5bee8168e396d2f85449212dc3dd945a602309b37a",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_fit_articulated_source_hand_v2.py",
+      "sha256": "69630be6dca10d3bc9f906ca6c06dd25aeaef3710cea12123ee911ea0ec24f46",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "prepare_fresh_hand_recovery_request_v1.py",
+      "sha256": "39d13865ee088be8b61a7c97127f3224cb0992eb50b6c26bd96854e43c3ab5e9",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "checkpoint_fresh_hand_recovery_v1.py",
+      "sha256": "d19481889c26f6889acf224559ba334632f56c5c540cb6163315a7f6feee9326",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
     }
   ],
   "input_assets_included": false,
   "credentials_included": false,
   "production_method": false,
   "physical_task_accepted": false,
-  "latest_result_scope": "Static/discrete reference gates remain passed, but carry source audit rejects grasp reference: rightdigits209..272mmfromspoon at50 due originalworldgapinterpolation. MediaPipefull151raw2Dcandidatescomplete;strictstereofullhand0qualify. GPUplanv2blocked;no physics/PPO.",
-  "executed_source_count": 135,
+  "latest_result_scope": "Inferred image flow72/75carryframes;rigid/articulatedsourcefitsstillrejectpeak. FreshSAM2/HaMeRpath10CPUcontracttestspass,8privateimagesprepared,CUDAunverified. No fullreference/policy promotion or PPO;BrevSTOPPED/shutdownendpointstillrejectsprovider token.",
+  "executed_source_count": 155,
   "unexecuted_source_count": 2
 }

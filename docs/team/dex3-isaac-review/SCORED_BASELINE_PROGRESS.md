@@ -136,3 +136,13 @@ work, but provider stop commands still fail; the VM was independently confirmed
 STOPPED at 20:39:46 UTC. No new paid work was started.
 The earlier development record is
 preserved in [the history](SCORED_BASELINE_HISTORY_20261018.md).
+
+### Fresh hand recovery — 2026-10-18 21:41 UTC
+
+The e037 empty-mask dependency is now addressed by a separate source-image
+SAM2/HaMeR recovery entry point. Ten CPU contract tests and the private eight-image
+request pass validation; GPU execution remains unverified. Inferred flow covers
+72/75 missing image frames, but rigid/articulated carry fits still fail source
+checks. No candidate was promoted or trained. Brev is STOPPED and its shutdown
+endpoint still rejects the provider token. See
+[E037_FRESH_HAND_RECOVERY_20261018.md](E037_FRESH_HAND_RECOVERY_20261018.md).
