@@ -190,6 +190,102 @@
       "file": "sgbm_left_right_source_audit_v2.py",
       "sha256": "27cdaaf550cdd1636b4e4b440aac69f537b0dc7e396c7088e728b5fa9ac72dd8",
       "exact_executed_producer": true
+    },
+    {
+      "file": "fast_stereo_cpu_probe_v1.py",
+      "sha256": "4c783ac64b414095beb35a2cf5cf866143d8020c5f48cae85abeb2b24255e7e2",
+      "exact_executed_producer": true,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_fast_stereo_cpu_probe_v1.py",
+      "sha256": "b2243f9d14347e5824bf6d0ed430a3c6b67ff9d2a838a8b9fac2d92246e3bd3a",
+      "exact_executed_producer": true,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "compare_fast_stereo_source_v1.py",
+      "sha256": "bf2aa45bc65c6d755ded374b93a97f959e0c9dac279089dd44a44722a6c83c9b",
+      "exact_executed_producer": true,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "fast_stereo_cpu_seven_v1.py",
+      "sha256": "4ca4c65d51e5e2c842c02da3361472d434b012bafd96d5d59a790ca1d8a5e049",
+      "exact_executed_producer": true,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_fast_stereo_cpu_seven_v1.py",
+      "sha256": "ff21a92d52df7b6d99a0b181463ca6a722c42b42cef795acdefbd977f6412de8",
+      "exact_executed_producer": true,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "compare_fast_stereo_source_seven_v1.py",
+      "sha256": "e9c720075c6c44611a3b7f76199ee2d99567f6e15fe5e428ea501ccbd658bccc",
+      "exact_executed_producer": true,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "fast_stereo_rigid_pose_probe_v1.py",
+      "sha256": "e336856feb89a2f67794353e8b89dc8b7230bb678d56d0f081854b8dc693b347",
+      "exact_executed_producer": true,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_fast_stereo_rigid_pose_probe_v1.py",
+      "sha256": "37ae4b144b9c36b3812084d4a9a7b7fc7c5ed89b3e3fba318d826fad529b9915",
+      "exact_executed_producer": true,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "stereo_photometric_source_audit_v1.py",
+      "sha256": "290b5799953f146d2da0e0e7b4eedc78bf531871522c3ad58301f8d9f742c134",
+      "exact_executed_producer": true,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "fast_stereo_scaled_seven_pose_probe_v1.py",
+      "sha256": "82162f9793a8466bc59c91085cd941d6294adc0757dff35bca0aa47ebe97fda3",
+      "exact_executed_producer": true,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_fast_stereo_scaled_seven_pose_probe_v1.py",
+      "sha256": "3d8e74e57f866702976b16aa49173f1111c990f6045dfdbd18d8ce16ad4e3e3c",
+      "exact_executed_producer": true,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "native_scaled_spoon_samples_v1.py",
+      "sha256": "d675cdc86b58ed5908aba681768fc16efda7b552f6cadadd98c222320a678946",
+      "exact_executed_producer": true,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "native_scaled_spoon_samples_v2.py",
+      "sha256": "a269e98d922d828f4d64973f7f0f7b885b08f737399dc05d141a12ed9b5a0e38",
+      "exact_executed_producer": true,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_native_scaled_spoon_samples_v2.py",
+      "sha256": "ba9769378ce8b2179c6f3c38f8eba9ecf744121da925c8113863aa2b29fcd9a8",
+      "exact_executed_producer": true,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "fast_stereo_cpu_full_e037_v1.py",
+      "sha256": "1277c459e9204a9703bc40cfdbc72aea50624b24601c92062e1a855a3ee331a9",
+      "exact_executed_producer": true,
+      "full_job_in_progress_at_archive": true
+    },
+    {
+      "file": "guard_fast_stereo_cpu_full_e037_v1.py",
+      "sha256": "edcd9fc9129d20e52e1ca9756d6c15e233748917ecc36b7f0adaec14c25265f9",
+      "exact_executed_producer": true,
+      "full_job_in_progress_at_archive": true
     }
   ],
   "input_assets_included": false,

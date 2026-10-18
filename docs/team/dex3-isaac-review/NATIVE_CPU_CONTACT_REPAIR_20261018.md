@@ -118,6 +118,11 @@ resolve the source/support inconsistency, so it was not promoted. It used the
 unchanged saved control depths after verifying exact 1/16-pixel disparities and
 validity masks. A learned-stereo comparison remains prepared but unexecuted.
 
+The later [CPU learned-stereo investigation](FAST_STEREO_CPU_20261018.md) supplies
+a new depth hypothesis and seven fitted spoon poses with zero native
+object/support penetration. One hand/spoon sample still fails; the full new
+trajectory is not qualified.
+
 Receipts: [articulated stage](e037-articulated-contact-stage-20261018.json),
 [stereo cycle diagnostic](e037-stereo-cycle-diagnostic-20261018.json).
 
