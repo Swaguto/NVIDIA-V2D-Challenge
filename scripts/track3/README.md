@@ -131,3 +131,30 @@ a fake scored kit or change source confidence. Freeze the method and training
 budget before evaluating held-out episodes. These tests assess transfer of the
 pipeline to new episodes; per-episode policies are not a universal zero-shot
 policy, and recurring object categories are not unseen-category validation.
+### Complete reconstructed episode to a short policy baseline
+
+`docker/track3-scored/make_policy_context.py --out <fresh-context>` exports the
+committed CPU preparation code. It excludes robot assets and private inputs.
+`run_scored_policy.py --config <config.json>` then performs IK, prepares the
+complete source frame axis, freezes collision geometry, compiles the native
+scene on CPU, trains at most 100 PPO iterations, and runs the untouched official
+kit evaluator on both initial and final checkpoints. A separate final native
+readback verifies zero object assistance and records the task audit.
+
+The JSON config requires `episode`, `bundle`, `support`, `context`,
+`robot_assets`, `robot_asset_lock`, `kit`, `out`, `max_seconds`, `iterations`, and
+an immutable `training_image` digest. The lock uses the existing
+`v2d.dex3.robot-assets.v1` contract and its `files_sha256` closure. Real retrieved
+robot meshes are required. `anchor_policy` defaults to `visual`; `metric` remains
+an explicit experimental alternative. Keep the same choice across comparisons.
+
+The runner uses `/opt/ik/bin/python` from the existing training image for IK and
+case preparation. Portable preparation and PPO use that image's pinned training
+environment. It records the preparation source commit separately from the
+training image. No image download or rebuild happens inside this command.
+
+Use a surrounding timed lease with verified result backup and provider shutdown.
+Each episode needs a new output directory. A complete baseline can still fail
+every grasp: inspect evaluator metrics, full native motion and the task audit.
+These scores compare against reconstructed references and are not leaderboard
+ground truth. The command does not upload or select a submission automatically.
