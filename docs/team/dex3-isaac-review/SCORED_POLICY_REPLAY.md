@@ -48,6 +48,10 @@ contracts passed, 190 result files were hash-verified, and Brev was confirmed
 STOPPED. [Metric comparisons](scored-replay-rehearsal-20261018.json) vary,
 including e003 AUC 0.1478 versus 0.1818. Exact metrics and another teammate's
 reproduction have not been established. The variability's cause is not isolated.
+The [saved native-array comparison](scored-replay-native-array-comparison-20261018.json)
+finds identical recorded native model arrays and first motor targets in all
+three cases, with differences already present in the first recorded physics
+states. This narrows the investigation; it does not prove a solver cause.
 
 ## Private portable input folder
 

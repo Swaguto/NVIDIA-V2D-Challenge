@@ -1,0 +1,54 @@
+{
+  "schema": "v2d.historical-cpu-probe-source.v1",
+  "files": [
+    {
+      "file": "native_retarget_contact_prototype_v1.py",
+      "sha256": "fb675d9f653191fe6328cf3f42cc234d7ef077161377ed6c9b5f18fc98265912",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "native_retarget_contact_prototype_v2.py",
+      "sha256": "7439e7961833994fe8760d44f0de1f56a50969a9b0852ea749675980612b1f05",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "native_retarget_contact_prototype_v3.py",
+      "sha256": "fdbb92b1130c156cc3a713e2b4d1054e359d5db8f89d6e0bf01ac3ed5594399a",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "native_retarget_contact_prototype_v4.py",
+      "sha256": "4b4cb5913dd4c880f04e520cce03656c34fbfe80651c9a2cffa97d286e94d3d8",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "native_retarget_contact_prototype_v5.py",
+      "sha256": "27359b2cd35fc0e2c8c1cba89c31ead69d3243dad3bb4006eb7bb0a742f2685c",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "native_retarget_contact_prototype_v6.py",
+      "sha256": "4d71d967b14eaf76093be677b91f8f36fc63bd8fab2d760ee73b73e8caef61e8",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "metric_scale_source_probes_v1.py",
+      "sha256": "a80f0f083e366ff5b0e20fc8deafc8c557379245e849811529170edb07ac4700",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "score_metric_scale_sequences_v2.py",
+      "sha256": "bae97e1011524cb2d246e3c0228a3a22f7b696f5018a3faecd0557220e56e27a",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "spoon_support_fit_probe_v1.py",
+      "sha256": "b4f717ad3ff6cca1afe44bb00ec20680be3feb4437114ea28017cfb9b39e0f3b",
+      "exact_executed_producer": true
+    }
+  ],
+  "input_assets_included": false,
+  "credentials_included": false,
+  "production_method": false,
+  "physical_task_accepted": false
+}

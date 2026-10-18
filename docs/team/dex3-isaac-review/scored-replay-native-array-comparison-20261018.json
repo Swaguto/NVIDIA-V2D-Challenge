@@ -1,0 +1,89 @@
+{
+  "schema": "v2d.saved-replay-native-array-comparison.v1",
+  "rows": [
+    {
+      "episode": 3,
+      "native_model_arrays_exact": true,
+      "model_array_differences": {},
+      "native_trace_comparison": {
+        "body_poses": {
+          "first_frame_maximum_absolute_difference": 0.0018716603517532349,
+          "first_frame_over_1e_minus6": 0,
+          "maximum_absolute_difference": 0.9892328977584839
+        },
+        "joint_positions": {
+          "first_frame_maximum_absolute_difference": 0.0018716603517532349,
+          "first_frame_over_1e_minus6": 0,
+          "maximum_absolute_difference": 0.9892328977584839
+        },
+        "motor_target": {
+          "first_frame_maximum_absolute_difference": 0.0,
+          "first_frame_over_1e_minus6": 1,
+          "maximum_absolute_difference": 0.0947536826133728
+        },
+        "direct_joint_effort": {
+          "first_frame_maximum_absolute_difference": 2.5032786652445793e-06,
+          "first_frame_over_1e_minus6": 0,
+          "maximum_absolute_difference": 1.5706366300582886
+        }
+      }
+    },
+    {
+      "episode": 15,
+      "native_model_arrays_exact": true,
+      "model_array_differences": {},
+      "native_trace_comparison": {
+        "body_poses": {
+          "first_frame_maximum_absolute_difference": 0.022657886147499084,
+          "first_frame_over_1e_minus6": 0,
+          "maximum_absolute_difference": 1.345022439956665
+        },
+        "joint_positions": {
+          "first_frame_maximum_absolute_difference": 0.04171741008758545,
+          "first_frame_over_1e_minus6": 0,
+          "maximum_absolute_difference": 1.8313860893249512
+        },
+        "motor_target": {
+          "first_frame_maximum_absolute_difference": 0.0,
+          "first_frame_over_1e_minus6": 1,
+          "maximum_absolute_difference": 0.09316843748092651
+        },
+        "direct_joint_effort": {
+          "first_frame_maximum_absolute_difference": 0.2554816007614136,
+          "first_frame_over_1e_minus6": 0,
+          "maximum_absolute_difference": 34.999855041503906
+        }
+      }
+    },
+    {
+      "episode": 38,
+      "native_model_arrays_exact": true,
+      "model_array_differences": {},
+      "native_trace_comparison": {
+        "body_poses": {
+          "first_frame_maximum_absolute_difference": 0.00317932665348053,
+          "first_frame_over_1e_minus6": 0,
+          "maximum_absolute_difference": 0.4176008105278015
+        },
+        "joint_positions": {
+          "first_frame_maximum_absolute_difference": 0.00317932665348053,
+          "first_frame_over_1e_minus6": 0,
+          "maximum_absolute_difference": 0.8188520669937134
+        },
+        "motor_target": {
+          "first_frame_maximum_absolute_difference": 0.0,
+          "first_frame_over_1e_minus6": 1,
+          "maximum_absolute_difference": 0.02374577522277832
+        },
+        "direct_joint_effort": {
+          "first_frame_maximum_absolute_difference": 0.003549627959728241,
+          "first_frame_over_1e_minus6": 0,
+          "maximum_absolute_difference": 1.0607072114944458
+        }
+      }
+    }
+  ],
+  "physics_rerun": false,
+  "inputs_modified": false,
+  "determinism_cause_proven": false
+}
