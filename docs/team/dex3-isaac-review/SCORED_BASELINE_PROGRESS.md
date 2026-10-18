@@ -46,6 +46,13 @@ gap proposal reduces a large hand/object separation but increases intersecting
 frames. Its local contact-projection attempts also leave unresolved contacts
 and introduce velocity violations. Those proposals were not promoted or trained.
 
+A subsequent source-constrained articulated e037 candidate clears **27 → 0**
+hand/frame penetration failures across all 151 knots. Independent source
+projection, full native FK and actual URDF finger position/velocity checks pass.
+The full task remains blocked by **78 object/support penetration knots**; no new
+policy or score improvement is claimed. The original selected baseline is
+preserved. [Native CPU repair and limitations](NATIVE_CPU_CONTACT_REPAIR_20261018.md).
+
 The independently frozen reserved baseline was run on e014/e032/e036 using the
 previously recorded method and source/image pins. All three MP-SR results are
 zero; some objects are lost badly in the unassisted rollout. Those results

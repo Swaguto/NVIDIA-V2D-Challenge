@@ -1,0 +1,60 @@
+{
+  "schema": "v2d.replay-reset-source-inspection.v1",
+  "updated_utc": "2026-10-18T16:37:33.376498+00:00",
+  "physics_rerun": false,
+  "inputs_or_evaluator_changed": false,
+  "cause_proven": false,
+  "recorded_native_options": [
+    {
+      "episode": "e003",
+      "native_model_sha256": "3dd87947d44587e7ca9941244e39c8661c388bc402a145311dc48846caf5884f",
+      "disableflags": 524288,
+      "warmstart_disable_bit": 512,
+      "warmstart_enabled": true
+    },
+    {
+      "episode": "e015",
+      "native_model_sha256": "a66fbf598eeba7c1b2e400e4879b01de0fcad0fbaf70342aadf0ed344877f86e",
+      "disableflags": 524288,
+      "warmstart_disable_bit": 512,
+      "warmstart_enabled": true
+    },
+    {
+      "episode": "e038",
+      "native_model_sha256": "489804cfad7c655b6a13ea615e80701b23fbabc359d37666553ec0cc705a9cb2",
+      "disableflags": 524288,
+      "warmstart_disable_bit": 512,
+      "warmstart_enabled": true
+    }
+  ],
+  "source_sha256": {
+    "cpu-native-runtime-v1/src/flash_chord/envs/base.py": "5011b2c672911d4d0b68fe0f832e6a333943627e5020308fd3bd241619dd3292",
+    "cpu-native-runtime-v1/src/flash_chord/lifecycle/reset.py": "f43221defb9814970d36b72b8b524d73418deabbedd88cc95cc7166e6622a8d2",
+    "cpu-env/lib/python3.12/site-packages/newton/_src/solvers/mujoco/solver_mujoco.py": "c381eaf5f267418b61aae6b233989a2fd4dad7029f2ffa889bfc5714a37ce359",
+    "cpu-env/lib/python3.12/site-packages/mujoco_warp/_src/solver.py": "bba0c67182ade84f5375d6a066048e111edd3371b33d46a6f1246349f22bb30a",
+    "repo/scripts/dex3_training/diagnose_task.py": "d756bfe5d5573d606fc908b3b9c870cb0e3ac332d90af705c9b317b96786131b"
+  },
+  "observations": [
+    "Saved readback frame0 is after wrapped.step, so no initial reset-state buffer was preserved.",
+    "Pinned local BaseEnv.reset/reset_worlds resets Newton state0 coordinates and velocities, action/lifecycle/objective state. No native qacc_warmstart clear appears in this reset path.",
+    "Pinned local Newton _update_mjc_data copies qpos/qvel; it does not write qacc_warmstart.",
+    "Pinned local MuJoCo-Warp solver uses qacc_warmstart when WARMSTART is not disabled. All3 actual GPU readback disableflags leave warmstart enabled."
+  ],
+  "hypothesis": "Unrecorded native solver startup/warmstart state is one possible source of first-control-interval differences; this source audit does not establish that it differed or caused score variation.",
+  "next_passive_snapshot_stages": [
+    "afterconstruction",
+    "after sampled reset beforecapture",
+    "after capture",
+    "afterexplicit frame0 reset",
+    "immediately beforefirst controlinterval",
+    "afterfirst interval"
+  ],
+  "next_snapshot_fields": [
+    "Newtonstate0/state1 joint_q/joint_qd/body_q/body_qd",
+    "nativeqpos/qvel/qacc/qacc_warmstart/time/ctrl/qfrc_applied",
+    "timestep/episode/reset counters and observation/action buffers",
+    "complete native flags/runtime configuration"
+  ],
+  "one_substep_followup": "Only after matching startup snapshots, use a separate labeled debug rollout to snapshot after one solver substep. Do not modify the untouched official evaluator or claim debug-score equivalence.",
+  "gpu_work_queued": false
+}

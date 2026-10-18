@@ -1,0 +1,112 @@
+{
+  "schema": "v2d.e037-articulated-source-contact-stage-summary.v1",
+  "episode": 37,
+  "original_manifest_sha256": "ada1990909c3f9685f93d798c280a902653b432e380607a563f131017fae7815",
+  "candidate_manifest_sha256": "f1557d18c348e2f84a0a8d2c6d2b9adbf7bce923319911425c1b2e54812f8ba4",
+  "candidate_sha256": "8f6effed4d382ffb19d185a2d240e7161d1a9834178528a1a4df8c5f845802d4",
+  "source_confidence_changed": false,
+  "object_targets_changed": false,
+  "physics_stepped": false,
+  "new_training_steps": 0,
+  "physical_task_accepted": false,
+  "trajectory_promoted_to_training": false,
+  "full_task_gate_passed": false,
+  "native_contact_gate": {
+    "schema": "v2d.reference-native-penetration-gate.v1",
+    "input_manifest_sha256": "f1557d18c348e2f84a0a8d2c6d2b9adbf7bce923319911425c1b2e54812f8ba4",
+    "reference_knots": 151,
+    "tolerance_m": 0.001,
+    "object_knots_over_tolerance": 78,
+    "hand_slots_over_tolerance": 0,
+    "maximum_object_penetration_m": 0.013664358608946992,
+    "maximum_hand_penetration_m": 0,
+    "native_penetration_gate_passed": false,
+    "contact_distances_recomputed_from_every_audit_frame": true,
+    "source_targets_modified": false,
+    "contact_forces_or_grasp_stability_assessed": false,
+    "swept_contacts_assessed": false,
+    "physical_task_accepted": false
+  },
+  "native_hand_body_fk_verified": true,
+  "fresh_compiler_all_geometry_buffers_match_control": true,
+  "independent_source_projection": [
+    {
+      "hand": "left",
+      "observed_points": 604,
+      "source_metric_supported_frames": 24,
+      "maximum_point_regression_px": 0.0,
+      "before_median_px": 15.505636231216908,
+      "after_median_px": 15.483058330343791,
+      "before_p95_px": 24.74005227754762,
+      "after_p95_px": 24.73905174816775,
+      "passed": true
+    },
+    {
+      "hand": "right",
+      "observed_points": 300,
+      "source_metric_supported_frames": 55,
+      "maximum_point_regression_px": 0.0,
+      "before_median_px": 15.037255198552062,
+      "after_median_px": 14.90223195761908,
+      "before_p95_px": 35.46643358442163,
+      "after_p95_px": 35.26229547049901,
+      "passed": true
+    }
+  ],
+  "wrist_motion": [
+    {
+      "hand": "left",
+      "maximum_correction_rad": 0.07878214384219996,
+      "maximum_original_root_velocity_m_s": 0.22134149853109772,
+      "maximum_candidate_root_velocity_m_s": 0.18636544756404294,
+      "maximum_original_wrist_velocity_rad_s": 0.8005406071389773,
+      "maximum_candidate_wrist_velocity_rad_s": 0.7988381961236904
+    },
+    {
+      "hand": "right",
+      "maximum_correction_rad": 0.15000000235335678,
+      "maximum_original_root_velocity_m_s": 0.6307908613475712,
+      "maximum_candidate_root_velocity_m_s": 0.6296256143736868,
+      "maximum_original_wrist_velocity_rad_s": 8.607200648746094,
+      "maximum_candidate_wrist_velocity_rad_s": 8.536826879140778
+    }
+  ],
+  "inferred_motion_bounds": {
+    "maximum_root_correction_norm_m": 0.01708394271924961,
+    "maximum_added_root_adjacent_component_m": 0.001500000000169699,
+    "maximum_added_root_second_component_m": 0.0014014157825908424,
+    "maximum_added_rotation_adjacent_component_rad": 0.014052571388241869,
+    "maximum_added_rotation_second_component_rad": 0.011809089468891185,
+    "maximum_added_finger_adjacent_rad": 0.020429235251148745,
+    "maximum_added_finger_second_rad": 0.016083684115398955
+  },
+  "source_fit_stage_passed": true,
+  "motion_limits_stage_passed": true,
+  "hand_source_motion_stage_passed": true,
+  "original_frozen_closure_and_unchanged_targets_verified_after": true,
+  "wall_seconds": 8.4443298750557,
+  "private_validation_report_sha256": "cfd9bca53888f5544e7a8743f130394df1f896956b62906ab211ab57243629f4",
+  "before_hand_slots_over_1mm": 27,
+  "after_hand_slots_over_1mm": 0,
+  "source_ground_truth_known": false,
+  "no_force_closure_or_policy_score_claim": true,
+  "source_confidence_and_missing_observation_flags_preserved": true,
+  "failed_controls_retained": [
+    {
+      "name": "samples-v1/v2/v3",
+      "reason": "Source constraints or optimizer convergence failed."
+    },
+    {
+      "name": "samples-v4",
+      "reason": "Rejected before measurement: exact native-depth/support-interval equality assertion was invalid; no gate was changed."
+    },
+    {
+      "name": "trajectory-v1",
+      "reason": "All-vertex dense constraints hit45second solver cap; original candidate retained."
+    },
+    {
+      "name": "SGBM-cycle-v1",
+      "reason": "Regenerated float32 depth differed oneULP; no geometric measurement ran. V2 verifies exact recovered pixel disparities and uses original depth bytes."
+    }
+  ]
+}

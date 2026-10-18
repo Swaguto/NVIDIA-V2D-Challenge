@@ -125,6 +125,71 @@
       "file": "prepare_learned_stereo_probe_v1.py",
       "sha256": "506a1a9404c6703af7d6c386f22d1409f593ef36ee34f0fe871c96bc21aef729",
       "exact_executed_producer": true
+    },
+    {
+      "file": "articulated_source_contact_samples_v1.py",
+      "sha256": "a4b73f9195c356be8174df42c2bdd7bf6568adaf0fd544579f5d3e5c8f115c6d",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "articulated_source_contact_samples_v2.py",
+      "sha256": "86549c37304438b8c9c2c8ca3f571d78ffe952094027868ff564857a481aa118",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "articulated_source_contact_samples_v3.py",
+      "sha256": "2b8277ab87b2eb993187132ecba0827201f4d310ad0e82cf7c0e2b09f30e2fd0",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "articulated_source_contact_samples_v4.py",
+      "sha256": "4bf8ae6cfed49d4b33a7f59cb0383605ea7522c967d8d98050c77416040196b2",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "articulated_source_contact_samples_v5.py",
+      "sha256": "3f2a1c48c3b183f0d2841a54979ea33a40789c39dd90ce911f688ffdb0d3aa58",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "native_distance_derivative_audit_v1.py",
+      "sha256": "74bd7ab2ac717fbfbd87729f08bcd9db1f77b7062ad8a9447d0eb5bf9a105d99",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "native_plane_support_audit_v1.py",
+      "sha256": "47584934aed41de86b14a79cf3f3161500be4c2f25b012979cc72cfbcae4ca04",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "verify_articulated_source_contact_samples_v1.py",
+      "sha256": "2abb0050f74f566d03ba10e57c70053edbb8e18138142f0b1473788c70a7cf72",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "articulated_source_contact_trajectory_v1.py",
+      "sha256": "8bc664b42710ba34f1d7d7ed0baaba119915b0f76dfb16e9bac92a82f6d7449f",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "articulated_source_contact_trajectory_v2.py",
+      "sha256": "9ee7b18c584780493b9576529eda6c7db75495e043521afd7fbc45b3df665e6c",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "validate_articulated_source_contact_trajectory_v1.py",
+      "sha256": "d464fc308818d4f2dc600fc1a7dcf26915afeed374e318a643389be143ade472",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "sgbm_left_right_source_audit_v1.py",
+      "sha256": "b2cbae20b75f1df4e39ecd5e95ad56c4d210b33e972f7b9a94493a04811a9e3a",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "sgbm_left_right_source_audit_v2.py",
+      "sha256": "27cdaaf550cdd1636b4e4b440aac69f537b0dc7e396c7088e728b5fa9ac72dd8",
+      "exact_executed_producer": true
     }
   ],
   "input_assets_included": false,

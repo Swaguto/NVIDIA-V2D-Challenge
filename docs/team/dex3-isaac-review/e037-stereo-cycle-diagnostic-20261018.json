@@ -1,0 +1,215 @@
+{
+  "schema": "v2d.sgbm-image-cycle-source-audit.v2",
+  "private_full_report_sha256": "1d16265466a945c8855c404c3b25414e478196674c517ad7612b62229d810153",
+  "producer_sha256": "27cdaaf550cdd1636b4e4b440aac69f537b0dc7e396c7088e728b5fa9ac72dd8",
+  "source_manifest_sha256": "ca1e2b20e758328d8e6f39b28ae21fcab12806d108d1fcbf8a530e370d9e5aea",
+  "cycle_threshold_px": 1.0,
+  "source_or_confidence_modified": false,
+  "production_depth_replaced": false,
+  "depth_accuracy_proven": false,
+  "physical_task_accepted": false,
+  "rows": [
+    {
+      "frame": 0,
+      "control_disparity_and_validity_reproduced_exactly": true,
+      "original_control_depth_used": true,
+      "mask_pixels": 10349,
+      "control_metric_mask_pixels": 7104,
+      "cycle_consistent_metric_mask_pixels": 5567,
+      "foreground_cycle_pass_fraction": 0.7836430180180181,
+      "interior_cycle_pass_fraction": 0.7826800065606035,
+      "original_eroded_heights": {
+        "count": 6097,
+        "quantiles_m": [
+          -0.05490399960822958,
+          -0.007284669680986178,
+          0.001821871650743434,
+          0.012338715409243806,
+          0.03735879735242262
+        ],
+        "below_minus_1mm_fraction": 0.4177464326718058
+      },
+      "consistent_eroded_heights": {
+        "count": 4772,
+        "quantiles_m": [
+          -0.03248931142393051,
+          -0.006211239016232745,
+          0.002095587282812228,
+          0.012484084162219883,
+          0.027679670707074475
+        ],
+        "below_minus_1mm_fraction": 0.4059094719195306
+      }
+    },
+    {
+      "frame": 25,
+      "control_disparity_and_validity_reproduced_exactly": true,
+      "original_control_depth_used": true,
+      "mask_pixels": 7925,
+      "control_metric_mask_pixels": 7000,
+      "cycle_consistent_metric_mask_pixels": 5503,
+      "foreground_cycle_pass_fraction": 0.7861428571428571,
+      "interior_cycle_pass_fraction": 0.7863032138650513,
+      "original_eroded_heights": {
+        "count": 5943,
+        "quantiles_m": [
+          -0.03236125456921304,
+          -0.004070598167215389,
+          0.01009225856258511,
+          0.01507690581459456,
+          0.03202562619349596
+        ],
+        "below_minus_1mm_fraction": 0.3000168265185933
+      },
+      "consistent_eroded_heights": {
+        "count": 4673,
+        "quantiles_m": [
+          -0.03191372353075137,
+          -0.003962407216911434,
+          0.010220644525992084,
+          0.014618809287022083,
+          0.025354682970904235
+        ],
+        "below_minus_1mm_fraction": 0.29702546543976033
+      }
+    },
+    {
+      "frame": 50,
+      "control_disparity_and_validity_reproduced_exactly": true,
+      "original_control_depth_used": true,
+      "mask_pixels": 12207,
+      "control_metric_mask_pixels": 7423,
+      "cycle_consistent_metric_mask_pixels": 5122,
+      "foreground_cycle_pass_fraction": 0.6900175131348512,
+      "interior_cycle_pass_fraction": 0.7038820343063497
+    },
+    {
+      "frame": 75,
+      "control_disparity_and_validity_reproduced_exactly": true,
+      "original_control_depth_used": true,
+      "mask_pixels": 10030,
+      "control_metric_mask_pixels": 7879,
+      "cycle_consistent_metric_mask_pixels": 5725,
+      "foreground_cycle_pass_fraction": 0.7266150526716588,
+      "interior_cycle_pass_fraction": 0.7249081557678178,
+      "original_eroded_heights": {
+        "count": 6805,
+        "quantiles_m": [
+          -0.0016876010315493334,
+          0.022381140050134085,
+          0.032509645743037996,
+          0.03990509693330091,
+          0.07034591132476185
+        ],
+        "below_minus_1mm_fraction": 0.05422483468038207
+      },
+      "consistent_eroded_heights": {
+        "count": 4933,
+        "quantiles_m": [
+          -0.0006438152395424219,
+          0.02402226571052757,
+          0.03242914494701571,
+          0.03843306169059485,
+          0.05825566067956256
+        ],
+        "below_minus_1mm_fraction": 0.04682748834380701
+      }
+    },
+    {
+      "frame": 100,
+      "control_disparity_and_validity_reproduced_exactly": true,
+      "original_control_depth_used": true,
+      "mask_pixels": 7514,
+      "control_metric_mask_pixels": 6533,
+      "cycle_consistent_metric_mask_pixels": 5136,
+      "foreground_cycle_pass_fraction": 0.7861625593142507,
+      "interior_cycle_pass_fraction": 0.7858715596330276,
+      "original_eroded_heights": {
+        "count": 5450,
+        "quantiles_m": [
+          -0.02694053582612267,
+          -0.0013955597760126892,
+          0.006086893565500934,
+          0.014593626146481145,
+          0.03510124781809955
+        ],
+        "below_minus_1mm_fraction": 0.25779816513761467
+      },
+      "consistent_eroded_heights": {
+        "count": 4283,
+        "quantiles_m": [
+          -0.026659672587303215,
+          -0.00046246142269837365,
+          0.005744467498385475,
+          0.013924640845856956,
+          0.029398845597979065
+        ],
+        "below_minus_1mm_fraction": 0.24212000933924818
+      }
+    },
+    {
+      "frame": 125,
+      "control_disparity_and_validity_reproduced_exactly": true,
+      "original_control_depth_used": true,
+      "mask_pixels": 10070,
+      "control_metric_mask_pixels": 8491,
+      "cycle_consistent_metric_mask_pixels": 6873,
+      "foreground_cycle_pass_fraction": 0.8094452950182546,
+      "interior_cycle_pass_fraction": 0.8121085594989561,
+      "original_eroded_heights": {
+        "count": 7185,
+        "quantiles_m": [
+          -0.06762591620874277,
+          -0.03808524264187341,
+          -0.009762661937396278,
+          0.0032634393576467247,
+          0.01819948729670022
+        ],
+        "below_minus_1mm_fraction": 0.6803061934585943
+      },
+      "consistent_eroded_heights": {
+        "count": 5835,
+        "quantiles_m": [
+          -0.06428053982420376,
+          -0.0359535543656162,
+          -0.009677206243513314,
+          0.002518752089742504,
+          0.013338745951393654
+        ],
+        "below_minus_1mm_fraction": 0.6920308483290488
+      }
+    },
+    {
+      "frame": 150,
+      "control_disparity_and_validity_reproduced_exactly": true,
+      "original_control_depth_used": true,
+      "mask_pixels": 10234,
+      "control_metric_mask_pixels": 7737,
+      "cycle_consistent_metric_mask_pixels": 5906,
+      "foreground_cycle_pass_fraction": 0.7633449657489983,
+      "interior_cycle_pass_fraction": 0.7684872660325253,
+      "original_eroded_heights": {
+        "count": 6518,
+        "quantiles_m": [
+          -0.08882275542701006,
+          -0.015100933197436578,
+          0.0008322040411987142,
+          0.008893806051015793,
+          0.02055068248416196
+        ],
+        "below_minus_1mm_fraction": 0.4418533292420988
+      },
+      "consistent_eroded_heights": {
+        "count": 5009,
+        "quantiles_m": [
+          -0.07871777420763204,
+          -0.010339645699125932,
+          0.0015023480459326333,
+          0.0090108550060784,
+          0.016755708615864076
+        ],
+        "below_minus_1mm_fraction": 0.40187662208025554
+      }
+    }
+  ]
+}
