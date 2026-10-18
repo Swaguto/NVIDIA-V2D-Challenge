@@ -8,6 +8,21 @@ from the preceding knot. Intermediate confidence is the AND of its neighbours.
 import numpy as np
 
 
+def integer_rate_factor(source_fps, control_fps):
+    """Accept floating-point clock roundoff, while rejecting real rate changes."""
+    if (
+        not np.isfinite([source_fps, control_fps]).all()
+        or source_fps <= 0
+        or control_fps <= 0
+    ):
+        raise ValueError("Need finite positive source and control rates")
+    ratio = control_fps / source_fps
+    factor = round(ratio)
+    if factor < 1 or not np.isclose(ratio, factor, atol=1e-10, rtol=1e-10):
+        raise ValueError("Only integer source-rate command upsampling is supported")
+    return factor
+
+
 def interpolate_quaternions(a, b, weight):
     a = a / np.linalg.norm(a, axis=-1, keepdims=True)
     b = b / np.linalg.norm(b, axis=-1, keepdims=True)

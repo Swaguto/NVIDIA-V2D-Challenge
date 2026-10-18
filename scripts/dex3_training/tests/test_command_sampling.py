@@ -7,7 +7,25 @@ import numpy as np
 import pytest
 
 sys.path.insert(0, str(Path(__file__).parents[1]))
-from v2d_dex3_flashchord.sampling import resample_targets
+from v2d_dex3_flashchord.sampling import integer_rate_factor, resample_targets
+
+
+def test_measured_clock_roundoff_keeps_every_source_frame():
+    # Real e010 median timestamp inversion produced this representation of 20Hz.
+    fps = 20.00000000000007
+    factor = integer_rate_factor(fps, 20)
+    assert factor == 1
+    data = source()
+    result = resample_targets(data, (len(data["frame_indices"]) - 1) * factor + 1)
+    for key, value in data.items():
+        np.testing.assert_array_equal(result[key], value)
+    assert integer_rate_factor(fps, 60) == 3
+
+
+@pytest.mark.parametrize("fps", [0, np.nan, 15, 20.001, 30])
+def test_real_clock_changes_are_not_rounded_away(fps):
+    with pytest.raises(ValueError):
+        integer_rate_factor(20, fps)
 
 
 def source():

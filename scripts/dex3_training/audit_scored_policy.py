@@ -12,7 +12,7 @@ from pathlib import Path
 import numpy as np
 from scipy.spatial.transform import Rotation
 
-from v2d_dex3_flashchord.sampling import resample_targets
+from v2d_dex3_flashchord.sampling import integer_rate_factor, resample_targets
 
 
 def tracking_errors(actual, reference):
@@ -91,11 +91,8 @@ def audit(run, inputs):
     actual = body.reshape(len(body), worlds, stride, 7)[:, :, ids]
     with np.load(inputs / "targets.npz", allow_pickle=False) as f:
         data = {k: f[k].copy() for k in f.files}
-    ratio = report["control_fps"] / report["source_fps"]
-    if (
-        ratio != int(ratio)
-        or len(body) != (len(data["frame_indices"]) - 1) * int(ratio) + 1
-    ):
+    ratio = integer_rate_factor(report["source_fps"], report["control_fps"])
+    if len(body) != (len(data["frame_indices"]) - 1) * ratio + 1:
         raise ValueError("Full original episode is not covered")
     reference = resample_targets(data, len(body))["object_poses"]
     rows = tracking_errors(actual, reference)

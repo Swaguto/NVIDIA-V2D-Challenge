@@ -13,7 +13,7 @@ import numpy as np
 
 from v2d_dex3_flashchord import RUNTIME_COMMIT
 
-from .sampling import resample_targets
+from .sampling import integer_rate_factor, resample_targets
 
 
 def sha(path):
@@ -102,14 +102,9 @@ def load_dex3(
         "v2d.dex3-training-task.v3",
         "v2d.dex3-training-retargeted-task.v4",
     }
-    if target_fps != fps and (not inferred_task or source_frame_playback):
+    rate_factor = integer_rate_factor(fps, target_fps)
+    if rate_factor != 1 and (not inferred_task or source_frame_playback):
         raise ValueError("Confidence windows require source-rate playback")
-    if (
-        not np.isfinite(target_fps)
-        or target_fps < fps
-        or target_fps / fps != int(target_fps / fps)
-    ):
-        raise ValueError("Only integer source-rate command upsampling is supported")
     expected_contract = (
         "inferred_retargeted_robot_commands.v1"
         if manifest["schema"] == "v2d.dex3-training-retargeted-task.v4"
@@ -129,7 +124,7 @@ def load_dex3(
     for key, values in data.items():
         if not np.isfinite(values).all():
             raise ValueError(f"Nonfinite training target {key}")
-    count = (count - 1) * int(target_fps / fps) + 1
+    count = (count - 1) * rate_factor + 1
     data = resample_targets(data, count)
     sides = ("left", "right")
     objects = manifest["objects"]
@@ -138,7 +133,7 @@ def load_dex3(
     contact_normals = {s: np.zeros((count, 1, 3), dtype=np.float32) for s in sides}
     contact_parts = {s: np.zeros((count, 1), dtype=np.int32) for s in sides}
     if estimated:
-        if target_fps != fps:
+        if rate_factor != 1:
             raise ValueError(
                 "Estimated contact hints require the unchanged source clock"
             )
