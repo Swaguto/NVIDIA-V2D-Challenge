@@ -126,6 +126,11 @@ full native object/hand contacts, source hand projections and URDF motion
 limits. A further between-frame clipping failure was repaired: the latest
 independent discrete sweep clears all 3,805 samples. This is an inferred
 reference candidate for a physics trial, not a grasp or score improvement.
+A later [carry-source audit](E037_CARRY_SOURCE_GAP_20261018.md) rejects this
+as a grasp reference: at frame 50 its distal fingers are at least209–272 mm
+from the spoon during the visible source carry. The original missing-hand
+world interpolation is traced exactly; strict stereo recovery still qualifies
+zero full hands. Fix that upstream source gap before training.
 The new geometry has not been used for PPO. Normal Brev login/listing now
 work, but provider stop commands still fail; the VM was independently confirmed
 STOPPED at 20:39:46 UTC. No new paid work was started.

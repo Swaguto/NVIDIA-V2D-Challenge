@@ -161,9 +161,14 @@ Private arrays remain outside Git. This discrete geometric sweep does not prove
 continuous collision avoidance or the motion of an actual controlled hand.
 No force-bearing grasp is established by making reference meshes nonpenetrating.
 
-## Next required gates
+## Later carry audit: grasp reference remains rejected
 
-Run one bounded GPU trial of this exact frozen candidate: fresh native/source
+The static/discrete gate pass is preserved. A subsequent source-hand
+audit **rejects this candidate as a carry/grasp reference**; do not start PPO
+on it. See [the carry diagnosis](E037_CARRY_SOURCE_GAP_20261018.md).
+
+After that upstream failure is repaired, a new frozen candidate must qualify
+all original gates before a bounded GPU trial: fresh native/source
 preflight, full unassisted zero-residual controller rollout, measured motor and
 contact readbacks, then a short learning experiment only if the reference and
 controller survive. Evaluate independent repeats against fixed inputs before
@@ -182,5 +187,5 @@ The 1 mm gate, unassisted dynamics and independent evaluation repeats still
 stand. All 20 selected policies retain MP-SR zero. No completed cohort, replay,
 finalizer or renderer was rerun; no new policy or submission was promoted.
 Private footage, arrays and weights remain outside Git. The source archive
-contains 122 exact scripts: 120 executed and two prepared but unexecuted old
+contains 137 exact scripts: 135 executed and two prepared but unexecuted old
 unaligned validators. All failed controls are preserved.

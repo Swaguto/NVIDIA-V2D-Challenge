@@ -110,7 +110,7 @@
       "frame": 95
     }
   ],
-  "exact_cpu_archive_source_count": 122,
+  "exact_cpu_archive_source_count": 137,
   "unexecuted_prepared_source_count": 2,
   "estimated_depth_truth_verified": false,
   "RGB_and_SGBM_conflicts_retained": true,
@@ -223,5 +223,23 @@
   "local_integrity_checkpoint": {
     "verified_files": 636,
     "independent_off_machine_backup": false
-  }
+  },
+  "carry_reference_accepted": false,
+  "carry_source_gap_diagnosis": "E037_CARRY_SOURCE_GAP_20261018.md",
+  "gpu_plan_status": "BLOCKED_SOURCE_HAND_CARRY_REFERENCE",
+  "right_invalid_frames": [
+    36,
+    69
+  ],
+  "right_missing_direct_metric_frames": [
+    25,
+    99
+  ],
+  "frame50_right_distal_lower_gaps_m": [
+    0.27158295851854486,
+    0.21893916200757307,
+    0.20851588479509137
+  ],
+  "new_cpu_raw_detector_full_frames": 151,
+  "strict_stereo_full_hands_qualified": 0
 }

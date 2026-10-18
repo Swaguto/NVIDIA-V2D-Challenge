@@ -17,7 +17,7 @@ retained; a later local refinement clears all 3,805 independent interpolation
 samples. No physics, force-bearing grasp, policy or score improvement is
 established. See the [complete reference investigation](../../../docs/team/dex3-isaac-review/E037_FULL_REFERENCE_REPAIR_20261018.md).
 
-The manifest contains 122 exact sources: 120 executed and two prepared,
+The manifest contains 137 exact sources: 135 executed and two prepared,
 unexecuted old unaligned validators. Executed does not mean successful: failed
 and partial workers remain recorded. `later_job_closed` distinguishes a closed
 job from a historically true `full_job_in_progress_at_archive` field.
@@ -39,3 +39,5 @@ job from a historically true `full_job_in_progress_at_archive` field.
 
 See [current results](../../../docs/team/dex3-isaac-review/SCORED_BASELINE_PROGRESS.md)
 and [spoon diagnostics](../../../docs/team/dex3-isaac-review/SPOON_SOURCE_FIT_20261018.md).
+
+A later [carry-source diagnosis](../../../docs/team/dex3-isaac-review/E037_CARRY_SOURCE_GAP_20261018.md) rejects the static/sweep-qualified candidate as a grasp reference. It preserves the incomplete full separation audit, completed11-frame bounds, unqualified object-relative proposals, failed full-frame detector and complete151-frame CPU detector/stereo screens. No physics or PPO was launched.

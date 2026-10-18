@@ -771,13 +771,118 @@
       "exact_executed_producer": true,
       "preparation_only": false,
       "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "audit_aligned_grasp_separation_v1.py",
+      "sha256": "2e0be499b3e7105d1350ac926514b14e4ad002e948ff73b2d5ae5b8c98dc4015",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_audit_aligned_grasp_separation_v1.py",
+      "sha256": "8e91a0cc40cf1f492844a3a852f168f94f2c3cc30166f81368e62b58f1e212fa",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "audit_aligned_grasp_separation_v2.py",
+      "sha256": "9d91fa597a6097a924bfc2db2c98de0d9166d70bfd25a18508178cd4172792a7",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_audit_aligned_grasp_separation_v2.py",
+      "sha256": "db575e6544555a48bc3330eeccb43e748ac9d92ed8ee8c8c84700888111751f5",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "extract_grasp_source_evidence_v1.py",
+      "sha256": "a32838755f186202c28421cdfee449e14e6effa3335681770262ba56482df254",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "probe_e037_object_relative_gap_v1.py",
+      "sha256": "7566927051d2cb2bd409f331699e0669ae3bbed682ddcd0cfdf805ab18067462",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "audit_e037_carry_observation_gap_v1.py",
+      "sha256": "b3b41b4b14c3212efdfcbd7d688a0d9c5613b16b9537aafb815e81ebffab5d67",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "probe_mediapipe_source_hands_v1.py",
+      "sha256": "417ba73a57ef14a320499f079257915d95ceb550848b8f70184a0c63d47e3780",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_probe_mediapipe_source_hands_v1.py",
+      "sha256": "2012e58a3daf70634294dd3ed1c981d829df87421656c0afbd0a987089d10acb",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "probe_mediapipe_source_hands_v2.py",
+      "sha256": "e774b017b266b37d54bfa79faa6d11e343afd38314cd6ff6ca9aa499bde81d65",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_probe_mediapipe_source_hands_v2.py",
+      "sha256": "e584d5b2b1b52ea493a2ff0b2822e7a584da424537979489213ae046647936ee",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "probe_mediapipe_source_hands_full_v1.py",
+      "sha256": "77793545893b4a36c04889309c41903ac0898ba48d821011234bb5afda05ecc8",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_probe_mediapipe_source_hands_full_v1.py",
+      "sha256": "4680735ba28ef4a0cb02ed4dc1407d3b76757c735d12799af90c879fa8f236b1",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "audit_mediapipe_stereo_candidates_v1.py",
+      "sha256": "8051aaa1bf4c2af4b558238f8f826122350cea192658c970635ee9b40f23f14f",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_audit_mediapipe_stereo_candidates_v1.py",
+      "sha256": "9dd0272a1ad51367993f96df50c0a173b29eab3b706d7e436a5a1bc78d308bd5",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
     }
   ],
   "input_assets_included": false,
   "credentials_included": false,
   "production_method": false,
   "physical_task_accepted": false,
-  "latest_result_scope": "V4 object path source/motion all151 passes; V5 hand repair passes fresh native/source/URDF and independent3805sample discrete interpolation. No physics/PPO success.",
-  "executed_source_count": 120,
+  "latest_result_scope": "Static/discrete reference gates remain passed, but carry source audit rejects grasp reference: rightdigits209..272mmfromspoon at50 due originalworldgapinterpolation. MediaPipefull151raw2Dcandidatescomplete;strictstereofullhand0qualify. GPUplanv2blocked;no physics/PPO.",
+  "executed_source_count": 135,
   "unexecuted_source_count": 2
 }
