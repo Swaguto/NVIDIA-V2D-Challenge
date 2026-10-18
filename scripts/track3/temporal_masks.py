@@ -150,7 +150,7 @@ def run(episode: int, names: list[str], data: Path, out: Path, threshold: float,
         report = {"episode": episode, "objects": names, "frames": len(frames),
                   "seeds": {names[i]: {"score": seeds[i][0], "box_xyxy": seeds[i][1],
                              "label": seeds[i][2], "frame": seeds[i][3]} for i in seeds},
-                  "gt_use": "none"}
+                  "gt_use": "none", "manual_annotations_used": bool(supplied)}
         (out / "seed_report.json").write_text(json.dumps(report, indent=2))
         return report
 
@@ -204,6 +204,7 @@ def run(episode: int, names: list[str], data: Path, out: Path, threshold: float,
               "gt_use": "none", "model": "facebook/sam2.1-hiera-large"}
     report["model_revisions"] = {"grounding_dino": os.environ.get("V2D_DINO_REVISION"),
                                  "sam2": os.environ.get("V2D_SAM2_REVISION")}
+    report["manual_annotations_used"] = bool(supplied)
     report["semantic_seed_camera"] = "calibrated ego_cam_a colour" if semantic_color else "rectified monochrome stereo"
     report["semantic_prompts"] = {name: SEMANTIC_PROMPTS.get(name, name.replace("_", " ")) for name in names}
     (out / "report.json").write_text(json.dumps(report, indent=2))

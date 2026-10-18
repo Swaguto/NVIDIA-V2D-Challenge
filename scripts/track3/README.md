@@ -192,3 +192,13 @@ body gauge and does not treat that median as the body origin. Both still use the
 original measured-depth support and pose-jump acceptance checks. Use fresh result
 roots and review source overlays before promoting either experiment. Neither is
 enabled by default.
+
+`--foreground-translation-fallback` retries a rejected normal track once using
+that measured displacement. Successful normal frames do not use it. Both the
+normal and recovery candidates pass the same original depth-support and
+pose-jump checks. This conservative alternative also remains experimental.
+
+Rostered video inference always uses automatic object prompts. Saved per-episode
+box overrides are retained for legacy public CAD diagnostics only; a rostered run
+rejects an annotated mask cache. Historically reviewed public episodes are useful
+regression cases and must not be presented as untouched end-to-end holdouts.

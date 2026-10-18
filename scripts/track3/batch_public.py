@@ -60,9 +60,18 @@ def frame_count(data: Path, episode: int) -> int:
     return count
 
 
+def require_automatic_mask_prompts(report):
+    """A cached episode annotation cannot silently enter a rostered method run."""
+    if report.get('manual_annotations_used') is True or any(
+            str(seed.get('label', '')).startswith('manual:')
+            for seed in report.get('seeds', {}).values()):
+        raise ValueError('Rostered video inference requires automatic prompts; use a fresh result root')
+
+
 def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,
           python: str, fp_python: str, reinit_every: int = 0, scored: bool = False,
-          foreground_depth_only: bool = False, foreground_translation_prior: bool = False):
+          foreground_depth_only: bool = False, foreground_translation_prior: bool = False,
+          foreground_translation_fallback: bool = False):
     item = root / f"e{episode:03d}"
     item.mkdir(parents=True, exist_ok=True)
     logs = item / "logs"
@@ -78,6 +87,8 @@ def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,
     elif phase == "masks":
         out = item / "masks"
         if (out / "report.json").is_file():
+            if scored:
+                require_automatic_mask_prompts(json.loads((out / 'report.json').read_text()))
             return "cached"
         command = [python, str(HERE.parent / "temporal_masks.py"),
                    "--episode", str(episode), "--objects", names_arg,
@@ -85,9 +96,11 @@ def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,
         if scored:
             command += ["--semantic-color"]
         seeds = HERE.parent / "seed_overrides" / f"e{episode:03d}.json"
-        if seeds.is_file():
+        if seeds.is_file() and not scored:
             command += ["--seed-json", str(seeds)]
         run_command(command, logs / "masks.log")
+        if scored:
+            require_automatic_mask_prompts(json.loads((out / 'report.json').read_text()))
     elif phase == "poses":
         if scored:
             from reconstructed_view import verify_geometry
@@ -113,6 +126,8 @@ def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,
                     raise ValueError("Tracking cache uses a different refinement-depth policy; use a fresh result root")
                 if bool(cached.get('foreground_translation_prior', False)) != foreground_translation_prior:
                     raise ValueError("Tracking cache uses a different foreground initialization policy; use a fresh result root")
+                if bool(cached.get('foreground_translation_fallback', False)) != foreground_translation_fallback:
+                    raise ValueError("Tracking cache uses a different foreground recovery policy; use a fresh result root")
                 if scored:
                     import hashlib
                     proof = json.loads((out / f"e{episode:03d}" / f"{name}_fp_report.json").read_text())
@@ -133,6 +148,8 @@ def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,
                 command += ['--foreground-depth-only']
             if foreground_translation_prior:
                 command += ['--foreground-translation-prior']
+            if foreground_translation_fallback:
+                command += ['--foreground-translation-fallback']
             run_command(command, logs / f"pose_{name}.log", env)
     elif phase in ("world", "scores"):
         camera, poses = item / "camera", item / "poses"
@@ -201,6 +218,8 @@ def main():
                         help='Experiment: object-mask refinement depth; original acceptance gates')
     parser.add_argument('--foreground-translation-prior', action='store_true',
                         help='Experiment: measured visible-surface displacement initialization; original acceptance gates')
+    parser.add_argument('--foreground-translation-fallback', action='store_true',
+                        help='Experiment: measured displacement retry after normal track rejection only')
     parser.add_argument("--fp-python", default=os.environ.get(
         "V2D_FP_PYTHON", "/home/ubuntu/fp_venv/bin/python"))
     args = parser.parse_args()
@@ -222,7 +241,8 @@ def main():
             results[str(episode)] = stage(args.phase, episode, names, args.data,
                                           args.root, args.python, args.fp_python, args.reinit_every,
                                           scored=bool(args.roster), foreground_depth_only=args.foreground_depth_only,
-                                          foreground_translation_prior=args.foreground_translation_prior)
+                                          foreground_translation_prior=args.foreground_translation_prior,
+                                          foreground_translation_fallback=args.foreground_translation_fallback)
         except Exception as error:
             results[str(episode)] = f"failed: {error}"
             traceback.print_exc()

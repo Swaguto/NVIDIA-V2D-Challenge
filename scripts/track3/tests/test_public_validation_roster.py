@@ -67,3 +67,15 @@ def test_reference_tables_inside_inference_view_and_mismatched_clocks_fail(tmp_p
         make(source, metadata, [11], tmp_path / "out.json")
     with pytest.raises(ValueError, match="outside"):
         make(source, source / "metadata", [11], tmp_path / "out.json")
+
+
+def test_annotated_mask_cache_cannot_be_reused_for_automatic_video_validation():
+    from batch_public import require_automatic_mask_prompts
+
+    require_automatic_mask_prompts({"seeds": {"cup": {"label": "cup", "score": 0.9}}})
+    for report in [
+        {"seeds": {"water_pitcher": {"label": "manual:water_pitcher"}}},
+        {"manual_annotations_used": True, "seeds": {}},
+    ]:
+        with pytest.raises(ValueError, match="automatic prompts"):
+            require_automatic_mask_prompts(report)

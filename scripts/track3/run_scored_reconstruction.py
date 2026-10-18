@@ -141,6 +141,9 @@ def run(config):
         "physical_task_accepted": False,
         "stages": [],
         "foreground_depth_only": config.get("foreground_depth_only", False),
+        "foreground_translation_fallback": config.get(
+            "foreground_translation_fallback", False
+        ),
     }
 
     def save():
@@ -355,6 +358,8 @@ def run(config):
             if config.get("foreground_depth_only", False)
             else []
         )
+        if config.get("foreground_translation_fallback", False):
+            options += ["--foreground-translation-fallback"]
         container(
             batch,
             [

@@ -53,6 +53,25 @@ def foreground_depth(depth, valid, mask):
     return np.where(selected, depth, 0).astype(np.float32)
 
 
+def pose_rejection(pose, depth, valid, mask, K, bounds, bootstrap, jump_prior):
+    """Use the same measured-depth and 15cm/40degree gates on every attempt."""
+    pose = np.asarray(pose, dtype=np.float64).reshape(4, 4)
+    support = None
+    if not np.isfinite(pose).all() or pose[2, 3] <= 0.05:
+        return {"error": "invalid pose"}, support
+    if bootstrap:
+        from reconstruct_stereo_object import fusion_depth
+        _, support = fusion_depth(depth, valid, mask, K, pose, bounds)
+        if not support['accepted']:
+            return dict(error='insufficient observed depth support', depth_support=support), support
+    if jump_prior is not None:
+        step = np.linalg.inv(jump_prior) @ pose
+        if (np.linalg.norm(step[:3, 3]) > 0.15 or
+                Rotation.from_matrix(step[:3, :3]).magnitude() > np.deg2rad(40)):
+            return {"error": "implausible pose jump"}, support
+    return None, support
+
+
 def stereo_frames(left, right, anchor=None, max_frames=0):
     """Visit every source frame once, anchored forwards then backwards if requested."""
     prefix = []
@@ -86,7 +105,8 @@ def stereo_frames(left, right, anchor=None, max_frames=0):
 def run(episode: int, name: str, data: Path, masks: Path, out: Path,
         register_iterations=5, track_iterations=2, max_frames=0,
         reinit_every=0, bootstrap_manifest=None, camera_root=None,
-        foreground_depth_only=False, foreground_translation_prior=False):
+        foreground_depth_only=False, foreground_translation_prior=False,
+        foreground_translation_fallback=False):
     target = (out / f"e{episode:03d}" / "ego_object_poses" / f"e{episode:03d}" /
               name / "object_to_cam" / "ego_cam_c")
     if target.exists() and any(target.iterdir()):
@@ -103,7 +123,9 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
     mesh = trimesh.load(str(mesh_path), force="mesh", process=False)
     anchor = None
     anchor_pose = None
-    if foreground_translation_prior and bootstrap_manifest is None:
+    if foreground_translation_prior and foreground_translation_fallback:
+        raise ValueError('Choose always-on foreground initialization or rejection fallback separately')
+    if (foreground_translation_prior or foreground_translation_fallback) and bootstrap_manifest is None:
         raise ValueError('Foreground translation prior requires an own reconstructed body anchor')
     if bootstrap_manifest is not None:
         proof = json.loads(bootstrap_manifest.read_text())
@@ -159,6 +181,7 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
     last_pose_frame = None
     last_surface = None
     observed, missing, rejected = [], [], []
+    fallback_attempted, fallback_accepted = [], []
     frames_seen = 0
     for frame, raw_l, raw_r, reset_anchor in stereo_frames(left, right, anchor, max_frames):
         frames_seen = max(frames_seen, frame+1)
@@ -177,7 +200,7 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
             continue
         refinement_depth = foreground_depth(depth, valid, mask) if foreground_depth_only else depth
         surface = None
-        if foreground_translation_prior:
+        if foreground_translation_prior or foreground_translation_fallback:
             from foreground_prior import measured_surface
             surface = measured_surface(depth, valid, mask, K)
         try:
@@ -187,7 +210,7 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
                 prior_pose = transport(last_pose, camera_poses[last_pose_frame], camera_poses[frame])
             acceptance_prior_pose = prior_pose
             surface_shift = 0.0
-            if surface is not None and last_surface is not None:
+            if foreground_translation_prior and surface is not None and last_surface is not None:
                 from foreground_prior import translated_prior
                 camera_delta = (camera_poses[frame] @ np.linalg.inv(camera_poses[last_pose_frame])) if camera_poses is not None else None
                 prior_pose = translated_prior(prior_pose, last_surface, surface, camera_delta)
@@ -221,25 +244,31 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
             last_frame = None
             continue
         pose = np.asarray(pose, dtype=np.float64).reshape(4, 4)
-        if not np.isfinite(pose).all() or pose[2, 3] <= 0.05:
-            rejected.append({"frame": frame, "error": "invalid pose"})
+        jump_prior = (acceptance_prior_pose if camera_poses is not None else last_pose) if last_pose is not None and last_frame is not None else None
+        rejection, support = pose_rejection(pose, depth, valid, mask, K, mesh.bounds, anchor is not None, jump_prior)
+        initial_rejection = rejection
+        if rejection is not None and foreground_translation_fallback and surface is not None and last_surface is not None:
+            # Successful normal tracks never enter this branch. Retry once, then
+            # apply exactly the original gate reference and measured data again.
+            from foreground_prior import translated_prior
+            fallback_attempted.append(frame)
+            camera_delta = (camera_poses[frame] @ np.linalg.inv(camera_poses[last_pose_frame])) if camera_poses is not None else None
+            fallback_pose = translated_prior(acceptance_prior_pose, last_surface, surface, camera_delta)
+            surface_shift = float(np.linalg.norm(fallback_pose[:3, 3] - acceptance_prior_pose[:3, 3]))
+            tracker.pose_last = torch.as_tensor(centered_tracker_pose(fallback_pose, tracker.model_center), device='cuda', dtype=torch.float)
+            try:
+                pose = np.asarray(tracker.track_one(rgb=rgb, depth=refinement_depth, K=K, iteration=track_iterations), dtype=np.float64).reshape(4, 4)
+                rejection, support = pose_rejection(pose, depth, valid, mask, K, mesh.bounds, anchor is not None, jump_prior)
+                if rejection is None:
+                    fallback_accepted.append(frame)
+                    method = 'recover_from_measured_foreground'
+            except Exception as error:
+                traceback.print_exc()
+                rejection = dict(error=f'{type(error).__name__}: {error}')
+        if rejection is not None:
+            rejected.append(dict(frame=frame, **rejection))
             last_frame = None
             continue
-        support = None
-        if anchor is not None:
-            from reconstruct_stereo_object import fusion_depth
-            _, support = fusion_depth(depth, valid, mask, K, pose, mesh.bounds)
-            if not support['accepted']:
-                rejected.append(dict(frame=frame, error='insufficient observed depth support', depth_support=support))
-                last_frame = None
-                continue
-        if last_pose is not None and last_frame is not None:
-            step = np.linalg.inv(acceptance_prior_pose if camera_poses is not None else last_pose) @ pose
-            if (np.linalg.norm(step[:3, 3]) > 0.15 or
-                    Rotation.from_matrix(step[:3, :3]).magnitude() > np.deg2rad(40)):
-                rejected.append({"frame": frame, "error": "implausible pose jump"})
-                last_frame = None
-                continue
         quat = Rotation.from_matrix(pose[:3, :3]).as_quat()
         record = {"episode": episode, "frame_index": frame, "object": name,
                   "mesh_sha256": mesh_sha256,
@@ -252,6 +281,9 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
                   "depth_pixels": int(((mask > 127) & valid).sum())}
         record['foreground_depth_only'] = foreground_depth_only
         record['foreground_translation_prior'] = foreground_translation_prior
+        record['foreground_translation_fallback'] = foreground_translation_fallback
+        if initial_rejection is not None:
+            record['normal_attempt_rejection'] = initial_rejection
         record['measured_surface_initialization_shift_m'] = surface_shift
         if support is not None:
             record['depth_support'] = support
@@ -277,6 +309,9 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
               "track_iterations": track_iterations,
               "foreground_depth_only": foreground_depth_only,
               "foreground_translation_prior": foreground_translation_prior,
+              "foreground_translation_fallback": foreground_translation_fallback,
+              "fallback_attempted_frames": fallback_attempted,
+              "fallback_accepted_frames": fallback_accepted,
               "acceptance_prior_excludes_foreground_translation": True,
               "acceptance_uses_original_measured_depth": True}
     if bootstrap_manifest is not None:
@@ -309,11 +344,14 @@ def main():
                         help='Experiment: refine using measured object-mask depth only; acceptance gates unchanged')
     parser.add_argument('--foreground-translation-prior', action='store_true',
                         help='Experiment: initialize displacement from measured foreground; original pose-jump/depth gates unchanged')
+    parser.add_argument('--foreground-translation-fallback', action='store_true',
+                        help='Experiment: retry rejected normal tracks once with measured displacement; identical acceptance gates')
     args = parser.parse_args()
     print(run(args.episode, args.object, args.data, args.masks, args.out,
               args.register_iterations, args.track_iterations, args.max_frames,
               args.reinit_every, args.bootstrap_manifest, args.camera_root,
-              args.foreground_depth_only, args.foreground_translation_prior), flush=True)
+              args.foreground_depth_only, args.foreground_translation_prior,
+              args.foreground_translation_fallback), flush=True)
 
 
 if __name__ == "__main__":

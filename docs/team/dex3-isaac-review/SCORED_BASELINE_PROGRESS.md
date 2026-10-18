@@ -33,7 +33,9 @@ Fresh CPU cloud IK matches all three Mac pilots numerically (maximum robot-posit
 
 The e002 checkpoint-2000 control is retained. Two distinct exploration-key forks (101 and 202) preserve every other learner array and counter exactly, and pair control versus short training-reset settling. Four 100-iteration continuations with repeated unassisted evaluation are queued. The earlier settling improvement remains unqualified; no seed-confirmed improvement is claimed yet.
 
-Public development episodes 11, 22 and 42 were selected before inspecting their metadata or outcomes. Their videos and calibration have been acquired, while reference pose tables are isolated outside inference mounts. The method is not frozen and these held-out episodes have not been evaluated. This will test a reconstruction/training procedure on new episodes, not a single zero-shot policy across arbitrary episodes.
+Public development episodes 11, 22 and 42 were selected before inspecting new metadata or outcomes. A subsequent history audit found that all three were reviewed in the earlier continuity work, and e022 has a legacy manual object-box override. They are therefore retrospective regression cases, not untouched end-to-end holdouts. Their reference pose tables remain isolated outside inference mounts. Rostered video runs now exclude per-episode manual object prompts and reject annotated mask caches.
+
+Scored episodes e014 (cup/dish rack), e032 (cup/spoon) and e036 (spoon) are reserved for validation after the current tuning choices are frozen. Their camera/hand preparations already ran with unchanged settings; no object reconstruction or PPO results from these three have been used for tuning. No such validation has run yet. It will test the reconstruction/training procedure across new task results, not a single zero-shot policy across arbitrary episodes.
 
 ## Diagnostics and interpretation
 
