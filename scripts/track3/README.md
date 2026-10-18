@@ -167,6 +167,16 @@ It runs before training. Robot contacts are excluded because this probe does not
 reset the robot to its reference. Penetration is recorded as a quality problem;
 a successful probe process is not a collision-clearance or grasp pass.
 
+A SAM candidate with an explicit `metric_refinement` record can retain its
+calibrated seed pose instead of immediately running another unconstrained pose
+refinement on that frame. `calibrated_anchor.py` requires the exact pointmap,
+refiner source, report and mesh hashes, improved measured surface/silhouette
+diagnostics, nonnegative reported support clearance, and the original raw body
+rotation/origin. Other SAM and TSDF candidates keep their existing behavior.
+The retained seed still passes the original measured-depth support and pose-jump
+acceptance checks. This experimental initialization is not a physical pass or
+proof that the above-table constraint applies to arbitrary episodes.
+
 ### Start from videos, without saved hand fits
 
 `run_scored_hands.py --config <config.json>` estimates independent stereo camera

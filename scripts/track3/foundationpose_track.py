@@ -123,6 +123,8 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
     mesh = trimesh.load(str(mesh_path), force="mesh", process=False)
     anchor = None
     anchor_pose = None
+    calibrated_anchor = False
+    calibrated_anchor_sha256 = None
     if foreground_translation_prior and foreground_translation_fallback:
         raise ValueError('Choose always-on foreground initialization or rejection fallback separately')
     if (foreground_translation_prior or foreground_translation_fallback) and bootstrap_manifest is None:
@@ -141,6 +143,8 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
                 or not np.allclose(anchor_pose[:3, :3].T @ anchor_pose[:3, :3], np.eye(3), atol=1e-5)
                 or not np.isclose(np.linalg.det(anchor_pose[:3, :3]), 1, atol=1e-5)):
             raise ValueError('Invalid measured reconstruction anchor')
+        from calibrated_anchor import calibrated_seed
+        calibrated_anchor, calibrated_anchor_sha256 = calibrated_seed(bootstrap_manifest, proof)
     # FoundationPose's renderer expects SimpleMaterial.image, while the public
     # GLBs carry PBRMaterial.baseColorTexture.
     if isinstance(mesh.visual, trimesh.visual.texture.TextureVisuals):
@@ -220,7 +224,10 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
             if anchor is not None:
                 tracker.pose_last = torch.as_tensor(centered_tracker_pose(prior_pose, tracker.model_center), device='cuda', dtype=torch.float)
                 if frame == anchor:
-                    if proof.get('stage') == 'sam3d_metric_depth':
+                    if calibrated_anchor:
+                        pose = anchor_pose.copy()
+                        method = 'calibrated_measured_surface_anchor'
+                    elif proof.get('stage') == 'sam3d_metric_depth':
                         pose = tracker.track_one(rgb=rgb, depth=refinement_depth, K=K,
                                                  iteration=max(register_iterations, track_iterations))
                         method = 'refine_sam3d_anchor'
@@ -276,7 +283,7 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
                   "rotation": quat[[3, 0, 1, 2]].tolist(),
                   "scale": 1.0, "status": "observed", "gt_use": "none",
                   "coordinate_frame": "rectified_camera", "camera_frame": rig.left,
-                  "method": method if method == 'stereo_seed_anchor' else f"foundationpose_{method}",
+                  "method": method if method in {'stereo_seed_anchor', 'calibrated_measured_surface_anchor'} else f"foundationpose_{method}",
                   "mask_pixels": int((mask > 127).sum()),
                   "depth_pixels": int(((mask > 127) & valid).sum())}
         record['foreground_depth_only'] = foreground_depth_only
@@ -318,6 +325,9 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
         report.update(bootstrap_manifest_sha256=hashlib.sha256(bootstrap_manifest.read_bytes()).hexdigest(),
                       seed_frame=anchor, initialization='bidirectional tracking from measured reconstruction body gauge',
                       no_arbitrary_bootstrap_rotation_registration=True)
+        report.update(calibrated_seed_preserved=calibrated_anchor,
+                      calibrated_seed_report_sha256=calibrated_anchor_sha256,
+                      calibrated_seed_still_uses_original_acceptance_gates=True)
     report.update(independent_camera_prior=camera_poses is not None,camera_trajectory_sha256=camera_sha256)
     (out / f"e{episode:03d}" / f"{name}_fp_report.json").write_text(json.dumps(report, indent=2))
     return report
