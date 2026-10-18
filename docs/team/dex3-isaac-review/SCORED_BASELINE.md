@@ -405,3 +405,22 @@ inferred reference instead of using the older e002 viewport. The camera does
 not follow escaping simulated objects; out-of-view object centres are labeled.
 These videos render recorded collision surfaces and actual simulated body poses,
 and are separate from the Isaac Sim review renderer.
+
+### First scored policy controls: failed physical tasks
+
+e001 and e010 each completed 100 PPO iterations (153,600 environment steps)
+with the same generic configuration. The untouched official local wrapper ran
+both initial and trained checkpoints over eight full-sequence worlds each.
+Neither trained candidate improved meaningfully: AUC was 0.1650 for e001 and
+0.1203 for e010, and MP-SR was zero for both. These are proxy metrics against our
+inferred partial-TSDF references, not hidden-ground-truth leaderboard scores.
+
+Native readbacks and input hashes are preserved. The old pot/lid scene starts
+with centimetre-scale object/support interpenetration and large opposing native
+contact forces. e038 failed native model compilation on a near-zero-volume
+collision fragment before any learning. Increasing training length has not been
+qualified as the repair. The cleaner SAM3D geometry is being retracked into new
+references; source camera and measurement gates remain enabled.
+
+[Frozen comparison report](scored-control-results-v1.json) records exact scores,
+checkpoint counters, reference hashes, and unchanged evaluator file hashes.

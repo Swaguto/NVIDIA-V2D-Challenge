@@ -1,0 +1,74 @@
+{
+  "schema": "v2d.first-scored-policy-controls.v1",
+  "evaluations": [
+    {
+      "episode": 1,
+      "comparison": [
+        {
+          "iteration": 0,
+          "environment_steps": 0,
+          "add_auc": 0.1650186567164179,
+          "mp_sr": 0.0,
+          "rpe_cm": 15.982374464161374,
+          "mean_position_error_m": 0.10844913201294158,
+          "full_frames": 335,
+          "world_count": 8,
+          "sha256": "afb00a7a0818adac3749e4d746bc0f747ece9e34a5b3bdee55b368207cf053ef"
+        },
+        {
+          "iteration": 100,
+          "environment_steps": 153600,
+          "add_auc": 0.1650186567164179,
+          "mp_sr": 0.0,
+          "rpe_cm": 15.982542355623533,
+          "mean_position_error_m": 0.1084469245100001,
+          "full_frames": 335,
+          "world_count": 8,
+          "sha256": "dc71b32a003fe8d2ea72bd4edc99f096945b1cecfac6abb32372d34e9d954ffa"
+        }
+      ],
+      "source_manifest_sha256": "3c113c0b66c66e57d8346e1aa0eae0787e7837d398b7be36041fce8a826ce54e",
+      "maximum_sampled_native_object_penetration_m": 0.024612605571746826,
+      "physical_task_accepted": false
+    },
+    {
+      "episode": 10,
+      "comparison": [
+        {
+          "iteration": 0,
+          "environment_steps": 0,
+          "add_auc": 0.1203416149068323,
+          "mp_sr": 0.0,
+          "rpe_cm": 21.75274578053643,
+          "mean_position_error_m": 0.17500199065286226,
+          "full_frames": 161,
+          "world_count": 8,
+          "sha256": "d360ba0265bd178ae412a09159919d3d71e7a10eda24e5fde6ade8ab6ca1e0ff"
+        },
+        {
+          "iteration": 100,
+          "environment_steps": 153600,
+          "add_auc": 0.1203416149068323,
+          "mp_sr": 0.0,
+          "rpe_cm": 21.748734263486323,
+          "mean_position_error_m": 0.17500635372716394,
+          "full_frames": 161,
+          "world_count": 8,
+          "sha256": "dad33566d11666965294ed048ae5727037eba83aebaeb3fdb4d3c458ff78142c"
+        }
+      ],
+      "source_manifest_sha256": "01ec6321943e92adacfd34099a57e6973a999a83001d70ce9e670cbc6850ac1b",
+      "maximum_sampled_native_object_penetration_m": 0.01973855495452881,
+      "physical_task_accepted": false
+    }
+  ],
+  "source_code_commit": "c732a38a2a9636b6df0297e4c5906330bbd60536",
+  "runtime_commit": "8c778f905cb35f76f8e6cd6e2ea486da4fb9e0ef",
+  "official_wrapper_sha256": "0bcc41f5de246a51f194409b3e5292e04109012cb22a433a8f7ed477df04e55d",
+  "official_evaluator_sha256": "160d24f5fbeb70ccd569ca4192056f1892b2a9f2999066db9d8279461648fdf1",
+  "reference": "Own inferred partial-TSDF reference; not hidden ground truth",
+  "physical_task_accepted": false,
+  "promote_trained_candidate": false,
+  "mesh_repair_pending": true,
+  "private_inputs_published": false
+}

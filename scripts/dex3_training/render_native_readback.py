@@ -193,7 +193,13 @@ def render(run, out, world=0, inputs=None):
         for source_index, frame in enumerate(frames):
             for bi, vertices, polygons, collection in meshes:
                 pose = poses[frame, bi]
-                points = Rotation.from_quat(pose[3:]).apply(vertices) + pose[:3]
+                # Some BLAS builds leave floating-point status flags set by a
+                # previous draw. Check actual output bytes instead of accepting
+                # invalid geometry or emitting repeated flag-only warnings.
+                with np.errstate(divide="ignore", over="ignore", invalid="ignore"):
+                    points = Rotation.from_quat(pose[3:]).apply(vertices) + pose[:3]
+                if not np.isfinite(points).all():
+                    raise ValueError("Nonfinite native geometry/pose in review frame")
                 collection.set_verts(points[polygons])
             title.set_text(
                 f"Reference {source_index:03d}/{len(frames) - 1:03d} · {frame / fps:05.2f} s · world {world} · {fps:g} Hz control"
@@ -216,6 +222,16 @@ def render(run, out, world=0, inputs=None):
             encoder.stdin.write(
                 np.asarray(fig.canvas.buffer_rgba())[:, :, :3].tobytes()
             )
+            if (source_index + 1) % 25 == 0:
+                print(
+                    json.dumps(
+                        dict(
+                            rendered_source_frames=source_index + 1,
+                            total_source_frames=len(frames),
+                        )
+                    ),
+                    flush=True,
+                )
             if source_index == min(140, len(frames) - 1):
                 fig.savefig(out / "poster.png", facecolor=fig.get_facecolor())
         encoder.stdin.close()
