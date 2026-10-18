@@ -1,0 +1,28 @@
+# Reuse verified compiled PyTorch3D/nvdiffrast; do not rebuild CUDA extensions.
+FROM ghcr.io/swaguto/nvidia-v2d-challenge-dex3-review@sha256:5b28becdf2eb969fe404e09f29815ce20c880489a0b81189d30926f787c96ee4
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1 PYOPENGL_PLATFORM=egl
+COPY sam3d-requirements.txt /opt/locks/scored-sam3d-requirements.txt
+RUN python -m venv --system-site-packages /workspace/sam3d-runtime \
+    && printf 'torch==2.5.1\ntorchvision==0.20.1\nnumpy==1.26.4\nopen3d==0.19.0\n' > /opt/locks/scored-sam3d-constraints.txt \
+    && /workspace/sam3d-runtime/bin/python -m pip install --no-cache-dir \
+       -c /opt/locks/scored-sam3d-constraints.txt -r /opt/locks/scored-sam3d-requirements.txt \
+    && /workspace/sam3d-runtime/bin/python -m pip install --no-cache-dir --no-deps \
+       kaolin==0.18.0 -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/torch-2.5.1_cu124.html \
+    && /workspace/sam3d-runtime/bin/python -m pip install --no-cache-dir --no-deps \
+       git+https://github.com/EasternJournalist/utils3d.git@3913c65d81e05e47b9f367250cf8c0f7462a0900 \
+       git+https://github.com/microsoft/MoGe.git@a8c37341bc0325ca99b9d57981cc3bb2bd3e255b \
+       git+https://github.com/facebookresearch/sam-3d-objects.git@f91db411c50efee93d8db7aeb323885650f6f722
+COPY code/ /workspace/pr32/
+COPY context-manifest.json /opt/locks/scored-sam3d-context.json
+RUN /workspace/sam3d-runtime/bin/python -m pip install --no-deps \
+       -e /workspace/pr32/reconstruction/modules/v2d_common \
+       -e /workspace/pr32/reconstruction/modules/v2d_sam3d/lib \
+    && /workspace/sam3d-runtime/bin/python -c \
+       'import sam3d_objects,kaolin,spconv,gsplat; from v2d.sam3d.lib.image_to_mesh import image_to_mesh; print("SAM3D imports pass; GPU inference unverified")' \
+    && /workspace/sam3d-runtime/bin/python -m pip freeze > /opt/locks/scored-sam3d-installed.txt
+ARG VCS_REF
+LABEL org.opencontainers.image.source="https://github.com/Swaguto/NVIDIA-V2D-Challenge" \
+      org.opencontainers.image.revision="${VCS_REF}"
+WORKDIR /workspace/pr32
+ENTRYPOINT ["/workspace/sam3d-runtime/bin/python"]
+CMD ["-m", "v2d.sam3d.lib.image_to_mesh", "--help"]
