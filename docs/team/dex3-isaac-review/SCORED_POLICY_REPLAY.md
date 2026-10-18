@@ -44,3 +44,16 @@ isolation, full-clock binding and read-only/offline Docker arguments. The actual
 166-frame e015 archive passes local preflight with its original image and
 153,600-step checkpoint. A fresh GPU replay using this new command is pending;
 another teammate's reproduction has not yet been verified.
+
+## Private portable input folder
+
+`export_scored_replay_pack.py` accepts the same six paths plus `--code-commit`
+with the complete committed replay source SHA. Its output is a new private
+folder containing only the declared frozen replay assets, selected checkpoint,
+producer/evaluator receipts, a relative-path recipe and per-file hashes. It
+rejects non-replay data such as footage or inference weights. Keep the folder
+local or transfer it through an approved private channel; no publishing occurs.
+
+The actual e015 pack contains 19.33 MB and passes preflight again after its files
+are relocated into the pack. This validates portability of that contract; GPU
+replay and independent teammate verification remain separate checks.
