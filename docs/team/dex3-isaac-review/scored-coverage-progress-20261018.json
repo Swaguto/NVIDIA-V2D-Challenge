@@ -1,6 +1,6 @@
 {
   "schema": "v2d.current-scored-coverage.v3",
-  "verified_utc": "2026-10-18T13:41:01.471459+00:00",
+  "verified_utc": "2026-10-18T14:31:31.909652+00:00",
   "official_roster_sha256": "be92ef6db25aa60cefcdfb44f0acfdc6fbdfa26bb249f6890e1963c659b79272",
   "episodes": [
     {
@@ -340,22 +340,44 @@
         "left": 100,
         "right": 64
       },
-      "policy_status": "pending",
+      "policy_status": "short baseline complete; physical task fails",
       "reserved_post_freeze_validation": true,
       "geometry": [
         {
           "slot": 0,
           "object": "blue_cup",
           "owner": "Codex implementation",
-          "status": "pending own reconstruction",
-          "physical_task_accepted": false
+          "status": "SHA-verified own candidate; physical task not accepted",
+          "physical_task_accepted": false,
+          "manifest_sha256": "15cd50bbcca04bfe6dcc716b9ccb5cf24dc9efdc321de5c564305d41920ffd4d",
+          "mesh_sha256": "f89b68512a663c248de41e361d638a611c18ca8f9d976e36be2e437ebc41be62",
+          "units": "metres",
+          "body_origin_frozen": true,
+          "seed_frame": 13,
+          "source_file_closure_verified": true,
+          "vertices": 6004,
+          "triangles": 12000,
+          "watertight": true,
+          "full_bundle_frame_axis_verified": true,
+          "bundle_manifest_sha256": "69e94c526677dbc01df74353e45a5a6254ce5b847a839a0324415e036d7bcf38"
         },
         {
           "slot": 1,
           "object": "plastic_dish_rack",
           "owner": "Codex implementation",
-          "status": "pending own reconstruction",
-          "physical_task_accepted": false
+          "status": "SHA-verified own candidate; physical task not accepted",
+          "physical_task_accepted": false,
+          "manifest_sha256": "f4344872a8800fcaafb4197eb9f6f0a02ec472b0921f69a016dfcec117ecd6c4",
+          "mesh_sha256": "186d032ca6f8f463f88a18ce1a4652b9a8930b868abd4002209b9a3ee200a774",
+          "units": "metres",
+          "body_origin_frozen": true,
+          "seed_frame": 14,
+          "source_file_closure_verified": true,
+          "vertices": 6054,
+          "triangles": 12000,
+          "watertight": true,
+          "full_bundle_frame_axis_verified": true,
+          "bundle_manifest_sha256": "69e94c526677dbc01df74353e45a5a6254ce5b847a839a0324415e036d7bcf38"
         }
       ]
     },
@@ -750,22 +772,44 @@
         "left": 148,
         "right": 259
       },
-      "policy_status": "pending",
+      "policy_status": "short baseline complete; physical task fails",
       "reserved_post_freeze_validation": true,
       "geometry": [
         {
           "slot": 0,
           "object": "blue_cup",
           "owner": "Codex implementation",
-          "status": "pending own reconstruction",
-          "physical_task_accepted": false
+          "status": "SHA-verified own candidate; physical task not accepted",
+          "physical_task_accepted": false,
+          "manifest_sha256": "141d73937fbecb950f298f35966f1e6cc926f70cbbbcb665ebab9dfdb9df9b87",
+          "mesh_sha256": "430371ffd0dcb171201f587fb69ce153618951731fa15ce6d3b5f16fd8fc7c37",
+          "units": "metres",
+          "body_origin_frozen": true,
+          "seed_frame": 2,
+          "source_file_closure_verified": true,
+          "vertices": 6004,
+          "triangles": 12000,
+          "watertight": true,
+          "full_bundle_frame_axis_verified": true,
+          "bundle_manifest_sha256": "6a6d3ea458364e55dc3904930ec0353b3a223768059dc5401078fc4efb8941ea"
         },
         {
           "slot": 1,
           "object": "wooden_spoon",
           "owner": "Codex implementation",
-          "status": "pending own reconstruction",
-          "physical_task_accepted": false
+          "status": "SHA-verified own candidate; physical task not accepted",
+          "physical_task_accepted": false,
+          "manifest_sha256": "015f59b301f50888e26526629bbe61fca982e33e2fdbe0517241f4716f948ee9",
+          "mesh_sha256": "3005094d65c3f6d712f2d36cf2e220b5fe4e62a854395aacfccc6f37f0fbb788",
+          "units": "metres",
+          "body_origin_frozen": true,
+          "seed_frame": 0,
+          "source_file_closure_verified": true,
+          "vertices": 6014,
+          "triangles": 12000,
+          "watertight": true,
+          "full_bundle_frame_axis_verified": true,
+          "bundle_manifest_sha256": "6a6d3ea458364e55dc3904930ec0353b3a223768059dc5401078fc4efb8941ea"
         }
       ]
     },
@@ -870,15 +914,26 @@
         "left": 390,
         "right": 371
       },
-      "policy_status": "pending",
+      "policy_status": "short baseline complete; physical task fails",
       "reserved_post_freeze_validation": true,
       "geometry": [
         {
           "slot": 0,
           "object": "wooden_spoon",
           "owner": "Codex implementation",
-          "status": "pending own reconstruction",
-          "physical_task_accepted": false
+          "status": "SHA-verified own candidate; physical task not accepted",
+          "physical_task_accepted": false,
+          "manifest_sha256": "03d0b5e75c01c881c0312135de4c11c21f6705d2b0b9fa3dededb90ebc0b2fed",
+          "mesh_sha256": "4bb8dbea1d6c2bffaf41f6dfad24ce9b5b98c2aba4dd880fb1e93fed9c05d6c5",
+          "units": "metres",
+          "body_origin_frozen": true,
+          "seed_frame": 0,
+          "source_file_closure_verified": true,
+          "vertices": 6010,
+          "triangles": 12000,
+          "watertight": true,
+          "full_bundle_frame_axis_verified": true,
+          "bundle_manifest_sha256": "7bd3ee68b26431c7f53cc98af4148c05bd4216e60454eb59af4de6adae488c5c"
         }
       ]
     },
@@ -956,14 +1011,17 @@
   "required_episodes": 20,
   "required_mesh_slots": 36,
   "source_frames": 5181,
-  "completed_short_baseline_episodes": 17,
-  "verified_own_candidate_slots": 31,
-  "pending_mesh_slots": 5,
+  "completed_short_baseline_episodes": 20,
+  "verified_own_candidate_slots": 36,
+  "pending_mesh_slots": 0,
   "physically_accepted_episodes": 0,
   "all_assets_have_status_and_owner": true,
-  "official_packer_passed": false,
+  "official_packer_passed": true,
   "submission_ready": false,
   "private_asset_bytes_included": false,
   "provided_meshes_used_for_reconstruction": false,
-  "reference_pose_labels_used_for_reconstruction": false
+  "reference_pose_labels_used_for_reconstruction": false,
+  "local_captain_artifact_sha256": "d9c0b20d03ddc7f37c0ae0959ebcad48f1f0e1dc1ad3e4a72d092a09f4ca21de",
+  "artifact_uploaded": false,
+  "physical_quality_accepted": false
 }

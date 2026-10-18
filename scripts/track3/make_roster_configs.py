@@ -48,11 +48,15 @@ def create(settings, out, episodes=None):
         "sam3d_image",
         "training_image",
         "docker_host",
+        "diagnostic_baseline",
     }
     if not required <= settings.keys() or settings.keys() - allowed:
         raise ValueError(
-            "Use the declared path/image settings only; credentials are not configuration fields"
+            "Use declared settings only; credentials are not configuration fields"
         )
+    diagnostic = settings.get("diagnostic_baseline", False)
+    if type(diagnostic) is not bool:
+        raise ValueError("Diagnostic baseline must be an explicit JSON boolean")
     paths = {
         key: Path(settings[key]).expanduser().resolve()
         for key in required - {"data_subdir"}
@@ -115,6 +119,12 @@ def create(settings, out, episodes=None):
     ):
         raise ValueError("Need a verified code-only policy context")
     verify_files(policy_context, policy_source["files"])
+    if (
+        not diagnostic
+        and "code/scripts/track3/reference_contact_gate.py"
+        not in policy_source["files"]
+    ):
+        raise ValueError("Fresh quality runs need a committed reference contact gate")
     perception_source = json.loads(
         (paths["perception_context"] / "context-manifest.json").read_text()
     )
@@ -206,6 +216,7 @@ def create(settings, out, episodes=None):
             iterations=100,
             max_seconds=1200,
             anchor_policy="visual",
+            require_reference_contact_feasibility=not diagnostic,
             training_image=images["training"],
         )
         configs = dict(
@@ -254,6 +265,8 @@ def create(settings, out, episodes=None):
         docker_invoked=False,
         cloud_instance_created=False,
         policy_training_executed=False,
+        diagnostic_baseline_requested=diagnostic,
+        native_reference_contact_gate_required=not diagnostic,
         physical_task_accepted=False,
         exact_reconstruction_or_retraining_reproduction_claimed=False,
     )

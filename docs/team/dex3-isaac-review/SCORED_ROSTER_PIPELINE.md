@@ -42,6 +42,14 @@ Images default to the committed immutable runtime digests. Optional settings
 `docker_host` applies to the perception stages; policy execution uses the host's
 default Docker daemon. Keep credentials out of this file.
 
+Fresh plans require a current policy context with `reference_contact_gate.py`.
+They stop before PPO if either full native audit has penetration above 1 mm.
+This prevents extending training on the currently inconsistent references; it
+does not certify grasp forces, joint velocity feasibility or a physical pass.
+For an intentional historical diagnostic baseline, `"diagnostic_baseline": true`
+records that the contact gate is not required. Saved checkpoint replay remains
+the preferred way to reproduce the existing selected policies without retraining.
+
 ```bash
 python scripts/track3/make_roster_configs.py \
   --settings /data/private-settings.json --out /data/fresh-roster-plan

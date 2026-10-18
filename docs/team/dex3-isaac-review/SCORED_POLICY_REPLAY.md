@@ -42,8 +42,12 @@ when reproduced.
 Six CPU controls pass, including altered input/checkpoint rejection, output
 isolation, full-clock binding and read-only/offline Docker arguments. The actual
 166-frame e015 archive passes local preflight with its original image and
-153,600-step checkpoint. A fresh GPU replay using this new command is pending;
-another teammate's reproduction has not yet been verified.
+153,600-step checkpoint. The fresh-container GPU rehearsal completed on
+e003/e015/e038 using relocated private packs. All full-clock/unassisted/input
+contracts passed, 190 result files were hash-verified, and Brev was confirmed
+STOPPED. [Metric comparisons](scored-replay-rehearsal-20261018.json) vary,
+including e003 AUC 0.1478 versus 0.1818. Exact metrics and another teammate's
+reproduction have not been established. The variability's cause is not isolated.
 
 ## Private portable input folder
 
@@ -54,6 +58,7 @@ producer/evaluator receipts, a relative-path recipe and per-file hashes. It
 rejects non-replay data such as footage or inference weights. Keep the folder
 local or transfer it through an approved private channel; no publishing occurs.
 
-The actual e015 pack contains 19.33 MB and passes preflight again after its files
-are relocated into the pack. This validates portability of that contract; GPU
-replay and independent teammate verification remain separate checks.
+All 20 selected packs now exist privately, totalling 383.50 MB, and pass relocated
+preflight and file-hash checks. e015's pack contains 19.33 MB. Three packs have
+also completed the GPU rehearsal above. Independent teammate verification
+remains a separate check.

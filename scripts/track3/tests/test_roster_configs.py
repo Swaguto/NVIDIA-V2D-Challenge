@@ -76,6 +76,9 @@ def settings(tmp_path):
             )
             for s in stages
         }
+        if key == "policy_context":
+            name = "code/scripts/track3/reference_contact_gate.py"
+            files[name] = put(root / name, "# fixture contact gate\n")
         put(
             root / "context-manifest.json",
             json.dumps(
@@ -135,6 +138,7 @@ def test_complete_roster_wires_actual_stage_outputs_without_execution(
     assert policy["support"] == str(root / "reconstruction/support/e003")
     assert hands["out"] == str(root / "hands")
     assert policy["iterations"] == 100
+    assert policy["require_reference_contact_feasibility"] is True
     assert not Path(settings["work_root"]).exists()
     for row in report["episodes"]:
         for command in row["commands"]:
@@ -208,3 +212,16 @@ def test_subset_is_explicit_and_keeps_full_roster_count(settings, tmp_path):
     result = create(settings, tmp_path / "plans", [10])
     assert result["required_episodes"] == 2
     assert result["selected_episodes"] == result["selected_mesh_slots"] == 1
+
+
+def test_old_context_needs_explicit_diagnostic_baseline(settings, tmp_path):
+    path = Path(settings["policy_context"]) / "context-manifest.json"
+    manifest = json.loads(path.read_text())
+    del manifest["files"]["code/scripts/track3/reference_contact_gate.py"]
+    path.write_text(json.dumps(manifest))
+    with pytest.raises(ValueError, match="reference contact gate"):
+        create(settings, tmp_path / "quality")
+    result = create(dict(settings, diagnostic_baseline=True), tmp_path / "diagnostic")
+    assert result["native_reference_contact_gate_required"] is False
+    with pytest.raises(ValueError, match="explicit JSON boolean"):
+        create(dict(settings, diagnostic_baseline="false"), tmp_path / "bad")

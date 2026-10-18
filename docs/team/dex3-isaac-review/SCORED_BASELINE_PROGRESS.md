@@ -1,100 +1,101 @@
-# Scored baseline development — 18 October 2026
+# Full-roster Track 3 baseline — 18 October 2026
 
-The complete Track 3 release is **not ready**. Development runs use reconstructed reference trajectories; their local evaluator results are not leaderboard scores. No successful physical task or unseen-episode generalization has been established.
+The **complete local baseline passed the untouched official packer**. Its
+physical quality is not accepted: all 20 selected short policies have local
+MP-SR zero against inferred references. No hidden leaderboard score is known,
+and nothing has been submitted.
 
-## Current coverage
+## Delivered coverage
 
-The latest [slot-by-slot inventory](scored-coverage-progress-20261018.json)
-accounts for all 20 episodes, 36 mesh slots and 5,181 source frames. Seven
-episodes (e001/e003/e005/e006/e008/e010/e038) have completed short baselines and
-13 own candidate mesh slots have verified source closures, metric units, fixed
-body origins, object ordering and full bundle frame axes. The other 23 mesh
-slots remain pending with an explicit implementation owner. **No physical task
-has passed.** e008 contains both a beige cup and a pot.
+| Item | Verified result |
+| --- | --- |
+| Scored video inputs | 20 episodes, 60 videos, 5,181 source frames |
+| Own reconstructed mesh slots | 36 / 36 with provenance and file hashes |
+| Complete short policies | 20 / 20, 100 PPO iterations each |
+| Selected policy training | 153,600 environment steps per episode, seed 42 |
+| Official combined artifact | 9,120 rows, 3,727,302 bytes, 36 mesh payloads |
+| Private replay packs | 20 / 20, 383,501,755 bytes total; kept private |
+| Physically accepted tasks | 0 / 20 |
 
-The latest [measured-geometry experiments](MEASURED_GEOMETRY_20261018.md) repair
-the calibrated pot seed but expose later native reference collisions. Future
-policy preparation audits every reference knot before PPO. A first-frame spoon
-diagnostic and an e008 pot-transfer comparison remain experiments; they are not
-accepted geometry or generalization results.
+The packer's local receipt was verified at 14:26:04 UTC. The artifact SHA256 is
+`d9c0b20d03ddc7f37c0ae0959ebcad48f1f0e1dc1ad3e4a72d092a09f4ca21de`;
+its recorded code commit is
+`a4510fb4e1736008e9090a8535a4b365b2c0e6fb`.
+Input poses or scores were not repaired to satisfy packing. This is a valid
+baseline artifact for captain review, not an approved competitive release.
 
-- All 20 scored episodes' 60 source videos and the shared camera calibration were downloaded at a pinned dataset revision and hash-verified. No scored object pose tables were read.
-- Independent stereo camera trajectories and hand observation inputs are prepared for all 20 episodes.
-- Three pilot episodes (e001 pot/lid, e010 cups, e038 dustpan) have complete hand fits, own SAM3D meshes, object tracks, native hand alignment, full-episode retargeting, portable inputs, and six short trained policies.
-- Each of those six policies ran 100 PPO iterations, 153,600 environment steps, seed 42. Visual/metric anchor variants preserve identical object targets, clock, confidence, geometry and robot assets. The robot commands and their derived FK targets are the changed factor.
-- All 20 neural hand fits now exist, covering all 5,181 source frames with fixed stereo cameras and fixed sequence hand shape verified. The remaining batch's 35,317 retained files were hash-verified on the operator's Mac before provider STOPPED was confirmed. Observation gaps remain unknown; finishing a fit does not establish tracking accuracy. See `all-scored-hand-fit-coverage-v1.json`.
-- e003 additionally has its own pot and wooden-spoon mesh candidates. Export and hand-prior recovery, short training and full native evaluation are complete; these are not accepted geometry or grasp results. e005/e006/e008 also completed the complete automatic driver. A complete 20-episode/36-mesh submission has not been packed.
+See the [slot inventory](scored-coverage-progress-20261018.json) and
+[per-episode metrics and audit hashes](full-roster-baseline-result-20261018.json).
+The local review gallery includes source videos and recorded unassisted
+Newton/MuJoCo physics for all 20 cases. It is an offline collision-surface replay,
+not an Isaac Sim render; eight worlds were evaluated and world zero is shown.
 
-## First failures found
+## What is failing
 
-The old partial-depth meshes could produce invalid native collision geometry. The clean SAM3D dustpan now passes native compilation and short PPO training. This fixes that execution failure, not grasp success. The beige cup's wire handle remains incomplete.
+A native CPU audit reset both robot hands and every object to their exact
+reference poses at **every source knot**. It independently checked robot FK and
+the frozen file closures. Every episode has hand/object or hand/support
+penetration above 1 mm at some knots: **5,761 of 10,362 hand/frame slots** are
+affected. Maximum per-episode penetration ranges from approximately 10.5 to
+45.4 mm. These measurements do not assess contact forces or force closure.
 
-The clean e010 beige-cup track loses measured support at frame 45. Its report contains 45 observed and 116 inferred world-hold frames. Synchronized source overlays show that this held target misses the demonstrated lift. Longer policy training against that target cannot repair the missing demonstrated motion. e001 also contains substantial inferred object pose spans; e038 object tracking covers all 263 frames but its short policies still fail the physical task.
+This establishes reference inconsistency, not a proof that every policy failure
+has one cause. Missing metric hand depth, robot/human morphology differences,
+shape/pose errors and retargeting all remain relevant. e020's object-relative
+gap proposal reduces a large hand/object separation but increases intersecting
+frames. Its local contact-projection attempts also leave unresolved contacts
+and introduce velocity violations. Those proposals were not promoted or trained.
 
-Restricting robot command anchors to metric hand observations changes initial poses and parks unsupported hands, but is not a universal improvement. It remains an opt-in experiment. Source observations and contact unknowns stay unchanged.
+The independently frozen reserved baseline was run on e014/e032/e036 using the
+previously recorded method and source/image pins. All three MP-SR results are
+zero; some objects are lost badly in the unassisted rollout. Those results
+reject a claim that this baseline already generalizes successfully. They were
+not used to retune the reserved test and then claim held-out improvement.
 
-`foundationpose_track.py --foreground-depth-only` is a new **unvalidated** single-factor experiment: retain only the measured target-mask depth for pose refinement. The independent depth-support and pose-jump acceptance gates still use the original data. The default behavior is unchanged. Tracking caches record and bind this choice so experimental results cannot silently reuse the old trajectory.
+The e002 checkpoint-2000 control remains retained. The two-stream controlled
+reset/reward investigations did not establish a repeatable improvement beyond
+evaluation variability. Higher training reward alone did not qualify a change.
 
-`--foreground-translation-prior` is a separate **unvalidated** initialization experiment. It uses changes in measured foreground surface position to help the tracker follow object motion and reacquire it after a rejection. The median surface point is not declared to be the body origin. It retains the original jump-check reference, the original measured-depth acceptance data, and the reconstructed body gauge. Neither experiment is promoted merely by increasing the count of accepted poses; source overlays must improve.
+## Reproduction status
 
-The recovered e001 visual/metric 100-iteration policies both have local MP-SR zero. Their AUC values are approximately 0.0213 and 0.1047 respectively against their reconstructed targets. These do not establish successful pot handling or hidden-ground-truth improvement.
+- [Frozen policy replay](SCORED_POLICY_REPLAY.md) verifies the input/checkpoint
+  closure and re-runs full unassisted evaluation without training. A three-case
+  fresh-container rehearsal on e003/e015/e038 completed and all contracts passed.
+  It uses relocated
+  private packs on the existing host; a fresh container is not an independent
+  teammate or fresh-host reproduction.
+  [Replay comparisons](scored-replay-rehearsal-20261018.json) show different
+  numerical scores: e003 AUC 0.1478 → 0.1818, e015 0.54452 → 0.54417,
+  e038 0.21890 → 0.22119. MP-SR remains zero in each case. Identical scores are
+  not established; the cause of the replay variability is not isolated.
+- [Fresh roster plans](SCORED_ROSTER_PIPELINE.md) generate ordered hand,
+  reconstruction and policy configurations with pinned code runners, images and
+  private paths. The uniform baseline does not silently substitute the selected
+  e003 geometry or e015 seed experiment.
+- Existing replay packs include the selected frozen inputs and learner
+  checkpoints, but exclude footage, MANO/inference weights and credentials.
+  They remain local/private at the owner's request.
+- An external teammate's clean setup, private package/input access, result
+  comparison and shutdown receipt remain to be verified. No teammate was
+  messaged and no private input pack was published.
 
-## Reproduction work and controlled repeats
+## Next quality gate
 
-The committed host runners are `run_scored_hands.py`, `run_scored_reconstruction.py`, and `run_scored_policy.py`. They cover video observations through complete hand fitting, own object reconstruction, calibrated alignment, retargeting, portable collision assets, a short PPO baseline, official evaluation, and separate unassisted native readback. They use immutable images and explicit private mounts; operational compute guards remain outside these runners. See the Track 3 scripts README for configuration.
+Repair object initialization and contact-aware retargeting on a non-reserved
+single-object task. Require source-frame fit, native full-reference contacts,
+joint limits, velocity limits and full unassisted rollouts before extending PPO.
+New roster plans enable a 1 mm native reference-penetration gate before PPO.
+It was checked against 14 actual paired full-audit archives; all 14 correctly
+block training. An explicit diagnostic-baseline option preserves intentional
+baseline experiments. [Spoon source-fit checks](SPOON_SOURCE_FIT_20261018.md)
+improve sampled geometry fit on three cases but do not yet repair a complete
+contact-consistent trajectory.
+Seed-only geometry fit improvements are candidates until they survive other
+source frames and physics. Keep the packed baseline and every failed control
+unchanged during this investigation.
 
-Fresh CPU cloud IK matches all three Mac pilots numerically (maximum robot-position difference approximately 1.24e-12). Integer/confidence arrays are exact. Cloud case and portable-pack preparation also passed. Subsequent complete GPU driver runs on e005/e006/e008 validated execution of reconstruction through short policy evaluation, while all three physical tasks failed.
-
-The e002 checkpoint-2000 control is retained. Two distinct exploration-key forks (101 and 202) preserve every other learner array and counter exactly, and pair control versus short training-reset settling. All four 100-iteration continuations and three eight-world unassisted readbacks per case are complete: 3,276,800 new environment steps. Short settling shows a modest paired MP-SR benefit and avoids one large-error repeat, but its AUC improvement does not exceed observed repeat variability or consistently beat the retained parent. No candidate is promoted. These are distinct exploration streams from the same learner state, not independent actor initializations. [Results](RESET_CONFIRMATION_20261018.md).
-
-The complete hand runner passed a fresh e010 GPU integration. The reconstruction runner's first e003 run completed masks, two own meshes, object tracking and world conversion, then failed because relative camera paths escaped the mounted observation namespace. A copied manifest now relocates only those paths after proving each camera JSON byte-identical. The formerly failing bind stage and complete exports subsequently passed. All 12,521 retained recovery files were hash-verified before provider STOPPED.
-
-The e003 end-to-end audit then found a second integration defect: native alignment had 252/125 metric hand frames, but continuity repair looked in a missing default conversion directory. It silently loaded no priors, erased both hands, and produced a parked-hand policy. That policy is disqualified. The fix passes the actual raw conversion directory explicitly and preserves the cropped frame mapping (310 fitted indices map to source frames 3–312). Missing/empty priors now fail immediately; policy training refuses zero command anchors.
-
-The GPU repair completed: 310 left and 309 right visual frames and command anchors, complete exports, 100 PPO iterations / 153,600 environment steps, initial/final official evaluations and an eight-world native readback. Its 5,795 retained files were hash-verified before STOPPED at 07:48:58 UTC. The next non-reserved cohort (e005/e006/e008) started only after that closure. It completed the three-hypothesis tracking driver with source `848f408178e4d7e3b1bcbdcc1404a64325303307`; all 35,383 retained files were verified before STOPPED at 08:36:51 UTC. All three MP-SR results are zero.
-
-The repaired e003 policy still fails: initial/final AUC is 0.01505/0.01493, MP-SR remains zero, and training repeatedly terminates for object error after one step. The native convex hull envelope lies 28.4 mm (pot) and 34.6 mm (spoon) below the inferred horizontal support top at the reference start. This is an envelope diagnostic, not an exact intersection test. The first recorded native spoon pose is 97.7 mm and 66.7 degrees from its reference. Its complete readback retains nonfinite late objective terms/scores, although body/contact arrays, checkpoint tensors and training metrics are finite. The reward-balance audit correctly refuses to summarize that nonfinite rollout. Source geometry/contact initialization needs investigation before a longer run; the checkpoint is not promoted.
-
-A subsequent CPU MuJoCo contact probe explicitly resets both free objects to
-their exact reference start and verifies their positions/quaternions before
-contact detection. It confirms 21.75 mm pot/support and 14.77 mm spoon/support
-penetration. No physics step or robot-reference reset is performed; robot
-contacts are excluded. `audit_initial_contacts.py` records this separate geometry
-diagnostic before future short policy runs. It does not relax native mesh checks
-or declare a physical pass. An experimental measured-surface pot candidate
-improves source silhouette overlap from 0.497 to 0.744 and median measured
-point-to-mesh-vertex distance from 53.2 to 10.7 mm, with 2 mm seed clearance above
-the unchanged support plane. It has not passed full-sequence tracking or physics;
-its above-table constraint currently applies to this diagnosed pilot only.
-
-An experimental whole-track selector compares the control, foreground-depth and foreground-motion trajectories against the same measured source masks/depth. It selects one entire unchanged trajectory per object; missing observations score zero. On the two inspected pilots it selected the original pot control, the foreground-motion lid/beige cup, and the foreground-depth blue cup. Both cups now retain 161 observed frames and the lid 335. Video review still shows silhouette/orientation errors. Its complete driver integration passed on the next three episodes, but this establishes execution rather than physical acceptance or hidden accuracy. Tuning choices remain unfrozen for the reserved episodes.
-
-Public development episodes 11, 22 and 42 were selected before inspecting new metadata or outcomes. A subsequent history audit found that all three were reviewed in the earlier continuity work, and e022 has a legacy manual object-box override. They are therefore retrospective regression cases, not untouched end-to-end holdouts. Their reference pose tables remain isolated outside inference mounts. Rostered video runs now exclude per-episode manual object prompts and reject annotated mask caches.
-
-Scored episodes e014 (cup/dish rack), e032 (cup/spoon) and e036 (spoon) are reserved for validation after the current tuning choices are frozen. Their camera/hand preparations already ran with unchanged settings; no object reconstruction or PPO results from these three have been used for tuning. No such validation has run yet. It will test the reconstruction/training procedure across new task results, not a single zero-shot policy across arbitrary episodes.
-
-## Diagnostics and interpretation
-
-`audit_reference_geometry.py` verifies bundle/input hashes, complete source frame and timestamp axes, object ordering, and named robot joint order. It compares supported human and robot fingertips with the same own mesh. Human summaries require joint hand-metric and object-pose observations. Inferred object frame counts are explicit.
-
-Unsigned nearest-vertex distance does not prove contact, penetration clearance or force closure. Full-episode summaries include intentional release/idle frames. XML joint traversal order is not the payload's declared joint order; diagnostics and commands must use the manifest's names.
-
-Example (private paths provided by the operator):
-
-```sh
-python scripts/dex3_training/audit_reference_geometry.py \
-  --bundle "$BUNDLE" --inputs "$FROZEN_TASK" --out "$REPORT"
-```
-
-Next gates: verify the tracking experiment against source pixels; complete own geometry and policies for the roster; run the untouched official packer; independently repeat any proposed training improvement; freeze held-out development validation; finish a clean-setup team reproduction. A short successful process exit is never a physical acceptance certificate.
-
-## Compute and privacy
-
-The owner renewed as-needed Brev authorization. Each paid session still has an independent stop guard, bounded stages, verified private result backup, and provider STOPPED verification. Stop compute while idle. Images exclude credentials, footage, MANO and gated model weights. Derived private input packs are not published. A captain-approved leaderboard upload and another teammate's reproduction are separate external gates.
-
-The [current scored setup](../../../docker/track3-scored/README.md) now includes
-immutable runtime digests, public upstream input metadata, hand/robot asset
-checksums, video-only acquisition and the final official-packer staging command.
-A clean input-directory rehearsal verified all 61 selected files without CAD or
-pose tables. It reused verified source bytes and does not establish a fresh
-policy or teammate reproduction.
+Each GPU session has a deadline, private hash-verified backups and confirmed
+provider shutdown. The latest replay's 190 retained files were verified and
+Brev was confirmed STOPPED at 14:32:02 UTC. Brev must stop when idle.
+The earlier development record is
+preserved in [the history](SCORED_BASELINE_HISTORY_20261018.md).

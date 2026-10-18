@@ -14,6 +14,8 @@ import subprocess
 import time
 from pathlib import Path
 
+from reference_contact_gate import assess as assess_reference_contacts
+
 TRAINING = "ghcr.io/swaguto/nvidia-v2d-challenge-dex3-review@sha256:bcde4a54c47743564d65f95725c4891e814077962b3f1b0a4a522ecb7d576922"
 
 
@@ -105,6 +107,8 @@ def verify_reused_collision_cache(seed_root, frozen_root):
 
 
 def validate(config):
+    if type(config.get("require_reference_contact_feasibility", False)) is not bool:
+        raise ValueError("Reference contact gate requires an explicit JSON boolean")
     if type(config["max_seconds"]) is not int or not 0 < config["max_seconds"] <= 7200:
         raise ValueError(
             "Policy run needs a positive deadline no longer than two hours"
@@ -133,6 +137,10 @@ def validate(config):
     ):
         raise ValueError("Expected a committed code-only policy context")
     verify_files(context, source["files"])
+    if config.get("require_reference_contact_feasibility", False) and (
+        "code/scripts/track3/reference_contact_gate.py" not in source["files"]
+    ):
+        raise ValueError("Reference contact gate needs a fresh committed policy context")
     if config.get("gap_policy", "world") == "object-relative" and (
         "code/scripts/track3/object_relative_gaps.py" not in source["files"]
     ):
@@ -447,6 +455,24 @@ def run(config):
             "quality_gate_pass_claimed": False,
         }
         save()
+        frozen_manifest = out / "frozen/manifest.json"
+        receipt["reference_contact_gate"] = assess_reference_contacts(
+            frozen_manifest,
+            json.loads(frozen_manifest.read_text()),
+            json.loads((out / "reference-contacts.json").read_text()),
+            hand_contacts,
+        )
+        receipt["reference_contact_gate_required"] = config.get(
+            "require_reference_contact_feasibility", False
+        )
+        save()
+        if (
+            receipt["reference_contact_gate_required"]
+            and not receipt["reference_contact_gate"]["native_penetration_gate_passed"]
+        ):
+            raise ValueError(
+                "Full reference exceeds the 1 mm native penetration gate; PPO was not started"
+            )
         container(
             "/opt/dex3-extension/train.py",
             [
