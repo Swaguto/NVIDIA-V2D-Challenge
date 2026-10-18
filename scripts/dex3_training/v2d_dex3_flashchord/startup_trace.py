@@ -47,8 +47,15 @@ class StartupTrace:
                 read(name + "." + field, getattr(state, field, None))
         solver = getattr(env, "solver", None)
         data = getattr(solver, "mjw_data", None)
-        for name in ("qpos", "qvel", "qacc", "qacc_warmstart", "time", "ctrl", "qfrc_applied"):
+        for name in (
+            "qpos", "qvel", "qacc", "qacc_warmstart", "time", "ctrl",
+            "act", "act_dot", "qfrc_applied", "xfrc_applied", "mocap_pos",
+            "mocap_quat", "eq_active", "userdata", "qfrc_actuator",
+            "qfrc_bias", "qfrc_passive", "qfrc_constraint", "qfrc_smooth",
+        ):
             read("native." + name, getattr(data, name, None))
+        for name in ("update_data_interval", "_step", "use_mujoco_cpu"):
+            read("solver." + name, getattr(solver, name, None))
         for name in (
             "timestep", "episode_start_frame", "episode_step", "terminated",
             "truncated", "observation", "action_input", "voc_scale",
@@ -60,10 +67,13 @@ class StartupTrace:
         for name in ("joint_target",):
             read("action." + name, getattr(action, name, None))
         buffers = getattr(action, "buffers", None)
-        read("action.raw_action", getattr(buffers, "raw_action", None))
+        for owner_name, owner in (("action", action), ("action.buffers", buffers)):
+            for name in ("raw_action", "filtered_action", "processed_target", "rate_initialized"):
+                read(owner_name + "." + name, getattr(owner, name, None))
         control = getattr(env, "control", None)
         for name in ("joint_target_pos", "joint_target_vel", "joint_f"):
             read("control." + name, getattr(control, name, None))
+        read("control.mujoco.ctrl", getattr(getattr(control, "mujoco", None), "ctrl", None))
         reset = getattr(env, "reset_table", None)
         for name in ("reset_frame", "all_reset_mask"):
             read("reset_table." + name, getattr(reset, name, None))
@@ -74,7 +84,14 @@ class StartupTrace:
         for name in ("terms", "score"):
             read("objective." + name, getattr(objective, name, None))
         for owner_name in ("mj_model", "mjw_model"):
-            option = getattr(getattr(solver, owner_name, None), "opt", None)
+            native_model = getattr(solver, owner_name, None)
+            for name in (
+                "actuator_gainprm", "actuator_biasprm", "actuator_dynprm",
+                "actuator_forcerange", "actuator_ctrlrange", "dof_damping",
+                "dof_armature", "qpos0",
+            ):
+                read(owner_name + "." + name, getattr(native_model, name, None))
+            option = getattr(native_model, "opt", None)
             for name in (
                 "enableflags", "disableflags", "timestep", "solver", "integrator",
                 "iterations", "ls_iterations", "cone", "impratio", "tolerance",

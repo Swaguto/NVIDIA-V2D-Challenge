@@ -1023,6 +1023,13 @@
       "exact_executed_producer": true,
       "preparation_only": false,
       "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "audit_saved_replay_first_interval_v1.py",
+      "sha256": "6c97033f0887ffabd03fcb413a1c34a967b07e71384e75e8d38121063462c4a9",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
     }
   ],
   "input_assets_included": false,
@@ -1030,6 +1037,6 @@
   "production_method": false,
   "physical_task_accepted": false,
   "latest_result_scope": "Inferred image flow72/75carryframes;rigid/articulatedsourcefitsstillrejectpeak. FreshSAM2/HaMeRpath10CPUcontracttestspass,8privateimagesprepared,CUDAunverified. No fullreference/policy promotion or PPO;BrevSTOPPED/shutdownendpointstillrejectsprovider token.",
-  "executed_source_count": 156,
+  "executed_source_count": 157,
   "unexecuted_source_count": 2
 }
