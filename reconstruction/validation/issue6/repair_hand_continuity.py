@@ -55,11 +55,15 @@ def repair(
     image_flow=False,
     bidirectional_image_flow=False,
     image_observations=None,
+    *,
+    original_run=None,
+    temporal_root=None,
+    mano_assets_root=None,
 ):
     label = f"e{episode:03d}"
     cache = input_root / "issue6-quality-cache/episodes" / label
-    original = cache / "issue6-full-runs/all20-final-v3" / label
-    temporal = cache / "temporal-hands" / label
+    original = original_run or (cache / "issue6-full-runs/all20-final-v3" / label)
+    temporal = temporal_root or (cache / "temporal-hands" / label)
     if output.exists():
         raise FileExistsError(
             f"Preserve the previous run; choose a new output: {output}"
@@ -93,7 +97,9 @@ def repair(
                 return str(input_root / x[len("/workspace/") :])
         return x
 
-    manifest = relocate(source_manifest)
+    manifest = (
+        source_manifest if original_run is not None else relocate(source_manifest)
+    )
     write(output / "manifest.json", manifest)
     write(output / "align/job.json", config)
     (output / "inputs.lock.json").write_bytes(
@@ -107,7 +113,7 @@ def repair(
         "continuity_render", modules / "v2d_hamer/lib/render_hands_aligned_video.py"
     )
     align = upstream("continuity_align", modules / "v2d_hamer/lib/align_hands.py")
-    mano_root = cache / "local-assets/mano"
+    mano_root = mano_assets_root or (cache / "local-assets/mano")
     mano = render._mano_layer(str(mano_root))
     renderer = pyrender.OffscreenRenderer(c["width"], c["height"])
     cam = pyrender.IntrinsicsCamera(c["fx"], c["fy"], c["cx"], c["cy"])
@@ -573,6 +579,17 @@ if __name__ == "__main__":
     p.add_argument("--image-flow", action="store_true")
     p.add_argument("--bidirectional-image-flow", action="store_true")
     p.add_argument("--image-observations", type=Path)
+    p.add_argument(
+        "--original-run",
+        type=Path,
+        help="Explicit fresh native alignment run; keep its source paths",
+    )
+    p.add_argument(
+        "--temporal-root",
+        type=Path,
+        help="Fitted episode and converted-record directory",
+    )
+    p.add_argument("--mano-assets-root", type=Path, help="Private licensed MANO mount")
     p.add_argument("--prior-records", type=Path)
     p.add_argument("--smooth-seconds", type=float, default=0.15)
     p.add_argument("--prior-weight", type=float, default=0.05)
@@ -589,4 +606,7 @@ if __name__ == "__main__":
         a.image_flow or a.bidirectional_image_flow,
         a.bidirectional_image_flow,
         a.image_observations,
+        original_run=a.original_run,
+        temporal_root=a.temporal_root,
+        mano_assets_root=a.mano_assets_root,
     )

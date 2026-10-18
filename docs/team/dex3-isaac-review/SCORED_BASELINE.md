@@ -158,6 +158,19 @@ is hash-bound in its reports. CPU tests cover world-pose invariance and reject
 GT-assisted, unrectified or inferred camera records. GPU comparison is pending;
 this option is not active in the first anchored pilot.
 
+Fresh temporal hand fits can be converted without overwriting their source:
+`convert_and_validate.py` accepts explicit manifest, fitted-episode, fresh
+conversion, imported-manifest and native-run destinations. Continuity repair
+also accepts explicit native-run, fitted-episode and licensed MANO roots. Its
+legacy recovered-cache defaults remain available.
+
+`scripts/track3/infer_support_plane.py` estimates a finite table hypothesis from
+repeated stereo background outside the object masks. It records every sampled
+depth/camera/mask hash, residuals and persistent footprint support. An optional
+bundle binding verifies its payload, intrinsics and actual camera world gauge.
+This is an inferred support surface; it does not independently measure gravity
+or certify collision geometry or a successful physical task.
+
 The same FAQ explicitly permits floating hands and fixed-base arm/hand setups
 for Track 3. Our selected policy runtime remains the official pinned
 FlashCHORD/Newton/JAX path with floating Dex3 hands. The Isaac renderer remains
