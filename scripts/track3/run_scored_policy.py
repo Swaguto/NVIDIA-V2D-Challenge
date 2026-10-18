@@ -31,6 +31,79 @@ def verify_files(root, files):
             raise ValueError("Asset or source closure differs: " + name)
 
 
+def collision_seed_manifest(root):
+    """Only a complete hash-bound frozen pack can supply collision geometry."""
+    root = Path(root).resolve()
+    manifest = json.loads((root / "manifest.json").read_text())
+    verify_files(root, manifest["files"])
+    cache = manifest.get("collision_cache", {})
+    names = cache.get("files", [])
+    declared = {n for n in manifest["files"] if n.startswith("collision-cache/")}
+    actual = {
+        p.relative_to(root).as_posix()
+        for p in (root / "collision-cache").rglob("*")
+        if p.is_file()
+    }
+    if (
+        cache.get("directory") != "collision-cache"
+        or not cache.get("runtime_commit")
+        or not names
+        or len(names) != len(set(names))
+        or set(names) != declared
+        or declared != actual
+        or any(
+            not re.fullmatch(r"collision-cache/convex/[a-zA-Z0-9_-]+\.npz", n)
+            for n in names
+        )
+    ):
+        raise ValueError("Invalid frozen collision seed closure")
+    return manifest
+
+
+def require_matching_collision_geometry(seed_root, target_root):
+    seed = collision_seed_manifest(seed_root)
+    target = json.loads((Path(target_root) / "manifest.json").read_text())
+    verify_files(Path(target_root), target["files"])
+
+    def geometry(m):
+        return {
+            n: h
+            for n, h in m["files"].items()
+            if n.startswith(("objects/", "robot/")) or n == "support.usda"
+        }
+
+    files = geometry(seed)
+    if (
+        not any(n.startswith("objects/") for n in files)
+        or not any(n.startswith("robot/") for n in files)
+        or "support.usda" not in files
+        or files != geometry(target)
+        or seed.get("objects") != target.get("objects")
+    ):
+        raise ValueError(
+            "Collision seed requires identical ordered object, robot and support geometry"
+        )
+    return seed
+
+
+def verify_reused_collision_cache(seed_root, frozen_root):
+    seed = require_matching_collision_geometry(seed_root, frozen_root)
+    frozen = collision_seed_manifest(frozen_root)
+    if seed["collision_cache"] != frozen["collision_cache"] or any(
+        seed["files"][n] != frozen["files"][n] for n in seed["collision_cache"]["files"]
+    ):
+        raise ValueError("Frozen collision cache differs from the paired control")
+    return {
+        "source_manifest_sha256": sha(Path(seed_root) / "manifest.json"),
+        "cache_files_sha256": {
+            n: seed["files"][n] for n in seed["collision_cache"]["files"]
+        },
+        "object_robot_support_geometry_exact": True,
+        "collision_cache_bytes_exact": True,
+        "native_preflight_and_contact_audits_still_required": True,
+    }
+
+
 def validate(config):
     if type(config["max_seconds"]) is not int or not 0 < config["max_seconds"] <= 7200:
         raise ValueError(
@@ -87,6 +160,8 @@ def validate(config):
         raise ValueError("Need the matching label-free reconstructed episode")
     if not (Path(config["kit"]) / "examples/run_policy_evaluation.py").is_file():
         raise ValueError("Official evaluator is missing")
+    if config.get("collision_seed_pack"):
+        collision_seed_manifest(config["collision_seed_pack"])
     return source["source_commit"]
 
 
@@ -178,6 +253,10 @@ def run(config):
         ]
         if pack:
             mounts.append((out / pack, "/data", True))
+        if config.get("collision_seed_pack"):
+            mounts.append(
+                (Path(config["collision_seed_pack"]), "/collision-seed", True)
+            )
         for source, dest, readonly in mounts:
             command += [
                 "-v",
@@ -275,9 +354,15 @@ def run(config):
             "portable",
             limit=180,
         )
+        freeze_args = ["--inputs", "/data", "--out", "/outputs/frozen"]
+        if config.get("collision_seed_pack"):
+            require_matching_collision_geometry(
+                config["collision_seed_pack"], out / "unfrozen"
+            )
+            freeze_args += ["--seed-cache", "/collision-seed/collision-cache"]
         container(
             "/opt/dex3-extension/freeze_collision_cache.py",
-            ["--inputs", "/data", "--out", "/outputs/frozen"],
+            freeze_args,
             "freeze",
             pack="unfrozen",
             limit=600,
@@ -288,6 +373,11 @@ def run(config):
             after["files"].get(n) != h for n, h in before["files"].items()
         ):
             raise ValueError("Collision freeze changed source targets or assets")
+        if config.get("collision_seed_pack"):
+            receipt["collision_geometry_reuse"] = verify_reused_collision_cache(
+                config["collision_seed_pack"], out / "frozen"
+            )
+            save()
         container(
             "/opt/dex3-extension/check_native_scene.py",
             ["--inputs", "/data", "--out", "/outputs/native-preflight.json"],

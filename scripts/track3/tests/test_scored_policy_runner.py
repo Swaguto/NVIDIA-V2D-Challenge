@@ -8,7 +8,13 @@ from pathlib import Path
 import pytest
 
 sys.path.insert(0, str(Path(__file__).parents[1]))
-from run_scored_policy import TRAINING, validate
+from run_scored_policy import (
+    TRAINING,
+    collision_seed_manifest,
+    require_matching_collision_geometry,
+    validate,
+    verify_reused_collision_cache,
+)
 
 
 def test_no_training_with_both_hands_parked():
@@ -154,3 +160,76 @@ def test_nested_readonly_mount_target_must_exist_before_docker(config):
     ).rmdir()
     with pytest.raises(ValueError, match="mount target"):
         validate(config)
+
+
+def write_collision_pack(
+    root, *, frozen=True, object_mesh="same geometry", targets="commands"
+):
+    root.mkdir()
+    contents = {
+        "objects/pot.obj": object_mesh,
+        "objects/pot.urdf": "same mass and collision material",
+        "robot/hand.urdf": "same robot",
+        "support.usda": "same table",
+        "targets.npz": targets,
+    }
+    if frozen:
+        contents["collision-cache/convex/example.npz"] = "same frozen hull bytes"
+    files = {}
+    for name, content in contents.items():
+        path = root / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(content)
+        files[name] = hashlib.sha256(path.read_bytes()).hexdigest()
+    manifest = {"files": files, "objects": [{"name": "pot", "mesh": "objects/pot.obj"}]}
+    if frozen:
+        manifest["collision_cache"] = {
+            "directory": "collision-cache",
+            "runtime_commit": "same-pinned-runtime",
+            "files": ["collision-cache/convex/example.npz"],
+        }
+    (root / "manifest.json").write_text(json.dumps(manifest))
+    return manifest
+
+
+def test_paired_anchor_commands_can_reuse_identical_physics_geometry(tmp_path):
+    seed, target = tmp_path / "seed", tmp_path / "candidate"
+    write_collision_pack(seed)
+    write_collision_pack(target, targets="changed robot anchor commands")
+    require_matching_collision_geometry(seed, target)
+    proof = verify_reused_collision_cache(seed, target)
+    assert proof["collision_cache_bytes_exact"] is True
+    assert proof["native_preflight_and_contact_audits_still_required"] is True
+
+
+def test_different_objects_cannot_reuse_a_control_collision_cache(tmp_path):
+    seed, target = tmp_path / "seed", tmp_path / "candidate"
+    write_collision_pack(seed)
+    write_collision_pack(target, frozen=False, object_mesh="different geometry")
+    with pytest.raises(ValueError, match="identical ordered"):
+        require_matching_collision_geometry(seed, target)
+
+
+def test_modified_or_undeclared_collision_seed_is_rejected(tmp_path):
+    seed = tmp_path / "seed"
+    write_collision_pack(seed)
+    extra = seed / "collision-cache/convex/extra.npz"
+    extra.write_text("unbound hulls")
+    with pytest.raises(ValueError, match="seed closure"):
+        collision_seed_manifest(seed)
+    extra.unlink()
+    (seed / "collision-cache/convex/example.npz").write_text("altered hulls")
+    with pytest.raises(ValueError, match="closure differs"):
+        collision_seed_manifest(seed)
+
+
+def test_regenerated_hulls_fail_even_when_surface_assets_match(tmp_path):
+    seed, target = tmp_path / "seed", tmp_path / "candidate"
+    write_collision_pack(seed)
+    manifest = write_collision_pack(target)
+    name = "collision-cache/convex/example.npz"
+    (target / name).write_text("different regenerated hulls")
+    manifest["files"][name] = hashlib.sha256((target / name).read_bytes()).hexdigest()
+    (target / "manifest.json").write_text(json.dumps(manifest))
+    with pytest.raises(ValueError, match="paired control"):
+        verify_reused_collision_cache(seed, target)
