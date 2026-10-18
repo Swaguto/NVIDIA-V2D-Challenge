@@ -1,6 +1,6 @@
 {
   "schema": "v2d.current-scored-coverage.v2",
-  "verified_utc": "2026-10-18T10:33:06.207098+00:00",
+  "verified_utc": "2026-10-18T11:10:30.797482+00:00",
   "official_roster_sha256": "be92ef6db25aa60cefcdfb44f0acfdc6fbdfa26bb249f6890e1963c659b79272",
   "episodes": [
     {
@@ -79,8 +79,8 @@
           "owner": "Codex implementation",
           "status": "SHA-verified own candidate; physical task fails",
           "physical_task_accepted": false,
-          "manifest_sha256": "e146c86d3f7619761143bfd0d80e480f913a36aa2474d5d76694f0e0716cd2bd",
-          "mesh_sha256": "e30fde87b2f6071bf4e7e82aba708de3e10468dd494da54c08ca9ba2b7469c5b",
+          "manifest_sha256": "d3aa1a9b0f78c9f8814e7b55221d38d8ac844f49e12cf0fd616f89c73191d41e",
+          "mesh_sha256": "7312a36a737d14cb59f172231f87a48e780538b2ffae0ad697a970b5a4fcb2e0",
           "units": "metres",
           "body_origin_frozen": true,
           "seed_frame": 0,
@@ -89,7 +89,7 @@
           "triangles": 12000,
           "watertight": true,
           "full_bundle_frame_axis_verified": true,
-          "bundle_manifest_sha256": "5589dfa4d6b27ea9337b0d2e3e4de54fff523460d5f13abf801dd6c565aa33c6"
+          "bundle_manifest_sha256": "b1cfd8b0fda41497cbc0d7b480d44d3662288a1a44bf8923816f51dc20355d11"
         },
         {
           "slot": 1,
@@ -97,17 +97,17 @@
           "owner": "Codex implementation",
           "status": "SHA-verified own candidate; physical task fails",
           "physical_task_accepted": false,
-          "manifest_sha256": "51c6f23ac39860b121bfcfed241451e105c452e0050448c4648e93bdbc7674a0",
-          "mesh_sha256": "0a476ab96c1ea2e0072f67bac7b15fcf6b8a11484d71abd5871ea6c5f06c09ec",
+          "manifest_sha256": "e994f73d7575023f4adaa69044f89facad4103e9a85de9f6cddd1a4c6dede6e8",
+          "mesh_sha256": "79822f197e5aee1364e08da7e7a1af2d42e5cfbe706ba66d6895964cdf86cf44",
           "units": "metres",
           "body_origin_frozen": true,
-          "seed_frame": 136,
+          "seed_frame": 0,
           "source_file_closure_verified": true,
-          "vertices": 6014,
+          "vertices": 6006,
           "triangles": 12000,
-          "watertight": false,
+          "watertight": true,
           "full_bundle_frame_axis_verified": true,
-          "bundle_manifest_sha256": "5589dfa4d6b27ea9337b0d2e3e4de54fff523460d5f13abf801dd6c565aa33c6"
+          "bundle_manifest_sha256": "b1cfd8b0fda41497cbc0d7b480d44d3662288a1a44bf8923816f51dc20355d11"
         }
       ]
     },

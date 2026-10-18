@@ -62,10 +62,17 @@ def frame_count(data: Path, episode: int) -> int:
 
 def require_automatic_mask_prompts(report):
     """A cached episode annotation cannot silently enter a rostered method run."""
+    from object_prompts import numbered_groups
+
     if report.get('manual_annotations_used') is True or any(
             str(seed.get('label', '')).startswith('manual:')
             for seed in report.get('seeds', {}).values()):
         raise ValueError('Rostered video inference requires automatic prompts; use a fresh result root')
+    if numbered_groups(report.get("objects", [])) and (
+        report.get("numbered_mask_quality_policy") != "shared-foreground-overlap-unknown-v1"
+        or report.get("numbered_overlap_intersection_over_smaller_threshold") != 0.70
+    ):
+        raise ValueError("Numbered mask cache predates ambiguity filtering; use a fresh result root")
 
 
 def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,

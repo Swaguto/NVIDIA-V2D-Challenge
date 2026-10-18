@@ -34,6 +34,7 @@ from object_prompts import (  # noqa: E402
     numbered_groups,
     numbered_instance_seeds,
 )
+from instance_mask_quality import numbered_mask_conflicts  # noqa: E402
 
 
 def seed_boxes(frames: list[np.ndarray], names: list[str], threshold: float,
@@ -137,6 +138,29 @@ def suppress_lid_overlap(out: Path, names: list[str], frames: int) -> dict[str, 
     return suppressed
 
 
+def suppress_numbered_overlap(out: Path, names: list[str], frames: int):
+    """Retain ambiguous raw masks, but exclude them from measured pose fitting."""
+    indices = {index for group in numbered_groups(names) for index in group}
+    suppressed = {names[index]: [] for index in indices}
+    for frame in range(frames) if indices else []:
+        masks = {}
+        for index in indices:
+            path = out / names[index] / f"{frame:06d}.png"
+            if path.is_file():
+                mask = cv2.imread(str(path), cv2.IMREAD_GRAYSCALE)
+                if mask is None:
+                    raise ValueError(f"Unreadable instance mask: {path}")
+                masks[names[index]] = mask > 127
+        for index in numbered_mask_conflicts(names, masks):
+            name = names[index]
+            source = out / name / f"{frame:06d}.png"
+            target = out / "ambiguous-instance-masks" / name / source.name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            source.rename(target)
+            suppressed[name].append(frame)
+    return suppressed
+
+
 def run(episode: int, names: list[str], data: Path, out: Path, threshold: float,
         max_area: float, device: str, seed_stride: int, max_box_area: float,
         seed_only: bool = False, seed_json: Path | None = None,
@@ -226,12 +250,17 @@ def run(episode: int, names: list[str], data: Path, out: Path, threshold: float,
                     session, start_frame_idx=frame, reverse=True), index)
             del session
     suppressed = suppress_lid_overlap(out, names, len(frames))
+    numbered_suppressed = suppress_numbered_overlap(out, names, len(frames))
     counts = {name: len(list((out / name).glob("*.png"))) for name in names}
     report = {"episode": episode, "objects": names, "frames": len(frames),
               "seeds": {names[i]: {"score": seeds[i][0],
               "box_xyxy": seeds[i][1], "label": seeds[i][2], "frame": seeds[i][3]} for i in seeds},
               "mask_counts": counts, "rejected_frames": rejected,
               "suppressed_identity_switch_frames": suppressed,
+              "ambiguous_numbered_overlap_frames": numbered_suppressed,
+              "ambiguous_numbered_raw_masks": "ambiguous-instance-masks",
+              "numbered_overlap_intersection_over_smaller_threshold": 0.70,
+              "numbered_mask_quality_policy": "shared-foreground-overlap-unknown-v1",
               "coordinate_frame": "rectified_camera", "camera_frame": rig.left,
               "gt_use": "none", "model": "facebook/sam2.1-hiera-large"}
     report["model_revisions"] = {"grounding_dino": os.environ.get("V2D_DINO_REVISION"),
