@@ -1,5 +1,6 @@
 """Source authority, missing-point and camera contracts for fresh GPU hand fits."""
 import copy
+import hashlib
 import importlib.util
 import json
 from pathlib import Path
@@ -42,6 +43,14 @@ def recovery_request(tmp_path):
 def test_validation_runs_without_loading_gpu_dependencies(recovery_request):
     path, _ = recovery_request
     assert len(m.validate_request(path)["frames"]) == 1
+
+
+def test_digest_preserves_sha256_on_python_without_file_digest(tmp_path,monkeypatch):
+    data=b"private-source-contract"*100000
+    path=tmp_path/'large-source.bin';path.write_bytes(data)
+    expected=hashlib.sha256(data).hexdigest()
+    monkeypatch.delattr(hashlib,'file_digest',raising=False)
+    assert m.digest(path)==expected
 
 
 @pytest.mark.parametrize("change", [{"original_direct_observation":True}, {"timestamp_s":.3}, {"is_right":"right"}, {"is_right":False}])

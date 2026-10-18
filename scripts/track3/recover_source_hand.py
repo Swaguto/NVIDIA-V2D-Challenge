@@ -21,8 +21,11 @@ KINDS = {"identity_associated_source_model_prediction", "checked_inferred_image_
 
 
 def digest(path):
+    checksum = hashlib.sha256()
     with Path(path).open("rb") as stream:
-        return hashlib.file_digest(stream, "sha256").hexdigest()
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            checksum.update(block)
+    return checksum.hexdigest()
 
 
 def validate_request(path):

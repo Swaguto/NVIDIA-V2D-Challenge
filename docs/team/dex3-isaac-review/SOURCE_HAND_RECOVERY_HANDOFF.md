@@ -47,7 +47,7 @@ confidence or contact truth is inferred from a fresh model prediction.
 
 ## CPU verification
 
-Nineteen focused tests pass. The protocol integration tests use explicitly
+Twenty focused tests pass. The protocol integration tests use explicitly
 synthetic model callbacks and the **real** `load_native_priors` and
 `load_image_estimate` consumers. They check original-byte preservation, source
 indices, missing-point confidence, mask rejection, output hashes, authority
@@ -62,3 +62,15 @@ lease. Use the existing pinned perception image and a committed code overlay;
 no image rebuild or full source-video inference is required for this eight-frame
 probe. Models and inputs are separate read-only private mounts; inference output
 stays private. Do not publish footage, model weights or this private input pack.
+
+A local-only minimal probe payload now contains 315 hash-verified files: eight
+existing source images, 302 canonical hand records and the required request,
+confidence/geometry payload and provenance metadata. Its input archive is
+12,191,559 bytes; it contains no model weights or full source videos. Validation
+against copied, relocated inputs succeeds without reading the original paths.
+This is a partial source-recovery payload, not a complete episode replay pack.
+
+The recovery has a streaming SHA256 implementation compatible with the stated
+Python 3.10+ host contract. The committed code context is versioned separately
+from the unchanged private input archive. No Docker execution or GPU inference
+was rehearsed; the probe plan remains blocked and unqueued during the outage.
