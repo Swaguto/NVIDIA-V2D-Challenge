@@ -1,6 +1,6 @@
 {
   "schema": "v2d.current-scored-coverage.v3",
-  "verified_utc": "2026-10-18T12:24:51.633121+00:00",
+  "verified_utc": "2026-10-18T12:35:59.777388+00:00",
   "official_roster_sha256": "be92ef6db25aa60cefcdfb44f0acfdc6fbdfa26bb249f6890e1963c659b79272",
   "episodes": [
     {
@@ -372,7 +372,7 @@
         "left": 145,
         "right": 68
       },
-      "policy_status": "reconstruction exported; policy failed",
+      "policy_status": "short baseline complete; physical task fails",
       "reserved_post_freeze_validation": false,
       "geometry": [
         {
@@ -391,7 +391,7 @@
           "triangles": 12000,
           "watertight": true,
           "full_bundle_frame_axis_verified": true,
-          "bundle_manifest_sha256": "cfd9ad7f98cc9bfc37b77d9ced435293cf36af7a8eaaae527e853cd693b9f0bb"
+          "bundle_manifest_sha256": "abc91d75a60c57e26b3cbab25c287593ae1c20178b6fb0aa0b942a240ae4f3e9"
         },
         {
           "slot": 1,
@@ -409,7 +409,7 @@
           "triangles": 12000,
           "watertight": true,
           "full_bundle_frame_axis_verified": true,
-          "bundle_manifest_sha256": "cfd9ad7f98cc9bfc37b77d9ced435293cf36af7a8eaaae527e853cd693b9f0bb"
+          "bundle_manifest_sha256": "abc91d75a60c57e26b3cbab25c287593ae1c20178b6fb0aa0b942a240ae4f3e9"
         }
       ]
     },
@@ -890,7 +890,7 @@
   "required_episodes": 20,
   "required_mesh_slots": 36,
   "source_frames": 5181,
-  "completed_short_baseline_episodes": 12,
+  "completed_short_baseline_episodes": 13,
   "verified_own_candidate_slots": 25,
   "pending_mesh_slots": 11,
   "physically_accepted_episodes": 0,

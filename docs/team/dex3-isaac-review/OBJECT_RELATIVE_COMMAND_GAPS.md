@@ -35,6 +35,20 @@ with no fabricated human observation or contact label.
 Eight CPU mechanics tests cover rotating/moving objects, uncertainty rejection,
 frame invariance and rigid-transform validation. The actual e020 case applies
 the rule to 74 right-hand frames and leaves all observed commands unchanged.
-Native collision and physical rollout checks are still required. This change
-does not fix the original 12–21 mm finger/object intersections at observed
-anchors. More training is deferred until those targets are addressed.
+The CPU native comparison reuses byte-identical object, robot, support and
+convex collision geometry. Object/clock/confidence arrays, observed robot
+commands and finger commands are checked against the control.
+
+At frame 80, right fingertip-to-can signed gaps change from 124/110/157 mm
+to 17/21/38 mm. This still does not establish contact. At frame 40, the worst
+hand/object penetration increases from 21.75 to 24.45 mm. The observed initial
+left-hand penetration remains 20.81 mm. A zero from `mj_geomDistance` alone is
+not a contact or clearance certificate; actual native contact samples are also
+retained.
+
+**Do not promote this gap rule or train longer on this candidate yet.** Native
+collision-aware retargeting and full-task validation remain necessary. A
+bounded CPU feasibility probe can reduce some intersections below 1 mm, but
+one sampled left-hand frame remains above 6 mm and other fingers remain far
+from the object. Neither a favorable optimizer status nor small penetration
+alone qualifies as a grip.
