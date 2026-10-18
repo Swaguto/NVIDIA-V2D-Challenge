@@ -284,3 +284,18 @@ as verified account usage or an enforced spending limit.
 - A new immutable release image, private input manifest, fresh teammate
   reproduction and report. Current workflow images do not yet provide a complete
   fresh video-to-policy implementation.
+
+### Generic full-episode command preparation
+
+`prepare_scored_case.py` freezes a verified bundle, retargeting and measured
+support hypothesis into the case/static-input contracts consumed by
+`prepare_window.py --full-episode`. It preserves supported IK exactly, fills
+missing commands with linear translation/finger interpolation and quaternion
+SLERP, and holds endpoint commands outside the observed span. A hand with no
+available IK is parked laterally outside the inferred table footprint. These
+commands remain explicitly inferred; observation confidence is unchanged.
+
+Objects reuse the existing nominal URDF generator (0.3 kg and diagonal
+0.001 kg m² inertia); these are modelling defaults, not recovered physical
+measurements. This baseline prescribes no hand/object assignment or contact
+labels and does not establish grasp or collision acceptance.
