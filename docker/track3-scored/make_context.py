@@ -82,6 +82,7 @@ def create(out):
         "Dockerfile",
         "Dockerfile.geometry",
         "Dockerfile.sam3d",
+        "Dockerfile.camera",
         "hand-requirements.txt",
         "sam3d-requirements.txt",
     ]:

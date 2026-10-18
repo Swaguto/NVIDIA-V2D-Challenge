@@ -1,0 +1,11 @@
+# Preserve calibrated camera poses before upstream temporal fitting begins.
+FROM ghcr.io/swaguto/nvidia-v2d-challenge-dex3-review@sha256:5b28becdf2eb969fe404e09f29815ce20c880489a0b81189d30926f787c96ee4
+COPY code/ /workspace/pr32/
+COPY context-manifest.json /opt/locks/scored-code-context.json
+RUN python -c 'from pathlib import Path;import hashlib; p=Path("/workspace/Dyn-HaMR/dyn-hamr/data/dataset.py"); assert hashlib.sha256(p.read_bytes()).hexdigest()=="ce8ea3f399c1dbda5d5139c237da4b414837babb8401b326507fe733a6dd4f8d"' \
+    && git -C /workspace/Dyn-HaMR apply --check /workspace/pr32/reconstruction/validation/issue6/dynhamr-stereo-camera.patch \
+    && git -C /workspace/Dyn-HaMR apply /workspace/pr32/reconstruction/validation/issue6/dynhamr-stereo-camera.patch \
+    && /workspace/hand-runtime/bin/python -m compileall -q /workspace/pr32/reconstruction/validation/issue6 /workspace/Dyn-HaMR/dyn-hamr/data/dataset.py
+ARG VCS_REF
+LABEL org.opencontainers.image.source="https://github.com/Swaguto/NVIDIA-V2D-Challenge" \
+      org.opencontainers.image.revision="${VCS_REF}"

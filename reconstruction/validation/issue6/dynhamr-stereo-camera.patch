@@ -1,0 +1,19 @@
+diff --git a/dyn-hamr/data/dataset.py b/dyn-hamr/data/dataset.py
+--- a/dyn-hamr/data/dataset.py
++++ b/dyn-hamr/data/dataset.py
+@@ -363,9 +363,13 @@
+             #             self.cam_R = torch.einsum("ij,...jk->...ik", R0, cam_R[sidx:eidx])
+             #             self.cam_t = t0 + torch.einsum("ij,...j->...i", R0, cam_t[sidx:eidx])
+ #             t0 = -cam_t[sidx:eidx].mean(dim=0) + torch.randn(3) * 0.1
+-            t0 = -cam_t[sidx:sidx+1] + torch.randn(3) * 0.1
+             self.cam_R = cam_R[sidx:eidx]
+-            self.cam_t = cam_t[sidx:eidx] - t0
++            if os.environ.get("V2D_PRESERVE_CAMERA_EXTRINSICS", "0") == "1":
++                # Calibrated scored observations already define the world frame.
++                self.cam_t = cam_t[sidx:eidx]
++            else:
++                t0 = -cam_t[sidx:sidx+1] + torch.randn(3) * 0.1
++                self.cam_t = cam_t[sidx:eidx] - t0
+         else:
+             # raise ValueError
+             Logger.log(f"WARNING: {fpath} does not exist, using static cameras...")

@@ -329,3 +329,19 @@ physical collision/contact dynamics, inferred support and tracking rewards.
 Contact-label rewards remain disabled. It requires no episode-specific grasp
 plan or motor feedforward pack. Actual GPU training and untouched official
 evaluator/packer checks are required before calling its outputs a baseline.
+
+### Preserve the measured camera extrinsics
+
+The original Dyn-HaMR loader adds `torch.randn(3) * 0.1` to its camera
+initialization even when camera optimization is disabled. The three scored
+pilots exhibited a constant camera-coordinate translation offset of about
+12.65 cm. Because the observing camera rotates, this is not one fixed world
+coordinate transform. The scored bundle exporter correctly rejected it.
+
+`dynhamr-stereo-camera.patch` adds an explicit calibrated mode, and
+`run_temporal_fit.py` enables it for scored inputs only. It verifies the
+independent source camera export, refuses an unpatched runtime, and checks
+every fitted camera rotation/translation against the source frame axis after
+optimization. Prior fitted outputs are preserved for diagnosis and must be
+refitted. The exporter tolerance remains unchanged. `Dockerfile.camera` adds
+this patch to the verified perception image without rebuilding GPU libraries.

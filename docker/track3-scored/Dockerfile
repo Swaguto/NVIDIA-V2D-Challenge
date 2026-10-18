@@ -12,7 +12,9 @@ RUN git clone --filter=blob:none --no-checkout https://github.com/geopavlakos/ha
 COPY code/ /workspace/pr32/
 COPY context-manifest.json /opt/locks/scored-code-context.json
 RUN git -C /workspace/Dyn-HaMR apply --ignore-space-change \
-    /workspace/pr32/reconstruction/validation/issue6/dynhamr-native-fixed-shape.patch
+    /workspace/pr32/reconstruction/validation/issue6/dynhamr-native-fixed-shape.patch \
+    && git -C /workspace/Dyn-HaMR apply --check /workspace/pr32/reconstruction/validation/issue6/dynhamr-stereo-camera.patch \
+    && git -C /workspace/Dyn-HaMR apply /workspace/pr32/reconstruction/validation/issue6/dynhamr-stereo-camera.patch
 COPY hand-requirements.txt /opt/locks/scored-hand-requirements.txt
 RUN python -m venv --system-site-packages /workspace/hand-runtime \
     && /workspace/hand-runtime/bin/python -m pip install --no-cache-dir \
