@@ -87,13 +87,15 @@ def settings(tmp_path):
                 )
             ),
         )
-    relative = "urdfs/g1/dex3_left.urdf"
-    digest = put(Path(c["robot_assets"]) / relative, "fixture URDF")
+    assets = {
+        f"urdfs/g1/dex3_{side}.urdf": put(
+            Path(c["robot_assets"]) / f"urdfs/g1/dex3_{side}.urdf", "fixture URDF"
+        )
+        for side in ("left", "right")
+    }
     put(
         Path(c["robot_asset_lock"]),
-        json.dumps(
-            dict(schema="v2d.dex3.robot-assets.v1", files_sha256={relative: digest})
-        ),
+        json.dumps(dict(schema="v2d.dex3.robot-assets.v1", files_sha256=assets)),
     )
     kit = Path(c["kit"])
     put(
@@ -156,6 +158,7 @@ def test_complete_roster_wires_actual_stage_outputs_without_execution(
         "labels",
         "existing-output",
         "input-overlap",
+        "missing-hand-lock",
     ],
 )
 def test_invalid_prerequisite_fails_before_creating_plan(settings, tmp_path, change):
@@ -184,6 +187,11 @@ def test_invalid_prerequisite_fails_before_creating_plan(settings, tmp_path, cha
         (Path(c["work_root"]) / "episodes/e010/policy").mkdir(parents=True)
     elif change == "input-overlap":
         c["work_root"] = c["source_root"]
+    elif change == "missing-hand-lock":
+        path = Path(c["robot_asset_lock"])
+        manifest = json.loads(path.read_text())
+        del manifest["files_sha256"]["urdfs/g1/dex3_right.urdf"]
+        path.write_text(json.dumps(manifest))
     out = tmp_path / "plans"
     with pytest.raises(ValueError):
         create(c, out)

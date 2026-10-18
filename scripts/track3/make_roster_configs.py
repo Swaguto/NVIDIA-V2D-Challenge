@@ -128,7 +128,10 @@ def create(settings, out, episodes=None):
         "policy": require_runner(policy_context, policy_source, "policy"),
     }
     asset_lock = json.loads(paths["robot_asset_lock"].read_text())
-    if asset_lock.get("schema") != "v2d.dex3.robot-assets.v1":
+    if asset_lock.get("schema") != "v2d.dex3.robot-assets.v1" or not all(
+        f"urdfs/g1/dex3_{side}.urdf" in asset_lock.get("files_sha256", {})
+        for side in ("left", "right")
+    ):
         raise ValueError("Need the locked actual robot assets")
     verify_files(paths["robot_assets"], asset_lock["files_sha256"])
     rows = []
