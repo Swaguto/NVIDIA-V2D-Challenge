@@ -286,6 +286,41 @@
       "sha256": "edcd9fc9129d20e52e1ca9756d6c15e233748917ecc36b7f0adaec14c25265f9",
       "exact_executed_producer": true,
       "full_job_in_progress_at_archive": true
+    },
+    {
+      "file": "verify_fast_stereo_full_e037_v1.py",
+      "sha256": "36c04f1262a3d67c8579237512d5e6cc4ca641b03c3a2d3de042c320544fcc7a",
+      "exact_executed_producer": true,
+      "full_job_in_progress_at_archive": false,
+      "preparation_only": false
+    },
+    {
+      "file": "fast_stereo_full_object_trajectory_v1.py",
+      "sha256": "b59b36d16630b19a2bd31bd10a73fbe565ddbb2f5cd2e40d88b80befa97cf30c",
+      "exact_executed_producer": true,
+      "full_job_in_progress_at_archive": true,
+      "preparation_only": false
+    },
+    {
+      "file": "guard_fast_stereo_full_object_trajectory_v1.py",
+      "sha256": "d3a8896562db9e2aad234457b4c43d9e7dbac2c5f102f9764e48982eae6275c1",
+      "exact_executed_producer": true,
+      "full_job_in_progress_at_archive": true,
+      "preparation_only": false
+    },
+    {
+      "file": "validate_fast_stereo_full_object_trajectory_v1.py",
+      "sha256": "3f5d1111ef9f96cdfc1be892c9a1161ff9ff14a9996e528adf041309876c2b8c",
+      "exact_executed_producer": false,
+      "full_job_in_progress_at_archive": false,
+      "preparation_only": true
+    },
+    {
+      "file": "guard_validate_fast_stereo_full_object_trajectory_v1.py",
+      "sha256": "32c95068e6768b48ffbed913994524a17d4b86017396ec4c3f887356051f616d",
+      "exact_executed_producer": false,
+      "full_job_in_progress_at_archive": false,
+      "preparation_only": true
     }
   ],
   "input_assets_included": false,

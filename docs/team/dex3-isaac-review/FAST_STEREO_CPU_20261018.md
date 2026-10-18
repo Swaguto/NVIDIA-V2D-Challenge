@@ -79,17 +79,32 @@ is unchanged; inertia is scaled by 1.3². These remain nominal assumptions.
 The previous hand-only repair must be checked again after changing geometry and
 object targets. It is not a contact certificate for this new candidate.
 
-## Next work
+## Full-clock depth and next work
 
-Full-clock CPU depth inference has started in a separate private job, with a
-45-minute parent cap, 40-minute worker cap, 3 GiB RSS cap and 1.5 GiB disk
-reserve. It reuses the seven outputs and verifies their source pixels against
-the sequential video decode. Its completion must be established from the live
-guard and depth report; this document does not claim it has finished.
+Full-clock CPU depth inference **completed at 17:29:06 UTC**. The independent
+guard recorded exit zero, 1,281.2 seconds and 1.216 GB maximum observed RSS.
+A separate verifier checked every one of the 151 output hashes, array shape,
+finite estimates, valid-mask metric ranges, exact 20 Hz source clock and frozen
+source closure. The seven reused depth/mask outputs match their earlier arrays
+exactly; the worker also checked those samples against sequentially decoded
+source pixels. The private depth outputs total 498,556,063 bytes. These checks
+establish input/output integrity, not ground-truth depth accuracy.
 
-After that: fit and check the complete object trajectory, repair the hand
+A separate complete object-pose fitting diagnostic is now running locally,
+reusing the seven qualified fits and the unchanged source fitter. It retains
+failed knots and missing-observation flags, checks each corrected pose against
+the previous corrected pose, and reports actual world-frame velocity and
+acceleration. A native full-path audit is prepared but **not yet executed**.
+The fit has a 40-minute independent wall cap, 2 GiB RSS cap and 1.5 GiB disk
+reserve. It neither qualifies motion nor starts training automatically.
+
+After that: check the complete object trajectory, repair the hand
 commands against the new geometry, and run the unchanged full 1 mm native gate,
 source-fit and motion checks. No PPO should start until those checks qualify.
 Brev remains stopped; its shutdown-control failure still blocks paid GPU work.
+
+The optional [passive startup trace](REPLAY_STARTUP_TRACE_20261018.md) is also
+implemented and has two passing CPU tests. GPU lifecycle integration and the
+cause of replay variability remain unverified; no completed replay was rerun.
 
 See the [measurement summary](e037-fast-stereo-cpu-summary-20261018.json).

@@ -75,6 +75,10 @@ evaluation variability. Higher training reward alone did not qualify a change.
   numerical scores: e003 AUC 0.1478 → 0.1818, e015 0.54452 → 0.54417,
   e038 0.21890 → 0.22119. MP-SR remains zero in each case. Identical scores are
   not established; the cause of the replay variability is not isolated.
+  An optional [passive startup trace](REPLAY_STARTUP_TRACE_20261018.md) now
+  captures the previously missing reset/capture/first-interval buffers in the
+  separate diagnostic tool. Two CPU tests pass; GPU integration remains
+  unverified and no completed replay was rerun.
 - [Fresh roster plans](SCORED_ROSTER_PIPELINE.md) generate ordered hand,
   reconstruction and policy configurations with pinned code runners, images and
   private paths. The uniform baseline does not silently substitute the selected
@@ -106,9 +110,16 @@ provider shutdown. The latest replay's 190 retained files were verified and
 Brev was confirmed STOPPED at 14:32:02 UTC. Brev must stop when idle.
 Later guarded depth-probe launch attempts never reached RUNNING; the stop
 preflight still returns an invalid-security-token error after a fresh CLI login. Twelve
-subsequent checks confirmed STOPPED; no depth inference or training occurred.
+subsequent checks confirmed STOPPED; no GPU depth inference or training occurred.
 [Native contact repair now runs on the Mac CPU](NATIVE_CPU_CONTACT_REPAIR_20261018.md).
-Its static control reproduces all 151 archived e037 knots, but the current wrist
-repair proposals have not passed both source and contact requirements.
+Its static control reproduces all 151 archived e037 knots. The articulated
+hand-only stage passes its source/contact/motion checks, while the full task
+still fails object/support contact requirements.
+
+The separate [CPU stereo experiment](FAST_STEREO_CPU_20261018.md) has now
+completed and independently verified all **151 e037 depth frames** with the
+source clock and frozen inputs intact. It does not establish ground-truth depth
+accuracy. Complete object-pose fitting is running locally under a bounded
+guard; the new geometry has not passed the full task gate or been used for PPO.
 The earlier development record is
 preserved in [the history](SCORED_BASELINE_HISTORY_20261018.md).

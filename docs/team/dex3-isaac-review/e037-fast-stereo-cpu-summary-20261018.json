@@ -18,7 +18,7 @@
   "training_steps": 0,
   "physical_task_accepted": false,
   "full_task_gate_passed": false,
-  "full_depth_inference_status": "IN_PROGRESS; inspect private live guard and report",
+  "full_depth_inference_status": "COMPLETE: independent closure/clock/array verification passed for all 151 frames",
   "full_depth_guard_limits": {
     "parent_seconds": 2700,
     "worker_seconds": 2400,
@@ -1209,5 +1209,20 @@
     "native_sample_audit": "deb2e372f79e2d37d1609cbce429f89385d4b281dd2ba226f6084e27636835ca",
     "pose_fits": "22fd79689afa8497cddc41363affbcb1a1afb09e3ff26d0a24f5de0373fa1a89",
     "photometric_audit": "48163d6605ae5f9fe0ca7f93f99945589574e427947157542f41646b3a0f43ec"
+  },
+  "full_depth_completed_utc": "2026-10-18T17:29:06.134045+00:00",
+  "full_depth_wall_seconds": 1281.2036082500126,
+  "full_depth_maximum_observed_resident_bytes": 1215692800,
+  "full_depth_output_bytes": 498556063,
+  "full_depth_verification_sha256": "31ce78128571870af201cdaf1c98b2d99d194fb2a1bc9b4b82dd3f61a65ec432",
+  "full_depth_report_sha256": "8e679a1d8a29e29e55685c2eac4811c1913944e4a9af008dc235a41587a8ded6",
+  "full_object_fit_status": "IN_PROGRESS in a separate bounded private CPU diagnostic; no native full-path or motion qualification yet",
+  "startup_trace": {
+    "implemented": true,
+    "cpu_tests_passed": 2,
+    "gpu_lifecycle_integration_verified": false,
+    "default_enabled": false,
+    "new_gpu_replay_queued": false,
+    "cause_proven": false
   }
 }

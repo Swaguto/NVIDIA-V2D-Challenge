@@ -1,11 +1,17 @@
 # Preserved CPU investigation producers
 
-These are exact copies of executed experimental producers, bound by
-`source-manifest.json`. They preserve negative results and the source of the
+These are exact copies of experimental producers, bound by
+`source-manifest.json`. Executed producers and prepared, unexecuted next steps
+are explicitly distinguished in that manifest. They preserve negative results and the source of the
 reported geometry/contact measurements. They are not production stages or
 accepted methods, and require their original private input layout and pinned
 runtime. Absolute paths describe the historical environment. No input assets,
 model weights, results or credentials are included here.
+
+The full 151-frame CPU depth pass and its independent array/clock/closure
+verification completed. Complete object-pose fitting is a new diagnostic still
+in progress. Its full native validator and resource guard are prepared but
+unexecuted; their presence in Git is not evidence that the candidate passed.
 
 - Contact projections v1–v6 never established a full contact-consistent,
   velocity-feasible grasp trajectory. V5 cleared the earlier sampled poses but

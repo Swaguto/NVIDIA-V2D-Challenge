@@ -1,0 +1,24 @@
+{
+  "schema": "v2d.replay-reset-passive-instrumentation.v1",
+  "updated_utc": "2026-10-18T17:33:36.859230+00:00",
+  "prior_source_inspection_sha256": "61a849d2b88edc34519d6cbb41f76452cd3ac297a6de67ffec14a356db2707cb",
+  "stock_evaluator_constructs_stock_RLEnv": true,
+  "training_only_reset_cleanup_applies_to_stock_evaluator": false,
+  "optional_trace_implemented": true,
+  "default_trace_enabled": false,
+  "extra_physics_steps": 0,
+  "official_evaluator_source_modified": false,
+  "new_gpu_replays_queued": false,
+  "cause_proven": false,
+  "cpu_tests": {
+    "passed": 2,
+    "gpu_integration_verified": false
+  },
+  "source_sha256": {
+    "private-workspace/cpu-native-runtime-v1/src/flash_chord/evaluation/harness.py": "6e61b092e9aa9d00d11c557b8508c09ef990314a3f68b0779bbf97765c85ddc2",
+    "repo/scripts/dex3_training/record_policy_readback.py": "6d3a9b6167d04e8b2053ab84713b5a0eac205b7dcc746d8e89655fc671c2bf91",
+    "repo/scripts/dex3_training/v2d_dex3_flashchord/startup_trace.py": "4802b25982ecf439ac1108894c8969f65811a02e4a75d275c551d08fd40ffee9",
+    "repo/scripts/dex3_training/v2d_dex3_flashchord/numerical_failure.py": "c89ec44606ac7631aa5d89a786e214cf281cb4f32081ca3b56ad2ce4e9346385",
+    "repo/scripts/dex3_training/tests/test_startup_trace.py": "e633f2daa1281ac6b40783c8f45aca631a6ddac86e2967d6437f5c331ba789b3"
+  }
+}
