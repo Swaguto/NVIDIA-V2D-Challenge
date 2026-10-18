@@ -40,6 +40,19 @@ def centered_tracker_pose(pose, model_center):
     return result
 
 
+def foreground_depth(depth, valid, mask):
+    """Exclude other surfaces from refinement without changing measured depths.
+
+    The separate acceptance gate still uses the original depth and foreground.
+    This optional experiment supplies no depth outside the observed object mask.
+    """
+    depth, valid, mask = np.asarray(depth), np.asarray(valid), np.asarray(mask)
+    if depth.ndim != 2 or valid.shape != depth.shape or mask.shape != depth.shape:
+        raise ValueError("Depth, validity and foreground must share the calibrated grid")
+    selected = valid & (mask > 127) & np.isfinite(depth) & (depth > 0)
+    return np.where(selected, depth, 0).astype(np.float32)
+
+
 def stereo_frames(left, right, anchor=None, max_frames=0):
     """Visit every source frame once, anchored forwards then backwards if requested."""
     prefix = []
@@ -72,7 +85,8 @@ def stereo_frames(left, right, anchor=None, max_frames=0):
 
 def run(episode: int, name: str, data: Path, masks: Path, out: Path,
         register_iterations=5, track_iterations=2, max_frames=0,
-        reinit_every=0, bootstrap_manifest=None, camera_root=None):
+        reinit_every=0, bootstrap_manifest=None, camera_root=None,
+        foreground_depth_only=False):
     target = (out / f"e{episode:03d}" / "ego_object_poses" / f"e{episode:03d}" /
               name / "object_to_cam" / "ego_cam_c")
     if target.exists() and any(target.iterdir()):
@@ -157,6 +171,7 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
             missing.append(frame)
             last_frame = None
             continue
+        refinement_depth = foreground_depth(depth, valid, mask) if foreground_depth_only else depth
         try:
             prior_pose = last_pose
             if camera_poses is not None:
@@ -168,21 +183,21 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
                 tracker.pose_last = torch.as_tensor(centered_tracker_pose(prior_pose, tracker.model_center), device='cuda', dtype=torch.float)
                 if frame == anchor:
                     if proof.get('stage') == 'sam3d_metric_depth':
-                        pose = tracker.track_one(rgb=rgb, depth=depth, K=K,
+                        pose = tracker.track_one(rgb=rgb, depth=refinement_depth, K=K,
                                                  iteration=max(register_iterations, track_iterations))
                         method = 'refine_sam3d_anchor'
                     else:
                         pose = anchor_pose.copy()
                         method = 'stereo_seed_anchor'
                 else:
-                    pose = tracker.track_one(rgb=rgb, depth=depth, K=K, iteration=track_iterations)
+                    pose = tracker.track_one(rgb=rgb, depth=refinement_depth, K=K, iteration=track_iterations)
                     method = 'track_from_reconstructed_seed' if last_frame is not None else 'reacquire_from_seed_prior'
             elif last_frame is None or periodic:
-                pose = tracker.register(K=K, rgb=rgb, depth=depth, ob_mask=mask > 127,
+                pose = tracker.register(K=K, rgb=rgb, depth=refinement_depth, ob_mask=mask > 127,
                                         iteration=register_iterations)
                 method = "register_periodic" if periodic and last_frame is not None else "register"
             else:
-                pose = tracker.track_one(rgb=rgb, depth=depth, K=K,
+                pose = tracker.track_one(rgb=rgb, depth=refinement_depth, K=K,
                                          iteration=track_iterations)
                 method = "track"
         except Exception as error:  # keep the batch moving; report each failure
@@ -220,6 +235,7 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
                   "method": method if method == 'stereo_seed_anchor' else f"foundationpose_{method}",
                   "mask_pixels": int((mask > 127).sum()),
                   "depth_pixels": int(((mask > 127) & valid).sum())}
+        record['foreground_depth_only'] = foreground_depth_only
         if support is not None:
             record['depth_support'] = support
         if camera_poses is not None:
@@ -240,7 +256,9 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
               "observed": len(observed), "missing_mask_or_depth": missing,
               "rejected": rejected, "gt_use": "none",
               "reinit_every": reinit_every, "register_iterations": register_iterations,
-              "track_iterations": track_iterations}
+              "track_iterations": track_iterations,
+              "foreground_depth_only": foreground_depth_only,
+              "acceptance_uses_original_measured_depth": True}
     if bootstrap_manifest is not None:
         report.update(bootstrap_manifest_sha256=hashlib.sha256(bootstrap_manifest.read_bytes()).hexdigest(),
                       seed_frame=anchor, initialization='bidirectional tracking from measured reconstruction body gauge',
@@ -267,10 +285,13 @@ def main():
                         help='Own reconstructed mesh anchor; preserve its measured seed-frame body gauge')
     parser.add_argument('--camera-root',type=Path,
                         help='Explicit experiment: per-frame independent rectified camera JSON folder')
+    parser.add_argument('--foreground-depth-only', action='store_true',
+                        help='Experiment: refine using measured object-mask depth only; acceptance gates unchanged')
     args = parser.parse_args()
     print(run(args.episode, args.object, args.data, args.masks, args.out,
               args.register_iterations, args.track_iterations, args.max_frames,
-              args.reinit_every, args.bootstrap_manifest, args.camera_root), flush=True)
+              args.reinit_every, args.bootstrap_manifest, args.camera_root,
+              args.foreground_depth_only), flush=True)
 
 
 if __name__ == "__main__":

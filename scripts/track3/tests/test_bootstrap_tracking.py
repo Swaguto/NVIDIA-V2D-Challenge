@@ -8,7 +8,7 @@ import pytest
 from scipy.spatial.transform import Rotation
 
 sys.path.insert(0, str(Path(__file__).parents[1]))
-from foundationpose_track import centered_tracker_pose, stereo_frames
+from foundationpose_track import centered_tracker_pose, foreground_depth, stereo_frames
 
 
 class Capture:
@@ -56,3 +56,17 @@ def test_tracker_centering_does_not_change_the_reconstructed_body_frame():
         centered[:3, :3] @ local + centered[:3, 3],
         pose[:3, :3] @ (local + center) + pose[:3, 3],
     )
+
+
+def test_foreground_refinement_preserves_measurements_and_excludes_other_surfaces():
+    depth = np.array([[0.6, 0.7, np.nan], [0, -1, 0.8]], np.float32)
+    original = depth.copy()
+    valid = np.array([[True, True, True], [True, True, False]])
+    mask = np.array([[255, 0, 255], [255, 255, 255]], np.uint8)
+    np.testing.assert_array_equal(
+        foreground_depth(depth, valid, mask),
+        np.array([[0.6, 0, 0], [0, 0, 0]], np.float32),
+    )
+    np.testing.assert_array_equal(depth, original)
+    with pytest.raises(ValueError, match="grid"):
+        foreground_depth(depth, valid[:, :2], mask)
