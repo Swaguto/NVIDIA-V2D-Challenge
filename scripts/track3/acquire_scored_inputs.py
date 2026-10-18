@@ -27,7 +27,7 @@ def hashes(path):
     return sha.hexdigest(), blob.hexdigest()
 
 
-def select(inventory, roster):
+def select(inventory, roster, videos_only=False):
     if inventory.get("pagination_link"):
         raise ValueError("Dataset inventory must include every page")
     if not re.fullmatch(r"[0-9a-f]{40}", inventory["revision"]):
@@ -53,6 +53,9 @@ def select(inventory, roster):
                 raise ValueError("Duplicate video")
             videos[key] = item
             selected.append(item)
+        elif videos_only:
+            if str(path) == "track_3/public/meta/camera_calibration.json":
+                selected.append(item)
         elif any(
             str(path).startswith(f"track_3/public/{part}/")
             for part in ("meta", "mesh", "urdf")
@@ -78,8 +81,12 @@ def verify(path, item):
     return sha
 
 
-def acquire(inventory, roster, root, receipt):
-    items = select(inventory, roster)
+def acquire(inventory, roster, root, receipt, videos_only=False):
+    items = select(inventory, roster, videos_only)
+    if videos_only and not any(
+        item["path"] == "track_3/public/meta/camera_calibration.json" for item in items
+    ):
+        raise ValueError("Video-only acquisition requires shared camera calibration")
     root = root.resolve()
     if receipt.exists():
         raise FileExistsError(
@@ -138,6 +145,11 @@ def acquire(inventory, roster, root, receipt):
         "ground_truth_used_for_inference": False,
         "scored_episodes": sorted(map(int, roster)),
         "provided_meshes_are_not_claimed_as_reconstructions": True,
+        "videos_only": videos_only,
+        "provided_assets_downloaded": any(
+            item["path"].startswith(("track_3/public/mesh/", "track_3/public/urdf/"))
+            for item in items
+        ),
     }
     receipt.parent.mkdir(parents=True, exist_ok=True)
     with receipt.open("x") as stream:
@@ -150,11 +162,17 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("inventory", "roster", "root", "receipt"):
         parser.add_argument("--" + name, type=Path, required=True)
+    parser.add_argument(
+        "--videos-only",
+        action="store_true",
+        help="Acquire only the scored videos and shared camera calibration for inference",
+    )
     args = parser.parse_args()
     result = acquire(
         json.loads(args.inventory.read_text()),
         json.loads(args.roster.read_text())["episodes"],
         args.root,
         args.receipt,
+        args.videos_only,
     )
     print(json.dumps({"complete": True, "files": len(result["files"])}))

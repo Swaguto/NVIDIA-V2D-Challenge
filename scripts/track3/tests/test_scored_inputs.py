@@ -31,6 +31,61 @@ def test_evaluation_input_selection_excludes_public_pose_labels():
     assert not any(item["path"].endswith("parquet") for item in selected)
 
 
+def test_inference_acquisition_excludes_cad_and_unneeded_public_metadata():
+    data = inventory()
+    data["items"] += [
+        {"type": "file", "path": p}
+        for p in [
+            "track_3/public/meta/camera_calibration.json",
+            "track_3/public/meta/episodes_metadata.jsonl",
+            "track_3/public/mesh/cup/cup.glb",
+            "track_3/public/urdf/cup.urdf",
+        ]
+    ]
+    selected = select(data, {"3": ["white_pot", "wooden_spoon"]}, videos_only=True)
+    assert len(selected) == 4
+    assert {Path(item["path"]).suffix for item in selected} == {".mp4", ".json"}
+
+
+def test_video_view_cannot_expose_old_diagnostic_assets(tmp_path):
+    from run_scored_reconstruction import validate_video_mount
+
+    root = tmp_path / "dataset"
+    (root / "track_3/evaluation/videos").mkdir(parents=True)
+    camera = root / "track_3/public/meta/camera_calibration.json"
+    camera.parent.mkdir(parents=True)
+    camera.write_text("{}")
+    receipt = tmp_path / "acquisition.json"
+    receipt.write_text(
+        json.dumps(
+            {
+                "schema": "v2d.scored-input-acquisition.v1",
+                "revision": "a" * 40,
+                "pose_labels_downloaded": False,
+                "videos_only": True,
+                "files": [
+                    {
+                        "path": str(camera.relative_to(root)),
+                        "size": 2,
+                        "sha256": hashlib.sha256(b"{}").hexdigest(),
+                    }
+                ],
+            }
+        )
+    )
+    view = tmp_path / "raw"
+    prepare(root, receipt, view, videos_only=True)
+    assert sorted(p.name for p in view.iterdir()) == [
+        "input-view.json",
+        "meta",
+        "videos",
+    ]
+    validate_video_mount(tmp_path, view)
+    (root / "track_3/public/mesh").mkdir()
+    with pytest.raises(ValueError, match="only videos"):
+        prepare(root, receipt, tmp_path / "rejected", videos_only=True)
+
+
 @pytest.mark.parametrize(
     "bad",
     [
