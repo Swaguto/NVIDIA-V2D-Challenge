@@ -447,6 +447,21 @@ def run(config):
         container(
             batch, ["--phase", "masks", "--data", data, *common], "masks", gpu=True
         )
+        mask_report = json.loads(
+            (out / "source" / label / "masks/report.json").read_text()
+        )
+        missing_masks = [
+            name
+            for name in names
+            if mask_report.get("mask_counts", {}).get(name, 0) < 1
+        ]
+        if missing_masks:
+            receipt["missing_object_masks"] = missing_masks
+            save()
+            raise ValueError(
+                "Automatic detector/propagation produced no masks for: "
+                + ", ".join(missing_masks)
+            )
         for obj in names:
             selection = f"/stage/selections/{obj}.json"
             container(

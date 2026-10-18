@@ -214,6 +214,10 @@ def test_bind_resume_does_not_repeat_neural_inference_and_preserves_failure(
         )
     )
     shutil.copytree(camera, out / "source/e003/camera")
+    (out / "source/e003/masks").mkdir()
+    (out / "source/e003/masks/report.json").write_text(
+        json.dumps({"mask_counts": {"white_pot": 1, "wooden_spoon": 1}})
+    )
     obs = Path(config["observations"]) / "e003/manifest.json"
     obs.parent.mkdir()
     obs.write_text(

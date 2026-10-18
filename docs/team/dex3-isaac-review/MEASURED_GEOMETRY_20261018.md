@@ -94,3 +94,27 @@ The remaining work includes general reconstruction/pose repair, full task
 validation, the remaining roster, frozen reserved-episode testing, the untouched
 official packer and fresh team reproduction. Inputs, derived videos, MANO and
 gated model weights remain private. No leaderboard artifact has been submitted.
+
+## Coverage failures at the detector boundary
+
+The next cohort completed e019 (sweeper/dustpan), while e020 and e025 stopped
+before geometry inference. e020 had 202 blue-cup masks and zero pitcher masks;
+its actual source object is a watering can. e025 had zero first-piece masks and
+356 second-piece masks: the detector returned the combined text
+`wooden piece 1 wooden piece 2`, and the old longest-match tie silently chose
+the last slot. Neither failure is evidence about learned grasp quality.
+
+The generic prompt map now covers all canonical classes, including watering-can
+aliases. Ambiguous detector labels remain ambiguous. Numbered same-category
+instances require distinct boxes in a joint source view; a fused box cannot
+populate two slots. Specific detected identities take precedence, otherwise the
+earliest joint view's left-to-right association is explicitly **inferred**.
+Printed canonical identity is not certified by that convention. Source inspection
+of e025 shows the marked first board on the left and second board on the right,
+but this does not establish a general hidden-episode identity guarantee.
+The driver now reports an absent object mask at the detector boundary. A fresh
+bounded retry must validate these changes through actual segmentation/geometry.
+
+An additional source-only camera-compensated stillness experiment passes its
+synthetic tests, but supports only 11/313 pot and 26/313 spoon frames in the
+inspected clip. It is not connected to the tracker or promoted as a repair.

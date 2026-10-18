@@ -27,29 +27,25 @@ ROOT = HERE.parents[2]
 sys.path.insert(0, os.environ.get("V2D_RUNTIME", str(ROOT / "reconstruction/modules/v2d_stereo_depth/lib")))
 from stereo_depth import load_rig  # noqa: E402
 
-SEMANTIC_PROMPTS = {"white_pot": "white saucepan with a long handle", "white_pot_lid": "detached circular lid",
-                    "mini_dust_pan": "small dustpan", "mini_sweeper": "small hand brush"}
-SEMANTIC_ALIASES = {"white_pot": ["white saucepan", "saucepan"], "white_pot_lid": ["circular lid", "pot lid", "lid"],
-                    "mini_dust_pan": ["dustpan"], "mini_sweeper": ["hand brush"]}
-
-
-def assign_label(label: str, names: list[str]) -> int | None:
-    label = label.lower().replace("_", " ").strip()
-    matches = [(len(name), index) for index, object_name in enumerate(names)
-               for name in {object_name.replace("_", " "), SEMANTIC_PROMPTS.get(object_name, ""),
-                            *SEMANTIC_ALIASES.get(object_name, [])}
-               if name and name in label]
-    return max(matches)[1] if matches else None
+from object_prompts import (  # noqa: E402
+    SEMANTIC_PROMPTS,
+    assign_label,
+    numbered_groups,
+    numbered_instance_seeds,
+)
 
 
 def seed_boxes(frames: list[np.ndarray], names: list[str], threshold: float,
                device: str, stride: int, max_box_area: float, semantic_frames=None):
-    prompt = ". ".join(SEMANTIC_PROMPTS.get(name, name.replace("_", " ")) for name in names) + "."
+    prompt = ". ".join(dict.fromkeys(SEMANTIC_PROMPTS.get(name, name.replace("_", " ")) for name in names)) + "."
     revision = os.environ.get("V2D_DINO_REVISION")
     processor = AutoProcessor.from_pretrained("IDEA-Research/grounding-dino-base", revision=revision)
     model = GroundingDinoForObjectDetection.from_pretrained(
         "IDEA-Research/grounding-dino-base", revision=revision).to(device).eval()
     best: dict[int, tuple[float, list[float], str, int]] = {}
+    groups = numbered_groups(names)
+    grouped = {index for group in groups for index in group}
+    locked = set()
     inspected = sorted(set(range(0, len(frames), stride)) | {len(frames) - 1})
     with torch.inference_mode():
         for frame in inspected:
@@ -58,18 +54,39 @@ def seed_boxes(frames: list[np.ndarray], names: list[str], threshold: float,
             result = processor.post_process_grounded_object_detection(
                 model(**inputs), inputs.input_ids, threshold=threshold,
                 text_threshold=0.25, target_sizes=[rgb.shape[:2]])[0]
+            detections = []
             for label, score, box in zip(result["text_labels"], result["scores"].tolist(),
                                          result["boxes"].tolist()):
                 index = assign_label(label, names)
                 x0, y0, x1, y1 = box
                 area_fraction = max(0, x1 - x0) * max(0, y1 - y0) / (rgb.shape[0] * rgb.shape[1])
-                if index is None or not 0.0002 <= area_fraction <= max_box_area:
+                print(json.dumps(dict(detector_frame=frame, detector_label=label,
+                                      score=float(score), assigned_index=index,
+                                      area_fraction=area_fraction,
+                                      accepted_box_size=0.0002 <= area_fraction <= max_box_area)), flush=True)
+                if not 0.0002 <= area_fraction <= max_box_area:
+                    continue
+                detections.append(dict(label=label, score=float(score), box=[float(value) for value in box]))
+                if index is None or index in grouped:
                     continue
                 # Prefer early, high-confidence seeds. The size gate excludes
                 # the round table that Grounding DINO calls a white pot.
                 rank = score - 0.00015 * frame
                 if index not in best or rank > best[index][0] - 0.00015 * best[index][3]:
                     best[index] = (float(score), [float(value) for value in box], label, frame)
+            for group in groups:
+                if set(group).issubset(locked):
+                    continue
+                joint = numbered_instance_seeds(detections, names, group)
+                if not joint:
+                    continue
+                for index, detection in joint.items():
+                    label = detection['label']
+                    if detection['identity_policy'] == 'inferred_initial_left_to_right':
+                        label = 'inferred_initial_left_to_right:' + names[index] + ':' + label
+                    best[index] = (detection['score'], detection['box'], label, frame)
+                locked.update(group)
+
     del model, processor
     torch.cuda.empty_cache()
     return best
@@ -204,6 +221,11 @@ def run(episode: int, names: list[str], data: Path, out: Path, threshold: float,
               "gt_use": "none", "model": "facebook/sam2.1-hiera-large"}
     report["model_revisions"] = {"grounding_dino": os.environ.get("V2D_DINO_REVISION"),
                                  "sam2": os.environ.get("V2D_SAM2_REVISION")}
+    report["numbered_instance_assignment"] = {
+        names[index]: {"policy": "inferred_initial_left_to_right", "canonical_identity_certified": False}
+        for index in seeds if seeds[index][2].startswith("inferred_initial_left_to_right:")
+    }
+    report["unseeded_objects"] = [name for index, name in enumerate(names) if index not in seeds]
     report["manual_annotations_used"] = bool(supplied)
     report["semantic_seed_camera"] = "calibrated ego_cam_a colour" if semantic_color else "rectified monochrome stereo"
     report["semantic_prompts"] = {name: SEMANTIC_PROMPTS.get(name, name.replace("_", " ")) for name in names}
