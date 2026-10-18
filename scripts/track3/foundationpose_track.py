@@ -72,7 +72,7 @@ def stereo_frames(left, right, anchor=None, max_frames=0):
 
 def run(episode: int, name: str, data: Path, masks: Path, out: Path,
         register_iterations=5, track_iterations=2, max_frames=0,
-        reinit_every=0, bootstrap_manifest=None):
+        reinit_every=0, bootstrap_manifest=None, camera_root=None):
     target = (out / f"e{episode:03d}" / "ego_object_poses" / f"e{episode:03d}" /
               name / "object_to_cam" / "ego_cam_c")
     if target.exists() and any(target.iterdir()):
@@ -125,6 +125,14 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
                                  f"episode_{episode:06d}.mp4"))
     if not left.isOpened() or not right.isOpened():
         raise FileNotFoundError(f"stereo episode {episode}")
+    camera_poses = None
+    camera_sha256 = None
+    if camera_root is not None:
+        if bootstrap_manifest is None:
+            raise ValueError('Independent camera transport is an explicit reconstructed-body experiment')
+        from camera_prior import load_sequence
+        camera_poses, camera_sha256 = load_sequence(camera_root, episode,
+            int(left.get(cv2.CAP_PROP_FRAME_COUNT)), rig.left)
     K = np.asarray(rig.P1[:3, :3], dtype=np.float64)
     directory = (out / f"e{episode:03d}" / "ego_object_poses" / f"e{episode:03d}" /
                  name / "object_to_cam" / rig.left)
@@ -132,12 +140,14 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
     last_frame = None
     last_pose = None
     last_registration = None
+    last_pose_frame = None
     observed, missing, rejected = [], [], []
     frames_seen = 0
     for frame, raw_l, raw_r, reset_anchor in stereo_frames(left, right, anchor, max_frames):
         frames_seen = max(frames_seen, frame+1)
         if reset_anchor:
             last_frame, last_pose = anchor, anchor_pose.copy()
+            last_pose_frame = anchor
         rect_l, _ = rig.rectify_pair(raw_l, raw_r)
         rgb = cv2.cvtColor(rect_l, cv2.COLOR_BGR2RGB)
         depth, valid = stereo_depth(rig, raw_l, raw_r)
@@ -148,10 +158,14 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
             last_frame = None
             continue
         try:
+            prior_pose = last_pose
+            if camera_poses is not None:
+                from camera_prior import transport
+                prior_pose = transport(last_pose, camera_poses[last_pose_frame], camera_poses[frame])
             periodic = (reinit_every > 0 and last_registration is not None and
                         frame - last_registration >= reinit_every)
             if anchor is not None:
-                tracker.pose_last = torch.as_tensor(centered_tracker_pose(last_pose, tracker.model_center), device='cuda', dtype=torch.float)
+                tracker.pose_last = torch.as_tensor(centered_tracker_pose(prior_pose, tracker.model_center), device='cuda', dtype=torch.float)
                 if frame == anchor:
                     pose = anchor_pose.copy()
                     method = 'stereo_seed_anchor'
@@ -185,7 +199,7 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
                 last_frame = None
                 continue
         if last_pose is not None and last_frame is not None:
-            step = np.linalg.inv(last_pose) @ pose
+            step = np.linalg.inv(prior_pose if camera_poses is not None else last_pose) @ pose
             if (np.linalg.norm(step[:3, 3]) > 0.15 or
                     Rotation.from_matrix(step[:3, :3]).magnitude() > np.deg2rad(40)):
                 rejected.append({"frame": frame, "error": "implausible pose jump"})
@@ -203,9 +217,13 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
                   "depth_pixels": int(((mask > 127) & valid).sum())}
         if support is not None:
             record['depth_support'] = support
+        if camera_poses is not None:
+            record.update(independent_camera_prior=True,camera_prior_frame=last_pose_frame,
+                          camera_trajectory_sha256=camera_sha256)
         (directory / f"{frame:06d}.json").write_text(json.dumps(record))
         observed.append(frame)
         last_frame, last_pose = frame, pose
+        last_pose_frame = frame
         if method.startswith("register"):
             last_registration = frame
         if frame % 25 == 0:
@@ -222,6 +240,7 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
         report.update(bootstrap_manifest_sha256=hashlib.sha256(bootstrap_manifest.read_bytes()).hexdigest(),
                       seed_frame=anchor, initialization='bidirectional tracking from measured reconstruction body gauge',
                       no_arbitrary_bootstrap_rotation_registration=True)
+    report.update(independent_camera_prior=camera_poses is not None,camera_trajectory_sha256=camera_sha256)
     (out / f"e{episode:03d}" / f"{name}_fp_report.json").write_text(json.dumps(report, indent=2))
     return report
 
@@ -241,10 +260,12 @@ def main():
                         help="re-register from the current mask every N frames; 0 disables")
     parser.add_argument('--bootstrap-manifest',type=Path,
                         help='Own reconstructed mesh anchor; preserve its measured seed-frame body gauge')
+    parser.add_argument('--camera-root',type=Path,
+                        help='Explicit experiment: per-frame independent rectified camera JSON folder')
     args = parser.parse_args()
     print(run(args.episode, args.object, args.data, args.masks, args.out,
               args.register_iterations, args.track_iterations, args.max_frames,
-              args.reinit_every, args.bootstrap_manifest), flush=True)
+              args.reinit_every, args.bootstrap_manifest, args.camera_root), flush=True)
 
 
 if __name__ == "__main__":

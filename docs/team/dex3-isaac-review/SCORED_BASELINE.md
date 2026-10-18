@@ -150,6 +150,14 @@ completion. These gates reject bad evidence; they do not establish physical
 acceptance. GPU validation of this anchored revision is a separate run from the
 RGB/pinned-runtime pilot.
 
+An additional opt-in experiment is `foundationpose_track.py --camera-root
+/independent/e001/camera/ego_cam_c`. It verifies complete observed rectified
+camera records and transports the last accepted body pose into the current
+camera before refinement against the new image/depth. The source camera sequence
+is hash-bound in its reports. CPU tests cover world-pose invariance and reject
+GT-assisted, unrectified or inferred camera records. GPU comparison is pending;
+this option is not active in the first anchored pilot.
+
 The same FAQ explicitly permits floating hands and fixed-base arm/hand setups
 for Track 3. Our selected policy runtime remains the official pinned
 FlashCHORD/Newton/JAX path with floating Dex3 hands. The Isaac renderer remains
