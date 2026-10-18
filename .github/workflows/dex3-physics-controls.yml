@@ -26,6 +26,7 @@ jobs:
           scripts/track3/tests/test_measured_pose_refinement.py
           scripts/track3/tests/test_static_anchor_prior.py
           scripts/track3/tests/test_scored_continuation.py
+          scripts/track3/tests/test_scored_replay.py
           scripts/track3/tests/test_submission_preparation.py -q
       - name: Verify persistent cache in training Compose services
         run: python scripts/compute/check_compose_cache.py
