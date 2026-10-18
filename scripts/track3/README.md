@@ -107,3 +107,27 @@ and digest-pinned images. A surrounding operator must enforce VM shutdown and
 verify result backups. Brev provisioning and billing controls are separate.
 `foreground_depth_only` remains an experimental opt-in until source-video
 validation passes; it does not relax pose acceptance gates.
+
+### Isolated development validation
+
+`make_public_validation_roster.py` reads only the public Parquet schema's object
+names and probes the three source-video clocks. Keep those reference Parquets in
+a separate directory **outside** the common inference mount. The generated JSON
+contains names, clocks and hashes; pose values are not decoded or copied. It
+records `method_frozen: false`: acquisition is preparation, not validation.
+
+```sh
+python scripts/track3/make_public_validation_roster.py \
+  --source "$VIDEO_ONLY_VIEW" --metadata-source "$REFERENCE_ONLY_METADATA" \
+  --episodes 11 22 42 --out "$PUBLIC_VIDEO_ROSTER"
+python -m issue6.track3_adapter --episode 11 --data "$VIDEO_ONLY_VIEW" \
+  --results "$INDEPENDENT_CAMERAS" --camera-root "$INDEPENDENT_CAMERAS" \
+  --video-roster "$PUBLIC_VIDEO_ROSTER" --hands-only --output "$HAND_OBSERVATIONS"
+```
+
+This explicit public video mode uses the same fixed-camera, own-geometry and
+bundle gates as scored inference. It retains `split: public`; it does not create
+a fake scored kit or change source confidence. Freeze the method and training
+budget before evaluating held-out episodes. These tests assess transfer of the
+pipeline to new episodes; per-episode policies are not a universal zero-shot
+policy, and recurring object categories are not unseen-category validation.

@@ -9,7 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "reconstruction/modules/v2d_issue6"))
-from issue6.manifest import PATH_KEYS, load
+from issue6.manifest import PATH_KEYS, label_free_video_contract, load
 from issue6.track3_adapter import observed_object_state
 from reconstructed_view import verify_geometry, FINAL_STAGES
 
@@ -24,7 +24,7 @@ def bind(manifest, data, results, out):
     m = load(manifest)
     contract = m.get("input_contract", {})
     if (
-        contract.get("split") != "evaluation"
+        not label_free_video_contract(contract)
         or contract.get("hands_only") is not True
         or contract.get("reference_pose_tables_read") is not False
         or m["objects"]

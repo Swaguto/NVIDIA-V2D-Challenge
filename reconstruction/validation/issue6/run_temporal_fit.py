@@ -9,6 +9,7 @@ import subprocess
 import sys
 import time
 from issue6.backend import final_dynhamr_result, dynhamr_frame_axis
+from issue6.manifest import label_free_video_contract
 from fit_validation import verify_fit, verify_source_cameras
 
 parser = argparse.ArgumentParser()
@@ -18,7 +19,7 @@ root = Path(f"/workspace/temporal-hands/e{args.episode:03d}")
 manifest = json.loads(
     Path(f"/workspace/issue6-full-inputs/e{args.episode:03d}/manifest.json").read_text()
 )
-scored = manifest.get("input_contract", {}).get("split") == "evaluation"
+scored = label_free_video_contract(manifest.get("input_contract", {}))
 camera_loader = Path("/workspace/Dyn-HaMR/dyn-hamr/data/dataset.py")
 camera_source = root / "cameras/cameras.npz"
 if scored:

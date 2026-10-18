@@ -70,6 +70,7 @@ def export(
     scored_kit: Path | None = None,
     camera_root: Path | None = None,
     hands_only: bool = False,
+    video_roster: Path | None = None,
 ) -> Path:
     # Input paths are relative to the caller, whereas paths inside the manifest
     # are resolved relative to its output directory. Preserve their locations.
@@ -81,44 +82,74 @@ def export(
     sys.path.insert(0, str(repo / "reconstruction/modules/v2d_stereo_depth/lib"))
     from stereo_depth import load_rig, stereo_depth
 
-    if start < 0 or (frames <= 0 and scored_kit is None) or (output.exists() and any(output.iterdir())):
+    if scored_kit is not None and video_roster is not None:
+        raise ValueError("Choose either the official scored kit or an isolated public video roster")
+    label_free = scored_kit is not None or video_roster is not None
+    if start < 0 or (frames <= 0 and not label_free) or (output.exists() and any(output.iterdir())):
         raise ValueError("Choose nonnegative start, positive frames, and a fresh output directory")
     rig = load_rig(str(data / "meta/camera_calibration.json"))
     if rig.left != "ego_cam_c":
         raise ValueError(f"Track 3 pose output expects rectified ego_cam_c; got {rig.left}")
     ep = results / f"e{episode:03d}"
-    if scored_kit is None:
+    if not label_free:
         import pyarrow.parquet as pq
+
         parquet = data / "data/chunk-000" / f"episode_{episode:06d}.parquet"
         source = pq.ParquetFile(parquet)
         names = json.loads(source.schema_arrow.metadata[b"objects"])
         rows = pq.read_table(parquet, columns=["frame_index", "timestamp"]).to_pylist()
     else:
-        sys.path.insert(0, str(repo / "scripts/track3"))
-        from audit_scored_coverage import official_frames
-        roster = json.loads((scored_kit / "data/track_3_evaluation_objects.json").read_text())["episodes"]
+        if scored_kit is not None:
+            sys.path.insert(0, str(repo / "scripts/track3"))
+            from audit_scored_coverage import official_frames
+
+            roster = json.loads((scored_kit / "data/track_3_evaluation_objects.json").read_text())["episodes"]
+        else:
+            declaration = json.loads(video_roster.read_text())
+            if (
+                declaration.get("schema") != "v2d.public-video-validation-roster.v1"
+                or declaration.get("reference_pose_values_read") is not False
+                or declaration.get("split") != "public"
+            ):
+                raise ValueError("Expected an explicit isolated public video validation roster")
+            roster = declaration["episodes"]
         if str(episode) not in roster:
             raise ValueError("Episode is outside the official scored roster")
         names = roster[str(episode)]
-        count = official_frames(scored_kit, roster)[episode]
+        if (
+            not names
+            or len(set(names)) != len(names)
+            or not all(isinstance(name, str) and name.isidentifier() for name in names)
+        ):
+            raise ValueError("Declared object slots must be distinct safe names")
+        count = (
+            official_frames(scored_kit, roster)[episode]
+            if scored_kit is not None
+            else declaration["video_axes"][str(episode)]["frames"]
+        )
+        if type(count) is not int or count < 2:
+            raise ValueError("Declared video axis needs at least two source frames")
         if frames == 0:
             frames = count
         if start != 0 or frames != count:
             raise ValueError("Scored hand inputs require the complete original episode")
         # Scored data releases videos, not pose-label tables. Recover the clock
         # from the video; validate its actual decoded frame timestamps below.
-        probe = cv2.VideoCapture(str(data / "videos/chunk-000" /
-                                    f"observation.images.{rig.left}" / f"episode_{episode:06d}.mp4"))
+        probe = cv2.VideoCapture(
+            str(data / "videos/chunk-000" / f"observation.images.{rig.left}" / f"episode_{episode:06d}.mp4")
+        )
         fps = probe.get(cv2.CAP_PROP_FPS)
         video_count = int(probe.get(cv2.CAP_PROP_FRAME_COUNT))
         probe.release()
         if not np.isfinite(fps) or fps <= 0 or video_count != count:
             raise ValueError("Scored video clock/frame count differs from official roster")
-        rows = [{"frame_index": i, "timestamp": i/fps} for i in range(count)]
+        if video_roster is not None and not np.isclose(fps, declaration["video_axes"][str(episode)]["fps"], atol=1e-8):
+            raise ValueError("Public source clock differs from its validation declaration")
+        rows = [{"frame_index": i, "timestamp": i / fps} for i in range(count)]
     official_names = list(names)
     if hands_only:
-        if scored_kit is None:
-            raise ValueError('Hands-only preparation requires the explicit scored roster contract')
+        if not label_free:
+            raise ValueError("Hands-only preparation requires the explicit scored roster contract")
         names = []
     # Human observation preparation can run independently of object geometry.
     # Full integration still fails before decoding if an object mesh is absent.
@@ -155,10 +186,9 @@ def export(
             ok_r, raw_r = right.read()
             if not ok_l or not ok_r:
                 raise ValueError(f"Stereo video ends before frame {frame}")
-            if scored_kit is not None:
+            if label_free:
                 for capture in (left, right):
-                    if not np.isclose(capture.get(cv2.CAP_PROP_POS_MSEC)/1000,
-                                      row["timestamp"], atol=1e-5):
+                    if not np.isclose(capture.get(cv2.CAP_PROP_POS_MSEC) / 1000, row["timestamp"], atol=1e-5):
                         raise ValueError("Scored stereo timestamps are not on the declared clock")
             rect_l, _ = rig.rectify_pair(raw_l, raw_r)
             depth, valid = stereo_depth(rig, raw_l, raw_r)
@@ -183,12 +213,16 @@ def export(
             if camera_root is not None:
                 camera_path = camera_root.resolve() / f"e{episode:03d}/camera" / rig.left / f"{stem}.json"
                 record = json.loads(camera_path.read_text())
-                if (record.get("episode") != episode or record.get("frame_index") != frame
-                        or record.get("gt_use") != "independent"
-                        or record.get("camera_frame") != rig.left):
+                if (
+                    record.get("episode") != episode
+                    or record.get("frame_index") != frame
+                    or record.get("gt_use") != "independent"
+                    or record.get("camera_frame") != rig.left
+                ):
                     raise ValueError("Camera evidence differs from scored frame")
-                manifest_frames[-1].update(camera_pose_path=str(camera_path),
-                                           camera_valid=record.get("status") == "observed")
+                manifest_frames[-1].update(
+                    camera_pose_path=str(camera_path), camera_valid=record.get("status") == "observed"
+                )
     finally:
         left.release()
         right.release()
@@ -215,21 +249,34 @@ def export(
     manifest = output / "manifest.json"
     if evaluation is not None:
         m["evaluation"] = evaluation
-    if scored_kit is not None:
-        m["input_contract"] = dict(split="evaluation", object_slots="official roster order",
-                                   timestamps="validated video presentation clock",
-                                   reference_pose_tables_read=False,
-                                   provided_geometry_is_not_claimed_as_reconstruction=True,
-                                   official_roster_sha256=file_hash(scored_kit / "data/track_3_evaluation_objects.json"),
-                                   official_sample_sha256=file_hash(scored_kit / "data/track_3_sample_submission.parquet"),
-                                   calibration_sha256=file_hash(data / "meta/camera_calibration.json"),
-                                   adapter_sha256=file_hash(Path(__file__)),
-                                   stereo_videos_sha256={cam: file_hash(base / f"observation.images.{cam}" / f"episode_{episode:06d}.mp4") for cam in (rig.left, rig.right)})
-        m['input_contract'].update(hands_only=hands_only, official_object_slot_names=official_names,
-                                   object_geometry_read=not hands_only)
+    if label_free:
+        m["input_contract"] = dict(
+            split="evaluation" if scored_kit else "public",
+            object_slots="official roster order" if scored_kit else "declared public roster order",
+            timestamps="validated video presentation clock",
+            reference_pose_tables_read=False,
+            provided_geometry_is_not_claimed_as_reconstruction=True,
+            calibration_sha256=file_hash(data / "meta/camera_calibration.json"),
+            adapter_sha256=file_hash(Path(__file__)),
+            stereo_videos_sha256={
+                cam: file_hash(base / f"observation.images.{cam}" / f"episode_{episode:06d}.mp4")
+                for cam in (rig.left, rig.right)
+            },
+        )
+        if scored_kit is not None:
+            m["input_contract"].update(
+                official_roster_sha256=file_hash(scored_kit / "data/track_3_evaluation_objects.json"),
+                official_sample_sha256=file_hash(scored_kit / "data/track_3_sample_submission.parquet"),
+            )
+        else:
+            m["input_contract"].update(video_only=True, public_video_roster_sha256=file_hash(video_roster))
+        m["input_contract"].update(
+            hands_only=hands_only, official_object_slot_names=official_names, object_geometry_read=not hands_only
+        )
         geometry_proof = data / "geometry-provenance.json"
         if not hands_only and geometry_proof.is_file():
             from reconstructed_view import verify_geometry
+
             verify_geometry(data, episode, names)
             m["input_contract"]["reconstructed_geometry_provenance_sha256"] = file_hash(geometry_proof)
             m["input_contract"]["reconstructed_geometry_provenance"] = json.loads(geometry_proof.read_text())
@@ -257,15 +304,34 @@ def main() -> None:
     parser.add_argument("--start", type=int, default=0)
     parser.add_argument("--frames", type=int, help="Public default 64; scored default complete episode")
     parser.add_argument("--scored-kit", type=Path, help="Official kit for label-free scored input creation")
+    parser.add_argument(
+        "--video-roster", type=Path, help="Isolated public validation names/video clock; no reference pose tables"
+    )
     parser.add_argument("--camera-root", type=Path, help="Independent stereo camera results root")
-    parser.add_argument('--hands-only',action='store_true',
-                        help='Prepare human observations without opening object geometry; bind reconstructed objects later')
+    parser.add_argument(
+        "--hands-only",
+        action="store_true",
+        help="Prepare human observations without opening object geometry; bind reconstructed objects later",
+    )
     parser.add_argument("--hand-source-json", type=Path, help="HaMeR/Dyn-HaMR/import paths and settings")
     args = parser.parse_args()
     source = json.loads(args.hand_source_json.read_text()) if args.hand_source_json else {"backend": "hamer"}
-    frames = args.frames if args.frames is not None else (0 if args.scored_kit else 64)
-    print(export(args.data, args.results, args.episode, args.output, args.start, frames, source,
-                 scored_kit=args.scored_kit, camera_root=args.camera_root, hands_only=args.hands_only))
+    frames = args.frames if args.frames is not None else (0 if args.scored_kit or args.video_roster else 64)
+    print(
+        export(
+            args.data,
+            args.results,
+            args.episode,
+            args.output,
+            args.start,
+            frames,
+            source,
+            scored_kit=args.scored_kit,
+            camera_root=args.camera_root,
+            hands_only=args.hands_only,
+            video_roster=args.video_roster,
+        )
+    )
 
 
 if __name__ == "__main__":

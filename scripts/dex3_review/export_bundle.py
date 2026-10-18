@@ -24,7 +24,7 @@ ROBOT = CODE / 'robotic_grounding'
 sys.path[:0] = [str(CODE / 'reconstruction/modules/v2d_issue6'), str(ROBOT / 'source/robotic_grounding')]
 from issue6.backend import dynhamr_frame_axis
 from issue6.geometry import hand_geometry, transform
-from issue6.manifest import load, camera_from_object, pose as camera_pose
+from issue6.manifest import load, camera_from_object, label_free_video_contract, pose as camera_pose
 from issue6.pipeline import load_mesh
 from robotic_grounding.retarget.track3_bundle import SCHEMA, SIDES, JOINT_NAMES, digest, validate_bundle, wrist_rotation
 
@@ -44,7 +44,7 @@ def export(ep):
     ids = np.array([f['id'] for f in frames])
     times = np.array([f['timestamp_s'] for f in frames])
     names = [o['id'] for o in m['objects']]
-    scored = m.get('input_contract', {}).get('split') == 'evaluation'
+    scored = label_free_video_contract(m.get('input_contract', {}))
     if scored != bool(args.scored_reconstructed_view and args.object_world_root):
         raise ValueError('Scored export requires both reconstructed geometry and complete world targets')
     scored_proof = None

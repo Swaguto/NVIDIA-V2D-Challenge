@@ -166,6 +166,35 @@ def test_human_input_preparation_never_opens_provided_object_geometry(
     assert all(row["objects"] == {} for row in manifest["frames"])
 
 
+def test_public_video_validation_cannot_read_pose_tables(tmp_path, monkeypatch):
+    _, data = fixture(tmp_path, monkeypatch)
+    roster = tmp_path / "public-video-roster.json"
+    roster.write_text(json.dumps({
+        "schema": "v2d.public-video-validation-roster.v1",
+        "split": "public", "reference_pose_values_read": False,
+        "episodes": {"1": ["z_object", "a_object"]},
+        "video_axes": {"1": {"frames": 3, "fps": 20}},
+    }))
+
+    def forbidden(*args, **kwargs):
+        raise AssertionError("Validation inference attempted to read a pose table")
+
+    monkeypatch.setattr(pq, "ParquetFile", forbidden)
+    monkeypatch.setattr(pq, "read_table", forbidden)
+    path = export(data, tmp_path / "predictions", 1, tmp_path / "public-output",
+                  0, 0, {"backend": "hamer"}, video_roster=roster, hands_only=True)
+    m = json.loads(path.read_text())
+    assert m["input_contract"]["split"] == "public"
+    assert m["input_contract"]["video_only"] is True
+    assert m["input_contract"]["reference_pose_tables_read"] is False
+    assert len(m["frames"]) == 3 and m["objects"] == []
+    from issue6.manifest import label_free_video_contract
+    assert label_free_video_contract(m["input_contract"])
+    with pytest.raises(ValueError, match="exclude"):
+        label_free_video_contract({"split": "public", "video_only": True,
+                                  "reference_pose_tables_read": True})
+
+
 @pytest.mark.parametrize("wrong_pose_mesh", [False, True])
 def test_binding_own_objects_preserves_human_bytes_and_rejects_different_pose_geometry(
     tmp_path, monkeypatch, wrong_pose_mesh

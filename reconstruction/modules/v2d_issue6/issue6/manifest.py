@@ -34,6 +34,17 @@ PATH_KEYS = {
 PROVENANCE = {"predicted", "ground_truth_assisted", "synthetic"}
 
 
+def label_free_video_contract(contract):
+    """Share strict own-geometry/camera gates with isolated public validation."""
+    if contract.get("split") == "evaluation":
+        return True
+    if contract.get("split") == "public" and contract.get("video_only") is True:
+        if contract.get("reference_pose_tables_read") is not False:
+            raise ValueError("Public video validation must exclude reference pose tables")
+        return True
+    return False
+
+
 def write_json(path, value):
     Path(path).parent.mkdir(parents=True, exist_ok=True)
     Path(path).write_text(json.dumps(value, indent=2, allow_nan=False) + "\n", encoding="utf-8")
