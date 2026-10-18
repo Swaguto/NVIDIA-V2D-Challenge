@@ -7,7 +7,7 @@ import numpy as np
 import pytest
 
 sys.path.insert(0, str(Path(__file__).parents[1]))
-from calibrated_anchor import calibrated_seed
+from calibrated_anchor import calibrated_seed, verified_model_seed
 
 
 def sha(path):
@@ -107,3 +107,57 @@ def test_unqualified_or_reframed_seed_cannot_bypass_refinement(tmp_path, change)
     proof["metric_refinement"]["report_sha256"] = sha(path)
     with pytest.raises(ValueError, match="original body frame"):
         calibrated_seed(tmp_path / "manifest.json", proof)
+
+
+def raw_model(tmp_path):
+    for name in ["input.png", "mask.png", "raw.glb", "mesh.glb"]:
+        (tmp_path / name).write_bytes(b"immutable model input " + name.encode())
+    (tmp_path / "input-intrinsics.json").write_text("{}")
+    (tmp_path / "raw-transform.json").write_text(
+        json.dumps(
+            {"rotation": [1, 0, 0, 0], "scale": [1, 1, 1], "translation": [0, 0, 1]}
+        )
+    )
+    points = np.ones((20, 20, 3), np.float32)
+    np.save(tmp_path / "pointmap.npy", points)
+    pose = np.eye(4)
+    pose[2, 3] = 1
+    proof = {
+        "stage": "sam3d_metric_depth",
+        "body_origin_frozen": True,
+        "provided_meshes_read": False,
+        "reference_pose_labels_read": False,
+        "measured_pointmap_pixels": 400,
+        "seed_camera_from_object": pose.tolist(),
+        "mesh_sha256": sha(tmp_path / "mesh.glb"),
+        "source_files_sha256": {p.name: sha(p) for p in tmp_path.iterdir()},
+    }
+    (tmp_path / "manifest.json").write_text(json.dumps(proof))
+    return proof
+
+
+def test_raw_model_seed_is_a_bound_hypothesis_without_a_fit_certificate(tmp_path):
+    proof = raw_model(tmp_path)
+    path = tmp_path / "manifest.json"
+    assert verified_model_seed(path, proof) == sha(path)
+    assert calibrated_seed(path, proof) == (False, None)
+    (tmp_path / "pointmap.npy").write_bytes(b"changed measured pixels")
+    with pytest.raises(ValueError, match="source closure"):
+        verified_model_seed(path, proof)
+
+
+@pytest.mark.parametrize("change", ["pose", "depth_count", "refined", "labels"])
+def test_raw_seed_option_cannot_relabel_different_geometry_or_missing_measurements(
+    tmp_path, change
+):
+    proof = raw_model(tmp_path)
+    if change == "pose":
+        proof["seed_camera_from_object"][0][3] += 0.02
+    if change == "depth_count":
+        proof["measured_pointmap_pixels"] = 10
+    if change == "refined":
+        proof["metric_refinement"] = {"report_sha256": "not-a-raw-seed"}
+    if change == "labels":
+        proof["provided_meshes_read"] = True
+    with pytest.raises(ValueError):
+        verified_model_seed(tmp_path / "manifest.json", proof)

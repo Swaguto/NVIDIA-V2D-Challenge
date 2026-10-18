@@ -12,6 +12,81 @@ import numpy as np
 from scipy.spatial.transform import Rotation
 
 
+def verified_model_seed(manifest, proof):
+    """Verify an original SAM model hypothesis without claiming calibrated fit.
+
+    The caller must opt in and still apply the usual measured-depth/jump gates.
+    Refined seeds use their separate, stricter calibrated-seed contract.
+    """
+    root = Path(manifest).resolve().parent
+    if (
+        proof.get("stage") != "sam3d_metric_depth"
+        or proof.get("metric_refinement") is not None
+        or proof.get("body_origin_frozen") is not True
+        or proof.get("provided_meshes_read") is not False
+        or proof.get("reference_pose_labels_read") is not False
+    ):
+        raise ValueError("Need an original label-free SAM model seed")
+    for name in (
+        "input.png",
+        "mask.png",
+        "pointmap.npy",
+        "input-intrinsics.json",
+        "raw.glb",
+        "raw-transform.json",
+        "mesh.glb",
+    ):
+        path = (root / name).resolve()
+        expected = (
+            proof.get("mesh_sha256")
+            if name == "mesh.glb"
+            else proof.get("source_files_sha256", {}).get(name)
+        )
+        if (
+            not path.is_relative_to(root)
+            or not path.is_file()
+            or hashlib.sha256(path.read_bytes()).hexdigest() != expected
+        ):
+            raise ValueError("SAM model seed lost its measured-source closure")
+    raw = json.loads((root / "raw-transform.json").read_text())
+    pose = np.asarray(proof["seed_camera_from_object"], float)
+    q, scale, t = (
+        np.asarray(raw[k], float) for k in ("rotation", "scale", "translation")
+    )
+    if (
+        q.shape != (4,)
+        or scale.shape != (3,)
+        or t.shape != (3,)
+        or not np.isfinite(np.r_[q, scale, t]).all()
+        or not np.isclose(np.linalg.norm(q), 1, atol=1e-5)
+        or not ((scale > 0) & (scale < 10)).all()
+        or pose.shape != (4, 4)
+        or not np.isfinite(pose).all()
+        or not np.allclose(pose[3], [0, 0, 0, 1], atol=1e-8)
+        or not np.allclose(pose[:3, 3], t, atol=1e-6, rtol=0)
+        or not np.allclose(
+            pose[:3, :3],
+            Rotation.from_quat(q[[1, 2, 3, 0]]).as_matrix(),
+            atol=1e-5,
+            rtol=0,
+        )
+    ):
+        raise ValueError("SAM model seed changed its original body pose")
+    points = np.load(root / "pointmap.npy", allow_pickle=False)
+    if points.ndim != 3 or points.shape[-1] != 3:
+        raise ValueError("SAM seed needs a calibrated measured pointmap")
+    count = int(
+        (
+            np.isfinite(points).all(-1)
+            & (points[..., 2] > 0.1)
+            & (points[..., 2] < 2.5)
+        ).sum()
+    )
+    if count < 200 or count != proof.get("measured_pointmap_pixels"):
+        raise ValueError("SAM seed lost its original measured foreground support")
+    return hashlib.sha256(Path(manifest).read_bytes()).hexdigest()
+
+
 def calibrated_seed(manifest, proof):
     metadata = proof.get("metric_refinement")
     if metadata is None:

@@ -106,7 +106,7 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
         register_iterations=5, track_iterations=2, max_frames=0,
         reinit_every=0, bootstrap_manifest=None, camera_root=None,
         foreground_depth_only=False, foreground_translation_prior=False,
-        foreground_translation_fallback=False):
+        foreground_translation_fallback=False, preserve_model_seed=False):
     target = (out / f"e{episode:03d}" / "ego_object_poses" / f"e{episode:03d}" /
               name / "object_to_cam" / "ego_cam_c")
     if target.exists() and any(target.iterdir()):
@@ -125,6 +125,9 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
     anchor_pose = None
     calibrated_anchor = False
     calibrated_anchor_sha256 = None
+    model_seed_sha256 = None
+    if preserve_model_seed and bootstrap_manifest is None:
+        raise ValueError('Model seed preservation requires an explicit own reconstruction')
     if foreground_translation_prior and foreground_translation_fallback:
         raise ValueError('Choose always-on foreground initialization or rejection fallback separately')
     if (foreground_translation_prior or foreground_translation_fallback) and bootstrap_manifest is None:
@@ -145,6 +148,9 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
             raise ValueError('Invalid measured reconstruction anchor')
         from calibrated_anchor import calibrated_seed
         calibrated_anchor, calibrated_anchor_sha256 = calibrated_seed(bootstrap_manifest, proof)
+        if preserve_model_seed and not calibrated_anchor:
+            from calibrated_anchor import verified_model_seed
+            model_seed_sha256 = verified_model_seed(bootstrap_manifest, proof)
     # FoundationPose's renderer expects SimpleMaterial.image, while the public
     # GLBs carry PBRMaterial.baseColorTexture.
     if isinstance(mesh.visual, trimesh.visual.texture.TextureVisuals):
@@ -227,6 +233,9 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
                     if calibrated_anchor:
                         pose = anchor_pose.copy()
                         method = 'calibrated_measured_surface_anchor'
+                    elif model_seed_sha256 is not None:
+                        pose = anchor_pose.copy()
+                        method = 'verified_sam_model_anchor_hypothesis'
                     elif proof.get('stage') == 'sam3d_metric_depth':
                         pose = tracker.track_one(rgb=rgb, depth=refinement_depth, K=K,
                                                  iteration=max(register_iterations, track_iterations))
@@ -317,6 +326,9 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
               "foreground_depth_only": foreground_depth_only,
               "foreground_translation_prior": foreground_translation_prior,
               "foreground_translation_fallback": foreground_translation_fallback,
+              "preserve_model_seed": preserve_model_seed,
+              "preserved_model_seed_manifest_sha256": model_seed_sha256,
+              "model_seed_fit_improvement_claimed": False,
               "fallback_attempted_frames": fallback_attempted,
               "fallback_accepted_frames": fallback_accepted,
               "acceptance_prior_excludes_foreground_translation": True,
@@ -356,12 +368,14 @@ def main():
                         help='Experiment: initialize displacement from measured foreground; original pose-jump/depth gates unchanged')
     parser.add_argument('--foreground-translation-fallback', action='store_true',
                         help='Experiment: retry rejected normal tracks once with measured displacement; identical acceptance gates')
+    parser.add_argument('--preserve-model-seed', action='store_true',
+                        help='Experiment: retain the verified raw SAM pose at its seed; original acceptance gates unchanged')
     args = parser.parse_args()
     print(run(args.episode, args.object, args.data, args.masks, args.out,
               args.register_iterations, args.track_iterations, args.max_frames,
               args.reinit_every, args.bootstrap_manifest, args.camera_root,
               args.foreground_depth_only, args.foreground_translation_prior,
-              args.foreground_translation_fallback), flush=True)
+              args.foreground_translation_fallback, args.preserve_model_seed), flush=True)
 
 
 if __name__ == "__main__":

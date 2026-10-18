@@ -1,6 +1,6 @@
 {
   "schema": "v2d.current-scored-coverage.v2",
-  "verified_utc": "2026-10-18T11:10:30.797482+00:00",
+  "verified_utc": "2026-10-18T11:27:24.196279+00:00",
   "official_roster_sha256": "be92ef6db25aa60cefcdfb44f0acfdc6fbdfa26bb249f6890e1963c659b79272",
   "episodes": [
     {
@@ -490,22 +490,44 @@
         "left": 202,
         "right": 92
       },
-      "policy_status": "pending",
+      "policy_status": "short baseline complete; physical task fails",
       "reserved_post_freeze_validation": false,
       "geometry": [
         {
           "slot": 0,
           "object": "blue_cup",
           "owner": "Codex implementation",
-          "status": "pending own reconstruction",
-          "physical_task_accepted": false
+          "status": "SHA-verified own candidate; physical task fails",
+          "physical_task_accepted": false,
+          "manifest_sha256": "a1f17e63aef044f6362f5effdbbbd16e84a2b84a765adf88ec4cd4a4da1f3803",
+          "mesh_sha256": "1be68c341c5d34a2ad4551c7059403484c779b2530f09476125407bac00fb88a",
+          "units": "metres",
+          "body_origin_frozen": true,
+          "seed_frame": 170,
+          "source_file_closure_verified": true,
+          "vertices": 6050,
+          "triangles": 12000,
+          "watertight": true,
+          "full_bundle_frame_axis_verified": true,
+          "bundle_manifest_sha256": "cae3057a4d65d6cc10d48b171e8520e55fe3be71eb6f46c06277926842f99263"
         },
         {
           "slot": 1,
           "object": "water_pitcher",
           "owner": "Codex implementation",
-          "status": "pending own reconstruction",
-          "physical_task_accepted": false
+          "status": "SHA-verified own candidate; physical task fails",
+          "physical_task_accepted": false,
+          "manifest_sha256": "ba9545f516b25754d30e1d37bc44ae7e6ec6ff25463e6638c8523c93f483ff93",
+          "mesh_sha256": "2b66e73d78bdc99ea48df126294184b0e289bf0d9171d7a2fe15738c342332b8",
+          "units": "metres",
+          "body_origin_frozen": true,
+          "seed_frame": 1,
+          "source_file_closure_verified": true,
+          "vertices": 6010,
+          "triangles": 12000,
+          "watertight": true,
+          "full_bundle_frame_axis_verified": true,
+          "bundle_manifest_sha256": "cae3057a4d65d6cc10d48b171e8520e55fe3be71eb6f46c06277926842f99263"
         }
       ]
     },
@@ -522,22 +544,44 @@
         "left": 331,
         "right": 317
       },
-      "policy_status": "pending",
+      "policy_status": "short baseline complete; physical task fails",
       "reserved_post_freeze_validation": false,
       "geometry": [
         {
           "slot": 0,
           "object": "wooden_piece_1",
           "owner": "Codex implementation",
-          "status": "pending own reconstruction",
-          "physical_task_accepted": false
+          "status": "SHA-verified own candidate; physical task fails",
+          "physical_task_accepted": false,
+          "manifest_sha256": "74ff10cac4bb6151d399a2a605bca1572327fdd30f561f4e272719aa50e15adb",
+          "mesh_sha256": "b11ec249a2246d4eab42ab82a55e5fadf271d540031e89846207a2f745ebaec1",
+          "units": "metres",
+          "body_origin_frozen": true,
+          "seed_frame": 0,
+          "source_file_closure_verified": true,
+          "vertices": 6014,
+          "triangles": 12000,
+          "watertight": true,
+          "full_bundle_frame_axis_verified": true,
+          "bundle_manifest_sha256": "212f198a372f0d3e22fc3df13da562e52f47a9e42a660a4ff2c194f1d0586de2"
         },
         {
           "slot": 1,
           "object": "wooden_piece_2",
           "owner": "Codex implementation",
-          "status": "pending own reconstruction",
-          "physical_task_accepted": false
+          "status": "SHA-verified own candidate; physical task fails",
+          "physical_task_accepted": false,
+          "manifest_sha256": "052155a2325c8c2d74c9349e0f71739dc635134bd3e4fc909ea9a437fda2bf09",
+          "mesh_sha256": "eec71f695062ff70f85e486bbf43e3b7e8c5a701796ad2831a447ae79a03ad43",
+          "units": "metres",
+          "body_origin_frozen": true,
+          "seed_frame": 0,
+          "source_file_closure_verified": true,
+          "vertices": 6010,
+          "triangles": 12000,
+          "watertight": true,
+          "full_bundle_frame_axis_verified": true,
+          "bundle_manifest_sha256": "212f198a372f0d3e22fc3df13da562e52f47a9e42a660a4ff2c194f1d0586de2"
         }
       ]
     },
@@ -780,9 +824,9 @@
   "required_episodes": 20,
   "required_mesh_slots": 36,
   "source_frames": 5181,
-  "completed_short_baseline_episodes": 8,
-  "verified_own_candidate_slots": 15,
-  "pending_mesh_slots": 21,
+  "completed_short_baseline_episodes": 10,
+  "verified_own_candidate_slots": 19,
+  "pending_mesh_slots": 17,
   "physically_accepted_episodes": 0,
   "all_assets_have_status_and_owner": true,
   "official_packer_passed": false,

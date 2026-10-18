@@ -90,6 +90,7 @@ def validate(config):
         "foreground_depth_only",
         "foreground_translation_fallback",
         "pose_hypothesis_selection",
+        "preserve_model_seed",
         "resume_from_bind",
     ):
         if type(config.get(key, False)) is not bool:
@@ -211,6 +212,7 @@ def run(config):
             "foreground_depth_only",
             "foreground_translation_fallback",
             "pose_hypothesis_selection",
+            "preserve_model_seed",
         ):
             if bool(previous.get(key, False)) != bool(config.get(key, False)):
                 raise ValueError("Resume cannot relabel upstream tracking policy")
@@ -261,6 +263,7 @@ def run(config):
             "foreground_translation_fallback", False
         ),
         "pose_hypothesis_selection": config.get("pose_hypothesis_selection", False),
+        "preserve_model_seed": config.get("preserve_model_seed", False),
     }
 
     def save():
@@ -544,6 +547,12 @@ def run(config):
         )
         if config.get("foreground_translation_fallback", False):
             options += ["--foreground-translation-fallback"]
+        seed_options = (
+            ["--preserve-model-seed"]
+            if config.get("preserve_model_seed", False)
+            else []
+        )
+        options += seed_options
         if config.get("pose_hypothesis_selection", False):
             hypotheses = {}
             for arm, flags in [
@@ -573,6 +582,7 @@ def run(config):
                         "--root",
                         root,
                         *flags,
+                        *seed_options,
                     ],
                     "poses-" + arm,
                     gpu=True,

@@ -78,7 +78,7 @@ def require_automatic_mask_prompts(report):
 def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,
           python: str, fp_python: str, reinit_every: int = 0, scored: bool = False,
           foreground_depth_only: bool = False, foreground_translation_prior: bool = False,
-          foreground_translation_fallback: bool = False):
+          foreground_translation_fallback: bool = False, preserve_model_seed: bool = False):
     item = root / f"e{episode:03d}"
     item.mkdir(parents=True, exist_ok=True)
     logs = item / "logs"
@@ -135,6 +135,8 @@ def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,
                     raise ValueError("Tracking cache uses a different foreground initialization policy; use a fresh result root")
                 if bool(cached.get('foreground_translation_fallback', False)) != foreground_translation_fallback:
                     raise ValueError("Tracking cache uses a different foreground recovery policy; use a fresh result root")
+                if bool(cached.get('preserve_model_seed', False)) != preserve_model_seed:
+                    raise ValueError("Tracking cache uses a different model seed policy; use a fresh result root")
                 if scored:
                     import hashlib
                     proof = json.loads((out / f"e{episode:03d}" / f"{name}_fp_report.json").read_text())
@@ -157,6 +159,8 @@ def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,
                 command += ['--foreground-translation-prior']
             if foreground_translation_fallback:
                 command += ['--foreground-translation-fallback']
+            if preserve_model_seed:
+                command += ['--preserve-model-seed']
             run_command(command, logs / f"pose_{name}.log", env)
     elif phase in ("world", "scores"):
         camera, poses = item / "camera", item / "poses"
@@ -227,6 +231,8 @@ def main():
                         help='Experiment: measured visible-surface displacement initialization; original acceptance gates')
     parser.add_argument('--foreground-translation-fallback', action='store_true',
                         help='Experiment: measured displacement retry after normal track rejection only')
+    parser.add_argument('--preserve-model-seed', action='store_true',
+                        help='Experiment: preserve the verified original SAM pose at its seed frame')
     parser.add_argument("--fp-python", default=os.environ.get(
         "V2D_FP_PYTHON", "/home/ubuntu/fp_venv/bin/python"))
     args = parser.parse_args()
@@ -249,7 +255,8 @@ def main():
                                           args.root, args.python, args.fp_python, args.reinit_every,
                                           scored=bool(args.roster), foreground_depth_only=args.foreground_depth_only,
                                           foreground_translation_prior=args.foreground_translation_prior,
-                                          foreground_translation_fallback=args.foreground_translation_fallback)
+                                          foreground_translation_fallback=args.foreground_translation_fallback,
+                                          preserve_model_seed=args.preserve_model_seed)
         except Exception as error:
             results[str(episode)] = f"failed: {error}"
             traceback.print_exc()
