@@ -2,6 +2,7 @@
 FROM ghcr.io/swaguto/track3-runpod@sha256:46cc00a62d1076595b71401a96d17fbe53488afe1fe4d7a9784bf3512ac3e908
 ENV GIT_LFS_SKIP_SMUDGE=1 PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PYOPENGL_PLATFORM=egl V2D_OPT_HAND_SHAPE=0 SAM2_BUILD_CUDA=0
+RUN python -m pip install --no-cache-dir --no-deps open3d==0.19.0
 RUN git clone --filter=blob:none --no-checkout https://github.com/geopavlakos/hamer.git /workspace/hamer \
     && git -C /workspace/hamer checkout --detach 3a01849f4148352e9260b69bf28b65d1671a4905 \
     && git clone --filter=blob:none --no-checkout https://github.com/ZhengdiYu/Dyn-HaMR.git /workspace/Dyn-HaMR \
@@ -35,6 +36,7 @@ RUN /workspace/hand-runtime/bin/python -c \
     'import hamer.models,manopth,manotorch,sam2,mediapipe,issue6.worker; print("Scored hand imports verified; inference untested")' \
     && /workspace/hand-runtime/bin/python -m pip freeze > /opt/locks/scored-hand-installed.txt \
     && python -m pip freeze > /opt/locks/scored-foundationpose-installed.txt
+RUN python scripts/track3/check_geometry_runtime.py --out /opt/locks/metric-tsdf-runtime.json
 ARG VCS_REF
 RUN V2D_BUILD_REVISION=${VCS_REF} python -c \
     'import os,json; m=json.load(open("/opt/locks/scored-code-context.json")); assert m["source_commit"] == os.environ["V2D_BUILD_REVISION"]; assert not m["model_weights_included"] and not m["private_footage_included"] and not m["credentials_included"]'

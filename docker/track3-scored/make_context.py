@@ -9,7 +9,13 @@ import tarfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-PREFIXES = ["scripts/track3", "reconstruction/validation/issue6"]
+PREFIXES = [
+    "scripts/track3",
+    "scripts/eval",
+    "scripts/dex3_review",
+    "reconstruction/validation/issue6",
+    "robotic_grounding/source/robotic_grounding/robotic_grounding/retarget/track3_bundle.py",
+]
 PREFIXES += [
     "reconstruction/modules/" + name
     for name in (
@@ -59,6 +65,11 @@ def create(out):
                 and path.parent.as_posix() != "reconstruction/validation/issue6"
             ):
                 continue
+            if (
+                str(path).startswith("scripts/dex3_review/")
+                and path.parent.as_posix() != "scripts/dex3_review"
+            ):
+                continue
             if path.suffix not in ALLOWED and path.name != "LICENSE":
                 continue
             if path.is_absolute() or ".." in path.parts:
@@ -66,7 +77,7 @@ def create(out):
             target = out / "code" / path
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_bytes(archive.extractfile(member).read())
-    for name in ["Dockerfile", "hand-requirements.txt"]:
+    for name in ["Dockerfile", "Dockerfile.geometry", "hand-requirements.txt"]:
         (out / name).write_bytes(
             subprocess.check_output(
                 [

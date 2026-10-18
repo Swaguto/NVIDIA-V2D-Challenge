@@ -1,0 +1,13 @@
+# Repair the inherited Open3D 0.20 metric-depth regression without rebuilding GPU libraries.
+FROM ghcr.io/swaguto/nvidia-v2d-challenge-dex3-review@sha256:0612e39a9f7377aa3b184105f3aeab0184d55854df0c9e2a2b0bc41145585b99
+RUN python -m pip install --no-cache-dir --no-deps open3d==0.19.0
+COPY code/ /workspace/pr32/
+COPY context-manifest.json /opt/locks/scored-code-context.json
+RUN python scripts/track3/check_geometry_runtime.py --out /opt/locks/metric-tsdf-runtime.json \
+    && python -m pip freeze > /opt/locks/scored-foundationpose-installed.txt \
+    && /workspace/hand-runtime/bin/python -m pip freeze > /opt/locks/scored-hand-installed.txt
+ARG VCS_REF
+RUN V2D_BUILD_REVISION=${VCS_REF} python -c \
+    'import os,json; m=json.load(open("/opt/locks/scored-code-context.json")); assert m["source_commit"] == os.environ["V2D_BUILD_REVISION"]; assert not m["model_weights_included"] and not m["private_footage_included"] and not m["credentials_included"]'
+LABEL org.opencontainers.image.source="https://github.com/Swaguto/NVIDIA-V2D-Challenge" \
+      org.opencontainers.image.revision="${VCS_REF}"

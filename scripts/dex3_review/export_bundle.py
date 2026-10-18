@@ -14,13 +14,17 @@ parser=argparse.ArgumentParser(description=__doc__)
 for key in ['run','checkpoint','mano','out']:
     parser.add_argument('--'+key,type=Path,required=True)
 parser.add_argument('--episode',type=int,required=True)
+parser.add_argument('--scored-reconstructed-view',type=Path,
+                    help='Required for scored inputs; own reconstructed mesh view')
+parser.add_argument('--object-world-root',type=Path,
+                    help='Complete independently inferred world targets bound to these meshes')
 args=parser.parse_args()
 CODE = Path(__file__).resolve().parents[2]
 ROBOT = CODE / 'robotic_grounding'
 sys.path[:0] = [str(CODE / 'reconstruction/modules/v2d_issue6'), str(ROBOT / 'source/robotic_grounding')]
 from issue6.backend import dynhamr_frame_axis
 from issue6.geometry import hand_geometry, transform
-from issue6.manifest import load, camera_from_object
+from issue6.manifest import load, camera_from_object, pose
 from issue6.pipeline import load_mesh
 from robotic_grounding.retarget.track3_bundle import SCHEMA, SIDES, JOINT_NAMES, digest, validate_bundle, wrist_rotation
 
@@ -39,6 +43,23 @@ def export(ep):
     n = len(frames)
     ids = np.array([f['id'] for f in frames])
     times = np.array([f['timestamp_s'] for f in frames])
+    names = [o['id'] for o in m['objects']]
+    scored = m.get('input_contract', {}).get('split') == 'evaluation'
+    if scored != bool(args.scored_reconstructed_view and args.object_world_root):
+        raise ValueError('Scored export requires both reconstructed geometry and complete world targets')
+    scored_proof = None
+    if scored:
+        sys.path.insert(0, str(CODE / 'scripts/track3'))
+        from reconstructed_view import verify_geometry
+        scored_proof = verify_geometry(args.scored_reconstructed_view, ep, names)
+        if any(item['stage'] != 'multi_view_tsdf' for item in scored_proof['objects'].values()):
+            raise ValueError('Scored training bundles require refined geometry; bootstrap seeds are insufficient')
+        proof_path = args.scored_reconstructed_view / 'geometry-provenance.json'
+        if digest(proof_path) != m['input_contract'].get('reconstructed_geometry_provenance_sha256'):
+            raise ValueError('Hand reconstruction and scored mesh views differ')
+        for obj in m['objects']:
+            if digest(Path(obj['mesh'])) != digest(args.scored_reconstructed_view / 'mesh' / obj['id'] / (obj['id'] + '.glb')):
+                raise ValueError('Scored bundle mesh differs from reconstruction')
     fps = float(1 / np.median(np.diff(times)))
     np.testing.assert_allclose(times, ids / fps, rtol=1e-5, atol=1e-6)
     c = m['color_camera']
@@ -58,6 +79,13 @@ def export(ep):
                 w2c[i, :3, :3] = rotations[0, native]
                 w2c[i, :3, 3] = translations[0, native]
                 camera_known[i] = True
+    if scored:
+        independently_inferred = np.stack([pose({'pose_path': frame['camera_pose_path']}) for frame in frames])
+        if not all(frame.get('camera_valid') is True for frame in frames):
+            raise ValueError('Scored export needs explicit camera inference for every source frame')
+        np.testing.assert_allclose(w2c[camera_known], independently_inferred[camera_known], atol=1e-5, rtol=1e-5)
+        w2c = independently_inferred
+        camera_known[:] = True
     c2w = np.linalg.inv(w2c)
     arrays = dict(frame_indices=ids, timestamps_s=times, camera_c2w=c2w,
                   camera_native_valid=camera_known,
@@ -72,6 +100,20 @@ def export(ep):
                   wrench_known=np.zeros((n, 2), bool), wrench_world_N_Nm=np.full((n, 2, 6), np.nan))
     frozen = {'manifest.json': run / 'manifest.json', 'continuity-receipt.json': run / 'continuity-receipt.json',
               'native-camera-checkpoint.npz': checkpoint}
+    object_provenance = {}
+    if scored:
+        from scored_targets import load_world_targets
+        targets, target_observed, object_provenance, target_files = load_world_targets(
+            args.object_world_root, ep, names, ids,
+            {obj['id']: digest(Path(obj['mesh'])) for obj in m['objects']})
+        frozen['geometry-provenance.json'] = proof_path
+        for obj in m['objects']:
+            item = scored_proof['objects'][obj['id']]
+            frozen['geometry/' + obj['id'] + '/manifest.json'] = args.scored_reconstructed_view / item['manifest']
+        for name, frame, path in target_files:
+            frozen[f'object-targets/{name}/{frame:06d}.json'] = path
+        for frame in frames:
+            frozen[f'cameras/{frame["id"]:06d}.json'] = Path(frame['camera_pose_path'])
     mano = renderer._mano_layer(str(args.mano.resolve()))
     for si, side in enumerate(SIDES):
         for p in sorted((run / 'align/records' / side).glob('*.json')):
@@ -117,11 +159,15 @@ def export(ep):
                 path = frame['objects'][obj['id']].get('pose_path')
                 if path:
                     frozen[f'objects/{obj["id"]}/{ids[i]:06d}.json'] = Path(path)
-        arrays[f'object_{oi}_world'] = poses
-        arrays[f'object_{oi}_valid'] = known
+        arrays[f'object_{oi}_world'] = targets[:, oi] if scored else poses
+        arrays[f'object_{oi}_valid'] = target_observed[:, oi] if scored else known
+        if scored:
+            arrays[f'object_{oi}_pose_inferred'] = ~target_observed[:, oi]
         arrays[f'object_{oi}_scale'] = np.ones(n)
         frozen[f'meshes/{obj["id"]}.glb'] = Path(obj['mesh'])
-        objects.append(dict(index=oi, name=obj['id'], pose_source='unchanged saved CAD estimates', geometry_provenance='provided development CAD'))
+        objects.append(dict(index=oi, name=obj['id'],
+                            pose_source='independent stereo-camera tracking with labeled occlusion inference' if scored else 'unchanged saved CAD estimates',
+                            geometry_provenance='participant video reconstruction' if scored else 'provided development CAD'))
     sources = []
     for name, original in frozen.items():
         dest = out / 'source' / name
@@ -134,12 +180,19 @@ def export(ep):
     metadata = dict(schema=SCHEMA, episode=ep, units='metres', fps=fps, frames=ids.tolist(),
                     hand_sides=list(SIDES), mano_joint_names=JOINT_NAMES, objects=objects,
                     payload=dict(path='episode.npz', sha256=digest(out / 'episode.npz')), sources=sources,
-                    source_repair_commit='9f93a50', retarget_code_commit='3db10766bf09bca10fe1b452afe5c78e1649c870',
+                    source_repair_commit=None if scored else '9f93a50',
+                    retarget_code_commit=None if scored else '3db10766bf09bca10fe1b452afe5c78e1649c870',
                     exporter_sha256=digest(Path(__file__)),
                     scope='VISUAL REVIEW INPUTS: hand_valid means visual geometry available, including labeled estimates; hand_metric_valid remains separate',
                     unknown_policy='NaN hand geometry and false hand_valid; original metric validity and all unknown contacts preserved',
                     camera_unknown_policy='Identity gauge only for leading unknown-camera frames with no visible hand; source CAD remains camera relative',
                     robot_motion_inferred=True, physical_task_accepted=False)
+    if scored:
+        metadata.update(input_contract=m['input_contract'], object_observation_provenance=object_provenance,
+                        object_world_targets_include_inferred=True, provided_meshes_read=False,
+                        reference_pose_labels_read=False,
+                        camera_unknown_policy='Every source frame uses the independent stereo camera estimate; native fit cameras verified against it',
+                        scope='Scored reconstruction inputs with explicit observation confidence; no policy or physical success claim')
     (out / 'manifest.json').write_text(json.dumps(metadata, indent=2))
     report = validate_bundle(out)
     report['source_metric_hand_frames'] = arrays['hand_metric_valid'].sum(axis=0).tolist()

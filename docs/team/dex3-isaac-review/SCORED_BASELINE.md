@@ -106,6 +106,26 @@ Inspect and retrack refined geometry before creating final robot bundles. A
 depth seed, TSDF output or passing format check alone does not establish geometry
 quality, correct collision behavior or submission readiness.
 
+The first GPU perception pilot exposed two failures before any scored training:
+the monochrome detector swapped pot/lid identities, and the inherited Open3D
+0.20.0 scalable TSDF returned empty geometry. The latter also reproduces with an
+isolated 0.5-metre synthetic plane, independently of episode poses, matching
+[Open3D #7592](https://github.com/isl-org/Open3D/issues/7592). The repaired image
+pins Open3D 0.19.0 and must pass `check_geometry_runtime.py` before reconstruction.
+Its incremental `Dockerfile.geometry` reuses the already compiled GPU libraries.
+Scored semantic seeding now uses the calibrated colour camera projected through
+measured stereo depth, with distinct saucepan/lid prompts. Colour-only depth
+hole filling changes appearance for seeding; metric observations remain unchanged.
+The stereo propagation remains at the original frame rate. Identity and geometry
+quality still require actual pilot inspection; this code change alone is not a pass.
+
+The scored bundle exporter requires refined own-geometry and complete world
+targets bound to its mesh hashes. Conversion and occlusion inference preserve
+those bindings. Inferred frames keep false observation masks and explicit methods;
+gaps cannot silently become identity-pose targets. All camera estimates are checked
+against the fixed native hand-fit cameras. The legacy development exporter retains
+its separate interpretation. Input footage and MANO remain private mounts.
+
 The same FAQ explicitly permits floating hands and fixed-base arm/hand setups
 for Track 3. Our selected policy runtime remains the official pinned
 FlashCHORD/Newton/JAX path with floating Dex3 hands. The Isaac renderer remains

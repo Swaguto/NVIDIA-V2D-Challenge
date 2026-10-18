@@ -26,13 +26,16 @@ def matrix(record):
 
 def pose_record(pose, episode, frame, method, template):
     q = Rotation.from_matrix(pose[:3, :3]).as_quat()
-    return {"episode": episode, "frame_index": frame,
+    result = {"episode": episode, "frame_index": frame,
             "rotation": q[[3, 0, 1, 2]].tolist(),
             "translation": pose[:3, 3].tolist(), "scale": [1.0, 1.0, 1.0],
             "status": "inferred", "inference_method": method,
             "coordinate_frame": "fixed_world",
             "gt_use": template.get("gt_use", "unknown"),
             "source_observation": template.get("observation_sha256")}
+    if template.get("mesh_sha256") is not None:
+        result.update(object=template["object"], mesh_sha256=template["mesh_sha256"])
+    return result
 
 
 def interpolate(left, right, fraction):

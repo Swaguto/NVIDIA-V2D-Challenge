@@ -27,17 +27,24 @@ ROOT = HERE.parents[2]
 sys.path.insert(0, os.environ.get("V2D_RUNTIME", str(ROOT / "reconstruction/modules/v2d_stereo_depth/lib")))
 from stereo_depth import load_rig  # noqa: E402
 
+SEMANTIC_PROMPTS = {"white_pot": "white saucepan", "white_pot_lid": "detached circular lid",
+                    "mini_dust_pan": "small dustpan", "mini_sweeper": "small hand brush"}
+SEMANTIC_ALIASES = {"white_pot": ["saucepan"], "white_pot_lid": ["circular lid", "pot lid", "lid"],
+                    "mini_dust_pan": ["dustpan"], "mini_sweeper": ["hand brush"]}
+
 
 def assign_label(label: str, names: list[str]) -> int | None:
     label = label.lower().replace("_", " ").strip()
     matches = [(len(name), index) for index, object_name in enumerate(names)
-               if (name := object_name.replace("_", " ")) in label]
+               for name in {object_name.replace("_", " "), SEMANTIC_PROMPTS.get(object_name, ""),
+                            *SEMANTIC_ALIASES.get(object_name, [])}
+               if name and name in label]
     return max(matches)[1] if matches else None
 
 
 def seed_boxes(frames: list[np.ndarray], names: list[str], threshold: float,
-               device: str, stride: int, max_box_area: float):
-    prompt = ". ".join(name.replace("_", " ") for name in names) + "."
+               device: str, stride: int, max_box_area: float, semantic_frames=None):
+    prompt = ". ".join(SEMANTIC_PROMPTS.get(name, name.replace("_", " ")) for name in names) + "."
     revision = os.environ.get("V2D_DINO_REVISION")
     processor = AutoProcessor.from_pretrained("IDEA-Research/grounding-dino-base", revision=revision)
     model = GroundingDinoForObjectDetection.from_pretrained(
@@ -46,7 +53,7 @@ def seed_boxes(frames: list[np.ndarray], names: list[str], threshold: float,
     inspected = sorted(set(range(0, len(frames), stride)) | {len(frames) - 1})
     with torch.inference_mode():
         for frame in inspected:
-            rgb = frames[frame]
+            rgb = semantic_frames[frame] if semantic_frames is not None else frames[frame]
             inputs = processor(images=rgb, text=prompt, return_tensors="pt").to(device)
             result = processor.post_process_grounded_object_detection(
                 model(**inputs), inputs.input_ids, threshold=threshold,
@@ -110,7 +117,8 @@ def suppress_lid_overlap(out: Path, names: list[str], frames: int) -> dict[str, 
 
 def run(episode: int, names: list[str], data: Path, out: Path, threshold: float,
         max_area: float, device: str, seed_stride: int, max_box_area: float,
-        seed_only: bool = False, seed_json: Path | None = None) -> dict:
+        seed_only: bool = False, seed_json: Path | None = None,
+        semantic_color: bool = False) -> dict:
     if out.exists() and any(out.iterdir()):
         raise ValueError(f"output must be a fresh directory: {out}")
     rig = load_rig()
@@ -120,8 +128,13 @@ def run(episode: int, names: list[str], data: Path, out: Path, threshold: float,
     unknown = set(supplied) - set(names)
     if unknown:
         raise ValueError(f"seed JSON has unknown objects: {sorted(unknown)}")
+    colour_frames = None
+    if semantic_color:
+        from rgb_stereo import seed_frames
+        inspected = sorted(set(range(0, len(frames), seed_stride)) | {len(frames) - 1})
+        colour_frames = seed_frames(data, episode, rig, inspected)
     seeds = {} if len(supplied) == len(names) else seed_boxes(
-        frames, names, threshold, device, seed_stride, max_box_area)
+        frames, names, threshold, device, seed_stride, max_box_area, colour_frames)
     for name, entry in supplied.items():
         frame = int(entry["frame"])
         box = [float(value) for value in entry["box_xyxy"]]
@@ -191,6 +204,8 @@ def run(episode: int, names: list[str], data: Path, out: Path, threshold: float,
               "gt_use": "none", "model": "facebook/sam2.1-hiera-large"}
     report["model_revisions"] = {"grounding_dino": os.environ.get("V2D_DINO_REVISION"),
                                  "sam2": os.environ.get("V2D_SAM2_REVISION")}
+    report["semantic_seed_camera"] = "calibrated ego_cam_a colour" if semantic_color else "rectified monochrome stereo"
+    report["semantic_prompts"] = {name: SEMANTIC_PROMPTS.get(name, name.replace("_", " ")) for name in names}
     (out / "report.json").write_text(json.dumps(report, indent=2))
     return report
 
@@ -207,6 +222,8 @@ def main() -> None:
     parser.add_argument("--seed-stride", type=int, default=20)
     parser.add_argument("--max-box-area", type=float, default=0.10)
     parser.add_argument("--seed-only", action="store_true")
+    parser.add_argument("--semantic-color", action="store_true",
+                        help="Use calibrated ego RGB for semantic names and colours, then propagate in stereo")
     parser.add_argument("--seed-json", type=Path,
                         help="optional object to frame/box_xyxy overrides")
     parser.add_argument("--device", default="cuda")
@@ -216,7 +233,7 @@ def main() -> None:
         parser.error("--objects needs distinct object names")
     report = run(args.episode, names, args.data, args.out, args.box_threshold,
                  args.max_area, args.device, args.seed_stride, args.max_box_area,
-                 args.seed_only, args.seed_json)
+                 args.seed_only, args.seed_json, args.semantic_color)
     print(json.dumps(report.get("mask_counts", report["seeds"])), flush=True)
 
 

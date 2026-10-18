@@ -81,6 +81,8 @@ def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,
         command = [python, str(HERE.parent / "temporal_masks.py"),
                    "--episode", str(episode), "--objects", names_arg,
                    "--data", str(data), "--out", str(out)]
+        if scored:
+            command += ["--semantic-color"]
         seeds = HERE.parent / "seed_overrides" / f"e{episode:03d}.json"
         if seeds.is_file():
             command += ["--seed-json", str(seeds)]

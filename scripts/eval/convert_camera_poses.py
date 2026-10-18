@@ -109,6 +109,8 @@ def convert_episode(predictions, camera_root, out, episode, cam="ego_cam_c",
                       "gt_use": combined_gt_use, "camera_source": provenance,
                       "observation_gt_use": observation_gt_use,
                       "observation_sha256": hashlib.sha256(pose_path.read_bytes()).hexdigest()}
+            if pose.get("mesh_sha256") is not None:
+                result.update(object=obj.name, mesh_sha256=pose["mesh_sha256"])
             if rectification_sha256 is not None:
                 result["rectification_sha256"] = rectification_sha256
             dest = out / f"e{episode:03d}" / "ego_object_poses" / f"e{episode:03d}" / obj.name / "object_to_world" / pose_path.name
