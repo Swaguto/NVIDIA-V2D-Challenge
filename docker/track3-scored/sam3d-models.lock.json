@@ -1,0 +1,122 @@
+{
+  "schema": "v2d.scored-sam3d-model-lock.v1",
+  "sam3d": {
+    "repo": "facebook/sam-3d-objects",
+    "revision": "2e73555018d2741ccd486e56c24fac41155a1dc6",
+    "verified_files": {
+      "LICENSE": {
+        "size": 8204,
+        "sha256": "b3a5a0e2d973ab80e6610ccf1cffc40756050d0ace3cd4fec879b3ec290b2e9b"
+      },
+      "README.md": {
+        "size": 7708,
+        "sha256": "0181e7ad54cc11501d467b427f2bc3a0509245f0256b2b7a2f8b216b1e104944"
+      },
+      "checkpoints/pipeline.yaml": {
+        "size": 3548,
+        "sha256": "53c3d226b21df85c0bb3d16e6e4fa63abde0d6167525765eb929d02bfa9d358c"
+      },
+      "checkpoints/slat_decoder_gs.ckpt": {
+        "size": 171476155,
+        "sha256": "f8077c36a06eaf890dd93cda1937411f793dea1eb80b3dd9329f2038ba84a111"
+      },
+      "checkpoints/slat_decoder_gs.yaml": {
+        "size": 576,
+        "sha256": "53f054e02a0c185f0a6885d30bb6ca0ec92efe0a98148688e7f05f7c26afe670"
+      },
+      "checkpoints/slat_decoder_gs_4.ckpt": {
+        "size": 170269801,
+        "sha256": "731a0eceaa47945b52aa27f650d695b2aea9cc70945751e5609e5cb5b49f0186"
+      },
+      "checkpoints/slat_decoder_gs_4.yaml": {
+        "size": 575,
+        "sha256": "3d1dfd4c56cdac56f30e0cf5eb310d4df973fe25c60ac0a462c86ca4e3bf8b48"
+      },
+      "checkpoints/slat_decoder_mesh.ckpt": {
+        "size": 363726862,
+        "sha256": "85907b37b67d8ce5b099a96629bdcfbd873eb407dee6b3aa9a75deb15038db33"
+      },
+      "checkpoints/slat_decoder_mesh.pt": {
+        "size": 363728714,
+        "sha256": "93333fcd57a3e36ded0b3bca6969e05ce2b35142029dadab514f41df46d2f985"
+      },
+      "checkpoints/slat_decoder_mesh.yaml": {
+        "size": 300,
+        "sha256": "8f46952764aa985c50109a56f0b4f07625cdb06457aaded74957d26f3520c69e"
+      },
+      "checkpoints/slat_encoder.ckpt": {
+        "size": 173263986,
+        "sha256": "6485623145535f42c8afa4cbb68ab9953e54e2f0c1cb1eaf95dcb41051e10181"
+      },
+      "checkpoints/slat_encoder.yaml": {
+        "size": 268,
+        "sha256": "ca80da7f1395a2acef9c6cea30ec3ccc89321ef890c644860f316a4ef1e8ebdb"
+      },
+      "checkpoints/slat_generator.ckpt": {
+        "size": 4906537684,
+        "sha256": "91529bde8e7daa12d09618a66c319e3a5a6398db6b23b958cedcb1c3f28faabb"
+      },
+      "checkpoints/slat_generator.yaml": {
+        "size": 1986,
+        "sha256": "53029fadff6fe34a0344381a16d64d65d0567d603484952712e8969319559c4e"
+      },
+      "checkpoints/ss_decoder.ckpt": {
+        "size": 147609242,
+        "sha256": "6dac1cd7b7fda5a38e0614fadae441f1794f80e39ea2981f1ac8aff0a7e99340"
+      },
+      "checkpoints/ss_decoder.yaml": {
+        "size": 244,
+        "sha256": "baacff269b664f84f7aa1896ebd66128065f6568cdb88d419d5c3d2ccb4193ae"
+      },
+      "checkpoints/ss_encoder.ckpt": {
+        "size": 119085402,
+        "sha256": "dcc47810ac568b11fe6e4821ea1c8d6b960dfbda3e5f68e94c19f44b3bf9e83b"
+      },
+      "checkpoints/ss_encoder.safetensors": {
+        "size": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "checkpoints/ss_encoder.yaml": {
+        "size": 231,
+        "sha256": "d3df5e18b2cbe87697d319adce0fe7e4fb6266809ad9d2f8c502761739bc4a06"
+      },
+      "checkpoints/ss_generator.ckpt": {
+        "size": 6690136964,
+        "sha256": "225f40479e4cff4f39d6fa14c55be3abad1475bf55b61af3bec1e19ed2f6c146"
+      },
+      "checkpoints/ss_generator.yaml": {
+        "size": 5076,
+        "sha256": "3c265448bca7c057f94e3ef56adea3a895a10bcd9f15f992a41dd03fa35412cd"
+      }
+    },
+    "credentials_included": false
+  },
+  "moge": {
+    "repo": "Ruicheng/moge-vitl",
+    "revision": "ad326bfb61facd6c52b5a825bc1e34d7c97d9672",
+    "files": [
+      {
+        "name": "model.pt",
+        "size": 1256823446,
+        "sha256": "da96b09a0485a3c45a5aa455e67743c8b4efc4dd8437c1f2aa93c2b4303d957f"
+      }
+    ]
+  },
+  "auxiliary": {
+    "dinov2_source_revision": "7764ea0f912e53c92e82eb78a2a1631e92725fc8",
+    "source_archive_sha256": "c27dcdaf50e9fb5bbdf2bb529da357716372e19c6afab17d5350f3f0094aed4b",
+    "files": {
+      "dinov2_vitl14_reg4_pretrain.pth": {
+        "url": "https://dl.fbaipublicfiles.com/dinov2/dinov2_vitl14/dinov2_vitl14_reg4_pretrain.pth",
+        "size": 1217607321,
+        "sha256": "36e4deffbaef061a2576705b0c36f93621e2ae20bf6274694821b0b492551b51"
+      },
+      "dinov2_vitb14_reg4_pretrain.pth": {
+        "url": "https://dl.fbaipublicfiles.com/dinov2/dinov2_vitb14/dinov2_vitb14_reg4_pretrain.pth",
+        "size": 346393545,
+        "sha256": "73182a088cf94833c94b1666d1c99e02fe87e2007bff57b564fb6206e25dba71"
+      }
+    }
+  },
+  "gated_weights_included": false
+}

@@ -10,6 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 PREFIXES = [
+    "docker/track3-scored/sam3d-models.lock.json",
     "scripts/track3",
     "scripts/eval",
     "scripts/dex3_review",

@@ -353,3 +353,37 @@ support. The original candidate remains available for comparison. Generated
 meshes are simplified to at most 12,000 triangles for tracking/collision, with
 a 2 mm envelope-change check and their full source mesh preserved. Simplification
 is a runtime-cost control; it is not a geometric accuracy or topology certificate.
+
+### Pinned SAM3D model cache for teammates
+
+Each teammate needs their own approved Hugging Face access to
+`facebook/sam-3d-objects`. Authenticate on the machine doing the download with
+`hf auth login`; credentials are not part of an image or reproduction pack.
+Install `huggingface-hub==0.36.0` in the download environment, then run:
+
+```bash
+python scripts/track3/download_sam3d_models.py --root /private/models/sam3d
+python scripts/track3/download_sam3d_models.py --root /private/models/sam3d --verify-only
+```
+
+`docker/track3-scored/sam3d-models.lock.json` pins the SAM3D and MoGe revisions,
+DINO source archive and auxiliary weight hashes. Cache reuse verifies actual
+weight and source bytes. The download command writes only nonsecret receipts;
+the offline verification command makes no network requests. The existing local
+cache passed this verifier for all 21 SAM3D files and three auxiliary weights.
+Mount the cache into the SAM3D runtime separately. Torch Hub needs a writable
+cache for its trust and import metadata; the image contains no gated weights.
+
+All three pilot temporal refits now pass strict source-camera checks and export
+complete bundles. e001 contains 335 frames with 244 left and 239 right metric
+hand-depth alignments; remaining source observations retain their validity flags.
+Full-episode retargeting/preparation is complete for e001, e010 and e038.
+Collision-cache freezing preserves the v3/v4 inferred-target contracts instead
+of downgrading them to fully observed confidence windows. These are input and
+format milestones, not physical task acceptance or leaderboard scores.
+
+`audit_scored_policy.py` audits native readbacks across every object and world
+without requiring an episode-specific grasp plan. It reports full frame coverage,
+source-relative tracking errors, sampled native contact gaps and motor-limit
+verification. A local readback from the development control passed the audit's
+input and assistance checks; its physical task remains unaccepted.

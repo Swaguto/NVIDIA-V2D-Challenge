@@ -52,6 +52,7 @@ def select(data, masks, hand_masks, episode, name, out):
     if report["episode"] != episode or name not in names:
         raise ValueError("Mask episode/identity differs")
     features = []
+    excluded_unknown_other_foreground = []
     hand_dirs = (
         sorted(p for p in hand_masks.iterdir() if p.is_dir()) if hand_masks else []
     )
@@ -63,16 +64,23 @@ def select(data, masks, hand_masks, episode, name, out):
             raise ValueError("Unreadable target mask")
         other = np.zeros_like(target, bool)
         hands = other.copy()
+        other_coverage_known = True
         for obj in names:
             if obj == name:
                 continue
             p = masks / obj / path.name
             if not p.is_file():
-                raise ValueError("Other-object foreground coverage is incomplete")
+                other_coverage_known = False
+                break
             a = cv2.imread(str(p), 0)
             if a is None or a.shape != target.shape:
                 raise ValueError("Object mask axes differ")
             other |= a > 127
+        if not other_coverage_known:
+            # A missing detector result cannot establish a clean object view.
+            # Exclude that candidate without discarding the complete episode.
+            excluded_unknown_other_foreground.append(int(path.stem))
+            continue
         for folder in hand_dirs:
             p = folder / path.name
             if p.is_file():
@@ -129,6 +137,15 @@ def select(data, masks, hand_masks, episode, name, out):
         area_floor_pixels=threshold,
         source_mask_report_sha256=sha(masks / "report.json"),
         chosen_mask_sha256=sha(masks / name / f"{chosen['frame']:06d}.png"),
+        selected_foreground_sha256={
+            obj: sha(masks / obj / f"{chosen['frame']:06d}.png") for obj in names
+        },
+        selected_hand_mask_sha256={
+            folder.name: sha(folder / f"{chosen['frame']:06d}.png")
+            for folder in hand_dirs
+            if (folder / f"{chosen['frame']:06d}.png").is_file()
+        },
+        excluded_unknown_other_foreground_frames=excluded_unknown_other_foreground,
         provided_meshes_read=False,
         reference_pose_labels_read=False,
         selection_uses_simulator_results=False,
