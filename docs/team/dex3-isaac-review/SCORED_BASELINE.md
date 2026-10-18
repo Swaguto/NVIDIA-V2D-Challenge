@@ -19,7 +19,10 @@ The first camera pilots are e001 (pot/lid), e010 (two cups), and e038 (one dust
 pan). Their stereo camera trajectories cover 335, 161 and 263 frames respectively,
 with no held camera frames under the existing PnP checks. Camera checks do not
 establish correct object tracks, reconstructed geometry, retargeting or policies.
-All-episode camera processing is being recorded separately.
+All 20 camera runs are now complete: 5,181 frames, with zero held frames under
+the existing PnP checks. The [coverage receipt](scored-baseline-coverage-v1.json)
+records per-episode counts, diagnostics and hashes. These checks are independent
+of hidden trajectory accuracy.
 
 ## Reproduce the scored input contract
 
@@ -54,6 +57,35 @@ scorer. `--roster ... --phase scores` is rejected because scored ground truth
 is unavailable. The official policy evaluator and complete packer remain
 separate final gates.
 
+### Fresh hand inputs from scored video
+
+The existing Issue 6 stereo adapter now accepts `--scored-kit` and obtains
+object ordering and frame coverage from the kit. It derives timestamps from
+the actual video clock and checks both decoded stereo timestamps. It reads no
+source pose tables. Only complete original scored episodes are accepted.
+`--camera-root` attaches the independently inferred stereo cameras. The manifest
+binds raw video/calibration/kit/adapter hashes and uses portable relative paths
+for source observations and geometry. Missing object observations remain invalid.
+
+```bash
+PYTHONPATH=reconstruction/modules/v2d_issue6 python -m issue6.track3_adapter \
+  --episode 1 --data /private/scored/inputs --results /private/scored/perception \
+  --output /private/scored/hand-inputs/e001 --scored-kit /kit \
+  --camera-root /private/scored/perception
+python scripts/track3/export_optimizer_cameras.py \
+  --manifest /private/scored/hand-inputs/e001/manifest.json \
+  --out /private/scored/optimizer-cameras/e001
+```
+
+This prepares observations for reconstruction; it does not claim completed hand
+inference. The camera adapter preserves the world-to-camera convention and
+explicit observation-validity sidecar. It does not run ViPE. The new
+`docker/track3-scored/` code-only runtime reuses the pinned FoundationPose image
+and original pinned HaMeR/Dyn-HaMR/SAM2 preparation dependencies. Model weights,
+licensed MANO files and episode inputs remain separate private mounts. Build and
+GPU inference validation are recorded separately; no fresh end-to-end success
+is established by its Dockerfile.
+
 ## Short controlled training forks
 
 The retained e002 checkpoint is a development control outside the scored roster.
@@ -83,6 +115,37 @@ read-only, then run `train.py --config-path /experiment-configs --config-name co
 (or `half-cws`, `short-settling`). Restore the parent at `/initial-policy` and
 its context at `/initial-context`. No longer continuation is authorized by a
 rise in training reward alone.
+
+### First controlled trial results
+
+All three 100-iteration trials completed with no reported numerical failures:
+2,457,600 new environment steps in total. The image digest is
+`ghcr.io/swaguto/nvidia-v2d-challenge-dex3-review@sha256:f73bfdcfec5244757633fbdf24a86e4ff15ebe37ee41f7de8a36ebe69c19984f`,
+with entry-point source `68d7d8ad5c1c5c35ee6639e5d7aab85390b44aad` and original
+runtime payload source `31c0d89282e157f413d3dc6a0286734b19f474ea`.
+
+Each saved policy received three full, unassisted eight-world readbacks:
+
+| Policy | Mean AUC | Mean MP-SR | Mean RPE, cm |
+| --- | ---: | ---: | ---: |
+| Retained parent | 0.86549 | 0.87500 | 5.0241 |
+| Unchanged 100-iteration continuation | 0.85844 | 0.87500 | 4.9866 |
+| Contact-wrench reward halved | 0.85690 | 0.83333 | 5.1323 |
+| Reset settling shortened to 5 steps | 0.87444 | 0.95833 | 4.6377 |
+
+These are e002 inferred-reference diagnostics, not scored-episode or leaderboard
+results. The half-contact candidate regresses. Shorter settling is promising,
+but its 0.00895 AUC gain is below the observed parent/control AUC range of
+0.01995. Neither treatment qualifies for a longer run under the empirical
+variability guard. No candidate passes all physical grasp checks. Keep the
+retained parent selected while independently confirming the reset result and
+building scored pilots. Three readbacks of one trained policy are not three
+independent training seeds.
+
+[Complete repeated report](controlled-training-results-v1.json). All 166 output
+files, including checkpoints and failed grasp evidence, were hash-verified on
+the producing Mac. Brev was confirmed STOPPED after the 1,000.4-second session.
+This duration is not a verified invoice charge.
 
 ## Evaluation variability and compute
 

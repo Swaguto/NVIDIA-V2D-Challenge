@@ -12,8 +12,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python -m pip install pytest==8.4.2 numpy==2.2.6 scipy==1.15.3 trimesh==4.5.1 pyarrow==18.1.0
-      - run: python -m pytest scripts/compute/tests scripts/reproduction/tests scripts/dex3_physics/tests scripts/dex3_training/tests scripts/track3/tests/test_scored_inputs.py -q
+      - run: python -m pip install pytest==8.4.2 numpy==2.2.6 scipy==1.15.3 trimesh==4.5.1 pyarrow==18.1.0 opencv-python-headless==4.11.0.86 Pillow==11.3.0
+      - run: python -m pytest scripts/compute/tests scripts/reproduction/tests scripts/dex3_physics/tests scripts/dex3_training/tests scripts/track3/tests/test_scored_inputs.py scripts/track3/tests/test_scored_hand_adapter.py -q
       - name: Verify persistent cache in training Compose services
         run: python scripts/compute/check_compose_cache.py
       - name: Check physics Compose overlay

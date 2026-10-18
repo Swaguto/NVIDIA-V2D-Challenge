@@ -1,0 +1,323 @@
+{
+  "schema": "v2d.repeated-controlled-experiments.v1",
+  "trials": {
+    "parent": {
+      "metrics": {
+        "add_auc": {
+          "mean": 0.8654906158892128,
+          "minimum": 0.8564026056851312,
+          "maximum": 0.8763552295918368,
+          "repeats": [
+            0.8564026056851312,
+            0.8637140123906706,
+            0.8763552295918368
+          ]
+        },
+        "chord_sr": {
+          "mean": 0.9166666666666666,
+          "minimum": 0.75,
+          "maximum": 1.0,
+          "repeats": [
+            0.75,
+            1.0,
+            1.0
+          ]
+        },
+        "spider_sr_uncentered": {
+          "mean": 1.0,
+          "minimum": 1.0,
+          "maximum": 1.0,
+          "repeats": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "maniptrans_sr": {
+          "mean": 0.875,
+          "minimum": 0.75,
+          "maximum": 1.0,
+          "repeats": [
+            0.75,
+            0.875,
+            1.0
+          ]
+        },
+        "relative_position_error_cm": {
+          "mean": 5.024070871695435,
+          "minimum": 4.811473923503728,
+          "maximum": 5.241522793582322,
+          "repeats": [
+            5.241522793582322,
+            5.0192158980002555,
+            4.811473923503728
+          ]
+        },
+        "mppe_cm": {
+          "mean": 2.713303967024104,
+          "minimum": 2.5802097655306064,
+          "maximum": 2.8193755424599387,
+          "repeats": [
+            2.8193755424599387,
+            2.7403265930817677,
+            2.5802097655306064
+          ]
+        }
+      },
+      "checkpoint_sha256": "4d91fd4164b043a41a390ee7fbb904a3f3aa6a0bb724e19fc1f2342e3f108a40",
+      "evaluation_report_sha256": [
+        "d1133e12aaeaa56741d17373e71dc052b64681138295e3ff334cae0604216136",
+        "934fb8639abaff63a6828effff389e86d750cd18133bbd427ad4d066463bb3c3",
+        "5e7680736d7c64c91b583676fbb74d11e2454bb4394e35a98a49b04b7bacc48b"
+      ],
+      "all_first_readback_grasp_gates_passed": false
+    },
+    "control": {
+      "metrics": {
+        "add_auc": {
+          "mean": 0.8584411443148688,
+          "minimum": 0.8563114978134111,
+          "maximum": 0.862495444606414,
+          "repeats": [
+            0.8563114978134111,
+            0.862495444606414,
+            0.8565164905247813
+          ]
+        },
+        "chord_sr": {
+          "mean": 0.875,
+          "minimum": 0.75,
+          "maximum": 1.0,
+          "repeats": [
+            0.875,
+            1.0,
+            0.75
+          ]
+        },
+        "spider_sr_uncentered": {
+          "mean": 1.0,
+          "minimum": 1.0,
+          "maximum": 1.0,
+          "repeats": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "maniptrans_sr": {
+          "mean": 0.875,
+          "minimum": 0.875,
+          "maximum": 0.875,
+          "repeats": [
+            0.875,
+            0.875,
+            0.875
+          ]
+        },
+        "relative_position_error_cm": {
+          "mean": 4.986624064968013,
+          "minimum": 4.961742126289271,
+          "maximum": 5.032530312126504,
+          "repeats": [
+            5.032530312126504,
+            4.961742126289271,
+            4.965599756488266
+          ]
+        },
+        "mppe_cm": {
+          "mean": 2.817455454778633,
+          "minimum": 2.7641916671261417,
+          "maximum": 2.8612432776802894,
+          "repeats": [
+            2.8612432776802894,
+            2.826931419529467,
+            2.7641916671261417
+          ]
+        }
+      },
+      "checkpoint_sha256": "5bf2bfb99ae2999dec5b3548a1c3326c3efad3620972e64bad316f2d66737d37",
+      "evaluation_report_sha256": [
+        "e113271732e339e4e3d76f13b178d32631982653de2402d515ada905957d18b7",
+        "d8779940f1f59d71076c4e532f5ead2f91f88cbfd25678115bf8148baab8ee33",
+        "0ea86480414ee4b0d7a3d217a778b27adaf88ac1d189ed0ed62970960eae57b4"
+      ],
+      "all_first_readback_grasp_gates_passed": false
+    },
+    "half-cws": {
+      "metrics": {
+        "add_auc": {
+          "mean": 0.8568961066569485,
+          "minimum": 0.8424403243440234,
+          "maximum": 0.8682466290087464,
+          "repeats": [
+            0.8424403243440234,
+            0.8682466290087464,
+            0.8600013666180758
+          ]
+        },
+        "chord_sr": {
+          "mean": 0.75,
+          "minimum": 0.625,
+          "maximum": 0.875,
+          "repeats": [
+            0.625,
+            0.75,
+            0.875
+          ]
+        },
+        "spider_sr_uncentered": {
+          "mean": 1.0,
+          "minimum": 1.0,
+          "maximum": 1.0,
+          "repeats": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "maniptrans_sr": {
+          "mean": 0.8333333333333334,
+          "minimum": 0.75,
+          "maximum": 0.875,
+          "repeats": [
+            0.75,
+            0.875,
+            0.875
+          ]
+        },
+        "relative_position_error_cm": {
+          "mean": 5.132310925143741,
+          "minimum": 5.006251217752358,
+          "maximum": 5.338793523642423,
+          "repeats": [
+            5.338793523642423,
+            5.006251217752358,
+            5.05188803403644
+          ]
+        },
+        "mppe_cm": {
+          "mean": 2.8063301636672464,
+          "minimum": 2.6526664583279893,
+          "maximum": 3.0052995149310795,
+          "repeats": [
+            3.0052995149310795,
+            2.6526664583279893,
+            2.76102451774267
+          ]
+        }
+      },
+      "checkpoint_sha256": "580ede00c2998b31f26a29e4e9f9b3e37e775cc0508a608b9db0adf08707203b",
+      "evaluation_report_sha256": [
+        "bc389c479c21d524160d6859e05b51f03c8377bbba05b9ecd69cf9f204d710d0",
+        "1872b38c8ae0e84198be0f5979d42abf2df283f3f72e15caab0c6c81926be22d",
+        "4c42cb14b283d1ce8505e7f1a0308009c8ee5f7abbc248c8e54a99474f653041"
+      ],
+      "all_first_readback_grasp_gates_passed": false,
+      "screen": {
+        "eligible_for_independent_confirmation": false,
+        "reasons": [
+          "AUC gain over the retained parent does not exceed observed control variability",
+          "AUC gain over matched trained control is below 0.005",
+          "add_auc regressed against parent repeat mean",
+          "chord_sr regressed against parent repeat mean",
+          "maniptrans_sr regressed against parent repeat mean",
+          "relative_position_error_cm regressed against parent repeat mean",
+          "mppe_cm regressed against parent repeat mean"
+        ],
+        "empirical_auc_variability_guard": 0.019952623906705602,
+        "automatic_long_continuation": false
+      }
+    },
+    "short-settling": {
+      "metrics": {
+        "add_auc": {
+          "mean": 0.8744381681243926,
+          "minimum": 0.8579856049562682,
+          "maximum": 0.8832224854227405,
+          "repeats": [
+            0.8579856049562682,
+            0.8821064139941691,
+            0.8832224854227405
+          ]
+        },
+        "chord_sr": {
+          "mean": 0.9166666666666666,
+          "minimum": 0.875,
+          "maximum": 1.0,
+          "repeats": [
+            0.875,
+            0.875,
+            1.0
+          ]
+        },
+        "spider_sr_uncentered": {
+          "mean": 1.0,
+          "minimum": 1.0,
+          "maximum": 1.0,
+          "repeats": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "maniptrans_sr": {
+          "mean": 0.9583333333333334,
+          "minimum": 0.875,
+          "maximum": 1.0,
+          "repeats": [
+            0.875,
+            1.0,
+            1.0
+          ]
+        },
+        "relative_position_error_cm": {
+          "mean": 4.637733055048094,
+          "minimum": 4.545611035734531,
+          "maximum": 4.729510495683942,
+          "repeats": [
+            4.729510495683942,
+            4.545611035734531,
+            4.638077633725808
+          ]
+        },
+        "mppe_cm": {
+          "mean": 2.522679230543902,
+          "minimum": 2.3794235427414527,
+          "maximum": 2.773917457717807,
+          "repeats": [
+            2.773917457717807,
+            2.414696691172446,
+            2.3794235427414527
+          ]
+        }
+      },
+      "checkpoint_sha256": "711e0f7edfd84b929ae00e097238f5cc7d757e0083e6ca7c6743bda685d712a3",
+      "evaluation_report_sha256": [
+        "061aeba841621771d773f2a09aac8d56635ec0b81d0a9d653dffec3df668a5bc",
+        "65b2f135ae225333796a5b264beb1be3849a31a6c46b65e5565eff46fa829f05",
+        "a12d8444c53e2d1f262e8e2cea1da5f44ec8b43f8c7a250f2ba04f02d4e56f93"
+      ],
+      "all_first_readback_grasp_gates_passed": false,
+      "screen": {
+        "eligible_for_independent_confirmation": false,
+        "reasons": [
+          "AUC gain over the retained parent does not exceed observed control variability"
+        ],
+        "empirical_auc_variability_guard": 0.019952623906705602,
+        "automatic_long_continuation": false
+      }
+    }
+  },
+  "evaluation_coverage": {
+    "world_count": 8,
+    "step_count": 343,
+    "sim_control_fps": 20.0,
+    "sim_physics_fps": 400.0,
+    "object_orientation_threshold_rad": 0.5,
+    "object_position_threshold_m": 0.1
+  },
+  "official_scores_claimed": false,
+  "physical_task_accepted": false,
+  "automatic_long_continuation": false,
+  "comparison_policy": "Descriptive repeated local readbacks, not hidden scores or statistical significance; independent confirmation still required"
+}
