@@ -44,6 +44,44 @@ def bake_metric_scale(mesh, transform):
     return mesh, pose
 
 
+def simplify_metric_mesh(mesh, maximum_triangles=12000):
+    """Bound collision/tracking cost while preserving the frozen metric frame."""
+    if len(mesh.faces) <= maximum_triangles:
+        return mesh, {"applied": False, "triangles": len(mesh.faces)}
+    import open3d as o3d
+    from scipy.spatial import cKDTree
+
+    source = o3d.geometry.TriangleMesh(
+        o3d.utility.Vector3dVector(np.asarray(mesh.vertices)),
+        o3d.utility.Vector3iVector(np.asarray(mesh.faces)),
+    )
+    reduced = source.simplify_quadric_decimation(maximum_triangles)
+    result = trimesh.Trimesh(
+        np.asarray(reduced.vertices), np.asarray(reduced.triangles), process=False
+    )
+    if (
+        not np.isfinite(result.vertices).all()
+        or len(result.faces) < 100
+        or np.any(abs(result.bounds - mesh.bounds) > 0.002)
+    ):
+        raise ValueError("Simplification changed the metric shape envelope")
+    colors = (
+        mesh.visual.to_color().vertex_colors
+        if mesh.visual.kind == "texture"
+        else mesh.visual.vertex_colors
+    )
+    nearest = cKDTree(np.asarray(mesh.vertices)).query(result.vertices)[1]
+    result.visual.vertex_colors = colors[nearest]
+    return result, dict(
+        applied=True,
+        source_triangles=len(mesh.faces),
+        triangles=len(result.faces),
+        maximum_bound_change_m=float(abs(result.bounds - mesh.bounds).max()),
+        body_origin_changed=False,
+        source_mesh_preserved_in_raw_glb=True,
+    )
+
+
 def generate(data, masks, episode, name, frame, weights, out, seed=20261017):
     if out.exists():
         raise FileExistsError(out)
@@ -123,6 +161,7 @@ def generate(data, masks, episode, name, frame, weights, out, seed=20261017):
     mesh, pose = bake_metric_scale(
         mesh, json.loads((out / "raw-transform.json").read_text())
     )
+    mesh, simplification = simplify_metric_mesh(mesh)
     mesh.export(out / "mesh.glb")
     report = dict(
         schema="v2d.video-object-reconstruction.v1",
@@ -152,6 +191,7 @@ def generate(data, masks, episode, name, frame, weights, out, seed=20261017):
         calibration_sha256=sha(data / "meta/camera_calibration.json"),
         mask_sha256=sha(mask_path),
         measured_pointmap_pixels=int(selected.sum()),
+        simplification=simplification,
         coordinate_frame="rectified_camera",
         camera_frame=rig.left,
         stereo_videos_sha256={

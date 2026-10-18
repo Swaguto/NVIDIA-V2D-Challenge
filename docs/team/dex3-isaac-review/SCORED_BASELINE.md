@@ -345,3 +345,11 @@ every fitted camera rotation/translation against the source frame axis after
 optimization. Prior fitted outputs are preserved for diagnosis and must be
 refitted. The exporter tolerance remains unchanged. `Dockerfile.camera` adds
 this patch to the verified perception image without rebuilding GPU libraries.
+
+The first SAM3D blue-cup candidate used a late stacked-cup view and fused both
+instances. It is rejected. `select_reconstruction_frame.py` ranks views by
+other-object and hand overlap, excludes tiny masks, and checks measured stereo
+support. The original candidate remains available for comparison. Generated
+meshes are simplified to at most 12,000 triangles for tracking/collision, with
+a 2 mm envelope-change check and their full source mesh preserved. Simplification
+is a runtime-cost control; it is not a geometric accuracy or topology certificate.
