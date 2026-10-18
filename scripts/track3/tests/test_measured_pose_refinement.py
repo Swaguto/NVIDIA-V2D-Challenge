@@ -75,3 +75,39 @@ def test_plane_cannot_override_contradictory_measured_depth():
     )
     assert report["support_constraint_applied"] and not report["accepted"]
     np.testing.assert_array_equal(pose, args[2])
+
+
+def test_optional_partial_footprint_checks_triangle_interiors_after_fitting():
+    args = surface()
+    footprint = np.array(
+        [
+            [-0.02, -0.02, 0.49],
+            [0.02, -0.02, 0.49],
+            [0.02, 0.02, 0.49],
+            [-0.02, 0.02, 0.49],
+        ]
+    )
+    assert support_constraints(args[0], args[2], [0, 0, 1, -0.49], footprint) is None
+    pose, report = refine_translation(
+        *args, plane=[0, 0, 1, -0.49], footprint=footprint, partial_support=True
+    )
+    assert report["accepted"] and report["partial_support_applied"]
+    assert report["finite_overlap_after"]["minimum_height_m"] >= 0.002 - 1e-7
+    assert pose[2, 3] == pytest.approx(0, abs=0.001)
+
+
+def test_partial_support_does_not_reclassify_a_wholly_below_table_body():
+    args = surface()
+    footprint = np.array(
+        [
+            [-0.02, -0.02, 0.55],
+            [0.02, -0.02, 0.55],
+            [0.02, 0.02, 0.55],
+            [-0.02, 0.02, 0.55],
+        ]
+    )
+    _, report = refine_translation(
+        *args, plane=[0, 0, 1, -0.55], footprint=footprint, partial_support=True
+    )
+    assert not report["partial_support_applied"]
+    assert report["finite_overlap_before"]["maximum_height_m"] < 0

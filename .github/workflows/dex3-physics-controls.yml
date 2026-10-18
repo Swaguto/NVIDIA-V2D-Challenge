@@ -24,6 +24,7 @@ jobs:
           scripts/track3/tests/test_instance_mask_quality.py
           scripts/track3/tests/test_calibrated_anchor.py
           scripts/track3/tests/test_measured_pose_refinement.py
+          scripts/track3/tests/test_finite_support_overlap.py
           scripts/track3/tests/test_static_anchor_prior.py
           scripts/track3/tests/test_scored_continuation.py
           scripts/track3/tests/test_scored_replay.py

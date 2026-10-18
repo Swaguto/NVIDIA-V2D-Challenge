@@ -1,5 +1,18 @@
 # Scored baseline progress — October 18
 
+## Latest closed coverage
+
+As of 13:41 UTC, **17 of 20 policies and 31 of 36 own mesh candidates** are
+verified. New complete episodes are 30, 33, 35 and 37. Each has 100 iterations,
+153,600 environment steps and complete official/native evaluations. MP-SR is
+zero in all 17 pilots. The original source files, final bundles, models and
+checkpoints remain preserved; regenerable native caches are retired only after
+verified final backups.
+
+Episodes 14, 32 and 36 run next under the committed frozen baseline settings.
+The 13-case inventory below records the earlier seed-repair milestone. The
+machine-readable inventory and local review page include the latest closed runs.
+
 ## Verified coverage
 
 - All 20 source episodes and all 5,181 source frames are inventoried.
