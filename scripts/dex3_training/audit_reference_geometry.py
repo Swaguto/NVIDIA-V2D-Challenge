@@ -25,14 +25,14 @@ def summary(values):
     values = np.asarray(values).reshape(-1)
     values = values[np.isfinite(values)]
     if not len(values):
-        return dict(samples=0, median_m=None, p95_m=None)
-    return dict(
-        samples=len(values),
-        median_m=float(np.median(values)),
-        p95_m=float(np.quantile(values, 0.95)),
-        fraction_under_2cm=float(np.mean(values < 0.02)),
-        fraction_over_10cm=float(np.mean(values > 0.1)),
-    )
+        return {"samples": 0, "median_m": None, "p95_m": None}
+    return {
+        "samples": len(values),
+        "median_m": float(np.median(values)),
+        "p95_m": float(np.quantile(values, 0.95)),
+        "fraction_under_2cm": float(np.mean(values < 0.02)),
+        "fraction_over_10cm": float(np.mean(values > 0.1)),
+    }
 
 
 def nearest(tree, points):
@@ -59,17 +59,19 @@ def robot_tips(qpos, kin, ordered_joint_names, side):
         ordered_joint_names
     ) != set(kin.names):
         raise ValueError("Declared finger joint names differ from the URDF")
-    if qpos.shape != (len(qpos), 7 + len(ordered_joint_names)) or not np.isfinite(
-        qpos
-    ).all():
+    if (
+        qpos.shape != (len(qpos), 7 + len(ordered_joint_names))
+        or not np.isfinite(qpos).all()
+    ):
         raise ValueError("Need finite declared root and finger commands")
     result = []
     for row in qpos:
-        poses = kin.poses(
-            row[:7], dict(zip(ordered_joint_names, row[7:], strict=True))
-        )
+        poses = kin.poses(row[:7], dict(zip(ordered_joint_names, row[7:], strict=True)))
         result.append(
-            [poses[f"{side}_{digit}_tip"][:3, 3] for digit in ("thumb", "index", "middle")]
+            [
+                poses[f"{side}_{digit}_tip"][:3, 3]
+                for digit in ("thumb", "index", "middle")
+            ]
         )
     return np.asarray(result)
 
@@ -89,22 +91,24 @@ def audit(bundle, inputs):
     with np.load(inputs / "targets.npz", allow_pickle=False) as f:
         targets = {k: f[k] for k in f.files}
     np.testing.assert_array_equal(source["frame_indices"], targets["frame_indices"])
-    np.testing.assert_allclose(source["timestamps_s"], targets["timestamps_s"], atol=1e-8, rtol=0)
+    np.testing.assert_allclose(
+        source["timestamps_s"], targets["timestamps_s"], atol=1e-8, rtol=0
+    )
     if [o["name"] for o in meta["objects"]] != [o["name"] for o in manifest["objects"]]:
         raise ValueError("Object ordering differs")
-    report = dict(
-        schema="v2d.reference-geometry-diagnostic.v1",
-        episode=meta["episode"],
-        bundle_manifest_sha256=sha(bundle / "manifest.json"),
-        input_manifest_sha256=sha(inputs / "manifest.json"),
-        diagnostic_source_sha256=sha(Path(__file__)),
-        source_frames=len(source["frame_indices"]),
-        hand_metric_frames=source["hand_metric_valid"].sum(0).tolist(),
-        objects=[],
-        contact_labels_created=False,
-        physical_task_accepted=False,
-        scope=__doc__,
-    )
+    report = {
+        "schema": "v2d.reference-geometry-diagnostic.v1",
+        "episode": meta["episode"],
+        "bundle_manifest_sha256": sha(bundle / "manifest.json"),
+        "input_manifest_sha256": sha(inputs / "manifest.json"),
+        "diagnostic_source_sha256": sha(Path(__file__)),
+        "source_frames": len(source["frame_indices"]),
+        "hand_metric_frames": source["hand_metric_valid"].sum(0).tolist(),
+        "objects": [],
+        "contact_labels_created": False,
+        "physical_task_accepted": False,
+        "scope": __doc__,
+    }
     robot = {
         side: robot_tips(
             targets["robot_qpos"][:, si],
@@ -117,7 +121,9 @@ def audit(bundle, inputs):
     for oi, obj in enumerate(meta["objects"]):
         if obj["index"] != oi:
             raise ValueError("Object index differs from payload ordering")
-        tree = cKDTree(source[f"object_{oi}_vertices"] * source[f"object_{oi}_scale"][0])
+        tree = cKDTree(
+            source[f"object_{oi}_vertices"] * source[f"object_{oi}_scale"][0]
+        )
         observed = source[f"object_{oi}_valid"]
         hp = source["hand_joints_world"][:, :, [4, 8, 12]]
         hd = nearest(tree, body_coordinates(hp, source[f"object_{oi}_world"]))
@@ -125,17 +131,30 @@ def audit(bundle, inputs):
         matrix = np.tile(np.eye(4), (len(pose), 1, 1))
         matrix[:, :3, :3] = Rotation.from_quat(pose[:, 3:]).as_matrix()
         matrix[:, :3, 3] = pose[:, :3]
-        item = dict(name=obj["name"], observed_frames=int(observed.sum()), inferred_frames=int((~observed).sum()), hands={})
+        item = {
+            "name": obj["name"],
+            "observed_frames": int(observed.sum()),
+            "inferred_frames": int((~observed).sum()),
+            "hands": {},
+        }
         for si, side in enumerate(("left", "right")):
             supported = source["hand_metric_valid"][:, si] & observed
             rd = nearest(tree, body_coordinates(robot[side], matrix))
-            item["hands"][side] = dict(
-                jointly_observed_hand_object_frames=int(supported.sum()),
-                human_nearest_of_three_on_supported_frames=summary(hd[supported, si].min(-1)),
-                human_median_of_three_on_supported_frames=summary(np.median(hd[supported, si], axis=-1)),
-                robot_median_of_three_on_same_supported_frames=summary(np.median(rd[supported], axis=-1)),
-                robot_median_of_three_all_frames_including_releases_and_inference=summary(np.median(rd, axis=-1)),
-            )
+            item["hands"][side] = {
+                "jointly_observed_hand_object_frames": int(supported.sum()),
+                "human_nearest_of_three_on_supported_frames": summary(
+                    hd[supported, si].min(-1)
+                ),
+                "human_median_of_three_on_supported_frames": summary(
+                    np.median(hd[supported, si], axis=-1)
+                ),
+                "robot_median_of_three_on_same_supported_frames": summary(
+                    np.median(rd[supported], axis=-1)
+                ),
+                "robot_median_of_three_all_frames_including_releases_and_inference": summary(
+                    np.median(rd, axis=-1)
+                ),
+            }
         report["objects"].append(item)
     return report
 

@@ -60,3 +60,50 @@ The report has one row and one overlay for each episode. A missing score is
 shown as pending, never as zero. AUC, MP-SR, and SP-SR are reconstruction
 diagnostics under one constant alignment per episode. They do not measure
 robot policy rollout success.
+
+## Scored own-geometry reconstruction runner
+
+`run_scored_reconstruction.py` runs a single scored episode through object masks,
+visibility-based source selection, pinned SAM3D metric geometry, FoundationPose,
+independent world conversion, native hand alignment/continuity, bundle export,
+and support inference. It uses the prepared stereo observations and calibrated
+hand fits. Its completion receipt is an export result, not a physical task pass.
+The host requires Python 3.10+, Docker, an NVIDIA GPU, and the separately licensed
+private model cache. Model weights and episode data are not baked into the images.
+
+Create the committed code overlay with `docker/track3-scored/make_context.py`.
+Verify the private model cache once before the batch with
+`download_sam3d_models.py --root "$MODELS/sam3d" --verify-only`.
+Use a source view containing only `videos` and `meta`: relative links must remain
+inside their common mounted parent. The runner rejects views exposing object CAD,
+URDFs or pose tables. The older general-purpose scored view includes diagnostic
+assets and is intentionally rejected by this runner.
+
+Example private configuration (replace directory paths, retain immutable images):
+
+```json
+{
+  "episode": 3,
+  "source_root": "/private/inputs",
+  "data_subdir": "scored-video-view",
+  "models": "/private/models",
+  "observations": "/private/hand-inputs",
+  "temporal_fits": "/private/temporal-hands",
+  "cameras": "/private/perception",
+  "overlay": "/private/committed-code-overlay",
+  "roster": "/private/official-kit/data/track_3_evaluation_objects.json",
+  "out": "/private/results/e003-run1",
+  "max_seconds": 2400,
+  "foreground_depth_only": false,
+  "perception_image": "ghcr.io/swaguto/nvidia-v2d-challenge-dex3-review@sha256:6e2039d0a54e14a188a1798efe57c3465d002f063c782c827b791e4418d2dce6",
+  "sam3d_image": "ghcr.io/swaguto/nvidia-v2d-challenge-dex3-review@sha256:dc9d0aedd2c6d50f53ce2d0677eca6f96e9631806d2bc12a7da4396629ce5357"
+}
+```
+
+Run `python3 scripts/track3/run_scored_reconstruction.py --config "$CONFIG"`.
+An optional `docker_host` selects an existing Docker daemon. Each run requires a
+fresh output directory, bounded stages, read-only source inputs, source hashes,
+and digest-pinned images. A surrounding operator must enforce VM shutdown and
+verify result backups. Brev provisioning and billing controls are separate.
+`foreground_depth_only` remains an experimental opt-in until source-video
+validation passes; it does not relax pose acceptance gates.

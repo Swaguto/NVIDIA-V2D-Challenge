@@ -25,12 +25,12 @@ def test_absent_hand_stays_unknown_and_empty_summary_is_not_zero_error():
     tree = cKDTree([[0, 0, 0]])
     result = nearest(tree, [[np.nan, np.nan, np.nan], [1, 0, 0]])
     assert np.isnan(result[0]) and result[1] == 1
-    assert summary(result[:1]) == dict(samples=0, median_m=None, p95_m=None)
+    assert summary(result[:1]) == {"samples": 0, "median_m": None, "p95_m": None}
 
 
 def test_robot_diagnostic_binds_declared_joint_order():
     class Kinematics:
-        names = ["thumb", "index", "middle"]
+        names = ("thumb", "index", "middle")
 
         def poses(self, root, positions):
             result = {}
