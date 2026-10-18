@@ -1016,6 +1016,13 @@
       "exact_executed_producer": true,
       "preparation_only": false,
       "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "review_fresh_hand_crops_v1.py",
+      "sha256": "e25394478d53532198528ce7e6d2298047cc22b3d69aaa9af0da3f1b02a3cec6",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
     }
   ],
   "input_assets_included": false,
@@ -1023,6 +1030,6 @@
   "production_method": false,
   "physical_task_accepted": false,
   "latest_result_scope": "Inferred image flow72/75carryframes;rigid/articulatedsourcefitsstillrejectpeak. FreshSAM2/HaMeRpath10CPUcontracttestspass,8privateimagesprepared,CUDAunverified. No fullreference/policy promotion or PPO;BrevSTOPPED/shutdownendpointstillrejectsprovider token.",
-  "executed_source_count": 155,
+  "executed_source_count": 156,
   "unexecuted_source_count": 2
 }

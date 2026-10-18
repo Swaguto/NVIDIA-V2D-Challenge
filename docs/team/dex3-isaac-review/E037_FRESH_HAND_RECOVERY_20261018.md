@@ -48,7 +48,8 @@ non-metric and not directly observed. They are **not** accepted robot references
 The existing observation gate is not edited.
 
 Ten focused CPU contract tests pass. The private eight-frame request validates
-locally. **SAM2/HaMeR CUDA execution and downstream integration are unverified.**
+locally. Visual review confirms that the eight crops include the right hand and
+handle region; forearm crop boundaries and occluded fingers remain limitations. **SAM2/HaMeR CUDA execution and downstream integration are unverified.**
 Fresh records and image observations are separate outputs. Any later integration
 must preserve the original records, merge only the explicitly selected new priors
 into a new reconstruction run, and pass source-fit, motion, actual URDF limits,
@@ -71,3 +72,7 @@ Brev is **STOPPED**. The shutdown-only preflight at 21:41 UTC still returned
 job was attempted. Resolve that control failure before a GPU probe; then install
 an independent stop guard, bind the private mounts/code revision, enforce a short
 lease, hash-verify backups and confirm provider STOPPED after the run.
+
+The owner confirmed Brev is down. Keep all GPU work unqueued and avoid further
+provider retries during the reported outage. The recovery contract tests are now
+included in the existing CPU CI workflow.
