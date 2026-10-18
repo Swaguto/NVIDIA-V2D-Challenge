@@ -54,6 +54,15 @@ def bind(manifest, data, results, out):
             for name in names
         }
         for name, state in states.items():
+            # Image foreground is independent evidence even when 3-D tracking
+            # rejects a pose. Keep it for hand occlusion/depth alignment; never
+            # turn the missing object pose into an observed contact state.
+            mask = episode_root / "masks" / name / f"{frame['id']:06d}.png"
+            if mask.is_file():
+                state["mask"] = str(mask)
+                state["mask_provenance"] = (
+                    "predicted_image_foreground_independent_of_pose"
+                )
             if state["valid"]:
                 record = json.loads(Path(state["pose_path"]).read_text())
                 if (
@@ -71,6 +80,7 @@ def bind(manifest, data, results, out):
         reconstructed_geometry_provenance_sha256=sha(data / "geometry-provenance.json"),
         reconstructed_geometry_provenance=proof,
         human_pixels_depth_cameras_changed=False,
+        image_foreground_retained_without_object_pose=True,
     )
     out.parent.mkdir(parents=True, exist_ok=True)
 

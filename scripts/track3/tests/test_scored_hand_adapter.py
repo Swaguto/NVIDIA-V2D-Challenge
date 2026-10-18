@@ -238,6 +238,11 @@ def test_binding_own_objects_preserves_human_bytes_and_rejects_different_pose_ge
                 human, view, tmp_path / "predictions", tmp_path / "final/manifest.json"
             )
     else:
+        # Foreground masks still constrain hand alignment when no 3-D object
+        # pose was accepted. This must not fabricate object observations.
+        mask = tmp_path / "predictions/e001/masks/z_object/000000.png"
+        mask.parent.mkdir(parents=True)
+        cv2.imwrite(str(mask), np.ones((8, 10), np.uint8) * 255)
         receipt = bind(
             human, view, tmp_path / "predictions", tmp_path / "final/manifest.json"
         )
@@ -246,3 +251,9 @@ def test_binding_own_objects_preserves_human_bytes_and_rejects_different_pose_ge
         assert after["frames"][0]["color"] == str(image_path)
         assert hashlib.sha256(image_path.read_bytes()).hexdigest() == image_hash
         assert before["objects"] == [] and not receipt["human_observations_changed"]
+        state = after["frames"][0]["objects"]["z_object"]
+        assert state["mask"] == str(mask) and state["valid"] is False
+        assert "pose_path" not in state
+        assert (
+            state["mask_provenance"] == "predicted_image_foreground_independent_of_pose"
+        )
