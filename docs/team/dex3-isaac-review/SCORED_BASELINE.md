@@ -90,6 +90,15 @@ licensed MANO files and episode inputs remain separate private mounts. Build and
 GPU inference validation are recorded separately; no fresh end-to-end success
 is established by its Dockerfile.
 
+Use the adapter's `--hands-only` option to prepare human pixels, stereo depth and
+cameras without reading any object geometry. The official object-slot order
+remains in its input contract. `bind_scored_objects.py` subsequently attaches
+refined own-geometry and observed object tracks to those unchanged files. It
+rejects changed mesh/pose bindings and emits portable paths. This allows hand
+inference to proceed independently while object reconstruction is being checked;
+the scored final bundle still requires both complete object targets and refined
+own geometry.
+
 ### Geometry path without released CAD
 
 `reconstruct_stereo_object.py --stage seed` makes an explicitly incomplete

@@ -69,6 +69,7 @@ def export(
     evaluation: dict | None = None,
     scored_kit: Path | None = None,
     camera_root: Path | None = None,
+    hands_only: bool = False,
 ) -> Path:
     # Input paths are relative to the caller, whereas paths inside the manifest
     # are resolved relative to its output directory. Preserve their locations.
@@ -114,7 +115,13 @@ def export(
         if not np.isfinite(fps) or fps <= 0 or video_count != count:
             raise ValueError("Scored video clock/frame count differs from official roster")
         rows = [{"frame_index": i, "timestamp": i/fps} for i in range(count)]
-    # Fail before decoding hundreds of depth frames when an object asset is absent.
+    official_names = list(names)
+    if hands_only:
+        if scored_kit is None:
+            raise ValueError('Hands-only preparation requires the explicit scored roster contract')
+        names = []
+    # Human observation preparation can run independently of object geometry.
+    # Full integration still fails before decoding if an object mesh is absent.
     meshes = {name: mesh_for(data, name) for name in names}
     selected = rows[start : start + frames]
     if len(selected) != frames or any(row["frame_index"] != start + i for i, row in enumerate(selected)):
@@ -218,8 +225,10 @@ def export(
                                    calibration_sha256=file_hash(data / "meta/camera_calibration.json"),
                                    adapter_sha256=file_hash(Path(__file__)),
                                    stereo_videos_sha256={cam: file_hash(base / f"observation.images.{cam}" / f"episode_{episode:06d}.mp4") for cam in (rig.left, rig.right)})
+        m['input_contract'].update(hands_only=hands_only, official_object_slot_names=official_names,
+                                   object_geometry_read=not hands_only)
         geometry_proof = data / "geometry-provenance.json"
-        if geometry_proof.is_file():
+        if not hands_only and geometry_proof.is_file():
             from reconstructed_view import verify_geometry
             verify_geometry(data, episode, names)
             m["input_contract"]["reconstructed_geometry_provenance_sha256"] = file_hash(geometry_proof)
@@ -249,12 +258,14 @@ def main() -> None:
     parser.add_argument("--frames", type=int, help="Public default 64; scored default complete episode")
     parser.add_argument("--scored-kit", type=Path, help="Official kit for label-free scored input creation")
     parser.add_argument("--camera-root", type=Path, help="Independent stereo camera results root")
+    parser.add_argument('--hands-only',action='store_true',
+                        help='Prepare human observations without opening object geometry; bind reconstructed objects later')
     parser.add_argument("--hand-source-json", type=Path, help="HaMeR/Dyn-HaMR/import paths and settings")
     args = parser.parse_args()
     source = json.loads(args.hand_source_json.read_text()) if args.hand_source_json else {"backend": "hamer"}
     frames = args.frames if args.frames is not None else (0 if args.scored_kit else 64)
     print(export(args.data, args.results, args.episode, args.output, args.start, frames, source,
-                 scored_kit=args.scored_kit, camera_root=args.camera_root))
+                 scored_kit=args.scored_kit, camera_root=args.camera_root, hands_only=args.hands_only))
 
 
 if __name__ == "__main__":
