@@ -24,7 +24,7 @@ ROBOT = CODE / 'robotic_grounding'
 sys.path[:0] = [str(CODE / 'reconstruction/modules/v2d_issue6'), str(ROBOT / 'source/robotic_grounding')]
 from issue6.backend import dynhamr_frame_axis
 from issue6.geometry import hand_geometry, transform
-from issue6.manifest import load, camera_from_object, pose
+from issue6.manifest import load, camera_from_object, pose as camera_pose
 from issue6.pipeline import load_mesh
 from robotic_grounding.retarget.track3_bundle import SCHEMA, SIDES, JOINT_NAMES, digest, validate_bundle, wrist_rotation
 
@@ -80,7 +80,7 @@ def export(ep):
                 w2c[i, :3, 3] = translations[0, native]
                 camera_known[i] = True
     if scored:
-        independently_inferred = np.stack([pose({'pose_path': frame['camera_pose_path']}) for frame in frames])
+        independently_inferred = np.stack([camera_pose({'pose_path': frame['camera_pose_path']}) for frame in frames])
         if not all(frame.get('camera_valid') is True for frame in frames):
             raise ValueError('Scored export needs explicit camera inference for every source frame')
         np.testing.assert_allclose(w2c[camera_known], independently_inferred[camera_known], atol=1e-5, rtol=1e-5)
