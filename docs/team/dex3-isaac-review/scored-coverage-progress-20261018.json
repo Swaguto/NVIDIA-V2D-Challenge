@@ -1,6 +1,6 @@
 {
   "schema": "v2d.current-scored-coverage.v2",
-  "verified_utc": "2026-10-18T09:29:05.682695+00:00",
+  "verified_utc": "2026-10-18T10:33:06.207098+00:00",
   "official_roster_sha256": "be92ef6db25aa60cefcdfb44f0acfdc6fbdfa26bb249f6890e1963c659b79272",
   "episodes": [
     {
@@ -436,22 +436,44 @@
         "left": 178,
         "right": 235
       },
-      "policy_status": "pending",
+      "policy_status": "short baseline complete; physical task fails",
       "reserved_post_freeze_validation": false,
       "geometry": [
         {
           "slot": 0,
           "object": "mini_sweeper",
           "owner": "Codex implementation",
-          "status": "pending own reconstruction",
-          "physical_task_accepted": false
+          "status": "SHA-verified own candidate; physical task fails",
+          "physical_task_accepted": false,
+          "manifest_sha256": "e370cbb2d9a3211815adbcd1e30621071e22fbbad08e0c820775143fc8730026",
+          "mesh_sha256": "ff7e137f9658b140be433968ffdfb4855066bf4c2f5c0a54ac682313090c80f7",
+          "units": "metres",
+          "body_origin_frozen": true,
+          "seed_frame": 0,
+          "source_file_closure_verified": true,
+          "vertices": 5992,
+          "triangles": 12000,
+          "watertight": true,
+          "full_bundle_frame_axis_verified": true,
+          "bundle_manifest_sha256": "f144dc0e18622c660be37e42a8c10963485cf468968d53bfc3bb20a50a39748a"
         },
         {
           "slot": 1,
           "object": "mini_dust_pan",
           "owner": "Codex implementation",
-          "status": "pending own reconstruction",
-          "physical_task_accepted": false
+          "status": "SHA-verified own candidate; physical task fails",
+          "physical_task_accepted": false,
+          "manifest_sha256": "220573395ee1ce87e507156baa18c864d434a54240e1387e59fcc65dc742d005",
+          "mesh_sha256": "74c33698210ee79cf19c22325efdfbdf0f168f6d58d2a981dec9474dcffd969a",
+          "units": "metres",
+          "body_origin_frozen": true,
+          "seed_frame": 198,
+          "source_file_closure_verified": true,
+          "vertices": 6014,
+          "triangles": 12000,
+          "watertight": true,
+          "full_bundle_frame_axis_verified": true,
+          "bundle_manifest_sha256": "f144dc0e18622c660be37e42a8c10963485cf468968d53bfc3bb20a50a39748a"
         }
       ]
     },
@@ -758,9 +780,9 @@
   "required_episodes": 20,
   "required_mesh_slots": 36,
   "source_frames": 5181,
-  "completed_short_baseline_episodes": 7,
-  "verified_own_candidate_slots": 13,
-  "pending_mesh_slots": 23,
+  "completed_short_baseline_episodes": 8,
+  "verified_own_candidate_slots": 15,
+  "pending_mesh_slots": 21,
   "physically_accepted_episodes": 0,
   "all_assets_have_status_and_owner": true,
   "official_packer_passed": false,

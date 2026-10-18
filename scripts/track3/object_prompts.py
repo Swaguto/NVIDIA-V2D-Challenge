@@ -19,8 +19,8 @@ SEMANTIC_PROMPTS = {
     "beige_cup": "beige cup",
     "plastic_dish_rack": "plastic dish rack",
     "water_pitcher": "white watering can with a long spout",
-    "wooden_piece_1": "wooden puzzle board",
-    "wooden_piece_2": "wooden puzzle board",
+    "wooden_piece_1": "wooden piece 1",
+    "wooden_piece_2": "wooden piece 2",
 }
 SEMANTIC_ALIASES = {
     "white_pot": ["white saucepan", "saucepan"],
@@ -32,6 +32,7 @@ SEMANTIC_ALIASES = {
     "beige_cup": ["beige mug", "white cup", "cream cup", "cup", "mug"],
     "plastic_dish_rack": ["dish rack", "dish drying rack", "rack"],
     "water_pitcher": [
+        "watering",
         "watering can",
         "watering jug",
         "water pitcher",
@@ -51,6 +52,17 @@ SEMANTIC_ALIASES = {
         "wooden puzzle board",
     ],
 }
+
+
+def detector_box_limit(name, fallback, canonical_limits=False):
+    """Long spouts need a larger box; retain the pot/table rejection prior.
+
+    This optional class prior changes only the detector box area. Confidence,
+    propagated mask area, measured depth and reconstruction gates are separate.
+    """
+    if canonical_limits and name == "water_pitcher":
+        return max(fallback, 0.20)
+    return fallback
 
 
 def label_candidates(label, names):

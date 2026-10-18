@@ -94,7 +94,7 @@ def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,
                    "--episode", str(episode), "--objects", names_arg,
                    "--data", str(data), "--out", str(out)]
         if scored:
-            command += ["--semantic-color"]
+            command += ["--semantic-color", "--canonical-box-limits"]
         seeds = HERE.parent / "seed_overrides" / f"e{episode:03d}.json"
         if seeds.is_file() and not scored:
             command += ["--seed-json", str(seeds)]

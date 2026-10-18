@@ -30,13 +30,15 @@ from stereo_depth import load_rig  # noqa: E402
 from object_prompts import (  # noqa: E402
     SEMANTIC_PROMPTS,
     assign_label,
+    detector_box_limit,
     numbered_groups,
     numbered_instance_seeds,
 )
 
 
 def seed_boxes(frames: list[np.ndarray], names: list[str], threshold: float,
-               device: str, stride: int, max_box_area: float, semantic_frames=None):
+               device: str, stride: int, max_box_area: float, semantic_frames=None,
+               canonical_box_limits: bool = False):
     prompt = ". ".join(dict.fromkeys(SEMANTIC_PROMPTS.get(name, name.replace("_", " ")) for name in names)) + "."
     revision = os.environ.get("V2D_DINO_REVISION")
     processor = AutoProcessor.from_pretrained("IDEA-Research/grounding-dino-base", revision=revision)
@@ -60,11 +62,14 @@ def seed_boxes(frames: list[np.ndarray], names: list[str], threshold: float,
                 index = assign_label(label, names)
                 x0, y0, x1, y1 = box
                 area_fraction = max(0, x1 - x0) * max(0, y1 - y0) / (rgb.shape[0] * rgb.shape[1])
+                limit = detector_box_limit(names[index] if index is not None else None,
+                                           max_box_area, canonical_box_limits)
                 print(json.dumps(dict(detector_frame=frame, detector_label=label,
                                       score=float(score), assigned_index=index,
                                       area_fraction=area_fraction,
-                                      accepted_box_size=0.0002 <= area_fraction <= max_box_area)), flush=True)
-                if not 0.0002 <= area_fraction <= max_box_area:
+                                      box_xyxy=box, maximum_box_area_fraction=limit,
+                                      accepted_box_size=0.0002 <= area_fraction <= limit)), flush=True)
+                if not 0.0002 <= area_fraction <= limit:
                     continue
                 detections.append(dict(label=label, score=float(score), box=[float(value) for value in box]))
                 if index is None or index in grouped:
@@ -135,7 +140,7 @@ def suppress_lid_overlap(out: Path, names: list[str], frames: int) -> dict[str, 
 def run(episode: int, names: list[str], data: Path, out: Path, threshold: float,
         max_area: float, device: str, seed_stride: int, max_box_area: float,
         seed_only: bool = False, seed_json: Path | None = None,
-        semantic_color: bool = False) -> dict:
+        semantic_color: bool = False, canonical_box_limits: bool = False) -> dict:
     if out.exists() and any(out.iterdir()):
         raise ValueError(f"output must be a fresh directory: {out}")
     rig = load_rig()
@@ -151,7 +156,8 @@ def run(episode: int, names: list[str], data: Path, out: Path, threshold: float,
         inspected = sorted(set(range(0, len(frames), seed_stride)) | {len(frames) - 1})
         colour_frames = seed_frames(data, episode, rig, inspected)
     seeds = {} if len(supplied) == len(names) else seed_boxes(
-        frames, names, threshold, device, seed_stride, max_box_area, colour_frames)
+        frames, names, threshold, device, seed_stride, max_box_area, colour_frames,
+        canonical_box_limits)
     for name, entry in supplied.items():
         frame = int(entry["frame"])
         box = [float(value) for value in entry["box_xyxy"]]
@@ -163,11 +169,20 @@ def run(episode: int, names: list[str], data: Path, out: Path, threshold: float,
     print(f"episode {episode}: {len(frames)} frames, seeds " +
           str({names[i]: entry for i, entry in seeds.items()}), flush=True)
     out.mkdir(parents=True, exist_ok=True)
+    detector_rules = {
+        "confidence_threshold": threshold,
+        "canonical_box_limits": canonical_box_limits,
+        "maximum_box_area_fraction": {
+            name: detector_box_limit(name, max_box_area, canonical_box_limits) for name in names
+        },
+        "maximum_mask_area_fraction": max_area,
+    }
     if seed_only:
         report = {"episode": episode, "objects": names, "frames": len(frames),
                   "seeds": {names[i]: {"score": seeds[i][0], "box_xyxy": seeds[i][1],
                              "label": seeds[i][2], "frame": seeds[i][3]} for i in seeds},
-                  "gt_use": "none", "manual_annotations_used": bool(supplied)}
+                  "gt_use": "none", "manual_annotations_used": bool(supplied),
+                  "detector_rules": detector_rules}
         (out / "seed_report.json").write_text(json.dumps(report, indent=2))
         return report
 
@@ -226,6 +241,7 @@ def run(episode: int, names: list[str], data: Path, out: Path, threshold: float,
         for index in seeds if seeds[index][2].startswith("inferred_initial_left_to_right:")
     }
     report["unseeded_objects"] = [name for index, name in enumerate(names) if index not in seeds]
+    report["detector_rules"] = detector_rules
     report["manual_annotations_used"] = bool(supplied)
     report["semantic_seed_camera"] = "calibrated ego_cam_a colour" if semantic_color else "rectified monochrome stereo"
     report["semantic_prompts"] = {name: SEMANTIC_PROMPTS.get(name, name.replace("_", " ")) for name in names}
@@ -244,6 +260,8 @@ def main() -> None:
     parser.add_argument("--max-area", type=float, default=0.15)
     parser.add_argument("--seed-stride", type=int, default=20)
     parser.add_argument("--max-box-area", type=float, default=0.10)
+    parser.add_argument("--canonical-box-limits", action="store_true",
+                        help="Allow long-spout watering-can boxes up to 20%%; retain other box and mask limits")
     parser.add_argument("--seed-only", action="store_true")
     parser.add_argument("--semantic-color", action="store_true",
                         help="Use calibrated ego RGB for semantic names and colours, then propagate in stereo")
@@ -256,7 +274,7 @@ def main() -> None:
         parser.error("--objects needs distinct object names")
     report = run(args.episode, names, args.data, args.out, args.box_threshold,
                  args.max_area, args.device, args.seed_stride, args.max_box_area,
-                 args.seed_only, args.seed_json, args.semantic_color)
+                 args.seed_only, args.seed_json, args.semantic_color, args.canonical_box_limits)
     print(json.dumps(report.get("mask_counts", report["seeds"])), flush=True)
 
 
