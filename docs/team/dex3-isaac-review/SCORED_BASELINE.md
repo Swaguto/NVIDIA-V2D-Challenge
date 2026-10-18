@@ -387,3 +387,21 @@ without requiring an episode-specific grasp plan. It reports full frame coverage
 source-relative tracking errors, sampled native contact gaps and motor-limit
 verification. A local readback from the development control passed the audit's
 input and assistance checks; its physical task remains unaccepted.
+
+Before launching PPO on a newly frozen pack, run the native geometry preflight:
+
+```bash
+python /opt/dex3-extension/check_native_scene.py --inputs /data --out /outputs/native-preflight.json
+```
+
+It constructs one scene and invokes the same native MuJoCo model compiler on
+CPU, keeping solid-mesh checks enabled. It passed the e001 control and reproduced
+e038's exact near-zero-volume collision-fragment failure using CPU without
+launching another GPU learner. Compilation is not a contact, grasp, or policy acceptance test.
+
+For offline native-readback review of other episodes, pass `--inputs /data` to
+`render_native_readback.py`. This binds a fixed camera extent to the verified
+inferred reference instead of using the older e002 viewport. The camera does
+not follow escaping simulated objects; out-of-view object centres are labeled.
+These videos render recorded collision surfaces and actual simulated body poses,
+and are separate from the Isaac Sim review renderer.

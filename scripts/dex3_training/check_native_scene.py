@@ -95,6 +95,14 @@ if __name__ == "__main__":
                     schema="v2d.scored-native-geometry-preflight.v1",
                     status="failed",
                     error=str(error),
+                    input_manifest_sha256=hashlib.sha256(
+                        (a.inputs / "manifest.json").read_bytes()
+                    ).hexdigest()
+                    if (a.inputs / "manifest.json").is_file()
+                    else None,
+                    producer_sha256=hashlib.sha256(
+                        Path(__file__).read_bytes()
+                    ).hexdigest(),
                     physical_task_accepted=False,
                     native_mesh_checks_relaxed=False,
                 ),

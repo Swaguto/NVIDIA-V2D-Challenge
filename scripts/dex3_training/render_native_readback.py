@@ -10,14 +10,36 @@ import json
 from pathlib import Path
 import subprocess
 
-import matplotlib
-
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 import numpy as np
 from scipy.spatial import ConvexHull
 from scipy.spatial.transform import Rotation
+from v2d_dex3_flashchord.sampling import integer_rate_factor
+
+
+def reference_view(inputs, report):
+    """Fix the review camera from verified reference geometry, before rollout."""
+    manifest_path = inputs / "manifest.json"
+    if (
+        hashlib.sha256(manifest_path.read_bytes()).hexdigest()
+        != report["source_manifest_sha256"]
+    ):
+        raise ValueError("Viewport inputs differ from simulated inputs")
+    manifest = json.loads(manifest_path.read_text())
+    target = inputs / "targets.npz"
+    if (
+        hashlib.sha256(target.read_bytes()).hexdigest()
+        != manifest["files"]["targets.npz"]
+    ):
+        raise ValueError("Viewport reference changed")
+    with np.load(target, allow_pickle=False) as f:
+        centers = f["object_poses"][..., :3]
+    if centers.ndim != 3 or not np.isfinite(centers).all():
+        raise ValueError("Need complete object reference positions")
+    margin = max(0.15, *(o["radius_m"] for o in manifest["objects"]))
+    low, high = centers.min(axis=(0, 1)) - margin, centers.max(axis=(0, 1)) + margin
+    middle = (low + high) / 2
+    span = np.maximum(high - low, 0.6)
+    return np.stack([middle - span / 2, middle + span / 2], axis=1)
 
 
 def faces(vertices):
@@ -36,7 +58,13 @@ def faces(vertices):
     return ConvexHull(vertices).simplices
 
 
-def render(run, out, world=0):
+def render(run, out, world=0, inputs=None):
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from mpl_toolkits.mplot3d.art3d import Poly3DCollection
+
     if out.exists():
         raise FileExistsError(out)
     out.mkdir(parents=True)
@@ -54,8 +82,8 @@ def render(run, out, world=0):
         raise ValueError("Unsupported native body mapping")
     source_fps = report.get("source_fps", 20.0)
     fps = report.get("control_fps", 20.0)
-    ratio = int(fps / source_fps)
-    if ratio < 1 or fps / source_fps != ratio or (len(poses) - 1) % ratio:
+    ratio = integer_rate_factor(source_fps, fps)
+    if (len(poses) - 1) % ratio:
         raise ValueError("Readback does not contain every original source knot")
     frames = np.arange(0, len(poses), ratio)
     plt.rcParams.update(
@@ -68,15 +96,20 @@ def render(run, out, world=0):
     )
     fig = plt.figure(figsize=(10, 7.5), dpi=100, facecolor="#0d1522")
     ax = fig.add_axes([0.02, 0.07, 0.96, 0.82], projection="3d", facecolor="#0d1522")
+    bounds = (
+        reference_view(inputs, report)
+        if inputs
+        else np.array([[-0.16, 0.43], [0.04, 0.52], [-0.65, -0.13]])
+    )
     ax.set(
-        xlim=(-0.16, 0.43),
-        ylim=(0.04, 0.52),
-        zlim=(-0.65, -0.13),
+        xlim=bounds[0],
+        ylim=bounds[1],
+        zlim=bounds[2],
         xlabel="world X (m)",
         ylabel="world Y (m)",
         zlabel="world Z (m)",
     )
-    ax.set_box_aspect([0.59, 0.48, 0.52])
+    ax.set_box_aspect(bounds[:, 1] - bounds[:, 0])
     ax.view_init(elev=25, azim=-111)
     for axis in (ax.xaxis, ax.yaxis, ax.zaxis):
         axis.pane.set_facecolor((0.08, 0.12, 0.19, 1))
@@ -105,6 +138,10 @@ def render(run, out, world=0):
             if "pot_lid" in label
             else "#bac8d9"
             if "pot" in label
+            else "#5caadc"
+            if "blue_cup" in label
+            else "#e4d2ab"
+            if "beige_cup" in label
             else "#546b83"
         )
         polygons = faces(vertices)
@@ -161,15 +198,18 @@ def render(run, out, world=0):
             title.set_text(
                 f"Reference {source_index:03d}/{len(frames) - 1:03d} · {frame / fps:05.2f} s · world {world} · {fps:g} Hz control"
             )
-            fallen = [
+            outside = [
                 labels[i].split("/")[0]
                 for i in range(stride)
                 if "/object" in labels[i]
-                and poses[frame, i + world * stride, 2] < -0.72
+                and np.any(
+                    (poses[frame, i + world * stride, :3] < bounds[:, 0])
+                    | (poses[frame, i + world * stride, :3] > bounds[:, 1])
+                )
             ]
             status.set_text(
-                "Below the fixed view: " + ", ".join(fallen)
-                if fallen
+                "Object centre outside the fixed view: " + ", ".join(outside)
+                if outside
                 else "Diagnostic replay; full physical task has not passed acceptance."
             )
             fig.canvas.draw()
@@ -201,6 +241,10 @@ def render(run, out, world=0):
         new_simulation=False,
         isaac_sim_render=False,
         source_speed=1.0,
+        fixed_view_bounds_xyz_m=bounds.tolist(),
+        view_source="Verified inferred reference extent; camera never follows simulated objects"
+        if inputs
+        else "Legacy fixed development viewport",
     )
     (out / "render-receipt.json").write_text(json.dumps(receipt, indent=2) + "\n")
     return receipt
@@ -211,5 +255,10 @@ if __name__ == "__main__":
     p.add_argument("--run", type=Path, required=True)
     p.add_argument("--out", type=Path, required=True)
     p.add_argument("--world", type=int, default=0)
+    p.add_argument(
+        "--inputs",
+        type=Path,
+        help="Verified training pack for a fixed reference-based viewport",
+    )
     a = p.parse_args()
-    print(json.dumps(render(a.run, a.out, a.world), indent=2))
+    print(json.dumps(render(a.run, a.out, a.world, a.inputs), indent=2))
