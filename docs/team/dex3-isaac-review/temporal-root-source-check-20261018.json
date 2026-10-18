@@ -1,0 +1,84 @@
+{
+  "schema": "v2d.native-root-source-projection-diagnostic.v1",
+  "episode": 37,
+  "candidate_sha256": "8219a6812cfdb29ccbc7603f9fda0028db7d920ca48e96f575eea560e935b374",
+  "bundle_sha256": "5460c67099ddb4ec45ff6e6df26236518473c837f63fa913efbfdb0068a29a99",
+  "producer_sha256": "d2bef7e13768526fb0d0528cfadc203ca5f9d550fb29c42c9f70c1f09b626b8f",
+  "rows": [
+    {
+      "hand": "left",
+      "control": {
+        "points": 604,
+        "median_px": 15.505636231216908,
+        "p95_px": 24.74005227754762,
+        "maximum_px": 28.1952124454052
+      },
+      "candidate": {
+        "points": 604,
+        "median_px": 14.979759401125595,
+        "p95_px": 25.27269325351777,
+        "maximum_px": 31.724977354068592
+      },
+      "screen_movement": {
+        "points": 604,
+        "median_px": 0.03870882409304964,
+        "p95_px": 6.505288619428868,
+        "maximum_px": 11.163797370299266
+      },
+      "metric_supported_control": {
+        "points": 96,
+        "median_px": 15.928095011993246,
+        "p95_px": 23.732600310049413,
+        "maximum_px": 24.07899335738238
+      },
+      "metric_supported_candidate": {
+        "points": 96,
+        "median_px": 15.260706311650047,
+        "p95_px": 25.691027110322715,
+        "maximum_px": 31.724977354068592
+      },
+      "projection_screen_passed": false
+    },
+    {
+      "hand": "right",
+      "control": {
+        "points": 300,
+        "median_px": 15.037255198552062,
+        "p95_px": 35.46643358442163,
+        "maximum_px": 43.00961451216173
+      },
+      "candidate": {
+        "points": 300,
+        "median_px": 15.02966917207564,
+        "p95_px": 38.34747084631936,
+        "maximum_px": 43.114234281932
+      },
+      "screen_movement": {
+        "points": 300,
+        "median_px": 0.8057041688741873,
+        "p95_px": 8.13171164029479,
+        "maximum_px": 12.58995354819982
+      },
+      "metric_supported_control": {
+        "points": 220,
+        "median_px": 14.847738799781796,
+        "p95_px": 38.41481388540864,
+        "maximum_px": 43.00961451216173
+      },
+      "metric_supported_candidate": {
+        "points": 220,
+        "median_px": 14.720954761168656,
+        "p95_px": 39.384437444316696,
+        "maximum_px": 43.114234281932
+      },
+      "projection_screen_passed": false
+    }
+  ],
+  "source_observations_modified": false,
+  "source_confidence_modified": false,
+  "protocol": "Compare source fitted MANO wrist/thumb/index/middle tip projections on directly observed valid frames; unknown metric depth remains unknown. Both median and p95 pixel error must not worsen for source-screen qualification.",
+  "true_hand_pixel_ground_truth_known": false,
+  "trajectory_promoted": false,
+  "physical_task_accepted": false,
+  "all_source_projection_screens_passed": false
+}

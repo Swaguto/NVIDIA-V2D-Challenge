@@ -1,0 +1,21 @@
+{
+  "schema": "v2d.prepared-depth-probe-source.v1",
+  "files": {
+    "learned_stereo_onnx_probe_v1.py": {
+      "sha256": "1bb6dcd4f4b681eb674288aca8ca57a49fb7a879b07eb97dfcfbc7b4540997e0",
+      "executed": false
+    },
+    "remote_learned_stereo_probe_v3.py": {
+      "sha256": "c801d871ac30b00348db1b8108328f568045d47df63582b35486a834dc69eda0",
+      "executed": false
+    },
+    "compare_learned_stereo_probe_v1.py": {
+      "sha256": "31db8df20b5202ed38913e96554a25128082014dfd47d4f140e50e886a8ab669",
+      "executed": false
+    }
+  },
+  "reason_not_executed": "Three Brev launch attempts never reached RUNNING; start/stop returns security-token-invalid even after successful CLI login refresh.",
+  "private_inputs_included": false,
+  "model_weights_included": false,
+  "training_steps": 0
+}

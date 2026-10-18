@@ -57,3 +57,28 @@ matched aggregate scores within 1e-12 and all intersection counts, without those
 warnings. The warning's cause is not isolated and is not evidence about GPU
 replay variability. [Comparison receipt](spoon-thickness-grid-20261018.json).
 No candidate was promoted or sent to PPO; Brev remained stopped.
+
+## Rigid pose and depth consistency
+
+A bounded six-degree-of-freedom probe tested five deterministic starts per
+shape/frame on e037 frames 0, 100 and 125, using the control and uniformly scaled
+meshes. Only the scaled frame-100 proposal qualified. Clearing the start/return
+intersections worsened the full measured-depth fit. No full trajectory qualified.
+
+A seven-frame source audit found nearby background median height varying from
+-6.96 to +8.90 mm against the global support plane. Local plane hypotheses had
+approximately 2.66–3.22 mm median held-out background residual in six frames;
+the lifted frame had insufficient nearby table support. At frame 125, 68.0% of
+eroded-mask foreground depth points were below the locally fitted surface by
+more than 1 mm. These are stereo-estimate consistency checks, without ground
+truth depth; neither plane nor source observations were replaced.
+
+The next depth comparison freezes seven original rectified pairs, masks and
+control depth maps. A versioned NVIDIA FoundationStereo ONNX worker includes
+bidirectional consistency checks and calibrated disparity scaling. **It has not
+run:** Brev launch attempts failed, and its stop preflight still returns an
+invalid-security-token error after a successful fresh CLI login. All attempted launches ended with provider
+STOPPED; no depth inference or PPO occurred. Inputs remain private.
+
+See the [rigid/depth receipt](spoon-rigid-depth-diagnostics-20261018.json) and
+[native CPU contact investigation](NATIVE_CPU_CONTACT_REPAIR_20261018.md).

@@ -1,0 +1,599 @@
+{
+  "schema": "v2d.spoon-rigid-depth-diagnostic-summary.v1",
+  "episode": 37,
+  "rigid_report_sha256": "7dbfba273bbba26da93a9c5d454a1866c44167da69ef6755571b2378c708defe",
+  "support_report_sha256": "a79be11876bb09f80cac89df0e710e294f94b5d69d56377f4e212b4e25edb92c",
+  "rigid_trials": [
+    {
+      "frame": 0,
+      "arm": "control-shape",
+      "accepted": false,
+      "original_gate_passed": true,
+      "height_before_m": -0.012274438864752324,
+      "height_after_m": -0.012274438864752324
+    },
+    {
+      "frame": 0,
+      "arm": "uniform-1.3-shape",
+      "accepted": false,
+      "original_gate_passed": true,
+      "height_before_m": -0.015298284632506265,
+      "height_after_m": -0.015298284632506265
+    },
+    {
+      "frame": 100,
+      "arm": "control-shape",
+      "accepted": false,
+      "original_gate_passed": true,
+      "height_before_m": 0.002083415401023747,
+      "height_after_m": 0.002083415401023747
+    },
+    {
+      "frame": 100,
+      "arm": "uniform-1.3-shape",
+      "accepted": true,
+      "original_gate_passed": true,
+      "height_before_m": -0.003738928143229625,
+      "height_after_m": 0.0048043511344015855
+    },
+    {
+      "frame": 125,
+      "arm": "control-shape",
+      "accepted": false,
+      "original_gate_passed": true,
+      "height_before_m": -0.01746053846217499,
+      "height_after_m": -0.01746053846217499
+    },
+    {
+      "frame": 125,
+      "arm": "uniform-1.3-shape",
+      "accepted": false,
+      "original_gate_passed": true,
+      "height_before_m": -0.02210495649218336,
+      "height_after_m": -0.02210495649218336
+    }
+  ],
+  "source_diagnostics": [
+    {
+      "frame": 0,
+      "masked_measured_heights": {
+        "count": 7104,
+        "quantiles_m": [
+          -0.12144283241472117,
+          -0.013653597003551732,
+          -0.0035224595294128247,
+          0.008464527046926074,
+          0.03408553399204132
+        ],
+        "below_minus_1mm_fraction": 0.5675675675675675
+      },
+      "eroded_mask_measured_heights": {
+        "count": 6097,
+        "quantiles_m": [
+          -0.05955536093186899,
+          -0.012126110751817354,
+          -0.0033222316340619784,
+          0.008155695880605163,
+          0.03236679254268619
+        ],
+        "below_minus_1mm_fraction": 0.5665081187469247
+      },
+      "nearby_background_prior_heights": {
+        "count": 48344,
+        "quantiles_m": [
+          -0.0148515753802543,
+          -0.007965940050952997,
+          -0.0048222233707396756,
+          -0.002058930305098461,
+          0.0020632871823181346
+        ],
+        "below_minus_1mm_fraction": 0.8203499917259639
+      },
+      "mask_pixels": 10349,
+      "measured_mask_pixels": 7104,
+      "local_plane": {
+        "plane_world": [
+          -0.031141710898969256,
+          -0.6637061987599786,
+          -0.7473448170489075,
+          0.5079233078871066
+        ],
+        "fit_points": 8061,
+        "fit_inliers": 5400,
+        "prior_normal_angle_deg": 0.9278300701882592,
+        "heldout_measured_background_residual": {
+          "count": 24162,
+          "quantiles_m": [
+            0.00022185194362260298,
+            0.001136820620231932,
+            0.002681136412936269,
+            0.004855722041744531,
+            0.01037067329496303
+          ],
+          "below_minus_1mm_fraction": 0.0
+        },
+        "foreground_signed_height": {
+          "count": 7104,
+          "quantiles_m": [
+            -0.11930539117179625,
+            -0.008617289548874585,
+            0.001437848409717002,
+            0.01260557636305075,
+            0.03903777667801294
+          ],
+          "below_minus_1mm_fraction": 0.4341216216216216
+        },
+        "eroded_foreground_signed_height": {
+          "count": 6097,
+          "quantiles_m": [
+            -0.05490399960822958,
+            -0.007284669680986178,
+            0.001821871650743434,
+            0.012338715409243806,
+            0.03735879735242262
+          ],
+          "below_minus_1mm_fraction": 0.4177464326718058
+        },
+        "native_support_replacement_accepted": false
+      }
+    },
+    {
+      "frame": 25,
+      "masked_measured_heights": {
+        "count": 7000,
+        "quantiles_m": [
+          -0.03639631335070676,
+          -0.005984397735373181,
+          0.009676485905885046,
+          0.015399824725464972,
+          0.03337211745610896
+        ],
+        "below_minus_1mm_fraction": 0.3157142857142857
+      },
+      "eroded_mask_measured_heights": {
+        "count": 5943,
+        "quantiles_m": [
+          -0.03233870833061061,
+          -0.004155507362607613,
+          0.010141317240061898,
+          0.015270759871802125,
+          0.032179966953312884
+        ],
+        "below_minus_1mm_fraction": 0.29799764428739695
+      },
+      "nearby_background_prior_heights": {
+        "count": 48361,
+        "quantiles_m": [
+          -0.010052936551295466,
+          -0.003606263118972608,
+          -0.00025216403892358574,
+          0.0030490525848509975,
+          0.007533087997070531
+        ],
+        "below_minus_1mm_fraction": 0.43692231343437893
+      },
+      "mask_pixels": 7925,
+      "measured_mask_pixels": 7000,
+      "local_plane": {
+        "plane_world": [
+          -0.019953076885294074,
+          -0.6664144960522216,
+          -0.7453144263827671,
+          0.502225916501244
+        ],
+        "fit_points": 8023,
+        "fit_inliers": 4749,
+        "prior_normal_angle_deg": 0.6720616150288415,
+        "heldout_measured_background_residual": {
+          "count": 24294,
+          "quantiles_m": [
+            0.0002703888911111952,
+            0.0014371030260194317,
+            0.0032191834518962015,
+            0.0058274044920464535,
+            0.011098024600498297
+          ],
+          "below_minus_1mm_fraction": 0.0
+        },
+        "foreground_signed_height": {
+          "count": 7000,
+          "quantiles_m": [
+            -0.03647935889945092,
+            -0.005962189237948168,
+            0.009556629135696187,
+            0.015170383454633174,
+            0.033140364438182586
+          ],
+          "below_minus_1mm_fraction": 0.31742857142857145
+        },
+        "eroded_foreground_signed_height": {
+          "count": 5943,
+          "quantiles_m": [
+            -0.03236125456921304,
+            -0.004070598167215389,
+            0.01009225856258511,
+            0.01507690581459456,
+            0.03202562619349596
+          ],
+          "below_minus_1mm_fraction": 0.3000168265185933
+        },
+        "native_support_replacement_accepted": false
+      }
+    },
+    {
+      "frame": 50,
+      "masked_measured_heights": {
+        "count": 7423,
+        "quantiles_m": [
+          0.29087109933085703,
+          0.30009985650194604,
+          0.305337905534795,
+          0.30998753065050694,
+          0.32594768936514545
+        ],
+        "below_minus_1mm_fraction": 0.0029637612825003366
+      },
+      "eroded_mask_measured_heights": {
+        "count": 6646,
+        "quantiles_m": [
+          0.2910130695912193,
+          0.2999401511092971,
+          0.30499065656254226,
+          0.30957308937663086,
+          0.3255484098889519
+        ],
+        "below_minus_1mm_fraction": 0.0
+      },
+      "nearby_background_prior_heights": {
+        "count": 994,
+        "quantiles_m": [
+          -0.026903198071612622,
+          -0.00020757523789174948,
+          0.01470239919191757,
+          0.02507623343695367,
+          0.03296873568482185
+        ],
+        "below_minus_1mm_fraction": 0.23742454728370221
+      },
+      "mask_pixels": 12207,
+      "measured_mask_pixels": 7423
+    },
+    {
+      "frame": 75,
+      "masked_measured_heights": {
+        "count": 7879,
+        "quantiles_m": [
+          0.0022060660083299656,
+          0.020740798822945494,
+          0.03770273330015411,
+          0.04706650173437252,
+          0.07747627381681513
+        ],
+        "below_minus_1mm_fraction": 0.03452214748064475
+      },
+      "eroded_mask_measured_heights": {
+        "count": 6805,
+        "quantiles_m": [
+          0.003766461050986305,
+          0.02743119657331833,
+          0.037923038517052365,
+          0.04563734902572569,
+          0.07566570331598557
+        ],
+        "below_minus_1mm_fraction": 0.027479794268919912
+      },
+      "nearby_background_prior_heights": {
+        "count": 47868,
+        "quantiles_m": [
+          -0.005092391519875394,
+          0.0019443423641829494,
+          0.005169740330934092,
+          0.007887605317968782,
+          0.012659243131484683
+        ],
+        "below_minus_1mm_fraction": 0.12728754073702683
+      },
+      "mask_pixels": 10030,
+      "measured_mask_pixels": 7879,
+      "local_plane": {
+        "plane_world": [
+          -0.025718218893298596,
+          -0.6648738367544117,
+          -0.7465127958825781,
+          0.4973399543643521
+        ],
+        "fit_points": 7993,
+        "fit_inliers": 5222,
+        "prior_normal_angle_deg": 0.7330391736464762,
+        "heldout_measured_background_residual": {
+          "count": 23891,
+          "quantiles_m": [
+            0.00022703025030942903,
+            0.0012006130739907195,
+            0.002657584745106689,
+            0.00514364431991382,
+            0.010913659136536635
+          ],
+          "below_minus_1mm_fraction": 0.0
+        },
+        "foreground_signed_height": {
+          "count": 7879,
+          "quantiles_m": [
+            -0.0034505029247338336,
+            0.01538135946673616,
+            0.03227681368977975,
+            0.04125115976850463,
+            0.0719788861936097
+          ],
+          "below_minus_1mm_fraction": 0.07259804543723823
+        },
+        "eroded_foreground_signed_height": {
+          "count": 6805,
+          "quantiles_m": [
+            -0.0016876010315493334,
+            0.022381140050134085,
+            0.032509645743037996,
+            0.03990509693330091,
+            0.07034591132476185
+          ],
+          "below_minus_1mm_fraction": 0.05422483468038207
+        },
+        "native_support_replacement_accepted": false
+      }
+    },
+    {
+      "frame": 100,
+      "masked_measured_heights": {
+        "count": 6533,
+        "quantiles_m": [
+          -0.024736603062882324,
+          0.005287104300192413,
+          0.01546390130431241,
+          0.024614036096419045,
+          0.04980660395937534
+        ],
+        "below_minus_1mm_fraction": 0.1878157048829022
+      },
+      "eroded_mask_measured_heights": {
+        "count": 5450,
+        "quantiles_m": [
+          -0.017570688010002587,
+          0.007854520255389491,
+          0.015545464358463823,
+          0.02408087634123869,
+          0.04468689327208864
+        ],
+        "below_minus_1mm_fraction": 0.16311926605504587
+      },
+      "nearby_background_prior_heights": {
+        "count": 46578,
+        "quantiles_m": [
+          -0.000878279913598912,
+          0.005807132497972836,
+          0.008904049997743996,
+          0.011826212236827977,
+          0.015693180574298762
+        ],
+        "below_minus_1mm_fraction": 0.048155781699514795
+      },
+      "mask_pixels": 7514,
+      "measured_mask_pixels": 6533,
+      "local_plane": {
+        "plane_world": [
+          -0.02114551762199803,
+          -0.6665955669273063,
+          -0.7451195992841423,
+          0.4927840601724397
+        ],
+        "fit_points": 7757,
+        "fit_inliers": 5065,
+        "prior_normal_angle_deg": 0.7063733279319699,
+        "heldout_measured_background_residual": {
+          "count": 23308,
+          "quantiles_m": [
+            0.00024027690365207858,
+            0.0012638690221669635,
+            0.002871084934534557,
+            0.005193756188256182,
+            0.011164444487834983
+          ],
+          "below_minus_1mm_fraction": 0.0
+        },
+        "foreground_signed_height": {
+          "count": 6533,
+          "quantiles_m": [
+            -0.0340031789820475,
+            -0.0039038627320556185,
+            0.005987937484144723,
+            0.015070618377651113,
+            0.04031886473498903
+          ],
+          "below_minus_1mm_fraction": 0.2856268176947803
+        },
+        "eroded_foreground_signed_height": {
+          "count": 5450,
+          "quantiles_m": [
+            -0.02694053582612267,
+            -0.0013955597760126892,
+            0.006086893565500934,
+            0.014593626146481145,
+            0.03510124781809955
+          ],
+          "below_minus_1mm_fraction": 0.25779816513761467
+        },
+        "native_support_replacement_accepted": false
+      }
+    },
+    {
+      "frame": 125,
+      "masked_measured_heights": {
+        "count": 8491,
+        "quantiles_m": [
+          -0.07638447981611257,
+          -0.04652267651380165,
+          -0.016966894910209862,
+          -0.002719175386844297,
+          0.015893643442682376
+        ],
+        "below_minus_1mm_fraction": 0.7910729007184077
+      },
+      "eroded_mask_measured_heights": {
+        "count": 7185,
+        "quantiles_m": [
+          -0.07293958546924828,
+          -0.04380815442066377,
+          -0.01632416311608642,
+          -0.002819787744411273,
+          0.013483764690813055
+        ],
+        "below_minus_1mm_fraction": 0.7965205288796103
+      },
+      "nearby_background_prior_heights": {
+        "count": 48092,
+        "quantiles_m": [
+          -0.01799323716925273,
+          -0.010439016520549488,
+          -0.006963532758169244,
+          -0.0038620207568134113,
+          0.0011032168337743392
+        ],
+        "below_minus_1mm_fraction": 0.8983822673209682
+      },
+      "mask_pixels": 10070,
+      "measured_mask_pixels": 8491,
+      "local_plane": {
+        "plane_world": [
+          -0.02548282042235985,
+          -0.6638742496988169,
+          -0.747409931998602,
+          0.5093135432306231
+        ],
+        "fit_points": 7988,
+        "fit_inliers": 4740,
+        "prior_normal_angle_deg": 0.6685751819854907,
+        "heldout_measured_background_residual": {
+          "count": 24129,
+          "quantiles_m": [
+            0.00028422485363464037,
+            0.0014542909340535815,
+            0.003219766816996761,
+            0.006141781941753743,
+            0.0120177701454283
+          ],
+          "below_minus_1mm_fraction": 0.0
+        },
+        "foreground_signed_height": {
+          "count": 8491,
+          "quantiles_m": [
+            -0.07086495097765311,
+            -0.04094432450431995,
+            -0.010398372958428603,
+            0.0034004482208938036,
+            0.02051349158575208
+          ],
+          "below_minus_1mm_fraction": 0.6829584265693087
+        },
+        "eroded_foreground_signed_height": {
+          "count": 7185,
+          "quantiles_m": [
+            -0.06762591620874277,
+            -0.03808524264187341,
+            -0.009762661937396278,
+            0.0032634393576467247,
+            0.01819948729670022
+          ],
+          "below_minus_1mm_fraction": 0.6803061934585943
+        },
+        "native_support_replacement_accepted": false
+      }
+    },
+    {
+      "frame": 150,
+      "masked_measured_heights": {
+        "count": 7737,
+        "quantiles_m": [
+          -0.10210537707571196,
+          -0.022001563959486603,
+          -0.0019801669407999434,
+          0.007245293559892119,
+          0.028639610783595545
+        ],
+        "below_minus_1mm_fraction": 0.5312136487010469
+      },
+      "eroded_mask_measured_heights": {
+        "count": 6518,
+        "quantiles_m": [
+          -0.08939333932365519,
+          -0.017014747300434507,
+          -0.0011500888750763383,
+          0.007241722047425736,
+          0.018975386354912013
+        ],
+        "below_minus_1mm_fraction": 0.503988953666769
+      },
+      "nearby_background_prior_heights": {
+        "count": 47667,
+        "quantiles_m": [
+          -0.0099569151282498,
+          -0.0044786316167668705,
+          -0.0016095160412533671,
+          0.0012762865571375737,
+          0.005747458334020083
+        ],
+        "below_minus_1mm_fraction": 0.5599471332368305
+      },
+      "mask_pixels": 10234,
+      "measured_mask_pixels": 7737,
+      "local_plane": {
+        "plane_world": [
+          -0.02908248508765193,
+          -0.6585646408692518,
+          -0.7519619823221648,
+          0.5068308982625487
+        ],
+        "fit_points": 7926,
+        "fit_inliers": 5217,
+        "prior_normal_angle_deg": 0.6916616891604519,
+        "heldout_measured_background_residual": {
+          "count": 23891,
+          "quantiles_m": [
+            0.0002649146308672523,
+            0.0012995461012578202,
+            0.0027477831998166113,
+            0.004968243962716112,
+            0.009859650935631292
+          ],
+          "below_minus_1mm_fraction": 0.0
+        },
+        "foreground_signed_height": {
+          "count": 7737,
+          "quantiles_m": [
+            -0.10206093212095362,
+            -0.02027968116931478,
+            -7.423751740220919e-05,
+            0.008847604433640077,
+            0.03116656266789539
+          ],
+          "below_minus_1mm_fraction": 0.4764120460126664
+        },
+        "eroded_foreground_signed_height": {
+          "count": 6518,
+          "quantiles_m": [
+            -0.08882275542701006,
+            -0.015100933197436578,
+            0.0008322040411987142,
+            0.008893806051015793,
+            0.02055068248416196
+          ],
+          "below_minus_1mm_fraction": 0.4418533292420988
+        },
+        "native_support_replacement_accepted": false
+      }
+    }
+  ],
+  "observations_modified": false,
+  "trajectory_promoted": false,
+  "physical_task_accepted": false,
+  "new_training_steps": 0,
+  "serialization_failure_v1_retained": true
+}

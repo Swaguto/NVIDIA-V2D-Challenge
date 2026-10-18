@@ -97,5 +97,11 @@ unchanged during this investigation.
 Each GPU session has a deadline, private hash-verified backups and confirmed
 provider shutdown. The latest replay's 190 retained files were verified and
 Brev was confirmed STOPPED at 14:32:02 UTC. Brev must stop when idle.
+Later guarded depth-probe launch attempts never reached RUNNING; the stop
+preflight still returns an invalid-security-token error after a fresh CLI login. Twelve
+subsequent checks confirmed STOPPED; no depth inference or training occurred.
+[Native contact repair now runs on the Mac CPU](NATIVE_CPU_CONTACT_REPAIR_20261018.md).
+Its static control reproduces all 151 archived e037 knots, but the current wrist
+repair proposals have not passed both source and contact requirements.
 The earlier development record is
 preserved in [the history](SCORED_BASELINE_HISTORY_20261018.md).

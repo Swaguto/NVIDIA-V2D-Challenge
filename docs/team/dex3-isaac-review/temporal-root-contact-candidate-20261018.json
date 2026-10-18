@@ -1,0 +1,85 @@
+{
+  "schema": "v2d.temporal-native-root-contact-probe.v1",
+  "episode": 37,
+  "producer_sha256": "ce46dbae0e7fa96c89f72b639680444c8a3888a8177aac8f7157cfee5d70fcd1",
+  "control_report_sha256": "2f81e8aad2d57e6091bddebd90949a70caa7fcd596e5be107846abeff1790d42",
+  "native_model_sha256": "8344c3edddbdc72deb88de001cfd1e66dc8f2640bace304afc6d184c1ac6496a",
+  "frozen_manifest_sha256": "ada1990909c3f9685f93d798c280a902653b432e380607a563f131017fae7815",
+  "source_observations_modified": false,
+  "source_confidence_flags_modified": false,
+  "finger_targets_modified": false,
+  "wrist_orientations_modified": false,
+  "object_targets_modified": false,
+  "physics_stepped": false,
+  "new_training_steps": 0,
+  "trajectory_promoted": false,
+  "physical_task_accepted": false,
+  "source_fit_qualified": false,
+  "iterations": [
+    {
+      "iteration": 0,
+      "status": "solved",
+      "constraints": 87,
+      "before_slots_over_1mm": 27,
+      "after_slots_over_1mm": 0,
+      "maximum_penetration_m": 0.0,
+      "max_correction_m": 0.011024876484956243
+    }
+  ],
+  "limits": {
+    "root_correction_norm_m": 0.025,
+    "root_component_bound_m": 0.014,
+    "adjacent_correction_component_step_m": 0.0015,
+    "second_difference_correction_component_m": 0.0015,
+    "contact_target_clearance_m": 0.0005,
+    "contact_acceptance_penetration_m": 0.001
+  },
+  "control": {
+    "hand_frame_slots_over_1mm": 27,
+    "maximum_penetration_m": 0.010524876484956244
+  },
+  "native_contact_derivative_checks": [
+    {
+      "frame": 64,
+      "hand": "left",
+      "maximum_derivative_error": 1.4147460980495907e-11
+    },
+    {
+      "frame": 65,
+      "hand": "left",
+      "maximum_derivative_error": 1.395827897709978e-11
+    },
+    {
+      "frame": 23,
+      "hand": "right",
+      "maximum_derivative_error": 2.7622792941883745e-11
+    },
+    {
+      "frame": 22,
+      "hand": "right",
+      "maximum_derivative_error": 2.6755486715046572e-11
+    },
+    {
+      "frame": 35,
+      "hand": "right",
+      "maximum_derivative_error": 2.6755486715046572e-11
+    },
+    {
+      "frame": 64,
+      "hand": "left",
+      "maximum_derivative_error": 2.626676653960658e-12
+    }
+  ],
+  "final": {
+    "hand_frame_slots_over_1mm": 0,
+    "maximum_penetration_m": 0.0,
+    "maximum_correction_norm_m": 0.011024876484956243,
+    "maximum_adjacent_correction_component_m": 0.0013581478443465047,
+    "maximum_second_difference_correction_component_m": 0.0008356470658929076,
+    "original_finger_limits_and_velocities_pass": true,
+    "unresolved_object_support_control_retained": true
+  },
+  "contact_stage_passed": true,
+  "candidate_sha256": "8219a6812cfdb29ccbc7603f9fda0028db7d920ca48e96f575eea560e935b374",
+  "wall_seconds": 0.2880732499761507
+}

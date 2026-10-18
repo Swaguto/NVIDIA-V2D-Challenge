@@ -55,6 +55,76 @@
       "file": "spoon_thickness_grid_v2.py",
       "sha256": "776aab87b8ecbe57dfa11b7e5906837825591b13dd41b9e2bba28e468d89f90a",
       "exact_executed_producer": true
+    },
+    {
+      "file": "measured_rigid_pose_probe_v1.py",
+      "sha256": "b4286695790eac84ddf663f7cb605e674773bce86c0a0b415876b5a7dae5f34b",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "rigid_spoon_source_probe_v1.py",
+      "sha256": "bca534b5e7c85bcc57fc86224171e7434ae8ee053c4a45b0cdf965a5715b8a72",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "measured_rigid_pose_probe_v2.py",
+      "sha256": "4796ab39d5baa4909bff706cb8248c477bcf0ef6d86a81a2d2e0e9b090b7a07f",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "rigid_spoon_source_probe_v2.py",
+      "sha256": "2812e98530536aa767401229ffdd43f71771a1c6ae42af476e6927c4567a41d7",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "spoon_source_support_audit_v1.py",
+      "sha256": "4062627fac334b3db8aed9c98bda0408b822b247809992c958099899607dc91e",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "static_native_collision_probe_v1.py",
+      "sha256": "1597b74be781f35f2861cac7ad90e89a97483ac7a332ea74758aaf5ec5bfb218",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "local_native_contact_control_v1.py",
+      "sha256": "e0783523761dbd53b3b0acd181101d35d053ce0f3155dcaffae4d5b4a3a17820",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "temporal_root_contact_probe_v1.py",
+      "sha256": "74961a73eecbd2a06d101aa9387cf6f9f438c4f85fadbae14776d761173ab2d4",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "temporal_root_contact_probe_v2.py",
+      "sha256": "cfb2bf00639378a05265603ba37945f082707e6270dbb03207f8a7a15e7ae9df",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "temporal_root_contact_probe_v3.py",
+      "sha256": "ce46dbae0e7fa96c89f72b639680444c8a3888a8177aac8f7157cfee5d70fcd1",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "temporal_root_contact_probe_v4.py",
+      "sha256": "379122afad4c4f454cf637a063492dd52ffea13ef0a56ac2164ed69d67ce5e74",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "temporal_root_source_check_v1.py",
+      "sha256": "d2bef7e13768526fb0d0528cfadc203ca5f9d550fb29c42c9f70c1f09b626b8f",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "root_source_projection_constraints_v1.py",
+      "sha256": "6fab1658984a8791ce9a8002122a8dc139f807b207fa0b9afd8624078ec1471b",
+      "exact_executed_producer": true
+    },
+    {
+      "file": "prepare_learned_stereo_probe_v1.py",
+      "sha256": "506a1a9404c6703af7d6c386f22d1409f593ef36ee34f0fe871c96bc21aef729",
+      "exact_executed_producer": true
     }
   ],
   "input_assets_included": false,
