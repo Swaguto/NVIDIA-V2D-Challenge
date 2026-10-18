@@ -27,9 +27,9 @@ ROOT = HERE.parents[2]
 sys.path.insert(0, os.environ.get("V2D_RUNTIME", str(ROOT / "reconstruction/modules/v2d_stereo_depth/lib")))
 from stereo_depth import load_rig  # noqa: E402
 
-SEMANTIC_PROMPTS = {"white_pot": "white saucepan", "white_pot_lid": "detached circular lid",
+SEMANTIC_PROMPTS = {"white_pot": "white saucepan with a long handle", "white_pot_lid": "detached circular lid",
                     "mini_dust_pan": "small dustpan", "mini_sweeper": "small hand brush"}
-SEMANTIC_ALIASES = {"white_pot": ["saucepan"], "white_pot_lid": ["circular lid", "pot lid", "lid"],
+SEMANTIC_ALIASES = {"white_pot": ["white saucepan", "saucepan"], "white_pot_lid": ["circular lid", "pot lid", "lid"],
                     "mini_dust_pan": ["dustpan"], "mini_sweeper": ["hand brush"]}
 
 
