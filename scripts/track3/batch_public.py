@@ -61,7 +61,7 @@ def frame_count(data: Path, episode: int) -> int:
 
 
 def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,
-          python: str, fp_python: str, reinit_every: int = 0):
+          python: str, fp_python: str, reinit_every: int = 0, scored: bool = False):
     item = root / f"e{episode:03d}"
     item.mkdir(parents=True, exist_ok=True)
     logs = item / "logs"
@@ -86,6 +86,9 @@ def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,
             command += ["--seed-json", str(seeds)]
         run_command(command, logs / "masks.log")
     elif phase == "poses":
+        if scored:
+            from reconstructed_view import verify_geometry
+            verify_geometry(data, episode, names)
         masks = item / "masks"
         if not (masks / "report.json").is_file():
             raise FileNotFoundError(f"masks missing: {masks}")
@@ -102,6 +105,12 @@ def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,
         for name in names:
             out = item / "poses"
             if (out / f"e{episode:03d}" / f"{name}_fp_report.json").is_file():
+                if scored:
+                    import hashlib
+                    proof = json.loads((out / f"e{episode:03d}" / f"{name}_fp_report.json").read_text())
+                    current = hashlib.sha256((data / "mesh" / name / f"{name}.glb").read_bytes()).hexdigest()
+                    if proof.get("mesh_sha256") != current:
+                        raise ValueError("Tracking cache has different geometry; use a fresh result root")
                 continue
             run_command([fp_python, str(HERE.parent / "foundationpose_track.py"),
                          "--episode", str(episode), "--object", name,
@@ -190,7 +199,7 @@ def main():
             continue
         try:
             results[str(episode)] = stage(args.phase, episode, names, args.data,
-                                          args.root, args.python, args.fp_python, args.reinit_every)
+                                          args.root, args.python, args.fp_python, args.reinit_every, scored=bool(args.roster))
         except Exception as error:
             results[str(episode)] = f"failed: {error}"
             traceback.print_exc()

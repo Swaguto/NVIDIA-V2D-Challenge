@@ -15,8 +15,12 @@ from pathlib import Path
 import cv2
 import numpy as np
 import torch
-from transformers import (AutoProcessor, GroundingDinoForObjectDetection,
-                          Sam2VideoModel, Sam2VideoProcessor)
+from transformers import (
+    AutoProcessor,
+    GroundingDinoForObjectDetection,
+    Sam2VideoModel,
+    Sam2VideoProcessor,
+)
 
 HERE = Path(__file__).resolve()
 ROOT = HERE.parents[2]
@@ -34,9 +38,10 @@ def assign_label(label: str, names: list[str]) -> int | None:
 def seed_boxes(frames: list[np.ndarray], names: list[str], threshold: float,
                device: str, stride: int, max_box_area: float):
     prompt = ". ".join(name.replace("_", " ") for name in names) + "."
-    processor = AutoProcessor.from_pretrained("IDEA-Research/grounding-dino-base")
+    revision = os.environ.get("V2D_DINO_REVISION")
+    processor = AutoProcessor.from_pretrained("IDEA-Research/grounding-dino-base", revision=revision)
     model = GroundingDinoForObjectDetection.from_pretrained(
-        "IDEA-Research/grounding-dino-base").to(device).eval()
+        "IDEA-Research/grounding-dino-base", revision=revision).to(device).eval()
     best: dict[int, tuple[float, list[float], str, int]] = {}
     inspected = sorted(set(range(0, len(frames), stride)) | {len(frames) - 1})
     with torch.inference_mode():
@@ -136,8 +141,9 @@ def run(episode: int, names: list[str], data: Path, out: Path, threshold: float,
         (out / "seed_report.json").write_text(json.dumps(report, indent=2))
         return report
 
-    processor = Sam2VideoProcessor.from_pretrained("facebook/sam2.1-hiera-large")
-    model = Sam2VideoModel.from_pretrained("facebook/sam2.1-hiera-large").to(device).eval()
+    revision = os.environ.get("V2D_SAM2_REVISION")
+    processor = Sam2VideoProcessor.from_pretrained("facebook/sam2.1-hiera-large", revision=revision)
+    model = Sam2VideoModel.from_pretrained("facebook/sam2.1-hiera-large", revision=revision).to(device).eval()
     counts = {name: 0 for name in names}
     rejected = {name: [] for name in names}
     height, width = frames[0].shape[:2]
@@ -183,6 +189,8 @@ def run(episode: int, names: list[str], data: Path, out: Path, threshold: float,
               "suppressed_identity_switch_frames": suppressed,
               "coordinate_frame": "rectified_camera", "camera_frame": rig.left,
               "gt_use": "none", "model": "facebook/sam2.1-hiera-large"}
+    report["model_revisions"] = {"grounding_dino": os.environ.get("V2D_DINO_REVISION"),
+                                 "sam2": os.environ.get("V2D_SAM2_REVISION")}
     (out / "report.json").write_text(json.dumps(report, indent=2))
     return report
 

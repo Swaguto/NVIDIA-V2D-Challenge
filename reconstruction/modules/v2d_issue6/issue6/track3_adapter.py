@@ -218,6 +218,12 @@ def export(
                                    calibration_sha256=file_hash(data / "meta/camera_calibration.json"),
                                    adapter_sha256=file_hash(Path(__file__)),
                                    stereo_videos_sha256={cam: file_hash(base / f"observation.images.{cam}" / f"episode_{episode:06d}.mp4") for cam in (rig.left, rig.right)})
+        geometry_proof = data / "geometry-provenance.json"
+        if geometry_proof.is_file():
+            from reconstructed_view import verify_geometry
+            verify_geometry(data, episode, names)
+            m["input_contract"]["reconstructed_geometry_provenance_sha256"] = file_hash(geometry_proof)
+            m["input_contract"]["reconstructed_geometry_provenance"] = json.loads(geometry_proof.read_text())
         # Keep all generated/source geometry and observation links portable.
         for obj in m["objects"]:
             obj["mesh"] = os.path.relpath(obj["mesh"], output)

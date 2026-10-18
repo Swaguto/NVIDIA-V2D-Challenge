@@ -12,7 +12,11 @@ slot. Public pose-label Parquets were excluded from this acquisition.
 The shared released assets cover 26 pairs. The other ten need `wooden_spoon`,
 which is still absent from this revision. Released CAD is recorded as released
 CAD; acquisition does not establish participant reconstruction provenance or
-submission eligibility. The current kit requires a mesh for every object in
+submission eligibility. The [official FAQ](https://nvidia-isaac.github.io/video_to_data/v2d_challenge/assets/v2d_challenge_2026_faqs.pdf)
+explicitly requires participants to reconstruct their own objects and use
+reconstructed geometry to generate trajectories, including objects with public
+meshes. All 36 pairs therefore need our own reconstruction; the ten spoon pairs
+additionally lack a released diagnostic asset. The current kit requires a mesh for every object in
 the combined submission, including for registration of the five pose metrics.
 
 The first camera pilots are e001 (pot/lid), e010 (two cups), and e038 (one dust
@@ -85,6 +89,27 @@ and original pinned HaMeR/Dyn-HaMR/SAM2 preparation dependencies. Model weights,
 licensed MANO files and episode inputs remain separate private mounts. Build and
 GPU inference validation are recorded separately; no fresh end-to-end success
 is established by its Dockerfile.
+
+### Geometry path without released CAD
+
+`reconstruct_stereo_object.py --stage seed` makes an explicitly incomplete
+convex seed from a source object mask and calibrated stereo measurements. It
+does not read released object meshes. `reconstructed_view.py --allow-seed`
+binds that seed to one episode and the official object-slot order for initial
+tracking. Scored `--phase poses` rejects the released-asset view and any changed
+mesh/cache binding. Every new tracked pose records its actual mesh digest.
+
+After initial tracking, `--stage refine` integrates observed masked depth views
+with TSDF in the same fixed object body frame. It requires poses generated from
+that exact seed, preserves the body origin and records the used observations.
+Inspect and retrack refined geometry before creating final robot bundles. A
+depth seed, TSDF output or passing format check alone does not establish geometry
+quality, correct collision behavior or submission readiness.
+
+The same FAQ explicitly permits floating hands and fixed-base arm/hand setups
+for Track 3. Our selected policy runtime remains the official pinned
+FlashCHORD/Newton/JAX path with floating Dex3 hands. The Isaac renderer remains
+a separate review runtime; a whole-body G1 port is not required by that FAQ.
 
 ## Short controlled training forks
 

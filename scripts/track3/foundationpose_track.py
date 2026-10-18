@@ -7,6 +7,7 @@ later world-frame inference stage may fill them with explicit provenance.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import sys
@@ -15,8 +16,8 @@ from pathlib import Path
 
 import cv2
 import numpy as np
-from scipy.spatial.transform import Rotation
 import trimesh
+from scipy.spatial.transform import Rotation
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, os.environ.get("V2D_RUNTIME", str(ROOT / "reconstruction/modules/v2d_stereo_depth/lib")))
@@ -46,7 +47,9 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
     from estimater import FoundationPose, PoseRefinePredictor, ScorePredictor
 
     rig = load_rig()
-    mesh = trimesh.load(str(mesh_for(data, name)), force="mesh", process=False)
+    mesh_path = mesh_for(data, name)
+    mesh_sha256 = hashlib.sha256(mesh_path.read_bytes()).hexdigest()
+    mesh = trimesh.load(str(mesh_path), force="mesh", process=False)
     # FoundationPose's renderer expects SimpleMaterial.image, while the public
     # GLBs carry PBRMaterial.baseColorTexture.
     if isinstance(mesh.visual, trimesh.visual.texture.TextureVisuals):
@@ -127,7 +130,8 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
                 frame += 1
                 continue
         quat = Rotation.from_matrix(pose[:3, :3]).as_quat()
-        record = {"episode": episode, "frame_index": frame,
+        record = {"episode": episode, "frame_index": frame, "object": name,
+                  "mesh_sha256": mesh_sha256,
                   "translation": pose[:3, 3].tolist(),
                   "rotation": quat[[3, 0, 1, 2]].tolist(),
                   "scale": 1.0, "status": "observed", "gt_use": "none",
@@ -146,6 +150,7 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
     left.release()
     right.release()
     report = {"episode": episode, "object": name, "frames": frame,
+              "mesh_sha256": mesh_sha256,
               "observed": len(observed), "missing_mask_or_depth": missing,
               "rejected": rejected, "gt_use": "none",
               "reinit_every": reinit_every, "register_iterations": register_iterations,
