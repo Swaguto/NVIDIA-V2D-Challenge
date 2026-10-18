@@ -659,6 +659,8 @@ def run(config):
                 f"/stage/native/{label}",
                 "--temporal-root",
                 f"/workspace/temporal-hands/{label}",
+                "--converted-records",
+                f"/stage/conversions/{label}/converted",
                 "--mano-assets-root",
                 "/workspace/mano",
                 "--image-fit",

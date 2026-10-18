@@ -59,6 +59,7 @@ def repair(
     original_run=None,
     temporal_root=None,
     mano_assets_root=None,
+    converted_records=None,
 ):
     label = f"e{episode:03d}"
     cache = input_root / "issue6-quality-cache/episodes" / label
@@ -140,21 +141,15 @@ def repair(
     camera_translations_full = np.zeros((len(handedness), len(frames), 3))
     camera_rotations[:, fitted_source_indices] = rotations
     camera_translations_full[:, fitted_source_indices] = camera_translations
-    raw = {"left": {}, "right": {}}
-    for p in sorted((prior_records or (temporal / "converted")).rglob("*.json")):
-        r = read(p)
-        if "mano" not in r or "frame_idx" not in r:
-            continue
-        side = "right" if r["is_right"] else "left"
-        if prior_records is None:
-            native_index = r["frame_idx"]
-            if not 0 <= native_index < len(fitted_axis):
-                raise ValueError("Native pose is outside the recorded fitted axis")
-            r["inference_frame_idx"] = native_index
-            r["frame_idx"] = fitted_axis[native_index]["id"]
-        if r["frame_idx"] in raw[side]:
-            raise ValueError("Ambiguous same-side native hand")
-        raw[side][r["frame_idx"]] = r
+    from issue6.native_priors import load_native_priors
+
+    if prior_records is not None and converted_records is not None:
+        raise ValueError("Choose canonical source priors or native converted priors")
+    raw = load_native_priors(
+        prior_records or converted_records or (temporal / "converted"),
+        fitted_axis,
+        source_frame_indices=prior_records is not None,
+    )
     additional = {side: {} for side in raw}
     if image_observations is not None:
         from issue6.image_observations import load_image_estimate
@@ -559,6 +554,10 @@ def repair(
             if image_observations
             else None,
             "prior_records": str(prior_records) if prior_records else None,
+            "converted_records": str(converted_records) if converted_records else None,
+            "loaded_native_prior_counts": {
+                side: len(rows) for side, rows in raw.items()
+            },
             "cad_foreground_margin_m": 0.005,
             "minimum_pixels": config["minimum_pixels"],
             "maximum_residual_m": config["maximum_residual_m"],
@@ -591,6 +590,11 @@ if __name__ == "__main__":
     )
     p.add_argument("--mano-assets-root", type=Path, help="Private licensed MANO mount")
     p.add_argument("--prior-records", type=Path)
+    p.add_argument(
+        "--converted-records",
+        type=Path,
+        help="Raw converted native-index records, before observation gating",
+    )
     p.add_argument("--smooth-seconds", type=float, default=0.15)
     p.add_argument("--prior-weight", type=float, default=0.05)
     a = p.parse_args()
@@ -609,4 +613,5 @@ if __name__ == "__main__":
         original_run=a.original_run,
         temporal_root=a.temporal_root,
         mano_assets_root=a.mano_assets_root,
+        converted_records=a.converted_records,
     )

@@ -11,6 +11,15 @@ sys.path.insert(0, str(Path(__file__).parents[1]))
 from run_scored_policy import TRAINING, validate
 
 
+def test_no_training_with_both_hands_parked():
+    from run_scored_policy import require_command_anchors
+
+    require_command_anchors({"selected_anchor_slots": [4, 0]})
+    for slots in ([0, 0], [False, 1], [-1, 2], [2]):
+        with pytest.raises(ValueError, match="command anchors"):
+            require_command_anchors({"selected_anchor_slots": slots})
+
+
 @pytest.fixture
 def config(tmp_path):
     c = {

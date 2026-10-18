@@ -178,6 +178,13 @@ private mounts. The resulting `observations`, `temporal-hands`, and `perception`
 directories supply the reconstruction runner's corresponding config paths.
 All three runners need a surrounding timed compute lease and result backup.
 
+The reconstruction runner passes its separate raw conversion directory explicitly
+to continuity repair. Raw native frame indices are mapped through the recorded
+fit crop; canonical source-index priors use a separate option. Missing or empty
+prior directories fail immediately. The policy runner also rejects a case with
+zero command anchors across both hands before collision preparation or training.
+An entirely parked-hand rollout must not silently qualify as this baseline.
+
 For an offline native replay, run
 `scripts/dex3_training/render_native_readback_fast.py --run <readback> --inputs <frozen-pack> --out <new-preview>`.
 It retains every source knot at source speed, draws the actual recorded collision

@@ -96,6 +96,19 @@ def checkpoint_metadata(path):
     }
 
 
+def require_command_anchors(report):
+    anchors = report.get("selected_anchor_slots")
+    if (
+        not isinstance(anchors, list)
+        or len(anchors) != 2
+        or any(type(n) is not int or n < 0 for n in anchors)
+        or sum(anchors) == 0
+    ):
+        raise ValueError(
+            "No usable hand command anchors; repair reconstruction before training"
+        )
+
+
 def run(config):
     commit = validate(config)
     out = Path(config["out"]).resolve()
@@ -231,6 +244,12 @@ def run(config):
             ik=True,
             limit=180,
         )
+        case_report = json.loads(
+            (out / "prepared/case/proposal/report.json").read_text()
+        )
+        require_command_anchors(case_report)
+        receipt["selected_command_anchor_slots"] = case_report["selected_anchor_slots"]
+        save()
         container(
             "/opt/dex3-extension/prepare_window.py",
             [
