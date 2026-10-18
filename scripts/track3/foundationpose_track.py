@@ -86,7 +86,7 @@ def stereo_frames(left, right, anchor=None, max_frames=0):
 def run(episode: int, name: str, data: Path, masks: Path, out: Path,
         register_iterations=5, track_iterations=2, max_frames=0,
         reinit_every=0, bootstrap_manifest=None, camera_root=None,
-        foreground_depth_only=False):
+        foreground_depth_only=False, foreground_translation_prior=False):
     target = (out / f"e{episode:03d}" / "ego_object_poses" / f"e{episode:03d}" /
               name / "object_to_cam" / "ego_cam_c")
     if target.exists() and any(target.iterdir()):
@@ -103,6 +103,8 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
     mesh = trimesh.load(str(mesh_path), force="mesh", process=False)
     anchor = None
     anchor_pose = None
+    if foreground_translation_prior and bootstrap_manifest is None:
+        raise ValueError('Foreground translation prior requires an own reconstructed body anchor')
     if bootstrap_manifest is not None:
         proof = json.loads(bootstrap_manifest.read_text())
         if (proof.get('provided_meshes_read') is not False or proof.get('reference_pose_labels_read') is not False
@@ -155,6 +157,7 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
     last_pose = None
     last_registration = None
     last_pose_frame = None
+    last_surface = None
     observed, missing, rejected = [], [], []
     frames_seen = 0
     for frame, raw_l, raw_r, reset_anchor in stereo_frames(left, right, anchor, max_frames):
@@ -162,6 +165,7 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
         if reset_anchor:
             last_frame, last_pose = anchor, anchor_pose.copy()
             last_pose_frame = anchor
+            last_surface = None
         rect_l, _ = rig.rectify_pair(raw_l, raw_r)
         rgb = cv2.cvtColor(rect_l, cv2.COLOR_BGR2RGB)
         depth, valid = stereo_depth(rig, raw_l, raw_r)
@@ -172,11 +176,22 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
             last_frame = None
             continue
         refinement_depth = foreground_depth(depth, valid, mask) if foreground_depth_only else depth
+        surface = None
+        if foreground_translation_prior:
+            from foreground_prior import measured_surface
+            surface = measured_surface(depth, valid, mask, K)
         try:
             prior_pose = last_pose
             if camera_poses is not None:
                 from camera_prior import transport
                 prior_pose = transport(last_pose, camera_poses[last_pose_frame], camera_poses[frame])
+            acceptance_prior_pose = prior_pose
+            surface_shift = 0.0
+            if surface is not None and last_surface is not None:
+                from foreground_prior import translated_prior
+                camera_delta = (camera_poses[frame] @ np.linalg.inv(camera_poses[last_pose_frame])) if camera_poses is not None else None
+                prior_pose = translated_prior(prior_pose, last_surface, surface, camera_delta)
+                surface_shift = float(np.linalg.norm(prior_pose[:3, 3] - acceptance_prior_pose[:3, 3]))
             periodic = (reinit_every > 0 and last_registration is not None and
                         frame - last_registration >= reinit_every)
             if anchor is not None:
@@ -219,7 +234,7 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
                 last_frame = None
                 continue
         if last_pose is not None and last_frame is not None:
-            step = np.linalg.inv(prior_pose if camera_poses is not None else last_pose) @ pose
+            step = np.linalg.inv(acceptance_prior_pose if camera_poses is not None else last_pose) @ pose
             if (np.linalg.norm(step[:3, 3]) > 0.15 or
                     Rotation.from_matrix(step[:3, :3]).magnitude() > np.deg2rad(40)):
                 rejected.append({"frame": frame, "error": "implausible pose jump"})
@@ -236,6 +251,8 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
                   "mask_pixels": int((mask > 127).sum()),
                   "depth_pixels": int(((mask > 127) & valid).sum())}
         record['foreground_depth_only'] = foreground_depth_only
+        record['foreground_translation_prior'] = foreground_translation_prior
+        record['measured_surface_initialization_shift_m'] = surface_shift
         if support is not None:
             record['depth_support'] = support
         if camera_poses is not None:
@@ -245,6 +262,7 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
         observed.append(frame)
         last_frame, last_pose = frame, pose
         last_pose_frame = frame
+        last_surface = surface
         if method.startswith("register"):
             last_registration = frame
         if frame % 25 == 0:
@@ -258,6 +276,8 @@ def run(episode: int, name: str, data: Path, masks: Path, out: Path,
               "reinit_every": reinit_every, "register_iterations": register_iterations,
               "track_iterations": track_iterations,
               "foreground_depth_only": foreground_depth_only,
+              "foreground_translation_prior": foreground_translation_prior,
+              "acceptance_prior_excludes_foreground_translation": True,
               "acceptance_uses_original_measured_depth": True}
     if bootstrap_manifest is not None:
         report.update(bootstrap_manifest_sha256=hashlib.sha256(bootstrap_manifest.read_bytes()).hexdigest(),
@@ -287,11 +307,13 @@ def main():
                         help='Explicit experiment: per-frame independent rectified camera JSON folder')
     parser.add_argument('--foreground-depth-only', action='store_true',
                         help='Experiment: refine using measured object-mask depth only; acceptance gates unchanged')
+    parser.add_argument('--foreground-translation-prior', action='store_true',
+                        help='Experiment: initialize displacement from measured foreground; original pose-jump/depth gates unchanged')
     args = parser.parse_args()
     print(run(args.episode, args.object, args.data, args.masks, args.out,
               args.register_iterations, args.track_iterations, args.max_frames,
               args.reinit_every, args.bootstrap_manifest, args.camera_root,
-              args.foreground_depth_only), flush=True)
+              args.foreground_depth_only, args.foreground_translation_prior), flush=True)
 
 
 if __name__ == "__main__":

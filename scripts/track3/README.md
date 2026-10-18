@@ -183,3 +183,12 @@ For an offline native replay, run
 It retains every source knot at source speed, draws the actual recorded collision
 surfaces with a fixed view, and warns when an object leaves that view. Triangle
 visibility is approximate. It does not run new physics or render Isaac Sim.
+
+Two separate optional tracking experiments are available in `batch_public.py`:
+`--foreground-depth-only` removes non-object depth from refinement;
+`--foreground-translation-prior` initializes a moving object's displacement from
+the measured foreground surface median. The latter retains the reconstructed
+body gauge and does not treat that median as the body origin. Both still use the
+original measured-depth support and pose-jump acceptance checks. Use fresh result
+roots and review source overlays before promoting either experiment. Neither is
+enabled by default.

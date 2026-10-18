@@ -62,7 +62,7 @@ def frame_count(data: Path, episode: int) -> int:
 
 def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,
           python: str, fp_python: str, reinit_every: int = 0, scored: bool = False,
-          foreground_depth_only: bool = False):
+          foreground_depth_only: bool = False, foreground_translation_prior: bool = False):
     item = root / f"e{episode:03d}"
     item.mkdir(parents=True, exist_ok=True)
     logs = item / "logs"
@@ -111,6 +111,8 @@ def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,
                 cached = json.loads((out / f"e{episode:03d}" / f"{name}_fp_report.json").read_text())
                 if bool(cached.get('foreground_depth_only', False)) != foreground_depth_only:
                     raise ValueError("Tracking cache uses a different refinement-depth policy; use a fresh result root")
+                if bool(cached.get('foreground_translation_prior', False)) != foreground_translation_prior:
+                    raise ValueError("Tracking cache uses a different foreground initialization policy; use a fresh result root")
                 if scored:
                     import hashlib
                     proof = json.loads((out / f"e{episode:03d}" / f"{name}_fp_report.json").read_text())
@@ -129,6 +131,8 @@ def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,
                 command += ['--bootstrap-manifest', str(data / geometry_proof['objects'][name]['manifest'])]
             if foreground_depth_only:
                 command += ['--foreground-depth-only']
+            if foreground_translation_prior:
+                command += ['--foreground-translation-prior']
             run_command(command, logs / f"pose_{name}.log", env)
     elif phase in ("world", "scores"):
         camera, poses = item / "camera", item / "poses"
@@ -195,6 +199,8 @@ def main():
                         help="CAD re-registration interval; recorded by each object tracker")
     parser.add_argument('--foreground-depth-only', action='store_true',
                         help='Experiment: object-mask refinement depth; original acceptance gates')
+    parser.add_argument('--foreground-translation-prior', action='store_true',
+                        help='Experiment: measured visible-surface displacement initialization; original acceptance gates')
     parser.add_argument("--fp-python", default=os.environ.get(
         "V2D_FP_PYTHON", "/home/ubuntu/fp_venv/bin/python"))
     args = parser.parse_args()
@@ -215,7 +221,8 @@ def main():
         try:
             results[str(episode)] = stage(args.phase, episode, names, args.data,
                                           args.root, args.python, args.fp_python, args.reinit_every,
-                                          scored=bool(args.roster), foreground_depth_only=args.foreground_depth_only)
+                                          scored=bool(args.roster), foreground_depth_only=args.foreground_depth_only,
+                                          foreground_translation_prior=args.foreground_translation_prior)
         except Exception as error:
             results[str(episode)] = f"failed: {error}"
             traceback.print_exc()
