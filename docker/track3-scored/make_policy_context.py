@@ -39,6 +39,11 @@ def create(out):
         ["git", "-C", str(ROOT), "archive", commit, *PREFIXES]
     )
     out.mkdir(parents=True)
+    # Docker cannot create a nested bind target inside a read-only parent mount.
+    # This directory is empty; the actual robot closure is mounted separately.
+    (
+        out / "code/robotic_grounding/source/robotic_grounding/robotic_grounding/assets"
+    ).mkdir(parents=True)
     with tarfile.open(fileobj=io.BytesIO(payload)) as archive:
         for member in archive:
             path = Path(member.name)

@@ -58,6 +58,11 @@ def validate(config):
     ):
         raise ValueError("Expected a committed code-only policy context")
     verify_files(context, source["files"])
+    if not (
+        context
+        / "code/robotic_grounding/source/robotic_grounding/robotic_grounding/assets"
+    ).is_dir():
+        raise ValueError("Code context needs an empty nested robot asset mount target")
     lock = json.loads(Path(config["robot_asset_lock"]).read_text())
     if lock.get("schema") != "v2d.dex3.robot-assets.v1" or not all(
         f"urdfs/g1/dex3_{side}.urdf" in lock["files_sha256"]

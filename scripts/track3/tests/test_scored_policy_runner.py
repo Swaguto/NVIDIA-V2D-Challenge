@@ -38,6 +38,10 @@ def config(tmp_path):
     source = Path(c["context"]) / "code/producer.py"
     source.parent.mkdir()
     source.write_text("# committed preparation code\n")
+    (
+        Path(c["context"])
+        / "code/robotic_grounding/source/robotic_grounding/robotic_grounding/assets"
+    ).mkdir(parents=True)
     manifest = {
         "schema": "v2d.scored-policy-context.v1",
         "source_commit": "test",
@@ -120,4 +124,13 @@ def test_robot_file_lock_cannot_escape_the_mount(config, tmp_path):
     ).hexdigest()
     p.write_text(json.dumps(lock))
     with pytest.raises(ValueError, match="closure differs"):
+        validate(config)
+
+
+def test_nested_readonly_mount_target_must_exist_before_docker(config):
+    (
+        Path(config["context"])
+        / "code/robotic_grounding/source/robotic_grounding/robotic_grounding/assets"
+    ).rmdir()
+    with pytest.raises(ValueError, match="mount target"):
         validate(config)
