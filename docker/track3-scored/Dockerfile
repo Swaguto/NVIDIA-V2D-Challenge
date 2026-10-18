@@ -2,7 +2,7 @@
 FROM ghcr.io/swaguto/track3-runpod@sha256:46cc00a62d1076595b71401a96d17fbe53488afe1fe4d7a9784bf3512ac3e908
 ENV GIT_LFS_SKIP_SMUDGE=1 PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PYOPENGL_PLATFORM=egl V2D_OPT_HAND_SHAPE=0 SAM2_BUILD_CUDA=0
-RUN python -m pip install --no-cache-dir --no-deps open3d==0.19.0
+RUN python -m pip install --no-cache-dir --no-deps open3d==0.19.0 addict==2.4.0 pyquaternion==0.9.9
 RUN git clone --filter=blob:none --no-checkout https://github.com/geopavlakos/hamer.git /workspace/hamer \
     && git -C /workspace/hamer checkout --detach 3a01849f4148352e9260b69bf28b65d1671a4905 \
     && git clone --filter=blob:none --no-checkout https://github.com/ZhengdiYu/Dyn-HaMR.git /workspace/Dyn-HaMR \

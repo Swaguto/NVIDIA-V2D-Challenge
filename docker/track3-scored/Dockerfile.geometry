@@ -1,6 +1,6 @@
 # Repair the inherited Open3D 0.20 metric-depth regression without rebuilding GPU libraries.
 FROM ghcr.io/swaguto/nvidia-v2d-challenge-dex3-review@sha256:0612e39a9f7377aa3b184105f3aeab0184d55854df0c9e2a2b0bc41145585b99
-RUN python -m pip install --no-cache-dir --no-deps open3d==0.19.0
+RUN python -m pip install --no-cache-dir --no-deps open3d==0.19.0 addict==2.4.0 pyquaternion==0.9.9
 COPY code/ /workspace/pr32/
 COPY context-manifest.json /opt/locks/scored-code-context.json
 RUN python scripts/track3/check_geometry_runtime.py --out /opt/locks/metric-tsdf-runtime.json \
