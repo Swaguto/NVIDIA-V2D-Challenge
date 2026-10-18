@@ -90,17 +90,20 @@ exactly; the worker also checked those samples against sequentially decoded
 source pixels. The private depth outputs total 498,556,063 bytes. These checks
 establish input/output integrity, not ground-truth depth accuracy.
 
-A separate complete object-pose fitting diagnostic is now running locally,
-reusing the seven qualified fits and the unchanged source fitter. It retains
-failed knots and missing-observation flags, checks each corrected pose against
-the previous corrected pose, and reports actual world-frame velocity and
-acceleration. A native full-path audit is prepared but **not yet executed**.
-The fit has a 40-minute independent wall cap, 2 GiB RSS cap and 1.5 GiB disk
-reserve. It neither qualifies motion nor starts training automatically.
+The separate complete object-pose fit and its fresh native audit have now
+finished. They remain **rejected**: 11 source-fit failures, 6 object/support
+penetration knots, 20 hand/frame penetration failures and worse peak motion.
+Subsequent bounded source/camera-alignment experiments and their retained
+negative controls are recorded in the
+[complete-reference investigation](E037_FULL_REFERENCE_REPAIR_20261018.md).
+The later inferred object/hand reference now passes full source, motion and
+1 mm native knot checks, plus an independent 3,805-sample discrete sweep.
+This qualifies a reference candidate for a bounded physics test; no stable
+grasp, trained policy or score improvement is established. The earlier
+between-frame clipping and rejected solver proposals are retained.
 
-After that: check the complete object trajectory, repair the hand
-commands against the new geometry, and run the unchanged full 1 mm native gate,
-source-fit and motion checks. No PPO should start until those checks qualify.
+Next: a fresh GPU preflight and full unassisted controller test, followed by
+a short learning experiment if the physics checks pass.
 Brev remains stopped; its shutdown-control failure still blocks paid GPU work.
 
 The optional [passive startup trace](REPLAY_STARTUP_TRACE_20261018.md) is also

@@ -1,0 +1,227 @@
+{
+  "schema": "v2d.e037-full-reference-repair-summary.v1",
+  "selected_policies_mp_sr_changed": false,
+  "new_paid_sessions": 0,
+  "new_training_steps": 0,
+  "physical_task_accepted": false,
+  "full_fit_source_qualified_frames": 140,
+  "full_fit_source_failed_frames": [
+    34,
+    46,
+    64,
+    65,
+    66,
+    89,
+    93,
+    103,
+    104,
+    126,
+    128
+  ],
+  "full_native_control": {
+    "schema": "v2d.reference-native-penetration-gate.v1",
+    "input_manifest_sha256": "f4f3e1ed63e1f7888e43f017420ad558cba2a00651d85445080b6262ba4c70f3",
+    "reference_knots": 151,
+    "tolerance_m": 0.001,
+    "object_knots_over_tolerance": 6,
+    "hand_slots_over_tolerance": 20,
+    "maximum_object_penetration_m": 0.013177289409581952,
+    "maximum_hand_penetration_m": 0.008962677142225409,
+    "native_penetration_gate_passed": false,
+    "contact_distances_recomputed_from_every_audit_frame": true,
+    "source_targets_modified": false,
+    "contact_forces_or_grasp_stability_assessed": false,
+    "swept_contacts_assessed": false,
+    "physical_task_accepted": false
+  },
+  "source_pool_fixed_camera_empty_frames": [
+    126,
+    128
+  ],
+  "observed_background_planes": 138,
+  "qualified_background_planes": 137,
+  "inferred_only_plane_frames": [
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58
+  ],
+  "rejected_smooth_alignment_v1_frames": [
+    67,
+    113,
+    115
+  ],
+  "source_alignment_v2": {
+    "source_alignment_stage_passed": true,
+    "centroid_hard_gates_passed": true,
+    "motion_bounds": {
+      "maximum_rotation_norm_rad": 0.02896433874891312,
+      "maximum_normal_displacement_m": 0.012797788224015219,
+      "maximum_adjacent_rotation_component_rad": 0.0029571487753635925,
+      "maximum_second_rotation_component_rad": 0.0025029443908690958,
+      "maximum_adjacent_normal_displacement_m": 0.001500000000000001,
+      "maximum_second_normal_displacement_m": 0.0006160799131402902
+    },
+    "maximum_source_hand_projection_change_px": 5.023445309899899e-13,
+    "maximum_unobserved_tangential_camera_translation_m": 3.892572694516993e-18,
+    "source_gate_failed_frames": [],
+    "camera_motion": {
+      "original": {
+        "maximum_linear_speed_m_s": 0.08761090528175451,
+        "maximum_angular_speed_rad_s": 0.20684470028716875,
+        "maximum_linear_acceleration_m_s2": 1.0074021868737761,
+        "maximum_angular_acceleration_rad_s2": 2.7451090666076228,
+        "p95_linear_speed_m_s": 0.05119951048097754,
+        "p95_angular_speed_rad_s": 0.16186103843878688
+      },
+      "candidate": {
+        "maximum_linear_speed_m_s": 0.0636037457048337,
+        "maximum_angular_speed_rad_s": 0.2080485772738098,
+        "maximum_linear_acceleration_m_s2": 1.0038631518902401,
+        "maximum_angular_acceleration_rad_s2": 2.7275543961397632,
+        "p95_linear_speed_m_s": 0.04116908000608284,
+        "p95_angular_speed_rad_s": 0.1494037692202299
+      }
+    }
+  },
+  "plane_aligned_pose_pools_all_frames_qualified": true,
+  "source_pool93_narrow_qualified_candidates": 754,
+  "motion_selection_failures": [
+    {
+      "variant": "aligned_v1",
+      "frame": 62
+    },
+    {
+      "variant": "aligned_v2",
+      "frame": 79
+    },
+    {
+      "variant": "aligned_v3",
+      "frame": 95
+    }
+  ],
+  "exact_cpu_archive_source_count": 122,
+  "unexecuted_prepared_source_count": 2,
+  "estimated_depth_truth_verified": false,
+  "RGB_and_SGBM_conflicts_retained": true,
+  "private_arrays_or_images_included": false,
+  "complete_object_path": {
+    "source_qualified_frames": 151,
+    "motion_quality_certified": true,
+    "motion": {
+      "original": {
+        "maximum_linear_speed_m_s": 0.8029814730925238,
+        "maximum_angular_speed_rad_s": 5.043756080119872,
+        "maximum_linear_acceleration_m_s2": 15.476044531066256,
+        "maximum_angular_acceleration_rad_s2": 152.51487858608039,
+        "p95_linear_speed_m_s": 0.4925047000217366,
+        "p95_angular_speed_rad_s": 3.5699946857974005
+      },
+      "candidate": {
+        "maximum_linear_speed_m_s": 0.6797604164263895,
+        "maximum_angular_speed_rad_s": 4.597923394392586,
+        "maximum_linear_acceleration_m_s2": 13.111465473274755,
+        "maximum_angular_acceleration_rad_s2": 135.81811705731366,
+        "p95_linear_speed_m_s": 0.4456856351936675,
+        "p95_angular_speed_rad_s": 3.055093732086866
+      }
+    },
+    "report_sha256": "45a4aae462a7a7f5fc4bfea45b1f40ee2892c71bd7626e5293b4c5e739cc1cb6"
+  },
+  "independent_static_candidate": {
+    "candidate_manifest_sha256": "7e12fcd85eab8b54e1d694a95be7037c624a71bb827139e6a18f4ca4420bf650",
+    "candidate_sha256": "be8fdb232ab3cba7418ff127683efee625929446461b66783c97079cbb53c81f",
+    "native_contact_gate": {
+      "schema": "v2d.reference-native-penetration-gate.v1",
+      "input_manifest_sha256": "7e12fcd85eab8b54e1d694a95be7037c624a71bb827139e6a18f4ca4420bf650",
+      "reference_knots": 151,
+      "tolerance_m": 0.001,
+      "object_knots_over_tolerance": 0,
+      "hand_slots_over_tolerance": 0,
+      "maximum_object_penetration_m": 0,
+      "maximum_hand_penetration_m": 0,
+      "native_penetration_gate_passed": true,
+      "contact_distances_recomputed_from_every_audit_frame": true,
+      "source_targets_modified": false,
+      "contact_forces_or_grasp_stability_assessed": false,
+      "swept_contacts_assessed": false,
+      "physical_task_accepted": false
+    },
+    "independent_source_projection": [
+      {
+        "hand": "left",
+        "observed_points": 604,
+        "source_metric_supported_frames": 24,
+        "maximum_point_regression_px": 0.0,
+        "before_median_px": 15.505636231216954,
+        "after_median_px": 15.36400810983124,
+        "before_p95_px": 24.740052277547687,
+        "after_p95_px": 24.72337890067869,
+        "passed": true
+      },
+      {
+        "hand": "right",
+        "observed_points": 300,
+        "source_metric_supported_frames": 55,
+        "maximum_point_regression_px": 0.0,
+        "before_median_px": 15.037255198552502,
+        "after_median_px": 14.901031331295812,
+        "before_p95_px": 35.466433584421644,
+        "after_p95_px": 35.35988433305496,
+        "passed": true
+      }
+    ],
+    "inferred_motion_bounds": {
+      "maximum_root_correction_norm_m": 0.01678267021730733,
+      "maximum_added_root_adjacent_component_m": 0.0015000000000000568,
+      "maximum_added_root_second_component_m": 0.001433667209198547,
+      "maximum_added_rotation_adjacent_component_rad": 0.02,
+      "maximum_added_rotation_second_component_rad": 0.016900165050460516,
+      "maximum_added_finger_adjacent_rad": 0.03399411555127743,
+      "maximum_added_finger_second_rad": 0.024876175153104862,
+      "maximum_root_correction_component_m": 0.014000000003667412,
+      "maximum_finger_change_rad": 0.23505562277562342
+    },
+    "motion_limits_stage_passed": true,
+    "complete_static_source_contact_motion_stage_passed": true,
+    "physical_task_accepted": false
+  },
+  "retained_between_knot_control": {
+    "samples": 3805,
+    "failed_samples": 11,
+    "maximum_penetration_m": 0.003961374216350604,
+    "interval": 67
+  },
+  "independent_final_discrete_sweep": {
+    "samples": 3805,
+    "interior_samples": 3654,
+    "source_knots": 151,
+    "maximum_sample_spacing_s": 0.002000000000000668,
+    "failed_samples": 0,
+    "discrete_interpolated_contact_gate_passed": true,
+    "continuous_collision_certified": false,
+    "actual_policy_motion_assessed": false,
+    "contact_forces_assessed": false,
+    "physical_task_accepted": false
+  },
+  "stable_grasp_verified": false,
+  "training_approved": false,
+  "provider_status": "STOPPED",
+  "provider_status_checked_utc": "2026-10-18T20:39:46.949847+00:00",
+  "brev_normal_login_restored": true,
+  "brev_stop_control_working": false,
+  "local_integrity_checkpoint": {
+    "verified_files": 636,
+    "independent_off_machine_backup": false
+  }
+}

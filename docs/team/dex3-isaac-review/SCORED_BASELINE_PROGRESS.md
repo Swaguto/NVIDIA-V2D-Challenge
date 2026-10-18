@@ -119,7 +119,15 @@ still fails object/support contact requirements.
 The separate [CPU stereo experiment](FAST_STEREO_CPU_20261018.md) has now
 completed and independently verified all **151 e037 depth frames** with the
 source clock and frozen inputs intact. It does not establish ground-truth depth
-accuracy. Complete object-pose fitting is running locally under a bounded
-guard; the new geometry has not passed the full task gate or been used for PPO.
+accuracy. The complete object fit is rejected for source/contact/motion failures.
+A separate [source-derived camera/reference repair](E037_FULL_REFERENCE_REPAIR_20261018.md)
+now passes all 151 object source fits, unchanged original motion caps, fresh
+full native object/hand contacts, source hand projections and URDF motion
+limits. A further between-frame clipping failure was repaired: the latest
+independent discrete sweep clears all 3,805 samples. This is an inferred
+reference candidate for a physics trial, not a grasp or score improvement.
+The new geometry has not been used for PPO. Normal Brev login/listing now
+work, but provider stop commands still fail; the VM was independently confirmed
+STOPPED at 20:39:46 UTC. No new paid work was started.
 The earlier development record is
 preserved in [the history](SCORED_BASELINE_HISTORY_20261018.md).

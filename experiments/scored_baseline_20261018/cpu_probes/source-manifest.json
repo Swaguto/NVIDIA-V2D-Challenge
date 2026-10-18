@@ -279,13 +279,15 @@
       "file": "fast_stereo_cpu_full_e037_v1.py",
       "sha256": "1277c459e9204a9703bc40cfdbc72aea50624b24601c92062e1a855a3ee331a9",
       "exact_executed_producer": true,
-      "full_job_in_progress_at_archive": true
+      "full_job_in_progress_at_archive": true,
+      "later_job_closed": true
     },
     {
       "file": "guard_fast_stereo_cpu_full_e037_v1.py",
       "sha256": "edcd9fc9129d20e52e1ca9756d6c15e233748917ecc36b7f0adaec14c25265f9",
       "exact_executed_producer": true,
-      "full_job_in_progress_at_archive": true
+      "full_job_in_progress_at_archive": true,
+      "later_job_closed": true
     },
     {
       "file": "verify_fast_stereo_full_e037_v1.py",
@@ -299,32 +301,483 @@
       "sha256": "b59b36d16630b19a2bd31bd10a73fbe565ddbb2f5cd2e40d88b80befa97cf30c",
       "exact_executed_producer": true,
       "full_job_in_progress_at_archive": true,
-      "preparation_only": false
+      "preparation_only": false,
+      "later_job_closed": true
     },
     {
       "file": "guard_fast_stereo_full_object_trajectory_v1.py",
       "sha256": "d3a8896562db9e2aad234457b4c43d9e7dbac2c5f102f9764e48982eae6275c1",
       "exact_executed_producer": true,
       "full_job_in_progress_at_archive": true,
-      "preparation_only": false
+      "preparation_only": false,
+      "later_job_closed": true
     },
     {
       "file": "validate_fast_stereo_full_object_trajectory_v1.py",
       "sha256": "3f5d1111ef9f96cdfc1be892c9a1161ff9ff14a9996e528adf041309876c2b8c",
-      "exact_executed_producer": false,
+      "exact_executed_producer": true,
       "full_job_in_progress_at_archive": false,
-      "preparation_only": true
+      "preparation_only": false,
+      "outcome": "failed before measurements: output directory existed; newv2 preserved separately"
     },
     {
       "file": "guard_validate_fast_stereo_full_object_trajectory_v1.py",
       "sha256": "32c95068e6768b48ffbed913994524a17d4b86017396ec4c3f887356051f616d",
-      "exact_executed_producer": false,
+      "exact_executed_producer": true,
       "full_job_in_progress_at_archive": false,
-      "preparation_only": true
+      "preparation_only": false,
+      "outcome": "failed before measurements: output directory existed; newv2 preserved separately"
+    },
+    {
+      "file": "validate_fast_stereo_full_object_trajectory_v2.py",
+      "sha256": "5458efee7a9a8dfc1702e6efd47063f031380e22aebaffd8018edcbdb856241f",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_validate_fast_stereo_full_object_trajectory_v2.py",
+      "sha256": "b478f883b4ea69133ea1f791a368572342b22edc6d79dca91e3d001e9e93cbf8",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "source_pose_pool_repair_v1.py",
+      "sha256": "d7ed8ee50394f33731d2f58ebaa3f6ff0a937f9463b5e7c7d58dfbe7fcf84955",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_source_pose_pool_repair_v1.py",
+      "sha256": "a830c9e85b689d092760b3fbf86a727638d181fcdc586955708424a6b5560a46",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "select_source_pose_temporal_path_v1.py",
+      "sha256": "117c937624ccafa2226cb17c8713c42b02c9d225f4c6a3cf2a8ab2bee7aa5a66",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_select_source_pose_temporal_path_v1.py",
+      "sha256": "feb2d1c317c07ca64a3a86224bafa0b6d34bca976bd2ad63350212b2dac42a2c",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "validate_source_pose_temporal_path_v1.py",
+      "sha256": "5e5d802c918bafcbdb360506331f8058923249c6eee9e3d758034bb406ebf7d9",
+      "exact_executed_producer": false,
+      "preparation_only": true,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_validate_source_pose_temporal_path_v1.py",
+      "sha256": "78ed50389f7f307bf10d78f2d9558369ba8af750fc2880f7dcae16bfd0a402a3",
+      "exact_executed_producer": false,
+      "preparation_only": true,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "source_support_failure_window_v1.py",
+      "sha256": "3e070b55ab5a15812de59af5fcc829a055273cd89dfcd2d0da1f13c150123513",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_source_support_failure_window_v1.py",
+      "sha256": "afd5ee772928820578aae097802ccf6568018b0928a965da169a1b4a7b20ec77",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "plane_aligned_source_samples_v1.py",
+      "sha256": "5075355a9c2871122fb2001be2d9ce28d56cefbcab60503205bf9ffe6e056a9c",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_plane_aligned_source_samples_v1.py",
+      "sha256": "d5bea07b85f968d847df921fc7b279b5538de732bdb9f3bbd9fdfe58f980fecd",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "observe_full_static_support_v1.py",
+      "sha256": "05f1f6a2053ba9fee40850d460773cd1c826870953115aebaf224489797734cd",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_observe_full_static_support_v1.py",
+      "sha256": "5ea276d12957342320c647ed79ca66a29d18f1f1914ef431129a62135b1e9e88",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "smooth_plane_camera_alignment_v1.py",
+      "sha256": "2a4a898592278cdac760bf59fd908ec8e07ba74ac9902b75e449b33b331779f6",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_smooth_plane_camera_alignment_v1.py",
+      "sha256": "ce25910e63e829a0dd275b49d68e0e093d8693f9e54f94f2920ed25994e6b488",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "smooth_plane_camera_alignment_v2.py",
+      "sha256": "57a5dfbe1cc492f09f2c5055bd41b8d0b0cf93cc335c690df4ba34e354fd8278",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_smooth_plane_camera_alignment_v2.py",
+      "sha256": "f01cd659c8063d7840aae62ece642e798e0b742d4f0684b41b6518b17edca2fa",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "plane_aligned_pose_pools_v1.py",
+      "sha256": "f2d4ae7c1146c777b22a245233c55806127bbc87decd718c354f17664ae6bdae",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_plane_aligned_pose_pools_v1.py",
+      "sha256": "3fde497c1077821c19fa3065999afa4c8f113f58c769dc1b43b8bbb9ccfa5cd9",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "select_plane_aligned_pose_temporal_path_v1.py",
+      "sha256": "b7adb877fb13f295ec2ca25e29679fb5e55c94bdb7afcf09c5931595988d091d",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_select_plane_aligned_pose_temporal_path_v1.py",
+      "sha256": "f535bd0c31dea4230b221f96aba24b1d6c0155f6ab80bafba01ce343fb9e8130",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "repair_aligned_pose_pool93_v1.py",
+      "sha256": "24962d055adfc021e4a36ad0c08a16e78b89679d08a0e18432e9313a57360af3",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_repair_aligned_pose_pool93_v1.py",
+      "sha256": "9294efe6dca4026aaf9d4e4e5e77443d2bca83355dd017a3aa2db251314e3bb2",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "expand_temporal_pose_pools62_v1.py",
+      "sha256": "39763c949edf69f768a11e8d3557455b54705c8b66d7c043a5fee2894f630f81",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_expand_temporal_pose_pools62_v1.py",
+      "sha256": "b9d15d388785d10623006b33f44cc75f29b0c019d50ed883d9500e3eb0e79550",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "expand_temporal_pose_pools62_v2.py",
+      "sha256": "34000a75090e4168f5fbd855c3b028a6f9a5277844285626626a7f8a044e4a0b",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_expand_temporal_pose_pools62_v2.py",
+      "sha256": "e921953e44b9c97b2d32b0af4b70a103efaf0d9b326cf30a8331b0353c0d4843",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "seal_completed_temporal_pools_v1.py",
+      "sha256": "470e8f1d7b2dcd17fd9f8a437900df1136f9c16cfd2bab1be55f3385565e0fcc",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_seal_completed_temporal_pools_v1.py",
+      "sha256": "ed3a6d5a64c65bc2b4256811ceb9923e2a42c5de4a4e2c4e4ea3c1b5c6f9dac5",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "select_plane_aligned_pose_temporal_path_v2.py",
+      "sha256": "045c2d4e36a5ce025c1c3e787f8929157ef5572a35f2d09dbd36d9fcebed6010",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_select_plane_aligned_pose_temporal_path_v2.py",
+      "sha256": "5ab5771609f8a89bfa700f1a81ee71f213b201bb254894278970ab52477e0aa7",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "adaptive_temporal_pool_expansion_v1.py",
+      "sha256": "61846af925627b528fc3945e41056cae969ae9118a1a29f08d038be26a81eed2",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": true,
+      "later_job_closed": true
+    },
+    {
+      "file": "guard_adaptive_temporal_pool_expansion_v1.py",
+      "sha256": "cace4b058c4a19070400c7d10cd7dc6ffde47fba2f25f90c9b74533de4fd76e8",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": true,
+      "later_job_closed": true
+    },
+    {
+      "file": "select_plane_aligned_pose_temporal_path_v3.py",
+      "sha256": "636086598f2b2175c8cb44958c5f39d8e3a2505f2c74e29cf2745a211d0b5d52",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_select_plane_aligned_pose_temporal_path_v3.py",
+      "sha256": "fb18b12be243ed3d68f39095371d058e56588b35eb3212d2f31e07587b50178a",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_adaptive_temporal_pool_expansion_v2.py",
+      "sha256": "521c2e89e47deff09ca3e5636117f960dfd8ef941e6335aede7d2b7887ee01e9",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": true,
+      "later_job_closed": true
+    },
+    {
+      "file": "select_plane_aligned_pose_temporal_path_v4.py",
+      "sha256": "4c51388d55d22f00f8f8b92ba62494b123480f6d005f19bf8b07ea5420b3d0be",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_select_plane_aligned_pose_temporal_path_v4.py",
+      "sha256": "dd716b639f7031d628cf5f1c24bfa3d4c3aa0119fec99ce2f64b8488161f41b2",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "validate_plane_aligned_native_reference_v1.py",
+      "sha256": "cf834a0bc0a52f9f129d121107e19179c33fe448cb16a0a9e7dff10057d5836f",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_validate_plane_aligned_native_reference_v1.py",
+      "sha256": "2925c1e27e53828a52541bb73832560c9e10d7d0f67809dc37d94529e71b62e1",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "prepare_swept_hand_solver_v1.py",
+      "sha256": "4a1e9a62cb4542207d2141baa42b48087c66920bb9e40650fabf5f59f24a2c2d",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "checkpoint_aligned_reference_work_v1.py",
+      "sha256": "dde9d1eb2ed287f3367f74103a5ae6b916d55e027c56f41e9308b78982237577",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "plane_aligned_articulated_trajectory_v1.py",
+      "sha256": "807e409e10a32769446548ab628bc34831b6bfcb22f050a6a94b5ae49b6d829f",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_plane_aligned_articulated_trajectory_v1.py",
+      "sha256": "c3ed06fb2b3ce2600af56bc28df2a28f62438bc6be49f62aee71096b02356b80",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "plane_aligned_articulated_trajectory_v2.py",
+      "sha256": "d74e5b6650d1500064806d73abd01887acce787ddc7e9c09b9f3aebf18243c7d",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_plane_aligned_articulated_trajectory_v2.py",
+      "sha256": "e401a0c8dce67d022ea7c2dac42f9ef8235466c607cce1a035268a49b1bb494b",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "plane_aligned_articulated_trajectory_v3.py",
+      "sha256": "c8cb81967952e561d3d1421a94f5598f8061b971525e465c1979eb51bd10ca36",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_plane_aligned_articulated_trajectory_v3.py",
+      "sha256": "439089962886a01f1224c228f80ff08e4235e3bb130116bd669016f15b57dcc8",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "plane_aligned_articulated_trajectory_v4.py",
+      "sha256": "a02c8afeb1aab7e98bea713aa24b65eab7a41898b3295065844ba45a5f954e2e",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_plane_aligned_articulated_trajectory_v4.py",
+      "sha256": "f919a9a493f4a071e14691d472ffe12dd264b913eab30aed5deb816c775e4161",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "plane_aligned_articulated_trajectory_v5.py",
+      "sha256": "52ff339a92a46b7c47e026e770306cd83f72e13e88d38427fd04949c25df7a02",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_plane_aligned_articulated_trajectory_v5.py",
+      "sha256": "f84ffd4f85011ca5eba069f08d5d3bb703c6bac30bf19ea7b4249b43cae53bb3",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "validate_plane_aligned_articulated_trajectory_v1.py",
+      "sha256": "da80ef05600e4e237554251e7b2b12d945a07166350a3b5afe24721990005e4f",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_validate_plane_aligned_articulated_trajectory_v1.py",
+      "sha256": "761126f93de70a298db98a3778f827496fa4913f609fdd672f2b20b72a9d3cd3",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "audit_aligned_reference_sweep_v1.py",
+      "sha256": "c8cecd18237078c821f8f2f9116062dc20a17dd8aa7e7fca864c8786a12ea819",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_audit_aligned_reference_sweep_v1.py",
+      "sha256": "baf82251da66c8d517d872f06e1808b8f27c62feda866396942ec1d09dedd73c",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "validate_plane_aligned_articulated_trajectory_v2.py",
+      "sha256": "ef3e710742157b8a19415c12612d42dc99b0b14e3d3a370a3d4f39e015231c73",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_validate_plane_aligned_articulated_trajectory_v2.py",
+      "sha256": "af7d1f8947624858f3c26c825d2db2b1108aeb816c02d3c5d373d0e008630eb3",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "audit_aligned_reference_sweep_v2.py",
+      "sha256": "303c637c99f03769f6370dd5abcd2d17c043e5d25f58db35ccda308d6e201ee1",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "guard_audit_aligned_reference_sweep_v2.py",
+      "sha256": "01cb15401ca2a8dbc7e47dc615f613c8b2235e76a7e948b1770bc41731ba9ac1",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "seal_aligned_reference_candidate_v1.py",
+      "sha256": "25b9e286a99cb15a099312487b44776318766d3e7b8dca8876eb3b3d776e9722",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
+    },
+    {
+      "file": "checkpoint_aligned_reference_work_v2.py",
+      "sha256": "35ee6e8d15cbc628c737e6209d00499a083581801dcfde4c66a6383a686b905b",
+      "exact_executed_producer": true,
+      "preparation_only": false,
+      "full_job_in_progress_at_archive": false
     }
   ],
   "input_assets_included": false,
   "credentials_included": false,
   "production_method": false,
-  "physical_task_accepted": false
+  "physical_task_accepted": false,
+  "latest_result_scope": "V4 object path source/motion all151 passes; V5 hand repair passes fresh native/source/URDF and independent3805sample discrete interpolation. No physics/PPO success.",
+  "executed_source_count": 120,
+  "unexecuted_source_count": 2
 }

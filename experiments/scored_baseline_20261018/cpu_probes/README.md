@@ -8,10 +8,19 @@ accepted methods, and require their original private input layout and pinned
 runtime. Absolute paths describe the historical environment. No input assets,
 model weights, results or credentials are included here.
 
-The full 151-frame CPU depth pass and its independent array/clock/closure
-verification completed. Complete object-pose fitting is a new diagnostic still
-in progress. Its full native validator and resource guard are prepared but
-unexecuted; their presence in Git is not evidence that the candidate passed.
+The full 151-frame CPU depth pass and independent array/clock/closure
+verification completed. The first complete object fit is rejected; later
+source-derived alignment and temporal selection qualify all 151 inferred
+object poses under unchanged motion caps. A fresh articulated repair passes
+full static source/native/motion checks. Its between-knot clipping control is
+retained; a later local refinement clears all 3,805 independent interpolation
+samples. No physics, force-bearing grasp, policy or score improvement is
+established. See the [complete reference investigation](../../../docs/team/dex3-isaac-review/E037_FULL_REFERENCE_REPAIR_20261018.md).
+
+The manifest contains 122 exact sources: 120 executed and two prepared,
+unexecuted old unaligned validators. Executed does not mean successful: failed
+and partial workers remain recorded. `later_job_closed` distinguishes a closed
+job from a historically true `full_job_in_progress_at_archive` field.
 
 - Contact projections v1–v6 never established a full contact-consistent,
   velocity-feasible grasp trajectory. V5 cleared the earlier sampled poses but
