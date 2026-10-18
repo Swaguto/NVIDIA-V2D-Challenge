@@ -9,15 +9,14 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-from pathlib import Path
 import shutil
 import xml.etree.ElementTree as ET
+from pathlib import Path
 
 import numpy as np
 import pyarrow as pa
 import pyarrow.parquet as pq
 from scipy.spatial.transform import Rotation
-
 from v2d_dex3_flashchord.kinematics import URDFKinematics
 
 
@@ -38,7 +37,27 @@ def longest_window(valid):
     return tuple(map(int, max(intervals, key=lambda pair: pair[1] - pair[0])))
 
 
-def prepare(case, static_inputs, robot_assets, out):
+def select_rows(valid, qpos, *, full_episode=False):
+    """Keep source confidence separate from explicitly inferred robot commands."""
+    valid = np.asarray(valid)
+    qpos = np.asarray(qpos)
+    if valid.ndim != 1 or valid.dtype != bool or qpos.shape != (len(valid), 2, 14):
+        raise ValueError("Source confidence and dual-hand command axes differ")
+    if full_episode:
+        if len(valid) < 2 or not np.isfinite(qpos).all():
+            raise ValueError(
+                "Full episodes need finite inferred commands for every frame"
+            )
+        if not np.allclose(np.linalg.norm(qpos[:, :, 3:7], axis=-1), 1, atol=1e-4):
+            raise ValueError("Full-episode wrist quaternions must be normalized")
+        return 0, len(valid)
+    start, stop = longest_window(valid)
+    if stop - start < 20:
+        raise ValueError("Need at least one second of fully confident source targets")
+    return start, stop
+
+
+def prepare(case, static_inputs, robot_assets, out, *, full_episode=False):
     declared = json.loads((case / "file-manifest.json").read_text())["files_sha256"]
     for relative in (
         "bundle/episode.npz",
@@ -64,6 +83,13 @@ def prepare(case, static_inputs, robot_assets, out):
         case / "proposal/robot-motion-proposal.npz", allow_pickle=False
     ) as data:
         qpos = data["robot_qpos_inferred"].copy()
+        if full_episode and (
+            data["robot_pose_is_inferred"].shape != qpos.shape[:2]
+            or not data["robot_pose_is_inferred"].all()
+            or data["robot_motion_target_validated"].any()
+            or not np.array_equal(data["frame_indices"], source["frame_indices"])
+        ):
+            raise ValueError("Full-episode proposal must retain its inferred robot provenance and complete frame axis")
     hand_mask_key = (
         "hand_metric_valid" if "hand_metric_valid" in source else "hand_valid"
     )
@@ -79,9 +105,11 @@ def prepare(case, static_inputs, robot_assets, out):
             )
         valid &= source[key]
     valid &= np.isfinite(qpos).all(axis=(1, 2))
-    start, stop = longest_window(valid)
-    if stop - start < 20:
-        raise ValueError("Need at least one second of fully confident source targets")
+    start, stop = select_rows(valid, qpos, full_episode=full_episode)
+    if full_episode and not np.array_equal(source["frame_indices"], np.arange(len(valid))):
+        raise ValueError(
+            "Full-episode commands must cover every original frame and remain inferred"
+        )
     indices = source["frame_indices"][start:stop]
     times = source["timestamps_s"][start:stop]
     if not np.all(np.diff(indices) == 1) or not np.allclose(
@@ -137,6 +165,10 @@ def prepare(case, static_inputs, robot_assets, out):
             dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(static_inputs / asset[kind], dest)
         matrix = source[f"object_{oi}_world"][start:stop]
+        if not np.isfinite(matrix).all():
+            raise ValueError(
+                "Object references need explicit finite inferred poses, with confidence retained separately"
+            )
         position = rotation.apply(matrix[:, :3, 3])
         quaternion = (rotation * Rotation.from_matrix(matrix[:, :3, :3])).as_quat()
         poses.append(np.c_[position, quaternion])
@@ -221,15 +253,22 @@ def prepare(case, static_inputs, robot_assets, out):
         out / "reference.parquet",
     )
     manifest = dict(
-        schema="v2d.dex3-training-window.v1",
-        sequence_id=f"e{metadata['episode']:03d}_pilot",
+        schema="v2d.dex3-training-retargeted-task.v4"
+        if full_episode
+        else "v2d.dex3-training-window.v1",
+        sequence_id=f"e{metadata['episode']:03d}_"
+        + ("full_retargeted" if full_episode else "pilot"),
         episode=metadata["episode"],
         source_rows_half_open=[start, stop],
         source_frame_indices=indices.tolist(),
         source_frame_count=len(valid),
         selected_frame_count=stop - start,
-        selection=f"longest contiguous interval with both hands {hand_mask_key}/directly observed and every object observed",
-        all_selected_targets_confident=True,
+        selection=(
+            "Every source frame; inferred retargeted commands and object poses; original source confidence preserved"
+            if full_episode
+            else f"longest contiguous interval with both hands {hand_mask_key}/directly observed and every object observed"
+        ),
+        all_selected_targets_confident=bool(valid[start:stop].all()),
         contacts_known=False,
         source_observations_changed=False,
         contact_labels_fabricated=False,
@@ -256,8 +295,18 @@ def prepare(case, static_inputs, robot_assets, out):
             if p.is_file()
         },
         physical_task_accepted=False,
-        full_episode_covered=False,
+        full_episode_covered=full_episode,
     )
+    if full_episode:
+        manifest.update(
+            target_contract="inferred_retargeted_robot_commands.v1",
+            allows_inferred_robot_targets=True,
+            observed_source_frame_count=int(valid.sum()),
+            hand_object_assignment="not prescribed; generic retargeted motion baseline",
+            grasp_plan_used=False,
+            source_motion_speed=1.0,
+            target_preparation_source_sha256=sha(Path(__file__)),
+        )
     (out / "manifest.json").write_text(
         json.dumps(manifest, indent=2, allow_nan=False) + "\n"
     )
@@ -268,6 +317,17 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("case", "static-inputs", "robot-assets", "out"):
         parser.add_argument("--" + name, type=Path, required=True)
+    parser.add_argument(
+        "--full-episode",
+        action="store_true",
+        help="Keep all inferred robot commands; never promote unknown source confidence",
+    )
     args = parser.parse_args()
-    result = prepare(args.case, args.static_inputs, args.robot_assets, args.out)
+    result = prepare(
+        args.case,
+        args.static_inputs,
+        args.robot_assets,
+        args.out,
+        full_episode=args.full_episode,
+    )
     print(json.dumps({k: v for k, v in result.items() if k != "files"}, indent=2))

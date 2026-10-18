@@ -111,6 +111,24 @@ for Track 3. Our selected policy runtime remains the official pinned
 FlashCHORD/Newton/JAX path with floating Dex3 hands. The Isaac renderer remains
 a separate review runtime; a whole-body G1 port is not required by that FAQ.
 
+### General full-episode retargeted training references
+
+`scripts/dex3_training/prepare_window.py --full-episode` keeps the complete
+retargeted command sequence instead of selecting a dual-hand confidence window.
+It checks that all original frames and finite, normalized inferred robot poses
+are present. A one-hand task may have no frame where both human hands were
+directly observed; that does not promote any source confidence to observed.
+Missing/nonfinite robot or object targets are rejected and require explicit
+upstream inference. The original full source masks are saved separately.
+
+This path writes `v2d.dex3-training-retargeted-task.v4` with
+`inferred_retargeted_robot_commands.v1`. It does not require a phase plan assigning
+one object per hand. The native reference loader accepts it with the ordinary
+residual action and tracking objective; the grasp-feedforward action retains its
+separate v3 contract. Contact labels remain unknown and their rewards stay
+disabled in the generic baseline. This adapter has CPU contract checks; complete
+scored runtime training and physical validation are still pending.
+
 ## Short controlled training forks
 
 The retained e002 checkpoint is a development control outside the scored roster.

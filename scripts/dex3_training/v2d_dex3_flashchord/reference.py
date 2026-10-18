@@ -10,7 +10,9 @@ import os
 from pathlib import Path
 
 import numpy as np
+
 from v2d_dex3_flashchord import RUNTIME_COMMIT
+
 from .sampling import resample_targets
 
 
@@ -65,6 +67,7 @@ def load_dex3(
         "v2d.dex3-training-window.v1",
         "v2d.dex3-training-window.v2",
         "v2d.dex3-training-task.v3",
+        "v2d.dex3-training-retargeted-task.v4",
     }:
         raise ValueError("Unsupported Dex3 reference manifest")
     for relative, expected in manifest["files"].items():
@@ -74,13 +77,13 @@ def load_dex3(
     if path.name not in manifest["files"] or sha(path) != manifest["files"][path.name]:
         raise ValueError("Reference parquet is not declared")
     bind_collision_cache(root, manifest, required=require_frozen_collisions)
+    import pyarrow.parquet as pq
     from flash_chord.data.mano_sharpa import ManoSharpaReference
     from flash_chord.data.reference import (
         ObjectAssetSpec,
         ObjectBodySpec,
         ReferenceMetadata,
     )
-    import pyarrow.parquet as pq
 
     row = pq.ParquetFile(path).read().to_pylist()[0]
     fps = float(row["fps"])
@@ -95,7 +98,10 @@ def load_dex3(
     count = len(data["frame_indices"])
     if count < 2 or not np.all(np.diff(data["frame_indices"]) == 1):
         raise ValueError("Confidence window is not contiguous")
-    inferred_task = manifest["schema"] == "v2d.dex3-training-task.v3"
+    inferred_task = manifest["schema"] in {
+        "v2d.dex3-training-task.v3",
+        "v2d.dex3-training-retargeted-task.v4",
+    }
     if target_fps != fps and (not inferred_task or source_frame_playback):
         raise ValueError("Confidence windows require source-rate playback")
     if (
@@ -104,8 +110,13 @@ def load_dex3(
         or target_fps / fps != int(target_fps / fps)
     ):
         raise ValueError("Only integer source-rate command upsampling is supported")
+    expected_contract = (
+        "inferred_retargeted_robot_commands.v1"
+        if manifest["schema"] == "v2d.dex3-training-retargeted-task.v4"
+        else "inferred_robot_grasp_commands.v1"
+    )
     if inferred_task and (
-        manifest.get("target_contract") != "inferred_robot_grasp_commands.v1"
+        manifest.get("target_contract") != expected_contract
         or manifest.get("allows_inferred_robot_targets") is not True
         or manifest.get("source_observations_changed") is not False
         or manifest.get("contact_labels_fabricated") is not False
@@ -128,8 +139,11 @@ def load_dex3(
     contact_parts = {s: np.zeros((count, 1), dtype=np.int32) for s in sides}
     if estimated:
         if target_fps != fps:
-            raise ValueError("Estimated contact hints require the unchanged source clock")
+            raise ValueError(
+                "Estimated contact hints require the unchanged source clock"
+            )
         from .estimated_reference import contacts
+
         positions, normals, ids = contacts(root, manifest, data)
         contact_points = {s: positions[:, i] for i, s in enumerate(sides)}
         contact_normals = {s: normals[:, i] for i, s in enumerate(sides)}
@@ -155,7 +169,9 @@ def load_dex3(
             motion_kind="dual_hand",
             robot_name="dex3",
             sequence_id=manifest["sequence_id"],
-            source_dataset="local_development_estimated_surface" if estimated else "local_development",
+            source_dataset="local_development_estimated_surface"
+            if estimated
+            else "local_development",
             coord_frame="inferred support aligned world; metres; wxyz",
         ),
         _fps=target_fps,

@@ -324,7 +324,7 @@ def main(cfg: DictConfig):
         ).hexdigest()
         metadata["dex3_pilot_scope"] = (
             "full source episode with inferred robot targets; original source confidence masks preserved; unassisted development experiment"
-            if input_manifest["schema"] == "v2d.dex3-training-task.v3"
+            if input_manifest["schema"] in {"v2d.dex3-training-task.v3", "v2d.dex3-training-retargeted-task.v4"}
             else "confident development window; unassisted; not full episode acceptance"
         )
         if input_manifest.get("estimated_contact_reference") is not None:
