@@ -202,3 +202,36 @@ Rostered video inference always uses automatic object prompts. Saved per-episode
 box overrides are retained for legacy public CAD diagnostics only; a rostered run
 rejects an annotated mask cache. Historically reviewed public episodes are useful
 regression cases and must not be presented as untouched end-to-end holdouts.
+
+### Camera paths and a failed object-bind stage
+
+The reconstruction runner relocates camera paths in a copied observation
+manifest. Each relocated camera JSON must be byte-identical to the original;
+image, depth and hand inputs are unchanged. It mounts that copy over the original
+manifest pathname, preserving the parent of every relative image/depth path.
+
+For a run that completed masks, geometry, poses and world conversion but failed
+specifically at `bind`, set `resume_from_bind: true` in its config and retain the
+same output directory. The runner checks the previous stage sequence, source
+hashes, image pins and tracking options, preserves the old receipt and failure
+log, and skips completed inference. It refuses to overwrite existing downstream
+outputs. This recovery mode does not relax camera or own-geometry gates.
+
+### Experimental whole-track selection
+
+`select_pose_hypothesis.py` compares complete, independently gate-accepted
+tracking hypotheses for the same reconstructed body. It scores agreement with
+the observed mask and measured stereo surface, assigning missing frames zero.
+It copies one entire track unchanged, retaining source hashes and unknown gaps.
+This avoids combining poses from different tracks frame by frame.
+
+Configs use `--episode`, `--object`, `--data` (the verified own-geometry view),
+`--observations` (the source manifest), `--masks`, `--candidates` (an ordered JSON
+map of hypothesis name to pose root), and `--out`. The fixed 2 cm depth-distance
+scale comes from the existing depth envelope margin. Unsigned nearest-vertex
+distance and a full projected triangle silhouette are approximate measurements;
+they do not certify pose accuracy or contact and do not model occluders. The
+selector is still experimental. Set `pose_hypothesis_selection: true` to run the
+three fixed control, foreground-depth, and foreground-motion tracks inside the
+reconstruction runner and select one complete track per object. This mode cannot
+be combined with the individual depth or fallback switches, and is off by default.

@@ -15,7 +15,7 @@ jobs:
       - run: python -m pip install pytest==8.4.2 numpy==2.2.6 scipy==1.15.3 trimesh==4.5.1 pyarrow==18.1.0 opencv-python-headless==4.11.0.86 Pillow==11.3.0
       - run: python -m pytest scripts/compute/tests scripts/reproduction/tests scripts/dex3_physics/tests scripts/dex3_training/tests scripts/track3/tests/test_scored_inputs.py scripts/track3/tests/test_scored_hand_adapter.py scripts/track3/tests/test_stereo_reconstruction.py scripts/track3/tests/test_rgb_stereo.py scripts/track3/tests/test_bootstrap_tracking.py scripts/track3/tests/test_camera_prior.py scripts/track3/tests/test_support_plane.py scripts/track3/tests/test_scored_commands.py scripts/track3/tests/test_sam3d_candidate.py scripts/track3/tests/test_scored_camera_fit.py scripts/track3/tests/test_reconstruction_frame.py scripts/track3/tests/test_model_cache.py scripts/track3/tests/test_public_validation_roster.py scripts/track3/tests/test_scored_reconstruction_runner.py scripts/track3/tests/test_scored_policy_runner.py -q
       - name: Check measured foreground initialization
-        run: python -m pytest scripts/track3/tests/test_foreground_prior.py -q
+        run: python -m pytest scripts/track3/tests/test_foreground_prior.py scripts/track3/tests/test_pose_hypothesis.py -q
       - name: Verify persistent cache in training Compose services
         run: python scripts/compute/check_compose_cache.py
       - name: Check physics Compose overlay

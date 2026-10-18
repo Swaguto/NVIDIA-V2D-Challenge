@@ -46,7 +46,61 @@ def validate_video_mount(root, data):
             )
 
 
+def relocate_camera_paths(source, camera, out, label):
+    """Copy the manifest with new paths to byte-identical calibrated cameras.
+
+    Mount this file over the original manifest's existing container pathname.
+    Its relative image/depth paths then retain their original parent directory.
+    """
+    original = source.read_bytes()
+    manifest = json.loads(original)
+    cam = manifest["color_camera"]["id"]
+    if not re.fullmatch(r"[a-zA-Z0-9_]+", cam):
+        raise ValueError("Unsafe camera ID")
+    files = {}
+    for frame in manifest["frames"]:
+        filename = f"{frame['id']:06d}.json"
+        old = (source.parent / frame["camera_pose_path"]).resolve()
+        measured = camera / cam / filename
+        if sha(old) != sha(measured):
+            raise ValueError("Camera relocation would change numerical source data")
+        record = json.loads(measured.read_text())
+        if (
+            record["episode"] != manifest["episode"]
+            or record["frame_index"] != frame["id"]
+            or record["gt_use"] != "independent"
+            or record["camera_frame"] != cam
+        ):
+            raise ValueError("Camera relocation changed the frame/episode binding")
+        files[filename] = sha(measured)
+        frame["camera_pose_path"] = f"/stage/source/{label}/camera/{cam}/{filename}"
+    proof = {
+        "source_manifest_sha256": hashlib.sha256(original).hexdigest(),
+        "camera_files_sha256": files,
+        "camera_values_changed": False,
+        "image_depth_hand_inputs_changed": False,
+    }
+    manifest["input_contract"]["camera_path_relocation"] = proof
+    out.write_text(json.dumps(manifest, indent=2) + "\n")
+    return dict(proof, relocated_manifest_sha256=sha(out))
+
+
 def validate(config):
+    for key in (
+        "foreground_depth_only",
+        "foreground_translation_fallback",
+        "pose_hypothesis_selection",
+        "resume_from_bind",
+    ):
+        if type(config.get(key, False)) is not bool:
+            raise ValueError("Inference switches require explicit JSON booleans")
+    if config.get("pose_hypothesis_selection", False) and (
+        config.get("foreground_depth_only", False)
+        or config.get("foreground_translation_fallback", False)
+    ):
+        raise ValueError(
+            "Whole-track selection uses its three separate fixed hypotheses"
+        )
     if type(config["max_seconds"]) is not int or not 0 < config["max_seconds"] <= 7200:
         raise ValueError(
             "Episode execution needs a positive deadline no longer than two hours"
@@ -110,9 +164,69 @@ def validate(config):
 def run(config):
     names, commit = validate(config)
     out = Path(config["out"]).resolve()
-    out.mkdir(parents=True, exist_ok=False)
-    (out / "inputs").mkdir()
-    shutil.copyfile(config["roster"], out / "inputs/roster.json")
+    resume = config.get("resume_from_bind", False)
+    previous = None
+    reused = set()
+    if resume:
+        previous = json.loads((out / "receipt.json").read_text())
+        expected_stages = (
+            ["masks"]
+            + [
+                obj + "-" + stage
+                for obj in names
+                for stage in ("selection", "sam3d", "review")
+            ]
+            + ["view"]
+        )
+        expected_stages += (
+            (
+                ["poses-control", "poses-foreground-depth", "poses-foreground-motion"]
+                + [obj + "-pose-selection" for obj in names]
+            )
+            if config.get("pose_hypothesis_selection", False)
+            else ["poses"]
+        )
+        expected_stages += ["world"]
+        stages = previous["stages"]
+        if (
+            [s["name"] for s in stages] != expected_stages + ["bind"]
+            or any(s.get("returncode") != 0 for s in stages[:-1])
+            or stages[-1].get("returncode") == 0
+            or not previous.get("error")
+        ):
+            raise ValueError(
+                "Bind resume requires exactly the completed upstream stages and failed bind"
+            )
+        if (
+            previous["episode"] != config["episode"]
+            or previous["object_slot_names"] != names
+            or previous["images"]
+            != {
+                "perception": config["perception_image"],
+                "sam3d": config["sam3d_image"],
+            }
+        ):
+            raise ValueError("Resume changed the episode, meshes or immutable runtimes")
+        for key in (
+            "foreground_depth_only",
+            "foreground_translation_fallback",
+            "pose_hypothesis_selection",
+        ):
+            if bool(previous.get(key, False)) != bool(config.get(key, False)):
+                raise ValueError("Resume cannot relabel upstream tracking policy")
+        if (out / "receipt-before-bind-repair.json").exists():
+            raise ValueError(
+                "This bind repair already ran; inspect the first remaining failure"
+            )
+        reused = set(expected_stages)
+    else:
+        out.mkdir(parents=True, exist_ok=False)
+    (out / "inputs").mkdir(exist_ok=resume)
+    if resume:
+        if sha(Path(config["roster"])) != sha(out / "inputs/roster.json"):
+            raise ValueError("Resume changed the original stored roster")
+    else:
+        shutil.copyfile(config["roster"], out / "inputs/roster.json")
     wrapper = out / "inputs/run_native.py"
     wrapper.write_text(
         "import runpy,sys\nfrom pathlib import Path\n"
@@ -127,6 +241,8 @@ def run(config):
         ["--host", config["docker_host"]] if config.get("docker_host") else []
     )
     deadline = time.monotonic() + config["max_seconds"]
+    relocated = None
+    receipt_path = out / ("resume-bind-preflight.json" if resume else "receipt.json")
     receipt = {
         "schema": "v2d.scored-single-episode-reconstruction.v1",
         "episode": ep,
@@ -144,12 +260,15 @@ def run(config):
         "foreground_translation_fallback": config.get(
             "foreground_translation_fallback", False
         ),
+        "pose_hypothesis_selection": config.get("pose_hypothesis_selection", False),
     }
 
     def save():
-        (out / "receipt.json").write_text(json.dumps(receipt, indent=2) + "\n")
+        receipt_path.write_text(json.dumps(receipt, indent=2) + "\n")
 
     def container(script, args, name, *, native=False, sam=False, gpu=False, limit=600):
+        if name in reused:
+            return
         container_name = f"v2d-scored-{label}-{name}"
         command = daemon + [
             "run",
@@ -183,6 +302,12 @@ def run(config):
             command += [
                 "-v",
                 str(source.resolve()) + ":" + destination + (":ro" if readonly else ""),
+            ]
+        if relocated is not None:
+            command += [
+                "-v",
+                str(relocated)
+                + f":/workspace/issue6-full-inputs/{label}/manifest.json:ro",
             ]
         environment = {
             "NVIDIA_DRIVER_CAPABILITIES": "compute,utility,graphics",
@@ -266,8 +391,50 @@ def run(config):
             "camera_report": sha(camera / "report.json"),
             "model_download_receipt": sha(base / "sam3d/download-receipt.json"),
         }
+        if previous is not None:
+            if receipt["sources_sha256"] != previous["sources_sha256"]:
+                raise ValueError(
+                    "Resume changed source observations, fit, camera or model receipt"
+                )
+            if (out / "bound" / label / "manifest.json").exists() or (
+                out / "native" / label
+            ).exists():
+                raise ValueError(
+                    "Bind repair must not overwrite partial downstream outputs"
+                )
+            shutil.copyfile(
+                out / "receipt.json", out / "receipt-before-bind-repair.json"
+            )
+            shutil.copyfile(out / "bind.log", out / "bind-before-repair.log")
+            receipt_path = out / "receipt.json"
+            receipt["resume_history"] = {
+                "previous_receipt_sha256": sha(out / "receipt-before-bind-repair.json"),
+                "previous_source_commit": previous["source_commit"],
+                "previous_config_sha256": previous["config_sha256"],
+                "failed_bind_log_sha256": sha(out / "bind-before-repair.log"),
+                "upstream_inference_repeated": False,
+            }
+            receipt["stages"] = [
+                dict(s, reused=True, source_commit=previous["source_commit"])
+                for s in previous["stages"][:-1]
+            ]
         save()
-        shutil.copytree(camera, out / "source" / label / "camera")
+        if previous is None:
+            shutil.copytree(camera, out / "source" / label / "camera")
+        else:
+            for p in camera.rglob("*"):
+                if p.is_file() and sha(p) != sha(
+                    out / "source" / label / "camera" / p.relative_to(camera)
+                ):
+                    raise ValueError("Reused camera bytes differ")
+        relocated = out / "inputs/relocated-observations.json"
+        receipt["observation_camera_path_relocation"] = relocate_camera_paths(
+            Path(config["observations"]) / label / "manifest.json",
+            camera,
+            relocated,
+            label,
+        )
+        save()
         batch = "/workspace/pr32/scripts/track3/batch_public.py"
         common = [
             "--roster",
@@ -360,21 +527,81 @@ def run(config):
         )
         if config.get("foreground_translation_fallback", False):
             options += ["--foreground-translation-fallback"]
-        container(
-            batch,
-            [
-                "--phase",
+        if config.get("pose_hypothesis_selection", False):
+            hypotheses = {}
+            for arm, flags in [
+                ("control", []),
+                ("foreground-depth", ["--foreground-depth-only"]),
+                ("foreground-motion", ["--foreground-translation-prior"]),
+            ]:
+                host_root = out / "hypotheses" / arm / "source"
+                if previous is None:
+                    shutil.copytree(
+                        out / "source" / label / "masks", host_root / label / "masks"
+                    )
+                root = f"/stage/hypotheses/{arm}/source"
+                container(
+                    batch,
+                    [
+                        "--phase",
+                        "poses",
+                        "--data",
+                        view,
+                        "--fp-python",
+                        "/opt/conda/bin/python",
+                        "--roster",
+                        "/stage/inputs/roster.json",
+                        "--episodes",
+                        ep,
+                        "--root",
+                        root,
+                        *flags,
+                    ],
+                    "poses-" + arm,
+                    gpu=True,
+                )
+                hypotheses[arm] = root + f"/{label}/poses"
+            (out / "inputs/pose-hypotheses.json").write_text(
+                json.dumps(hypotheses, indent=2) + "\n"
+            )
+            for obj in names:
+                container(
+                    "/workspace/pr32/scripts/track3/select_pose_hypothesis.py",
+                    [
+                        "--episode",
+                        ep,
+                        "--object",
+                        obj,
+                        "--data",
+                        view,
+                        "--observations",
+                        f"/workspace/issue6-full-inputs/{label}/manifest.json",
+                        "--masks",
+                        f"/stage/source/{label}/masks",
+                        "--candidates",
+                        "/stage/inputs/pose-hypotheses.json",
+                        "--out",
+                        f"/stage/source/{label}/poses",
+                    ],
+                    obj + "-pose-selection",
+                    limit=300,
+                )
+        else:
+            container(
+                batch,
+                [
+                    "--phase",
+                    "poses",
+                    "--data",
+                    view,
+                    "--fp-python",
+                    "/opt/conda/bin/python",
+                    *common,
+                    *options,
+                ],
                 "poses",
-                "--data",
-                view,
-                "--fp-python",
-                "/opt/conda/bin/python",
-                *common,
-                *options,
-            ],
-            "poses",
-            gpu=True,
-        )
+                gpu=True,
+            )
         container(
             batch, ["--phase", "world", "--data", view, *common], "world", limit=120
         )
