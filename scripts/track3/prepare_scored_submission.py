@@ -14,6 +14,7 @@ import sys
 from pathlib import Path
 
 from audit_scored_coverage import official_frames
+from run_scored_policy import checkpoint_metadata
 
 
 def sha(path):
@@ -27,15 +28,109 @@ def locked(root, name, digest):
     return path
 
 
+def inspect_legacy_source(row, policy, bundle, frames):
+    """Adapt the original comparison layout by checking its actual evidence.
+
+    No receipt or evaluator output is rewritten. Recovery evaluations can live
+    elsewhere; their checkpoint/input bindings must still match exactly.
+    """
+    source = row["legacy_sources"]
+    original = Path(source["comparison_receipt"])
+    receipt = json.loads(original.read_text())
+    ep, iteration = row["episode"], row["iteration"]
+    frozen = Path(source["frozen"])
+    manifest = json.loads((frozen / "manifest.json").read_text())
+    label = f"{manifest['command_anchor_policy']}-e{ep:03d}"
+    checkpoint = policy / f"ppo/model_{iteration}.safetensors"
+    metadata = checkpoint_metadata(checkpoint)
+    initial = checkpoint_metadata(policy / "ppo/model_0.safetensors")
+    resolved = json.loads(metadata["resolved_config_json"])
+    steps = (
+        iteration
+        * resolved["training"]["world_count"]
+        * resolved["training"]["rollout_steps"]
+    )
+    evaluation = Path(source["evaluation"])
+    readback = Path(source["readback_report"])
+    native = json.loads(readback.read_text())
+    if (
+        receipt.get("schema") != "v2d.scored-sam3d-anchor-comparison.v1"
+        or ep not in receipt.get("episodes", [])
+        or not re.fullmatch(r"[0-9a-f]{40}", receipt.get("source_commit", ""))
+        or not re.fullmatch(
+            r"[a-z0-9./_-]+@sha256:[0-9a-f]{64}", receipt.get("image", "")
+        )
+        or receipt.get("training", {}).get(label)
+        != {"iterations": iteration, "environment_steps": steps}
+        or int(metadata["iteration"]) != iteration
+        or int(metadata["environment_steps"]) != steps
+        or int(initial["iteration"]) != 0
+        or int(initial["environment_steps"]) != 0
+        or metadata["dex3_input_manifest_sha256"] != sha(frozen / "manifest.json")
+        or initial["dex3_input_manifest_sha256"]
+        != metadata["dex3_input_manifest_sha256"]
+        or manifest.get("source_files_sha256", {}).get("bundle/episode.npz")
+        != sha(bundle / "episode.npz")
+        or native.get("schema") != "v2d.dex3-full-task-policy-readback.v1"
+        or native.get("learned_policy") is not True
+        or native.get("checkpoint_sha256") != sha(checkpoint)
+        or native.get("source_manifest_sha256") != sha(frozen / "manifest.json")
+        or native.get("frame_count") != frames
+        or native.get("source_frame_count") != frames
+        or native.get("zero_assistance_control_steps_verified") != frames
+        or native.get("virtual_object_assistance") != 0.0
+        or native.get("virtual_object_actuator_caps_zero") is not True
+        or native.get("evaluation_reset_stabilization_steps") != 0
+        or native.get("source_motion_speed") != 1.0
+    ):
+        raise ValueError(
+            "Legacy baseline lost its checkpoint, source or unassisted evaluation binding"
+        )
+    first = json.loads(
+        (evaluation / "official-0" / f"episode_{ep:06d}.json").read_text()
+    )
+    if (
+        first.get("checkpoint_sha256") != sha(policy / "ppo/model_0.safetensors")
+        or first.get("step_count") != frames
+        or first.get("start_frame") != 0
+        or first.get("non_finite_worlds")
+    ):
+        raise ValueError("Legacy initial-policy control is incomplete")
+    # An in-memory normalized view, never a fabricated/replaced producer receipt.
+    normalized = {
+        "baseline_complete": True,
+        "episode": ep,
+        "training": {"iterations": iteration},
+        "bundle_manifest_sha256": sha(bundle / "manifest.json"),
+    }
+    proof = {
+        "artifact_origin": "verified original comparison layout; no retraining or output edits",
+        "comparison_receipt_sha256": sha(original),
+        "readback_report_sha256": sha(readback),
+        "preparation_source_commit": receipt["source_commit"],
+        "training_image": receipt["image"],
+        "checkpoint_and_initial_control_verified": True,
+        "frozen_inputs_and_original_bundle_bound": True,
+        "full_unassisted_native_readback_verified": True,
+    }
+    return normalized, frozen, evaluation, proof
+
+
 def inspect_episode(row, names, frames):
     ep = row["episode"]
     iteration = row["iteration"]
     if type(ep) is not int or type(iteration) is not int or iteration < 1:
         raise ValueError("Catalog needs explicit integer episodes and checkpoints")
     policy, bundle = Path(row["policy_root"]), Path(row["bundle"])
-    receipt = json.loads((policy / "receipt.json").read_text())
+    origin = None
+    if "legacy_sources" in row:
+        receipt, frozen, evaluation, origin = inspect_legacy_source(
+            row, policy, bundle, frames
+        )
+    else:
+        receipt = json.loads((policy / "receipt.json").read_text())
+        frozen, evaluation = policy / "frozen", policy
     provenance = json.loads((bundle / "manifest.json").read_text())
-    frozen = policy / "frozen"
     manifest = json.loads((frozen / "manifest.json").read_text())
     if (
         receipt.get("baseline_complete") is not True
@@ -65,7 +160,7 @@ def inspect_episode(row, names, frames):
             raise ValueError("Unsupported reconstructed mesh format")
         meshes.append((obj["name"], path))
     checkpoint = policy / f"ppo/model_{iteration}.safetensors"
-    final = policy / f"official-{iteration}"
+    final = evaluation / f"official-{iteration}"
     stem = f"episode_{ep:06d}"
     report = json.loads((final / (stem + ".json")).read_text())
     if (
@@ -75,7 +170,7 @@ def inspect_episode(row, names, frames):
         or report.get("non_finite_worlds")
     ):
         raise ValueError("Final evaluator coverage/checkpoint differs or is nonfinite")
-    if not (policy / "official-0" / (stem + ".json")).is_file():
+    if not (evaluation / "official-0" / (stem + ".json")).is_file():
         raise ValueError("Initial-policy control report missing")
     return {
         "episode": ep,
@@ -86,6 +181,7 @@ def inspect_episode(row, names, frames):
         "checkpoint_sha256": sha(checkpoint),
         "frozen_manifest_sha256": sha(frozen / "manifest.json"),
         "bundle_manifest_sha256": sha(bundle / "manifest.json"),
+        "legacy_source_verification": origin,
     }
 
 

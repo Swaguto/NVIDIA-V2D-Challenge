@@ -1,5 +1,6 @@
 import hashlib
 import json
+import struct
 import sys
 from pathlib import Path
 
@@ -149,3 +150,111 @@ def test_staging_preserves_bytes_and_uses_official_packer(tmp_path, monkeypatch)
         receipt["submission_sha256"]
         == hashlib.sha256(b"official packed result").hexdigest()
     )
+
+
+def legacy_case(tmp_path):
+    row = case(tmp_path)
+    policy, bundle = Path(row["policy_root"]), Path(row["bundle"])
+    (bundle / "episode.npz").write_bytes(b"original episode array bytes")
+    frozen = policy / "frozen"
+    manifest = json.loads((frozen / "manifest.json").read_text())
+    manifest.update(
+        command_anchor_policy="visual",
+        source_files_sha256={
+            "bundle/episode.npz": submission.sha(bundle / "episode.npz")
+        },
+    )
+    write(frozen / "manifest.json", manifest)
+    input_hash = submission.sha(frozen / "manifest.json")
+    for n in [0, 100]:
+        metadata = {
+            "format": "learner_state",
+            "version": "1",
+            "user.iteration": str(n),
+            "user.environment_steps": str(n * 1536),
+            "user.dex3_input_manifest_sha256": input_hash,
+            "user.resolved_config_json": json.dumps(
+                {"training": {"world_count": 64, "rollout_steps": 24}}
+            ),
+        }
+        header = json.dumps({"__metadata__": metadata}).encode()
+        checkpoint = policy / f"ppo/model_{n}.safetensors"
+        checkpoint.write_bytes(struct.pack("<Q", len(header)) + header)
+        write(
+            policy / f"official-{n}/episode_000001.json",
+            {
+                "checkpoint_sha256": submission.sha(checkpoint),
+                "step_count": 2,
+                "start_frame": 0,
+                "non_finite_worlds": [],
+            },
+        )
+    original = tmp_path / "original-comparison.json"
+    write(
+        original,
+        {
+            "schema": "v2d.scored-sam3d-anchor-comparison.v1",
+            "episodes": [1],
+            "source_commit": "a" * 40,
+            "image": "example/image@sha256:" + "b" * 64,
+            "training": {
+                "visual-e001": {"iterations": 100, "environment_steps": 153600}
+            },
+        },
+    )
+    readback = tmp_path / "recovered-readback.json"
+    write(
+        readback,
+        {
+            "schema": "v2d.dex3-full-task-policy-readback.v1",
+            "learned_policy": True,
+            "checkpoint_sha256": submission.sha(policy / "ppo/model_100.safetensors"),
+            "source_manifest_sha256": input_hash,
+            "frame_count": 2,
+            "source_frame_count": 2,
+            "zero_assistance_control_steps_verified": 2,
+            "virtual_object_assistance": 0.0,
+            "virtual_object_actuator_caps_zero": True,
+            "evaluation_reset_stabilization_steps": 0,
+            "source_motion_speed": 1.0,
+        },
+    )
+    row["legacy_sources"] = {
+        "comparison_receipt": str(original),
+        "frozen": str(frozen),
+        "evaluation": str(policy),
+        "readback_report": str(readback),
+    }
+    # No synthetic normalized receipt is saved for this original layout.
+    (policy / "receipt.json").unlink()
+    return row
+
+
+def test_original_layout_is_bound_without_rewriting_outputs(tmp_path):
+    row = legacy_case(tmp_path)
+    report = Path(row["policy_root"]) / "official-100/episode_000001.json"
+    original = report.read_bytes()
+    checked = submission.inspect_episode(row, ["pot"], 2)
+    assert (
+        checked["legacy_source_verification"]["frozen_inputs_and_original_bundle_bound"]
+        is True
+    )
+    assert report.read_bytes() == original
+    assert not (Path(row["policy_root"]) / "receipt.json").exists()
+
+
+@pytest.mark.parametrize(
+    "change",
+    [
+        {"virtual_object_assistance": 1.0},
+        {"zero_assistance_control_steps_verified": 1},
+        {"source_manifest_sha256": "wrong"},
+    ],
+)
+def test_legacy_adapter_cannot_bypass_unassisted_or_input_binding(tmp_path, change):
+    row = legacy_case(tmp_path)
+    p = Path(row["legacy_sources"]["readback_report"])
+    native = json.loads(p.read_text())
+    write(p, dict(native, **change))
+    with pytest.raises(ValueError, match="unassisted evaluation binding"):
+        submission.inspect_episode(row, ["pot"], 2)
