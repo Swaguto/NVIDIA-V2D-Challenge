@@ -144,60 +144,138 @@ def make_record(row, prediction, camera, request_sha):
         source_request_sha256=request_sha, evidence_kind=row["evidence_kind"], raw_predicted_betas=np.asarray(prediction["betas"]).tolist())
 
 
+def canonical_sources(data):
+    """Verify original priors against the bundle's separately bound manifest."""
+    bundle = Path(data["canonical_bundle"])
+    manifest_path = bundle.parent / "manifest.json"
+    expected = data.get("canonical_manifest_sha256")
+    if not expected or digest(manifest_path) != expected:
+        raise ValueError("Fresh inference needs a hash-bound canonical hand manifest")
+    manifest = json.loads(manifest_path.read_text())
+    if (manifest.get("schema") != "v2d.track3.episode.v1"
+        or manifest["payload"] != dict(path=bundle.name, sha256=data["canonical_bundle_sha256"])):
+        raise ValueError("Canonical manifest belongs to another source bundle")
+    sources = {}
+    for entry in manifest["sources"]:
+        name = entry["path"]
+        if not name.startswith("source/hands/"):
+            continue
+        parts = Path(name).parts
+        if len(parts) != 4 or parts[2] not in {"left", "right"}:
+            raise ValueError("Invalid canonical hand path")
+        source = bundle.parent / name
+        if digest(source) != entry["sha256"]:
+            raise ValueError("Canonical hand prior changed")
+        record = json.loads(source.read_text())
+        fid, side = record["frame_idx"], parts[2]
+        if (type(fid) is not int or fid < 0 or parts[3] != f"{fid:06d}.json"
+            or type(record["is_right"]) is not bool or record["is_right"] != (side == "right")):
+            raise ValueError("Canonical hand identity/frame mismatch")
+        key = (side, fid)
+        if key in sources:
+            raise ValueError("Duplicate canonical hand prior")
+        sources[key] = (source, record)
+    if not sources:
+        raise ValueError("No canonical hand priors are bound to this bundle")
+    for row in data["frames"]:
+        side = "right" if row["is_right"] else "left"
+        prior = sources.get((side, row["frame_idx"]))
+        if prior is None:
+            raise ValueError("Recovery request lacks its canonical prior")
+        old = prior[1]
+        if (old["track_id"] != row["track_id"]
+            or old.get("directly_observed") is not row["original_direct_observation"]
+            or old["mano"]["betas"] != row["fixed_betas"]
+            or old["hand_scale"] != row["fixed_hand_scale"]):
+            raise ValueError("Recovery request changes canonical identity, observation or subject shape")
+    return sources
+
+
+def infer_frames(data, output, request_sha, predict_masks, predict_hand, receipt):
+    """Shared file protocol; CPU tests supply explicitly fake model callbacks."""
+    output = Path(output)
+    for row in data["frames"]:
+        side = "right" if row["is_right"] else "left"
+        stem = f"{row['frame_idx']:06d}"
+        image = np.array(Image.open(row["image"]).convert("RGB"))
+        points = np.array(row["keypoints"], float)
+        active = points[:, 2] > 0
+        crop = row["crop"]
+        box = np.r_[np.array([crop["cx"], crop["cy"]])-crop["size"]/2, np.array([crop["cx"], crop["cy"]])+crop["size"]/2]
+        masks, scores = predict_masks(image, points[active, :2], box)
+        candidates = []
+        for mask, score in zip(masks, scores):
+            if np.asarray(mask).shape != image.shape[:2] or not np.isfinite(score):
+                continue
+            try:
+                kp = associated_keypoints(points, mask)
+                candidates.append((float(score), mask, kp))
+            except ValueError:
+                pass
+        if not candidates:
+            receipt["rows"].append(dict(frame_idx=row["frame_idx"], side=side, status="rejected_mask_support"))
+            continue
+        score, mask, kp = max(candidates, key=lambda x: x[0])
+        prediction = predict_hand(image, crop, row["is_right"])
+        record = make_record(row, prediction, data["camera"], request_sha)
+        for folder in [output/"records"/side, output/"image-observations"/side]:
+            folder.mkdir(parents=True, exist_ok=True)
+        maskpath = output/"image-observations"/side/f"{stem}-mask.png"
+        Image.fromarray(mask.astype(np.uint8)*255).save(maskpath)
+        (output/"records"/side/f"{stem}.json").write_text(json.dumps(record, indent=2, allow_nan=False)+"\n")
+        estimate = dict(estimated=True, metric_valid=False, directly_observed=False, original_direct_observation=row["original_direct_observation"], keypoints=kp.tolist(), mask=maskpath.name, source=f"fresh_sam2_hamer:{request_sha}")
+        (maskpath.parent/f"{stem}.json").write_text(json.dumps(estimate, indent=2, allow_nan=False)+"\n")
+        receipt["rows"].append(dict(frame_idx=row["frame_idx"], side=side, status="fresh_prior_requires_validation", mask_score=score, supported_points=int(np.count_nonzero(kp[:, 2]))))
+
+
+def output_files(output):
+    return {str(p.relative_to(output)): digest(p) for p in sorted(Path(output).rglob("*"))
+            if p.is_file() and p != Path(output)/"receipt.json"}
+
+
 def run(path, output, sam_weights, sam_config, hamer_weights):
     data = validate_request(path)
+    canonical_sources(data)
     output = Path(output)
     if output.exists():
         raise FileExistsError("Preserve earlier results; choose a new output directory")
-    import torch
-    from sam2.build_sam import build_sam2
-    from sam2.sam2_image_predictor import SAM2ImagePredictor
-    from v2d.hamer.lib._hamer import get_model, run_hamer
-
-    if not torch.cuda.is_available():
-        raise RuntimeError("Fresh inference requires the bounded CUDA perception runtime")
     output.mkdir(parents=True)
-    predictor = SAM2ImagePredictor(build_sam2(sam_config, str(sam_weights), device="cuda", apply_postprocessing=False))
-    model, cfg = get_model(str(hamer_weights))
     request_sha = digest(path)
-    receipt = dict(schema="v2d.source-hand-recovery-result.v1", request_sha256=request_sha, sam_weights_sha256=digest(sam_weights), sam_config=sam_config,
-        hamer_checkpoint_sha256=digest(Path(hamer_weights)/"_DATA/hamer_ckpts/checkpoints/hamer.ckpt"), rows=[], complete=False,
+    receipt = dict(schema="v2d.source-hand-recovery-result.v1", request_sha256=request_sha,
+        canonical_manifest_sha256=data["canonical_manifest_sha256"],
+        producer_sha256=digest(Path(__file__)), rows=[], files={}, complete=False,
         original_observation_flags_changed=False, reference_accepted=False, training_approved=False)
     try:
-        for row in data["frames"]:
-            side = "right" if row["is_right"] else "left"
-            stem = f"{row['frame_idx']:06d}"
-            image = np.array(Image.open(row["image"]).convert("RGB"))
-            points = np.array(row["keypoints"], float)
-            active = points[:, 2] > 0
-            crop = row["crop"]
-            box = np.r_[np.array([crop["cx"], crop["cy"]])-crop["size"]/2, np.array([crop["cx"], crop["cy"]])+crop["size"]/2]
+        import torch
+        from sam2.build_sam import build_sam2
+        from sam2.sam2_image_predictor import SAM2ImagePredictor
+        from v2d.hamer.lib._hamer import get_model, run_hamer
+
+        if not torch.cuda.is_available():
+            raise RuntimeError("Fresh inference requires the bounded CUDA perception runtime")
+        receipt.update(sam_weights_sha256=digest(sam_weights), sam_config=sam_config,
+            hamer_checkpoint_sha256=digest(Path(hamer_weights)/"_DATA/hamer_ckpts/checkpoints/hamer.ckpt"))
+        predictor = SAM2ImagePredictor(build_sam2(sam_config, str(sam_weights), device="cuda", apply_postprocessing=False))
+        model, cfg = get_model(str(hamer_weights))
+
+        def predict_masks(image, points, box):
             predictor.set_image(image)
-            masks, scores, _ = predictor.predict(point_coords=points[active, :2], point_labels=np.ones(active.sum(), int), box=box, multimask_output=True)
-            candidates = []
-            for mask, score in zip(masks, scores):
-                try:
-                    kp = associated_keypoints(points, mask)
-                    candidates.append((float(score), mask, kp))
-                except ValueError:
-                    pass
-            if not candidates:
-                receipt["rows"].append(dict(frame_idx=row["frame_idx"], side=side, status="rejected_mask_support"))
-                continue
-            score, mask, kp = max(candidates, key=lambda x: x[0])
-            prediction = run_hamer(model, cfg, image, crop["cx"], crop["cy"], crop["size"], is_right=row["is_right"])
-            record = make_record(row, prediction, data["camera"], request_sha)
-            for folder in [output/"records"/side, output/"image-observations"/side]:folder.mkdir(parents=True, exist_ok=True)
-            maskpath = output/"image-observations"/side/f"{stem}-mask.png"
-            Image.fromarray(mask.astype(np.uint8)*255).save(maskpath)
-            (output/"records"/side/f"{stem}.json").write_text(json.dumps(record, indent=2)+"\n")
-            estimate = dict(estimated=True, metric_valid=False, directly_observed=False, original_direct_observation=row["original_direct_observation"], keypoints=kp.tolist(), mask=maskpath.name, source=f"fresh_sam2_hamer:{request_sha}")
-            (maskpath.parent/f"{stem}.json").write_text(json.dumps(estimate, indent=2)+"\n")
-            receipt["rows"].append(dict(frame_idx=row["frame_idx"], side=side, status="fresh_prior_requires_validation", mask_score=score, supported_points=int(np.count_nonzero(kp[:, 2]))))
+            masks, scores, _ = predictor.predict(point_coords=points, point_labels=np.ones(len(points), int), box=box, multimask_output=True)
+            return masks, scores
+
+        def predict_hand(image, crop, is_right):
+            return run_hamer(model, cfg, image, crop["cx"], crop["cy"], crop["size"], is_right=is_right)
+
+        infer_frames(data, output, request_sha, predict_masks, predict_hand, receipt)
         validate_request(path)
+        canonical_sources(data)
         receipt["complete"] = True
+    except BaseException as error:
+        receipt["error"] = repr(error)
+        raise
     finally:
-        (output/"receipt.json").write_text(json.dumps(receipt, indent=2)+"\n")
+        receipt["files"] = output_files(output)
+        (output/"receipt.json").write_text(json.dumps(receipt, indent=2, allow_nan=False)+"\n")
     return receipt
 
 

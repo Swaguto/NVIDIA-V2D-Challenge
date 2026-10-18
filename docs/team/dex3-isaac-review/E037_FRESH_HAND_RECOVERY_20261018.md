@@ -76,3 +76,13 @@ lease, hash-verify backups and confirm provider STOPPED after the run.
 The owner confirmed Brev is down. Keep all GPU work unqueued and avoid further
 provider retries during the reported outage. The recovery contract tests are now
 included in the existing CPU CI workflow.
+
+## CPU handoff integration
+
+The next adapter now hashes fresh output files and can merge selected missing
+priors into a new reconstruction input while preserving the other hand, original
+records, source indices and confidence arrays. The revision-2 private request
+binds all 302 canonical hand records. Nineteen focused tests pass, including
+synthetic-backend execution through the real downstream loaders; real model
+inference remains unverified. See
+[SOURCE_HAND_RECOVERY_HANDOFF.md](SOURCE_HAND_RECOVERY_HANDOFF.md).
