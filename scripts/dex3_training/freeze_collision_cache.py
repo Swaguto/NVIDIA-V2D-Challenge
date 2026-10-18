@@ -125,7 +125,11 @@ def freeze(inputs, output, seed_cache=None):
         json.dumps(receipt, indent=2) + "\n"
     )
     manifest = json.loads((output / "manifest.json").read_text())
-    manifest["schema"] = "v2d.dex3-training-window.v2"
+    # Freezing geometry must preserve the full-task command/confidence contract.
+    # Downgrading v3/v4 to a confidence window rejects legitimate unknown source
+    # frames and removes the loader's inferred-target validation.
+    if manifest["schema"] == "v2d.dex3-training-window.v1":
+        manifest["schema"] = "v2d.dex3-training-window.v2"
     manifest["collision_cache"] = dict(
         directory="collision-cache",
         runtime_commit=RUNTIME_COMMIT,
