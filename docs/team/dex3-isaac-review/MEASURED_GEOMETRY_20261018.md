@@ -74,6 +74,18 @@ later-seeded shape: IoU 0.523→0.604, measured distance 14.4→7.49 mm, and 2 m
 seed clearance. The next e003 trial tests both corrected objects. The manual
 first-frame diagnostic is not a frozen hidden-episode selection rule.
 
+The source-only selector audit subsequently found why that clean view was
+excluded: e003 frame 0 has 9,247 foreground pixels, below the old 10,440-pixel
+cutoff, while the selected closer frame 136 has 20,600 pixels and **58.5% direct
+hand overlap**. Their measured projected metric areas are 0.00962 and 0.00920
+square metres respectively. Camera distance, rather than visible completeness,
+was driving the area rejection. The generic runner now supplies its calibrated
+observations to the selector, ranks area using median measured depth squared,
+and checks direct hand overlap. It keeps measured-depth sufficiency checks,
+source hashes, unknown other-object exclusions and automatic prompts. This
+removes the need to specify e003 frame 0 as an episode override. New-object GPU
+integration and physical validation remain necessary.
+
 An e008 transfer trial changes only the pot; its required beige cup is retained
 unchanged. **e008 has two objects.** Both slots must be present in every bundle
 and submission. Neither experiment is accepted as a physical task yet.

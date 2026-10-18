@@ -458,6 +458,8 @@ def run(config):
                     f"/stage/source/{label}/masks",
                     "--hand-masks",
                     f"/workspace/temporal-hands/{label}/visual_masks",
+                    "--observations",
+                    f"/workspace/issue6-full-inputs/{label}/manifest.json",
                     "--episode",
                     ep,
                     "--object",
