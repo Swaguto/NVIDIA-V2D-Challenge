@@ -20,6 +20,7 @@ jobs:
         run: >-
           python -m pytest
           scripts/track3/tests/test_object_prompts.py
+          scripts/track3/tests/test_object_relative_gaps.py
           scripts/track3/tests/test_instance_mask_quality.py
           scripts/track3/tests/test_calibrated_anchor.py
           scripts/track3/tests/test_measured_pose_refinement.py

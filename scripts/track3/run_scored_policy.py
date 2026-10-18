@@ -113,6 +113,8 @@ def validate(config):
         raise ValueError("A baseline chunk must contain one to 100 iterations")
     if config.get("anchor_policy", "visual") not in {"visual", "metric"}:
         raise ValueError("Unknown command anchor policy")
+    if config.get("gap_policy", "world") not in {"world", "object-relative"}:
+        raise ValueError("Unknown robot command gap policy")
     if not re.fullmatch(r"[a-z0-9./_-]+@sha256:[0-9a-f]{64}", config["training_image"]):
         raise ValueError("Training image needs an immutable SHA256 digest")
     for name in ("bundle", "support", "context", "robot_assets", "kit"):
@@ -131,6 +133,10 @@ def validate(config):
     ):
         raise ValueError("Expected a committed code-only policy context")
     verify_files(context, source["files"])
+    if config.get("gap_policy", "world") == "object-relative" and (
+        "code/scripts/track3/object_relative_gaps.py" not in source["files"]
+    ):
+        raise ValueError("Object-relative commands need a fresh committed policy context")
     for name in (
         "check_native_scene.py",
         "audit_initial_contacts.py",
@@ -210,6 +216,7 @@ def run(config):
         "bundle_manifest_sha256": sha(Path(config["bundle"]) / "manifest.json"),
         "robot_asset_lock_sha256": sha(Path(config["robot_asset_lock"])),
         "anchor_policy": config.get("anchor_policy", "visual"),
+        "gap_policy": config.get("gap_policy", "world"),
         "stages": [],
         "physical_task_accepted": False,
         "official_leaderboard_score_claimed": False,
@@ -327,6 +334,8 @@ def run(config):
                 "/outputs/prepared",
                 "--anchor-policy",
                 receipt["anchor_policy"],
+                "--gap-policy",
+                receipt["gap_policy"],
             ],
             "case",
             ik=True,

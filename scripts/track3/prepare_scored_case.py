@@ -99,7 +99,9 @@ def command_anchors(ik_valid, metric_valid, policy):
     return ik_valid.copy() if policy == "visual" else ik_valid & metric_valid
 
 
-def prepare(bundle, retarget, support, out, anchor_policy="visual"):
+def prepare(bundle, retarget, support, out, anchor_policy="visual", gap_policy="world"):
+    if gap_policy not in {"world", "object-relative"}:
+        raise ValueError("Unknown robot command gap policy")
     validate_bundle(bundle)
     metadata = json.loads((bundle / "manifest.json").read_text())
     if (
@@ -157,6 +159,28 @@ def prepare(bundle, retarget, support, out, anchor_policy="visual"):
     q, inferred, parked = complete_commands(
         q, anchors, source["timestamps_s"], contract["joints"], parking
     )
+    gap_slots = np.full(anchors.shape, -1, dtype=np.int32)
+    gap_report = None
+    if gap_policy == "object-relative":
+        from object_relative_gaps import complete_object_relative_gaps
+
+        objects = []
+        for obj in metadata["objects"]:
+            oi = obj["index"]
+            scale = source[f"object_{oi}_scale"]
+            if not np.allclose(scale, scale[0], atol=1e-6, rtol=0):
+                raise ValueError("Object-relative gaps require fixed rigid mesh scale")
+            objects.append(
+                dict(
+                    vertices=source[f"object_{oi}_vertices"] * scale[0],
+                    world=source[f"object_{oi}_world"],
+                    observed=source[f"object_{oi}_valid"]
+                    & ~source[f"object_{oi}_pose_inferred"],
+                )
+            )
+        q, gap_slots, gap_report = complete_object_relative_gaps(
+            q, anchors, source["timestamps_s"], objects
+        )
     if out.exists():
         raise FileExistsError(out)
     import shutil
@@ -180,6 +204,8 @@ def prepare(bundle, retarget, support, out, anchor_policy="visual"):
         robot_no_selected_anchors_parked=parked,
         source_robot_valid=valid,
         command_anchor_valid=anchors,
+        robot_object_relative_gap_inferred=gap_slots >= 0,
+        robot_gap_object_slot=gap_slots,
     )
     static = out / "static-inputs"
     static.mkdir()
@@ -225,6 +251,8 @@ def prepare(bundle, retarget, support, out, anchor_policy="visual"):
         interpolated_hand_slots=inferred.sum(axis=0).tolist(),
         parked_hand_slots=parked.sum(axis=0).tolist(),
         command_anchor_policy=anchor_policy,
+        command_gap_policy=gap_policy,
+        object_relative_gap_hypothesis=gap_report,
         selected_anchor_slots=anchors.sum(axis=0).tolist(),
         original_ik_valid_slots=valid.sum(axis=0).tolist(),
         original_source_confidence_preserved=True,
@@ -263,9 +291,18 @@ if __name__ == "__main__":
         default="visual",
         help="Optional controlled hypothesis: complete commands from metric-supported IK only",
     )
+    p.add_argument(
+        "--gap-policy",
+        choices=["world", "object-relative"],
+        default="world",
+        help="Optional interior wrist interpolation in a consistently observed object's frame",
+    )
     a = p.parse_args()
     print(
         json.dumps(
-            prepare(a.bundle, a.retarget, a.support, a.out, a.anchor_policy), indent=2
+            prepare(
+                a.bundle, a.retarget, a.support, a.out, a.anchor_policy, a.gap_policy
+            ),
+            indent=2,
         )
     )

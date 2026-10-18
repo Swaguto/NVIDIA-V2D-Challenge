@@ -15,6 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 PREFIXES = [
     "scripts/track3/prepare_scored_case.py",
+    "scripts/track3/object_relative_gaps.py",
     "scripts/track3/run_scored_policy.py",
     "scripts/track3/continue_scored_policy.py",
     "scripts/reproduction/_dex3_static_load.py",
