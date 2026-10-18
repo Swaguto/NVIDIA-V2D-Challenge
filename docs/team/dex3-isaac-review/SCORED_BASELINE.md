@@ -312,3 +312,20 @@ a measured metric pointmap. Missing depth stays NaN. It bakes model scale into
 the mesh once and keeps a rigid body pose; unobserved surfaces and the anchor
 pose are explicitly inferred. It produces candidates pending rendered review
 and tracking, not automatic submission or physical acceptance.
+
+### Independent foreground and pose availability
+
+The first hand conversion exposed an adapter error: it discarded available
+object masks when FoundationPose rejected the associated 3-D pose. With two
+objects, that could mark all source occlusion as unknown and prevent every
+hand-depth alignment. `bind_scored_objects.py` now carries the predicted image
+foreground independently. Missing object poses keep `valid=false`, with no pose
+path or measured-contact claim. Fresh alignment/continuity runs are required;
+the original conversion remains preserved as the failed control.
+
+`experiment=dex3_scored_baseline` is the short, unassisted full-episode
+configuration. It uses ordinary residual hand commands, capped nominal motors,
+physical collision/contact dynamics, inferred support and tracking rewards.
+Contact-label rewards remain disabled. It requires no episode-specific grasp
+plan or motor feedforward pack. Actual GPU training and untouched official
+evaluator/packer checks are required before calling its outputs a baseline.

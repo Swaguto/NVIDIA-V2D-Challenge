@@ -1,0 +1,35 @@
+# @package _global_
+# Generic full-episode baseline: inferred retargeted commands; no grasp plan.
+# First run is deliberately short. A longer run needs comparative readbacks.
+defaults:
+  - dex3_pilot
+  - _self_
+
+embodiment:
+  config:
+    default_joint:
+      _target_: flash_chord.embodiments.base.JointControlSpec
+      kp: 8.0
+      kd: 0.2
+      armature: 0.00149
+      effort_limit: 0.76
+      velocity_limit: 23.0
+sim:
+  _target_: v2d_dex3_flashchord.sim.NativeContactSimConfig
+  substeps: 20
+  nconmax: 512
+  njmax: 2048
+  enable_multiccd: false
+objective:
+  object_keypoints:
+    weight: 8.0
+  hand_keypoints:
+    weight: 0.25
+  hand_joint_pos:
+    weight: 0.02
+training:
+  max_iterations: 100
+  save_interval: 25
+logging:
+  run_name: scored-generic-retarget-baseline
+output_dir: /outputs/scored-baseline
