@@ -126,6 +126,18 @@ gaps cannot silently become identity-pose targets. All camera estimates are chec
 against the fixed native hand-fit cameras. The legacy development exporter retains
 its separate interpretation. Input footage and MANO remain private mounts.
 
+The next tracking revision initializes from the measured seed-frame transform
+that defines the reconstructed body frame. It visits every decoded frame once,
+forwards and backwards from that anchor, without re-encoding cached pixels.
+FoundationPose's internal mesh-centering transform is accounted for explicitly.
+This avoids another arbitrary initial orientation search for our partial seeds.
+Every accepted frame must have at least 200 masked stereo points, with at least
+half inside the fixed seed envelope (20 mm or 10% extent margin). Fusion uses
+the same bound, records rejected views, and does not claim unseen-surface
+completion. These gates reject bad evidence; they do not establish physical
+acceptance. GPU validation of this anchored revision is a separate run from the
+RGB/pinned-runtime pilot.
+
 The same FAQ explicitly permits floating hands and fixed-base arm/hand setups
 for Track 3. Our selected policy runtime remains the official pinned
 FlashCHORD/Newton/JAX path with floating Dex3 hands. The Isaac renderer remains

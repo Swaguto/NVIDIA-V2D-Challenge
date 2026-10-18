@@ -90,7 +90,7 @@ def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,
     elif phase == "poses":
         if scored:
             from reconstructed_view import verify_geometry
-            verify_geometry(data, episode, names)
+            geometry_proof = verify_geometry(data, episode, names)
         masks = item / "masks"
         if not (masks / "report.json").is_file():
             raise FileNotFoundError(f"masks missing: {masks}")
@@ -111,14 +111,19 @@ def stage(phase: str, episode: int, names: list[str], data: Path, root: Path,
                     import hashlib
                     proof = json.loads((out / f"e{episode:03d}" / f"{name}_fp_report.json").read_text())
                     current = hashlib.sha256((data / "mesh" / name / f"{name}.glb").read_bytes()).hexdigest()
-                    if proof.get("mesh_sha256") != current:
+                    source_manifest = data / geometry_proof['objects'][name]['manifest']
+                    if (proof.get("mesh_sha256") != current
+                            or proof.get('no_arbitrary_bootstrap_rotation_registration') is not True
+                            or proof.get('bootstrap_manifest_sha256') != hashlib.sha256(source_manifest.read_bytes()).hexdigest()):
                         raise ValueError("Tracking cache has different geometry; use a fresh result root")
                 continue
-            run_command([fp_python, str(HERE.parent / "foundationpose_track.py"),
+            command = [fp_python, str(HERE.parent / "foundationpose_track.py"),
                          "--episode", str(episode), "--object", name,
                          "--data", str(data), "--masks", str(masks), "--out", str(out),
-                         "--reinit-every", str(reinit_every)],
-                        logs / f"pose_{name}.log", env)
+                         "--reinit-every", str(reinit_every)]
+            if scored:
+                command += ['--bootstrap-manifest', str(data / geometry_proof['objects'][name]['manifest'])]
+            run_command(command, logs / f"pose_{name}.log", env)
     elif phase in ("world", "scores"):
         camera, poses = item / "camera", item / "poses"
         if not (camera / "report.json").is_file():

@@ -7,7 +7,7 @@ import numpy as np
 import pytest
 
 sys.path.insert(0, str(Path(__file__).parents[1]))
-from reconstruct_stereo_object import points_from_depth, seed_from_points
+from reconstruct_stereo_object import fusion_depth, points_from_depth, seed_from_points
 from reconstructed_view import prepare, verify_geometry
 
 
@@ -62,6 +62,27 @@ def test_depth_mask_rejects_unknown_pixels_and_retains_metric_scale():
     )
     assert len(points) == 340
     assert np.allclose(points[:, 2], 0.5)
+
+
+def test_fusion_excludes_far_stereo_outliers_without_moving_measured_depth():
+    depth = np.full((20, 20), 0.5, dtype=np.float32)
+    depth[5:7, 5:7] = 2.0
+    valid = np.ones_like(depth, bool)
+    mask = np.full(depth.shape, 255, np.uint8)
+    pose = np.eye(4)
+    pose[2, 3] = 0.5
+    K = np.array([[100, 0, 10], [0, 100, 10], [0, 0, 1]])
+    filtered, support = fusion_depth(
+        depth, valid, mask, K, pose, [[-0.1] * 3, [0.1] * 3]
+    )
+    assert support["accepted"] and support["inside_seed_envelope_pixels"] == 396
+    np.testing.assert_array_equal(filtered[5:7, 5:7], 0)
+    assert np.all(filtered[filtered > 0] == 0.5)
+    pose[0, 3] = 2.0
+    rejected, support = fusion_depth(
+        depth, valid, mask, K, pose, [[-0.1] * 3, [0.1] * 3]
+    )
+    assert not support["accepted"] and not rejected.any()
 
 
 def fixture(tmp_path):

@@ -86,6 +86,33 @@ def points_from_depth(depth, valid, mask, K):
     )
 
 
+def fusion_depth(depth, valid, mask, K, camera_from_object, seed_bounds):
+    """Reject stereo outliers outside the fixed reconstructed body envelope."""
+    selected = valid & (mask > 127) & np.isfinite(depth) & (depth > 0.1) & (depth < 2.5)
+    y, x = np.nonzero(selected)
+    z = depth[y, x]
+    camera = np.c_[(x - K[0, 2]) * z / K[0, 0], (y - K[1, 2]) * z / K[1, 1], z]
+    body = np.einsum(
+        "ni,ij->nj", camera - camera_from_object[:3, 3], camera_from_object[:3, :3]
+    )
+    bounds = np.asarray(seed_bounds, float)
+    margin = max(0.02, 0.1 * float(np.max(bounds[1] - bounds[0])))
+    inside = ((body >= bounds[0] - margin) & (body <= bounds[1] + margin)).all(axis=1)
+    count = int(inside.sum())
+    fraction = count / max(1, len(z))
+    accepted = count >= 200 and fraction >= 0.5
+    filtered = np.zeros_like(depth, dtype=np.float32)
+    if accepted:
+        filtered[y[inside], x[inside]] = z[inside]
+    return filtered, dict(
+        candidate_pixels=len(z),
+        inside_seed_envelope_pixels=count,
+        inside_fraction=fraction,
+        accepted=accepted,
+        margin_m=margin,
+    )
+
+
 def frames(data, episode, masks, stride=1):
     import cv2
     from stereo_depth import load_rig, stereo_depth
@@ -212,7 +239,9 @@ def refine(data, masks, poses, seed_root, episode, name, out, stride=5):
         sdf_trunc=voxel * 6,
         color_type=o3d.pipelines.integration.TSDFVolumeColorType.RGB8,
     )
+    seed_mesh = trimesh.load(seed_root / "mesh.glb", force="mesh", process=False)
     used = []
+    rejected_views = []
     for index, color, depth, valid, mask, rig in frames(
         data, episode, masks / name, stride
     ):
@@ -232,12 +261,6 @@ def refine(data, masks, poses, seed_root, episode, name, out, stride=5):
             or record.get("mesh_sha256") != original["mesh_sha256"]
         ):
             raise ValueError("Unbound object pose in multi-view reconstruction")
-        selected = (
-            valid & (mask > 127) & np.isfinite(depth) & (depth > 0.1) & (depth < 2.5)
-        )
-        if selected.sum() < 200:
-            continue
-        filtered = np.where(selected, depth, 0).astype(np.float32)
         q = np.asarray(record["rotation"], float)
         if not np.isfinite(q).all() or not np.isclose(np.linalg.norm(q), 1, atol=1e-4):
             raise ValueError("Invalid tracked rotation")
@@ -246,6 +269,12 @@ def refine(data, masks, poses, seed_root, episode, name, out, stride=5):
         transform[:3, 3] = record["translation"]
         if not np.isfinite(transform).all() or record.get("scale") != 1:
             raise ValueError("Invalid rigid object pose")
+        filtered, support = fusion_depth(
+            depth, valid, mask, rig.P1[:3, :3], transform, seed_mesh.bounds
+        )
+        if not support["accepted"]:
+            rejected_views.append(dict(frame=index, **support))
+            continue
         rgbd = o3d.geometry.RGBDImage.create_from_color_and_depth(
             o3d.geometry.Image(cv2.cvtColor(color, cv2.COLOR_BGR2RGB)),
             o3d.geometry.Image(filtered),
@@ -264,6 +293,7 @@ def refine(data, masks, poses, seed_root, episode, name, out, stride=5):
                 "frame": index,
                 "pose_sha256": sha(pose_path),
                 "mask_sha256": sha(masks / name / f"{index:06d}.png"),
+                "depth_support": support,
             }
         )
     if len(used) < 3:
@@ -300,7 +330,11 @@ def refine(data, masks, poses, seed_root, episode, name, out, stride=5):
         "seed_manifest_sha256": sha(seed_root / "manifest.json"),
         "seed_mesh_sha256": original["mesh_sha256"],
         "seed_camera_from_object": original["seed_camera_from_object"],
+        "seed_frame": original["seed_frame"],
         "views": used,
+        "rejected_views": rejected_views,
+        "depth_filter": "Fixed seed-body bounds plus max(20mm,10% extent); reject views with less than 50% supported stereo pixels",
+        "unseen_surface_completion_claimed": False,
         "voxel_m": voxel,
         "geometry_final": False,
         "submission_ready": False,
