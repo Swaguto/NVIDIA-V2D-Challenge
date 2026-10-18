@@ -7,11 +7,11 @@ not step the simulator or certify contacts, grasping, or policy performance.
 import argparse
 import hashlib
 import json
-from pathlib import Path
 import time
+from pathlib import Path
 
 
-def check(inputs):
+def compile_scene(inputs):
     import newton
     import warp as wp
     from flash_chord.embodiments.base import JointControlSpec
@@ -38,7 +38,6 @@ def check(inputs):
     cfg = NativeContactSimConfig(
         substeps=20, nconmax=512, njmax=2048, enable_multiccd=False
     )
-    start = time.monotonic()
     with wp.ScopedDevice("cpu"):
         scene = build_scene(
             embodiment,
@@ -65,19 +64,25 @@ def check(inputs):
             use_mujoco_contacts=cfg.use_mujoco_contacts,
             enable_multiccd=cfg.enable_multiccd,
         )
-    return dict(
-        schema="v2d.scored-native-geometry-preflight.v1",
-        status="passed",
-        input_manifest_sha256=manifest_sha,
-        runtime_commit=RUNTIME_COMMIT,
-        producer_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-        native_geom_count=int(solver.mj_model.ngeom),
-        native_mesh_count=int(solver.mj_model.nmesh),
-        wall_seconds=time.monotonic() - start,
-        native_mesh_checks_relaxed=False,
-        physics_stepped=False,
-        physical_task_accepted=False,
-    )
+    return scene, reference, solver, manifest_sha, RUNTIME_COMMIT
+
+
+def check(inputs):
+    start = time.monotonic()
+    _, _, solver, manifest_sha, runtime_commit = compile_scene(inputs)
+    return {
+        "schema": "v2d.scored-native-geometry-preflight.v1",
+        "status": "passed",
+        "input_manifest_sha256": manifest_sha,
+        "runtime_commit": runtime_commit,
+        "producer_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        "native_geom_count": int(solver.mj_model.ngeom),
+        "native_mesh_count": int(solver.mj_model.nmesh),
+        "wall_seconds": time.monotonic() - start,
+        "native_mesh_checks_relaxed": False,
+        "physics_stepped": False,
+        "physical_task_accepted": False,
+    }
 
 
 if __name__ == "__main__":
@@ -91,21 +96,21 @@ if __name__ == "__main__":
     except Exception as error:
         a.out.write_text(
             json.dumps(
-                dict(
-                    schema="v2d.scored-native-geometry-preflight.v1",
-                    status="failed",
-                    error=str(error),
-                    input_manifest_sha256=hashlib.sha256(
+                {
+                    "schema": "v2d.scored-native-geometry-preflight.v1",
+                    "status": "failed",
+                    "error": str(error),
+                    "input_manifest_sha256": hashlib.sha256(
                         (a.inputs / "manifest.json").read_bytes()
                     ).hexdigest()
                     if (a.inputs / "manifest.json").is_file()
                     else None,
-                    producer_sha256=hashlib.sha256(
+                    "producer_sha256": hashlib.sha256(
                         Path(__file__).read_bytes()
                     ).hexdigest(),
-                    physical_task_accepted=False,
-                    native_mesh_checks_relaxed=False,
-                ),
+                    "physical_task_accepted": False,
+                    "native_mesh_checks_relaxed": False,
+                },
                 indent=2,
             )
             + "\n"

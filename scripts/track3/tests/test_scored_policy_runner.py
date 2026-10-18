@@ -67,6 +67,13 @@ def config(tmp_path):
             )
         }
     )
+    for name in ("check_native_scene.py", "audit_initial_contacts.py"):
+        path = Path(c["context"]) / "code/scripts/dex3_training" / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("# committed diagnostic fixture\n")
+        manifest["files"][path.relative_to(c["context"]).as_posix()] = hashlib.sha256(
+            path.read_bytes()
+        ).hexdigest()
     (Path(c["context"]) / "context-manifest.json").write_text(json.dumps(manifest))
     (Path(c["bundle"]) / "manifest.json").write_text(
         json.dumps(

@@ -159,6 +159,14 @@ every grasp: inspect evaluator metrics, full native motion and the task audit.
 These scores compare against reconstructed references and are not leaderboard
 ground truth. The command does not upload or select a submission automatically.
 
+New policy contexts also include `audit_initial_contacts.py` and
+`check_native_scene.py`. A CPU probe compiles the same native collision geometry,
+applies the exact rigid-object reference start to native free joints, verifies
+those poses, and reports signed object/support and object/object contact gaps.
+It runs before training. Robot contacts are excluded because this probe does not
+reset the robot to its reference. Penetration is recorded as a quality problem;
+a successful probe process is not a collision-clearance or grasp pass.
+
 ### Start from videos, without saved hand fits
 
 `run_scored_hands.py --config <config.json>` estimates independent stereo camera

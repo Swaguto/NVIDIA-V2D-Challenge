@@ -41,6 +41,18 @@ The GPU repair completed: 310 left and 309 right visual frames and command ancho
 
 The repaired e003 policy still fails: initial/final AUC is 0.01505/0.01493, MP-SR remains zero, and training repeatedly terminates for object error after one step. The native convex hull envelope lies 28.4 mm (pot) and 34.6 mm (spoon) below the inferred horizontal support top at the reference start. This is an envelope diagnostic, not an exact intersection test. The first recorded native spoon pose is 97.7 mm and 66.7 degrees from its reference. Its complete readback retains nonfinite late objective terms/scores, although body/contact arrays, checkpoint tensors and training metrics are finite. The reward-balance audit correctly refuses to summarize that nonfinite rollout. Source geometry/contact initialization needs investigation before a longer run; the checkpoint is not promoted.
 
+A subsequent CPU MuJoCo contact probe explicitly resets both free objects to
+their exact reference start and verifies their positions/quaternions before
+contact detection. It confirms 21.75 mm pot/support and 14.77 mm spoon/support
+penetration. No physics step or robot-reference reset is performed; robot
+contacts are excluded. `audit_initial_contacts.py` records this separate geometry
+diagnostic before future short policy runs. It does not relax native mesh checks
+or declare a physical pass. An experimental measured-surface pot candidate
+improves source silhouette overlap from 0.497 to 0.744 and median measured
+point-to-mesh-vertex distance from 53.2 to 10.7 mm, with 2 mm seed clearance above
+the unchanged support plane. It has not passed full-sequence tracking or physics;
+its above-table constraint currently applies to this diagnosed pilot only.
+
 An experimental whole-track selector compares the control, foreground-depth and foreground-motion trajectories against the same measured source masks/depth. It selects one entire unchanged trajectory per object; missing observations score zero. On the two inspected pilots it selected the original pot control, the foreground-motion lid/beige cup, and the foreground-depth blue cup. Both cups now retain 161 observed frames and the lid 335. Video review still shows silhouette/orientation errors. This is evidence for a baseline procedure, not a physical acceptance or hidden-accuracy claim. The selector and full GPU runner need integration validation before the method is frozen for the reserved episodes.
 
 Public development episodes 11, 22 and 42 were selected before inspecting new metadata or outcomes. A subsequent history audit found that all three were reviewed in the earlier continuity work, and e022 has a legacy manual object-box override. They are therefore retrospective regression cases, not untouched end-to-end holdouts. Their reference pose tables remain isolated outside inference mounts. Rostered video runs now exclude per-episode manual object prompts and reject annotated mask caches.

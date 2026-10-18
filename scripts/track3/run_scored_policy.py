@@ -58,6 +58,11 @@ def validate(config):
     ):
         raise ValueError("Expected a committed code-only policy context")
     verify_files(context, source["files"])
+    for name in ("check_native_scene.py", "audit_initial_contacts.py"):
+        if "code/scripts/dex3_training/" + name not in source["files"]:
+            raise ValueError(
+                "Policy context is missing the initial-contact diagnostic; export a fresh committed context"
+            )
     if not (
         context
         / "code/robotic_grounding/source/robotic_grounding/robotic_grounding/assets"
@@ -286,6 +291,25 @@ def run(config):
             pack="frozen",
             limit=120,
         )
+        container(
+            "/project/scripts/dex3_training/audit_initial_contacts.py",
+            ["--inputs", "/data", "--out", "/outputs/initial-contacts.json"],
+            "initial-contacts",
+            pack="frozen",
+            limit=120,
+        )
+        initial = json.loads((out / "initial-contacts.json").read_text())
+        receipt["initial_object_contact_diagnostic"] = {
+            "maximum_penetration_m": max(
+                (row["maximum_penetration_m"] for row in initial["contact_pairs"]),
+                default=0.0,
+            ),
+            "reference_start_poses_verified": initial[
+                "reference_object_start_poses_verified"
+            ],
+            "quality_gate_pass_claimed": False,
+        }
+        save()
         container(
             "/opt/dex3-extension/train.py",
             [
