@@ -40,16 +40,16 @@ def summarize_contacts(rows, objects, support):
     ]
 
 
-def audit(inputs):
+def reference_contacts(scene, reference, solver, frame=0):
+    """Place rigid reference bodies at one knot; inspect the compiled finite scene."""
     import mujoco
 
-    scene, reference, solver, manifest_sha, runtime_commit = compile_scene(inputs)
     model = solver.mj_model
     state = mujoco.MjData(model)
     objects = {}
     position, quaternion = reference.object_body_pos_w(), reference.object_body_quat_w()
     # Newton resets free object roots after compilation; MjModel.qpos0 is zero.
-    # Apply the exact reference start explicitly before checking collisions.
+    # Apply the exact reference knot explicitly before checking collisions.
     for obj in scene.objects:
         if obj.articulations:
             raise ValueError("This diagnostic currently covers rigid scored objects")
@@ -58,22 +58,24 @@ def audit(inputs):
         if joint < 0 or model.jnt_type[joint] != mujoco.mjtJoint.mjJNT_FREE:
             raise ValueError("Expected one native free root per scored object")
         start = int(model.jnt_qposadr[joint])
-        state.qpos[start : start + 3] = position[0, rid]
-        state.qpos[start + 3 : start + 7] = quaternion[0, rid]
+        state.qpos[start : start + 3] = position[frame, rid]
+        state.qpos[start + 3 : start + 7] = quaternion[frame, rid]
     mujoco.mj_forward(model, state)
     for obj in scene.objects:
         for binding in obj.bodies:
             bid, rid = binding.body_id + 1, binding.reference_body_id
             if (
-                not np.allclose(state.xpos[bid], position[0, rid], atol=1e-6, rtol=0)
+                not np.allclose(
+                    state.xpos[bid], position[frame, rid], atol=1e-6, rtol=0
+                )
                 or min(
-                    np.linalg.norm(state.xquat[bid] - quaternion[0, rid]),
-                    np.linalg.norm(state.xquat[bid] + quaternion[0, rid]),
+                    np.linalg.norm(state.xquat[bid] - quaternion[frame, rid]),
+                    np.linalg.norm(state.xquat[bid] + quaternion[frame, rid]),
                 )
                 > 1e-6
             ):
                 raise ValueError(
-                    "Compiled body pose does not match the reference start: "
+                    "Compiled body pose does not match the reference knot: "
                     + json.dumps(
                         {
                             "newton_id": binding.body_id,
@@ -81,9 +83,11 @@ def audit(inputs):
                             "native_name": model.body(bid).name,
                             "expected_name": obj.name,
                             "native_position": state.xpos[bid].tolist(),
-                            "reference_position": position[0, rid].tolist(),
+                            "reference_position": position[frame, rid].tolist(),
                             "native_quaternion_wxyz": state.xquat[bid].tolist(),
-                            "reference_quaternion_wxyz": quaternion[0, rid].tolist(),
+                            "reference_quaternion_wxyz": quaternion[
+                                frame, rid
+                            ].tolist(),
                             "solver_body_attributes": [
                                 name
                                 for name in dir(solver)
@@ -103,6 +107,12 @@ def audit(inputs):
         )
         for c in state.contact[: state.ncon]
     ]
+    return objects, support, rows
+
+
+def audit(inputs):
+    scene, reference, solver, manifest_sha, runtime_commit = compile_scene(inputs)
+    objects, support, rows = reference_contacts(scene, reference, solver)
     return {
         "schema": "v2d.native-initial-object-contact-audit.v1",
         "input_manifest_sha256": manifest_sha,

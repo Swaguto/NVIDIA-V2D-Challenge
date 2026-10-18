@@ -67,7 +67,11 @@ def config(tmp_path):
             )
         }
     )
-    for name in ("check_native_scene.py", "audit_initial_contacts.py"):
+    for name in (
+        "check_native_scene.py",
+        "audit_initial_contacts.py",
+        "audit_reference_contacts.py",
+    ):
         path = Path(c["context"]) / "code/scripts/dex3_training" / name
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text("# committed diagnostic fixture\n")

@@ -58,10 +58,14 @@ def validate(config):
     ):
         raise ValueError("Expected a committed code-only policy context")
     verify_files(context, source["files"])
-    for name in ("check_native_scene.py", "audit_initial_contacts.py"):
+    for name in (
+        "check_native_scene.py",
+        "audit_initial_contacts.py",
+        "audit_reference_contacts.py",
+    ):
         if "code/scripts/dex3_training/" + name not in source["files"]:
             raise ValueError(
-                "Policy context is missing the initial-contact diagnostic; export a fresh committed context"
+                "Policy context is missing a native contact diagnostic; export a fresh committed context"
             )
     if not (
         context
@@ -307,6 +311,21 @@ def run(config):
             "reference_start_poses_verified": initial[
                 "reference_object_start_poses_verified"
             ],
+            "quality_gate_pass_claimed": False,
+        }
+        save()
+        container(
+            "/project/scripts/dex3_training/audit_reference_contacts.py",
+            ["--inputs", "/data", "--out", "/outputs/reference-contacts.json"],
+            "reference-contacts",
+            pack="frozen",
+            limit=120,
+        )
+        reference_contacts = json.loads((out / "reference-contacts.json").read_text())
+        receipt["reference_object_contact_diagnostic"] = {
+            "reference_knots": reference_contacts["reference_knots"],
+            "summary": reference_contacts["summary"],
+            "physics_stepped": False,
             "quality_gate_pass_claimed": False,
         }
         save()
