@@ -1,7 +1,8 @@
 # Fresh hand recovery → reconstruction handoff
 
-Status: CPU file protocol verified; real SAM2/HaMeR inference and physical results
-remain unverified. This does not repair or qualify a grasp by itself.
+Status: the first real eight-image SAM2/HaMeR probe completed on Watcloud. The
+handoff and refinement contracts have 28 passing CPU tests. Source geometry and
+physical grasp acceptance remain unverified; see the measured checkpoint below.
 
 ## What is wired now
 
@@ -56,9 +57,9 @@ are tests of the handoff, not hand reconstruction accuracy.
 
 ## Compute and privacy
 
-Brev remains unqueued during the owner-confirmed outage. Before any new paid
-session, verify reliable stop control, arm the independent guard and use a short
-lease. Use the existing pinned perception image and a committed code overlay;
+The original Brev plan remains unqueued during its outage. Watcloud is now the
+selected provider, with bounded Slurm allocations and verified result backups.
+Use the existing pinned perception image and a committed code overlay;
 no image rebuild or full source-video inference is required for this eight-frame
 probe. Models and inputs are separate read-only private mounts; inference output
 stays private. Do not publish footage, model weights or this private input pack.
@@ -72,5 +73,33 @@ This is a partial source-recovery payload, not a complete episode replay pack.
 
 The recovery has a streaming SHA256 implementation compatible with the stated
 Python 3.10+ host contract. The committed code context is versioned separately
-from the unchanged private input archive. No Docker execution or GPU inference
-was rehearsed; the probe plan remains blocked and unqueued during the outage.
+from the unchanged private input archive. The copied-input CPU rehearsal did
+not execute Docker or GPU inference; the separate Watcloud run is recorded below.
+
+## Watcloud refinement after the first real inference
+
+The first eight-image inference now ran successfully on Watcloud. Its private
+outputs were hash-verified locally and the Slurm allocation completed. See
+[the measured result](WATCLOUD_MIGRATION_20261018.md); physical acceptance remains
+pending. The copied-input rehearsal above and the real inference have separate
+receipts and source identities.
+
+An optional per-frame `inferred_exclusion` binds a source object-mask path and
+SHA256, the source image hash, kind `inferred_source_object_segmentation`, and
+`ambiguous_regions_are_unknown: true`. Object/hand overlap becomes unknown for
+the hand. Positive source points inside it lose support; SAM2 receives negative
+prompts in the excluded region, and candidate masks retain no excluded pixels.
+Fewer than four remaining source points causes explicit abstention. These
+inferred masks never supply metric or contact labels.
+
+For a segmentation-only experiment, use `--reuse-hand-recovery` together with
+`--reuse-request`. The complete parent recovery and file hashes are checked.
+Images, crops, evidence, calibration, identity, shape and all other request
+fields must match; only the exclusion controls may differ. Pose/camera values
+are reused unchanged, with the parent record and request identities retained.
+The HaMeR model and its weights are not loaded in this mode. This avoids repeating
+unchanged pose inference or transferring its checkpoint for a mask refinement.
+
+The 28 focused CPU tests include this refinement, negative-prompt handling,
+abstention, parent-pose preservation and tampered/cross-source rejection. Model
+accuracy for the new negative-prompt path still requires a separate GPU probe.

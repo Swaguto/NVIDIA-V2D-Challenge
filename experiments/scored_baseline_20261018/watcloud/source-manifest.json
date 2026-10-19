@@ -1,0 +1,105 @@
+{
+  "schema": "v2d.watcloud-investigation-source-archive.v1",
+  "sources": [
+    {
+      "path": "audit_fresh_hand_source_v1.py",
+      "sha256": "f5a3b2d170b5598dde5c0bc80a56f7a3533429c65938b5434cdc56c6df1be0f4",
+      "execution_status": "executed",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/audit_fresh_hand_source_v1.py",
+      "scope": "new source-only CPU analysis or resource guard"
+    },
+    {
+      "path": "fit_dense_source_skin_v1.py",
+      "sha256": "4dd0f9517711d975a2f0a303a980b2a857ceb8830dae3f02d5c97c4d532c2402",
+      "execution_status": "executed",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/fit_dense_source_skin_v1.py",
+      "scope": "new source-only CPU analysis or resource guard"
+    },
+    {
+      "path": "fit_dense_source_skin_v2.py",
+      "sha256": "6b82b36051d330fd702d1335fb9451df45e213e2266afe9578405ce5806d3bb2",
+      "execution_status": "executed",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/fit_dense_source_skin_v2.py",
+      "scope": "new source-only CPU analysis or resource guard"
+    },
+    {
+      "path": "fit_fresh_hand_source_v1.py",
+      "sha256": "afe3e01ae49b10a72394e897a4f92808109902458be285fd9152b817b110f95c",
+      "execution_status": "executed",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/fit_fresh_hand_source_v1.py",
+      "scope": "new source-only CPU analysis or resource guard"
+    },
+    {
+      "path": "fit_fresh_hand_source_v2.py",
+      "sha256": "ae49512348b9fc295fb3ea84681b9dcf3c9eb56f2dc179f7548ddf6c1d0f6017",
+      "execution_status": "executed",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/fit_fresh_hand_source_v2.py",
+      "scope": "new source-only CPU analysis or resource guard"
+    },
+    {
+      "path": "fresh_hand_controller_v1.py",
+      "sha256": "0d2a5d5c2c36b2dcac6b0de6b09e96f43ab7eecb1c1ebe869aa8a855e6c2996d",
+      "execution_status": "executed",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/fresh_hand_controller_v1.py",
+      "scope": "scheduled GPU orchestration"
+    },
+    {
+      "path": "fresh_hand_worker_v1.py",
+      "sha256": "6f73f54c136949274862c7060a6c1ae40a61aeb8862719ff21071ecfd40fda4c",
+      "execution_status": "executed",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/fresh_hand_worker_v1.py",
+      "scope": "scheduled GPU orchestration"
+    },
+    {
+      "path": "guard_dense_source_skin_v1.py",
+      "sha256": "336ed6d464c06a1dd532176f8c56b8ddc45f16c2225b89e2544dc4aa60f08339",
+      "execution_status": "executed",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/guard_dense_source_skin_v1.py",
+      "scope": "new source-only CPU analysis or resource guard"
+    },
+    {
+      "path": "guard_dense_source_skin_v2.py",
+      "sha256": "4ef8b69221647078df384dc202715ad5f02095b314fc080a8d91076c4a235f0a",
+      "execution_status": "executed",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/guard_dense_source_skin_v2.py",
+      "scope": "new source-only CPU analysis or resource guard"
+    },
+    {
+      "path": "guard_fresh_hand_fit_v1.py",
+      "sha256": "cb0301e6f99eb8e643974114a4e7586fb2981776198985888c27d97fcd026b5c",
+      "execution_status": "executed",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/guard_fresh_hand_fit_v1.py",
+      "scope": "new source-only CPU analysis or resource guard"
+    },
+    {
+      "path": "guard_fresh_hand_fit_v2.py",
+      "sha256": "f286441bb6d9fbb5902cc76a607964321f934053c646fa993360cdd9c77f5f0c",
+      "execution_status": "executed",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/guard_fresh_hand_fit_v2.py",
+      "scope": "new source-only CPU analysis or resource guard"
+    },
+    {
+      "path": "preflight_worker_v1.py",
+      "sha256": "97e6246c14d2671e5e5443939be9f2ba27de6a660249ce66ae0e9e4da06fcd4d",
+      "execution_status": "executed",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/preflight_worker_v1.py",
+      "scope": "scheduled GPU orchestration"
+    },
+    {
+      "path": "prepare_object_exclusion_control_v1.py",
+      "sha256": "f09dc96e74a79311cff21b470cc598cf79aa626546d16077a71ae775d5e1538b",
+      "execution_status": "executed",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/prepare_object_exclusion_control_v1.py",
+      "scope": "CPU exclusion binding and cached-mask control only; no negative-prompt model inference"
+    }
+  ],
+  "recorded_source_scripts": 13,
+  "source_inference_code_commit": "60c943f0c50af779a11ca7ff79ed8642fd966e59",
+  "pinned_source_inference_code_is_separate_from_archive_revision": true,
+  "private_inputs_included": false,
+  "model_weights_included": false,
+  "credentials_included": false,
+  "official_evaluator_modified": false,
+  "no_completed_baseline_rerun": true,
+  "restoration_note": "These are exact executed experiment sources. They expect the original private workspace layout, not a teammate-ready generic CLI."
+}

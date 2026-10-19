@@ -8,6 +8,7 @@ Run --validate-only on CPU before a bounded GPU probe in the perception image.
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 from pathlib import Path
@@ -15,6 +16,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 from scipy.spatial.transform import Rotation
+from scipy.ndimage import binary_dilation, binary_erosion
 
 SCHEMA = "v2d.source-hand-recovery-request.v1"
 KINDS = {"identity_associated_source_model_prediction", "checked_inferred_image_flow"}
@@ -26,6 +28,48 @@ def digest(path):
         for block in iter(lambda: stream.read(1024 * 1024), b""):
             checksum.update(block)
     return checksum.hexdigest()
+
+
+def exclusion_mask(row, shape):
+    """A second inferred class creates unknown hand regions, not new labels."""
+    control = row.get("inferred_exclusion")
+    if control is None:
+        return None
+    if (control.get("kind") != "inferred_source_object_segmentation"
+        or control.get("ambiguous_regions_are_unknown") is not True
+        or control.get("source_image_sha256") != row["image_sha256"]):
+        raise ValueError("Object exclusions must remain source-bound inferred ambiguity")
+    path = Path(control["path"])
+    if not path.is_absolute() or digest(path) != control["sha256"]:
+        raise ValueError("Changed or unbound source object exclusion")
+    mask = np.asarray(Image.open(path)) > 0
+    if mask.shape != tuple(shape):
+        raise ValueError("Object exclusion differs from calibrated source grid")
+    return mask
+
+
+def mask_prompts(points, exclusion):
+    """Preserve positive pixels; infer negative prompts only in excluded areas."""
+    points = np.array(points, float, copy=True)
+    if exclusion is None:
+        return points, points[points[:, 2] > 0, :2], None
+    ids = np.flatnonzero(points[:, 2] > 0)
+    xy = np.rint(points[ids, :2]).astype(int)
+    xy[:, 0] = xy[:, 0].clip(0, exclusion.shape[1]-1)
+    xy[:, 1] = xy[:, 1].clip(0, exclusion.shape[0]-1)
+    points[ids[exclusion[xy[:, 1], xy[:, 0]]], 2] = 0
+    positives = points[points[:, 2] > 0, :2]
+    neighbourhood = np.zeros(exclusion.shape, bool)
+    if len(positives):
+        xy = np.rint(positives).astype(int)
+        xy[:, 0] = xy[:, 0].clip(0, exclusion.shape[1]-1)
+        xy[:, 1] = xy[:, 1].clip(0, exclusion.shape[0]-1)
+        neighbourhood[xy[:, 1], xy[:, 0]] = True
+    eligible = binary_erosion(exclusion, iterations=2) & ~binary_dilation(neighbourhood, iterations=6)
+    y, x = np.nonzero(eligible)
+    index = np.linspace(0, len(x)-1, min(16, len(x))).round().astype(int) if len(x) else np.array([], int)
+    negative = np.c_[x[index], y[index]]
+    return points, np.r_[positives, negative], np.r_[np.ones(len(positives), int), np.zeros(len(negative), int)]
 
 
 def validate_request(path):
@@ -106,6 +150,7 @@ def validate_request(path):
         with Image.open(image) as im:
             if im.size != (int(c[4]), int(c[5])):
                 raise ValueError("Source image differs from calibrated pixel grid")
+        exclusion_mask(row, (int(c[5]), int(c[4])))
     return data
 
 
@@ -194,22 +239,51 @@ def canonical_sources(data):
     return sources
 
 
-def infer_frames(data, output, request_sha, predict_masks, predict_hand, receipt):
+def validate_pose_reuse(request_path, original_request, recovery):
+    """Reuse model inference only when every source and crop contract matches."""
+    # Imported after this module's definitions; this is a CPU-only file check.
+    from merge_recovered_source_hand import validate_recovery
+    data = validate_request(request_path)
+    old, _, parent, accepted, _ = validate_recovery(original_request, recovery)
+    if {k:v for k,v in data.items() if k != "frames"} != {k:v for k,v in old.items() if k != "frames"}:
+        raise ValueError("Pose reuse cannot change canonical or image evidence inputs")
+    strip = lambda row: {k:v for k,v in row.items() if k != "inferred_exclusion"}
+    if [strip(r) for r in data["frames"]] != [strip(r) for r in old["frames"]] or len(accepted) != len(data["frames"]):
+        raise ValueError("Pose reuse needs identical source images, crops, identity and all original poses")
+    records = {}
+    for key, name, *_ in accepted:
+        path = Path(recovery)/name
+        record = json.loads(path.read_text())
+        record["pose_source_request_sha256"] = record.get("pose_source_request_sha256", parent["request_sha256"])
+        record["pose_source_record_sha256"] = digest(path)
+        records[key] = record
+    return records, parent
+
+
+def infer_frames(data, output, request_sha, predict_masks, predict_hand, receipt, reused_records=None):
     """Shared file protocol; CPU tests supply explicitly fake model callbacks."""
     output = Path(output)
     for row in data["frames"]:
         side = "right" if row["is_right"] else "left"
         stem = f"{row['frame_idx']:06d}"
         image = np.array(Image.open(row["image"]).convert("RGB"))
-        points = np.array(row["keypoints"], float)
+        exclusion = exclusion_mask(row, image.shape[:2])
+        points, prompt_points, labels = mask_prompts(row["keypoints"], exclusion)
         active = points[:, 2] > 0
         crop = row["crop"]
         box = np.r_[np.array([crop["cx"], crop["cy"]])-crop["size"]/2, np.array([crop["cx"], crop["cy"]])+crop["size"]/2]
-        masks, scores = predict_masks(image, points[active, :2], box)
+        if np.count_nonzero(active) < 4:
+            receipt["rows"].append(dict(frame_idx=row["frame_idx"], side=side, status="rejected_mask_support", reason="fewer_than_four_nonambiguous_source_points"))
+            continue
+        masks, scores = (predict_masks(image, prompt_points, box) if labels is None
+            else predict_masks(image, prompt_points, box, point_labels=labels))
         candidates = []
         for mask, score in zip(masks, scores):
             if np.asarray(mask).shape != image.shape[:2] or not np.isfinite(score):
                 continue
+            mask = np.asarray(mask, bool)
+            if exclusion is not None:
+                mask = mask & ~exclusion
             try:
                 kp = associated_keypoints(points, mask)
                 candidates.append((float(score), mask, kp))
@@ -219,8 +293,12 @@ def infer_frames(data, output, request_sha, predict_masks, predict_hand, receipt
             receipt["rows"].append(dict(frame_idx=row["frame_idx"], side=side, status="rejected_mask_support"))
             continue
         score, mask, kp = max(candidates, key=lambda x: x[0])
-        prediction = predict_hand(image, crop, row["is_right"])
-        record = make_record(row, prediction, data["camera"], request_sha)
+        if reused_records is None:
+            prediction = predict_hand(image, crop, row["is_right"])
+            record = make_record(row, prediction, data["camera"], request_sha)
+        else:
+            record = copy.deepcopy(reused_records[(side, row["frame_idx"])])
+            record["source_request_sha256"] = request_sha
         for folder in [output/"records"/side, output/"image-observations"/side]:
             folder.mkdir(parents=True, exist_ok=True)
         maskpath = output/"image-observations"/side/f"{stem}-mask.png"
@@ -236,9 +314,14 @@ def output_files(output):
             if p.is_file() and p != Path(output)/"receipt.json"}
 
 
-def run(path, output, sam_weights, sam_config, hamer_weights):
+def run(path, output, sam_weights, sam_config, hamer_weights, reuse_hand_recovery=None, reuse_request=None):
     data = validate_request(path)
     canonical_sources(data)
+    reused, parent = None, None
+    if reuse_hand_recovery is not None:
+        if reuse_request is None:
+            raise ValueError("Pose reuse requires its original request")
+        reused, parent = validate_pose_reuse(path, reuse_request, reuse_hand_recovery)
     output = Path(output)
     if output.exists():
         raise FileExistsError("Preserve earlier results; choose a new output directory")
@@ -248,30 +331,37 @@ def run(path, output, sam_weights, sam_config, hamer_weights):
         canonical_manifest_sha256=data["canonical_manifest_sha256"],
         producer_sha256=digest(Path(__file__)), rows=[], files={}, complete=False,
         original_observation_flags_changed=False, reference_accepted=False, training_approved=False)
+    receipt["hamer_inference_reused"] = reused is not None
+    if parent is not None:
+        receipt.update(pose_source_receipt_sha256=digest(Path(reuse_hand_recovery)/"receipt.json"),
+            hamer_checkpoint_sha256=parent.get("hamer_checkpoint_sha256"))
     try:
         import torch
         from sam2.build_sam import build_sam2
         from sam2.sam2_image_predictor import SAM2ImagePredictor
-        from v2d.hamer.lib._hamer import get_model, run_hamer
 
         if not torch.cuda.is_available():
             raise RuntimeError("Fresh inference requires the bounded CUDA perception runtime")
-        receipt.update(sam_weights_sha256=digest(sam_weights), sam_config=sam_config,
-            hamer_checkpoint_sha256=digest(Path(hamer_weights)/"_DATA/hamer_ckpts/checkpoints/hamer.ckpt"))
+        receipt.update(sam_weights_sha256=digest(sam_weights), sam_config=sam_config)
         predictor = SAM2ImagePredictor(build_sam2(sam_config, str(sam_weights), device="cuda", apply_postprocessing=False))
-        model, cfg = get_model(str(hamer_weights))
+        predict_hand = None
+        if reused is None:
+            from v2d.hamer.lib._hamer import get_model, run_hamer
+            receipt["hamer_checkpoint_sha256"] = digest(Path(hamer_weights)/"_DATA/hamer_ckpts/checkpoints/hamer.ckpt")
+            model, cfg = get_model(str(hamer_weights))
+            def predict_hand(image, crop, is_right):
+                return run_hamer(model, cfg, image, crop["cx"], crop["cy"], crop["size"], is_right=is_right)
 
-        def predict_masks(image, points, box):
+        def predict_masks(image, points, box, point_labels=None):
             predictor.set_image(image)
-            masks, scores, _ = predictor.predict(point_coords=points, point_labels=np.ones(len(points), int), box=box, multimask_output=True)
+            masks, scores, _ = predictor.predict(point_coords=points, point_labels=np.ones(len(points), int) if point_labels is None else point_labels, box=box, multimask_output=True)
             return masks, scores
 
-        def predict_hand(image, crop, is_right):
-            return run_hamer(model, cfg, image, crop["cx"], crop["cy"], crop["size"], is_right=is_right)
-
-        infer_frames(data, output, request_sha, predict_masks, predict_hand, receipt)
+        infer_frames(data, output, request_sha, predict_masks, predict_hand, receipt, reused)
         validate_request(path)
         canonical_sources(data)
+        if reused is not None:
+            validate_pose_reuse(path, reuse_request, reuse_hand_recovery)
         receipt["complete"] = True
     except BaseException as error:
         receipt["error"] = repr(error)
@@ -290,10 +380,14 @@ if __name__ == "__main__":
     p.add_argument("--sam-weights", type=Path)
     p.add_argument("--sam-config", default="configs/sam2.1/sam2.1_hiera_l.yaml")
     p.add_argument("--hamer-weights", type=Path)
+    p.add_argument("--reuse-hand-recovery", type=Path)
+    p.add_argument("--reuse-request", type=Path)
     a = p.parse_args()
     if a.validate_only:
         print(json.dumps(dict(validated_requests=len(validate_request(a.request)["frames"]), gpu_inference=False)))
     else:
-        if any(x is None for x in (a.out, a.sam_weights, a.hamer_weights)):
-            p.error("Inference requires --out, --sam-weights and --hamer-weights")
-        print(json.dumps(run(a.request, a.out, a.sam_weights, a.sam_config, a.hamer_weights)))
+        if a.out is None or a.sam_weights is None or (a.hamer_weights is None and a.reuse_hand_recovery is None):
+            p.error("Inference requires --out, --sam-weights and weights or a verified hand recovery to reuse")
+        if (a.reuse_request is None) != (a.reuse_hand_recovery is None):
+            p.error("Pose reuse requires both --reuse-hand-recovery and --reuse-request")
+        print(json.dumps(run(a.request, a.out, a.sam_weights, a.sam_config, a.hamer_weights, a.reuse_hand_recovery, a.reuse_request)))
