@@ -1,0 +1,17 @@
+{
+  "schema": "v2d.cpu-only-quality-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_index_source_polynomial_v1.py",
+  "worker_sha256": "90c3b6dfd52fb465ea6535f95637e4be82dc2d40dd65b41352d834da4eeca8e0",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-polynomial-independent-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-polynomial-v2/actual-index-polynomials-and-saved-region-charts.json": "9fbd623c8e54c23032ea29200a4c28be41ff4c0cda83d0c7f9e4fe3c5ad647ce",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-strict-source-wrist-mode-v1/UNQUALIFIED-strict-source-root-proposal.npz": "15a362bbf9eb6956ba487b175ce4d04e0ac42ecfa2e4d245c22799cca81c2932",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/kinematics.py": "0747c53517a45a64efa5c7ecf8e91fedafcfb5150042c9a99c2718c0d7cb376c"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "no_original_polynomial_or_Bernstein_conversion_reexecution": true,
+  "new_independent_actual_URDF_and_tensor_basis_checks": true,
+  "no_native_physics_GPU_PPO": true
+}

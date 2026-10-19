@@ -1246,3 +1246,43 @@ charts, MILP or 255-domain study, increase budgets, change the wrist mode or
 infer a necessary wrist mutation from source-only exclusions. A concrete new
 path still needs independent whole-clock source/URDF/original motion before
 native/self, swept, motor/grasp and whole-source gates.
+
+## Algebraic index source corridors
+
+A new tan-half-angle representation derives bidegree-(2,2) camera numerators
+and an at-most bidegree-(4,4) source-disk polynomial. Its common denominator
+is positive for finite chart coordinates. Positive camera depth is a separate
+inequality. Half-angle poles and the straight-distal kinematic singularity
+retain explicit scopes. No root or complex branch is silently selected.
+
+The first producer fails on Python list division before its first synthetic
+sample; source, guard and log are retained. V2 changes only that expression.
+Eight new analytic controls pass, covering independent complex-exponential
+kinematics, the disk identity, a known bivariate-square range, negative depth,
+straight-distal behavior, half-angle poles, fixed points and camera contracts.
+
+Nineteen actual index source preimages and 228 numerical Bernstein charts
+reuse the twelve saved outer regions without a new partition or old LP/source
+rerun. Five regions have numerical source exclusions; seven remain unresolved.
+Independent actual-URDF camera binding checks cover 304 new states, closing
+within 4.45e-16 m. A separate tensor-Bernstein evaluation checks 7,752 basis
+values against the saved power coefficients; all stay inside the saved
+padding, with maximum basis discrepancy 8.89e-16. Source/depth polynomial
+identity errors remain below 1.12e-15 after normalization.
+
+These bounds concern the fixed robot/source hypothesis. Floating coefficients,
+tan endpoints and numerical Bernstein padding are not a formal directed-rounding
+or global task proof. They do not qualify source accuracy, a temporal path,
+native contacts or a wrist mutation. The current verified reference and
+separate middle component remain unchanged. No native position, physics,
+GPU/PPO, new full reference or score gain occurred. Three bounded attempts
+and exact code are archived under
+`experiments/scored_baseline_20261019/index_source_polynomial`.
+
+Next derive continuous proximal-root branches and their distal critical events
+from the saved polynomials, preserving real/complex roots, leading-coefficient
+drops, singularities, poles and unresolved cases. Use seven remaining regions
+as outer restrictions, not accepted poses. This precedes any new path solve;
+do not repeat polynomial generation, the 228 charts, old partition/LP/graph
+families or enlarge their budgets. A constructive path still needs independent
+whole-clock source, actual URDF and original motion before physical gates.

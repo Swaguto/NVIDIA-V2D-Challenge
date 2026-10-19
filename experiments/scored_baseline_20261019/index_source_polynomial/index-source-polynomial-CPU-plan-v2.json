@@ -1,0 +1,19 @@
+{
+  "schema": "v2d.cpu-only-quality-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_index_source_polynomial_v2.py",
+  "worker_sha256": "346159f16780d1a02cfaeaf92cd08f02cb2e594f7269a1650bb38d72f894a068",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-polynomial-v2",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/planar_2R_source_polynomial_v1.py": "1f052b7dc1e2838124f76870c67540b88a49a5e4927170078f81bad2ac12ad64",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-strict-source-wrist-mode-v1/UNQUALIFIED-strict-source-root-proposal.npz": "15a362bbf9eb6956ba487b175ce4d04e0ac42ecfa2e4d245c22799cca81c2932",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-temporal-cone-branch-v1/processed-and-unresolved-domains.json": "d510194dae74e3c5d7aff3450ddbeaed45518cd964cbca8d170160816901c14d",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-ray-independent-validation-v1/report.json": "720fb0d9b6a7f8272ede38218f9c58954d305309c2dffed3853d2f1d1ecac89a"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "NEW_exact_form_bivariate_source_polynomial_and_Bernstein_ranges": true,
+  "saved12regions_reused_without_splitting_or_old_LP_reexecution": true,
+  "no_native_physics_GPU_PPO": true,
+  "v1_TypeError_before_any_control_or_episode_state_retained": true
+}

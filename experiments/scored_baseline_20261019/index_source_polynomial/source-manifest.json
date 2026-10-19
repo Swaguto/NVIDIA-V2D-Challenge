@@ -1,0 +1,68 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "private_results_absent": true,
+  "files": [
+    {
+      "file": "planar_2R_source_polynomial_v1.py",
+      "restore_relative_path": "compute/planar_2R_source_polynomial_v1.py",
+      "executed_or_declared_source_sha256": "1f052b7dc1e2838124f76870c67540b88a49a5e4927170078f81bad2ac12ad64"
+    },
+    {
+      "file": "derive_index_source_polynomial_v1.py",
+      "restore_relative_path": "compute/derive_index_source_polynomial_v1.py",
+      "executed_or_declared_source_sha256": "6330285e5021b20ca6aeee01dcd0a0054e5e90a01125247da6abd75cf007fcc0"
+    },
+    {
+      "file": "derive_index_source_polynomial_v2.py",
+      "restore_relative_path": "compute/derive_index_source_polynomial_v2.py",
+      "executed_or_declared_source_sha256": "346159f16780d1a02cfaeaf92cd08f02cb2e594f7269a1650bb38d72f894a068"
+    },
+    {
+      "file": "verify_index_source_polynomial_v1.py",
+      "restore_relative_path": "compute/verify_index_source_polynomial_v1.py",
+      "executed_or_declared_source_sha256": "90c3b6dfd52fb465ea6535f95637e4be82dc2d40dd65b41352d834da4eeca8e0"
+    },
+    {
+      "file": "index-source-polynomial-CPU-plan-v1.json",
+      "restore_relative_path": "compute/index-source-polynomial-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "e914d9fe7f9398c4ae6e6a551283b521eba25172317f9411042c6c28cc1a949b"
+    },
+    {
+      "file": "index-source-polynomial-CPU-plan-v2.json",
+      "restore_relative_path": "compute/index-source-polynomial-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "cda1e11f47c8b34d3e2e6e1771f4b32dfe0e0cf641ac429440b7de0d4ad407d0"
+    },
+    {
+      "file": "index-source-polynomial-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/index-source-polynomial-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "e052cf57a0e6d6d17d0589bf88e96b38e211c3214fdfac904e6d67485d51dd88"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "source_orientation_context_v1.py",
+      "restore_relative_path": "compute/source_orientation_context_v1.py",
+      "executed_or_declared_source_sha256": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00"
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+    }
+  ],
+  "repository_dependency_snapshots": [
+    {
+      "file": "repository-kinematics.py",
+      "repository_source_path": "scripts/dex3_training/v2d_dex3_flashchord/kinematics.py",
+      "sha256": "0747c53517a45a64efa5c7ecf8e91fedafcfb5150042c9a99c2718c0d7cb376c"
+    },
+    {
+      "file": "repository-audit_hand_reference_contacts.py",
+      "repository_source_path": "scripts/dex3_training/audit_hand_reference_contacts.py",
+      "sha256": "bd964efa556a0d9edf3335c98ded32399aea808c9772ee2167a1495a35fc6d81"
+    }
+  ]
+}
