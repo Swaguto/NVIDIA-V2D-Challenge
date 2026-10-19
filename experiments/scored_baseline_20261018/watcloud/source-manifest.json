@@ -20,7 +20,14 @@
       "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/audit_native_RGB_hand_v1.py",
       "scope": "source-only diagnostic",
       "sha256": "08541334cdac0646a44bc1ef9358fda170e7a978aff5dc1e1904bba723bb7499",
-      "execution_status": "prepared_not_yet_executed"
+      "execution_status": "executed"
+    },
+    {
+      "path": "audit_native_RGB_surface_coverage_v1.py",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/audit_native_RGB_surface_coverage_v1.py",
+      "scope": "source-only diagnostic",
+      "sha256": "4c44bb4faba4e632e3e18d17f435d30faa374ff6627de373baf2424910e3dd20",
+      "execution_status": "executed"
     },
     {
       "path": "audit_rgb_hand_correspondence_v1.py",
@@ -93,6 +100,20 @@
       "scope": "new source-only CPU analysis or resource guard"
     },
     {
+      "path": "fit_native_RGB_multiview_source_v1.py",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/fit_native_RGB_multiview_source_v1.py",
+      "scope": "source-only diagnostic",
+      "sha256": "5bdb4a34e4f072eeceacde5997b7a1af808a16d4d9038c55d38551a8bf556984",
+      "execution_status": "executed"
+    },
+    {
+      "path": "fit_native_RGB_skin_coverage_v1.py",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/fit_native_RGB_skin_coverage_v1.py",
+      "scope": "source-only diagnostic",
+      "sha256": "ecb1584a6505ed732667e73ef23d8678a18df1bde3f6c6e5c57ec1f1e848f814",
+      "execution_status": "executed"
+    },
+    {
       "path": "fresh_hand_controller_v1.py",
       "sha256": "0d2a5d5c2c36b2dcac6b0de6b09e96f43ab7eecb1c1ebe869aa8a855e6c2996d",
       "execution_status": "executed",
@@ -140,6 +161,27 @@
       "execution_status": "executed",
       "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/guard_fresh_hand_fit_v2.py",
       "scope": "new source-only CPU analysis or resource guard"
+    },
+    {
+      "path": "guard_native_RGB_audit_v1.py",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/guard_native_RGB_audit_v1.py",
+      "scope": "source-only diagnostic",
+      "sha256": "2122a4bffeac2a5a23df29e6e6a84a925c5902e23964c34ff168cea938be9ec4",
+      "execution_status": "executed"
+    },
+    {
+      "path": "guard_native_RGB_multiview_source_v1.py",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/guard_native_RGB_multiview_source_v1.py",
+      "scope": "source-only diagnostic",
+      "sha256": "83c3f325ab1bf92cdcc8925052363d9d50c4f5c73b9d5952efb46d7ec9f53f94",
+      "execution_status": "executed"
+    },
+    {
+      "path": "guard_native_RGB_skin_coverage_v1.py",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/guard_native_RGB_skin_coverage_v1.py",
+      "scope": "source-only diagnostic",
+      "sha256": "f63cb1fbc0924e1ea70f7553c03526f3096f77e71935796f1b650f2c482d340c",
+      "execution_status": "executed"
     },
     {
       "path": "guard_rgb_hand_correspondence_v1.py",
@@ -200,21 +242,21 @@
     {
       "path": "native_RGB_controller_v1.py",
       "sha256": "5bd3b0d9497f4f1523f8d02eec558af369db3f8516f0a8b048e2df88a395244c",
-      "execution_status": "running_GPU",
+      "execution_status": "executed",
       "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/native_RGB_controller_v1.py",
       "scope": "scheduled GPU orchestration"
     },
     {
       "path": "native_RGB_hamer_probe_v1.py",
       "sha256": "ac13376070ea313c951804b5c7a36028dcc0dd45a7b3e0a9e5494ee85e1d1344",
-      "execution_status": "prepared_not_yet_executed",
+      "execution_status": "executed",
       "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/native_RGB_hamer_probe_v1.py",
       "scope": "new source-only CPU analysis or resource guard"
     },
     {
       "path": "native_RGB_worker_v1.py",
       "sha256": "dd1a56e3196597f3d52ec782ad699f2f328437ec7d8fcb89afa276aa1cb70265",
-      "execution_status": "running_GPU",
+      "execution_status": "executed",
       "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/native_RGB_worker_v1.py",
       "scope": "scheduled GPU orchestration"
     },

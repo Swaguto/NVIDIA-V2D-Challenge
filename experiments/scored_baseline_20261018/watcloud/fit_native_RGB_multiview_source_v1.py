@@ -1,0 +1,58 @@
+"""Bound a fresh native RGB prior with the same saved image/surface observations and numeric gates."""
+from pathlib import Path
+import datetime,hashlib,json,sys,time
+S=Path(__file__).resolve().parents[2];R=Path('/Users/rohithiruku/v2d_hand_continuity_fix')
+sys.path[:0]=[str(S/'mediapipe-cpu-deps-v1'),str(R/'reconstruction/modules/v2d_stereo_depth/lib'),str(S/'compute')]
+import cv2,numpy as np,trimesh
+from scipy.optimize import least_squares
+from scipy.ndimage import binary_dilation
+from PIL import Image
+from stereo_depth import load_rig
+from numpy_mano_source_geometry_v2 import NumpyMano
+from audit_source_hand_surface_depth_v1 import ray_depth
+cv2.setNumThreads(1);sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();started=time.monotonic()
+O=S/'e037-native-RGB-multiview-source-fit-v1';O.mkdir(exist_ok=True);f=50
+request_path=S/'e037-fresh-source-hand-request-v2/request.json';request=json.loads(request_path.read_text());row=next(x for x in request['frames'] if x['frame_idx']==f)
+calpath=S/'dataset/track_3/public/meta/camera_calibration.json';cal=json.loads(calpath.read_text());rig=load_rig(str(calpath))
+a=cal['cameras']['ego_cam_a'];c=cal['cameras']['ego_cam_c'];KA=np.array(a['intrinsic_matrix']);DA=np.array(a['distortion_coefficients'])
+T=np.linalg.inv(np.array(a['extrinsics_to_stereo_left']))@np.array(c['extrinsics_to_stereo_left'])
+with np.load(request['canonical_bundle']) as z:K=z['intrinsics'].copy();camera_to_world=z['camera_c2w'][f].copy()
+assert np.allclose(K,rig.P1[:3,:3],atol=1e-5,rtol=0)
+mpath=S/'e037-RGB-hand-candidate-probe-v1/report.json';mp=json.loads(mpath.read_text());candidates=[x for x in mp['candidates'] if x['crop']=='full']
+# Fixed association established by the prior's projected location, not detector handedness.
+association=S/'e037-RGB-hand-correspondence-v1/report.json';assoc=json.loads(association.read_text());raw=[r for r in assoc['predictions_compared'] if r['prior']=='raw_fresh_prior'];order=sorted(raw,key=lambda r:r['palm_anchor_inferred_image_error_RGB_px']['median']);assert order[0]['palm_anchor_inferred_image_error_RGB_px']['median']*5<order[1]['palm_anchor_inferred_image_error_RGB_px']['median']
+rgb_index=order[0]['RGB_candidate_index'];rgb_points=np.asarray(candidates[rgb_index]['landmarks_px'])
+record_path=S/'e037-native-RGB-hand-source-audit-v1/canonical-C-unqualified-record.json';record=json.loads(record_path.read_text());prior=np.r_[record['mano']['global_orient'],record['mano']['hand_pose']]
+m=NumpyMano(S/'models/mano/models/MANO_RIGHT.pkl')
+parent=S/'e037-watcloud-dense-skin-source-fit-v2';fit_path=parent/'source-hand-candidate.npz';parent_report=json.loads((parent/'report.json').read_text())
+with np.load(fit_path) as z:train_px=z['train_pixels'].copy();test_px=z['heldout_pixels'].copy();old_pose=z['mano_pose'][0].copy();old_translation=z['camera_translation'][0].copy()
+dp=S/'fast-stereo-cpu-full-e037-v1/000050-depth.npz'
+with np.load(dp) as z:depth=z['depth_m'].copy()
+depth_path=S/'e037-source-hand-motion-fit-v1/source-hand-candidate.npz'
+with np.load(depth_path) as z:joint_depth=z['estimated_depth_m'][f].copy()
+points=np.asarray(row['keypoints']);supported=points[:,2]>0;hold=np.isin(np.arange(21),[1,4,7,10,13,16,19]);old_train=supported&~hold;test=supported&hold
+td=old_train&np.isfinite(joint_depth);_,local_j,_=m.record(record,translation=np.zeros(3));z=joint_depth[td];measured=np.c_[(points[td,0]-K[0,2])*z/K[0,0],(points[td,1]-K[1,2])*z/K[1,1],z];initial_t=np.median(measured-local_j[td],axis=0)
+op=S/'scored-cohort-14-results/reconstruction-e037/source/e037/masks/wooden_spoon/000050.png';objectmask=binary_dilation(np.asarray(Image.open(op))>0,iterations=3)
+conflict=objectmask[np.rint(points[:,1]).astype(int).clip(0,depth.shape[0]-1),np.rint(points[:,0]).astype(int).clip(0,depth.shape[1]-1)]
+old_image_train=old_train&~conflict
+z=depth[train_px[:,1],train_px[:,0]];targets=np.c_[(train_px[:,0]-K[0,2])*z/K[0,0],(train_px[:,1]-K[1,2])*z/K[1,1],z];test_z=depth[test_px[:,1],test_px[:,0]]
+def pc(j):return np.c_[K[0,0]*j[:,0]/j[:,2]+K[0,2],K[1,1]*j[:,1]/j[:,2]+K[1,2]]
+def pa(j):return cv2.projectPoints((j@rig.R1)@T[:3,:3].T+T[:3,3],np.zeros(3),np.zeros(3),KA,DA)[0].reshape(-1,2)
+def geometry(x):return m.record(record,pose=prior+x[:48],translation=initial_t+x[48:])
+rgb_train=~hold
+# Convert pixel residual scale by known focal ratios; no calibration adjustment.
+rgb_scale=np.array([KA[0,0]/K[0,0],KA[1,1]/K[1,1]])
+def residual(x):
+ v,j,_=geometry(x);closest,_,_=trimesh.proximity.closest_point_naive(trimesh.Trimesh(v,m.faces,process=False),targets)
+ return np.r_[((pc(j)[old_image_train]-points[old_image_train,:2])/8).ravel(),((pa(j)[rgb_train]-rgb_points[rgb_train])/rgb_scale/8).ravel()*np.sqrt(max(1,int(old_image_train.sum()))/int(rgb_train.sum())),((closest-targets)/.015).ravel()*np.sqrt(max(1,int(old_image_train.sum()))/len(train_px)),np.sqrt(.03)*x[:48]/.15,np.sqrt(.03)*x[48:]/.15]
+bounds=np.r_[np.full(3,.52),np.full(45,.35),np.full(3,.25)];x0=np.zeros(51)
+opt=least_squares(residual,x0,loss='huber',f_scale=1,bounds=(-bounds,bounds),max_nfev=80,ftol=1e-5,xtol=1e-5)
+v,j,_=geometry(opt.x);err=np.linalg.norm(pc(j)-points[:,:2],axis=1);front=ray_depth(v,m.faces,test_px,K);hit=np.isfinite(front);surface_error=abs(front-test_z);hd=test&np.isfinite(joint_depth)
+old_med=float(np.median(err[test]));old_p95=float(np.percentile(err[test],95));legacy_depth=float(np.median(abs(j[hd,2]-joint_depth[hd])))
+def rgb_stats(q):
+ delta=(pa(q)-rgb_points)/rgb_scale;e=np.linalg.norm(delta,axis=1)
+ return dict(all_21_estimated_RGB_error_equivalent_stereo_px_median=float(np.median(e)),heldout_7_estimated_RGB_error_equivalent_stereo_px_median=float(np.median(e[hold])),heldout_7_estimated_RGB_error_equivalent_stereo_px_p95=float(np.percentile(e[hold],95)))
+_,old_j,_=m.record(record)
+np.savez_compressed(O/'source-hand-candidate.npz',frame_indices=[f],mano_pose=(prior+opt.x[:48])[None],camera_translation=(initial_t+opt.x[48:])[None],vertices_world=((v@camera_to_world[:3,:3].T)+camera_to_world[:3,3])[None],joints_world=((j@camera_to_world[:3,:3].T)+camera_to_world[:3,3])[None],train_pixels=train_px,heldout_pixels=test_px,heldout_front_depth_m=front,heldout_estimated_source_depth_m=test_z)
+report=dict(schema='v2d.source-RGB-multiview-hand-fit.v1',created_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),producer_sha256=sha(Path(__file__)),source_hashes={str(p.relative_to(S)):sha(p) for p in [S/'e037-native-RGB-hand-source-audit-v1/report.json',S/'e037-watcloud-native-RGB-v1/outputs/native-RGB/receipt.json',request_path,calpath,mpath,association,record_path,fit_path,parent/'report.json',dp,depth_path,op]},fresh_native_RGB_prior_used=True,original_IR_prior_fits_retained=True,start='zero pose offset about new RGB prior; same historical source-derived translation initializer',objective_channels='same saved RGB/IR image and skin observations as RGB multiview v1; new prior and corresponding bounded parameter origin',RGB_candidate_index=rgb_index,RGB_identity_association_is_inferred_not_human_verified=True,RGB_landmarks_are_all_inferred_and_include_occluded_joints=True,new_hand_or_depth_model_inference=False,surface_samples_reused_unchanged=True,original_source_flags_changed=False,source_camera_calibration_changed=False,old_failed_control_preserved=True,before_RGB=rgb_stats(old_j),after_RGB=rgb_stats(j),heldout_original_IR_image_median_px=old_med,heldout_original_IR_image_p95_px=old_p95,legacy_estimated_joint_depth_median_error_m=legacy_depth,heldout_surface_hits=int(hit.sum()),heldout_surface_rays=len(front),heldout_surface_median_error_m=float(np.median(surface_error[hit])) if hit.any() else None,heldout_surface_p95_error_m=float(np.percentile(surface_error[hit],95)) if hit.any() else None,legacy_source_screen_passed=bool(old_med<=10 and old_p95<=25 and legacy_depth<=.01),dense_source_screen_passed=bool(hit.all() and np.median(surface_error)<=.01 and old_med<=10 and old_p95<=25),pose_root_component_bound_rad=.52,pose_finger_component_bound_rad=.35,translation_optimization_component_bound_m=.25,original_bounds_and_gates_unchanged=True,native_reference_contact_tolerance_m=.001,native_reference_gate_passed=None,reference_accepted=False,training_approved=False,physical_task_accepted=False,solver_success=bool(opt.success),nfev=int(opt.nfev),wall_seconds=time.monotonic()-started,candidate_sha256=sha(O/'source-hand-candidate.npz'))
+(O/'report.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))

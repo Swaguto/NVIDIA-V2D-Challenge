@@ -179,4 +179,34 @@ Watcloud job `711102` requests four CPUs, 16 GiB RAM, 16 GiB GPU shards and
 controller cancellation guard, and a three-minute model-inference limit. It
 uses the existing pinned private image and code overlay, transfers no SAM2
 weights, and must return a hash-verified private backup before releasing its
-allocation. Results and scheduler completion are pending at this checkpoint.
+allocation. It completed with exit `0:0` in **4 minutes 21 seconds**; six private
+output files were hash-verified before release. The transfer was
+**2,701,768,929 bytes**. Actual model inference took 13.93 seconds. Subsequent
+scheduler accounting confirms completion and the owner's queue is empty.
+
+The returned estimate was converted into the original stereo frame with
+`2.67e-9` m maximum vertex/joint closure error, preserving the fixed subject
+shape, scale and unknown/direct-observation flags. The unfitted monocular pose
+still has poor depth: 172.11 mm median against the historical inferred joint
+depths. A bounded fit using the saved RGB, IR and skin observations reaches
+**7.97 px median / 14.67 px p95** on the seven held-out inferred RGB landmarks,
+expressed in equivalent stereo pixels. This passes that image channel only.
+
+The complete source screen still rejects the fit: the old IR image median is
+11.97 px, the old inferred joint-depth discrepancy is 50.82 mm, and only 31 of
+32 held-out skin rays intersect the mesh. The skin median is 2.20 mm. A separate
+diagnostic locates the missing ray in the thumb–index web; its pixel is outside
+the estimated mesh silhouette, 5.77 px from its nearest projected vertex. This
+is a remaining geometry mismatch, with inferred masks/depth rather than ground
+truth labels.
+
+One additional CPU control added count-normalized projection coverage for the
+unchanged **training** skin pixels, without consuming held-out pixels. It reaches
+7.82/15.08 px on the RGB channel and 1.90 mm median skin-depth error, but still
+hits only 31/32 held-out rays and fails the full screen. It remains rejected.
+The camera helper passed [CI](https://github.com/Swaguto/NVIDIA-V2D-Challenge/actions/runs/39193403115).
+
+No new full carry reference, retargeted trajectory, physics success or PPO policy
+is qualified. Preserve both failed fits. Next investigate the source thumb-web
+silhouette and visibility/authority of the occluded landmark estimates before
+another bounded candidate; do not expand the new RGB probe or repeat training.
