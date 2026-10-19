@@ -84,3 +84,95 @@ Exact code is archived under
 `experiments/scored_baseline_20261018/source_pose/`, with SHA bindings and
 restoration instructions. Footage, model weights, private arrays and images
 remain outside Git. Independent teammate reproduction is unverified.
+
+## Joint source fit and native validation
+
+The translation-only follow-up reuses the image-only candidate. A training-only
+first-surface median correction reduces held-out depth error to 14.94 mm, but
+leaves 120/512 rays missing and increases median inferred human-tip separation
+to 54.73 mm. It remains rejected.
+
+A new joint fixed-mesh pose fit uses even-pixel mask IoU and a Cauchy
+first-surface loss on 128 fixed training depth pixels. No held-out depth or
+hand point enters its objective. Its finite missing-ray cost is only an
+optimizer device: reports preserve infinite residuals for missing coverage.
+The solver converges, and an independent check reproduces these measurements:
+
+| Frame-50 source diagnostic | Frozen object pose | Joint object pose |
+| --- | --- | --- |
+| Odd-pixel mask IoU | 0.4820 | 0.6594 |
+| Held-out front-surface hits | 310/512 | 417/512 |
+| Hit-only median depth error | 8.97 mm | 3.17 mm |
+| Hit-only p95 depth error | 28.82 mm | 8.58 mm |
+| Median **inferred human-tip** separation | 23.24 mm | 6.68 mm |
+| Original source-fit score, unchanged scorer | 0.3754 | 0.5814 |
+
+The unchanged tracker gate accepts this single frame. Of the 95 missing rays,
+72 are in the primary spoon component and 23 in the disconnected round-marker
+component. Every sample remains in the reports. This is a source improvement,
+not a complete geometry, grasp or policy qualification.
+
+NumPy matrix multiplication emitted warnings despite finite results. Explicit
+tensor contractions and independently expanded coordinate sums agree within
+`5.56e-17` m and reproduce the mask/depth results. The warnings remain recorded;
+their cause is unproven. Subsequent producers use explicit contractions.
+
+Inserting only frame 50 violates the original motion limits. A declared
+one-second cosine object-body correction passes all original object motion
+limits and the source checks at 17 of 19 changed knots. It initially regresses
+the mesh-vertex depth statistic at frames 47 and 49; that control is rejected.
+Training-only constrained translations of at most 5 mm repair those two knots.
+The resulting hypothesis passes unchanged per-frame source nonregression at
+all 19 changed knots and all six original full-track motion summaries.
+Rotations and other knots stay fixed during the two repairs.
+
+The **object-only** reference was frozen separately and compiled fresh. The
+unchanged native audits verify all 151 knots, robot FK and geometry buffers.
+The committed **1 mm gate passes**: zero object knots and hand slots exceed
+tolerance. Robot commands, confidence, meshes, URDFs and support stay unchanged.
+No physics step, force test or PPO was run.
+
+The actual Dex3 reference still has no carry grip. At frame 50, conservative
+whole-digit separation lower bounds are **247 mm thumb, 213 mm index and
+197 mm middle**. These robot distances differ from the inferred human-tip
+distances above. Collision-free empty space is not a grasp. No new swept audit
+was run after this grasp failure.
+
+## Inferred object-relative command experiment
+
+The existing optional automatic object-relative path already has conservative
+association and endpoint checks. Those checks and the default gap policy
+remain unchanged. A shared primitive now makes a single-object command
+hypothesis explicit and validates its clock, transforms, unknown interval and
+bracketing source flags. The automatic selector calls it after its existing
+checks. Fingers, outside-gap commands and source validity stay unchanged. Its
+output mask means inferred robot commands, not observed contact.
+
+The explicit development hypothesis for right-hand frames `[36,70)` follows
+the object between estimated anchors 35 and 70. It moves the wrist by up to
+234.56 mm and reduces frame-50 inferred tip-image median error from 290.65 to
+79.01 px. All five inspected inferred-image snapshots improve. However, the
+hypothesis fails the original root motion limits:
+
+| Root motion statistic | Original source cap | New hypothesis |
+| --- | --- | --- |
+| Maximum linear speed | 0.622 m/s | 0.955 m/s |
+| Maximum linear acceleration | 13.54 m/s² | 30.95 m/s² |
+| Maximum angular acceleration | 111.32 rad/s² | 137.97 rad/s² |
+| p95 linear speed | 0.527 m/s | 0.651 m/s |
+
+This command hypothesis is **rejected** and has no new native, swept or grasp
+certificate. Human observations remain invalid/unmeasured in the original gap.
+The first private producer's missing import path is retained separately; the
+corrected producer generated the measured hypothesis. Its exact helper
+snapshot is archived, and its commands match the current shared primitive
+exactly. **24 focused CPU tests pass** for the primitive, automatic selector
+and scored command completion. Tests preserve unknown object poses outside
+the selected window and the selector's existing rigid-input tolerances.
+
+Next fit the inferred wrist trajectory under the original motion caps and
+available source evidence, then retarget actual Dex3 fingers and check native
+contact, swept motion and grasp proximity. Do not enable the rejected path by
+default or relax association, source or motion gates. Preserve the improved
+object-only reference and failed command controls. Brev stays stopped until a
+concrete candidate qualifies for bounded GPU validation.

@@ -54,6 +54,108 @@
       "sha256": "53e21f7fcc48aa0ad935ffa8a671369b99a2b4510327ae02e41681ad1c9b1556",
       "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_object_silhouette_pose_v1.py",
       "status": "executed_source_control_no_physical_qualification"
+    },
+    {
+      "path": "probe_joint_object_ray_depth_v1.py",
+      "sha256": "2b5e604fbbfcbf8051c69991d9a40bbd8fa492a46ece4eac8bb33dd114204c77",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/probe_joint_object_ray_depth_v1.py",
+      "status": "executed_source_or_native_control_no_physical_task_qualification"
+    },
+    {
+      "path": "guard_joint_object_ray_depth_v1.py",
+      "sha256": "5bcda8f517e1372121a415a01fbeed37a6a106083d21dff16f801b5ad196acef",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_joint_object_ray_depth_v1.py",
+      "status": "executed_source_or_native_control_no_physical_task_qualification"
+    },
+    {
+      "path": "probe_joint_object_pose_v1.py",
+      "sha256": "80f37e33b1cd4c30179a5216461ee50efb00b6a8a194c56a9326489a5774a119",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/probe_joint_object_pose_v1.py",
+      "status": "executed_source_or_native_control_no_physical_task_qualification"
+    },
+    {
+      "path": "guard_joint_object_pose_v1.py",
+      "sha256": "9169f5d5cf8ff6c652487fa8afe923270275b468e1a99097397ba9bc1c665b5a",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_joint_object_pose_v1.py",
+      "status": "executed_source_or_native_control_no_physical_task_qualification"
+    },
+    {
+      "path": "verify_joint_object_pose_v1.py",
+      "sha256": "9241ebc3ed6e5fb786859d0da76791978e0fbdc53c42d53dd7f613ccf22a999e",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_joint_object_pose_v1.py",
+      "status": "executed_source_or_native_control_no_physical_task_qualification"
+    },
+    {
+      "path": "guard_verify_joint_object_pose_v1.py",
+      "sha256": "9e99a905c696dfe237a212b7ac572d42c053bf3635e0c953b4c5f7ec49a849e0",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_verify_joint_object_pose_v1.py",
+      "status": "executed_source_or_native_control_no_physical_task_qualification"
+    },
+    {
+      "path": "probe_joint_pose_temporal_compatibility_v1.py",
+      "sha256": "8b5c1e2e81fe8fe3f0e3e45f58b36f19099608170d2d892a5330c9637e06480f",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/probe_joint_pose_temporal_compatibility_v1.py",
+      "status": "executed_source_or_native_control_no_physical_task_qualification"
+    },
+    {
+      "path": "guard_joint_pose_temporal_compatibility_v1.py",
+      "sha256": "dfa6456871c8d43c5fc391e4eefffb93438433063809537de1cdfe56b11708c6",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_joint_pose_temporal_compatibility_v1.py",
+      "status": "executed_source_or_native_control_no_physical_task_qualification"
+    },
+    {
+      "path": "repair_joint_pose_translations_v1.py",
+      "sha256": "905e7bf41f13e7365ae7a14e0ddac5561c4bcdbb6e6630d872d12709cbf3909a",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/repair_joint_pose_translations_v1.py",
+      "status": "executed_source_or_native_control_no_physical_task_qualification"
+    },
+    {
+      "path": "guard_joint_pose_translations_v1.py",
+      "sha256": "838f998e814fa064011ab27a5a99803206c159692d5b45319d8568d2353f6932",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_joint_pose_translations_v1.py",
+      "status": "executed_source_or_native_control_no_physical_task_qualification"
+    },
+    {
+      "path": "validate_joint_object_native_v1.py",
+      "sha256": "a2fd1ec1353dad122356df1597c9bc684ff8e322aeac7f9dcf81b2d4cdd98cac",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/validate_joint_object_native_v1.py",
+      "status": "executed_source_or_native_control_no_physical_task_qualification"
+    },
+    {
+      "path": "guard_validate_joint_object_native_v1.py",
+      "sha256": "1e6d9c43888a9ae13fae14c026d6532bb64355c0735d46ce64d5815f4c0cf25b",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_validate_joint_object_native_v1.py",
+      "status": "executed_source_or_native_control_no_physical_task_qualification"
+    },
+    {
+      "path": "propose_object_relative_commands_v1.py",
+      "sha256": "166b2a3d157ee9d1837c730a000200c98d33919e84259b3a942b55ac744917ff",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/propose_object_relative_commands_v1.py",
+      "status": "retained_failed_import_preflight"
+    },
+    {
+      "path": "guard_object_relative_commands_v1.py",
+      "sha256": "45d10aa830beffc03fc6d261911f73a2b8f13c2da7d82eb480cbddca81d1e22f",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_object_relative_commands_v1.py",
+      "status": "retained_failed_import_preflight"
+    },
+    {
+      "path": "propose_object_relative_commands_v2.py",
+      "sha256": "06a7053d9dec62cca0c9d7b9bf539a023efbd87aab175de868244333b42249f3",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/propose_object_relative_commands_v2.py",
+      "status": "executed_source_or_native_control_no_physical_task_qualification"
+    },
+    {
+      "path": "guard_object_relative_commands_v2.py",
+      "sha256": "1cda889acb489811ceeb209cf94d2b9a76106b34ff22cbb06f1d5efce7a4a71e",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_object_relative_commands_v2.py",
+      "status": "executed_source_or_native_control_no_physical_task_qualification"
+    },
+    {
+      "path": "object_relative_commands_probe_snapshot_v1.py",
+      "sha256": "cfd224cd263a5622f1e8546fe56e5586c601e9cdbb573c2dcbfb4caccad95669",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_relative_commands_probe_snapshot_v1.py",
+      "status": "exact_helper_snapshot_used_by_private_command_probe"
     }
   ],
   "private_inputs_included": false,
@@ -61,5 +163,9 @@
   "credentials_included": false,
   "official_evaluator_modified": false,
   "no_completed_baseline_or_replay_rerun": true,
-  "restoration_note": "Restore these exact scripts under PRIVATE_WORKSPACE/compute. They resolve the private artifact workspace from that location and use the existing owner checkout path for production helper imports. The archive location itself is not the execution location. Private inputs and their hashes are in the owner-only result reports. This is not a portable full policy reproduction or independent teammate validation."
+  "restoration_note": "Restore these exact scripts under PRIVATE_WORKSPACE/compute. They resolve the private artifact workspace from that location and use the existing owner checkout path for production helper imports. The archive location itself is not the execution location. Private inputs and their hashes are in the owner-only result reports. This is not a portable full policy reproduction or independent teammate validation.",
+  "recorded_source_scripts": 26,
+  "generic_command_helper_current_path": "scripts/track3/object_relative_commands.py",
+  "native_gate_m": 0.001,
+  "new_policy_or_physical_success_claimed": false
 }

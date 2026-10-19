@@ -6,7 +6,9 @@ object references and observation confidence unchanged and never extrapolates.
 
 import numpy as np
 from scipy.spatial import cKDTree
-from scipy.spatial.transform import Rotation, Slerp
+from scipy.spatial.transform import Rotation
+
+from object_relative_commands import infer_object_relative_gap
 
 
 def complete_object_relative_gaps(commands, anchors, times, objects):
@@ -154,18 +156,19 @@ def complete_object_relative_gaps(commands, anchors, times, objects):
                 rec["reason"] = "endpoint relative wrist pose inconsistent"
                 continue
             indices = np.arange(start + 1, end)
-            alpha = (times[indices] - times[start]) / (times[end] - times[start])
-            positions = local_p[0] + alpha[:, None] * (local_p[1] - local_p[0])
-            out[indices, side, :3] = (
-                np.einsum(
-                    "nij,nj->ni", poses[indices, :3, :3], positions, optimize=False
-                )
-                + poses[indices, :3, 3]
+            # Keep every association gate above. The shared primitive handles
+            # the explicit command hypothesis only within this qualified window;
+            # unknown object poses elsewhere must not become an observation.
+            hypothesis = infer_object_relative_gap(
+                q[start : end + 1, side],
+                poses[start : end + 1],
+                times[start : end + 1],
+                1,
+                int(end - start),
+                source_valid=anchors[start : end + 1, side],
+                contact_assumption="inferred_object_relative_hold",
             )
-            out[indices, side, 3:7] = (
-                Rotation.from_matrix(poses[indices, :3, :3])
-                * Slerp(times[[start, end]], local_r)(times[indices])
-            ).as_quat()
+            out[indices, side] = hypothesis.commands[1:-1]
             slots[indices, side] = slot
             rec.update(
                 applied=True,

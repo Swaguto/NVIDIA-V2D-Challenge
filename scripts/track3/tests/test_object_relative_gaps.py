@@ -111,3 +111,28 @@ def test_bad_rigid_object_pose_fails_before_command_changes():
     objects[0]["world"][1, 0, 0] = 2
     with pytest.raises(ValueError, match="finite and rigid"):
         complete_object_relative_gaps(q, a, t, objects)
+
+
+def test_shared_primitive_preserves_existing_rigid_roundoff_tolerance():
+    q, a, t, objects = scene()
+    objects[0]["world"][2, :3, :3] += np.eye(3) * 1e-7
+    out, slots, report = complete_object_relative_gaps(q, a, t, objects)
+    assert report["decisions"][0]["applied"]
+    assert (slots[1:4, 0] == 0).all()
+    np.testing.assert_array_equal(out[a], q[a])
+
+
+def test_unknown_object_poses_outside_selected_window_remain_unknown():
+    q, a, _, objects = scene()
+    q = np.concatenate([q[:1], q, q[-1:]])
+    a = np.concatenate([a[:1], a, a[-1:]])
+    poses = objects[0]["world"]
+    objects[0]["world"] = np.concatenate([poses[:1], poses, poses[-1:]])
+    objects[0]["world"][[0, -1]] = np.nan
+    objects[0]["observed"] = np.array([False, True, True, True, True, True, False])
+    before = objects[0]["world"].copy()
+    out, slots, report = complete_object_relative_gaps(q, a, np.arange(7) * .05, objects)
+    assert report["decisions"][0]["applied"]
+    assert (slots[2:5, 0] == 0).all()
+    np.testing.assert_array_equal(out[a], q[a])
+    np.testing.assert_array_equal(objects[0]["world"], before)
