@@ -1,0 +1,18 @@
+{
+  "schema": "v2d.cpu-only-quality-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/lift_saved_index_regular_branches_v1.py",
+  "worker_sha256": "dfd0450ba2253e0f4b6dcaffd8b2e863a710a31458ec0bdb7ac03ed3815f2bbb",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-regular-source-branches-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/exact_source_projection_v1.py": "c7bc5fad871c5b5310804820a7e93eda6f6077521318c1d30a52d7bdb1935477",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-critical-projection-v1/source-projection-families-and-sections.json": "6284badd6af77d077840b728e7fc4df7e477ba3807844245185732e248a7caa7",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-critical-bernstein-v1/critical-chart-partitions-and-unresolved-events.json": "fdae3783ec5aa1982292f4315e9fdba5518b8ba169b1c40239674464b3fae775"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_continuous_event_cells_not_distal_sample_bank": true,
+  "failed_resultant_not_reconstructed": true,
+  "old_boundary_root_counts_and_common_zero_bounds_not_reexecuted": true,
+  "root_u_isolation_node_cap": 511,
+  "no_native_physics_GPU_PPO": true
+}

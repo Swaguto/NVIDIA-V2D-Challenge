@@ -1,0 +1,20 @@
+{
+  "schema": "v2d.cpu-only-quality-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_saved_index_root_charts_v1.py",
+  "worker_sha256": "f4eb6aa6c2c61f9a096582d5f210366499b7a0a7cbd060a788ea1a1c0d76701a",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-root-chart-independent-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-critical-projection-v1/source-projection-families-and-sections.json": "6284badd6af77d077840b728e7fc4df7e477ba3807844245185732e248a7caa7",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-critical-bernstein-v1/critical-chart-partitions-and-unresolved-events.json": "fdae3783ec5aa1982292f4315e9fdba5518b8ba169b1c40239674464b3fae775",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-critical-bernstein-v1/all-new-critical-chart-controls-proposals-and-bounds.jsonl": "e5e877395e0b99d09cfa6f0cb1774c52341cf29a10b5873043034ad94b996b79",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-regular-source-branches-v1/regular-source-cells-and-unknown-bands.json": "cb75d33407c86cf0e91431e42b66e0b88424eb609b9a8527b5067a588cc66da5",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-saved-middle-source-component-v1/UNQUALIFIED-middle-source-motion-component.npz": "6613f84dcdd7820f546ac8e30e899f7c19a9c6eec34a094f513c79b28f91ef5e",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/kinematics.py": "0747c53517a45a64efa5c7ecf8e91fedafcfb5150042c9a99c2718c0d7cb376c"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "NEW_exact_certificate_identity_audit_and_source_URDF_witnesses": true,
+  "no_old_producer_or_root_isolation_reexecution": true,
+  "no_native_physics_GPU_PPO": true
+}

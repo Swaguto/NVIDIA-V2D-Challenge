@@ -1,0 +1,18 @@
+{
+  "schema": "v2d.cpu-only-quality-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/construct_saved_index_critical_charts_v1.py",
+  "worker_sha256": "b3b32e8e4dcb800ef5d5853755cb6456edd72f73957e34c9ed032027fc1b93da",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-critical-bernstein-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/saved_bernstein_critical_v1.py": "fbfafbebfa0f2be914b34f0f882a7ec8ca525c06cabde17e45bef4da6d0ad89b",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-critical-projection-v1/source-projection-families-and-sections.json": "6284badd6af77d077840b728e7fc4df7e477ba3807844245185732e248a7caa7",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-polynomial-v2/actual-index-polynomials-and-saved-region-charts.json": "9fbd623c8e54c23032ea29200a4c28be41ff4c0cda83d0c7f9e4fe3c5ad647ce"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "NEW_F_Fu_common_zero_charts_not_pose_search": true,
+  "new_event_chart_node_cap_per_section": 127,
+  "failed_resultant_not_recomputed": true,
+  "old228Bernstein_transforms_not_reexecuted": true,
+  "no_native_physics_GPU_PPO": true
+}

@@ -1286,3 +1286,49 @@ as outer restrictions, not accepted poses. This precedes any new path solve;
 do not repeat polynomial generation, the 228 charts, old partition/LP/graph
 families or enlarge their budgets. A constructive path still needs independent
 whole-clock source, actual URDF and original motion before physical gates.
+
+## Continuous root charts at the first index transition
+
+Eleven new exact-arithmetic controls cover Sylvester determinants, degree
+changes, repeated and complex roots, endpoint roots, fixed intervals and
+unresolved root-isolation budgets. Arithmetic concerns the saved floating
+coefficient model; it does not validate upstream source or camera accuracy.
+
+The frame-109 critical-family calculation hits its declared 32,768-bit cap.
+Intermediate coefficients were not durably saved before subsequent work;
+the precise failing stage is not established. This failure stays unresolved.
+No rerun reconstructs those missing values, and no cap increases. Four other
+leading/proximal-boundary families have saved exact zero real-root counts on
+the scoped distal interval, with complex roots retained.
+
+A distinct method compares saved Bernstein grids with the frozen power
+polynomial through exact rational coefficient identities. It bounds source
+error and the proximal derivative without repeating the old transforms.
+Four new controls pass. Rational common-zero charts assess three local
+sections, retaining all seven full-region identities. Their node counts are
+127/7/7. Six unresolved event boxes remain in the first section; the other
+two have no source-boundary tangency. No failed resultant is reconstructed.
+
+Five regular distal cells yield implicit proximal source strips. Nine new
+proximal specializations retain real/complex roots, endpoint behavior and
+unknown event bands. Independent verification checks 135 exact coefficient
+identity values, 6,210 subdivision identities, all 141 chart nodes and 251
+saved Sturm root-count certificate nodes. Two new actual-URDF source witnesses
+close within 5.56e-17 m and pass the original image and joint-position gates.
+
+Both sparse insertions fail original temporal authority: adjacent corrections
+reach 0.07732/0.08074 rad and second-added corrections 0.15331/0.16016 rad,
+against unchanged 0.05 rad caps. Neither is a full source/path or native seed.
+The two empty local sections reject six conditional outer regions in the
+saved coefficient model; region 2 remains unresolved. This is not global
+task impossibility or measured source/contact truth.
+
+Five serial guarded jobs and exact code are archived code-only under
+`experiments/scored_baseline_20261019/index_root_charts`. All fifteen new
+analytic controls pass, while the critical-family cap failure remains explicit.
+No native position, physics, GPU/PPO, new qualified reference or score gain
+occurred. Current verified hand components, the separate middle component,
+source authority, missing/held-out failures and original parameters/gates are
+unchanged. The next construction must couple adjacent clock rows through
+the original temporal inequalities; do not select more isolated frame-109
+points or treat the current witnesses as mandatory measured nodes.

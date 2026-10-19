@@ -1,0 +1,21 @@
+{
+  "schema": "v2d.cpu-only-quality-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/project_saved_index_critical_events_v1.py",
+  "worker_sha256": "020352750599c8ef913d07625ff52ce1d5055b5b5405332c978589773ac221a0",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-critical-projection-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/exact_source_projection_v1.py": "c7bc5fad871c5b5310804820a7e93eda6f6077521318c1d30a52d7bdb1935477",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-projection-contract-v1/report.json": "87727c224190f4c95dffaebe4e660e83d408428fb2cf9119e856b26b05b1069e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-polynomial-v2/actual-index-polynomials-and-saved-region-charts.json": "9fbd623c8e54c23032ea29200a4c28be41ff4c0cda83d0c7f9e4fe3c5ad647ce",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-polynomial-independent-v1/independently-checked-source-region-records.json": "156a267796ec524983608b6a1b2e59763dda6bf334dbccc8f18527605e6194c6"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_saved_polynomial_projection_only_frame109": true,
+  "source_polynomials_and_old_studies_not_reexecuted": true,
+  "root_isolation_family_node_cap": 2047,
+  "exact_integer_bit_cap": 32768,
+  "root_v_interval_width": 1e-10,
+  "no_new_pose_or_point_bank": true,
+  "no_native_physics_GPU_PPO": true
+}

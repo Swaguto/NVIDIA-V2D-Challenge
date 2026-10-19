@@ -1,0 +1,93 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "private_results_absent": true,
+  "files": [
+    {
+      "file": "exact_source_projection_v1.py",
+      "restore_relative_path": "compute/exact_source_projection_v1.py",
+      "executed_or_declared_source_sha256": "c7bc5fad871c5b5310804820a7e93eda6f6077521318c1d30a52d7bdb1935477"
+    },
+    {
+      "file": "verify_exact_source_projection_contract_v1.py",
+      "restore_relative_path": "compute/verify_exact_source_projection_contract_v1.py",
+      "executed_or_declared_source_sha256": "2c30f697bbdfa3eb57d1f4556f411a9e8b24b8bfcb98d26d13fb06b4259d738c"
+    },
+    {
+      "file": "project_saved_index_critical_events_v1.py",
+      "restore_relative_path": "compute/project_saved_index_critical_events_v1.py",
+      "executed_or_declared_source_sha256": "020352750599c8ef913d07625ff52ce1d5055b5b5405332c978589773ac221a0"
+    },
+    {
+      "file": "saved_bernstein_critical_v1.py",
+      "restore_relative_path": "compute/saved_bernstein_critical_v1.py",
+      "executed_or_declared_source_sha256": "fbfafbebfa0f2be914b34f0f882a7ec8ca525c06cabde17e45bef4da6d0ad89b"
+    },
+    {
+      "file": "construct_saved_index_critical_charts_v1.py",
+      "restore_relative_path": "compute/construct_saved_index_critical_charts_v1.py",
+      "executed_or_declared_source_sha256": "b3b32e8e4dcb800ef5d5853755cb6456edd72f73957e34c9ed032027fc1b93da"
+    },
+    {
+      "file": "lift_saved_index_regular_branches_v1.py",
+      "restore_relative_path": "compute/lift_saved_index_regular_branches_v1.py",
+      "executed_or_declared_source_sha256": "dfd0450ba2253e0f4b6dcaffd8b2e863a710a31458ec0bdb7ac03ed3815f2bbb"
+    },
+    {
+      "file": "verify_saved_index_root_charts_v1.py",
+      "restore_relative_path": "compute/verify_saved_index_root_charts_v1.py",
+      "executed_or_declared_source_sha256": "f4eb6aa6c2c61f9a096582d5f210366499b7a0a7cbd060a788ea1a1c0d76701a"
+    },
+    {
+      "file": "index-source-projection-contract-CPU-plan-v1.json",
+      "restore_relative_path": "compute/index-source-projection-contract-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "c0fd697e7dd4fecb95118e8b70ad2f2bd3f41f2fd9b64bad2618a766472f72ec"
+    },
+    {
+      "file": "index-critical-projection-CPU-plan-v1.json",
+      "restore_relative_path": "compute/index-critical-projection-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "f6393893a7aca798dd3f30a237332c8b3abb03009742b068d86198b7e87fa99b"
+    },
+    {
+      "file": "index-critical-bernstein-CPU-plan-v1.json",
+      "restore_relative_path": "compute/index-critical-bernstein-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "6d2697d10523caa22351996d6b386fc14f48bae91d30e612b726973627833df6"
+    },
+    {
+      "file": "index-regular-source-branches-CPU-plan-v1.json",
+      "restore_relative_path": "compute/index-regular-source-branches-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "55982f37895ea9e1379cb6929bb0cd9620d698578f5605e94f743e89cd316c9e"
+    },
+    {
+      "file": "index-root-chart-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/index-root-chart-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "b6d038228032fd46bd1d1dd9e7d257d950e1370786f1a70d8448eb73af5e6f10"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "source_orientation_context_v1.py",
+      "restore_relative_path": "compute/source_orientation_context_v1.py",
+      "executed_or_declared_source_sha256": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00"
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+    }
+  ],
+  "repository_dependency_snapshots": [
+    {
+      "file": "repository-kinematics.py",
+      "repository_source_path": "scripts/dex3_training/v2d_dex3_flashchord/kinematics.py",
+      "sha256": "0747c53517a45a64efa5c7ecf8e91fedafcfb5150042c9a99c2718c0d7cb376c"
+    },
+    {
+      "file": "repository-audit_hand_reference_contacts.py",
+      "repository_source_path": "scripts/dex3_training/audit_hand_reference_contacts.py",
+      "sha256": "bd964efa556a0d9edf3335c98ded32399aea808c9772ee2167a1495a35fc6d81"
+    }
+  ]
+}
