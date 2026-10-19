@@ -1,0 +1,35 @@
+{
+  "schema": "v2d.root-twist-interval-study-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/study_source_root_twist_intervals_v1.py",
+  "worker_sha256": "8d0cdc24d94c5218c15b441f91e3cd004fda7a9866821a601e78d3d6b4b1fcaf",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-root-twist-interval-study-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/source_root_twist.py": "1f7bbf3d4298ca436bce7a58a8a41dea91eef88d5c5fd0098a1b275ceddbdc77",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/source_ray_kinematics.py": "b1214b5933f081878b3382136300cdffe1e32f5f024b90171fe1a98e3a14d14d",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/planar_thumb_ik.py": "a90fd94b1c80e36a1d0acb0b6e022f9820d460102b1c071aca7d4343489703d1",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-root-twist-library-v1/report.json": "72782ee238c9aa895ef1ad437ff7d9f0272da377f739877985271b2f35ddc020",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-right-thumb-bracketed-v2/report.json": "245b137c79c3f82b5eb74ebb1f387b435bf4d04a302d48cc28c1dbfa16fe1d64",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-right-thumb-bracketed-v2/right-thumb-reference-commands.npz": "e099d9b3135e64fdd55cf436c80225cab7be24082aac97ff70e2d1df581d46c5"
+  },
+  "CPU_only": true,
+  "control_frames": [
+    109,
+    111,
+    113
+  ],
+  "new_geometric_thumb_component_frames": [
+    112,
+    114
+  ],
+  "rejected_legacy_full_path_not_promoted": true,
+  "no_source_pose_or_old_center_selected_by_physical_score": true,
+  "source_model_orientation_and_original_root_bounds_unchanged": true,
+  "minimum_interval_width_rad": 1e-05,
+  "maximum_boxes_per_anchor": 1024,
+  "maximum_interval_witness_spacing_rad": 0.01,
+  "other_finger_preference": "retained or current joint point projected into ORIGINAL image disk",
+  "all_interval_splits_rejections_unresolved_and_state_witnesses_saved": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

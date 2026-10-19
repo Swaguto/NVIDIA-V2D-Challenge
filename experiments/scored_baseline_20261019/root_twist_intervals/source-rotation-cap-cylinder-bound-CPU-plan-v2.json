@@ -1,0 +1,17 @@
+{
+  "schema": "v2d.source-rotation-cap-cylinder-bound-plan.v2",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_rotation_cap_cylinder_bound_v2.py",
+  "worker_sha256": "e13b8885d3be6bf137a1665b12008458a595dedb3e7dd240ccebde2c1a4782e9",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-rotation-cap-cylinder-bound-v2",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-rotation-image-ball-bound-v1/report.json": "03f26936ef5263acf7c7c925cde8da2e27d5b537d520dc090ee7a713ec7db20f"
+  },
+  "CPU_only": true,
+  "new_source_orientation_cap_geometry_support_bound": true,
+  "saved_old_ball_records_not_recomputed": true,
+  "normal_count": 32,
+  "all_directional_support_certificates_saved": true,
+  "other_thumb_configurations_or_global_task_not_excluded": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

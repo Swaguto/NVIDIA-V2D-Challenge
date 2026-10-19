@@ -1,0 +1,19 @@
+{
+  "schema": "v2d.robot-point-source-cone-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/solve_robot_point_source_cone_v1.py",
+  "worker_sha256": "9ae37b98fa6cc00eaa364b58c0a25f0506a5774a084539db8d9bcccdebdf9359",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-robot-point-source-cone-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-rotation-image-ball-bound-v1/report.json": "03f26936ef5263acf7c7c925cde8da2e27d5b537d520dc090ee7a713ec7db20f"
+  },
+  "CPU_only": true,
+  "frame": 114,
+  "new_three_variable_convex_robot_endpoint_geometry": true,
+  "source_data_or_native_pose_not_refit": true,
+  "one_solver_no_restart_and_maximum_iterations": 100,
+  "positive_feasibility_checked_at_exact_sphere_chord_endpoint": true,
+  "source_caps_not_relaxed": true,
+  "all_optimizer_returns_history_and_failed_controls_retained": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

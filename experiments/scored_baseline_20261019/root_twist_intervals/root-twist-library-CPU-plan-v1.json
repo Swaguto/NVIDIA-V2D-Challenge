@@ -1,0 +1,15 @@
+{
+  "schema": "v2d.root-twist-library-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_source_root_twist_library_v1.py",
+  "worker_sha256": "3ca62bff1a64c9c61e45500cadd23d24497e575feccbbe71a3894e9412ba61b9",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-root-twist-library-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/source_root_twist.py": "1f7bbf3d4298ca436bce7a58a8a41dea91eef88d5c5fd0098a1b275ceddbdc77",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/tests/test_source_root_twist.py": "12a24f106038432585d2dd1f17169bdd89ea62484206337bac715b98628e2bed"
+  },
+  "CPU_only": true,
+  "new_closed_form_and_enclosure_tests_only": true,
+  "no_old_library_or_source_jobs_repeated": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

@@ -1,0 +1,23 @@
+{
+  "schema": "v2d.root-twist-independent-verification-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_source_root_twist_witnesses_v1.py",
+  "worker_sha256": "3797ca37ace1bbff0b969da37c13810fdeace79faa442339555de702493196fb",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-root-twist-independent-verification-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-root-twist-interval-study-v1/report.json": "97f81ffd776f3715f5530cdda77ce0e94d85cff0216becf16c9ad61be82e55a1",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-root-twist-source-disk-study-v2/report.json": "d154bc98fe821dce9d88c802372ed6a4f6424e9e0bf767c02f2ce8a0ab258b9b",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-root-twist-model-ray-study-v3/report.json": "97aec11be41c8d8eee3c13af4e4c8ef73b16153596072b1e016f8da7f1e4e7b6"
+  },
+  "CPU_only": true,
+  "selected_frames": [
+    109,
+    111,
+    112,
+    113
+  ],
+  "new_interval_and_independent_URDF_native_source_checks": true,
+  "legacy_paths_or_failed_optimizer_returns_not_promoted": true,
+  "sparse_motion_failure_must_remain_explicit": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

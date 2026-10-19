@@ -53,3 +53,24 @@ and has no complete path. These finite failures are not global infeasibility.
 The isolated poses are controls, not mandatory measured robot angles. No new
 reference replaces the three verified components. Full original source/motion,
 1 mm native/self, swept, actual motor and grasp checks remain before training.
+
+## Common-root twist intervals
+
+`source_root_twist.source_orientation_twist_domain` keeps the remaining
+one-dimensional rotation around an already mapped local vector. Its closed-form
+quaternion sinusoid describes the supplied source-model orientation error cap.
+The twist preserves that robot point, not measured human depth or contact.
+
+`partition_root_twist_domain` intersects that domain with the caller's original
+world-component rotation box using numerical principal-log envelopes. It saves
+every split and rejected/inside/unresolved leaf, including cut-locus or budget
+uncertainty. The envelopes use outward numerical padding and are **not** a
+formal libm directed-rounding certificate. Source images, actual fingers,
+native collisions and full motion remain separate checks.
+
+Twenty-two focused tests cover closed-form domains and seams, independent
+rotation grids, point preservation, component enclosures, complete leaf cover,
+cut-locus/budget uncertainty and strict contracts. Independent private checks
+on actual e037 geometry validate selected isolated poses; their sparse insertion
+still fails original joint speed and temporal caps. No new reference replaces
+the three verified components, and no physical or policy success is implied.

@@ -1,0 +1,27 @@
+{
+  "schema": "v2d.index-source-cone-intervals-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/construct_index_source_cone_intervals_v1.py",
+  "worker_sha256": "180137e133db61c4b62ce8640c809c1553b151a04ed6539c78f8a78a65884b49",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-cone-intervals-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-root-twist-cone-boundary-v4/report.json": "2525c10d14c3ddbab0cd8ef162931c2461a25e1a476c8e3e81e57e8ba42b7d83",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-root-twist-cone-boundary-v4/all-proposals.jsonl": "2fbc4c237db938021f05230e61632b5bc003812f214c366a2aaca5d9e3f5a2d3"
+  },
+  "CPU_only": true,
+  "frame": 114,
+  "saved_parent_root_states_only": true,
+  "new_actual_planar_finger_source_cone_quartic_intervals": true,
+  "finite_distal_angles_predeclared": [
+    "current",
+    "current-.05",
+    "current+.05",
+    "original_lower",
+    "original_upper"
+  ],
+  "original_source_native_URDF_and_motion_caps_not_relaxed": true,
+  "no_generic_optimizer_or_old_native_control_repeated": true,
+  "all_intervals_states_and_rejections_saved": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

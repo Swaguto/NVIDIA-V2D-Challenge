@@ -1,0 +1,142 @@
+{
+  "schema": "v2d.exact-root-twist-interval-archive.v1",
+  "files": [
+    {
+      "file": "audit_rotation_cap_cylinder_bound_v2.py",
+      "restore_relative_path": "compute/audit_rotation_cap_cylinder_bound_v2.py",
+      "executed_or_declared_source_sha256": "e13b8885d3be6bf137a1665b12008458a595dedb3e7dd240ccebde2c1a4782e9"
+    },
+    {
+      "file": "audit_source_rotation_image_ball_bound_v1.py",
+      "restore_relative_path": "compute/audit_source_rotation_image_ball_bound_v1.py",
+      "executed_or_declared_source_sha256": "d9b041d176f991d284c69c0378f2878c43bbc87b5edfcefd8e6877e624bf9403"
+    },
+    {
+      "file": "construct_index_source_cone_intervals_v1.py",
+      "restore_relative_path": "compute/construct_index_source_cone_intervals_v1.py",
+      "executed_or_declared_source_sha256": "180137e133db61c4b62ce8640c809c1553b151a04ed6539c78f8a78a65884b49"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "index-source-cone-intervals-CPU-plan-v1.json",
+      "restore_relative_path": "compute/index-source-cone-intervals-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "5d0ced09e4ea0c9fe1ef833a90492c680917d1032af405f4a10a0b9df2e643f8"
+    },
+    {
+      "file": "robot-point-source-cone-CPU-plan-v1.json",
+      "restore_relative_path": "compute/robot-point-source-cone-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "abc89ea6393fbeb20d4f0d3c827541a5fb358983526e576e92a60fa0eee4409d"
+    },
+    {
+      "file": "robot-point-source-cone-CPU-plan-v2.json",
+      "restore_relative_path": "compute/robot-point-source-cone-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "01d7aeaf144d2fec0b8bef50890feb73bd190495eaf1964eb3dc0d6c9b06f33f"
+    },
+    {
+      "file": "root-twist-cone-boundary-CPU-plan-v4.json",
+      "restore_relative_path": "compute/root-twist-cone-boundary-CPU-plan-v4.json",
+      "executed_or_declared_source_sha256": "d2b4f157aa662def43bc2d084bdec3bea404c7e4938554f5cb63741e643422ae"
+    },
+    {
+      "file": "root-twist-independent-verification-CPU-plan-v1.json",
+      "restore_relative_path": "compute/root-twist-independent-verification-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "62b05fda1f84aee5bc9802752859439bf97707ecd74487d2ab0942372c55a7d0"
+    },
+    {
+      "file": "root-twist-interval-study-CPU-plan-v1.json",
+      "restore_relative_path": "compute/root-twist-interval-study-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "0e3022bf2cbe566620d163d24f34637967d957538dc3b1a162d63f4736c2d8c4"
+    },
+    {
+      "file": "root-twist-library-CPU-plan-v1.json",
+      "restore_relative_path": "compute/root-twist-library-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "c5af716f0040fb4402846b29c783a90a6d277d24f3146a0513dd913c69588ba2"
+    },
+    {
+      "file": "root-twist-model-ray-study-CPU-plan-v3.json",
+      "restore_relative_path": "compute/root-twist-model-ray-study-CPU-plan-v3.json",
+      "executed_or_declared_source_sha256": "752d4694c6670072b37f8106d894ded962bf4e4e0852ba1b0e495ac94ecd2528"
+    },
+    {
+      "file": "root-twist-source-disk-study-CPU-plan-v2.json",
+      "restore_relative_path": "compute/root-twist-source-disk-study-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "fc81b89faa90bba233c218ac7e588c9239bd7a04ede927bb4ec501e8f7b4e696"
+    },
+    {
+      "file": "solve_robot_point_source_cone_v1.py",
+      "restore_relative_path": "compute/solve_robot_point_source_cone_v1.py",
+      "executed_or_declared_source_sha256": "9ae37b98fa6cc00eaa364b58c0a25f0506a5774a084539db8d9bcccdebdf9359"
+    },
+    {
+      "file": "solve_robot_point_source_cone_v2.py",
+      "restore_relative_path": "compute/solve_robot_point_source_cone_v2.py",
+      "executed_or_declared_source_sha256": "92888928ae45fb08f1d0f072e1b9652189bf8d02d3360d1c024ecf9903c37a03"
+    },
+    {
+      "file": "source-rotation-cap-cylinder-bound-CPU-plan-v2.json",
+      "restore_relative_path": "compute/source-rotation-cap-cylinder-bound-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "caf9caec3cf796412e444afd6cf794bb7410450085e9325cbd72050ad652436f"
+    },
+    {
+      "file": "source-rotation-image-ball-bound-CPU-plan-v1.json",
+      "restore_relative_path": "compute/source-rotation-image-ball-bound-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "30d252897cd640aa50b797ae0cfe44deb2e2e7263e9cc62588f29ded8a2b5955"
+    },
+    {
+      "file": "source_orientation_context_v1.py",
+      "restore_relative_path": "compute/source_orientation_context_v1.py",
+      "executed_or_declared_source_sha256": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00"
+    },
+    {
+      "file": "study_source_root_twist_cone_boundary_v4.py",
+      "restore_relative_path": "compute/study_source_root_twist_cone_boundary_v4.py",
+      "executed_or_declared_source_sha256": "ba9ef02f5ef49fa431bca91cd63aa16d7a9bb21296739fa2e15308b994222571"
+    },
+    {
+      "file": "study_source_root_twist_intervals_v1.py",
+      "restore_relative_path": "compute/study_source_root_twist_intervals_v1.py",
+      "executed_or_declared_source_sha256": "8d0cdc24d94c5218c15b441f91e3cd004fda7a9866821a601e78d3d6b4b1fcaf"
+    },
+    {
+      "file": "study_source_root_twist_model_ray_v3.py",
+      "restore_relative_path": "compute/study_source_root_twist_model_ray_v3.py",
+      "executed_or_declared_source_sha256": "74b484fdb30fbf77e4c03a20f4974e71ffa4ee84f33c7fa0245419dbd3f21169"
+    },
+    {
+      "file": "study_source_root_twist_source_disk_v2.py",
+      "restore_relative_path": "compute/study_source_root_twist_source_disk_v2.py",
+      "executed_or_declared_source_sha256": "06d7f0171b37a3e2850cd4322f099252088ba83a32a72c27e55ef2d3d91db963"
+    },
+    {
+      "file": "verify_source_root_twist_library_v1.py",
+      "restore_relative_path": "compute/verify_source_root_twist_library_v1.py",
+      "executed_or_declared_source_sha256": "3ca62bff1a64c9c61e45500cadd23d24497e575feccbbe71a3894e9412ba61b9"
+    },
+    {
+      "file": "verify_source_root_twist_witnesses_v1.py",
+      "restore_relative_path": "compute/verify_source_root_twist_witnesses_v1.py",
+      "executed_or_declared_source_sha256": "3797ca37ace1bbff0b969da37c13810fdeace79faa442339555de702493196fb"
+    }
+  ],
+  "repository_dependency_snapshots": [
+    {
+      "file": "source_root_twist.executed.py",
+      "repository_source_path": "scripts/dex3_training/v2d_dex3_flashchord/source_root_twist.py",
+      "sha256": "1f7bbf3d4298ca436bce7a58a8a41dea91eef88d5c5fd0098a1b275ceddbdc77"
+    },
+    {
+      "file": "test_source_root_twist.executed.py",
+      "repository_source_path": "scripts/dex3_training/tests/test_source_root_twist.py",
+      "sha256": "12a24f106038432585d2dd1f17169bdd89ea62484206337bac715b98628e2bed"
+    }
+  ],
+  "guarded_jobs": 11,
+  "generic_convex_control_failures_retained": 2,
+  "first_failed_control_return_unsaved_explicit": true,
+  "current_verified_reference_unchanged": true,
+  "private_arrays_models_commands_intervals_and_results_excluded": true
+}

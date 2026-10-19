@@ -813,3 +813,65 @@ these completed finite banks, old local solvers or source/gain/reward families.
 Keep all original bounds and source/native gates, and save any new interval
 witnesses and unresolved boxes explicitly. Full-clock and swept/motor/grasp
 qualification remain required before learning.
+
+## Explicit common-root twist and source/finger intervals
+
+A new one-dimensional twist module preserves an already mapped robot thumb
+point and solves the source-model orientation cap as a quaternion sinusoid.
+Numerical principal-log envelopes partition the original world-component root
+box. All splits, rejected/inside/unresolved leaves and witnesses are retained.
+Its **22 focused tests** include independent rotation grids, envelope containment,
+leaf cover and cut-locus/budget handling. Neither numerical enclosures nor a
+source-model orientation establishes measured hand accuracy or a global proof.
+
+Real-case controls produce finite witnesses at 109/111/113. A construction
+using the original image disk adds 25 witnesses at 112, while the particular
+tested 114 ray families do not produce an accepted pose. The thumb geometry
+borrowed for these tests is explicitly a component hypothesis from a rejected
+whole path; no old path or certificate is promoted. Root centers, source flags,
+human arrays, actual model parameters and original bounds remain unchanged.
+
+Independent source/URDF/native verification of four selected new witnesses
+closes point positions within 2.6e-9 m and checks self, external and interhand
+contacts at those knots. Sparse insertion still fails actual finger speed and
+the original temporal caps: 0.1731 rad adjacent and 0.3459 rad second-added,
+versus 0.05 rad. Original root motion passes the sparse diagnostic. This is
+neither a whole-clock reference nor a swept, motor, grasp or task certificate.
+
+Separate necessary image bounds use enclosing orientation-cap balls and
+cylinders, with four analytical controls each and saved support/tangent records.
+They do **not** exclude the tested frozen 114 thumb geometry: the stronger
+finite directional bound is 20.813 px versus the original 24.201 px allowance.
+No global infeasibility or constructive feasibility follows from that overlap.
+
+A distinct three-variable convex robot-point construction fails an analytical
+control before reaching the episode case. The first return was not saved;
+its assertion failure remains. A start-only numerical repair saves returns
+before assertions but still returns status 8, with a near-feasible failed
+control. Both methods remain rejected; no more solver restarts, tolerance
+tuning or intermediate promotion is justified by those returns.
+
+A new finite 32-ray image-cone boundary study at 114 produces 40 root witnesses.
+Two fail exact root/orientation checks; 38 fail the bounded index inverse.
+A subsequent actual planar-index/source-cone inequality is represented by a
+tan-half-angle quartic, with four analytical controls. Five declared distal
+samples at each saved root yield no accepted index interval. No new native
+state follows from either family. Those finite samples do not exclude other
+continuous distal angles, thumb articulations or source-cone/root configurations.
+
+Eleven guarded CPU jobs and exact sources are archived code-only under
+`experiments/scored_baseline_20261019/root_twist_intervals`. No physics/GPU/PPO
+ran. The three-component freeze, eight right-self failures and five object
+failures remain; no full reference, motor/grasp success, task, policy or score
+gain is qualified. All original source/held-out failures remain explicit.
+
+Next investigate the coupled thumb-articulation/index-workspace domain under
+the original source-cone and root bounds. The distal thumb joint can change the
+tip vector while the palm/thumb-1 geometry is fixed, but new thumb-2/finger and
+object contacts still require native checks. Treat the existing isolated poses
+as controls, not measured mandatory joints. Use saved interval evidence before
+declaring any new bounded study; do not resweep these completed ray families,
+five distal samples, failed convex controls, old pose solvers or source fits.
+Keep unresolved continuous domains explicit and save all new certificates and
+state rejections. A complete new source/native/motion/swept/motor/grasp result
+is still required before learning.

@@ -1,0 +1,27 @@
+{
+  "schema": "v2d.root-twist-source-disk-study-plan.v2",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/study_source_root_twist_source_disk_v2.py",
+  "worker_sha256": "06d7f0171b37a3e2850cd4322f099252088ba83a32a72c27e55ef2d3d91db963",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-root-twist-source-disk-study-v2",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/source_root_twist.py": "1f7bbf3d4298ca436bce7a58a8a41dea91eef88d5c5fd0098a1b275ceddbdc77",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/source_ray_kinematics.py": "b1214b5933f081878b3382136300cdffe1e32f5f024b90171fe1a98e3a14d14d",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-root-twist-interval-study-v1/report.json": "97f81ffd776f3715f5530cdda77ce0e94d85cff0216becf16c9ad61be82e55a1",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-right-thumb-bracketed-v2/report.json": "245b137c79c3f82b5eb74ebb1f387b435bf4d04a302d48cc28c1dbfa16fe1d64",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-right-thumb-bracketed-v2/right-thumb-reference-commands.npz": "e099d9b3135e64fdd55cf436c80225cab7be24082aac97ff70e2d1df581d46c5"
+  },
+  "CPU_only": true,
+  "frames": [
+    112,
+    114
+  ],
+  "prior_narrow_point_ray_family_retained": true,
+  "prior_positive_controls_not_repeated": true,
+  "uses_original_image_disk_not_a_forced_current_pixel": true,
+  "source_image_model_orientation_and_original_component_caps_unchanged": true,
+  "all_intervals_rejections_unresolved_and_states_saved": true,
+  "rejected_legacy_whole_path_not_promoted": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "v2d.root-twist-cone-boundary-plan.v4",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/study_source_root_twist_cone_boundary_v4.py",
+  "worker_sha256": "ba9ef02f5ef49fa431bca91cd63aa16d7a9bb21296739fa2e15308b994222571",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-root-twist-cone-boundary-v4",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/source_root_twist.py": "1f7bbf3d4298ca436bce7a58a8a41dea91eef88d5c5fd0098a1b275ceddbdc77",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/source_ray_kinematics.py": "b1214b5933f081878b3382136300cdffe1e32f5f024b90171fe1a98e3a14d14d",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-root-twist-model-ray-study-v3/report.json": "97aec11be41c8d8eee3c13af4e4c8ef73b16153596072b1e016f8da7f1e4e7b6",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-robot-point-source-cone-v2/guard.json": "3645c5d64474a12e287b4ece4e2f519abe6aaf38f9fcff05c6d02bfe3029c2c9"
+  },
+  "CPU_only": true,
+  "frame": 114,
+  "new_finite_cone_boundary_rays": 32,
+  "full_source_orientation_twist_domains_per_sphere_branch": true,
+  "original_source_caps_root_boxes_and_URDF_limits_unchanged": true,
+  "no_generic_optimizer_or_old_pose_control_repeated": true,
+  "all_rays_intervals_states_rejections_and_unresolved_cases_saved": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

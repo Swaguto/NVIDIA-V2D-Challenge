@@ -1,0 +1,25 @@
+{
+  "schema": "v2d.source-rotation-image-ball-bound-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_source_rotation_image_ball_bound_v1.py",
+  "worker_sha256": "d9b041d176f991d284c69c0378f2878c43bbc87b5edfcefd8e6877e624bf9403",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-rotation-image-ball-bound-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-root-twist-source-disk-study-v2/report.json": "d154bc98fe821dce9d88c802372ed6a4f6424e9e0bf767c02f2ce8a0ab258b9b",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-root-twist-model-ray-study-v3/report.json": "97aec11be41c8d8eee3c13af4e4c8ef73b16153596072b1e016f8da7f1e4e7b6",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-right-thumb-bracketed-v2/report.json": "245b137c79c3f82b5eb74ebb1f387b435bf4d04a302d48cc28c1dbfa16fe1d64"
+  },
+  "CPU_only": true,
+  "frames": [
+    109,
+    111,
+    113,
+    112,
+    114
+  ],
+  "new_optimistic_rotation_cap_image_bound": true,
+  "independent_analytic_support_controls": true,
+  "no_native_physics_or_completed_bound_jobs_repeated": true,
+  "no_exclusion_of_other_thumb_angles_or_task_impossibility_claimed": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}
