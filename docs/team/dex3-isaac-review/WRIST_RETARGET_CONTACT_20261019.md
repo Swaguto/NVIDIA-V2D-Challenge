@@ -1712,3 +1712,47 @@ representation from SAVED camera numerators, with an independent necessity/error
 proof against the SAVED scalar source/depth models before any diagnosis. This
 would be a distinct representation; the old unavailable scalar localizers and
 all earlier failures must remain, without a degree increase or old solver retry.
+
+## Matrix-valued image support within the existing tensor, 2026-10-19
+
+A genuinely new representation addresses the remaining source-image support
+necessity without adding moments. For positive depth, the original camera cone
+has arrow matrix `[[t,x,y],[x,t,0],[y,0,t]]`, PSD exactly when
+`t >= sqrt(x*x+y*y)`. Its entries use SAVED degree-(2,2) camera numerators.
+A four-element multilinear polynomial vector gives a 12x12 weighted matrix
+localizer within EXISTING per-coordinate degree-four tensors. The earlier
+nonconstant SCALAR quartic localizers remain unavailable; no powers are invented.
+
+Saved floating numerator and normalized scalar source/depth models are not
+assumed identical. Exact coefficient discrepancy bounds and the saved positive
+depth gate imply explicit necessary diagonal guards, 2.043574e-12 to 7.465079e-12.
+The original cap, 1e-6px image tolerance and .01m depth model are unchanged.
+These guards bind saved numerical coefficient models, not upstream trig/camera
+accuracy, measured human depth or accepted robot candidates. Source-model/root
+uncertainty, all region-2 correlations and three unknown 109 event bands remain.
+
+Twelve NEW analytical controls pass cone/PSD signs, positive/zero/signed cases,
+weighted-support necessity, existing-power capacity, tiny terms, axis order and
+error guards. A single NEW diagnosis reuses the SAVED support-aware AlmostSolved
+return without another solver or the old 1,292-matrix audit. Three new source
+support matrices fail at 107/109/110; 108/111 are exact PSD at rank 12.
+The earlier positivity passes and nonzero shared-equality residual remain.
+Actual weights and duals are never clipped, normalized, repaired or promoted.
+
+Independent exact checks verify 30 discrepancy/depth/guard identities, 170
+uniform-error terms, 15 affine polynomials, 135 falling-factorial shift maps,
+2,160 coefficients, 720 matrix entries, 288 positive congruence entries and
+all three negative rational weighted-square witnesses. These reject THAT saved
+numerical table as a source-supported measure. They do not exclude the source/
+time family, establish a required wrist change, qualify a deterministic path,
+source accuracy, native mechanics, motor/grasp/task or a policy/score gain.
+
+Three serial guarded CPU jobs and twelve exact source/plan files are retained
+in `experiments/scored_baseline_20261019/matrix_image_support`. All private maps,
+matrices, returns, errors and witnesses are durable. Production runtime/tests,
+verified F, separate middle/wrist components, missing/held-out observations and
+all original parameters/gates stay unchanged. No native position, physics or
+GPU/PPO runs. A future direct formulation may reuse the saved five new maps
+only after new dimension-12 packing/adjoint/dual contracts and a declared single
+bounded solve; it must not retry/tune the completed support-aware solve or repeat
+these producers, controls or audits.

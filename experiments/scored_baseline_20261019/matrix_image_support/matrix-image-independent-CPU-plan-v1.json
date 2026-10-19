@@ -1,0 +1,16 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_matrix_image_support_v1.py",
+  "worker_sha256": "b5b44e18abe3924587dc814273f79486666044950aa7a20e2d3900870b92076a",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-matrix-image-independent-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-matrix-image-support-v1/report.json": "e52d02b155a3d9a291aecab3d61efbf4018b8d45e5e807bf103c25b3c57585e0",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-time-system-v1/coupled-source-time-polynomial-system.json": "48732e47761f0a1d81a49ca9478b41ee7a8ae3a8623f066d8e91cacb269c6984",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-bounded-moment-cone-v1/update-05-necessary-LP-model.json": "5938c310fe73da913bd56383046f17fc1b667335c1bce60ee131f701c1f0b723",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-supported-conic-evaluation-v1/single-supported-solver-RETURN.json": "751736df98902519e910e095cc8be18229b06ec662a5a78cb513d8ac75088b93"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "NEW independent arrow necessity/error/affine/falling-factorial maps/positive congruences and negative weighted-square certificates, saved new five-matrix return diagnosis only; no solver/old audit/polynomial regeneration",
+  "no_GPU": true
+}
