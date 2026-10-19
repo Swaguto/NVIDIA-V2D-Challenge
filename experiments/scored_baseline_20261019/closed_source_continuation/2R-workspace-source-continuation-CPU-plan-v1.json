@@ -1,0 +1,16 @@
+{
+  "schema": "v2d.cpu-only-quality-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/construct_2R_workspace_source_continuation_v1.py",
+  "worker_sha256": "8461ba542ad573bd8955f867126ee78962a859fe64c0c7f81cfc3a70557ba72b",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-2R-workspace-source-continuation-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-closed-2R-independent-witnesses-v1/verified-2R-source-point-domains.json": "76ba4046ae1aa7e424f6819df5355fc468c141ff1dd3a0d8d59d738a2e8651a3",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/kinematics.py": "0747c53517a45a64efa5c7ecf8e91fedafcfb5150042c9a99c2718c0d7cb376c",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/temporal_pose_graph.py": "b87d6207635266ffafc07929e5a76f1d68b67cd678315c7e247c8bd0a03b8874"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_workspace_source_homotopy_not_old_joint_pose_interpolation": true,
+  "no_physics_GPU_PPO": true
+}

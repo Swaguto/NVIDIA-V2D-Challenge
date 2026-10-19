@@ -1,0 +1,15 @@
+{
+  "schema": "v2d.cpu-only-quality-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/factor_saved_2R_source_reachability_v1.py",
+  "worker_sha256": "889b809f64eab3bfd4ee28ecbb80fe93b38e19c276288fa00549fb5690410539",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-factorized-saved-source-reachability-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-2R-workspace-source-continuation-v1/all-new-workspace-source-domains.json": "6e576dc8a0d7d2c824f72023d02e31a483653c27746ca172395d49f80fb03119",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/temporal_pose_graph.py": "b87d6207635266ffafc07929e5a76f1d68b67cd678315c7e247c8bd0a03b8874"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "exact_new_factorization_no_extra_nodes_or_samples": true,
+  "no_physics_GPU_PPO": true
+}

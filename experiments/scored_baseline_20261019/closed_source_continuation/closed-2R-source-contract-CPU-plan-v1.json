@@ -1,0 +1,14 @@
+{
+  "schema": "v2d.cpu-only-quality-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_closed_2R_source_domains_v1.py",
+  "worker_sha256": "4bd630d5d59b91527c1ba70f69a4cdebba9e5e6adfa6524286d0a09cb827d2fe",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-closed-2R-source-contract-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/closed_2R_source_domains_v1.py": "8c7b44a637804bab9e0b1685e5302b6446adfb7a950a6d8c10571fc70c122e3e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/harmonic_source_domains_v1.py": "3c9eebd919c26132a4a15219de1686ef82ead41958f47a9abab28c713386aa8e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_zero_distal_and_nonelliptic_contracts_only": true,
+  "no_physics_GPU_PPO": true
+}

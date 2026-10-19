@@ -1133,3 +1133,58 @@ branches allowing both index/middle joints before reconsidering thumb/source
 continuation. Retain unresolved domains and original temporal authority.
 Do not resweep the two wrist modes, amplitudes, old fixed sections or failed
 finite graph, and do not promote the root-only proposal to a reference.
+
+## Closed source charts and temporal source components
+
+The ten previously unresolved source cases comprise nine zero-distal middle
+domains and one nonelliptic index conic. A new constructive closed 2R chart
+uses camera harmonics on all four workspace boundaries and checks finite
+conic stationary points. It supports straight-joint boundaries and retains
+unresolved results when no witness is verified. Eight new analytic contracts
+pass. All ten domains now have constructive source witnesses; all 64 new
+witnesses pass independent actual-URDF/source checks. The earlier 28 solved
+domains are reused without recomputing their conics.
+
+Independent checks assess 221 reused/new source points. Twenty-four points
+fail their actual gates and remain rejected; every one of the 38 source
+domains retains verified points. The maximum analytic/URDF closure is
+1.12e-16 m. These are robot image-fit witnesses, not measured contact/depth.
+
+A new source-cone workspace homotopy constructs intermediate robot points
+and inverts them through actual 2R kinematics; joint poses are not naively
+interpolated. It retains 25 invalid workspace inverses and verifies 452 new
+URDF/source points. Its finite four-joint path fails the first transition.
+Three new analytic controls pass; no global exclusion follows from pruning.
+
+A separate one-direction source-gradient/bracket construction verifies 34
+source points but leaves four branches unresolved: index 106/108/109 and
+middle 110. Its full proposal fails original adjacent/second-added caps at
+0.1195/0.2296 rad versus 0.05 rad and remains rejected. Three analytic controls
+pass; no restart, wrist-mode change or physical outcome enters the method.
+
+Exact per-digit finite reachability removes Cartesian node pruning and
+retains all saved points. Two independently exhaustive analytic controls pass.
+Integrating 20 distinct, independently passing source points from the scalar
+constructor produces a complete middle-digit path. The rejected whole scalar
+proposal is not promoted. Saved-evidence extraction checks all 151 rows and
+direct original bounds: component 0.13692 rad, adjacent 0.04879 rad, second
+0.04842 rad and maximum velocity 11.4717 rad/s. The index still has no path
+in the retained finite corpus; its first empty forward pair is 108→109.
+
+The private middle source/motion component is an intermediate robot hypothesis
+under the fixed wrist mode. It is unqualified for thumb source fit, native
+collision/self contact, swept motion, motors, grasp or a whole task. The current
+verified three-component reference remains unchanged with eight right-self and
+five object failures. No native position, physics, GPU/PPO or score gain ran.
+
+Eight serial guarded CPU jobs and exact code are archived under
+`experiments/scored_baseline_20261019/closed_source_continuation`. Production
+runtime/tests are unchanged. Sixteen new analytic controls and 707 URDF/source
+assessments pass their reported scopes, with rejected points explicitly retained.
+The integrated factorization reuses its two controls without rerunning them.
+
+Next derive necessary source/temporal compatibility around the index 108→109
+transition using saved correlated pair boxes and the continuous two-joint
+source chart. Keep the middle source/motion component as an intermediate
+control, retain continuous neighbor uncertainty, and do not rerun the completed
+source constructors or finite graphs or increase their sample budgets.

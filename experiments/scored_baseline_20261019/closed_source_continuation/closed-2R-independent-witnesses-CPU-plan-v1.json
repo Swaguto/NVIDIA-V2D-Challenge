@@ -1,0 +1,17 @@
+{
+  "schema": "v2d.cpu-only-quality-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_reused_and_closed_2R_source_witnesses_v1.py",
+  "worker_sha256": "62a74ceb9ad3d8dde9cd68dbdd440b37933ca7e016d32828521d55e2c879408b",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-closed-2R-independent-witnesses-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-root-full-2R-diagnosis-v1/all-new-full-2R-source-domain-records.json": "c2ae190d2bf2b3181919f7a9d8ec78624058ce3adfb0a4cd02955b855817f003",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-new-root-closed-source-domains-v1/all-ten-closed-source-domain-records.json": "08e7fb55462c1a7c5f33f32f13f49d817702c3302e1ad3ff5d12452580092b8a",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-source-face-path-v1/all-chart-sections-source-proposals-and-path-records.jsonl": "ea206fc9e1d527204aa018c648e5c16adce7eaa4669e0bce08c950aced0c9465",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/kinematics.py": "0747c53517a45a64efa5c7ecf8e91fedafcfb5150042c9a99c2718c0d7cb376c"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "no_old_conic_solves_repeated": true,
+  "no_physics_GPU_PPO": true
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "v2d.cpu-only-quality-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/extract_saved_middle_source_component_v1.py",
+  "worker_sha256": "5759de1950d9ef6eab1af53b99d5524cfb84f014d6ba9cfc0fcb55ad8bb821bc",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-saved-middle-source-component-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-integrated-source-corpora-reachability-v1/all-factorized-reachability-returns.json": "422238d7e9bd29d720f526dffe61a68906af97dd9088d6dfb525647e1c5fdcf6",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-integrated-source-corpora-reachability-v1/all-factorized-saved-banks-and-recurrence-returns.jsonl": "5e1855e82e452b76096937368c0094f1f21d131873ba126a1f3789dca23353e3",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-continuous-2R-source-projection-v1/all-new-continuous-source-branches.json": "33c43522345f149b4901c529d49a266e320f93208b9469b2c01ec16befa302b6",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-2R-workspace-source-continuation-v1/all-new-workspace-source-domains.json": "6e576dc8a0d7d2c824f72023d02e31a483653c27746ca172395d49f80fb03119"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "saved_evidence_extraction_no_graph_or_source_rerun": true,
+  "no_physics_GPU_PPO": true
+}
