@@ -1,0 +1,17 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_global_completion_return_v1.py",
+  "worker_sha256": "aa9cb2c5bae23e916df83e579adf8d9fe04b8e9f242bdb9254f46a752ef218bf",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-completion-independent-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/mixed_joint_moments_v1.py": "5f5f8d2a9d948744cf992b7694117a023ffb650d00332414dc95ca91bdd3fdcb",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-completion-model-v1/completion-model-binding.json": "c62b31a000fcedbbec9cdf197787fa14ca823e4ad27499a9a04b954bb74edbcf",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-completion-evaluation-v1/report.json": "96f89c4b23b82ff782ec67d945d0527d289a45635cca627bc7f85740509bf92a",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-completion-evaluation-v1/single-global-completion-solver-RETURN.json": "2c354be4f60caf5f7f29eba256309d7da0ea9d704968ec195df023fa37b82c06",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-completion-evaluation-v1/ONE-separate-existential-exact-completion-proposal.json": "57d789b7881b275259b3003a622eac0ff76f598ecdce91172ef608851b31bd58"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "NEW independent raw66auxiliary RETURN/exact separate11Gram completion/knowninterval/freeentry/PSDcongruence/residualcorrected dual proofs; no solver or original1125table audit/repair",
+  "no_GPU": true
+}

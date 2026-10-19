@@ -1,0 +1,15 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_global_completion_contracts_v1.py",
+  "worker_sha256": "a0fc400d25e94c59e9c8babdbfded5972c2728d28f89367fea82b0b258b764f2",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-completion-contract-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/global_completion_conic_v1.py": "2bb964b8a7f8ef2f2906e72e272d6029ac25c2b79cae15e4a6df6c42eb4f2673",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/direct_conditional_moment_sdp_v1.py": "1031c177074da3762a4fb7a4cb5141081b732956425d8f1656f8d275e32c0617",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/supported_conic_maps_v1.py": "4b84dc4a6c676e0d575865f0f5a7c8badea74b2822233a8c8d05f80b8af7e074",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Ten NEW dimension11 partial-global-Gram/support/packing/interval/adjoint/zero-signed/dual/separate-certificate contracts including2NEW tiny completionSDPs; no old controls/solver replay",
+  "no_GPU": true
+}

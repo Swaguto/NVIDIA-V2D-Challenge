@@ -394,3 +394,53 @@ and a single declared bounded evaluation. Missing entries may be existential
 auxiliary variables only, not new measured moments or a change to the original
 source/time model. No repeats, budget extensions, means/eigenvectors/Gram
 factors promoted to commands, or repairs to raw solver weights are authorized.
+
+## Exact separate global first/second Gram completion, 2026-10-19
+
+A genuinely new, SEPARATE diagnostic uses 66 auxiliary upper-triangle entries
+for the uncentered 11x11 Gram matrix of `(1,t_1,...,t_10)`. The saved 40 known
+entries include original unit mass one and 39 frozen copy/residual intervals;
+26 cross entries remain existential unknowns. Necessary normalized-coordinate
+support/Fréchet bounds yield 1 equality, 233 inequalities, 132 unit-box rows
+and 66 PSD rows, 432 canonical rows total. This does not alter the original
+1,125 source/time columns, moment authority, raw weights or human observations.
+
+Ten NEW dimension-11 partial-Gram, support, packing/adjoint/error, interval,
+zero/signed and dual-sign contracts pass, including two tiny new analytical
+SDPs. Old packing controls are referenced by hash. Independent constructor,
+frozen-interval, free-entry, support and packing bindings pass before ONE new
+100-iteration/60-second/one-thread/default-tolerance completion evaluation.
+It returns Solved at 7 iterations and about 0.003445 seconds. No retry,
+warmstart, tolerance repair, continuation or alternative proposal occurs.
+
+The actual auxiliary return is approximate: 40 scalar constraints fail exactly,
+with equality residual 2.220446e-15 and maximum inequality violation 8.263608e-11.
+Its actual Gram matrix is PSD/rank 11, with no box failure. Neither these values
+nor the original 1,125 returned weights are clipped, normalized or repaired.
+The old AlmostSolved status and all original mass/overlap residuals remain.
+
+A SINGLE predeclared SEPARATE certificate uses the saved rational known anchors,
+original unit mass and the sole return's 26 free entries. Its 40 specified
+entries differ from the actual auxiliary return; it is an existential diagnostic
+matrix, not a repaired return or original moment table. Independent exact checks
+verify all 39 interval bindings, 26 free-entry provenance, 1 equality, 233
+inequalities, 66 boxes and 121 PSD-congruence identities. The separate matrix
+is exact PSD/rank 11 and completes the diagnostic first/second Gram envelope.
+
+Independent 121 rational-Gram dual products and the original-diagnostic finite-
+box gap -9.674558e-9 verify; there is no exclusion. Generic helper scope text is
+not claimed: this certificate concerns only the separate copy/residual envelope,
+not source/time family infeasibility. First/second Gram completion is only a
+necessary common-measure condition. A common distribution with joint support,
+deterministic source/time trajectory, source accuracy or physical candidate
+remains unqualified. Existential cross moments never become observations.
+
+Five serial guarded CPU jobs and seventeen exact sources/plans are retained in
+`experiments/scored_baseline_20261019/global_Gram_completion`, with private models,
+actual returns, proposed matrices, errors and certificates durable before further
+work. Production runtime/tests, F, separate components, source/missing/held-out
+flags, region-2 correlations/unknown bands, parameters and original gates remain.
+No native position, physics, GPU/PPO, motor/grasp/task/policy/score gain occurs.
+Do not rerun/tune these producers, solvers, controls or audits, or construct
+alternative proposals. Joint-support necessities of the separate completion
+remain a distinct future question; no mean/eigenvector/Gram factor is a command.

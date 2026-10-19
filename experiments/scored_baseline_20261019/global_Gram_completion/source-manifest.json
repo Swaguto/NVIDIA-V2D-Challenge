@@ -1,0 +1,93 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "private_results_absent": true,
+  "files": [
+    {
+      "file": "global_completion_conic_v1.py",
+      "restore_relative_path": "compute/global_completion_conic_v1.py",
+      "executed_or_declared_source_sha256": "2bb964b8a7f8ef2f2906e72e272d6029ac25c2b79cae15e4a6df6c42eb4f2673"
+    },
+    {
+      "file": "verify_global_completion_contracts_v1.py",
+      "restore_relative_path": "compute/verify_global_completion_contracts_v1.py",
+      "executed_or_declared_source_sha256": "a0fc400d25e94c59e9c8babdbfded5972c2728d28f89367fea82b0b258b764f2"
+    },
+    {
+      "file": "build_global_completion_v1.py",
+      "restore_relative_path": "compute/build_global_completion_v1.py",
+      "executed_or_declared_source_sha256": "765a272614338b817686afb0b4552e029abf5117ca9ae365ee6306e4c6d35c0c"
+    },
+    {
+      "file": "verify_global_completion_binding_v1.py",
+      "restore_relative_path": "compute/verify_global_completion_binding_v1.py",
+      "executed_or_declared_source_sha256": "5c7d794bd4dbf5c5616575a5696457e4d56e72417b62c8ce2645c81e75d8409d"
+    },
+    {
+      "file": "run_global_completion_v1.py",
+      "restore_relative_path": "compute/run_global_completion_v1.py",
+      "executed_or_declared_source_sha256": "ba5b8d1d54871e5521685bff56c2385e127cbe6dd149c98be7fa246fb93681ff"
+    },
+    {
+      "file": "verify_global_completion_return_v1.py",
+      "restore_relative_path": "compute/verify_global_completion_return_v1.py",
+      "executed_or_declared_source_sha256": "aa9cb2c5bae23e916df83e579adf8d9fe04b8e9f242bdb9254f46a752ef218bf"
+    },
+    {
+      "file": "conditional_moment_cones_v1.py",
+      "restore_relative_path": "compute/conditional_moment_cones_v1.py",
+      "executed_or_declared_source_sha256": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995"
+    },
+    {
+      "file": "direct_conditional_moment_sdp_v1.py",
+      "restore_relative_path": "compute/direct_conditional_moment_sdp_v1.py",
+      "executed_or_declared_source_sha256": "1031c177074da3762a4fb7a4cb5141081b732956425d8f1656f8d275e32c0617"
+    },
+    {
+      "file": "supported_conic_maps_v1.py",
+      "restore_relative_path": "compute/supported_conic_maps_v1.py",
+      "executed_or_declared_source_sha256": "4b84dc4a6c676e0d575865f0f5a7c8badea74b2822233a8c8d05f80b8af7e074"
+    },
+    {
+      "file": "mixed_joint_moments_v1.py",
+      "restore_relative_path": "compute/mixed_joint_moments_v1.py",
+      "executed_or_declared_source_sha256": "5f5f8d2a9d948744cf992b7694117a023ffb650d00332414dc95ca91bdd3fdcb"
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "global-completion-contract-CPU-plan-v1.json",
+      "restore_relative_path": "compute/global-completion-contract-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "b79bab810712e1eb2e90ff99270844e104667c547fb9cbade1cca282705fa177"
+    },
+    {
+      "file": "global-completion-model-CPU-plan-v1.json",
+      "restore_relative_path": "compute/global-completion-model-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "e88824cfecae75b969ff9c5d9ebc0b4450fa97cc85e2965786bb7edff09b2669"
+    },
+    {
+      "file": "global-completion-binding-CPU-plan-v1.json",
+      "restore_relative_path": "compute/global-completion-binding-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "0f3e3f644862ddee91835611de06bf7e84e3c96573fd0c9fbeb57771dcf32246"
+    },
+    {
+      "file": "global-completion-evaluation-CPU-plan-v1.json",
+      "restore_relative_path": "compute/global-completion-evaluation-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "2361aecf572e768b10cdee83b51b055425185280b8812573cd6418a2576ec325"
+    },
+    {
+      "file": "global-completion-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/global-completion-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "1ea55f55d4389780b5c6c78a71bbea9f1386378e48069ec1ca77b9a1719bcc84"
+    }
+  ],
+  "repository_dependency_snapshots": [],
+  "repository_runtime_NOT_imported": true
+}

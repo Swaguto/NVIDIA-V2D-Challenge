@@ -1,0 +1,15 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_global_completion_binding_v1.py",
+  "worker_sha256": "5c7d794bd4dbf5c5616575a5696457e4d56e72417b62c8ce2645c81e75d8409d",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-completion-binding-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-completion-model-v1/completion-model-binding.json": "c62b31a000fcedbbec9cdf197787fa14ca823e4ad27499a9a04b954bb74edbcf",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-completion-model-v1/completion-canonical-A.npz": "efdbc228bc30b7ae67528f9a5aa24dc42ef5f43ac72d08f70d47f1020c89282b",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-completion-model-v1/completion-canonical-b.npy": "c5b6366756a1cb95cb85130d25c883d49d3b0e1635c6704fba43517c7f97d85c"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "NEW independent39frozeninterval/26freeentry/unit-support/66Grammap/canonical11packing binding; no old source/copy/solver/audit replay",
+  "no_GPU": true
+}
