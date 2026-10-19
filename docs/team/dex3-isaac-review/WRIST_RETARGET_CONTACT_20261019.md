@@ -258,3 +258,73 @@ root/finger motion limits, fresh full 1 mm native, swept and grasp checks before
 GPU/PPO. No new policy, physical task or source hand is qualified. Brev remains
 stopped. New code-only producers and plans are under
 `experiments/scored_baseline_20261019/contact_load_sites/`.
+
+## Source skin and actuator-constrained pose seed
+
+The reusable load diagnostic now has a separate actuator-aware entry point.
+At a concrete pose it combines contact Jacobians, free joint effort and supplied
+joint effort bounds while solving for force redistribution. It preserves the
+original outer-only entry point and measured-budget capacity API. **51 focused
+tests pass**, including virtual work, gravity consuming effort, native versus
+asset ratings, spin/rolling Jacobians and redistribution across contacts.
+
+The saved compiled model confirms every finger's runtime joint clamp is
+approximately **±0.76 Nm**, with actuator gravity compensation inside the clamp.
+The pinned upstream G1/Dex3 controller uses the same 0.76 Nm configuration.
+Larger URDF asset ratings are not used to increase the limits. Gravity
+compensation consumes this joint budget; it is not free passive support.
+[MuJoCo documents this clamp convention](https://mujoco.readthedocs.io/en/3.4.0/XMLreference.html#body-joint-actuatorgravcomp).
+
+A new source-conditioned site generator starts at finger-associated distal
+**skin triangles**, without projecting a distant joint onto the object. It
+requires at most 8 mm inferred skin separation, opposing skin/object normals,
+and at most 1 mm inferred skin-model penetration. These are exploratory proposal
+criteria, not measured uncertainty or a source qualification. Four nearest
+distinct sites per finger are retained before load screening. Raw RGB has no
+nearby sites. The two fitted cases yield 24 and 44 opposed triples; **all 68
+fail gravity balance in the outer model**. This finite pruning does not prove
+anything about the complete skin patch or globally possible grasps.
+
+The generator retains NumPy matrix-multiplication warnings. A separate explicit
+tensor calculation verifies its finite object vertex set within `5.73e-17` m
+and selected source centroids within `1.12e-16` m. The warning cause remains
+unproven; no failed controls are discarded.
+
+The previously recorded load-balanced potential sites remain a positive control
+for site selection. A new centroid/facing/penetration check finds only the
+unqualified multiview case satisfies all three exploratory skin associations.
+Raw separation and the failed-skin index normal reject the other cases. This
+does not select the multiview pose as source truth or erase its held-out failure.
+The old load solve, site family and visibility audit are not rerun.
+
+One new coupled solve tests that eligible potential-site control. Variables
+include the wrist within the unchanged 8 mm/0.08 rad component boxes, seven
+actual URDF finger ranges, barycentric points on fixed native distal triangles,
+and forces for both saved loads. Contact coincidence, facing, friction,
+equilibrium and native joint effort bounds enter together. Hand gravity and
+recorded native stiction are explicit. No invented normal-force budgets or
+larger asset effort ratings enter. Only the optimizer's returned candidate is
+recorded, not its best finite intermediate.
+
+**The solve is rejected.** SLSQP reports a positive directional derivative after
+34 iterations. Returned hand-site distances are **2.85 / 9.82 / 13.05 mm** for
+thumb/index/middle; contact/force/effort constraints fail. Its conditional
+potential-site effort estimate reaches **5.64 Nm**, but the assumed contacts
+are not realized, so this is not a measured torque or a global motor
+infeasibility proof. A separate native position/velocity check finds **zero
+hand/object contacts** and no penetration at this knot. The actual-contact load
+checks fail for both required loads. No physics step runs.
+
+Analytic free-gravity effort and point Jacobians agree with this new native pose
+within `1.84e-9` Nm and `2.83e-9` m/rad. This validates the calculation and joint
+binding; it does not qualify a grasp. Source flags, the original 31/32 held-out
+failure, motion limits and the full 1 mm gate remain unchanged. No whole
+trajectory, physical task or new policy is qualified.
+
+Next diagnose the grip-region geometry and discrete robot contact-patch
+assignment using the saved failure, rather than resweeping this fixed-triangle
+solve or increasing bounds/caps. Any new proposal requires source support,
+original motion limits, fresh full native/swept checks and actual motor/grasp
+validation before GPU/PPO. Brev remains stopped. Exact code-only producers and
+declared plans are under
+`experiments/scored_baseline_20261019/actuated_skin_seed/`.

@@ -58,6 +58,35 @@ assert result["feasible_in_outer_model"] is False
 Use the separate `wrench_capacity.capacity` API when measured normal-force
 budgets are available. Do not substitute solved forces for measured budgets.
 
+## Joint effort at a concrete pose
+
+`contact_effort_map(contact, linear_jacobian_m_per_rad, angular_jacobian)`
+maps contact components **on the object** to counteracting revolute actuator
+effort on the hand. Jacobians have shape `[3, joints]` in world axes at the
+actual contact point, with a declared joint order. Virtual work gives the
+positive map `J.T @ object_wrench`: the hand receives the opposite contact
+wrench. Spin and rolling use the angular Jacobian.
+
+`outer_actuated_contact_load_feasibility` adds these maps, free effort and
+joint effort bounds to the same optimistic friction model. It solves for force
+redistribution under the bounds; it does not reject a contact set merely because
+one previously chosen force allocation exceeds a cap. The caller must verify
+the maps, pose, contact/body ownership, joint order and actual native limits.
+The API marks this verification as an external requirement.
+
+Free effort must include gravity/dynamics that consume the actuator budget.
+In particular, `actuatorgravcomp` moves gravity compensation into the joint's
+actuator clamp. Do not subtract it as free passive support. See the
+[MuJoCo joint reference](https://mujoco.readthedocs.io/en/3.4.0/XMLreference.html#body-joint-actuatorgravcomp).
+Static stiction assistance may be included only with its explicitly recorded
+native coefficient and interpretation. Joint stops, self-contact assistance,
+motion, compliance and successful force production require separate checks.
+
+An asset's URDF effort rating is not a replacement for a lower runtime clamp.
+The saved native Dex3 model uses approximately ±0.76 Nm at every finger joint,
+including actuator gravity compensation. No caps or default controllers are
+changed by this diagnostic. Its solved efforts remain model predictions.
+
 Before learning from any proposed reference, require source fit, actual URDF
 and motion limits, the full 1 mm native reference-contact gate, swept checks,
 actual motor feasibility and grasp assessment. This diagnostic alone satisfies

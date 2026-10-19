@@ -1,0 +1,21 @@
+{
+  "schema": "v2d.skin-bound-actuated-pose-CPU-plan.v1",
+  "declared_utc": "2026-10-19T06:30:44.017439+00:00",
+  "case": "Only cached multiview potential sites satisfy unchanged exploratory skin-distance, penetration and facing prerequisites; this is not source-pose truth selection",
+  "other_cases_rejected_and_retained": true,
+  "contact_sites_and_initial_solved_forces": "Use exact saved load-balanced positive-control sites/components, no old load solve or 648-triple family rerun",
+  "root_component_translation_m": 0.008,
+  "root_component_rotation_rad": 0.08,
+  "fingers": "actual URDF joint ranges",
+  "pad_geometry": "One fixed native distal triangle per digit, chosen by facing and nearest distance at the seed; barycentric point variables inside each triangle",
+  "solver": "Single SLSQP surface/force/effort solve, not a wrist-prior sweep",
+  "iteration_cap": 100,
+  "wall_cap_seconds": 90,
+  "only_optimizer_returned_candidate_not_intermediate": true,
+  "source_and_contact_flags_not_upgraded": true,
+  "effort": "Native actuatorfrcrange plus explicitly recorded static dof frictionloss; analytic hand gravity included inside joint actuator clamp; free wrist/other passive assistance not certified",
+  "new_candidate_checks": "Native position/velocity only; analytic gravity and contact-point Jacobians checked against native; actual native contact load LP includes native effort ranges",
+  "required_fresh_full_native_reference_contact_gate_m": 0.001,
+  "full_source_motion_swept_actual_motor_grasp_before_PPO": true,
+  "GPU": false
+}

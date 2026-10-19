@@ -96,6 +96,78 @@ def outer_contact_load_feasibility(
     or a feasibility threshold. Numerical/solver failures raise RuntimeError;
     they must not be interpreted as feasible or as proven infeasible.
     """
+    return _solve_outer_load(
+        contacts, com_world_m, required_wrench_world, moment_length_m=moment_length_m,
+    )
+
+
+def contact_effort_map(contact, linear_jacobian_m_per_rad, angular_jacobian):
+    """Map forces ON the object to counteracting revolute actuator effort.
+
+    Both Jacobians must describe the same actual hand contact point and pose,
+    in world axes, with columns in one declared revolute-joint order. The hand
+    receives the opposite wrench, so its holding actuator effort is +J^T times
+    the object wrench. This does not verify contact activation or pose binding.
+    """
+    if not isinstance(contact, ContactGeometry):
+        raise ValueError("Need validated contact geometry")
+    linear = np.asarray(linear_jacobian_m_per_rad)
+    if linear.ndim != 2 or linear.shape[0] != 3 or not linear.shape[1]:
+        raise ValueError("Need linear Jacobian[3, revolute joints]")
+    linear = _array(linear, linear.shape, "linear Jacobian")
+    angular = _array(angular_jacobian, linear.shape, "angular Jacobian")
+    basis, dim = contact.frame_into_object_world, contact.dimension
+    result = np.zeros((linear.shape[1], dim))
+    nf = min(dim, 3)
+    result[:, :nf] = linear.T @ basis[:nf].T
+    if dim >= 4:
+        result[:, 3] = angular.T @ basis[0]
+    if dim == 6:
+        result[:, 4:6] = angular.T @ basis[1:].T
+    return result
+
+
+def outer_actuated_contact_load_feasibility(
+    contacts, com_world_m, required_wrench_world, *, effort_maps,
+    free_effort_Nm, effort_bounds_Nm, moment_length_m=0.1,
+):
+    """Outer load check with pose-bound, caller-verified joint effort limits.
+
+    At the supplied concrete pose, required effort is free_effort + sum(map @
+    contact_components). Free effort includes gravity/dynamics not canceled by
+    passive forces. Gravity compensation that is inside an actuator clamp must
+    still consume effort. Bounds may explicitly include known passive stiction;
+    that interpretation and native cap provenance are the caller's responsibility.
+
+    This tests only the stated actuation model. It certifies neither actual
+    contacts, exact friction, joint-stop/self-contact assistance, motion nor task
+    success. These are solved forces, not measured normal-force budgets.
+    """
+    contacts = tuple(contacts)
+    if not all(isinstance(c, ContactGeometry) for c in contacts):
+        raise ValueError("contacts must contain validated ContactGeometry records")
+    free = np.asarray(free_effort_Nm)
+    if free.ndim != 1 or not len(free):
+        raise ValueError("Need free effort for a nonempty revolute-joint order")
+    free = _array(free, free.shape, "free effort")
+    limits = _array(effort_bounds_Nm, (len(free), 2), "effort bounds")
+    if (limits[:, 0] > limits[:, 1]).any():
+        raise ValueError("Effort lower bounds must not exceed upper bounds")
+    maps = tuple(effort_maps)
+    if len(maps) != len(contacts):
+        raise ValueError("Need one effort map per contact")
+    maps = [_array(m, (len(free), c.dimension), "contact effort map")
+            for m, c in zip(maps, contacts, strict=True)]
+    matrix = np.concatenate(maps, axis=1) if maps else np.zeros((len(free), 0))
+    return _solve_outer_load(
+        contacts, com_world_m, required_wrench_world,
+        moment_length_m=moment_length_m, actuation=(matrix, free, limits),
+    )
+
+
+def _solve_outer_load(
+    contacts, com_world_m, required_wrench_world, *, moment_length_m, actuation=None,
+):
     com = _array(com_world_m, (3,), "COM")
     load = _array(required_wrench_world, (6,), "required wrench")
     if (
@@ -115,17 +187,25 @@ def outer_contact_load_feasibility(
         contact_geometry_assumed_active=True,
         force_origin="solved_not_measured",
         normal_force_limits_applied=False,
-        motor_limits_applied=False,
+        motor_limits_applied=actuation is not None,
         certifies_force_closure_or_dynamic_or_task_success=False,
     )
+    if actuation is not None:
+        effort_matrix, free, limits = actuation
+        result['effort_map_pose_binding_and_native_caps_require_external_verification'] = True
     if not contacts:
-        feasible = bool(np.all(load == 0))
-        return dict(
+        effort_ok = actuation is None or bool(np.all((free >= limits[:, 0]) & (free <= limits[:, 1])))
+        feasible = bool(np.all(load == 0)) and effort_ok
+        empty = dict(
             result, feasible_in_outer_model=feasible,
-            status="zero_load_without_contacts" if feasible else "no_contacts_for_load",
+            status=("zero_load_without_contacts" if feasible else
+                    "no_contacts_for_load" if effort_ok else "free_effort_outside_bounds"),
             solved_contact_components=[] if feasible else None,
             minimum_total_normal_force_N=0.0 if feasible else None,
         )
+        if actuation is not None:
+            empty['solved_required_joint_effort_Nm'] = free.tolist() if feasible else None
+        return empty
 
     count = sum(c.dimension for c in contacts)
     wrench = np.zeros((6, count))
@@ -156,11 +236,17 @@ def outer_contact_load_feasibility(
     objective = np.zeros(count)
     objective[normal_indices] = 1
     scale = np.r_[np.ones(3), np.full(3, 1 / moment_length_m)]
+    right_hand_side = [0.0] * len(inequalities)
+    if actuation is not None:
+        inequalities.extend(effort_matrix)
+        inequalities.extend(-effort_matrix)
+        right_hand_side.extend(limits[:, 1] - free)
+        right_hand_side.extend(free - limits[:, 0])
     inequality = np.array(inequalities) if inequalities else None
     solved = linprog(
         objective,
         A_ub=inequality,
-        b_ub=np.zeros(len(inequalities)) if inequalities else None,
+        b_ub=np.asarray(right_hand_side) if inequalities else None,
         A_eq=wrench * scale[:, None], b_eq=load * scale,
         bounds=bounds, method="highs",
     )
@@ -188,6 +274,11 @@ def outer_contact_load_feasibility(
         offset += contact.dimension
     if invalid:
         raise RuntimeError("Contact load solve failed independent equilibrium/friction checks")
+    if actuation is not None:
+        effort = free + effort_matrix @ x
+        if not np.isfinite(effort).all() or np.any(effort < limits[:, 0] - 1e-7) or np.any(effort > limits[:, 1] + 1e-7):
+            raise RuntimeError("Contact load solve failed independent joint effort checks")
+        result['solved_required_joint_effort_Nm'] = effort.tolist()
     return dict(
         result, feasible_in_outer_model=True, status="optimal",
         solved_contact_components=components,
