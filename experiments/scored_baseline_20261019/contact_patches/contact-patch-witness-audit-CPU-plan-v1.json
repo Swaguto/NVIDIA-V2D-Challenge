@@ -1,0 +1,15 @@
+{
+  "schema":"v2d.frozen-contact-patch-witness-forensic-plan.v1",
+  "episode":"e037",
+  "frame":50,
+  "new_question":"Why do saved close thumb witnesses not generate actual native object contacts?",
+  "scope":"Reuse exact immutable setup/witness functions only; compare saved commands, nearest patch triangle parent, native signed distances, convex halfspaces, collision masks and witness staleness.",
+  "optimizer_or_prior_fits_rerun":false,
+  "candidate_mutation":false,
+  "all_prior_input_hashes_required":true,
+  "wall_cap_seconds":240,
+  "resident_cap_bytes":2147483648,
+  "minimum_free_disk_bytes":1610612736,
+  "source_uncertainty_and_heldout_failures_preserved":true,
+  "GPU_or_physics_work":false
+}

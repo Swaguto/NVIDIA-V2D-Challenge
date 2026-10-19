@@ -355,3 +355,73 @@ test native contact manifolds and the required wrench rather than only isolated
 surface proximity. Preserve the rejected three-point/fixed-triangle and MCP
 controls. Do not resweep them or adopt the failed MCP center. No source
 confidence, contact labels or qualification gates change.
+# Object-local contact patches and compiled-support correction
+
+The next CPU investigation separates inferred human anatomical anchors from
+robot contact-region hypotheses. New reusable `contact_patches` contracts bind
+object-local external triangles to the exact object/model hash and support
+two-digit as well as three-digit modes. Twenty-five focused contract tests pass.
+A new analytic two-box control also verifies signed native distance and its
+point-Jacobian gradient in separation and penetration. No prior native job was
+recompiled or physical replay repeated.
+
+The first regional bank clips external convex faces to a frozen, inferred grip
+region formed from both retained fitted source hypotheses. This union is not a
+measured uncertainty interval or an observed contact label. Potential eight-point
+opposed patch sets need about 14.26 N total normal force for the worse of the two
+saved modeled loads, versus hundreds for the old source-closest isolated sites.
+This potential-contact comparison does not apply motor limits or establish that
+the robot realizes those contacts. The raw distant source case stays rejected.
+
+Three bounded dynamic whole-finger trials allow proximal or distal surfaces to
+change during the solve. All three fail actual contact/load prerequisites.
+The two-digit thumb/index trial improves the retained inferred image errors but
+has only one unmatched native index contact; the other modes also regress an
+image observation. Native contacts, including unmatched contacts, are retained
+in their load checks. Single-knot penetrations stay below 1 mm, which is not a
+full-trajectory certificate. These are failed controls, not stationary solutions
+or evidence of global unreachability.
+
+## A concrete representation error
+
+A separate frozen-pose audit finds that near-zero raw-hull thumb witnesses are
+still 2.18–4.80 mm from the actual native object geometry. Broadphase masks allow
+the pairs; stale witness updates and collision filtering do not explain this
+gap. The new contact search had rebuilt hulls from every raw `mesh_vert`, while
+the pinned native support function follows a compiled graph with fewer vertices.
+For example, the distal thumb has 381 raw vertices but 64 native support vertices.
+Its old witnesses lie 2.34–2.60 mm outside the compiled thumb hull. The object
+witnesses also lie about 0.34 mm outside their compiled object hull.
+
+New `native_mesh.compiled_mesh_vertices` follows the pinned MuJoCo 3.8.1
+vertex-global-ID table and fails closed on unknown layouts or invalid spans.
+Eighteen new focused tests include a discarded protrusion that must not become a
+collision surface. Independent support-plane checks at all seven saved witness
+pairs match native signed distances within **9.4e-16 m**. This isolates a bug in
+the new geometric contact proposal, not the authoritative native collision
+audits. The original failures and native model remain unchanged. The first audit
+producer passed its tests/numerical assertions but failed JSON serialization of
+a NumPy boolean; its failed log is retained. Version 2 fixes serialization only,
+reuses the 18 passing tests and writes the verified result.
+
+## Corrected bounded control still rejected
+
+A separately frozen bank now uses compiled support vertices for both object
+patches and robot surfaces, with unchanged source region and model parameters.
+Its potential patch-pair loads are 16.54 N (X), 13.16 N (Y) and 49.70 N (Z).
+These are still solved forces on assumed geometry, not motor or grasp success.
+Only one predeclared thumb/index control is executed with this correction.
+
+That trial stops after five iterations without an acceptable bounded step.
+Surface target errors are **1.19 mm / 3.92 mm**. It has one actual index contact
+outside the assigned patch and **no thumb contact**; both gravity and inferred
+motion load checks remain infeasible. Single-knot penetration is 0.272 mm.
+Inferred image errors improve from 71.19/86.83 to 39.36/78.39 pixels (landmark
+IDs 4 and 12; neither is direct metric truth). No complete source hand, trajectory,
+grasp or policy is qualified, and no training or GPU work runs.
+
+Next, contact-region choice must account for actual compiled-hand reachability
+and a common bounded root before choosing the lowest potential-force patch
+pair. The finite failed controls do not prove that all patch modes are
+unreachable. Preserve every old bound, failure and source flag; do not resweep
+these raw/corrected local controls or promote proximity to contact truth.

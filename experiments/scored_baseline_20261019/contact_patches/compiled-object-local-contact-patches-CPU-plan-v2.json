@@ -1,0 +1,31 @@
+{
+  "schema": "v2d.compiled-object-local-patch-plan.v2",
+  "declared_utc": "2026-10-19T06:58:21.862687+00:00",
+  "episode": 37,
+  "frame": 50,
+  "source_region": "Object-local AABB of all cached multiview/failed-skin projected site pools, padded8mm per component; inferred union of possible grip region, not per-finger observed contacts or a measured uncertainty interval; raw distant source excluded by retained source evidence",
+  "source_region_padding_component_m": 0.008,
+  "patch_rule": "Clip unchanged native convex object faces to source region; subtract interiors of other native hulls; group exterior surface by dominant signed native object axis",
+  "potential_samples_per_patch": 4,
+  "pair_rule": "Opposite signed axis patches; use potential dim3 samples with exact saved friction and both saved wrenches; no actual contact or motor claim",
+  "mode_ids": [
+    "thumb_index",
+    "thumb_middle",
+    "three_digit"
+  ],
+  "assignment": "Within each mode choose feasible pair by lowest worst-load potential total normal force, then current actual URDF tip-to-patch geometry; no source-pose winner",
+  "root_anchor": "unchanged wristv3 frame50; not source-pose or MCP failed centers",
+  "root_translation_component_bound_m": 0.008,
+  "root_rotation_component_bound_rad": 0.08,
+  "next_geometry_method": "One bounded dynamic surface-correspondence solve per declared contact mode; no fixed robot triangle and no forced missing middle contact. Native actual contacts, required wrench, .76Nm cap, source and1mm checks decide rejection.",
+  "target_signed_contact_gap_m": -0.00025,
+  "required_full_native_reference_contact_gate_m": 0.001,
+  "original_motion_source_swept_motor_grasp_gates_unchanged": true,
+  "source_flags_and_original_heldout_failures_unchanged": true,
+  "new_GPU_work": false,
+  "new_geometry_contract": "Use compiled native graph support vertices, not hull of all raw vertices. Native model and all gates unchanged.",
+  "parent_producer_sha256": "f81e74ae49546743eeee658fb02b76e9a3b9e699501165a80832b8151a1f0dee",
+  "retained_failed_raw_patch_control": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-local-contact-patches-v1/report.json",
+  "closure_proof": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-compiled-collision-vertex-verification-v2/report.json",
+  "no_new_source_pose_or_uncertainty": true
+}

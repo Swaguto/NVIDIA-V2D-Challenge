@@ -1,0 +1,42 @@
+{
+  "schema": "v2d.compiled-thumb-index-mode-plan.v2",
+  "declared_utc": "2026-10-19T07:03:59.823768+00:00",
+  "episode": 37,
+  "frame": 50,
+  "mode_ids": [
+    "thumb_index",
+    "thumb_middle",
+    "three_digit"
+  ],
+  "method": "One dynamic full-finger surface-correspondence bounded least-squares iteration per mode; alternate closest object-patch/full native finger surfaces with opposing normals; all finger links may contact, no frozen robot triangle or mandatory missing middle target",
+  "root_center": "unchanged original wristv3",
+  "root_translation_component_m": 0.008,
+  "root_rotation_component_rad": 0.08,
+  "iteration_cap": 30,
+  "mode_wall_cap_seconds": 60,
+  "numerical_step_cap": "2mm translation, .02rad root rotation, .15rad active finger per iteration; not a physical velocity certificate",
+  "inactive_fingers_fixed_to_original": true,
+  "target_signed_gap_m": -0.00025,
+  "surface_target_error_m": 0.00025,
+  "line_search_scales": [
+    1,
+    0.5,
+    0.25,
+    0.125
+  ],
+  "accepted_iterates_single_knot_penetration_cap_m": 0.001,
+  "actual_native_contacts": "Retain every actual object contact, report unmatched contacts and mode mismatch; use all in effort LP; potential samples never injected",
+  "motors": "Actual .76Nm native finger actuator ranges including hand gravity plus recorded static stiction; independently check chosen allocation root60N/60Nm envelope; no dynamic success certificate",
+  "source": "Unchanged visible inferred tip-image nonregression; missing middle and source flags not upgraded; original31/32 failure retained",
+  "required_fresh_full_native_reference_contact_gate_m": 0.001,
+  "required_original_motion_source_native_swept_motor_grasp_before_PPO": true,
+  "stop_at_final_accepted_geometry_iterate_not_best_hidden_candidate": true,
+  "GPU": false,
+  "new_correction": "Both object patch and robot surface must use actual compiled native support hull vertices. Reader closure proven independently at seven frozen native pairs.",
+  "mode": "thumb_index",
+  "other_modes_not_run": true,
+  "root_or_joint_bounds_unchanged": true,
+  "parent_producer_sha256": "be91ec552c94f161739ee023a6ba5c4893185e85b0fdb122266cafc4863ff04c",
+  "require_all_recorded_bank_input_hashes": true,
+  "raw_failed_controls_retained": true
+}

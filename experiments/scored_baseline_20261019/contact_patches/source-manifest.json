@@ -1,0 +1,121 @@
+{
+  "schema": "v2d.exact-code-only-source-archive.v1",
+  "files": [
+    {
+      "file": "verify_contact_patch_contract_v1.py",
+      "restore_relative_path": "compute/verify_contact_patch_contract_v1.py",
+      "executed_or_declared_source_sha256": "65547ea41d5ea2b0f92c34403d9e08d5872662f9f2aa66b1d88f679dafd28392"
+    },
+    {
+      "file": "guard_contact_patch_contract_v1.py",
+      "restore_relative_path": "compute/guard_contact_patch_contract_v1.py",
+      "executed_or_declared_source_sha256": "e1560a01fc6eec62608d5990d06bdd703bcfc674b888bc07660830bebe7be6d1"
+    },
+    {
+      "file": "build_object_local_contact_patches_v1.py",
+      "restore_relative_path": "compute/build_object_local_contact_patches_v1.py",
+      "executed_or_declared_source_sha256": "f81e74ae49546743eeee658fb02b76e9a3b9e699501165a80832b8151a1f0dee"
+    },
+    {
+      "file": "guard_object_local_contact_patches_v1.py",
+      "restore_relative_path": "compute/guard_object_local_contact_patches_v1.py",
+      "executed_or_declared_source_sha256": "4187070eb53648fc11c73885e6622fdafe1b284876cd18ee8dd18ffbdd45305e"
+    },
+    {
+      "file": "object-local-contact-patches-CPU-plan-v1.json",
+      "restore_relative_path": "compute/object-local-contact-patches-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "36fed3364843f4bd69c745a4f266fe54d57a3a76934d5686b7d92eadfe35f578"
+    },
+    {
+      "file": "solve_native_contact_patch_modes_v1.py",
+      "restore_relative_path": "compute/solve_native_contact_patch_modes_v1.py",
+      "executed_or_declared_source_sha256": "be91ec552c94f161739ee023a6ba5c4893185e85b0fdb122266cafc4863ff04c"
+    },
+    {
+      "file": "guard_native_contact_patch_modes_v1.py",
+      "restore_relative_path": "compute/guard_native_contact_patch_modes_v1.py",
+      "executed_or_declared_source_sha256": "417efb812cfe5816f1a7d9f85dd4266cc43525220be24b8fc6c34e786af75c62"
+    },
+    {
+      "file": "native-contact-patch-modes-CPU-plan-v1.json",
+      "restore_relative_path": "compute/native-contact-patch-modes-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "9270bd17028fb46063a167eb2ae95be995b8193e693f9e0b5f5d9d2b5b232c35"
+    },
+    {
+      "file": "audit_contact_patch_witnesses_v1.py",
+      "restore_relative_path": "compute/audit_contact_patch_witnesses_v1.py",
+      "executed_or_declared_source_sha256": "c5264f2cef33bfbe941f53a192f6f4c69860538823a854e6bdf5d7ff8407ba45"
+    },
+    {
+      "file": "guard_contact_patch_witnesses_v1.py",
+      "restore_relative_path": "compute/guard_contact_patch_witnesses_v1.py",
+      "executed_or_declared_source_sha256": "7afe82ef1024b90dce1cbf66507c79cee869b7e1df6ece4fa6dac5e27acf79dd"
+    },
+    {
+      "file": "contact-patch-witness-audit-CPU-plan-v1.json",
+      "restore_relative_path": "compute/contact-patch-witness-audit-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "b5f640d894ac548aefbc9f209997e8ddc12110d8dc08a859e7f53ef9ada0c5aa"
+    },
+    {
+      "file": "verify_compiled_collision_vertices_v1.py",
+      "restore_relative_path": "compute/verify_compiled_collision_vertices_v1.py",
+      "executed_or_declared_source_sha256": "4792d7134a5785a5bdd59463a7d20da9019aad703702ff6c338a90a3326062bb"
+    },
+    {
+      "file": "guard_compiled_collision_vertices_v1.py",
+      "restore_relative_path": "compute/guard_compiled_collision_vertices_v1.py",
+      "executed_or_declared_source_sha256": "e6857c38f4cae856f478e79a25adb1ea79151431a69f734353c3a363db37d5df"
+    },
+    {
+      "file": "compiled-collision-vertex-CPU-plan-v1.json",
+      "restore_relative_path": "compute/compiled-collision-vertex-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "bda722c52489102b2f3c1d3d76b5fdd1a1678162c88b72132a0c1c5af79d413b"
+    },
+    {
+      "file": "verify_compiled_collision_vertices_v2.py",
+      "restore_relative_path": "compute/verify_compiled_collision_vertices_v2.py",
+      "executed_or_declared_source_sha256": "28321cf5a94aaee36c5a97f193e46b068db83059e5544c4697144508b82e6d4d"
+    },
+    {
+      "file": "guard_compiled_collision_vertices_v2.py",
+      "restore_relative_path": "compute/guard_compiled_collision_vertices_v2.py",
+      "executed_or_declared_source_sha256": "8a96ec362233939218ec3943855b27643e876a3d33588e0077e75bcd56aff082"
+    },
+    {
+      "file": "compiled-collision-vertex-CPU-plan-v2.json",
+      "restore_relative_path": "compute/compiled-collision-vertex-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "cebc464ef9861862f30a2c243f0c5c7ffa4b84f7c1c543aba47f41f873d0bccf"
+    },
+    {
+      "file": "build_compiled_object_local_contact_patches_v2.py",
+      "restore_relative_path": "compute/build_compiled_object_local_contact_patches_v2.py",
+      "executed_or_declared_source_sha256": "bf44aab0073d3f42a5c152eabfa56ee6a1bab7a7a8d88e9fb9655eab7aabb004"
+    },
+    {
+      "file": "guard_compiled_object_local_contact_patches_v2.py",
+      "restore_relative_path": "compute/guard_compiled_object_local_contact_patches_v2.py",
+      "executed_or_declared_source_sha256": "74c7104e67a9b9e16770d34d14a94cd9c2241d76fc0bda7dfbf2a7f4cdd3930a"
+    },
+    {
+      "file": "compiled-object-local-contact-patches-CPU-plan-v2.json",
+      "restore_relative_path": "compute/compiled-object-local-contact-patches-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "4a90e6c1d4a4834ee8a9431d8f4a02779bc25f19b64bc1c5670dbed88506712d"
+    },
+    {
+      "file": "solve_compiled_thumb_index_mode_v2.py",
+      "restore_relative_path": "compute/solve_compiled_thumb_index_mode_v2.py",
+      "executed_or_declared_source_sha256": "b677a930ad770bbb89aba74c5a0010d683a9e3f0e476278f0aa7f39b803a082f"
+    },
+    {
+      "file": "guard_compiled_thumb_index_mode_v2.py",
+      "restore_relative_path": "compute/guard_compiled_thumb_index_mode_v2.py",
+      "executed_or_declared_source_sha256": "797fd815e66e2be80c49b69b4256a462a0436cee1a1339e51b7b837b6d2f998b"
+    },
+    {
+      "file": "compiled-thumb-index-mode-CPU-plan-v2.json",
+      "restore_relative_path": "compute/compiled-thumb-index-mode-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "3ee52cacb974745dfc7f9f6f629d9f531a562f71c36a5a31c331b7cb75c6deec"
+    }
+  ],
+  "no_private_arrays_or_reports_included": true
+}

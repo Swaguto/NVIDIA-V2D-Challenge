@@ -1,0 +1,19 @@
+{
+  "schema": "v2d.compiled-native-collision-vertex-verification-plan.v2",
+  "new_question": "Does rebuilding all raw mesh vertices invent surfaces excluded by the compiled native support graph?",
+  "episode": "e037",
+  "frame": 50,
+  "scope": "Test pinned3.8.1 graph vertex-global-id reader; compare native signed gap against independent compiled-vertex support planes at seven frozen witness pairs. No solve or candidate mutation.",
+  "primary_sources": [
+    "https://github.com/google-deepmind/mujoco/blob/3.8.1/src/engine/engine_collision_convex.c",
+    "https://github.com/google-deepmind/mujoco/blob/3.8.1/src/user/user_mesh.cc"
+  ],
+  "all_prior_input_hashes_required": true,
+  "maximum_support_gap_closure_error_m": 5e-06,
+  "wall_cap_seconds": 240,
+  "resident_cap_bytes": 2147483648,
+  "minimum_free_disk_bytes": 1610612736,
+  "source_flags_and_retained_failures_unchanged": true,
+  "GPU_or_physics_work": false,
+  "repair": "Convert NumPy boolean to JSON bool; v1 passed tests/all numerical assertions but failed writing JSON. Preserve v1 log. No gate or code-library changes; reuse 18 passing test result."
+}
