@@ -1,0 +1,82 @@
+{
+  "schema": "v2d.thumb-conic-code-archive.v1",
+  "files": [
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+    },
+    {
+      "file": "derive_thumb_conic_clearance_v1.py",
+      "restore_relative_path": "compute/derive_thumb_conic_clearance_v1.py",
+      "executed_or_declared_source_sha256": "e1165c2ef76d6bed9b8b24e0e1e602977eca8df2f7a7a2164ee7a69e69d39523"
+    },
+    {
+      "file": "construct_thumb_conic_arcs_v1.py",
+      "restore_relative_path": "compute/construct_thumb_conic_arcs_v1.py",
+      "executed_or_declared_source_sha256": "772954337a10fabfb7554994689830b1951119ef0454674fcf336c5ab137bbd6"
+    },
+    {
+      "file": "verify_thumb_conic_witnesses_v1.py",
+      "restore_relative_path": "compute/verify_thumb_conic_witnesses_v1.py",
+      "executed_or_declared_source_sha256": "0dbc67878085d2b35d55c1433f4ca364919d50d34cd7e9facb2105ccf78ecc80"
+    },
+    {
+      "file": "derive_conic_temporal_middle_boxes_v1.py",
+      "restore_relative_path": "compute/derive_conic_temporal_middle_boxes_v1.py",
+      "executed_or_declared_source_sha256": "c6022db4c14d76b19fe06e5d5a3acf31385b02213a367a69e073d7faf2ca1902"
+    },
+    {
+      "file": "source_orientation_context_v1.py",
+      "restore_relative_path": "compute/source_orientation_context_v1.py",
+      "executed_or_declared_source_sha256": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "thumb-conic-clearance-CPU-plan-v1.json",
+      "restore_relative_path": "compute/thumb-conic-clearance-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "0f60a0275647a62ba66455f61d27f40eaea4f45517c98843e69be2b52384d524"
+    },
+    {
+      "file": "thumb-conic-arcs-CPU-plan-v1.json",
+      "restore_relative_path": "compute/thumb-conic-arcs-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "2c2c44718ac2f25e8cf4c84b69dd3ef5cd78322863c0aeb1b11f536e3c6f3590"
+    },
+    {
+      "file": "thumb-conic-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/thumb-conic-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "5734a6acfb819b574cc7a490c590ae1ef6c8fb2329110ebe89643b8c666f28fc"
+    },
+    {
+      "file": "conic-temporal-middle-boxes-CPU-plan-v1.json",
+      "restore_relative_path": "compute/conic-temporal-middle-boxes-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "f2bb58e72f103d059eeaa575aa0f68e86de85afd82a016e21d152fece2eabd02"
+    }
+  ],
+  "repository_dependency_snapshots": [
+    {
+      "file": "dependency_native_mesh.py",
+      "repository_source_path": "scripts/dex3_training/v2d_dex3_flashchord/native_mesh.py",
+      "sha256": "8ff66a4dfb1e8337f9e4470ee5859fb1586e24e792893d0e2200eb0591b7a4d5"
+    },
+    {
+      "file": "dependency_kinematics.py",
+      "repository_source_path": "scripts/dex3_training/v2d_dex3_flashchord/kinematics.py",
+      "sha256": "0747c53517a45a64efa5c7ecf8e91fedafcfb5150042c9a99c2718c0d7cb376c"
+    },
+    {
+      "file": "dependency_temporal_pose_path.py",
+      "repository_source_path": "scripts/track3/temporal_pose_path.py",
+      "sha256": "49f3a790488e2ba1d07523456a40e8eebabba3bc1dd39f1b568bad9bb5b041f9"
+    }
+  ],
+  "exact_private_sources": 11,
+  "serial_guarded_CPU_jobs": 4,
+  "production_runtime_unchanged": true,
+  "private_episode_geometry_arrays_reports_results_or_weights_uploaded": false,
+  "no_failed_slice_or_old_bank_rerun": true
+}

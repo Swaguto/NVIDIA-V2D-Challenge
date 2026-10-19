@@ -1,0 +1,20 @@
+{
+  "schema": "v2d.conic-temporal-middle-boxes-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_conic_temporal_middle_boxes_v1.py",
+  "worker_sha256": "c6022db4c14d76b19fe06e5d5a3acf31385b02213a367a69e073d7faf2ca1902",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-conic-temporal-middle-boxes-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-source-disk-pose-bank-v2/pose-bank.json": "33d3a3c9c0b63f8f5b7ab335656705cf45662403922e1d03a53167523a2041cb",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-root-twist-interval-study-v1/accepted-finite-witnesses.json": "670f3c2395824c42dca0f45d464030771354911d0baa7b2896e98886f32d061f",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-conic-independent-v1/report.json": "21f9c38b8ebcc556d0221e15cc5ecbf6c121555a280b1b750834c3d6481d7cdb",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-conic-independent-v1/independent-isolated-witnesses.json": "8913f5e4003c6bd6ce825a9756d3f06019996e073b8480b5e8e1b80498743abc"
+  },
+  "CPU_only": true,
+  "new_analytic114_controls_and_saved_neighbor_pair_constraints": true,
+  "no_source_native_bank_graph_or_LP_rerun": true,
+  "all_original_temporal_velocity_bounds_preserved": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

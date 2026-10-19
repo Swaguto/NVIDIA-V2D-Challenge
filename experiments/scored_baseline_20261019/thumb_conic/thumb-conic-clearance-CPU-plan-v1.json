@@ -1,0 +1,23 @@
+{
+  "schema": "v2d.thumb-conic-clearance-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_thumb_conic_clearance_v1.py",
+  "worker_sha256": "e1165c2ef76d6bed9b8b24e0e1e602977eca8df2f7a7a2164ee7a69e69d39523",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-conic-clearance-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-articulation-independent-v1/report.json": "c770c936122034be153a78f2096d9c35d207b16214e53beab2902cf7a79046ce",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-articulation-independent-v1/best-retained-proposals-diagnostic-only.json": "142c5bdbc8322b3e8e393f1bcb6f85f24f7a18646dc6700b48e7af425056b72c",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-articulation-domain-v1/report.json": "f2f0905174e01fab23f8d0ba70103567141316b982cacf77511bfddec06c04c9",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/native_mesh.py": "8ff66a4dfb1e8337f9e4470ee5859fb1586e24e792893d0e2200eb0591b7a4d5"
+  },
+  "CPU_only": true,
+  "new_analytic_source_plane_conic_and_compiled_parent_domain": true,
+  "maximum_clearance_records": 255,
+  "worker_wall_budget": 180,
+  "all_returns_witnesses_and_certificates_immediate_durable_JSON": true,
+  "no_failed_slice_or_old_bank_rerun": true,
+  "no_full_reference_mutation": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "v2d.thumb-conic-independent-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_thumb_conic_witnesses_v1.py",
+  "worker_sha256": "0dbc67878085d2b35d55c1433f4ca364919d50d34cd7e9facb2105ccf78ecc80",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-conic-independent-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-conic-clearance-v1/report.json": "0c6eab987bd5f1742c46fcb61781c4af4cd11570d0bfe5d793fa84c24d07f8fc",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-conic-clearance-v1/compiled-parent-geometry.json": "b6ff75ae59dcc66e0801fe10fa78e1da82a692d5e124847f7789431fe14614f2",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-conic-clearance-v1/all-compiled-parent-clearance-intervals.json": "3c02e30564af118156194e41071b8d4535efc2fadde57497c4de5f3900d4e671",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-conic-arcs-v1/report.json": "55613cbe5c6c2b8cbec018d7374a176ba46c2523d7db33e30f0daa316fbe03b9",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-conic-arcs-v1/accepted-isolated-point-witnesses.json": "3f734be484aca14c5222d11a8fddc72829883d12fb56a39c4395784c4ad8c222"
+  },
+  "CPU_only": true,
+  "new_independent_compiled_certificate_URDF_native_and_temporal_scope": true,
+  "all_returns_and_states_immediately_durable": true,
+  "conditional_motion_only_window": [
+    104,
+    119
+  ],
+  "all_original_bounds_and_source_native_gates_preserved": true,
+  "no_old_auditor_source_fit_bank_or_slice_repeated": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

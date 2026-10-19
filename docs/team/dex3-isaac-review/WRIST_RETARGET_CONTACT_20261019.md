@@ -923,3 +923,53 @@ actual compiled geometry. Distinguish a necessary bound from a constructive
 pose, and do not resweep either the eight-variable bank or failed slice.
 Preserve original boxes, temporal authority and all source/native gates;
 full-clock, swept, motor/grasp and source qualification still precede learning.
+
+## Source-conic preimage and parent-clearance witnesses
+
+A new representation pulls the original image-error disk back to a conic in
+the actual thumb plane. Its numerical ellipse/circle quartics partition the
+negative distal 2R branch by original joint and clearance limits. Constructive
+points use a 0.02 px inward margin without changing the original source gate.
+The conditional root/index/middle command remains a robot hypothesis, not a
+qualified human/source pose or a failed optimizer promoted to truth.
+
+Actual compiled palm/thumb-1 hulls supply shared-ball penetration lower bounds
+and support-plane overlap bounds over the original proximal range. All 47
+interval records and LP returns are saved; leaves comprise seven clear,
+12 over-gate and five unresolved intervals. Seven analytical/durable-output
+controls pass. Independent samples of every certificate fit its stated bounds.
+This numerical geometric scope is distinct from actual active native contacts.
+
+The original and strict conics each have 51 boundary arcs. A frozen analytic
+source queue leads to ten new native position checks, six of which pass.
+Independent URDF/source/native checks confirm all six frame-114 poses, with
+tip closure below 2.56e-9 m. The closest control has 0.9365 mm self-penetration
+and zero external/interhand contacts. Margins remain narrow and absolute
+source errors remain large. No grip or whole reference is qualified.
+
+Seven necessary motion-only LPs can connect that one control in `[104,119)`;
+their paths omit source, native and root feasibility. Sparse insertion fails
+the original added-motion limits at 0.2482 rad adjacent and 0.4961 rad second,
+versus 0.05 rad. Original sparse root-motion statistics pass separately.
+
+A new saved-node temporal compatibility calculation uses six controls, four
+distinct 113 nodes and 125 distinct 115 nodes. All 3,000 conditional pairs
+fail: 1,128 full joint boxes are empty and 1,872 reject the fixed controls.
+Index-0, thumb-0 and thumb-2 are outside the allowed interval for every saved
+pair. Freeing only the middle finger therefore cannot connect these particular
+finite nodes. This does not exclude other source-constrained poses or prove
+global task infeasibility. No earlier bank, graph, source fit or failed slice
+was repeated; all new states and native outcomes were durably saved.
+
+Four guarded jobs and exact code are archived under
+`experiments/scored_baseline_20261019/thumb_conic`. The existing three-component
+freeze, missing/held-out source failures and original model/gates remain
+unchanged. Eight right-self and five object failures remain. No physics/GPU/PPO,
+full trajectory, motor/grasp, task, policy or score success is established.
+
+Next derive the allowed axial-thumb/index branch around 113–115 from the saved
+temporal boxes, then account for the source conic plane's dependence on axial
+thumb/root orientation. Do not fix the isolated controls as measured mandatory
+nodes, promote a motion-only LP path, resweep completed banks/slices or loosen
+source and native gates. A new construction still needs independent original
+source/URDF/native/motion checks and full-clock/swept/motor/grasp qualification.
