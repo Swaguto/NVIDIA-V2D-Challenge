@@ -1658,3 +1658,57 @@ production runtime/test change occurs. F and separate unqualified components
 stay unchanged. A distinct future support-aware conic formulation requires new
 packing/dual contracts and a declared single bounded evaluation, not another
 anchor/cut loop, restart or extension of earlier solver budgets.
+
+## Complete support-aware conic formulation, 2026-10-19
+
+A new formulation appends the complete saved 63 joint and 49 motion/depth
+support maps to the original canonical conic base. The original 14,099 rows
+are reused by hash, not regenerated or solved as a preliminary subproblem.
+The 112 new cones add 1,741 rows: total 15,840 rows, 1,125 original columns and
+1,292 PSD cones. All 549 shared equalities, 5,990 inequalities, explicit unit
+boxes and 1,180 conditional cones remain. No finite-anchor loop, new moment
+power, source polynomial, wrist mode or physical gate is introduced.
+
+The first new synthetic contract fails a dictionary roundtrip comparison
+before packing or a solver call: exact-zero entries are represented differently.
+Its actual roundtrip objects were not saved and are not reconstructed. The
+failed source/log/guard remain. V2 uses a canonical sparse fixture and durably
+journals its new returns before assertions. Ten NEW analytical contracts pass
+weighted packing/adjoints/error bounds in dimensions 4/6/8/10, exact rational
+Gram certificates and conic dual signs, including two new tiny SDP controls.
+Old dimension-three contracts are referenced by hash without reexecution.
+
+Independent pre-solve checks bind all 112 new cones, 1,741 new canonical rows
+and 67,123 upper-entry coefficients. Necessary outward spectral/packing guards
+are explicit and do not change original candidate tolerances. The reused base
+prefix and its box/equality/inequality bindings are unchanged. All model maps,
+constructors, solver returns and exact certificate data are durable.
+
+ONE new bounded evaluation (100 iterations, 60 seconds, one thread, default
+solver tolerances) returns **AlmostSolved**, reduced accuracy, at 14 iterations
+and about 0.432 seconds. There is no restart, tolerance repair or continuation.
+The independent NEW-return audit finds all 1,292 original rational matrices PSD,
+with zero actual unit-box or original-inequality failures, but shared equalities
+still have nonzero exact residual 3.215744e-16. No actual weight or dual is
+clipped, normalized or repaired. This is not an exact supported common measure
+or deterministic robot trajectory, and the solver status remains AlmostSolved.
+
+All 1,292 separate rational-Gram dual constructions and 10,620 entry identities
+verify independently. The exact residual-corrected finite-box gap is negative,
+-6.385598e-7; there is no exclusion certificate. This does not prove infeasibility,
+stationarity, a mandatory root change, source accuracy or task success. The
+conditional frozen region-2/fixed-wrist family remains unresolved. Five scalar
+source-image factors still require unavailable moments for nonconstant scalar
+localizers; no missing powers are fabricated.
+
+Six serial guarded CPU jobs (five successful processes and the retained first
+contract failure), eighteen exact sources/plans and all private evidence are
+preserved in `experiments/scored_baseline_20261019/supported_conic_model`.
+Production runtime/tests, F, separate unqualified components, source/missing/
+held-out evidence, original bounds, parameters and physical gates remain.
+No native position, physics, GPU/PPO, motor/grasp/task/policy or score success
+occurs. A useful new direction is to derive a degree-two matrix source-cone
+representation from SAVED camera numerators, with an independent necessity/error
+proof against the SAVED scalar source/depth models before any diagnosis. This
+would be a distinct representation; the old unavailable scalar localizers and
+all earlier failures must remain, without a degree increase or old solver retry.

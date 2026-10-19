@@ -237,3 +237,27 @@ GPU/PPO qualifies. Exact code/plans are in
 the verified reference stay private and unchanged. Any support-aware conic
 formulation is a new bounded scope requiring new packing/dual contracts first;
 it is not permission to rerun or extend completed solvers or cut algorithms.
+
+## Complete support-aware conic return remains unqualified
+
+A single NEW direct model reuses the canonical base by hash and appends all
+63 joint and 49 temporal/depth PSD maps. It has 15,840 rows, 1,125 columns and
+1,292 PSD cones, with all original linear/equality/unit-box constraints intact.
+Ten new weighted packing/adjoint/dual contracts pass; a first sparse-fixture
+dictionary failure is retained and its unsaved return objects are not recreated.
+Independent pre-solve packing checks pass. No old producer, contract or solver
+runs as a preliminary step.
+
+The one bounded call returns AlmostSolved at reduced accuracy after 14 iterations.
+Independent NEW-return checks find every matrix PSD and no box/inequality failure,
+but a nonzero 3.215744e-16 shared-equality residual remains. The independently
+checked rational-Gram finite-box gap is negative, so no exclusion follows.
+Weights are not repaired, and no exact common measure, source truth or path is
+promoted. Five nonconstant scalar image-support localizers remain unavailable.
+
+All exact code/plans are in `supported_conic_model`; private evidence, failed
+statuses, F and all original source/motion/native/physical gates stay unchanged.
+Do not restart, tune or extend this model or repeat its contracts/audits. A new
+matrix source-cone representation would need separate equivalence, coefficient
+error and tensor-capacity proofs from saved data before use; it cannot silently
+tighten the original image gate or regenerate completed source fits/polynomials.

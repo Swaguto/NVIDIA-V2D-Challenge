@@ -1,0 +1,98 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "private_results_absent": true,
+  "files": [
+    {
+      "file": "supported_conic_maps_v1.py",
+      "restore_relative_path": "compute/supported_conic_maps_v1.py",
+      "executed_or_declared_source_sha256": "4b84dc4a6c676e0d575865f0f5a7c8badea74b2822233a8c8d05f80b8af7e074"
+    },
+    {
+      "file": "verify_supported_conic_contracts_v1.py",
+      "restore_relative_path": "compute/verify_supported_conic_contracts_v1.py",
+      "executed_or_declared_source_sha256": "237488d351ba02768a96685afb33b5f2ea32a294c22df236f96e648f6cb1b246"
+    },
+    {
+      "file": "verify_supported_conic_contracts_v2.py",
+      "restore_relative_path": "compute/verify_supported_conic_contracts_v2.py",
+      "executed_or_declared_source_sha256": "2561d374711c60d92268bcac08c7345f14297779df74dfb2d6dd8f76f32fe87a"
+    },
+    {
+      "file": "build_supported_conic_model_v1.py",
+      "restore_relative_path": "compute/build_supported_conic_model_v1.py",
+      "executed_or_declared_source_sha256": "cb41f9cd06c105bda18ee409920a119299c0dc9ba101b923499b36e4991ac76a"
+    },
+    {
+      "file": "verify_supported_model_binding_v1.py",
+      "restore_relative_path": "compute/verify_supported_model_binding_v1.py",
+      "executed_or_declared_source_sha256": "53a643b4a40b59bf2693f84565f7843e1aec4028b2316d4a0c78ac30db52a61c"
+    },
+    {
+      "file": "run_supported_conic_evaluation_v1.py",
+      "restore_relative_path": "compute/run_supported_conic_evaluation_v1.py",
+      "executed_or_declared_source_sha256": "5e7c882a59979a4321a7de3da8b7dd46a3821a80df6c6def0858b1db9bc0470d"
+    },
+    {
+      "file": "verify_supported_return_v1.py",
+      "restore_relative_path": "compute/verify_supported_return_v1.py",
+      "executed_or_declared_source_sha256": "f17d284228ff193df6ee5ef71470642e5d7bd48255d6a66cc89f5dc10e7212af"
+    },
+    {
+      "file": "direct_conditional_moment_sdp_v1.py",
+      "restore_relative_path": "compute/direct_conditional_moment_sdp_v1.py",
+      "executed_or_declared_source_sha256": "1031c177074da3762a4fb7a4cb5141081b732956425d8f1656f8d275e32c0617"
+    },
+    {
+      "file": "mixed_joint_moments_v1.py",
+      "restore_relative_path": "compute/mixed_joint_moments_v1.py",
+      "executed_or_declared_source_sha256": "5f5f8d2a9d948744cf992b7694117a023ffb650d00332414dc95ca91bdd3fdcb"
+    },
+    {
+      "file": "conditional_moment_cones_v1.py",
+      "restore_relative_path": "compute/conditional_moment_cones_v1.py",
+      "executed_or_declared_source_sha256": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995"
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "supported-conic-contract-CPU-plan-v1.json",
+      "restore_relative_path": "compute/supported-conic-contract-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "a8fff43f9aecd2e37b9eafed8593fd2c1cb2a3d24d6fb6c27e0db6fe3a932194"
+    },
+    {
+      "file": "supported-conic-contract-CPU-plan-v2.json",
+      "restore_relative_path": "compute/supported-conic-contract-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "eb4588981c67485d4c56595ff336fe6e90646ba6e1931ef1125566aec5b2befc"
+    },
+    {
+      "file": "supported-conic-model-CPU-plan-v1.json",
+      "restore_relative_path": "compute/supported-conic-model-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "c875166e645102e4bcfe6393f94bec8752eb1f1ee055205c486860d6435fdfe0"
+    },
+    {
+      "file": "supported-model-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/supported-model-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "2fa87d1b25954a77a947b36329cf4a428730ae55e409bb0f94524f06fe644b3e"
+    },
+    {
+      "file": "supported-conic-evaluation-CPU-plan-v1.json",
+      "restore_relative_path": "compute/supported-conic-evaluation-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "430977ec22f218dea6527bb4d01e53d5ccacff94d3f4b23823ed4cedf2f83fb3"
+    },
+    {
+      "file": "supported-return-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/supported-return-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "067dee87871c1d38673eabd5aaf89dee156bdbe97286353b589addc969c35511"
+    }
+  ],
+  "repository_dependency_snapshots": [],
+  "repository_runtime_NOT_imported": true
+}

@@ -1,0 +1,21 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_supported_conic_model_v1.py",
+  "worker_sha256": "cb41f9cd06c105bda18ee409920a119299c0dc9ba101b923499b36e4991ac76a",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-supported-conic-model-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/supported_conic_maps_v1.py": "4b84dc4a6c676e0d575865f0f5a7c8badea74b2822233a8c8d05f80b8af7e074",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/direct_conditional_moment_sdp_v1.py": "1031c177074da3762a4fb7a4cb5141081b732956425d8f1656f8d275e32c0617",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-supported-conic-contract-v2/report.json": "0f7a5f4a92f0972c4a03a2b0c387da61313ede4a93bb964af55b1270411f09b2",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-conditional-SDP-v1/report.json": "a422803dfba81a0abc7eeab67fb83f3b29b648e56e3f8ba51218a1a1c436c898",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-conditional-SDP-v1/canonical-A.npz": "654c176a65ff7e6aa09c15a0df9af57138989584e5cb7a2b3ba0f53150f68477",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-conditional-SDP-v1/canonical-b.npy": "641e875977a8c3543b32e56b78f8e31636f92f1477cf4b0aa666c79e550484c0",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-conditional-SDP-v1/complete-direct-SDP-packing-and-error-bounds.json": "c2feaef1412ea711a1207db236142b9682cb190c7fe1bcef8f12f252fb45de48",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-saved-mixed-joint-moments-v1/report.json": "356d2fc72b19df0e4fe36ecc23582d641b223b2491a3197b8a9ca388502abfe5",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-pointwise-support-diagnosis-v1/report.json": "4ac961936bd10e695e894008a51d6b2df1f2a3e49a4b99ff27efee5c3163e630"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Build NEW complete support-aware model: reuse original canonical14099row prefix by hash;append63joint+49support PSDmaps,1741rows,no new variables/degrees/gates; no solver",
+  "no_GPU": true
+}

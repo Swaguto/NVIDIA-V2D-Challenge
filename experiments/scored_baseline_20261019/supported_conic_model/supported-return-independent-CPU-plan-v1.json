@@ -1,0 +1,19 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_supported_return_v1.py",
+  "worker_sha256": "f17d284228ff193df6ee5ef71470642e5d7bd48255d6a66cc89f5dc10e7212af",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-supported-return-independent-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/mixed_joint_moments_v1.py": "5f5f8d2a9d948744cf992b7694117a023ffb650d00332414dc95ca91bdd3fdcb",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-supported-conic-evaluation-v1/report.json": "cb01c5f54f30ad1af0c58b24758c3bc15750de74440619c9688cee537ffc838f",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-supported-conic-evaluation-v1/single-supported-solver-RETURN.json": "751736df98902519e910e095cc8be18229b06ec662a5a78cb513d8ac75088b93",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-supported-conic-evaluation-v1/supported-exact-Gram-finite-box-certificate.json": "10b6f7736cd9a9ad96f3526f17eeef0c03e3598a159d32b175a41ca43e5b2f0e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-supported-conic-model-v1/supported-model-binding.json": "179fdb18e656911149a7ffb0f18159f58c44c2b899a000c5d3f4093e890dfdc4",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-supported-conic-model-v1/additional-weighted-PSD-packing.json": "07e1b29c4ce90220c7462c0f6427047e884124930fe16c50c1bd210614e9e4d1",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-bounded-moment-cone-v1/update-05-necessary-LP-model.json": "5938c310fe73da913bd56383046f17fc1b667335c1bce60ee131f701c1f0b723"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Independent audit of ONLY NEW supported-conic RETURN:original exact rows/boxes,1292primal PSDmatrices,1292rational Gram duals and finite-box residual certificate; retain AlmostSolved, no clipping/tuning/restart/old audit replay",
+  "no_GPU": true
+}

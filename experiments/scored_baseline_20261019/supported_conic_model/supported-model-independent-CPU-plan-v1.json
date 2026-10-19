@@ -1,0 +1,18 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_supported_model_binding_v1.py",
+  "worker_sha256": "53a643b4a40b59bf2693f84565f7843e1aec4028b2316d4a0c78ac30db52a61c",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-supported-model-independent-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-supported-conic-model-v1/report.json": "9bf4f36ca7331270239c422a692cec48edde28db2e56520869ebeedd43158aca",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-supported-conic-model-v1/supported-model-binding.json": "179fdb18e656911149a7ffb0f18159f58c44c2b899a000c5d3f4093e890dfdc4",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-supported-conic-model-v1/supported-canonical-A.npz": "c1a0128899dd5c6f5b7d8a32c408dd82499ac1725e051e26e0f97701b5d191ac",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-supported-conic-model-v1/supported-canonical-b.npy": "633e0935500323c6a3fa7829520ee6540a8fad106447c7decdfe0d92873b66a6",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-supported-conic-model-v1/additional-weighted-PSD-packing.json": "07e1b29c4ce90220c7462c0f6427047e884124930fe16c50c1bd210614e9e4d1",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-conditional-SDP-v1/report.json": "a422803dfba81a0abc7eeab67fb83f3b29b648e56e3f8ba51218a1a1c436c898"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Independent PRE-SOLVE source-map binding for112new cones/1741new rows, all weighted packing error/signs, original14099row prefix reused byte-exactly; no old audit/source or solver",
+  "no_GPU": true
+}

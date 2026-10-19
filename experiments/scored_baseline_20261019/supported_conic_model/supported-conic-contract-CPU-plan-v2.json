@@ -1,0 +1,19 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_supported_conic_contracts_v2.py",
+  "worker_sha256": "2561d374711c60d92268bcac08c7345f14297779df74dfb2d6dd8f76f32fe87a",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-supported-conic-contract-v2",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/supported_conic_maps_v1.py": "4b84dc4a6c676e0d575865f0f5a7c8badea74b2822233a8c8d05f80b8af7e074",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/direct_conditional_moment_sdp_v1.py": "1031c177074da3762a4fb7a4cb5141081b732956425d8f1656f8d275e32c0617",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/mixed_joint_moments_v1.py": "5f5f8d2a9d948744cf992b7694117a023ffb650d00332414dc95ca91bdd3fdcb",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-SDP-contract-v2/report.json": "4d489d2c83ef9d492f1e2b07002fd52276816f7e9a963c627fd96dc3ca6e56ff",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-SDP-runtime-v2/runtime-inventory.json": "7bc5df26710a10c4ca6d9735f10142c0ac5849a69eed89754bd54831353e9cd8",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_supported_conic_contracts_v1.py": "237488d351ba02768a96685afb33b5f2ea32a294c22df236f96e648f6cb1b246",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-supported-conic-contract-v1/guard.json": "49144b34eff81c3b1f41764a13fd5f77bafc7d66493590b1b0cc5b6bdb57c4fe"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Retain failed zero-dictionary synthetic fixture BEFORE packing/solver; NEW canonical sparse fixture and durable roundtrip returns, ten new packing/Gram/dual controls, two analytic SDPs, no completed control replay or episode",
+  "no_GPU": true
+}
