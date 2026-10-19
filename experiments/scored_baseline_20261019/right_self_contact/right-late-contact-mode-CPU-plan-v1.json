@@ -1,0 +1,12 @@
+{
+  "schema": "v2d.cpu-right-component-plan.v1",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-right-late-contact-mode-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/construct_right_late_contact_mode_v1.py",
+  "worker_sha256": "b467fc20e90959e1e2a9bdf92232439f381db46061ac0e1ea45be3502de07b37",
+  "dependencies_sha256": {},
+  "CPU_only": true,
+  "partial_component": true,
+  "full_task_still_failed": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

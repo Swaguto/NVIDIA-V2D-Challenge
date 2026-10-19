@@ -1,0 +1,15 @@
+{
+  "schema": "v2d.cpu-right-independent-plan.v1",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-right-late-independent-validation-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_right_late_component_v1.py",
+  "worker_sha256": "df6edb7c1fb1273ee0af70a18ee04e9eb33cc2ad7afcb6115d9b6ddcbad8bc6a",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/audit_hand_self_contacts.py": "9dba3c757444ff4733a288b5de39a6a3fb822075996e8eec15729121438128ef",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/self_contact.py": "64ecfea7d3d78ee8fdc4f4ba7f4ee6722c4154b6f82968f258fe0b7992bb726f"
+  },
+  "CPU_only": true,
+  "new_changed_reference": true,
+  "no_old_audit_rerun": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

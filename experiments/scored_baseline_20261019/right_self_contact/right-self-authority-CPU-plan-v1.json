@@ -1,0 +1,13 @@
+{
+  "schema": "v2d.cpu-right-self-plan.v1",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-right-self-authority-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/diagnose_right_self_authority_v1.py",
+  "worker_sha256": "5f65ed8d387b7379e00c282bed6227b07ea12a6e4c55961c881423ecf74e8d84",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/right_self_context_v1.py": "a676cd96872a2030ce0ba2e76abd4e6cf5983660199f36613b406cd8207e2f89"
+  },
+  "CPU_only": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0,
+  "scope": "New right source/authority/worst-pair derivative analysis; no changed commands"
+}

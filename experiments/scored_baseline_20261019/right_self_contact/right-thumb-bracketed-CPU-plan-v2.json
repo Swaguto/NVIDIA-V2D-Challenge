@@ -1,0 +1,16 @@
+{
+  "schema": "v2d.cpu-right-self-plan.v2",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-right-thumb-bracketed-v2",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/construct_right_thumb_self_contact_v2.py",
+  "worker_sha256": "6e83c19a8e75b4636bc54c32a49b1f8af046b0fa52567f245c7225c00e52a297",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/right_self_context_v2.py": "545a6f6c4494b47800f658888e299051329a444c913f2fb9d5b7ba12c7bb6730"
+  },
+  "CPU_only": true,
+  "root_and_left_fixed": true,
+  "prior_missing_source_failure_preserved": true,
+  "component_cap_from_original": 0.25,
+  "adjacent_and_second_added_cap": 0.05,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

@@ -38,3 +38,12 @@ There are also 450 sampled intermediate left-self states, maximum 0.501 mm;
 these samples are not a continuous or full-task swept certificate. Right-hand
 self-collisions and five hand/object penetration failures remain. No complete
 physical task, policy or score improvement is qualified, and no PPO was run.
+
+A subsequent right late-contact-mode component preserves that left fix and
+reduces right failing knots from 46 to 13, with every right knot nonregressing.
+Fresh verification checks all 1,072 available left/right image anchors and all
+original motion bounds; 136 missing right anchors remain explicit and unchanged.
+The first full right paths and bridge failures are retained. Five object
+penetration failures persist, and 450 new complete-pose interpolation samples
+also retain failures. This combined component is not a whole-task, continuous
+swept, motor, grasp or policy certificate. No GPU/PPO ran.

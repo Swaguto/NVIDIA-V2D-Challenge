@@ -562,3 +562,66 @@ self-contacts under the same source, actual URDF and original motion bounds.
 The old finite grasp controls remain rejected. Right-hand/object penetration,
 full swept/motor/grasp checks and whole-source qualification are still required
 before any further learning.
+
+## Right-hand contact modes and original temporal limits
+
+Eight new guarded CPU jobs start from the verified left-hand freeze, preserving
+its commands exactly. Worst right self-contact gap Jacobians at frames 35, 116,
+119 and 121 agree with two central differences within 6.9e-12 m/rad. Native
+right thumb/palm and thumb/index pairs require different constraints; no source
+or joint authority is inferred from a derived robot angle.
+
+The first right bracket constructor stops when it reaches missing source hand
+observations. Its failed log is retained. Corrected contexts keep all 136 missing
+right image anchors explicit and freeze those 34 frames' right commands. There
+are 468 available right anchors and 604 left anchors. Frame direct/metric flags
+remain unchanged and do not establish measured occluded-joint depth.
+
+The full source-compensated right bracket path still fails at six frames and
+exceeds original temporal/velocity limits. A new whole-clock sequential-convex
+method stops on a numerical QP failure before accepting a new step. Its numerical
+repair uses shared image-frame slacks and linear programs, but stops without an
+acceptable merit step: maximum penetration 1.972 mm and source regression
+3.005 px remain. These are rejected controls, not successful optimization or
+physical success. Finite image-direction approximations never replace the exact
+Euclidean source gate in candidate verification.
+
+A separately declared late contact-mode component uses source-eligible commands
+from frame 116 onward; the earlier failed transitions stay unchanged and visible.
+A fixed cubic bridge first exceeds the original 0.05 rad second-added bound
+(0.0584 rad). That failure is retained. One convex projection onto the unchanged
+original component, adjacent/second-added, actual position and velocity polytope
+converges. It does not relax source, collision or motion gates.
+
+### Independently verified combined component
+
+Fresh 151-knot native/FK verification on the new private freeze finds **left
+0/151** and **right 13/151** self-contact failures; the right count falls from
+46, and its maximum penetration falls 7.248 to 2.646 mm. Every right knot's
+maximum self-depth is nonregressing. Remaining failures are frames 0–4 and
+110–117. All 1,072 available original source image anchors are nonregressing;
+combined median improves 15.083 to 14.978 px and p95 stays 30.012 px. All 136
+missing anchors remain missing, with unchanged commands at those frames.
+
+Actual URDF position/velocity, original 0.25 rad finger component bounds and
+0.05 rad adjacent/second-added bounds pass. The right second-added bound is
+active at 0.05 rad; no new envelope is introduced. Both roots, the verified left
+component, right nonthumb fingers, objects and human/source files remain exact.
+
+The five right-index/object penetration knots remain, maximum 6.302 mm at frame
+47. Another 450 new quarter/half/three-quarter samples interpolate complete rigid
+wrist and object poses plus fingers. Sampled maxima are 0.500445 mm left-self,
+2.618326 mm right-self and 4.553011 mm hand/object. These samples retain failures
+and are not a continuous/full-task swept certificate. No physical task, full
+source hand/reference, motor/grasp success, new policy or score gain is claimed.
+No physics, GPU or PPO ran; Brev remained stopped. Exact producers/plans are in
+`experiments/scored_baseline_20261019/right_self_contact`; private results stay
+private and old failed controls are not overwritten.
+
+Next preserve this **combined** freeze, including both left and right repairs.
+Diagnose the remaining observed transitions using actual thumb kinematics,
+source image rays and active original joint/velocity/temporal authority before
+another mutation. The failed local brackets and whole-clock controls do not
+prove global infeasibility. Do not repeat their sweeps or enlarge bounds. Any
+new command still needs fresh source/motion, full native/self, swept, actual
+motor and grasp checks before learning; the existing object failures remain.
