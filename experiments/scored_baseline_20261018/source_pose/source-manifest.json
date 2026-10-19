@@ -1,0 +1,65 @@
+{
+  "schema": "v2d.private-source-pose-code-archive.v1",
+  "sources": [
+    {
+      "path": "audit_retained_pose_grip_v1.py",
+      "sha256": "fcb6469857d7f594684e9452628312fc0abed4e196bfe64ba3ab8e796022af92",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_retained_pose_grip_v1.py",
+      "status": "rejected_input_binding_before_comparison"
+    },
+    {
+      "path": "audit_retained_pose_grip_v2.py",
+      "sha256": "aa6ddafdb28f03525b1d4892842d2f71e28d137599b28165f9330ce5275141b9",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_retained_pose_grip_v2.py",
+      "status": "executed_source_control_no_physical_qualification"
+    },
+    {
+      "path": "guard_retained_pose_grip_v1.py",
+      "sha256": "d5aa2f2e79d78c58031da5da3b590a9f0f828b4ebed41a787dbe9211d9bdc35d",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_retained_pose_grip_v1.py",
+      "status": "rejected_input_binding_before_comparison"
+    },
+    {
+      "path": "guard_retained_pose_grip_v2.py",
+      "sha256": "b6af7a78ac1ba5be30d576eb770b0556188361196b937831fdaac65777ec34e0",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_retained_pose_grip_v2.py",
+      "status": "executed_source_control_no_physical_qualification"
+    },
+    {
+      "path": "probe_visible_object_pose_v1.py",
+      "sha256": "24361a948161c663dd67dd0f738bc79fadde5aa73ae5338d5d37278b32a237aa",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/probe_visible_object_pose_v1.py",
+      "status": "executed_source_control_no_physical_qualification"
+    },
+    {
+      "path": "guard_visible_object_pose_v1.py",
+      "sha256": "774683e2038e2289b7eee77721356d6a250d1d4129e93739f97157d09fc3413b",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_visible_object_pose_v1.py",
+      "status": "executed_source_control_no_physical_qualification"
+    },
+    {
+      "path": "audit_tool_depth_edge_authority_v1.py",
+      "sha256": "c02539a73529ebcca8a15f2b97d1de8123ad27f4c78caceca15ec85805409025",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_tool_depth_edge_authority_v1.py",
+      "status": "executed_source_control_no_physical_qualification"
+    },
+    {
+      "path": "probe_object_silhouette_pose_v1.py",
+      "sha256": "2e6e5e819d0f52b6e6cbea6a4e08656af04e172c02b0168b35c3e572cbe0fa60",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/probe_object_silhouette_pose_v1.py",
+      "status": "executed_source_control_no_physical_qualification"
+    },
+    {
+      "path": "guard_object_silhouette_pose_v1.py",
+      "sha256": "53e21f7fcc48aa0ad935ffa8a671369b99a2b4510327ae02e41681ad1c9b1556",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_object_silhouette_pose_v1.py",
+      "status": "executed_source_control_no_physical_qualification"
+    }
+  ],
+  "private_inputs_included": false,
+  "model_weights_included": false,
+  "credentials_included": false,
+  "official_evaluator_modified": false,
+  "no_completed_baseline_or_replay_rerun": true,
+  "restoration_note": "Restore these exact scripts under PRIVATE_WORKSPACE/compute. They resolve the private artifact workspace from that location and use the existing owner checkout path for production helper imports. The archive location itself is not the execution location. Private inputs and their hashes are in the owner-only result reports. This is not a portable full policy reproduction or independent teammate validation."
+}
