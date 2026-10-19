@@ -700,3 +700,59 @@ rejected centers, enlarge the 8 mm/0.08 rad residual boxes, relax source/motion/
 1 mm gates, or repeat the completed branch/path/bound studies. Any justified new
 proposal needs fresh whole-clock source/native/self/motion, full swept, actual
 motor and grasp checks before GPU/PPO. No root change or paid job is queued.
+
+## Wrist authority and source-constrained coupling
+
+The frozen exporter and retarget code hashes match the bundle manifests. The
+exported wrist orientation comes from the MANO model's global orientation,
+transformed through the calibrated camera and existing Dex3 palm convention.
+The retargeter assigns it a soft orientation cost of 0.1; tip positions have
+position costs and no tip-orientation cost. The actual robot wrist and joint
+angles remain derived IK results. Direct/metric flags at the remaining observed
+transition describe frame-level source/depth support. They do not establish
+measured robot orientation, per-joint ground truth or an orientation covariance.
+The original human observations and flags are unchanged.
+
+A declared half geodesic step toward the retained source-model orientation at
+111/113 fails analytic finger-branch prerequisites and is retained as a failed
+control. A new coupled root-orientation/actual-URDF-finger solve at each of those
+two knots converges within the unchanged 0.08 rad root and 0.25 rad finger
+component boxes, with root translation fixed. Both optimizer returns pass
+source-image and model-orientation nonregression and native right-self depth
+of 0.5 mm. Independent URDF/native/source verification closes point positions
+within 2.7e-9 m. Neither pose has a hand/object contact. This is a constructive
+isolated-pose result, not a measured wrist correction or a realized grasp.
+
+Joining the poses remains unresolved. A dense 104:118 trajectory reaches its
+120-iteration cap. Explicit SO(3) root/pixel derivatives subsequently pass new
+numerical controls (maximum pixel derivative difference 1.85e-6 px/rad); the
+old norm-error finite difference is sensitive near an almost exact image
+anchor. This does not isolate every cause of the optimizer failure. An
+algebraically equivalent squared-source-constraint formulation with those
+derivatives also reaches its unchanged 120-iteration cap and fails source
+nonregression. Both returned trajectories remain rejected; no best intermediate
+or unconverged return is promoted.
+
+A distinct constructive path uses only the converged isolated seeds and fixed
+103/118 boundaries, plus exact remaining scalar finger-motion LP intervals.
+It stops at 111 on a failed conditional nonlinear solve and source regression.
+The scalar LPs certify only their stated linear motion intervals. They do not
+certify a future collision/source-feasible pose. Independent sparse insertion
+of the two verified poses also fails finger velocity and original temporal
+caps: maximum adjacent correction 0.1731 rad and second-added correction
+0.3459 rad, versus unchanged 0.05 rad caps. The original root motion summaries
+pass that sparse check; it still cannot qualify a trajectory.
+
+Eight new guarded CPU jobs and exact sources are archived code-only under
+`experiments/scored_baseline_20261019/source_wrist_authority`. The original
+three-component freeze remains byte unchanged. Eight right-self and five
+hand/object failures persist; no new full reference, motor/grasp success,
+physical task, policy or score gain is qualified. No source fitting, model
+compilation, physics stepping, GPU or PPO was performed. Brev remained stopped.
+
+Next assess temporal reachability of coupled source-supported pose sets before
+another path solve, including actual joint speed and first/second correction
+differences. The failed greedy construction and dense local solves do not prove
+global infeasibility. Preserve all source/held-out failures, existing root
+centers, original boxes and source/motion/native gates. Any future changed
+reference needs fresh full-clock and swept/motor/grasp qualification.

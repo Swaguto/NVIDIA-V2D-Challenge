@@ -57,3 +57,13 @@ reference penetration reaches 0.9934 mm and sampled intermediate penetration
 policy success is established. Fixed-root compatibility diagnostics remain
 qualified by missing per-leaf evidence; audit source/root authority before a new
 wrist hypothesis. Human observations, missing flags and held-out failures remain.
+
+The subsequent authority audit confirms that wrist orientation is model-derived
+and softly fitted during retargeting. Two new coupled wrist/finger poses clear
+the remaining hard knots in isolation while preserving image/model-orientation
+nonregression and original component bounds. Independent native/URDF checks
+agree, but their sparse insertion violates actual finger speed and original
+temporal bounds; two dense paths and a conditional construction also fail their
+acceptance checks. No new reference replaces the three-component freeze. The
+eight right-self and five object failures remain; no GPU/PPO or task success
+is qualified. See the retained source-wrist authority archive and wrist report.

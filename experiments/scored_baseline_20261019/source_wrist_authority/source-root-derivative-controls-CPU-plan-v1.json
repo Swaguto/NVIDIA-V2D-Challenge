@@ -1,0 +1,20 @@
+{
+  "schema": "v2d.cpu-source-root-derivative-plan.v1",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-root-derivative-controls-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_source_root_derivatives_v1.py",
+  "worker_sha256": "7fa57a8c8146e05eeaca5b7a277f055e1ea21add6632346269e54a34c7353445",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_root_differential_v1.py": "4e2bec1fceb48e62b243b123da956da147bf17c0eacdbb481134cc86202a7846"
+  },
+  "CPU_only": true,
+  "new_derivative_scope_not_prior_solver_repeat": true,
+  "frames": [
+    104,
+    109,
+    111,
+    113
+  ],
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

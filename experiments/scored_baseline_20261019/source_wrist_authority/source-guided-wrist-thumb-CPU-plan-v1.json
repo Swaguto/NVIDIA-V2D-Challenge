@@ -1,0 +1,23 @@
+{
+  "schema": "v2d.cpu-source-guided-wrist-plan.v1",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-guided-wrist-thumb-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/probe_source_guided_wrist_thumb_v1.py",
+  "worker_sha256": "4be5a67b0032800b395d886b53cebe4496fd67d24baf5a7d8a4f50a4f8af20db",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/planar_thumb_ik.py": "a90fd94b1c80e36a1d0acb0b6e022f9820d460102b1c071aca7d4343489703d1"
+  },
+  "CPU_only": true,
+  "frames": [
+    111,
+    113
+  ],
+  "orientation_step_fraction": 0.5,
+  "orientation_direction_from_frozen_source_model_not_object_or_contact": true,
+  "original_root_translation_fixed": true,
+  "source_and_orientation_nonregression_required": true,
+  "original_boxes_and_joint_caps_unchanged": true,
+  "no_more_source_pose_prior_or_gain_sweep": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

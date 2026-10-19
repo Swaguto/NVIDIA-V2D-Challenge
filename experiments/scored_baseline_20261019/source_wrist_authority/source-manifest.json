@@ -1,0 +1,105 @@
+{
+  "schema": "v2d.exact-source-wrist-authority-archive.v1",
+  "files": [
+    {
+      "file": "audit_wrist_source_authority_v1.py",
+      "restore_relative_path": "compute/audit_wrist_source_authority_v1.py",
+      "executed_or_declared_source_sha256": "deaeb6ff873ffb12e66385ac20126078baac0b9ef757bdf86b762c48108502dc"
+    },
+    {
+      "file": "construct_source_coupled_path_v1.py",
+      "restore_relative_path": "compute/construct_source_coupled_path_v1.py",
+      "executed_or_declared_source_sha256": "a34d4f150f813308c5af695485fce0b0176f8009ef60d0b616e4c195a57afdc2"
+    },
+    {
+      "file": "fit_source_orientation_coupled_fingers_v1.py",
+      "restore_relative_path": "compute/fit_source_orientation_coupled_fingers_v1.py",
+      "executed_or_declared_source_sha256": "233663e6af664c888a61da599928505d176816d89936e73f766d0e0bf2112b18"
+    },
+    {
+      "file": "fit_source_root_finger_trajectory_v1.py",
+      "restore_relative_path": "compute/fit_source_root_finger_trajectory_v1.py",
+      "executed_or_declared_source_sha256": "d7cc86ebb9f8ee7e0d95ac486e0557ce56e2e65e8021c37587c40661e1266ec2"
+    },
+    {
+      "file": "fit_source_root_finger_trajectory_v2.py",
+      "restore_relative_path": "compute/fit_source_root_finger_trajectory_v2.py",
+      "executed_or_declared_source_sha256": "b497d1e91499cb754d6121c7a64829cb541ebd0fb168db6de0d8d352a5a45c2e"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "probe_source_guided_wrist_thumb_v1.py",
+      "restore_relative_path": "compute/probe_source_guided_wrist_thumb_v1.py",
+      "executed_or_declared_source_sha256": "4be5a67b0032800b395d886b53cebe4496fd67d24baf5a7d8a4f50a4f8af20db"
+    },
+    {
+      "file": "source-coupled-isolated-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/source-coupled-isolated-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "1609bcc9e17e04404033a53625c71bebe761e3dfe7485b5a8a5054db5a92a4c0"
+    },
+    {
+      "file": "source-coupled-viability-path-CPU-plan-v1.json",
+      "restore_relative_path": "compute/source-coupled-viability-path-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "f091b27de4ad84d914f90ac9e454d9f742cfd2fb3f67384240d39b116179f592"
+    },
+    {
+      "file": "source-guided-wrist-thumb-CPU-plan-v1.json",
+      "restore_relative_path": "compute/source-guided-wrist-thumb-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "ee67aa87658a6243d86df2cc3bb5095b92bbb673038ccb12aa42ee524d273648"
+    },
+    {
+      "file": "source-orientation-coupled-fingers-CPU-plan-v1.json",
+      "restore_relative_path": "compute/source-orientation-coupled-fingers-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "070519a01e4316eae15a09e2de2d0ce48412fddc4ed8a97ef64ff1336525d698"
+    },
+    {
+      "file": "source-root-derivative-controls-CPU-plan-v1.json",
+      "restore_relative_path": "compute/source-root-derivative-controls-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "4c4a117e0664c2423fec02250554b19a6c9068fe03f3db7d11142c9a88539cef"
+    },
+    {
+      "file": "source-root-finger-trajectory-CPU-plan-v1.json",
+      "restore_relative_path": "compute/source-root-finger-trajectory-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "85e38193d0d7672fc00f1b93277b7a7c29c43464ba23c02aaeac34fd3be3a5a3"
+    },
+    {
+      "file": "source-root-finger-trajectory-CPU-plan-v2.json",
+      "restore_relative_path": "compute/source-root-finger-trajectory-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "a2af153aa2f60f4a025d45b9571e1a615e7d83f14cf9bd585b31efe9fa2dd5f5"
+    },
+    {
+      "file": "source_orientation_context_v1.py",
+      "restore_relative_path": "compute/source_orientation_context_v1.py",
+      "executed_or_declared_source_sha256": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00"
+    },
+    {
+      "file": "source_root_differential_v1.py",
+      "restore_relative_path": "compute/source_root_differential_v1.py",
+      "executed_or_declared_source_sha256": "4e2bec1fceb48e62b243b123da956da147bf17c0eacdbb481134cc86202a7846"
+    },
+    {
+      "file": "verify_source_coupled_isolated_seeds_v1.py",
+      "restore_relative_path": "compute/verify_source_coupled_isolated_seeds_v1.py",
+      "executed_or_declared_source_sha256": "f48b8964d2a3f6c983e422192e5e9120bff130833d6752b7aaf75a5f4b46952a"
+    },
+    {
+      "file": "verify_source_root_derivatives_v1.py",
+      "restore_relative_path": "compute/verify_source_root_derivatives_v1.py",
+      "executed_or_declared_source_sha256": "7fa57a8c8146e05eeaca5b7a277f055e1ea21add6632346269e54a34c7353445"
+    },
+    {
+      "file": "wrist-source-authority-CPU-plan-v1.json",
+      "restore_relative_path": "compute/wrist-source-authority-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "034de88037272acd5c6fe4936b4286d4fae4debaa9b0eac37832d4024c4d40de"
+    }
+  ],
+  "guarded_jobs": 8,
+  "repository_runtime_commit": "bc918bd88e7a3fe29b46b0e3dd8e8d123053f973",
+  "all_guarded_processes_completed": true,
+  "current_verified_reference_not_changed": true,
+  "private_source_arrays_native_model_commands_results_excluded": true
+}

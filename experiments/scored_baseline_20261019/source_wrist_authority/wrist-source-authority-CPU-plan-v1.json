@@ -1,0 +1,21 @@
+{
+  "schema": "v2d.cpu-wrist-authority-plan.v1",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-wrist-source-authority-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_wrist_source_authority_v1.py",
+  "worker_sha256": "deaeb6ff873ffb12e66385ac20126078baac0b9ef757bdf86b762c48108502dc",
+  "dependencies_sha256": {},
+  "CPU_only": true,
+  "frames": [
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117
+  ],
+  "source_and_commands_not_modified": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

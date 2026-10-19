@@ -1,0 +1,24 @@
+{
+  "schema": "v2d.cpu-source-root-finger-trajectory-plan.v1",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-root-finger-trajectory-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/fit_source_root_finger_trajectory_v1.py",
+  "worker_sha256": "d7cc86ebb9f8ee7e0d95ac486e0557ce56e2e65e8021c37587c40661e1266ec2",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00"
+  },
+  "CPU_only": true,
+  "free_frames_half_open": [
+    104,
+    118
+  ],
+  "original_root_translation_fixed": true,
+  "left_early_and_qualified_late_components_preserved": true,
+  "source_model_orientation_and_all_image_nonregression": true,
+  "original_root_and_finger_motion_caps_unchanged": true,
+  "original_root_component_box_rad": 0.08,
+  "original_finger_component_cap_rad": 0.25,
+  "adjacent_and_second_added_rad": 0.05,
+  "one_solver_no_best_intermediate": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

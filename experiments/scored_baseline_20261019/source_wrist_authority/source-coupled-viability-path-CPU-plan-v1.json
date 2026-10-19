@@ -1,0 +1,27 @@
+{
+  "schema": "v2d.cpu-source-coupled-viability-plan.v1",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-coupled-viability-path-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/construct_source_coupled_path_v1.py",
+  "worker_sha256": "a34d4f150f813308c5af695485fce0b0176f8009ef60d0b616e4c195a57afdc2",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_root_differential_v1.py": "4e2bec1fceb48e62b243b123da956da147bf17c0eacdbb481134cc86202a7846"
+  },
+  "CPU_only": true,
+  "free_frames_half_open": [
+    104,
+    118
+  ],
+  "guide_knots": [
+    103,
+    111,
+    113,
+    118
+  ],
+  "guide_from_converged_source_seeds_only": true,
+  "one_conditional_path_no_restarts": true,
+  "failed_dense_returns_not_used_as_seeds": true,
+  "original_source_native_motion_bounds_unchanged": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

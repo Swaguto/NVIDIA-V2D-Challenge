@@ -1,0 +1,21 @@
+{
+  "schema": "v2d.source-coupled-independent-seed-plan.v1",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-coupled-isolated-independent-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_source_coupled_isolated_seeds_v1.py",
+  "worker_sha256": "f48b8964d2a3f6c983e422192e5e9120bff130833d6752b7aaf75a5f4b46952a",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-orientation-coupled-fingers-v1/report.json": "1fa18f60dc7a1db4edcd756b5ca77b9b9ae1bec127f08104f3710bab16428375",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-wrist-source-authority-v1/report.json": "cb34f68f090208a5c99f6aaea83ab2ddc763a76090354f267b15f9f3092768e8"
+  },
+  "CPU_only": true,
+  "frames": [
+    111,
+    113
+  ],
+  "independent_native_URDF_source_closure": true,
+  "no_optimization_or_physics": true,
+  "source_frame_flags_not_measured_robot_orientation": true,
+  "current_reference_not_changed": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

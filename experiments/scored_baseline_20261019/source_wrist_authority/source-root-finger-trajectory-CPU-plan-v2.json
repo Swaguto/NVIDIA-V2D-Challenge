@@ -1,0 +1,26 @@
+{
+  "schema": "v2d.cpu-source-root-finger-trajectory-plan.v2",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-root-finger-trajectory-v2",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/fit_source_root_finger_trajectory_v2.py",
+  "worker_sha256": "b497d1e91499cb754d6121c7a64829cb541ebd0fb168db6de0d8d352a5a45c2e",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_root_differential_v1.py": "4e2bec1fceb48e62b243b123da956da147bf17c0eacdbb481134cc86202a7846"
+  },
+  "CPU_only": true,
+  "free_frames_half_open": [
+    104,
+    118
+  ],
+  "original_root_translation_fixed": true,
+  "verified_differential_numerical_repair_not_physical_sweep": true,
+  "source_image_disks_and_orientation_caps_algebraically_unchanged": true,
+  "original_root_and_finger_motion_caps_unchanged": true,
+  "original_root_component_box_rad": 0.08,
+  "original_finger_component_cap_rad": 0.25,
+  "adjacent_and_second_added_rad": 0.05,
+  "same_maximum_iterations": 120,
+  "no_best_intermediate": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

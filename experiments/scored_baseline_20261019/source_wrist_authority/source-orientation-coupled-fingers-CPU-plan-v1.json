@@ -1,0 +1,23 @@
+{
+  "schema": "v2d.cpu-source-coupled-fingers-plan.v1",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-orientation-coupled-fingers-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/fit_source_orientation_coupled_fingers_v1.py",
+  "worker_sha256": "233663e6af664c888a61da599928505d176816d89936e73f766d0e0bf2112b18",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00"
+  },
+  "CPU_only": true,
+  "frames": [
+    111,
+    113
+  ],
+  "one_solver_per_frame": true,
+  "source_orientation_and_image_nonregression": true,
+  "original_root_translation_fixed": true,
+  "original_world_rotation_component_box_rad": 0.08,
+  "original_finger_component_cap_rad": 0.25,
+  "all_failed_controls_retained": true,
+  "no_best_intermediate_promotion": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}
