@@ -1026,3 +1026,56 @@ neighbors uncertain and do not fix isolated controls as measured mandatory
 nodes or resweep completed source/solver/bank/slice families. New commands still
 require independent full original source/native/self/motion and swept/motor/grasp
 qualification before learning.
+
+## Global camera-cone duals and necessary wrist domains
+
+A new derivation lifts the saved planar source separators into genuine 3-D
+camera-cone halfspaces. For positive depth, the original image disk has
+`||B C|| <= radius * Cz`; any unit disk dual `u` supplies
+`(B.T u - radius * ez).C <= 0`. At an ellipse support point this is a tangent
+plane. Its pullback agrees with the saved planar separator by a positive
+scale. The old 312 planar minima are reused, without rerunning their solves.
+
+Eight new analytic controls pass. Independent checks cover 1,248 source-cone
+points and 936 new actual-URDF states; tip closure is below 1.67e-16 m. This
+validates the geometric lift and a rigid-rotation necessary bound. It does not
+validate source accuracy, native contacts or a trajectory.
+
+With translation fixed, each particular retained finite-neighbor domain needs
+at least 0.00383–0.01215 rad rotation from the isolated frame-114 conic control
+to remove its source-plane separation. The minimum over that finite family is
+about 0.219 degrees. This loose lower bound is below the conservative allowed
+upper bound of 0.17994 rad; it neither excludes allowed wrist changes nor
+specifies a constructive change. The center is the isolated robot control,
+not a measured wrist orientation or the current verified whole reference.
+
+A separate continuous root-box study uses the original source-model
+orientation cap, original world-component residual box and actual planar
+index workspace. A 2,047-node binary partition has 1,024 leaves: 141 exclude
+source-model orientation, four exclude even the original index authority,
+37 exclude the conditional finite-neighbor union, and 842 remain unresolved.
+The latter regions are necessary outer regions, not feasible robot poses.
+Continuous neighbors, root temporal statistics, other fingers, self contacts
+and motors remain unqualified. The source-model estimate is not measured truth.
+
+The first writer fails on a duplicate `kind` keyword after saving all six new
+support controls and its first proposed box. That failure is retained. Version
+2 repairs serialization and reuses those controls by hash, without rerunning
+them. A separate preparation NameError/missing-plan attempt changed no guard
+state. Independent verification checks the complete binary cover, 5,718 scalar
+boundary supports, 512 SO(3) box samples and 64 new URDF states. Scalar/batch
+support differences stay below 6.94e-18 m. These are numerical certificates,
+not formal directed-rounding or global exclusion proofs.
+
+Six guarded attempts are archived code-only under
+`experiments/scored_baseline_20261019/wrist_cone_domains`. Production runtime
+and tests are unchanged. No new native position, physics, GPU/PPO or command
+mutation ran. The verified three-component freeze still has eight right-self
+and five object failures; no whole reference, grasp, task, policy or score
+improvement is qualified.
+
+Next develop a constructive coupled wrist/index source-cone branch and thumb
+conic/clearance chart under the original temporal authority. Preserve continuous
+neighbor uncertainty. Unresolved root boxes are not accepted seeds, and the
+isolated controls are not mandatory measured trajectory nodes. Do not expand
+the partition budget, resweep completed controls or relax source/native gates.

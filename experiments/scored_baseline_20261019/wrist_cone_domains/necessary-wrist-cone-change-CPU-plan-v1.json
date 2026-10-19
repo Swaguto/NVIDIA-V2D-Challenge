@@ -1,0 +1,18 @@
+{
+  "schema": "v2d.cpu-only-quality-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_necessary_wrist_cone_change_v1.py",
+  "worker_sha256": "844cd34751702fdfdfe542dbe388b023b1fa6c6a0f59c4a53012c4a50318e798",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-necessary-wrist-cone-change-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_cone_dual_v1.py": "cf82dafc418aadd9067e0704c93a270c4aa59b46fdcd2ab7b4952e26cb90fed4",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-remaining-temporal-index-domains-v1/all-complete-conditional-domain-records.json": "bb4f17f1605455f64960f711abe6a6fd5df9ce3ecf369595190e50e1a5d307b6",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-temporal-index-conic-domains-v1/all-controls-domains-and-witnesses.jsonl": "5c0ddbf2ab01b0149e8bf947437da4e3676279cbed10f879a35be4b8437eddda",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-conic-independent-v1/selected-conditional-robot-control.json": "4c7807fa650527fc6e14016e88f4c0c77eb953bc0129c68186fe461212a3cf9a",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-conic-clearance-v1/source-conic-contract.json": "20aff844499c21b1390b49d5ebf111e81e08b2ff15b2693f8721de8e5ebbfb00"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "saved_supports_reused_not_recomputed": true,
+  "no_physics_GPU_PPO": true
+}

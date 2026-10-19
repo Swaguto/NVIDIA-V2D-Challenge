@@ -1,0 +1,17 @@
+{
+  "schema": "v2d.cpu-only-quality-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/bound_common_wrist_cone_domains_v1.py",
+  "worker_sha256": "47e9efc9667ccb83e02b7106dde644a9478bcd97b9a167ddc9cfe04d2789cc6c",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-wrist-cone-domains-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/rotated_index_support_v1.py": "8c2f94dc79546da595da23ca5c6c9cc1b3c19f15a49568f732dd9d87bce4db0e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-necessary-wrist-cone-change-v1/source-camera-and-wrist-contract.json": "9df8dec1dce2d0bbd2741330e81f63ff18bcf3ab3fe510bce4ff862f8f1563d5",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-necessary-wrist-cone-change-v1/all-conditional-wrist-necessary-bounds.json": "8343bde12a19fefaf010f6e003e70858cd1a3c93f8acb28aadca33ccc2b63f2c"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "node_budget": 2047,
+  "translation_fixed": true,
+  "no_physics_GPU_PPO": true
+}

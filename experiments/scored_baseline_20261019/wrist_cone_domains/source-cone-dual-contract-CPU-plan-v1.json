@@ -1,0 +1,13 @@
+{
+  "schema": "v2d.cpu-only-quality-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_source_cone_dual_v1.py",
+  "worker_sha256": "4f361ace8908e58bb495d57b0ae0605dbed98c1ec68000a3256631a2500aab84",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-cone-dual-contract-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_cone_dual_v1.py": "cf82dafc418aadd9067e0704c93a270c4aa59b46fdcd2ab7b4952e26cb90fed4",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_analytic_contracts_only": true,
+  "no_physics_GPU_PPO": true
+}

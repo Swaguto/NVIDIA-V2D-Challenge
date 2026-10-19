@@ -1,0 +1,7 @@
+{
+  "schema": "v2d.preparation-failure.v1",
+  "writer_error": "NameError: prior undefined after v2 source saved",
+  "premature_guard_attempt": "missing plan; failed before creating output or mutating phase/ledger",
+  "worker_or_scientific_controls_rerun": false,
+  "repair": "create missing plan only; v2 source retained"
+}

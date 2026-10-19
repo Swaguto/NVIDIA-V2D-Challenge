@@ -1,0 +1,115 @@
+{
+  "schema": "v2d.exact-research-source-archive.v1",
+  "files": [
+    {
+      "file": "verify_source_cone_dual_v1.py",
+      "restore_relative_path": "compute/verify_source_cone_dual_v1.py",
+      "executed_or_declared_source_sha256": "4f361ace8908e58bb495d57b0ae0605dbed98c1ec68000a3256631a2500aab84"
+    },
+    {
+      "file": "derive_necessary_wrist_cone_change_v1.py",
+      "restore_relative_path": "compute/derive_necessary_wrist_cone_change_v1.py",
+      "executed_or_declared_source_sha256": "844cd34751702fdfdfe542dbe388b023b1fa6c6a0f59c4a53012c4a50318e798"
+    },
+    {
+      "file": "verify_necessary_wrist_cone_change_v1.py",
+      "restore_relative_path": "compute/verify_necessary_wrist_cone_change_v1.py",
+      "executed_or_declared_source_sha256": "89e63877ed971265c76407dfac3da1da2bcd68e370b215c296816b56aa9f0c91"
+    },
+    {
+      "file": "bound_common_wrist_cone_domains_v1.py",
+      "restore_relative_path": "compute/bound_common_wrist_cone_domains_v1.py",
+      "executed_or_declared_source_sha256": "47e9efc9667ccb83e02b7106dde644a9478bcd97b9a167ddc9cfe04d2789cc6c"
+    },
+    {
+      "file": "bound_common_wrist_cone_domains_v2.py",
+      "restore_relative_path": "compute/bound_common_wrist_cone_domains_v2.py",
+      "executed_or_declared_source_sha256": "3ce71025457bc1e387de607486d729add06ebe6e0d2455d53699c65bc42851e3"
+    },
+    {
+      "file": "verify_common_wrist_cone_partition_v1.py",
+      "restore_relative_path": "compute/verify_common_wrist_cone_partition_v1.py",
+      "executed_or_declared_source_sha256": "d14825befdef5fcd9292aa988b9bc9c3a1f03ad2fe3f47b916184912fe2702ec"
+    },
+    {
+      "file": "source-cone-dual-contract-CPU-plan-v1.json",
+      "restore_relative_path": "compute/source-cone-dual-contract-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "a48222295ea9f48c000f8e6f462b63b5377f8adc0db727ec8ac70c180cc0c66d"
+    },
+    {
+      "file": "necessary-wrist-cone-change-CPU-plan-v1.json",
+      "restore_relative_path": "compute/necessary-wrist-cone-change-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "816766d713be4bf86ddd0f58dfe49da1b6f17ae5e979c7f71489c6c54be9f5f8"
+    },
+    {
+      "file": "wrist-cone-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/wrist-cone-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "d998a86f471d77694325f00277d3df4dfc17ae3ec52fd35ef81c2db1f25a7092"
+    },
+    {
+      "file": "common-wrist-cone-domains-CPU-plan-v1.json",
+      "restore_relative_path": "compute/common-wrist-cone-domains-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "6eedd1f541ce093e0328b56a2a5881c5defdceb4f2675f6b53982c09c8dcba98"
+    },
+    {
+      "file": "common-wrist-cone-domains-CPU-plan-v2.json",
+      "restore_relative_path": "compute/common-wrist-cone-domains-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "f199f0d1eed6e4d9cc0cc18ba336cb19f8eefe07673ba6f60ce962d7b03064c3"
+    },
+    {
+      "file": "wrist-cone-partition-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/wrist-cone-partition-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "61c9d486ea3474f432860486ca1c04f75177c0971bc14b57eac728d050568eb1"
+    },
+    {
+      "file": "source_cone_dual_v1.py",
+      "restore_relative_path": "compute/source_cone_dual_v1.py",
+      "executed_or_declared_source_sha256": "cf82dafc418aadd9067e0704c93a270c4aa59b46fdcd2ab7b4952e26cb90fed4"
+    },
+    {
+      "file": "rotated_index_support_v1.py",
+      "restore_relative_path": "compute/rotated_index_support_v1.py",
+      "executed_or_declared_source_sha256": "8c2f94dc79546da595da23ca5c6c9cc1b3c19f15a49568f732dd9d87bce4db0e"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+    },
+    {
+      "file": "source_orientation_context_v1.py",
+      "restore_relative_path": "compute/source_orientation_context_v1.py",
+      "executed_or_declared_source_sha256": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00"
+    },
+    {
+      "file": "planar_support_critical_points_v1.py",
+      "restore_relative_path": "compute/planar_support_critical_points_v1.py",
+      "executed_or_declared_source_sha256": "5578faff20976f103c83bc75b26e156505fcc961486a209f92884fefac1685ca"
+    },
+    {
+      "file": "wrist-cone-domain-plan-preparation-failure-v1.json",
+      "restore_relative_path": "compute/wrist-cone-domain-plan-preparation-failure-v1.json",
+      "executed_or_declared_source_sha256": "4e9547653f5b90fd51839aa4ea5d3cc872db81125e2c59121a4fcae452d0be2d"
+    }
+  ],
+  "repository_dependency_snapshots": [
+    {
+      "file": "repository_snapshot_kinematics.py",
+      "repository_source_path": "scripts/dex3_training/v2d_dex3_flashchord/kinematics.py",
+      "sha256": "0747c53517a45a64efa5c7ecf8e91fedafcfb5150042c9a99c2718c0d7cb376c"
+    },
+    {
+      "file": "repository_snapshot_audit_hand_reference_contacts.py",
+      "repository_source_path": "scripts/dex3_training/audit_hand_reference_contacts.py",
+      "sha256": "bd964efa556a0d9edf3335c98ded32399aea808c9772ee2167a1495a35fc6d81"
+    }
+  ],
+  "private_data_models_geometry_results_or_weights_included": false,
+  "failed_v1_and_control_reuse_preserved": true,
+  "production_runtime_unchanged": true
+}

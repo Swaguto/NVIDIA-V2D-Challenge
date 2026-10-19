@@ -74,3 +74,19 @@ cut-locus/budget uncertainty and strict contracts. Independent private checks
 on actual e037 geometry validate selected isolated poses; their sparse insertion
 still fails original joint speed and temporal caps. No new reference replaces
 the three verified components, and no physical or policy success is implied.
+
+## Research camera-cone duals
+
+The private wrist study now uses a global positive-depth source-cone halfspace
+instead of treating a fixed-plane conic separator as valid after wrist motion.
+For image disk matrix `B`, radius `r` and unit 2-vector `u`, every source-cone
+point satisfies `(B.T u - r * ez).C <= 0`. The tangent at a planar ellipse
+support point has a positive-scale pullback to the saved 2-D separator.
+
+With fixed translation and local point radius bound `rho`, a wrist rotation
+of angle `theta` changes any unit-normal support by at most
+`2 * rho * sin(theta / 2)`. This yields necessary rotation bounds, not a pose,
+source accuracy, native collision or motor/grasp certificate. The numerical
+root partition keeps its source-model/component constraints and every
+unresolved leaf. See the code-only `wrist_cone_domains` research archive and
+the wrist-contact review for exact scopes, retained failures and checks.
