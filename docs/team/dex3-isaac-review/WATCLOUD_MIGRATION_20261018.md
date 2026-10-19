@@ -210,3 +210,53 @@ No new full carry reference, retargeted trajectory, physics success or PPO polic
 is qualified. Preserve both failed fits. Next investigate the source thumb-web
 silhouette and visibility/authority of the occluded landmark estimates before
 another bounded candidate; do not expand the new RGB probe or repeat training.
+
+## Explicit fingertip and depth evidence contracts
+
+A direct comparison of the saved, actual HaMeR outputs with CPU reconstruction
+found matching mesh vertices (maximum component error `2.49e-8` m), but five
+different fingertip representatives. The repository's canonical manotorch
+layout uses vertices `[745,317,444,556,673]`; the actual HaMeR output uses
+`[744,320,443,554,671]`. The resulting fingertip differences are 1.57–5.14 mm.
+The [pinned HaMeR wrapper](https://github.com/geopavlakos/hamer/blob/3a01849f4148352e9260b69bf28b65d1671a4905/hamer/models/mano_wrapper.py)
+uses the [SMPL-X fingertip definition](https://github.com/vchoutas/smplx/blob/main/smplx/vertex_ids.py).
+The saved GPU arrays independently identify each vertex exactly.
+
+`source_hand_landmarks.py` now requires explicit source and target layouts,
+validates the incoming mesh/joint agreement and returns a separate array.
+The canonical mesh, 16 skeletal joints, source flags and historical arrays stay
+unchanged. Its nine focused tests cover both directions, mirrored hands,
+batch axes and rejected incorrect declarations. All 21 converted joints close
+against the saved actual HaMeR output within `1.78e-8` m. The original failed
+joint-closure control is retained.
+
+A new fit uses this explicit layout for RGB projection only, keeping the old
+IR projection, samples, weights and numeric gates. It reaches **7.72/12.13 px**
+held-out RGB median/p95 under the declared HaMeR convention. These values must
+not be presented as directly comparable with earlier p95 values using the
+canonical fingertip representatives. The full source check still rejects:
+IR median 12.03 px, historical inferred joint-depth discrepancy 50.97 mm and
+31/32 skin-ray hits. This smaller convention mismatch does not explain the
+larger depth/carry failures.
+
+The depth audit also reproduces the original saved 9×9 patch measurements and
+5 mm offset exactly. Frame 50 remains invalid, not directly observed and not
+metric-valid. A synthetic occlusion control has perfect image/surface agreement
+at a 0.30 m front surface with a true fingertip at 0.35 m; the offset heuristic
+still produces a 45 mm joint-depth error. This disproves its universal use for
+occluded joints, not the retained outcome of any real-data gate.
+
+`source_hand_depth.py` provides an explicitly typed estimated-visible-surface
+comparison. It compares first ray/mesh intersections without an anatomical
+offset, rejects joint-centre evidence in this operator, retains expected
+missing hits as infinite residuals and preserves unknown samples. Its nine
+focused tests cover occlusion, missing coverage, camera axes and invalid
+contracts. On the frozen real source candidate it matches the independent
+earlier ray operator within `1.67e-16` m and preserves the same 31/32 failure.
+No old failure has been relabeled or overridden.
+
+A new bounded CPU experiment tests hard projected-mesh containment for the
+unchanged training skin pixels, with the existing objective and corrected
+projection. Held-out pixels do not constrain that solver. It is a source
+feasibility study; the unchanged 1 mm native contact gate, motion, swept contact
+and grasp checks remain required before any PPO. No new GPU work is queued.
