@@ -50,6 +50,21 @@
       "file": "skin-bound-actuated-pose-CPU-plan-v1.json",
       "restore_relative_path": "compute/skin-bound-actuated-pose-CPU-plan-v1.json",
       "executed_or_declared_source_sha256": "392f422ec0acf6df68ec1dc9d10ca60579706cb22423a873bcc59ca5f640c667"
+    },
+    {
+      "file": "audit_anatomical_palm_origin_v1.py",
+      "restore_relative_path": "compute/audit_anatomical_palm_origin_v1.py",
+      "executed_or_declared_source_sha256": "4b1b0e5fcebd17dd71457641b7641984052cf87299e773d6451be3961ee44930"
+    },
+    {
+      "file": "guard_anatomical_palm_origin_v1.py",
+      "restore_relative_path": "compute/guard_anatomical_palm_origin_v1.py",
+      "executed_or_declared_source_sha256": "c5e8d7f1b0f6b7dd8cb9ae8662d263610bc4ee6d069227646f1bf9969a0408d8"
+    },
+    {
+      "file": "anatomical-palm-origin-CPU-plan-v1.json",
+      "restore_relative_path": "compute/anatomical-palm-origin-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "11dc69e9d6e8e475830bffbc78d99d97381364742a256fa9b8f2a2036bdd904b"
     }
   ],
   "no_private_arrays_or_reports_included": true

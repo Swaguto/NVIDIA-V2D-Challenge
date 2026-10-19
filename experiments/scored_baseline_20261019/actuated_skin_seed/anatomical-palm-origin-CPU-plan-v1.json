@@ -1,0 +1,17 @@
+{
+  "schema": "v2d.anatomical-palm-origin-CPU-plan.v1",
+  "declared_utc": "2026-10-19T06:37:20.120917+00:00",
+  "episode": 37,
+  "frame": 50,
+  "hypothesis": "Source wrist and robot palm origin may require a morphology-dependent translation; no presumption of defect",
+  "anchor_rule": "Keep saved source-to-robot orientation exactly fixed. Place robot index/middle joint0-origin midpoint at saved inferred human MCP5/9 midpoint. No scale, object sites, force, images or physical outcome in calibration.",
+  "unused_anatomical_check": "Human thumb base1 versus actual robot thumb0 origin, plus index-middle spread residual",
+  "all_three_saved_sources_predeclared": true,
+  "no_source_winner_selected": true,
+  "post_checks": "Read descriptive tip-image and fixed-finger site errors only after all centers are frozen; no tuning",
+  "existing_8mm_08rad_boxes_not_enlarged_or_overridden": true,
+  "hypothesis_not_an_accepted_mapping_or_new_prior": true,
+  "required_independent_source_anatomical_motion_full_native_1mm_swept_motor_grasp_validation": true,
+  "source_flags_and_original_heldout_failures_unchanged": true,
+  "new_GPU_work": false
+}

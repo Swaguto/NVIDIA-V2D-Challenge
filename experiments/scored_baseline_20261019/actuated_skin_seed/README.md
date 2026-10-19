@@ -27,3 +27,8 @@ pose as measured truth. All original source/held-out failures and root/finger
 motion requirements remain. No hardware cap, source confidence, official
 scorer, baseline policy, training default or acceptance gate is changed.
 No GPU/PPO ran and no physical task was qualified.
+
+5. Object-independent MCP midpoint palm-origin hypothesis: rejected. The source
+   and robot finger-base spans differ; the derived center worsens thumb-image
+   error and is outside the existing box. It is never adopted as a new prior.
+   No object or image data enters the translation derivation.

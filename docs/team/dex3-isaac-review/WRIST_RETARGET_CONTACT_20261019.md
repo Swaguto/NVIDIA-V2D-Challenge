@@ -328,3 +328,30 @@ original motion limits, fresh full native/swept checks and actual motor/grasp
 validation before GPU/PPO. Brev remains stopped. Exact code-only producers and
 declared plans are under
 `experiments/scored_baseline_20261019/actuated_skin_seed/`.
+
+### Object-independent palm-origin control
+
+A subsequent diagnostic derives a translation from the saved index/middle MCP
+midpoint and actual robot joint origins, keeping every source orientation fixed.
+Object sites, forces and image errors do not enter that derivation. The same
+robot-local offset `[4.82, 4.63, 7.75]` mm appears in all three saved source
+models, within `8.88e-17` m. This is a morphology-based hypothesis, not a new fit.
+
+**It is also rejected.** It worsens the inferred thumb image error in every
+case, leaves about 18.0 mm error at each MCP anchor and a 20.1 mm unused thumb-base
+error, and falls outside the existing world-component translation box. No box
+is enlarged, default mapping changed or new center adopted. The actual robot
+index/middle base separation is **57.0 mm**, versus **22.7 mm** in the inferred
+source hand. Half the span difference alone gives a **17.15 mm** necessary
+worst-anchor error for any rigid alignment of those two bases. This concerns
+MCP alignment, not global grasp reachability or task impossibility.
+
+The next representation should distinguish inferred human hand anchors from
+robot contact assignment. In particular, an inferred or missing human middle
+finger is not evidence that all three robot fingertips must contact its three
+chosen points. Develop explicit object-local robot contact-patch/mode hypotheses
+under the actual morphology and unchanged effort, motion and source checks;
+test native contact manifolds and the required wrench rather than only isolated
+surface proximity. Preserve the rejected three-point/fixed-triangle and MCP
+controls. Do not resweep them or adopt the failed MCP center. No source
+confidence, contact labels or qualification gates change.
