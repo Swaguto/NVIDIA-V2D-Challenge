@@ -2036,3 +2036,54 @@ AlmostSolved/equality/overlap statuses and failed controls remain. F/separate
 middle/wrist components, source/missing/held-out authority, full region-2 and
 unknown-band uncertainty, parameters, original gates and production runtime/tests
 stay unchanged. Do not rerun this fixed inventory, controls or verification.
+
+## Mixed original-variable / pair-observable aliases, 2026-10-19
+
+A distinct mixed block links the original ten normalized tensor variables with
+13 derived pair observables `Y_ij=t_i*t_j`. The 130 requests `E[t_a*Y_ij]`
+need powers `(2,1)` inside the pair and `(1,1,1)` outside. Existing scopes/powers
+and exact normalized-domain identities are required before evaluating any term.
+Eleven NEW contracts pass pointwise multiplicative aliases, these new tensor
+maps, continuous correlated moments, exact marginal rows, zero/signed mass,
+zero-variance mixed identities, domain mismatch handling and pointer assembly.
+The completed pair-power contracts are reused by hash, not repeated.
+
+ONE fixed inventory of the original 1,125-weight image-conic AlmostSolved return
+has 38 available mixed entries and 92 unavailable entries. The 130 requests
+form 108 distinct monomials; 32 are available. Six duplicate available entries
+share one exact monomial map. All 22 duplicate groups, including unknown groups,
+remain explicit. A shared map is an algebraic identity, not an averaging or
+repair of actual raw copies, new observation or accepted source state.
+
+The 32 new available groups have 56 actual scope copies and 2,136 coefficients.
+Twenty-four differences are exactly nonzero, maximum 3.9835394821e-17. Each equals
+and is bounded by a NEW exact linear combination of ORIGINAL saved marginal
+residual values. All 549 old values are reused by hash; no old residual audit
+runs. Domains bind identically. Actual raw weights/masses/residuals are unchanged.
+Copy envelopes cover reported values only, not all possible corrections/family
+feasibility and not any new original candidate tolerance.
+
+The SAVED old variable-11Gram and pair-14Gram inventories contribute 170 upper
+entries BY HASH, with only the constant shared. No old numerical block is
+reexecuted. The pointer-only partial `Gram(1,10t,13Y)`, dimension 24, has 300
+upper entries: 110 specified and 190 free/unknown. All 26 old variable unknowns,
+72 old pair unknowns and 92 new mixed unknowns remain free. The separate exact
+completed 11Gram supplies no new known values or source truth here.
+
+Independent verification checks all 130 mixed availability/alias decisions,
+56 new copies, 2,136 falling-factorial coefficients, original-row identities,
+exact residual predictions/bounds, domain bindings, 144 old pointer hashes and
+130 ordered durable entry BEFORE/AFTER pairs. All requests/maps/paths/copies,
+intermediate and constructor returns, unavailable entries and exact certificates
+are private/hash bound. Three serial guarded CPU jobs succeed; twelve exact
+code/plan files are archived under `mixed_product_aliases`.
+
+This is an algebraic inventory, not a global PSD completion, common supported
+measure, deterministic source/time trajectory or source accuracy certificate.
+No family/task exclusion, new solver, PSD audit, source generation, alternative
+distribution, command/root mutation, native position, physics or GPU/PPO occurs.
+Original/auxiliary raw returns and separate exact certificate stay unchanged.
+F/separate middle/wrist components, source/missing/held-out authority, region-2
+and unknown-band uncertainty, parameters, original gates and production
+runtime/tests remain. Do not rerun these contracts, inventory or verification,
+or promote a product-moment pointer, mean or Gram factor to a robot command.

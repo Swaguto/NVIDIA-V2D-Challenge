@@ -1,0 +1,68 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "private_results_absent": true,
+  "files": [
+    {
+      "file": "mixed_product_aliases_v1.py",
+      "restore_relative_path": "compute/mixed_product_aliases_v1.py",
+      "executed_or_declared_source_sha256": "98e92812d5e17c9246147a82b6671ed79d88169d4579a7529253444dd5ef20f6"
+    },
+    {
+      "file": "verify_mixed_product_contracts_v1.py",
+      "restore_relative_path": "compute/verify_mixed_product_contracts_v1.py",
+      "executed_or_declared_source_sha256": "4cd2712137c8f2579006a015dfce56f565747c774e826ebe4c8d802bd246afc3"
+    },
+    {
+      "file": "diagnose_mixed_products_v1.py",
+      "restore_relative_path": "compute/diagnose_mixed_products_v1.py",
+      "executed_or_declared_source_sha256": "1e05b44d55f0edb331660ac2c3eb81edacf4a8628aad21e2363aa86f1e5000eb"
+    },
+    {
+      "file": "verify_mixed_products_v1.py",
+      "restore_relative_path": "compute/verify_mixed_products_v1.py",
+      "executed_or_declared_source_sha256": "50da4763db53018a5815fdc36ba645fed8eefc6c27c09d116be05cc34a33102e"
+    },
+    {
+      "file": "pair_product_moments_v1.py",
+      "restore_relative_path": "compute/pair_product_moments_v1.py",
+      "executed_or_declared_source_sha256": "3908ee0867ed890b6aa5eaee12e39f6223d082bcf0cac45b40e2088624b68aac"
+    },
+    {
+      "file": "global_cycle_moments_v1.py",
+      "restore_relative_path": "compute/global_cycle_moments_v1.py",
+      "executed_or_declared_source_sha256": "2a051ca145ee20d3ee6d47a1b133ff9bc66a97e663544982ae8afda6d2417387"
+    },
+    {
+      "file": "conditional_moment_cones_v1.py",
+      "restore_relative_path": "compute/conditional_moment_cones_v1.py",
+      "executed_or_declared_source_sha256": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995"
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "mixed-products-contract-CPU-plan-v1.json",
+      "restore_relative_path": "compute/mixed-products-contract-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "1c0af66db4f931d5628c494e5760dd1c9936f9287cde62afe23dc1409885858e"
+    },
+    {
+      "file": "mixed-products-diagnosis-CPU-plan-v1.json",
+      "restore_relative_path": "compute/mixed-products-diagnosis-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "7639a0089c2f28b1b8bae1e694c9ea49f3fdf7490b78442b2a2584fb69f50a90"
+    },
+    {
+      "file": "mixed-products-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/mixed-products-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "1ec1eeb6cdec866c3bab836ea5d08875d5a0e7defd8e2a60fb28d4430da65d98"
+    }
+  ],
+  "repository_dependency_snapshots": [],
+  "repository_runtime_NOT_imported": true
+}

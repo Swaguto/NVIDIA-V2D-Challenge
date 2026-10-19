@@ -1,0 +1,16 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_mixed_product_contracts_v1.py",
+  "worker_sha256": "4cd2712137c8f2579006a015dfce56f565747c774e826ebe4c8d802bd246afc3",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-mixed-products-contract-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/mixed_product_aliases_v1.py": "98e92812d5e17c9246147a82b6671ed79d88169d4579a7529253444dd5ef20f6",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/pair_product_moments_v1.py": "3908ee0867ed890b6aa5eaee12e39f6223d082bcf0cac45b40e2088624b68aac",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-pair-products-contract-v1/report.json": "dd0863974ebb0a13ab8328eb39bef01a8899a2a9b2cf37e013482123937f0078"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Eleven NEW mixed t*Y alias/tensor(2,1)/(1,1,1)/zero-pivot/domain/pointer contracts. Old pair controls by hash only;no solver,old audits or episode inventory.",
+  "no_GPU": true,
+  "declared_new_controls": 11
+}
