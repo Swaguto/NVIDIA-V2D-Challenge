@@ -296,6 +296,13 @@
       "scope": "new source-only CPU analysis or resource guard"
     },
     {
+      "path": "record_RGB_checkpoint_v1.py",
+      "sha256": "197d87563e5c62005dd5434be5ea51b1ef4955dcd435617e80666573a2bc75d1",
+      "execution_status": "executed",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/record_RGB_checkpoint_v1.py",
+      "scope": "private integrity and scheduler reconciliation only"
+    },
+    {
       "path": "verify_RGB_pose_conversion_v2.py",
       "sha256": "e0b0736c0b6a20eeb4de772577592ecd05fdb8aec79d014a76f151237297796a",
       "execution_status": "executed",
