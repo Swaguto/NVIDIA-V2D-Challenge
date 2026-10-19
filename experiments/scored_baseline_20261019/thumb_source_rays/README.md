@@ -14,7 +14,7 @@ bounds and all nonsingular analytic point branches. An axial singularity is
 reported separately from empty finite branches. It certifies neither source
 accuracy, camera depth, collision, force, motor authority nor grasp success.
 Nine actual cached native configurations close against analytic tip geometry
-within 9.5e-10 m. These numerical bindings do not establish observed source truth.
+within 9.6e-10 m. These numerical bindings do not establish observed source truth.
 
 The new finite bank samples 1,025 depths on each of two predeclared rays at the
 13 retained failing frames: the original source-image center and the current

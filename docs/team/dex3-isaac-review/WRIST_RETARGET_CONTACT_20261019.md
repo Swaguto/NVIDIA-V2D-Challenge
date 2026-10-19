@@ -633,7 +633,7 @@ point-IK branches within supplied joint bounds. Empty branches and an axial
 singularity are distinct outcomes. Twenty-two focused tests cover analytic
 positions, radial/elbow branches, angle wrapping, tangencies, limits and invalid
 inputs. Nine retained native configurations close to analytic geometry within
-9.5e-10 m. The first test import failure is retained; the test repair does not
+9.6e-10 m. The first test import failure is retained; the test repair does not
 repeat native binding. Numerical closure does not establish source accuracy.
 
 At the 13 remaining right-self failures, a new finite study samples 1,025 depths
