@@ -1,0 +1,19 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_saved_mixed_joint_moments_v1.py",
+  "worker_sha256": "4f21f7656b61d6eba3b87dbb8515676768519d43e44ac165f6c2e962bad9ccf9",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-saved-mixed-joint-moments-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/mixed_joint_moments_v1.py": "5f5f8d2a9d948744cf992b7694117a023ffb650d00332414dc95ca91bdd3fdcb",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-mixed-joint-contract-v1/report.json": "f38b3f34ab64dc5d4775de09e5dba401d1bd4460eb780a4a831c64c37146687a",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-bounded-moment-cone-v1/update-05-necessary-LP-model.json": "5938c310fe73da913bd56383046f17fc1b667335c1bce60ee131f701c1f0b723",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-conditional-SDP-v1/report.json": "a422803dfba81a0abc7eeab67fb83f3b29b648e56e3f8ba51218a1a1c436c898",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-conditional-SDP-v1/single-direct-SDP-solver-RETURN.json": "e4b65adabf828bb0a8aeda79c9f04d2142f3771d15306c851c323930c95ec156",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-model-v1/common-degree-factor-representations.json": "7e03cc503ed8fca55a4e60fc42ac4b8205c7d7f867aa632b6839335d1dd3fca7",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-SDP-independent-v1/report.json": "a913df4623d4934e567e2c509ea70669ab986860b8287ae13dcc5f14804b6345"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "ONE saved-return mixed-square audit:19existing pair/triple cliques,63joint moment/localizer matrices,totaldeg2/1 within unchanged degree4tensor, exact rational congruence/witnesses; NO SOLVER",
+  "no_GPU": true
+}

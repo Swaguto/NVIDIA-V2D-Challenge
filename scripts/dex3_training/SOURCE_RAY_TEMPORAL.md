@@ -188,3 +188,28 @@ unknown event bands/correlations; it is not permission for a degree/anchor/solve
 sweep. Verified F, unqualified middle and wrist components and all original
 source/motion/native/motor/grasp gates remain unchanged. No native/physics/GPU
 or whole-clock reference qualification occurred.
+
+## Mixed squares and overlapping joint/time scopes
+
+Existing degree-four tensor coefficients now support a separate mixed-variable
+consistency audit: nineteen pair/triple scopes, sixty-three joint moment and
+interval-localizer matrices. Twelve new exact analytical contracts pass. All
+sixty-three actual matrices pass exact PSD with full rank. Independent checks
+verify 405 cross-moment maps, 14,818 coefficients and 1,590 congruence entries.
+No solver, old univariate audit or source constructor is repeated.
+
+A new cross-clique projection audit reuses saved marginal-equality residuals by
+hash. All 405 linear identities and 226 overlap comparisons verify. There are
+223 exact mismatches, maximum 2.294172e-16, each accounted for by an exact
+combination of saved residuals. No actual weights, tolerances or source flags
+are repaired. Positive unnormalized variances in all ten variables also prevent
+calling this table a deterministic assignment.
+
+These are necessary local consistency checks. A global common measure with
+pointwise support on every source/motion condition and a concrete trajectory
+remain unqualified. Derive the availability of temporal/depth support-localizer
+maps within the unchanged saved tensor powers before another formulation;
+unknown or unavailable moments stay explicit. Do not sweep degrees or rerun
+these contracts, matrices, overlap audit or earlier solvers. Exact code/plans
+are in `experiments/scored_baseline_20261019/mixed_joint_consistency`; all private
+results and the verified reference/source/physical gates remain unchanged.

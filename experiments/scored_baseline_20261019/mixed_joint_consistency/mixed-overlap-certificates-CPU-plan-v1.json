@@ -1,0 +1,18 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_mixed_overlap_certificates_v1.py",
+  "worker_sha256": "304e1b9e245adf6f8416063cfeda86c304e9c5f2a196a47890ae275d59b2a613",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-mixed-overlap-certificates-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/mixed_joint_moments_v1.py": "5f5f8d2a9d948744cf992b7694117a023ffb650d00332414dc95ca91bdd3fdcb",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-saved-mixed-joint-moments-v1/report.json": "356d2fc72b19df0e4fe36ecc23582d641b223b2491a3197b8a9ca388502abfe5",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-bounded-moment-cone-v1/update-05-necessary-LP-model.json": "5938c310fe73da913bd56383046f17fc1b667335c1bce60ee131f701c1f0b723",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-conditional-SDP-v1/single-direct-SDP-solver-RETURN.json": "e4b65adabf828bb0a8aeda79c9f04d2142f3771d15306c851c323930c95ec156",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-SDP-independent-v1/report.json": "a913df4623d4934e567e2c509ea70669ab986860b8287ae13dcc5f14804b6345",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-SDP-independent-v1/all-independent-direct-SDP-packing-primal-and-dual-certificates.jsonl": "7aabe4a2ce9dd42aacd835368b541f144642d1309c0392a15f7e4b240bb96a6e"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Three NEW projection identities then exact cross-clique monomial consistency and equality-linear-combination certificates, reuse old equality residuals by hash NO OLD AUDIT/SOLVER",
+  "no_GPU": true
+}

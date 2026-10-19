@@ -1,0 +1,68 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "private_results_absent": true,
+  "files": [
+    {
+      "file": "mixed_joint_moments_v1.py",
+      "restore_relative_path": "compute/mixed_joint_moments_v1.py",
+      "executed_or_declared_source_sha256": "5f5f8d2a9d948744cf992b7694117a023ffb650d00332414dc95ca91bdd3fdcb"
+    },
+    {
+      "file": "verify_mixed_joint_contracts_v1.py",
+      "restore_relative_path": "compute/verify_mixed_joint_contracts_v1.py",
+      "executed_or_declared_source_sha256": "b31f601bed7cd83aa4e85d2f76fd4f057d52d84e681596601178dae61feb4d2e"
+    },
+    {
+      "file": "audit_saved_mixed_joint_moments_v1.py",
+      "restore_relative_path": "compute/audit_saved_mixed_joint_moments_v1.py",
+      "executed_or_declared_source_sha256": "4f21f7656b61d6eba3b87dbb8515676768519d43e44ac165f6c2e962bad9ccf9"
+    },
+    {
+      "file": "derive_mixed_overlap_certificates_v1.py",
+      "restore_relative_path": "compute/derive_mixed_overlap_certificates_v1.py",
+      "executed_or_declared_source_sha256": "304e1b9e245adf6f8416063cfeda86c304e9c5f2a196a47890ae275d59b2a613"
+    },
+    {
+      "file": "verify_mixed_joint_saved_certificates_v1.py",
+      "restore_relative_path": "compute/verify_mixed_joint_saved_certificates_v1.py",
+      "executed_or_declared_source_sha256": "e4d461614865f2ea6a4421e19f90390695a7fd5b5b861d61188f9d5aca363f64"
+    },
+    {
+      "file": "conditional_moment_cones_v1.py",
+      "restore_relative_path": "compute/conditional_moment_cones_v1.py",
+      "executed_or_declared_source_sha256": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995"
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "mixed-joint-contract-CPU-plan-v1.json",
+      "restore_relative_path": "compute/mixed-joint-contract-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "3bf463dab7e29047e2008d42a81cfd31803101521b16792f26d08e85314e295c"
+    },
+    {
+      "file": "saved-mixed-joint-moments-CPU-plan-v1.json",
+      "restore_relative_path": "compute/saved-mixed-joint-moments-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "e6c74b95e9cd01e456415c89c93bb9a1ce4974611a463fa37847fdefbd043aba"
+    },
+    {
+      "file": "mixed-overlap-certificates-CPU-plan-v1.json",
+      "restore_relative_path": "compute/mixed-overlap-certificates-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "60812332dba325ed13b3f60c0a64d9a4bd962f1c2be517279465ec255ccd28ae"
+    },
+    {
+      "file": "mixed-joint-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/mixed-joint-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "33818fd6eb39d8cc1f47497cbf021f70bd0f421374c01ff5f992aa557b142ba4"
+    }
+  ],
+  "repository_dependency_snapshots": [],
+  "repository_runtime_NOT_imported": true
+}

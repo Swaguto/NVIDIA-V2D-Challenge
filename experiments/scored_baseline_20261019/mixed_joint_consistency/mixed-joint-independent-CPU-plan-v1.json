@@ -1,0 +1,18 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_mixed_joint_saved_certificates_v1.py",
+  "worker_sha256": "e4d461614865f2ea6a4421e19f90390695a7fd5b5b861d61188f9d5aca363f64",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-mixed-joint-independent-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-saved-mixed-joint-moments-v1/report.json": "356d2fc72b19df0e4fe36ecc23582d641b223b2491a3197b8a9ca388502abfe5",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-mixed-overlap-certificates-v1/report.json": "0ce7ffdf92d5cd18c219ec819f820043459086198f659883112568e263a46d21",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-mixed-overlap-certificates-v1/all-mixed-overlap-linear-certificates.json": "14d70f9a24b139ad76247a171a4ae2d991f4edb8b334911891c0f7ccec27a6e9",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-bounded-moment-cone-v1/update-05-necessary-LP-model.json": "5938c310fe73da913bd56383046f17fc1b667335c1bce60ee131f701c1f0b723",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-conditional-SDP-v1/single-direct-SDP-solver-RETURN.json": "e4b65adabf828bb0a8aeda79c9f04d2142f3771d15306c851c323930c95ec156",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-SDP-independent-v1/all-independent-direct-SDP-packing-primal-and-dual-certificates.jsonl": "7aabe4a2ce9dd42aacd835368b541f144642d1309c0392a15f7e4b240bb96a6e"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Independent exact falling-factorial crossmaps and unit-triangular congruence certificates, cross-clique projected residual identities, and unnormalized variance diagnostic. No solver or old audit replay",
+  "no_GPU": true
+}

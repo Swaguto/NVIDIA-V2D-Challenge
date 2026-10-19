@@ -1555,3 +1555,53 @@ result. F and the separate unqualified middle component, all source/missing/
 held-out evidence, original motion/physical gates and parameters are unchanged.
 No native position, physics, GPU/PPO, full reference, grasp, motor, task or score
 success occurred. Production runtime/tests are unchanged.
+
+## Mixed joint-variable consistency, 2026-10-19
+
+A new saved-return diagnosis tests polynomial squares involving multiple joints
+and clocks. The existing degree-four tensor tables contain thirteen pair scopes
+and six triples. Total-degree-two joint moment bases and total-degree-one
+interval localizers t_i(1-t_i) require only powers already available. No source
+polynomial, moment degree, anchor, optimizer or original gate changes. The
+necessity follows the [moment/localizer identities in Laurent, Section 4.1](https://homepages.cwi.nl/~monique/files/moment-ima-update.pdf).
+
+Nine new analytical contracts cover exact tensor-to-cross-moment maps, signed/
+zero mass, mixed square/localizer identities, boundary localizers, positive/
+rank-deficient/negative/zero-cross pivots, axis order, residual bounds and strict
+scope checks. Three additional contracts bind projected moments to marginal
+equalities. All twelve pass. Exact rational congruence replaces numerical
+eigenvalue thresholds; any negative square would be retained explicitly.
+
+All 63 new matrices pass exact PSD and are full rank: thirteen moment matrices
+have rank six, six have rank ten; 26 interval localizers have rank three and
+18 have rank four. Independent falling-factorial evaluation verifies all
+405 monomial maps, 14,818 coefficients and 1,590 congruence entry identities.
+This is additional local mixed positivity, not a qualified common measure or
+deterministic source/time path. No solver runs and no old matrix audit repeats.
+
+A genuinely new overlap calculation derives exact linear-combination
+certificates from the ORIGINAL shared-marginal equations. The earlier exact
+equality residuals are reused by hash rather than recomputed. Independent
+checks pass all 405 projection identities and 226 shared-moment comparisons.
+Of these comparisons, 223 have nonzero exact differences, maximum
+2.2941718e-16. Every difference equals and is bounded by its saved equality
+residual combination. These are arithmetic diagnostics, not new acceptance
+tolerances, missing source or a permission to repair the returned table.
+Actual weights are never clipped, normalized or changed.
+
+All ten joint variables have strictly positive unnormalized variance
+numerators. Thus the saved table is not a single deterministic assignment;
+local PSD and small residuals do not produce commands or establish source
+truth. Pointwise support on all source/time constraints, global common-measure
+consistency and a concrete whole-clock candidate remain unqualified. A future
+necessary study should first determine which temporal/depth support localizers
+fit the EXISTING moment powers; unavailable moments must remain unresolved,
+not inferred or supplied by a degree sweep. No new solve is queued from this
+result before that derivation and meaningful new contracts.
+
+Four serial guarded CPU jobs succeed; all twelve exact sources/plans and
+private evidence are retained in the code-only `mixed_joint_consistency`
+archive. Production runtime/tests, F, separate unqualified components, source/
+missing/held-out flags, original bounds/gates and physical parameters remain
+unchanged. No native position, physics, GPU/PPO, new reference, grasp, motor,
+task, policy or score success occurred.
