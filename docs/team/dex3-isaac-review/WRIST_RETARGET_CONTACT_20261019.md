@@ -1990,3 +1990,49 @@ and unknown bands, parameters and original gates remain unchanged. Production
 runtime/tests, native/physics/GPU/PPO and motor/grasp/task/policy/score do not
 change. Do not rerun this construction, controls, evaluation or verification,
 or treat density coefficients/corners as robot commands or observations.
+
+## Existing pair-product global moment inventory, 2026-10-19
+
+A distinct higher-order consistency question uses the 13 existing pair tensor
+scopes as observables `Y_s=t_i*t_j` in the SAME saved normalized coordinates.
+Squares use powers `(2,2)` and overlapping pair products use `(1,2,1)`; these
+powers already exist in the saved per-coordinate degree-four tables. Products
+whose union is absent from existing pair/triple scopes remain free/unavailable.
+The input is the newest ORIGINAL 1,125-weight image-conic AlmostSolved return,
+not the separate exact Gram certificate or a replacement distribution.
+
+Thirteen NEW analytic controls pass product/alias/box identities, a continuous
+correlated example, exact tensor/falling-factorial maps, axis order, weighted
+residual identities/envelopes, zero/signed mass/variance, domain aliases and
+unavailable scopes. No old scope/cycle/PSD/mixed/source control or audit repeats.
+Only after these controls and exact provenance/domain bindings, ONE fixed
+inventory checks all 105 upper entries of partial `Gram(1,13Y)`, dimension 14.
+There are 33 specified entries and 72 absent products, all retained FREE.
+The 32 nonconstant groups have 56 actual scope copies and 2,113 coefficients.
+
+Twenty-four copy differences are exactly nonzero, maximum 4.0515279933e-17.
+Each equals and is bounded by a NEW exact linear combination of ORIGINAL
+marginal-equality residual values. All 549 old residual values, saved link paths,
+old raw mass envelope and domain provenance are reused by hash; their original
+audit is not rerun. Actual raw weights, masses and differences stay unchanged.
+Diagnostic envelopes contain reported copies only. They are not bounds on all
+possible corrections/family feasibility or new candidate tolerances.
+
+Independent falling-factorial maps verify all 105 availability decisions,
+56 copy maps, 2,113 coefficients, original-row identities, exact residual
+predictions/bounds, domain aliases and 105 durable entry BEFORE/AFTER pairs.
+Every monomial, proposal, map, copy/path, intermediate return, unavailable product
+and exact certificate is private and hash bound. Three serial CPU guards
+succeed within 240 seconds/2 GiB/1.5 GiB reserve; eleven exact code/plan files are
+archived under `pair_product_moments`.
+
+No missing product is zeroed, replaced by means or supplied by a convenient
+completion. No original or auxiliary returned value, separate exact certificate,
+source observation or command/root changes. This inventory does not test global
+PSD completion or establish a common supported measure, deterministic source/time
+path, source truth, physical candidate or family/task exclusion. No new solver,
+PSD audit, source polynomial, native position, physics or GPU/PPO runs. The old
+AlmostSolved/equality/overlap statuses and failed controls remain. F/separate
+middle/wrist components, source/missing/held-out authority, full region-2 and
+unknown-band uncertainty, parameters, original gates and production runtime/tests
+stay unchanged. Do not rerun this fixed inventory, controls or verification.
