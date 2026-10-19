@@ -260,3 +260,52 @@ unchanged training skin pixels, with the existing objective and corrected
 projection. Held-out pixels do not constrain that solver. It is a source
 feasibility study; the unchanged 1 mm native contact gate, motion, swept contact
 and grasp checks remain required before any PPO. No new GPU work is queued.
+
+The two new contract helpers passed
+[CI](https://github.com/Swaguto/NVIDIA-V2D-Challenge/actions/runs/39195225709).
+The constrained source studies are now complete. The 32-point containment
+control hits all 32 training rays, with IR image median/p95 **5.70/16.21 px**
+and RGB **7.87/17.94 px**. Using all 70 points in the immutable training
+checkerboard partition hits 70/70 training rays, with IR **5.73/16.20 px** and
+RGB **7.89/17.96 px**. Both retain the same **31/32 held-out** failure. Neither
+optimizer reported success; their processes exited normally, which does not
+qualify their candidates. The exact optimizer failure message was not stored.
+Their historical joint-depth discrepancies remain about 50.8 mm. Both remain
+rejected; no labels, numeric gates, fixed subject shape or scale were changed.
+
+The unchanged failed pixel was inspected in the existing monochrome and
+calibrated RGB source frames. It lies on the visible thumb-web region in those
+views. The projected RGB point has no nearer sample in the registered stereo
+cloud, but physical exposure synchrony and per-pixel registration accuracy are
+still unverified. This check does not turn it into a direct metric label or
+remove the held-out failure.
+
+## Source object and grip registration
+
+A new single-frame audit places the source-estimated hand and the frozen own
+spoon proxy in the same calibrated camera frame. All nine native object hulls
+round-trip through source/native coordinates within `1.67e-16` m, and the
+native body matches its frozen reference pose. The estimated fingertips remain
+**12.24–49.43 mm** from the proxy surface; the thumb is 30.53 mm away. These are
+geometric distances between estimates, not measured contacts or force closure.
+
+The native proxy covers **57.27%** of the independently inferred object mask;
+the full reconstructed evaluation mesh covers **54.71%**. The mask includes
+uncertain regions, so these fractions are diagnostics rather than accuracy
+scores. The source overlay shows poor agreement around the bowl/handle and
+grip region. Shape and pose contributions still need to be separated.
+
+The full visual mesh and native proxy have **0.9589 projected IoU**, with only
+**0.00292 px** maximum projected-bound difference. A further check closes the
+effective evaluation mesh to the original source fitter's mesh within
+`5.06e-9` m and its recovered camera pose within `2.78e-16` component error.
+The original fitter's frame-50 IoU was 0.4805: its relative improvement over an
+older fit was not a certificate of accurate source geometry.
+
+Next compare retained source-pose hypotheses against the visible grip and
+source evidence, then investigate source-supported bowl/handle geometry if
+pose changes cannot resolve the mismatch. Preserve the rejected hand studies.
+Changing any object geometry or pose invalidates prior contact certificates;
+source, full native **1 mm**, actual URDF/motion, swept and grasp checks must
+be run on the new candidate before PPO. No new training, physics rollout or
+GPU job was run for these CPU investigations.

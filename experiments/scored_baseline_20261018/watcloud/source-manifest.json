@@ -18,7 +18,7 @@
     {
       "path": "audit_native_HaMeR_geometry_closure_v1.py",
       "sha256": "e8036b74561b4b02672c5c588aed66489550423860fc8a11fcc901597850adcb",
-      "execution_status": "executed",
+      "execution_status": "executed_rejected_joint_closure_control",
       "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/audit_native_HaMeR_geometry_closure_v1.py",
       "scope": "new source measurement/authority analysis and bounded CPU feasibility"
     },
@@ -86,6 +86,27 @@
       "scope": "new source measurement/authority analysis and bounded CPU feasibility"
     },
     {
+      "path": "audit_source_hand_object_registration_v1.py",
+      "sha256": "4d490efdb890062daa721e1b0ecb4ea05f992a632f678e3bd2bebb9db374c843",
+      "execution_status": "executed",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/audit_source_hand_object_registration_v1.py",
+      "scope": "source-only CPU registration/extent or bounded containment study"
+    },
+    {
+      "path": "audit_source_object_pose_mesh_contract_v1.py",
+      "sha256": "99f9971d0a909efceff45dd76d2dd52f1f36371702ff8b7a2b2c91dcf4c3523f",
+      "execution_status": "executed",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/audit_source_object_pose_mesh_contract_v1.py",
+      "scope": "source-only CPU registration/extent or bounded containment study"
+    },
+    {
+      "path": "audit_source_visual_collision_extent_v1.py",
+      "sha256": "9a384ac225ab00fbf063ac900749f0800d9bc02bcc7c40207be244f5fbbb4fa9",
+      "execution_status": "executed",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/audit_source_visual_collision_extent_v1.py",
+      "scope": "source-only CPU registration/extent or bounded containment study"
+    },
+    {
       "path": "fit_RGB_multiview_source_v1.py",
       "sha256": "8c845c0bb8e6a2c5e0b70104846fdff29b2a74db802e2b1e6e928e1696e6a1b9",
       "execution_status": "executed",
@@ -123,9 +144,16 @@
     {
       "path": "fit_native_RGB_hard_skin_coverage_v1.py",
       "sha256": "ee7ceed69e30aae2b0743bc5e333888d0996180a613956844f14aeabbf3baf75",
-      "execution_status": "running_guarded_CPU",
+      "execution_status": "executed_rejected_source_control",
       "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/fit_native_RGB_hard_skin_coverage_v1.py",
       "scope": "new source measurement/authority analysis and bounded CPU feasibility"
+    },
+    {
+      "path": "fit_native_RGB_hard_skin_coverage_v2.py",
+      "sha256": "ace7e26439af8448daf428b53c977ec42409618aef9d17159b8788541ca62703",
+      "execution_status": "executed_rejected_source_control",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/fit_native_RGB_hard_skin_coverage_v2.py",
+      "scope": "source-only CPU registration/extent or bounded containment study"
     },
     {
       "path": "fit_native_RGB_landmark_adapter_v1.py",
@@ -221,9 +249,16 @@
     {
       "path": "guard_native_RGB_hard_skin_coverage_v1.py",
       "sha256": "022b8add61677bf23f99106469f21bd3d7c1a7607e542798a2d83c0f2efa8088",
-      "execution_status": "running_guarded_CPU",
+      "execution_status": "executed_rejected_source_control",
       "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/guard_native_RGB_hard_skin_coverage_v1.py",
       "scope": "new source measurement/authority analysis and bounded CPU feasibility"
+    },
+    {
+      "path": "guard_native_RGB_hard_skin_coverage_v2.py",
+      "sha256": "3a5e4e881e782f10611ba0e4bc0bba77dccf7a1143f119f5f7bd23627a3b2689",
+      "execution_status": "executed_rejected_source_control",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/guard_native_RGB_hard_skin_coverage_v2.py",
+      "scope": "source-only CPU registration/extent or bounded containment study"
     },
     {
       "path": "guard_native_RGB_landmark_adapter_v1.py",
@@ -294,6 +329,20 @@
       "execution_status": "executed",
       "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/guard_source_depth_authority_v1.py",
       "scope": "new source measurement/authority analysis and bounded CPU feasibility"
+    },
+    {
+      "path": "guard_source_hand_object_registration_v1.py",
+      "sha256": "9fff0b1f62b6fa4e87fbb0274da237c5f8707d2187fa1c157d436a24f1813db0",
+      "execution_status": "executed",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/guard_source_hand_object_registration_v1.py",
+      "scope": "source-only CPU registration/extent or bounded containment study"
+    },
+    {
+      "path": "inspect_heldout_web_source_views_v1.py",
+      "sha256": "caf29d2c022bf27e6fca19475825e5de421fd298434faf8146676e7146714490",
+      "execution_status": "executed",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/inspect_heldout_web_source_views_v1.py",
+      "scope": "source-only CPU registration/extent or bounded containment study"
     },
     {
       "path": "mask_refinement_controller_v1.py",
