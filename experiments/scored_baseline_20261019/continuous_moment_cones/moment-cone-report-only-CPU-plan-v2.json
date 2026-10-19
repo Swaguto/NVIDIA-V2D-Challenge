@@ -1,0 +1,14 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/write_saved_cone_certificate_report_v2.py",
+  "worker_sha256": "9ce18fce5489e6cc2262792f5e57ad0fcfa698c67a4e34d09063b5f15a2374c7",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-moment-cone-certificate-report-v2",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-moment-cone-independent-v1/guard.json": "8fd84ce424b42a7f84529234599bd7a0db1df2b6293aa2b5ecf45e252c94cdb1",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-moment-cone-independent-v1/worker.log": "8fa166bb2ae7fce9dadd5115af90a9f9b2869465d68ab4bf9274a98b7ffa834e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-moment-cone-independent-v1/independent-cone-certificate-results.json": "cce15a9b3a7c3bbfde8a2505ba758148b2730ef9346528ec35de3e81a2cff5c4",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-moment-cone-independent-v1/all-independent-cone-square-selection-and-dual-certificates.jsonl": "e267de75fe857b23e6d4198a8cc502e715300f2dbdb49976f0b8105dc5b6e5d7"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Serialization-only recovery from durably saved completed certificates; failed source retained/no numerical checks repeated",
+  "no_GPU": true
+}

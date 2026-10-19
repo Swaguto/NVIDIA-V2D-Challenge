@@ -1458,3 +1458,48 @@ plans). Twelve new analytic controls pass their stated scope, with the failed
 process and both invalid tables retained. Production runtime/tests and the
 verified reference/middle component/source authority/parameters/gates remain
 unchanged. No native position, physics, GPU/PPO or qualified score gain occurred.
+
+## Bounded continuous moment-cone separation
+
+Ten new analytical contracts derive unnormalized conditional moment maps,
+Hankel/localizer polynomial-square identities, signed/zero mass handling,
+exact scale-invariant separation and a new tiny conic phase-I dual control.
+The method keeps actual weights intact. Polynomial coefficient vectors are
+neither robot poses nor measured source orientation/contact/force evidence.
+
+One declared conic outer-approximation uses the saved initial LP return rather
+than replaying that solve. Limits are fixed at six updates, 64 unique planes
+per update, seven cone audits and 20 seconds per subproblem. The same source,
+marginal and original authority constraints remain, with at most 5,990 rows.
+Each plane has a rational nonnegative-square identity and a strictly negative
+expectation at the current saved table. Selection uses exact normalized
+mathematical violation and hash order; no physical outcome selects source data.
+
+All six LP subproblems return phase-I objective zero. Six independently checked
+finite-box dual gaps are zero, so they establish no exclusion. The declared
+budget ends UNRESOLVED. The last table has 698 matrices failing exact PSD checks;
+no table, barycenter or matrix eigenvector is promoted to a physical candidate.
+No budget increase, added iteration or old-solver/tolerance repair is queued.
+
+The independent checker validates 4,130 conditioned groups, 8,260 matrices,
+41,300 principal-minor certificates, 5,254 rational square planes, all 384
+selected planes, all six exact top-64 selections and six duals. The initial
+saved table is rechecked under the new maps; it is not new source/physical
+progress. The last table has no unit-box violations, but exact binary equality
+and inequality residuals are 1.553e-14 and 1.895e-8. These normalized LP diagnostics
+do not alter any original image, root, finger, motion or native gate.
+
+After durably saving all completed certificates, the independent report writer
+FAILS on a duplicate schema keyword. Its source, guard and log remain failed.
+A separate report-only producer consumes the saved certificates by hash; no
+numerical test, eigenproblem, LP or conic algorithm is rerun. Four serial guarded
+jobs (three successful processes and that retained writer failure), 12 exact
+sources/plans and all private evidence are archived code-only under
+`experiments/scored_baseline_20261019/continuous_moment_cones`.
+
+The conditional fixed-wrist/region-2 source-time family remains unresolved.
+Production runtime/tests, the verified reference, separate middle component,
+source authority, missing/held-out evidence and all original gates/parameters
+are unchanged. No native position, physics, GPU/PPO, qualified trajectory or
+score gain occurred. A direct semidefinite formulation is a distinct next
+representation to assess; do not extend or repeat this six-update algorithm.

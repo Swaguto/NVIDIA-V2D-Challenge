@@ -144,3 +144,17 @@ local positivity alone would still not certify a deterministic whole path.
 See the code-only `common_moment_viability` archive and wrist review for all
 solver returns, failed status, reused-control scopes and independent checks.
 No reference, source authority, runtime, physical gate or score is promoted.
+
+## Continuous cone separation in research
+
+A new bounded method separates conditional Hankel/localizer cones using exact
+rational polynomial-square planes. Ten new contracts pass. Six declared LP
+updates add 384 valid planes, with no original tolerance change or pose promotion.
+The fixed budget remains unresolved; continuous positivity still fails at the
+last table. All matrices, vectors and unresolved cases remain private.
+
+Independent recorded-certificate checks pass before a report serialization
+failure; a report-only repair reuses those durable results without numerical
+reruns. The code-only `continuous_moment_cones` archive and wrist review retain
+all statuses and scopes. Local moment positivity would remain necessary only;
+whole-clock source/URDF/motion and physical gates still precede learning.

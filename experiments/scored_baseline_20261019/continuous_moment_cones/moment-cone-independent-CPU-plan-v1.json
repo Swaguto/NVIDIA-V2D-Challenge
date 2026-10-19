@@ -1,0 +1,16 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_bounded_cone_evidence_v1.py",
+  "worker_sha256": "8d1ade78e17ceb753cd3de682bd5569c2a5ab9346c1640c0fa6f5fa6edb5fbcc",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-moment-cone-independent-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-bounded-moment-cone-v1/report.json": "9397aaab19cfe38e5bc73376e7cf0d46ff59de1945e609d17fafd5b401fe72f2",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-bounded-moment-cone-v1/bounded-cone-outcome.json": "2687ad49abf485e5a80b8800e604194c44a7d04ac642b925c62e15025f4eb933",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-bounded-moment-cone-v1/all-continuous-cone-matrices-vectors-cuts-and-returns.jsonl": "aab5ac1debf5db55dad40dc01c8474930e82f3395fcce78b09de58ccc7afde6f",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-square-repair-v1/corrected-common-moment-LP-model.json": "d183932e0c4f7bce55db7a5d4d9d5b94fa6f3016906e38534945defa28f72096",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-square-repair-v1/corrective-phase-one-solver-RETURN.json": "c640bf0aeeae33a8aa83d9391b8883ae9fb167afcbc8b69885603891f617c6eb"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Independent saved rational cone/cut/selection/model-prefix/finite-box dual certificates; no LP/eigen/algorithm rerun",
+  "no_GPU": true
+}

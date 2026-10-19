@@ -1,0 +1,68 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "private_results_absent": true,
+  "files": [
+    {
+      "file": "conditional_moment_cones_v1.py",
+      "restore_relative_path": "compute/conditional_moment_cones_v1.py",
+      "executed_or_declared_source_sha256": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995"
+    },
+    {
+      "file": "verify_continuous_moment_cone_contract_v1.py",
+      "restore_relative_path": "compute/verify_continuous_moment_cone_contract_v1.py",
+      "executed_or_declared_source_sha256": "5679c6f426f6c1ed7e0e2aec84730ea37c97ebcae236ae36b93616ede9374483"
+    },
+    {
+      "file": "run_bounded_moment_cone_separation_v1.py",
+      "restore_relative_path": "compute/run_bounded_moment_cone_separation_v1.py",
+      "executed_or_declared_source_sha256": "81b2dff940ffda08a0527a3439090214cacf4ee393035feb504c1bc3b8743e74"
+    },
+    {
+      "file": "verify_bounded_cone_evidence_v1.py",
+      "restore_relative_path": "compute/verify_bounded_cone_evidence_v1.py",
+      "executed_or_declared_source_sha256": "8d1ade78e17ceb753cd3de682bd5569c2a5ab9346c1640c0fa6f5fa6edb5fbcc"
+    },
+    {
+      "file": "write_saved_cone_certificate_report_v2.py",
+      "restore_relative_path": "compute/write_saved_cone_certificate_report_v2.py",
+      "executed_or_declared_source_sha256": "9ce18fce5489e6cc2262792f5e57ad0fcfa698c67a4e34d09063b5f15a2374c7"
+    },
+    {
+      "file": "moment-cone-contract-CPU-plan-v1.json",
+      "restore_relative_path": "compute/moment-cone-contract-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "94fb2b188188bd2ddeeec3f977b7dfc8e6e099ce39262e1ee151620463e4ae4b"
+    },
+    {
+      "file": "bounded-moment-cone-CPU-plan-v1.json",
+      "restore_relative_path": "compute/bounded-moment-cone-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "62988ae8c1fa3ad4ba4ab93a46d931d7f54fbe3941176335059416dd392f8627"
+    },
+    {
+      "file": "moment-cone-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/moment-cone-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "1222f728167003bc08becfb602ed375a77b9efb62e7ebd353a0d96dcbc728a05"
+    },
+    {
+      "file": "moment-cone-report-only-CPU-plan-v2.json",
+      "restore_relative_path": "compute/moment-cone-report-only-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "cc1f6b4a387a33d696809e146806b70cbaf4ba83dc72521072a11ff610014ab4"
+    },
+    {
+      "file": "bernstein_common_moments_v1.py",
+      "restore_relative_path": "compute/bernstein_common_moments_v1.py",
+      "executed_or_declared_source_sha256": "a00876183dd1ef7332ff5cb7d3b056489163fd453dcfb3652e1261e014771c31"
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    }
+  ],
+  "repository_dependency_snapshots": [],
+  "repository_runtime_NOT_imported": true
+}

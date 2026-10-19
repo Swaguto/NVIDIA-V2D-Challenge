@@ -1,0 +1,16 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/run_bounded_moment_cone_separation_v1.py",
+  "worker_sha256": "81b2dff940ffda08a0527a3439090214cacf4ee393035feb504c1bc3b8743e74",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-bounded-moment-cone-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/bernstein_common_moments_v1.py": "a00876183dd1ef7332ff5cb7d3b056489163fd453dcfb3652e1261e014771c31",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-moment-cone-contract-v1/report.json": "5fab8c711f7d753507f9d45ef39b16049000c5875855b5a22f902ffcb09143e7",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-square-repair-v1/corrected-common-moment-LP-model.json": "d183932e0c4f7bce55db7a5d4d9d5b94fa6f3016906e38534945defa28f72096",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-square-repair-v1/corrective-phase-one-solver-RETURN.json": "c640bf0aeeae33a8aa83d9391b8883ae9fb167afcbc8b69885603891f617c6eb"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "One continuous PSD conic-separation algorithm:6LP updates/64planes each/7audits/20s per LP; old starting return reused, no old LP rerun",
+  "no_GPU": true
+}

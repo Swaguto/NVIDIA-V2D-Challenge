@@ -1,0 +1,13 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_continuous_moment_cone_contract_v1.py",
+  "worker_sha256": "5679c6f426f6c1ed7e0e2aec84730ea37c97ebcae236ae36b93616ede9374483",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-moment-cone-contract-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/bernstein_common_moments_v1.py": "a00876183dd1ef7332ff5cb7d3b056489163fd453dcfb3652e1261e014771c31",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "New continuous PSD map/square separation contracts and one tiny conic LP; no old controls rerun",
+  "no_GPU": true
+}
