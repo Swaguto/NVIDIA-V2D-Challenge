@@ -1,0 +1,20 @@
+{
+  "schema": "v2d.cpu-only-quality-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_index_temporal_source_boxes_v1.py",
+  "worker_sha256": "4235b1d5b4ea1bf349fb99c8e61761458f09c57dddc0f9b46551b542120f5999",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-temporal-source-boxes-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/index_temporal_box_v1.py": "255e7a220400407c8d6ce97766925f79649267d291d52602ca8652bd4a842569",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/closed_2R_source_domains_v1.py": "8c7b44a637804bab9e0b1685e5302b6446adfb7a950a6d8c10571fc70c122e3e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/harmonic_source_domains_v1.py": "3c9eebd919c26132a4a15219de1686ef82ead41958f47a9abab28c713386aa8e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-integrated-source-corpora-reachability-v1/all-factorized-saved-banks-and-recurrence-returns.jsonl": "5e1855e82e452b76096937368c0094f1f21d131873ba126a1f3789dca23353e3",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-strict-source-wrist-mode-v1/UNQUALIFIED-strict-source-root-proposal.npz": "15a362bbf9eb6956ba487b175ce4d04e0ac42ecfa2e4d245c22799cca81c2932",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-ray-independent-validation-v1/report.json": "720fb0d9b6a7f8272ede38218f9c58954d305309c2dffed3853d2f1d1ecac89a"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "all_saved_pairs_are_necessary_superset": true,
+  "no_graph_rerun_no_missing_state_reconstruction": true,
+  "no_native_physics_GPU_PPO": true
+}

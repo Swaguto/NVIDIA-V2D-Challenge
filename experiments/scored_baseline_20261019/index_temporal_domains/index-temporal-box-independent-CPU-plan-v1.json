@@ -1,0 +1,17 @@
+{
+  "schema": "v2d.cpu-only-quality-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_index_temporal_source_boxes_v1.py",
+  "worker_sha256": "194b9deb0264f19875ebec2248c46819954a7e82ac97b3c690303022bf6bba4c",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-temporal-box-independent-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/planar_support_critical_points_v1.py": "5578faff20976f103c83bc75b26e156505fcc961486a209f92884fefac1685ca",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-temporal-source-boxes-v1/all-correlated-index-source-domains.json": "23045f940188d17787f226d9749a8284f36c71ab520b6d2aefedf4fa53029355",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-strict-source-wrist-mode-v1/UNQUALIFIED-strict-source-root-proposal.npz": "15a362bbf9eb6956ba487b175ce4d04e0ac42ecfa2e4d245c22799cca81c2932",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/kinematics.py": "0747c53517a45a64efa5c7ecf8e91fedafcfb5150042c9a99c2718c0d7cb376c"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "no_chart_or_graph_repetition": true,
+  "no_native_physics_GPU_PPO": true
+}

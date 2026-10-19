@@ -1,0 +1,21 @@
+{
+  "schema": "v2d.cpu-only-quality-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/index_cone_temporal_branch_v1.py",
+  "worker_sha256": "c45446b8ef6a103d06d9abd7cdec6f89843ee8bc1e5502c485c1ceee25b9978d",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-temporal-cone-branch-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/planar_support_critical_points_v1.py": "5578faff20976f103c83bc75b26e156505fcc961486a209f92884fefac1685ca",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-strict-source-wrist-mode-v1/UNQUALIFIED-strict-source-root-proposal.npz": "15a362bbf9eb6956ba487b175ce4d04e0ac42ecfa2e4d245c22799cca81c2932",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-saved-middle-source-component-v1/UNQUALIFIED-middle-source-motion-component.npz": "6613f84dcdd7820f546ac8e30e899f7c19a9c6eec34a094f513c79b28f91ef5e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-ray-independent-validation-v1/report.json": "720fb0d9b6a7f8272ede38218f9c58954d305309c2dffed3853d2f1d1ecac89a"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "NEW_continuous_full_domain_source_Taylor_cone_with_original_temporal_LPs": true,
+  "maximum_processed_domains": 255,
+  "branch_study_wall_limit_s": 120,
+  "each_LP_time_limit_s": 10,
+  "no_old_partition_budget_expansion": true,
+  "no_native_physics_GPU_PPO": true
+}

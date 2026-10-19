@@ -1188,3 +1188,61 @@ transition using saved correlated pair boxes and the continuous two-joint
 source chart. Keep the middle source/motion component as an intermediate
 control, retain continuous neighbor uncertainty, and do not rerun the completed
 source constructors or finite graphs or increase their sample budgets.
+
+## Continuous index source and temporal domains
+
+The saved 107/108 index banks contain 14 and 13 nodes. All 182 consecutive
+pairs are retained as a conservative superset; missing forward-pair identities
+are not reconstructed. Original actual velocity and added-motion checks reject
+151 pairs locally. Of the remaining 31 correlated next-angle boxes, 26 have
+constructive source-chart witnesses. Independent actual-URDF/source/triple
+checks accept 155 of 173 proposed triples and retain all 18 failures. These
+local triples do not establish a feasible prefix or future trajectory.
+
+The five unresolved charts receive new global camera-cone dual support checks
+over their entire planar workspace rectangles. All five separate numerically
+from the original source cone; 160 independent URDF samples respect the saved
+support witnesses. This is a numerical fixed-pair restriction, not a formal
+directed-rounding or global reachability proof.
+
+A new formulation creates source-qualified continuous angle boxes around
+passing saved points, preserving correlated per-clock regions. Its 550-box
+mixed linear path model is infeasible under original temporal limits. This
+inner-family failure is retained and does not establish continuous exclusion.
+Its two path controls and two independent cone-enclosure controls pass.
+
+A separate new method considers the full continuous original index domain at
+the unchanged wrist mode. Camera-cone tangents and sinusoid Taylor remainders
+give necessary linear relaxations; an inscribed polygon and opposite remainder
+sign give sufficient constructive programs. All four new analytic controls
+pass. The declared 255-domain study ends with 122 numerical linear exclusions
+and twelve unresolved leaves. No returned point passes every source row. No
+budget expansion, failed-intermediate promotion or old graph rerun occurs.
+
+Independent checks verify the complete binary partition cover, 256 new actual
+URDF/Taylor states and 152 source-inner-box states. Maximum URDF/camera closure
+is 2.23e-16 m. A distinct dual calculation supplies eight residual-corrected,
+finite-box contradiction witnesses for the first eight saved empty leaves;
+three new analytical controls pass. Active dual rows concern source and box
+bounds, so these witnesses do not isolate a temporal cause or require a wrist
+change. Twelve outer regions remain unresolved. Dual weights are mathematical
+coefficients, not physical forces or causal importance scores.
+
+Six serial CPU jobs, exact code and dependency snapshots are archived code-only
+under `experiments/scored_baseline_20261019/index_temporal_domains`. Fifteen new
+analytic controls and 741 actual-URDF assessments pass their stated scopes.
+All rejected states, solver returns and unresolved domains are retained
+privately. Production runtime/tests, source authority, missing/held-out failures,
+the separate middle source/motion component and current verified reference are
+unchanged. Eight right-self and five object failures persist. No native
+position, physics, GPU/PPO, qualified new reference or score gain occurred.
+
+Next derive a continuous index source-boundary corridor jointly with original
+temporal limits, using the saved unresolved domains and source-only dual
+patterns as restrictions. The source cone's exact tan-half-angle 2R preimage
+can expose correlated proximal/distal branches without another finite point
+bank. Retain continuous-neighbor uncertainty; do not rerun these completed
+charts, MILP or 255-domain study, increase budgets, change the wrist mode or
+infer a necessary wrist mutation from source-only exclusions. A concrete new
+path still needs independent whole-clock source/URDF/original motion before
+native/self, swept, motor/grasp and whole-source gates.

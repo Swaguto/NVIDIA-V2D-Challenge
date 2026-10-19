@@ -1,0 +1,18 @@
+{
+  "schema": "v2d.cpu-only-quality-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/certify_saved_index_temporal_cone_leaves_v1.py",
+  "worker_sha256": "253afff560c92ea2f5ecdf1347b507de800d75031eba195ecea2bca1746c6f99",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-temporal-cone-dual-certificates-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/index_cone_temporal_branch_v1.py": "c45446b8ef6a103d06d9abd7cdec6f89843ee8bc1e5502c485c1ceee25b9978d",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-temporal-cone-branch-v1/all-continuous-domain-proposals-LP-returns-and-source-outcomes.jsonl": "025a08a0cedd4abf89ee4df5763ff139b29b0be7aaad9e5e44d85af972bf1c5d",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-temporal-cone-branch-v1/processed-and-unresolved-domains.json": "d510194dae74e3c5d7aff3450ddbeaed45518cd964cbca8d170160816901c14d"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "first_eight_saved_empty_leaf_duals_only": true,
+  "no_primal_LP_Taylor_or_partition_reexecution": true,
+  "each_dual_LP_time_limit_s": 10,
+  "no_native_physics_GPU_PPO": true
+}

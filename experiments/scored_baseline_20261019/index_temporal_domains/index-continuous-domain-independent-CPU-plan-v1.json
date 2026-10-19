@@ -1,0 +1,17 @@
+{
+  "schema": "v2d.cpu-only-quality-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_index_continuous_domain_records_v1.py",
+  "worker_sha256": "add6003b3fab4288ae741d4f8d7b9d9bca3161fe2d0bd2f3f19a44bf19251e7f",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-continuous-domain-independent-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-temporal-cone-branch-v1/all-continuous-domain-proposals-LP-returns-and-source-outcomes.jsonl": "025a08a0cedd4abf89ee4df5763ff139b29b0be7aaad9e5e44d85af972bf1c5d",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-temporal-cone-branch-v1/processed-and-unresolved-domains.json": "d510194dae74e3c5d7aff3450ddbeaed45518cd964cbca8d170160816901c14d",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-continuous-source-box-path-v1/all-continuous-source-box-records.json": "03a4f15b4b8ae34fd4074c9e3dbc4fc249b1f6a4c3099e87685e540263bfe83f",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-strict-source-wrist-mode-v1/UNQUALIFIED-strict-source-root-proposal.npz": "15a362bbf9eb6956ba487b175ce4d04e0ac42ecfa2e4d245c22799cca81c2932",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/kinematics.py": "0747c53517a45a64efa5c7ecf8e91fedafcfb5150042c9a99c2718c0d7cb376c"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "no_chart_MILP_branch_LP_or_native_reexecution": true
+}

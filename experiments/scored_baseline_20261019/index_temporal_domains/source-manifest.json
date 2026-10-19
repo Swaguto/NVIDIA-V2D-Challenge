@@ -1,0 +1,118 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "private_results_absent": true,
+  "files": [
+    {
+      "file": "index_temporal_box_v1.py",
+      "restore_relative_path": "compute/index_temporal_box_v1.py",
+      "executed_or_declared_source_sha256": "255e7a220400407c8d6ce97766925f79649267d291d52602ca8652bd4a842569"
+    },
+    {
+      "file": "derive_index_temporal_source_boxes_v1.py",
+      "restore_relative_path": "compute/derive_index_temporal_source_boxes_v1.py",
+      "executed_or_declared_source_sha256": "4235b1d5b4ea1bf349fb99c8e61761458f09c57dddc0f9b46551b542120f5999"
+    },
+    {
+      "file": "verify_index_temporal_source_boxes_v1.py",
+      "restore_relative_path": "compute/verify_index_temporal_source_boxes_v1.py",
+      "executed_or_declared_source_sha256": "194b9deb0264f19875ebec2248c46819954a7e82ac97b3c690303022bf6bba4c"
+    },
+    {
+      "file": "continuous_source_box_path_v1.py",
+      "restore_relative_path": "compute/continuous_source_box_path_v1.py",
+      "executed_or_declared_source_sha256": "c1fef99dba45261285a3a3d018883743090cbcdf7939ba2c5e8db393adb245ee"
+    },
+    {
+      "file": "construct_index_continuous_source_box_path_v1.py",
+      "restore_relative_path": "compute/construct_index_continuous_source_box_path_v1.py",
+      "executed_or_declared_source_sha256": "540f48e1e4d0c9d84bf476606cd7bb1bae61bacbe459bd16ae920ba118c21887"
+    },
+    {
+      "file": "index_cone_temporal_branch_v1.py",
+      "restore_relative_path": "compute/index_cone_temporal_branch_v1.py",
+      "executed_or_declared_source_sha256": "c45446b8ef6a103d06d9abd7cdec6f89843ee8bc1e5502c485c1ceee25b9978d"
+    },
+    {
+      "file": "verify_index_continuous_domain_records_v1.py",
+      "restore_relative_path": "compute/verify_index_continuous_domain_records_v1.py",
+      "executed_or_declared_source_sha256": "add6003b3fab4288ae741d4f8d7b9d9bca3161fe2d0bd2f3f19a44bf19251e7f"
+    },
+    {
+      "file": "certify_saved_index_temporal_cone_leaves_v1.py",
+      "restore_relative_path": "compute/certify_saved_index_temporal_cone_leaves_v1.py",
+      "executed_or_declared_source_sha256": "253afff560c92ea2f5ecdf1347b507de800d75031eba195ecea2bca1746c6f99"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "source_orientation_context_v1.py",
+      "restore_relative_path": "compute/source_orientation_context_v1.py",
+      "executed_or_declared_source_sha256": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00"
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+    },
+    {
+      "file": "closed_2R_source_domains_v1.py",
+      "restore_relative_path": "compute/closed_2R_source_domains_v1.py",
+      "executed_or_declared_source_sha256": "8c7b44a637804bab9e0b1685e5302b6446adfb7a950a6d8c10571fc70c122e3e"
+    },
+    {
+      "file": "harmonic_source_domains_v1.py",
+      "restore_relative_path": "compute/harmonic_source_domains_v1.py",
+      "executed_or_declared_source_sha256": "3c9eebd919c26132a4a15219de1686ef82ead41958f47a9abab28c713386aa8e"
+    },
+    {
+      "file": "planar_support_critical_points_v1.py",
+      "restore_relative_path": "compute/planar_support_critical_points_v1.py",
+      "executed_or_declared_source_sha256": "5578faff20976f103c83bc75b26e156505fcc961486a209f92884fefac1685ca"
+    },
+    {
+      "file": "index-temporal-source-boxes-CPU-plan-v1.json",
+      "restore_relative_path": "compute/index-temporal-source-boxes-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "3c720d99c12ad6f42cd8528be4f45b18a8909318bf753c9947365ba8472b9d3a"
+    },
+    {
+      "file": "index-temporal-box-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/index-temporal-box-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "b4270f30a5d4def3f1c0d9ccc69debac14a17e0396fb794115a384ba58dcd456"
+    },
+    {
+      "file": "index-continuous-source-box-path-CPU-plan-v1.json",
+      "restore_relative_path": "compute/index-continuous-source-box-path-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "87f89e7d17b395fda79623be56fcf91a46b9c67a1fcdbb1432160882d216bb93"
+    },
+    {
+      "file": "index-source-temporal-cone-branch-CPU-plan-v1.json",
+      "restore_relative_path": "compute/index-source-temporal-cone-branch-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "1f6f458af006c7a4381ebee2ee8dcd23a05d66c36c0ee501ad16ce6fe35e290f"
+    },
+    {
+      "file": "index-continuous-domain-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/index-continuous-domain-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "8e6efdad8329d158d1a3f4145632c4d5474f7d7831eb32f0292dc7e4e06ee763"
+    },
+    {
+      "file": "index-temporal-cone-dual-certificates-CPU-plan-v1.json",
+      "restore_relative_path": "compute/index-temporal-cone-dual-certificates-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "328091cfd7ba997620cff5ff482d27c47b57dc89c753cecef3f0d84e21011ac7"
+    }
+  ],
+  "repository_dependency_snapshots": [
+    {
+      "file": "repository-kinematics.py",
+      "repository_source_path": "scripts/dex3_training/v2d_dex3_flashchord/kinematics.py",
+      "sha256": "0747c53517a45a64efa5c7ecf8e91fedafcfb5150042c9a99c2718c0d7cb376c"
+    },
+    {
+      "file": "repository-audit_hand_reference_contacts.py",
+      "repository_source_path": "scripts/dex3_training/audit_hand_reference_contacts.py",
+      "sha256": "bd964efa556a0d9edf3335c98ded32399aea808c9772ee2167a1495a35fc6d81"
+    }
+  ]
+}
