@@ -1,0 +1,33 @@
+{
+  "schema": "v2d.source-patch-wrench-sites-CPU-plan.v1",
+  "declared_utc": "2026-10-19T05:56:33.029431+00:00",
+  "episode": 37,
+  "frame": 50,
+  "source_projected_patch_radius_m": 0.008,
+  "maximum_sites_per_digit": 6,
+  "required_thumb_opposition_dot_max": -0.5,
+  "root_translation_component_bound_m": 0.008,
+  "root_rotation_component_bound_rad": 0.08,
+  "necessary_surface_proximity_m": 0.002,
+  "source_patch_is_exploratory_not_a_measured_error_bound": true,
+  "source_centers": [
+    "raw_RGB",
+    "multiview_fit_unqualified",
+    "hard_skin_fit_failed"
+  ],
+  "no_source_pose_winner_selection": true,
+  "geometry_is_fixed_saved_native_convex_hulls": true,
+  "no_contact_budget_or_contact_truth_invented": true,
+  "loads": [
+    "saved nominal gravity",
+    "saved inferred motion"
+  ],
+  "new_IK_or_wrist_optimizer": false,
+  "source_and_contact_failures_retained": true,
+  "required_fresh_full_native_reference_contact_gate_m": 0.001,
+  "required_source_original_root_finger_motion_swept_actual_motor_grasp_checks_before_PPO": true,
+  "wall_seconds": 240,
+  "max_RSS_bytes": 2147483648,
+  "min_free_disk_bytes": 1610612736,
+  "GPU": false
+}

@@ -190,10 +190,56 @@ This is evidence against these particular contact configurations, not proof
 that the task is impossible or that a policy could never change contacts.
 More gain or reward tuning on the same frozen grasp would miss this failure.
 
-The next implementation is a reusable, explicit contact-load feasibility
-diagnostic with analytic controls, followed by contact-site/pose seed generation
-that includes the required object wrench. Preserve source uncertainty and
-validate actual motor feasibility, source/motion, full 1 mm native, swept and
-grasp checks before PPO. Do not continue wrist-prior or gain sweeps on these
-completed controls. Exact producers, declared plans and lossless restoration
-are under `experiments/scored_baseline_20261019/palm_diagnosis/`.
+Exact producers, declared plans and lossless restoration are under
+`experiments/scored_baseline_20261019/palm_diagnosis/`.
+
+## Reusable load check and new source-conditioned sites
+
+`scripts/dex3_training/v2d_dex3_flashchord/contact_load_feasibility.py`
+now implements the explicit outer-model diagnostic. It validates finite points,
+orthonormal force bases, dimensions 1/3/4/6, friction order, COM and wrench units.
+Its native geometry adapter binds the object side before reversing contact axes.
+An independent equilibrium and friction check follows an optimal LP result;
+unresolved numerical/solver errors raise instead of qualifying a candidate.
+Empty geometry supports only an exactly zero load.
+
+The result names `feasible_in_outer_model` and `force_origin` distinguish the
+optimistic solved forces from measured forces. There are no invented force caps,
+motor limits or source contact labels. The existing measured-budget
+`wrench_capacity.capacity` API is unchanged. **34 focused tests pass**, including
+the existing capacity tests. Analytic cases cover gravity, unsupported moments,
+spin versus rolling, anisotropic friction, COM/world transforms, native object
+binding and a friction-box corner outside the exact elliptic cone. All six
+saved native contact/load outcomes match without repeating a native job.
+
+A new finite screen samples three object-local surface sites near each retained
+inferred hand's projected thumb/index/middle locations. It uses an explicitly
+exploratory 8 mm surface patch, at most six samples per digit, fixed native
+geometry/friction, opposing normals and necessary actual-morphology bounds.
+The wrist seed is each saved source pose; its residual boxes remain 8 mm and
+0.08 rad per component. No wrist or finger optimization runs. Both saved gravity
+and inferred-motion wrenches enter the feasibility screen before retargeting.
+
+| Source hypothesis | Triples tested | Both modeled loads feasible | Selected seed gravity / motion total normal force, N |
+| --- | ---: | ---: | ---: |
+| Raw RGB | 216 | 36 | 20.25 / 27.57 |
+| Unqualified multiview fit | 216 | 79 | 254.05 / 232.77 |
+| Failed hard-skin fit | 216 | 69 | 251.11 / 295.47 |
+
+These are **potential surface contacts**, not contacts realized by robot fingers.
+Within each source hypothesis, the recorded seed minimizes source-point distance
+among the sampled feasible triples. There is no source-pose winner, no claim of
+a minimum-force grasp across the family, and no motor feasibility certificate.
+The raw hand is 104–110 mm from its nearest object surface before projection;
+the 8 mm patch does not erase that discrepancy or bound source error. The other
+two hypotheses retain their source-fit/held-out failures. Their selected sites
+also require hundreds of newtons even in the optimistic model. A finite search
+does not establish global feasibility or infeasibility.
+
+Next verify the source skin/visibility association of these sites and actual
+robot realization and motor loads before constructing a trajectory. Preserve
+source uncertainty and all failures. Any changed commands need original
+root/finger motion limits, fresh full 1 mm native, swept and grasp checks before
+GPU/PPO. No new policy, physical task or source hand is qualified. Brev remains
+stopped. New code-only producers and plans are under
+`experiments/scored_baseline_20261019/contact_load_sites/`.
