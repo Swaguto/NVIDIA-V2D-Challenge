@@ -1,0 +1,151 @@
+{
+  "schema": "v2d.private-wrist-retarget-code-archive.v1",
+  "created_utc": "2026-10-19T05:07:56.557681+00:00",
+  "sources": [
+    {
+      "path": "fit_motion_constrained_wrist_v1.py",
+      "sha256": "09bfc1738e9b689df1f49ebf6994583ea6b3305b96225ce834b825a1326905c2",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/fit_motion_constrained_wrist_v1.py",
+      "result_directory": "e037-motion-constrained-wrist-v1",
+      "status": "rejected_translation_solver_and_motion"
+    },
+    {
+      "path": "guard_motion_constrained_wrist_v1.py",
+      "sha256": "69576a1c8c5129eaab5953f6f54bde31200a087d3aa23c9e1428adcde4a5323d",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_motion_constrained_wrist_v1.py",
+      "result_directory": "e037-motion-constrained-wrist-v1",
+      "status": "rejected_translation_solver_and_motion"
+    },
+    {
+      "path": "fit_motion_constrained_wrist_v2.py",
+      "sha256": "9871211f3b5e87b58b4f361898a9d8b1f1c00ddc87b4bda15c8d555a9df6bf4e",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/fit_motion_constrained_wrist_v2.py",
+      "result_directory": "e037-motion-constrained-wrist-v2",
+      "status": "exact_motion_pass_solver_inaccurate_retained"
+    },
+    {
+      "path": "guard_motion_constrained_wrist_v2.py",
+      "sha256": "8bc56190b7e9032190d5126fc95852b0d5f8a4423c284b87ba907b4b273ca165",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_motion_constrained_wrist_v2.py",
+      "result_directory": "e037-motion-constrained-wrist-v2",
+      "status": "exact_motion_pass_solver_inaccurate_retained"
+    },
+    {
+      "path": "fit_motion_constrained_wrist_v3.py",
+      "sha256": "6976f63fe27732410218417487d54026e81bc6ee158a306ea6ab13e9a0bbea66",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/fit_motion_constrained_wrist_v3.py",
+      "result_directory": "e037-motion-constrained-wrist-v3",
+      "status": "motion_and_sampled_image_pass_subsequent_native_failed"
+    },
+    {
+      "path": "guard_motion_constrained_wrist_v3.py",
+      "sha256": "b3d52cce17eef71d2d2b65aadbdf54c421a08f92691d90ae0e6848c21ad0513f",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_motion_constrained_wrist_v3.py",
+      "result_directory": "e037-motion-constrained-wrist-v3",
+      "status": "motion_and_sampled_image_pass_subsequent_native_failed"
+    },
+    {
+      "path": "validate_motion_constrained_wrist_native_v1.py",
+      "sha256": "da41fdad91fdd2c356fc3c58e27719231704aa7b694629affe539a23323b4d48",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/validate_motion_constrained_wrist_native_v1.py",
+      "result_directory": "e037-motion-constrained-wrist-native-v1",
+      "status": "rejected_five_native_hand_slots_over_1mm"
+    },
+    {
+      "path": "guard_validate_motion_constrained_wrist_native_v1.py",
+      "sha256": "6923ea13f4802ee6b9ff562c89d036e4051179326618d7b20c548b64607506a9",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_validate_motion_constrained_wrist_native_v1.py",
+      "result_directory": "e037-motion-constrained-wrist-native-v1",
+      "status": "rejected_five_native_hand_slots_over_1mm"
+    },
+    {
+      "path": "probe_fixed_wrist_finger_reach_v1.py",
+      "sha256": "530efd886009448b9dd785e9745f914c22a8f91c54ab625aa9447d554fd894e7",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/probe_fixed_wrist_finger_reach_v1.py",
+      "result_directory": "e037-fixed-wrist-finger-reach-v1",
+      "status": "rejected_proximity_global_iteration_budget_exhausted"
+    },
+    {
+      "path": "guard_fixed_wrist_finger_reach_v1.py",
+      "sha256": "c95108b4dc3c9375788cd65a36bfd3c19f2eea674b75e6b229ffc8f10af9842e",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_fixed_wrist_finger_reach_v1.py",
+      "result_directory": "e037-fixed-wrist-finger-reach-v1",
+      "status": "rejected_proximity_global_iteration_budget_exhausted"
+    },
+    {
+      "path": "probe_fixed_wrist_finger_reach_v2.py",
+      "sha256": "829f500ab946c5913d5b96d8235449910f01b934f7da7a7014631ce1eecde4a9",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/probe_fixed_wrist_finger_reach_v2.py",
+      "result_directory": "e037-fixed-wrist-finger-reach-v2",
+      "status": "rejected_proximity_no_opposed_grip"
+    },
+    {
+      "path": "guard_fixed_wrist_finger_reach_v2.py",
+      "sha256": "f13c2f49c1cf8df53e0fd5bfc8b2071c01e736e49898cedbb351eb35623dfa55",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_fixed_wrist_finger_reach_v2.py",
+      "result_directory": "e037-fixed-wrist-finger-reach-v2",
+      "status": "rejected_proximity_no_opposed_grip"
+    },
+    {
+      "path": "probe_coupled_wrist_finger_reach_v1.py",
+      "sha256": "7363a3b655ca95414cf4bf5a802602229db9dc881cd9740aab9c9ab260fb8c44",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/probe_coupled_wrist_finger_reach_v1.py",
+      "result_directory": "e037-coupled-wrist-finger-reach-v1",
+      "status": "proximity_pass_only_grasp_rejected_by_witness_audit"
+    },
+    {
+      "path": "guard_coupled_wrist_finger_reach_v1.py",
+      "sha256": "6ccbf7e44cbd33dc26c2f92fb32770bf4c7427f167a69c3ee75fcda638a92d27",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_coupled_wrist_finger_reach_v1.py",
+      "result_directory": "e037-coupled-wrist-finger-reach-v1",
+      "status": "proximity_pass_only_grasp_rejected_by_witness_audit"
+    },
+    {
+      "path": "audit_coupled_grasp_witnesses_v1.py",
+      "sha256": "3970af967d56cc85d06d429562a14c334302ec85c997bcca7d6fcef4ecaf9f34",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_coupled_grasp_witnesses_v1.py",
+      "result_directory": "e037-coupled-grasp-witnesses-v1",
+      "status": "same_side_normal_and_zero_object_contact_counterexample"
+    },
+    {
+      "path": "guard_audit_coupled_grasp_witnesses_v1.py",
+      "sha256": "8358ec3088e03df6188231be3969e5f25a2de443823a521a67016412530ca475",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_audit_coupled_grasp_witnesses_v1.py",
+      "result_directory": "e037-coupled-grasp-witnesses-v1",
+      "status": "same_side_normal_and_zero_object_contact_counterexample"
+    },
+    {
+      "path": "probe_opposed_grasp_sites_v1.py",
+      "sha256": "05372630aa3bccd2667904f1a8323e8dafab6a1c18c26de2d38e9483c0205c93",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/probe_opposed_grasp_sites_v1.py",
+      "result_directory": "e037-opposed-grasp-sites-v1",
+      "status": "rejected_thumb_facing_site_distance_21mm"
+    },
+    {
+      "path": "guard_opposed_grasp_sites_v1.py",
+      "sha256": "e6c1795d90f85c9e667944a7a28f641fc92897cb1b111b8f5f3896a1162d3848",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_opposed_grasp_sites_v1.py",
+      "result_directory": "e037-opposed-grasp-sites-v1",
+      "status": "rejected_thumb_facing_site_distance_21mm"
+    }
+  ],
+  "recorded_source_scripts": 18,
+  "CPU_package_versions": {
+    "numpy": "2.2.6",
+    "scipy": "1.16.3",
+    "mujoco": "3.8.1",
+    "osqp": "1.1.1",
+    "trimesh": "4.5.1"
+  },
+  "private_inputs_included": false,
+  "model_weights_included": false,
+  "credentials_included": false,
+  "official_evaluator_modified": false,
+  "production_default_changed": false,
+  "native_gate_m": 0.001,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0,
+  "physical_tasks_qualified": 0,
+  "restore_under": "PRIVATE_WORKSPACE/compute",
+  "independent_teammate_reproduction_verified": false
+}
