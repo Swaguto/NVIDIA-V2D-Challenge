@@ -1,0 +1,16 @@
+{
+  "schema": "v2d.coupled-articulation-independent-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_coupled_articulation_domain_v1.py",
+  "worker_sha256": "5138299cc227a260cc0959f50e52d9c4764c40ecc044dd9d78df07d2aa8f55bb",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-articulation-independent-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-articulation-domain-v1/report.json": "f2f0905174e01fab23f8d0ba70103567141316b982cacf77511bfddec06c04c9",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-articulation-domain-v1/all-domain-nodes-and-states.json": "907c988b46acfa85426fe8dc3d0e9234c60489c13749339bad03fb4488663f0c"
+  },
+  "CPU_only": true,
+  "saved_box_partition_and_actual_URDF_projection_only": true,
+  "no_domain_search_native_or_prior_study_rerun": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

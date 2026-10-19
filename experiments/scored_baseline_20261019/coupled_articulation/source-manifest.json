@@ -1,0 +1,65 @@
+{
+  "schema": "v2d.coupled-articulation-source-archive.v1",
+  "files": [
+    {
+      "file": "coupled_articulation_intervals_v1.py",
+      "restore_relative_path": "compute/coupled_articulation_intervals_v1.py",
+      "executed_or_declared_source_sha256": "63f72e5a04e3032ed998bfe3aa8ba93047262ed81361bb0ceed586d6211111f1"
+    },
+    {
+      "file": "verify_coupled_articulation_intervals_v1.py",
+      "restore_relative_path": "compute/verify_coupled_articulation_intervals_v1.py",
+      "executed_or_declared_source_sha256": "5c66fa5c279e33b92e13dcbded4c191739f55fa3b519d07d05c6c6bf6ba57c76"
+    },
+    {
+      "file": "study_coupled_articulation_domain_v1.py",
+      "restore_relative_path": "compute/study_coupled_articulation_domain_v1.py",
+      "executed_or_declared_source_sha256": "75fe87e749217c6b608e329abe5f6b5364f71e5a4609d96f2d1142f70a147359"
+    },
+    {
+      "file": "verify_coupled_articulation_domain_v1.py",
+      "restore_relative_path": "compute/verify_coupled_articulation_domain_v1.py",
+      "executed_or_declared_source_sha256": "5138299cc227a260cc0959f50e52d9c4764c40ecc044dd9d78df07d2aa8f55bb"
+    },
+    {
+      "file": "study_thumb_proximal_distal_slice_v1.py",
+      "restore_relative_path": "compute/study_thumb_proximal_distal_slice_v1.py",
+      "executed_or_declared_source_sha256": "48541603b13dc051f667b647c15662908429be68da0fe88ba168ec669ce65548"
+    },
+    {
+      "file": "source_orientation_context_v1.py",
+      "restore_relative_path": "compute/source_orientation_context_v1.py",
+      "executed_or_declared_source_sha256": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "coupled-articulation-binding-CPU-plan-v1.json",
+      "restore_relative_path": "compute/coupled-articulation-binding-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "396194ef920dabbe8940fc09ee74e915408998b1f3b0854efc777e2548c695ae"
+    },
+    {
+      "file": "coupled-articulation-domain-CPU-plan-v1.json",
+      "restore_relative_path": "compute/coupled-articulation-domain-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "3a3e5998e5931a50038707705e6da645b3466732c9e68389fb4bfd005ab27dfa"
+    },
+    {
+      "file": "coupled-articulation-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/coupled-articulation-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "563296e89d67297cb2e36416298c9e73c73c69d09bcb793549f995453af84567"
+    },
+    {
+      "file": "thumb-proximal-distal-slice-CPU-plan-v1.json",
+      "restore_relative_path": "compute/thumb-proximal-distal-slice-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "1137015f13c86b926774f603b32ca4322778dde596e54b4be5b184a74adb161d"
+    }
+  ],
+  "private_episode_model_source_arrays_reports_and_results_uploaded": false,
+  "production_runtime_unchanged": true,
+  "completed_or_failed_serial_jobs": 4,
+  "serialization_failed_slice_has_unretained_states": true,
+  "no_reconstruction_of_missing_results_by_rerun": true
+}

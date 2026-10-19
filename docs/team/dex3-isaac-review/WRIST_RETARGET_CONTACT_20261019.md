@@ -875,3 +875,49 @@ five distal samples, failed convex controls, old pose solvers or source fits.
 Keep unresolved continuous domains explicit and save all new certificates and
 state rejections. A complete new source/native/motion/swept/motor/grasp result
 is still required before learning.
+
+## Continuous coupled articulation domain
+
+Actual URDF ancestry and three new native distal-thumb states confirm that
+thumb-2 changes the tip while leaving palm/thumb-1 geometry fixed. Analytic
+tip/native closure is below 7.16e-10 m. Seven new controls also include 384
+independent SO(3), principal-log and continuous finger enclosure samples.
+These controls validate the stated representation, not source accuracy.
+
+A new eight-variable numerical interval study at 114 varies the common-root
+Rodrigues ball, thumb-2 and both index/middle joint pairs continuously under
+the original source disks, model-orientation cap, root box and joint bounds.
+The fixed upstream thumb pair is a retained robot hypothesis from a rejected
+whole path, not a measured human angle or new source-pose winner. All 12,001
+nodes and proposed states are saved. The declared budget leaves 150 unresolved
+boxes; no evaluated center passes every source/root prerequisite, so there
+is no new native candidate. This is not global infeasibility.
+
+An independent saved-record audit closes the complete binary partition and
+checks 364 actual-URDF camera projections against its numerical enclosures.
+All samples fit. The best diagnostic proposal still has 24.826 px thumb error
+against the unchanged 24.201 px allowance and remains rejected. The numerical
+padding is not a formal directed-rounding or global exclusion certificate.
+
+A distinct conditional thumb-1/thumb-2 slice reaches its output writer but
+fails on NumPy Boolean JSON serialization. Its proposed states and native
+outcomes were not saved. The failure/log are retained; no physical outcome
+or qualified point is inferred and the slice must not repeat to reconstruct
+its missing results. Future proposals and native outcomes must be converted
+to plain JSON scalars and journaled immediately, before assertions or further
+work. This failure does not justify changing any source or native gate.
+
+Four guarded CPU jobs and 11 exact sources/plans are archived code-only under
+`experiments/scored_baseline_20261019/coupled_articulation`. No production
+runtime changed and no physics/GPU/PPO ran. The three-component freeze and
+all missing/held-out source failures remain unchanged; eight right-self and
+five index/object failures persist. No whole reference, task, motor/grasp,
+policy or score improvement is qualified.
+
+Next derive the original source-image conic's preimage in the actual planar
+thumb workspace together with the proximal thumb/palm clearance relationship.
+Use saved coupled-domain records, explicit robot-hypothesis authority and
+actual compiled geometry. Distinguish a necessary bound from a constructive
+pose, and do not resweep either the eight-variable bank or failed slice.
+Preserve original boxes, temporal authority and all source/native gates;
+full-clock, swept, motor/grasp and source qualification still precede learning.

@@ -1,0 +1,23 @@
+{
+  "schema": "v2d.coupled-articulation-domain-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/study_coupled_articulation_domain_v1.py",
+  "worker_sha256": "75fe87e749217c6b608e329abe5f6b5364f71e5a4609d96f2d1142f70a147359",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-articulation-domain-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/coupled_articulation_intervals_v1.py": "63f72e5a04e3032ed998bfe3aa8ba93047262ed81361bb0ceed586d6211111f1",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-articulation-binding-v1/report.json": "5cae4526c3081cef91955658be0153bd4e741fff58ae4d7d81eb709dbd6bc29d",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-right-thumb-bracketed-v2/right-thumb-reference-commands.npz": "e099d9b3135e64fdd55cf436c80225cab7be24082aac97ff70e2d1df581d46c5",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-source-disk-pose-bank-v2/report.json": "6bef9e73509a31249873d21f15076da92b3437c96afc7e654f6fcd42a642add8"
+  },
+  "CPU_only": true,
+  "continuous_domain_variables": 8,
+  "frame": 114,
+  "fixed_upstream_thumb_pair_is_retained_robot_hypothesis": true,
+  "maximum_boxes": 12000,
+  "worker_wall_budget_seconds": 150,
+  "all_original_gates_and_reference_unchanged": true,
+  "all_states_intervals_rejected_and_unresolved_boxes_saved": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

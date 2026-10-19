@@ -1,0 +1,17 @@
+{
+  "schema": "v2d.coupled-articulation-binding-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_coupled_articulation_intervals_v1.py",
+  "worker_sha256": "5c66fa5c279e33b92e13dcbded4c191739f55fa3b519d07d05c6c6bf6ba57c76",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-articulation-binding-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/coupled_articulation_intervals_v1.py": "63f72e5a04e3032ed998bfe3aa8ba93047262ed81361bb0ceed586d6211111f1",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-right-thumb-bracketed-v2/right-thumb-reference-commands.npz": "e099d9b3135e64fdd55cf436c80225cab7be24082aac97ff70e2d1df581d46c5"
+  },
+  "CPU_only": true,
+  "new_continuous_interval_controls_and_distal_ancestry_only": true,
+  "no_completed_study_repeated": true,
+  "no_native_compile_or_physics": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}
