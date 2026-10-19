@@ -135,3 +135,48 @@ The next source investigation is calibrated RGB/stereo registration and
 visibility-aware depth assignment. Do not substitute RGB pixels under the
 stereo camera's intrinsics, promote occluded fingertips to depth observations,
 or launch another PPO cohort from these preliminary candidates.
+
+## Fixed-calibration RGB checks
+
+A new frame-50 source correspondence audit reused the existing stereo depth;
+no depth model or completed detector cohort was rerun. SIFT produced 136 mutual
+appearance matches at a fixed 0.7 ratio. One corner feature failed fixed-model
+distortion inversion, even after four numerical starts, and remains missing.
+Its failure does not prove that no inverse exists. The retained failed global
+inverse controls are not counted as successful registration.
+
+For the other 135 matches, the published orientation has median epipolar
+distance **3.44 RGB pixels**, compared with **64.90 pixels** after an additional
+180-degree rotation of both raw grids. No calibration parameters were fitted.
+Across all 82 matches with known stereo depth, forward RGB projection error has
+median **3.23 px** and p95 **71.85 px**. The narrower subset of 30 matches with
+at most 2 px epipolar distance has median **1.34 px** and p95 **6.76 px** depth
+projection error. That selected subset does not establish whole-hand accuracy
+or physical exposure synchrony.
+
+Adding the saved RGB predictions to one bounded, existing dense-skin fit
+improved its seven held-out inferred RGB landmark errors from median
+**21.05 → 10.004 px** and p95 **33.28 → 29.50 px**, expressed in equivalent
+stereo pixels using the fixed focal ratios. It still fails the unchanged
+10/25 px image screen. The old IR image and joint-depth screens also reject it,
+and only 31 of 32 held-out surface rays hit the mesh. It is retained as a failed
+control, with no source-flag upgrades, new training or accepted reference.
+
+## Native RGB pose probe
+
+One new HaMeR-only image probe is justified by the remaining source mismatch.
+It uses the RGB image undistorted under its own factory pinhole, with the whole
+inference crop inside the valid source region. Its 21 saved detector points
+round-trip through distortion within `8.53e-13` pixels. The new coordinate helper
+preserves the shaped rest-wrist pivot, including the repository's left-hand
+mirror convention. Eight focused CPU tests pass. A separate private MANO
+control checks all 778 vertices and 21 joints across 20 camera conversions;
+maximum factory-frame closure error is below `3e-9` metres. These are coordinate
+checks, not metric pose validation.
+
+Watcloud job `711102` requests four CPUs, 16 GiB RAM, 16 GiB GPU shards and
+60 GiB temporary disk. It has a 30-minute scheduler limit, an earlier independent
+controller cancellation guard, and a three-minute model-inference limit. It
+uses the existing pinned private image and code overlay, transfers no SAM2
+weights, and must return a hash-verified private backup before releasing its
+allocation. Results and scheduler completion are pending at this checkpoint.
