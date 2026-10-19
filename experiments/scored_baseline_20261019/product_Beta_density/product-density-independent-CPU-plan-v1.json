@@ -1,0 +1,20 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_product_density_v1.py",
+  "worker_sha256": "44fdaf221a5305d7dc905319d217153e6d0772279deb700d7189a17151b48cea",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-product-density-independent-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-product-density-binding-v1/fixed-density-model.json": "54a32634297a8a3b054f5b40681ae4b1671d68e89268886b3fd0b9b024002ba1",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-completion-evaluation-v1/separate-existential-completion-matrix.json": "9ac9a5a6b2248b503d4daadc7ebdb8d4876b9c54c724e2cdf593fb138282e955",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-product-density-evaluation-v1/guard.json": "952bbea9fb36ef58d705cce77a2db5f9a165e14a6f40f6bb2307a3cc4d85716f",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-product-density-evaluation-v1/report.json": "45d6c47da22721d31e88746c3950aa094ea134d251f9e961e478af454c38fe1d",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-product-density-evaluation-v1/all-negative-density-corner-certificates.json": "9348c171c71b7182d48c1292d70c4fa23652a00dc64d84c5a857698555d0aa88",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-product-density-evaluation-v1/all-1024-fixed-density-corner-returns.json": "ba87a7f517e505354ce81dcb3b1030d56e72cc5cc1541e38a2f694ccbebb04f9",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-product-density-evaluation-v1/all-66-exact-normalization-first-second-cross-identities.json": "ccb8579d08bc1c4e5b95a3241cd85e0356e29a84d36fbdd1a570f0e1188ec322",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-product-density-evaluation-v1/ONE-fixed-density-construction-certificate.json": "022c09f3305370c1e2a4f294bbb7408acf95404e857121534e5f8e57dfbbff22"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Independently verify fixed10parameters/45corrections/56coefficients/1024factored signs/66moments with40rising products and1090ordered journals. No new density, old audit, solver or completion.",
+  "no_GPU": true
+}

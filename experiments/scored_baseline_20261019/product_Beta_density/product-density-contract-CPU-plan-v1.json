@@ -1,0 +1,14 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_product_density_contracts_v1.py",
+  "worker_sha256": "21e332ee95514d641dfb32e393d7dae607b6dd113fe6b9591a8f4d77537ad7ad",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-product-density-contract-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/product_beta_density_v1.py": "fca8799c71ea855c76c6ebe73073a7ecb0354b5bcfc9917430249d585b69ef30",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Twelve NEW exact product-Beta/Lancaster density, recurrence, orthogonality, moment, positivity and singular/unknown-domain contracts. No old controls, episode density evaluation, solver or robot candidate.",
+  "no_GPU": true,
+  "declared_new_analytic_controls": 12
+}

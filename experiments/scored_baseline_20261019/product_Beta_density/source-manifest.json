@@ -1,0 +1,68 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "private_results_absent": true,
+  "files": [
+    {
+      "file": "product_beta_density_v1.py",
+      "restore_relative_path": "compute/product_beta_density_v1.py",
+      "executed_or_declared_source_sha256": "fca8799c71ea855c76c6ebe73073a7ecb0354b5bcfc9917430249d585b69ef30"
+    },
+    {
+      "file": "verify_product_density_contracts_v1.py",
+      "restore_relative_path": "compute/verify_product_density_contracts_v1.py",
+      "executed_or_declared_source_sha256": "21e332ee95514d641dfb32e393d7dae607b6dd113fe6b9591a8f4d77537ad7ad"
+    },
+    {
+      "file": "build_product_density_v1.py",
+      "restore_relative_path": "compute/build_product_density_v1.py",
+      "executed_or_declared_source_sha256": "2c9aca9dd33dc8347b6eb0165b54b0f3a70b121cd371e548c22fe0168989bb66"
+    },
+    {
+      "file": "evaluate_product_density_v1.py",
+      "restore_relative_path": "compute/evaluate_product_density_v1.py",
+      "executed_or_declared_source_sha256": "666bd834a3958232614fd11c96b5a81f80599b864b76426b42938b72ad9b1512"
+    },
+    {
+      "file": "verify_product_density_v1.py",
+      "restore_relative_path": "compute/verify_product_density_v1.py",
+      "executed_or_declared_source_sha256": "44fdaf221a5305d7dc905319d217153e6d0772279deb700d7189a17151b48cea"
+    },
+    {
+      "file": "conditional_moment_cones_v1.py",
+      "restore_relative_path": "compute/conditional_moment_cones_v1.py",
+      "executed_or_declared_source_sha256": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995"
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "product-density-contract-CPU-plan-v1.json",
+      "restore_relative_path": "compute/product-density-contract-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "08124e659166fb28c3a18ed9f4322b4bc2946f0ee0fe1b7c2ec190b4df2e362d"
+    },
+    {
+      "file": "product-density-binding-CPU-plan-v1.json",
+      "restore_relative_path": "compute/product-density-binding-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "0983c74f671b9180a71c4d4064b4e6705f3fc84c6aca6bef58682eb339f11b32"
+    },
+    {
+      "file": "product-density-evaluation-CPU-plan-v1.json",
+      "restore_relative_path": "compute/product-density-evaluation-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "83aedaf5153be25ce328d2075a42066592d9276f8d708cd3fb9d3df5539608dc"
+    },
+    {
+      "file": "product-density-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/product-density-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "cd4e6e86fc3760e07affe2d54d464090ce6590b61a27bba2d5235a4896f566d6"
+    }
+  ],
+  "repository_dependency_snapshots": [],
+  "repository_runtime_NOT_imported": true
+}

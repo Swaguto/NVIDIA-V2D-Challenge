@@ -1,0 +1,16 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_product_density_v1.py",
+  "worker_sha256": "2c9aca9dd33dc8347b6eb0165b54b0f3a70b121cd371e548c22fe0168989bb66",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-product-density-binding-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/product_beta_density_v1.py": "fca8799c71ea855c76c6ebe73073a7ecb0354b5bcfc9917430249d585b69ef30",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-product-density-contract-v1/report.json": "718903fecbe2d0ef3968dffb02fc95469a743acf4d2518278b5b4dc9fdeaf9df",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-completion-evaluation-v1/separate-existential-completion-matrix.json": "9ac9a5a6b2248b503d4daadc7ebdb8d4876b9c54c724e2cdf593fb138282e955",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-completion-model-v1/separate-global-completion-model.json": "cbc40d9f164d30de90a377d85ea8651ce30d6c9c47ab4f5f5549ca1cfd109993"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Construct and independently bind ONE fixed density to10marginal/45cross entries of SAME saved separate exact Gram. No corner evaluation/solver/alternative completion or source audit.",
+  "no_GPU": true
+}

@@ -1938,3 +1938,55 @@ are unchanged. Production runtime/tests and motor/grasp/task/policy/score stay
 unchanged. Do not rerun this fixed diagnosis, controls or verification.
 
 The synthetic continuous contract stores only the requested mass/first/distinct-cross moments; unused diagonal zeros are storage placeholders, not second moments or a PSD/measure claim. That control checks only the new paired-corner formulas. Exact executed code/returns remain retained unchanged.
+
+## Fixed continuous product-Beta density attempt, 2026-10-19
+
+A distinct constructive question tests ONE explicit continuous distribution for
+the SAME separate exact first/second Gram completion. For saved unit mass,
+`mu_i=M0i`, `v_i=Mii-mu_i^2` and `c_ij=Mij-mu_i*mu_j`, the fixed inverse-Beta
+parameters use `kappa_i=mu_i*(1-mu_i)/v_i-1`, `a_i=mu_i*kappa_i` and
+`b_i=(1-mu_i)*kappa_i`. All ten satisfy the strict positive interior conditions.
+Relative to their product law, the proposed ratio is
+`D(t)=1+sum c_ij*(t_i-mu_i)*(t_j-mu_j)/(v_i*v_j)`.
+Orthogonality fixes its normalization and all requested first/second moments.
+This does not normalize, repair or alter any original/auxiliary/certificate entry.
+The 26 completed cross entries remain existential values of that ONE matrix.
+
+Twelve NEW analytic controls pass Beta integral recurrences, inverse parameters,
+positive correlated continuous examples, normalization/orthogonality/moment maps,
+multiaffine interpolation, missing/zero/signed/boundary handling, exact tiny
+negative signs and axis order. Old cube/cycle/Schur/PSD/mixed/source controls and
+solvers are not repeated. Independent pre-evaluation bindings verify all ten
+parameters, 45 fixed pair corrections and 56 multiaffine coefficients.
+
+ONE bounded fixed evaluation of all 1,024 algebraic cube corners finds 524
+strictly negative values and 500 nonnegative values. Minimum ratio is about
+-12.687057659 and maximum 27.729057868. These corners are proof evaluations,
+not robot/source anchors or a search over poses. Continuity carries a negative
+corner into a negative interior neighborhood, where the positive Beta base
+law has positive density. THIS density ansatz is REJECTED. All 66 formal
+normalization/first/second/cross identities still match exactly, demonstrating
+why moment closure alone cannot certify a positive measure. No coefficient
+adjustment, retry, alternative law, optimizer, solver or completion follows.
+
+Independent verification uses factored corner formulas and rising-product Beta
+moments rather than the producer's expanded polynomial/recurrence. All ten
+parameter bindings, 45 pair bindings, 56 coefficients, 1,024 corner signs,
+40 finite Beta moments, 66 centered-factor moment identities and 1,090 ordered
+durable BEFORE/AFTER pairs pass. Four serial guarded CPU jobs succeed; twelve
+exact code/plan files are archived under `product_Beta_density`. Parameters,
+actual returns, maps, signs, rejected/unresolved cases and certificates stay
+private and hash bound. Failed construction is a scientific result, not a
+failed worker or a proof that the matrix lacks any supported common measure.
+
+The rejection applies ONLY to this declared density. Other measures/completions,
+the copy/residual envelope, original source/time family and task remain
+unresolved. Even a positive law for this diagnostic first/second matrix would
+not realize the original 1,125 higher tensor weights or source/time support.
+No measured source truth, deterministic path or physical candidate is qualified.
+All actual original/auxiliary returns, separate exact certificate, F/separate
+middle/wrist components, source/missing/held-out flags, full region-2 correlations
+and unknown bands, parameters and original gates remain unchanged. Production
+runtime/tests, native/physics/GPU/PPO and motor/grasp/task/policy/score do not
+change. Do not rerun this construction, controls, evaluation or verification,
+or treat density coefficients/corners as robot commands or observations.

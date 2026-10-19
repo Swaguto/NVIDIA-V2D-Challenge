@@ -1,0 +1,19 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/evaluate_product_density_v1.py",
+  "worker_sha256": "666bd834a3958232614fd11c96b5a81f80599b864b76426b42938b72ad9b1512",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-product-density-evaluation-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/product_beta_density_v1.py": "fca8799c71ea855c76c6ebe73073a7ecb0354b5bcfc9917430249d585b69ef30",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-product-density-binding-v1/fixed-density-model.json": "54a32634297a8a3b054f5b40681ae4b1671d68e89268886b3fd0b9b024002ba1",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-product-density-binding-v1/report.json": "f0f72ea858eb191df4461f1df4da67f98462e1f10fdb4b373d0152926af6aea8",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-completion-evaluation-v1/separate-existential-completion-matrix.json": "9ac9a5a6b2248b503d4daadc7ebdb8d4876b9c54c724e2cdf593fb138282e955"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "ONE fixed product-Beta density:all1024algebraic corner signs and66normalization/first/second/cross identities. No parameter adjustment, solver, new matrix, source or physical candidate.",
+  "no_GPU": true,
+  "declared_corner_count": 1024,
+  "declared_moment_bindings": 66,
+  "maximum_episode_evaluations": 1
+}
