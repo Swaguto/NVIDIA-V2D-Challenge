@@ -355,7 +355,7 @@ test native contact manifolds and the required wrench rather than only isolated
 surface proximity. Preserve the rejected three-point/fixed-triangle and MCP
 controls. Do not resweep them or adopt the failed MCP center. No source
 confidence, contact labels or qualification gates change.
-# Object-local contact patches and compiled-support correction
+## Object-local contact patches and compiled-support correction
 
 The next CPU investigation separates inferred human anatomical anchors from
 robot contact-region hypotheses. New reusable `contact_patches` contracts bind
@@ -425,3 +425,71 @@ and a common bounded root before choosing the lowest potential-force patch
 pair. The finite failed controls do not prove that all patch modes are
 unreachable. Preserve every old bound, failure and source flag; do not resweep
 these raw/corrected local controls or promote proximity to contact truth.
+
+## Finite reachability atlas and common-root facet LP
+
+The next method samples actual URDF joint configurations at the unchanged
+current root orientation: 344 thumb, 50 index and 50 middle configurations,
+including each original command. Compiled whole-digit facets are compared with
+the saved inferred object-local patches. Four nearest object-facet centroids
+and a finite retained bank limit the search. These pruning choices and fixed
+orientation mean the atlas cannot establish global unreachability.
+
+Necessary translation-box tests find 34 thumb/index facet pairs and no
+thumb/middle pairs in this finite bank. The predeclared top 32 are frozen.
+The new reusable `common_translation_contact_seed` chooses barycentric points
+on both facets and **one common root translation**, with original 8 mm component
+bounds. It does not run a local wrist or finger optimizer or change a source
+pose/uncertainty center. Nineteen focused tests cover common-root closure,
+incompatible independently reachable contacts, two/three facet cases, unchanged
+bounds and conservative whole-hull halfspaces. The first test fixture failed
+NumPy broadcasting in three tests; its exact fixture/log are retained. The
+production solver was not changed to accommodate that fixture.
+
+Nine of the 32 facet LPs are geometrically feasible. All nine produce actual
+native thumb contacts, but **none passes the physical prerequisites**. Eight
+have two actual hand/object contacts; one has three. All nine improve the two
+retained inferred image observations but fail the 1 mm full single-knot native
+check and both actuator-aware load checks. Their maximum native penetrations
+range from 2.591 to 15.184 mm. Facet closure is not a collision-free hand pose.
+All actual contacts, including unmatched and third-digit contacts, are retained.
+
+The same frozen queue is then checked with conservative support-plane
+constraints from all compiled right-hand/object hull pairs, allowing at most
+0.5 mm support overlap inside the unchanged 1 mm native gate. Fixed-configuration
+self-penetration is also retained. No new joint configurations are generated.
+All 32 whole-hull LPs are infeasible. This concerns these fixed configurations,
+facets and separating directions; it is not proof of global task infeasibility.
+
+## Required wrench rank and a distinct self-contact gap
+
+A new analysis reads the saved native contact records without rerunning native
+geometry or any load LP. Four analytical mechanics controls pass. For eight
+two-point, dimension-3 contact sets the unrestricted wrench matrix has rank 5;
+both required modeled loads lie outside its span even before friction or effort
+bounds. Relative scaled residuals are 2.11–10.57% for gravity and 28.45–38.06%
+for estimated motion. Increasing force or reward cannot make those frozen
+contact sets balance those loads. This is not an impossibility result for a
+different contact manifold or moving policy.
+
+Candidate 4 has three native point contacts and rank 6, with load-span residuals
+below 1.3e-15, yet its saved constrained load checks still fail. The responsible
+friction/effort component is not isolated by this rank check. Source mass,
+friction and motion remain nominal or inferred, not measured truth.
+
+That same candidate's object contacts are only 0.278–0.559 mm deep, but its
+right palm/thumb-1 self-contact is **2.591 mm**. The unchanged left reference has
+a separate **2.098 mm** palm/thumb-1 self-contact at this knot. The existing
+hand/object/support auditor explicitly records `hand_self_contacts_assessed=False`;
+its previous certificates do not cover this failure. No existing certificate is
+rewritten and the full single-knot check is not relaxed to ignore it.
+
+Next audit hand self-contacts over the cached reference, as a new scope rather
+than rerunning the completed hand/object audit. Then develop source-constrained
+collision-free finger retargeting and contact modes with a sufficient actual
+wrench span. Three point contacts need not mean three mandatory human or robot
+digits: multiple legitimate native contacts on a finger may contribute, but
+must be realized and verified rather than invented. Do not resweep these finite
+atlas/LP controls, enlarge bounds, alter condim/morphology/effort or retry PPO.
+All source, original motion, fresh full 1 mm native, swept, self-contact, motor
+and grasp checks remain necessary. No complete task or policy is qualified.

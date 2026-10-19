@@ -1,0 +1,12 @@
+{
+ "schema":"v2d.saved-native-contact-wrench-span-plan.v1",
+ "episode":"e037","frame":50,
+ "new_question":"Do the required modeled wrenches lie outside the unrestricted linear span of the saved native contact geometries, even before friction/effort?",
+ "source":"saved9 facet-LP native contact records; no native or LP recomputation",
+ "analytic_controls":["one point force","one point pure moment rejection","two point axial moment rejection","three noncollinear point span"],
+ "moment_scaling_length_m":0.1,"relative_span_tolerance":1e-8,
+ "force_sign_friction_effort_constraints_ignored_for_necessary_test_only":true,
+ "no_contact_dimension_or_model_change":true,
+ "wall_cap_seconds":240,"resident_cap_bytes":2147483648,"minimum_free_disk_bytes":1610612736,
+ "GPU_or_physics_work":false
+}

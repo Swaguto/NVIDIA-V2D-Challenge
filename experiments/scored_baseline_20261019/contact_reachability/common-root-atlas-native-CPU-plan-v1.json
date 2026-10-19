@@ -1,0 +1,15 @@
+{
+ "schema":"v2d.common-root-facet-atlas-native-plan.v1",
+ "episode":"e037","frame":50,
+ "new_method":"LP for exact common wrist translation and hand/object facet barycentric witnesses at frozen sampled URDF configurations, followed by actual native contacts and effort-aware two-load checks.",
+ "queue":"frozen atlas top32 candidates per mode; no extra candidates generated or adaptive resweep",
+ "target_signed_gap_m":-0.00025,
+ "source_and_model_unchanged":true,"root_translation_component_cap_m":0.008,"added_root_rotation_rad":0,
+ "native_full_single_knot_penetration_cap_m":0.001,"assigned_patch_contact_tolerance_m":0.001,
+ "effort":"actual .76Nm native clamp including hand gravity compensation; recorded stiction unchanged",
+ "all_actual_native_contacts_retained":true,"all_right_object_contacts_in_effort_checks":true,
+ "required_loads":["gravity","estimated_motion"],
+ "source_fit_original_motion_full151_native_swept_motor_grasp_still_required":true,
+ "wall_cap_seconds":240,"resident_cap_bytes":2147483648,"minimum_free_disk_bytes":1610612736,
+ "GPU_or_physics_steps":false
+}

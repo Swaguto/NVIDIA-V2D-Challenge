@@ -1,0 +1,132 @@
+{
+  "schema": "v2d.exact-code-only-source-archive.v1",
+  "files": [
+    {
+      "file": "verify_contact_translation_v1.py",
+      "restore_relative_path": "compute/verify_contact_translation_v1.py",
+      "executed_or_declared_source_sha256": "c510581368bdb350102bd125095cf8ff83b824b283cb98212360cef43992c20c"
+    },
+    {
+      "file": "guard_contact_translation_v1.py",
+      "restore_relative_path": "compute/guard_contact_translation_v1.py",
+      "executed_or_declared_source_sha256": "b8eb475239cfea0342767c75eaf0934f973b8ac52132c259378b74f180d9d36b"
+    },
+    {
+      "file": "verify_contact_translation_v2.py",
+      "restore_relative_path": "compute/verify_contact_translation_v2.py",
+      "executed_or_declared_source_sha256": "f8734f0f8e62f6929cfb8fccb15251fedea0d9007d917287611d4925794899bd"
+    },
+    {
+      "file": "guard_contact_translation_v2.py",
+      "restore_relative_path": "compute/guard_contact_translation_v2.py",
+      "executed_or_declared_source_sha256": "5a4459e8f60f25b9dbe8b30bbfaab90597632d2254ade79cc621d113959c5b26"
+    },
+    {
+      "file": "verify_contact_translation_v3.py",
+      "restore_relative_path": "compute/verify_contact_translation_v3.py",
+      "executed_or_declared_source_sha256": "cf2df55950e8bea5036d1c43e619b8facb56e40f24ce0276fc1ef3710c6f41c6"
+    },
+    {
+      "file": "guard_contact_translation_v3.py",
+      "restore_relative_path": "compute/guard_contact_translation_v3.py",
+      "executed_or_declared_source_sha256": "edfa89822c1b616a4e4287e469e3a3a240944a36b2ef02d09a72b49041738d38"
+    },
+    {
+      "file": "verify_contact_translation_v4.py",
+      "restore_relative_path": "compute/verify_contact_translation_v4.py",
+      "executed_or_declared_source_sha256": "d9bde8e6d7664c2c1b8b02deab10e089fcc53c1497cfbb642790c2b1e22a3eed"
+    },
+    {
+      "file": "guard_contact_translation_v4.py",
+      "restore_relative_path": "compute/guard_contact_translation_v4.py",
+      "executed_or_declared_source_sha256": "945f5fde441dd73ebef3f47114a0c6a46a6bdd174262e75c2d318c68d80d20ae"
+    },
+    {
+      "file": "contact_translation_initial_v1.py",
+      "restore_relative_path": "compute/contact_translation_initial_v1.py",
+      "executed_or_declared_source_sha256": "5db83b0faacb382b70bc66b3e09edd293c6e300f4fa2ccf77065873a7bc897d2"
+    },
+    {
+      "file": "test_contact_translation_initial_failed_v1.py",
+      "restore_relative_path": "compute/test_contact_translation_initial_failed_v1.py",
+      "executed_or_declared_source_sha256": "39cb7a822be44201d187888c56977c8faa7efc1cbf12f059cf2339d26556c2d3"
+    },
+    {
+      "file": "test_contact_translation_initial_passing_v2.py",
+      "restore_relative_path": "compute/test_contact_translation_initial_passing_v2.py",
+      "executed_or_declared_source_sha256": "52885ec22df60dd367988dbee645154e26b3bf573b764cd5d8e0b27418529b00"
+    },
+    {
+      "file": "test_contact_translation_before_three_facet_v3.py",
+      "restore_relative_path": "compute/test_contact_translation_before_three_facet_v3.py",
+      "executed_or_declared_source_sha256": "0a56627de3705048115c46bd61ec5fa5f81339bffc6cb1cca88bcd89a1ded8c6"
+    },
+    {
+      "file": "build_compiled_contact_reachability_atlas_v1.py",
+      "restore_relative_path": "compute/build_compiled_contact_reachability_atlas_v1.py",
+      "executed_or_declared_source_sha256": "ef4a8bdf00e0840a80707aa1b3d070aff6f5e9eb98c0fa08c7939e30df86f339"
+    },
+    {
+      "file": "guard_compiled_contact_reachability_v1.py",
+      "restore_relative_path": "compute/guard_compiled_contact_reachability_v1.py",
+      "executed_or_declared_source_sha256": "ce06d29d120b4525ee1211747e28026efe2179808d11ff878d4af47a6605dd9e"
+    },
+    {
+      "file": "compiled-contact-reachability-CPU-plan-v1.json",
+      "restore_relative_path": "compute/compiled-contact-reachability-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "0ad5aa8951bb6e7939db3958936782b09ddb62018a9e84053c9bdfdf5b53973e"
+    },
+    {
+      "file": "evaluate_common_root_contact_atlas_v1.py",
+      "restore_relative_path": "compute/evaluate_common_root_contact_atlas_v1.py",
+      "executed_or_declared_source_sha256": "a97f96c3e59d106787081573faf5f5b5b464291a67e1aab2b0663af93f31ecde"
+    },
+    {
+      "file": "guard_common_root_contact_atlas_v1.py",
+      "restore_relative_path": "compute/guard_common_root_contact_atlas_v1.py",
+      "executed_or_declared_source_sha256": "c771f6bcf5b01a184b69f701863112dd74c080843d5da011ff0f177f1a2500d7"
+    },
+    {
+      "file": "common-root-atlas-native-CPU-plan-v1.json",
+      "restore_relative_path": "compute/common-root-atlas-native-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "c5ed4df2f4f68ed4c71f14e6e3bf5f5ba6e642b9f65d8046c6485aab98a743e0"
+    },
+    {
+      "file": "evaluate_whole_hull_common_root_v1.py",
+      "restore_relative_path": "compute/evaluate_whole_hull_common_root_v1.py",
+      "executed_or_declared_source_sha256": "88b247456a8e438c00564149ca13d857dd82936ff172f13ff550a0e689fdd8e1"
+    },
+    {
+      "file": "guard_whole_hull_common_root_v1.py",
+      "restore_relative_path": "compute/guard_whole_hull_common_root_v1.py",
+      "executed_or_declared_source_sha256": "1cad0cdcefe684452f657e7455d8361737bf65f4c52dd0969c07f65f65a0c8f1"
+    },
+    {
+      "file": "whole-hull-common-root-native-CPU-plan-v1.json",
+      "restore_relative_path": "compute/whole-hull-common-root-native-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "2d95fd874bd534aa7523ee20f237f23813c4eb3bd66e2eb2c0ef171c1829ce46"
+    },
+    {
+      "file": "audit_saved_contact_wrench_span_v1.py",
+      "restore_relative_path": "compute/audit_saved_contact_wrench_span_v1.py",
+      "executed_or_declared_source_sha256": "a7b98bd488df637e7363cd29d197fe48135b9f0de4145a2bd1f5528b5cfe61c2"
+    },
+    {
+      "file": "guard_saved_contact_wrench_span_v1.py",
+      "restore_relative_path": "compute/guard_saved_contact_wrench_span_v1.py",
+      "executed_or_declared_source_sha256": "c075db9bb2d98d2c5c53dc9fde9c21cc5b1877df4b40f80e7ca9539da3f94cf6"
+    },
+    {
+      "file": "saved-contact-wrench-span-CPU-plan-v1.json",
+      "restore_relative_path": "compute/saved-contact-wrench-span-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "89c7f39322433c00c01ad0baa7f82e9c29fce315540cfcc0af720bb2c693d87f"
+    }
+  ],
+  "historical_dependency_snapshots": {
+    "contact_translation_initial_v1.py": "scripts/dex3_training/v2d_dex3_flashchord/contact_translation.py before optional halfspaces",
+    "test_contact_translation_initial_failed_v1.py": "failed initial broadcasting test fixture",
+    "test_contact_translation_initial_passing_v2.py": "11-test fixture before whole-hull tests",
+    "test_contact_translation_before_three_facet_v3.py": "18-test fixture before third-facet test"
+  },
+  "no_private_arrays_or_reports_included": true
+}

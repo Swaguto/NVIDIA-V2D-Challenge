@@ -1,0 +1,16 @@
+{
+ "schema":"v2d.compiled-hand-finite-contact-reachability-plan.v1",
+ "episode":"e037","frame":50,
+ "new_method":"Finite actual joint grid, compiled whole-digit facets, inferred object-local patch bank; construct a common bounded root by facet barycentric LP rather than resweeping old local solves.",
+ "joint_grid_levels":7,"object_centroid_neighbors_per_hand_facet":4,
+ "retained_configurations_per_digit_patch":16,"joint_prior_score_weight":0.05,
+ "maximum_facet_pair_trials_per_mode":32,"modes":["thumb_index","thumb_middle"],
+ "target_signed_gap_m":-0.00025,
+ "root_translation_component_bound_m":0.008,"root_orientation":"unchanged current center; zero added rotation is within old0.08rad component box",
+ "source_region":"exact saved compiled patch bank, not new source truth",
+ "finite_sampling_does_not_prove_global_unreachability":true,
+ "actual_native_manifold_effort_source_and_fresh_full_trajectory_checks_still_required":true,
+ "model_morphology_mass_inertia_friction_condim_effort_caps_unchanged":true,
+ "wall_cap_seconds":240,"resident_cap_bytes":2147483648,"minimum_free_disk_bytes":1610612736,
+ "GPU_or_physics_steps":false
+}

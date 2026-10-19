@@ -1,0 +1,29 @@
+{
+  "schema": "v2d.whole-hull-common-root-facet-plan.v1",
+  "episode": "e037",
+  "frame": 50,
+  "new_method": "Add conservative whole compiled-hull separating halfspaces to exact shared-root facet LP; evaluate SAME frozen queue of32, no new joint samples or local optimizer.",
+  "queue": "frozen atlas top32 candidates per mode; no extra candidates generated or adaptive resweep",
+  "target_signed_gap_m": -0.00025,
+  "source_and_model_unchanged": true,
+  "root_translation_component_cap_m": 0.008,
+  "added_root_rotation_rad": 0,
+  "native_full_single_knot_penetration_cap_m": 0.001,
+  "assigned_patch_contact_tolerance_m": 0.001,
+  "effort": "actual .76Nm native clamp including hand gravity compensation; recorded stiction unchanged",
+  "all_actual_native_contacts_retained": true,
+  "all_right_object_contacts_in_effort_checks": true,
+  "required_loads": [
+    "gravity",
+    "estimated_motion"
+  ],
+  "source_fit_original_motion_full151_native_swept_motor_grasp_still_required": true,
+  "wall_cap_seconds": 240,
+  "resident_cap_bytes": 2147483648,
+  "minimum_free_disk_bytes": 1610612736,
+  "GPU_or_physics_steps": false,
+  "whole_hull_support_penetration_cap_m": 0.0005,
+  "root_center_and_source_uncertainty_unchanged": true,
+  "previous_facet_only_failure_retained": true,
+  "parent_producer_sha256": "a97f96c3e59d106787081573faf5f5b5b464291a67e1aab2b0663af93f31ecde"
+}

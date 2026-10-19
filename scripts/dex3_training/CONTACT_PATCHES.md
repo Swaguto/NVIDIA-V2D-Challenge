@@ -44,3 +44,23 @@ and [graph producer](https://github.com/google-deepmind/mujoco/blob/3.8.1/src/us
 The e037 investigations remain rejected controls. The compiled-vertex correction
 closes seven saved native support gaps numerically, but the corrected two-digit
 trial still has no thumb contact and fails both required load checks.
+
+## Common-root facet seeds
+
+`contact_translation.common_translation_contact_seed` solves a geometric LP for
+two or three fixed hand/object facet pairs. It chooses barycentric points on
+both facets and one shared bounded root translation. Finger configurations and
+root orientation remain fixed; separate roots per digit are not allowed.
+An independent residual check verifies the returned point closures and bounds.
+
+Optional translation halfspaces can carry conservative whole-hull separation
+constraints. This prevents a chosen facet from meeting while another part of
+the same hull penetrates. The producer must derive and bind these planes to the
+actual compiled geometry and concrete pose. Fixed-plane infeasibility does not
+prove global workspace infeasibility. Neither facet closure nor these planes
+certify active contacts, forces, source accuracy or grasp success.
+
+The finite e037 atlas and all its candidates are retained failures. The earlier
+native hand/object/support audit explicitly reports that hand self-contacts were
+not assessed. A new self-contact audit is required before treating a reference
+as ready for physical validation; a passing hand/object gate alone is insufficient.
