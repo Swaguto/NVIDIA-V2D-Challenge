@@ -1,0 +1,15 @@
+{
+  "schema": "v2d.cpu-only-quality-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_coupled_source_face_geometry_v1.py",
+  "worker_sha256": "a46f732f5684b386b4136f68399dcd193dce7489b83264cc2adb0c9c66e63879",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-face-independent-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-source-face-path-v1/all-chart-sections-source-proposals-and-path-records.jsonl": "ea206fc9e1d527204aa018c648e5c16adce7eaa4669e0bce08c950aced0c9465",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-conic-clearance-v1/compiled-parent-geometry.json": "b6ff75ae59dcc66e0801fe10fa78e1da82a692d5e124847f7789431fe14614f2",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/kinematics.py": "0747c53517a45a64efa5c7ecf8e91fedafcfb5150042c9a99c2718c0d7cb376c"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "no_physics_GPU_PPO": true
+}

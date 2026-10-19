@@ -1,0 +1,16 @@
+{
+  "schema": "v2d.cpu-only-quality-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/construct_strict_source_wrist_mode_v1.py",
+  "worker_sha256": "7ec819678ed4d0fa75970fa6ccbdae36d75fa9ab26de4f77880eaa638a420656",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-strict-source-wrist-mode-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-source-wrist-mode-v1/common-wrist-source-mode-contract.json": "9239c4befd52f5525deb2febe3f1a557eefe8da553b42436d59e74895c4c91de",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/source_root_twist.py": "1f7bbf3d4298ca436bce7a58a8a41dea91eef88d5c5fd0098a1b275ceddbdc77",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/track3/temporal_pose_path.py": "49f3a790488e2ba1d07523456a40e8eebabba3bc1dd39f1b568bad9bb5b041f9"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_strict_source_cone_geometry_not_optimizer_restart": true,
+  "no_physics_GPU_PPO": true
+}

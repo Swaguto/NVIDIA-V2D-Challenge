@@ -1,0 +1,109 @@
+{
+  "schema": "v2d.exact-research-source-archive.v1",
+  "files": [
+    {
+      "file": "construct_common_source_wrist_mode_v1.py",
+      "restore_relative_path": "compute/construct_common_source_wrist_mode_v1.py",
+      "executed_or_declared_source_sha256": "b828f6df15df10b717aca2c156801240cb89a69bfecbda66b1059430ad2ad1a7"
+    },
+    {
+      "file": "construct_strict_source_wrist_mode_v1.py",
+      "restore_relative_path": "compute/construct_strict_source_wrist_mode_v1.py",
+      "executed_or_declared_source_sha256": "7ec819678ed4d0fa75970fa6ccbdae36d75fa9ab26de4f77880eaa638a420656"
+    },
+    {
+      "file": "construct_coupled_source_face_path_v1.py",
+      "restore_relative_path": "compute/construct_coupled_source_face_path_v1.py",
+      "executed_or_declared_source_sha256": "7c45bc734f22acc44b1796a864d96075c161bffffa6b0dff3cafe53c80947722"
+    },
+    {
+      "file": "diagnose_coupled_root_finger_sections_v1.py",
+      "restore_relative_path": "compute/diagnose_coupled_root_finger_sections_v1.py",
+      "executed_or_declared_source_sha256": "ddc72fb5d249e7ed10759d854f2ad14e3e0f6267a6fa53923c8a66dcd9335cad"
+    },
+    {
+      "file": "verify_coupled_source_face_geometry_v1.py",
+      "restore_relative_path": "compute/verify_coupled_source_face_geometry_v1.py",
+      "executed_or_declared_source_sha256": "a46f732f5684b386b4136f68399dcd193dce7489b83264cc2adb0c9c66e63879"
+    },
+    {
+      "file": "common-source-wrist-mode-CPU-plan-v1.json",
+      "restore_relative_path": "compute/common-source-wrist-mode-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "d95f12488286f7f561da8108cd5c23b1fc5da56e911ede82b23b7a7ca4e01410"
+    },
+    {
+      "file": "strict-source-wrist-mode-CPU-plan-v1.json",
+      "restore_relative_path": "compute/strict-source-wrist-mode-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "6120ad38ea8e7ed0cf4a44ea38508044d0fc53cf253788b6cc0385000b473c47"
+    },
+    {
+      "file": "coupled-source-face-path-CPU-plan-v1.json",
+      "restore_relative_path": "compute/coupled-source-face-path-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "8f6df256e25570b0d7b82645add10faf444ad9a48bb39ad36311f5901187e666"
+    },
+    {
+      "file": "coupled-root-full-2R-diagnosis-CPU-plan-v1.json",
+      "restore_relative_path": "compute/coupled-root-full-2R-diagnosis-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "2ee026bb110e4e140e690fa580c0adc7fab1e1c18b3c3453e3fbbb62e0cebb12"
+    },
+    {
+      "file": "coupled-face-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/coupled-face-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "839a998953db64deb4e43ab452fadd473b53433ea1a5d285cd957593c2c3aa39"
+    },
+    {
+      "file": "source_orientation_context_v1.py",
+      "restore_relative_path": "compute/source_orientation_context_v1.py",
+      "executed_or_declared_source_sha256": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00"
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+    },
+    {
+      "file": "harmonic_source_domains_v1.py",
+      "restore_relative_path": "compute/harmonic_source_domains_v1.py",
+      "executed_or_declared_source_sha256": "3c9eebd919c26132a4a15219de1686ef82ead41958f47a9abab28c713386aa8e"
+    },
+    {
+      "file": "compiled_thumb_face_chart_v1.py",
+      "restore_relative_path": "compute/compiled_thumb_face_chart_v1.py",
+      "executed_or_declared_source_sha256": "a14c2692abcbc96079f31e3cc5381c3c6a960d922ea9459f76400b5c9e477144"
+    },
+    {
+      "file": "planar_workspace_conic_v1.py",
+      "restore_relative_path": "compute/planar_workspace_conic_v1.py",
+      "executed_or_declared_source_sha256": "51ae8c5ea0466b970b98d8afabd71cbeacfaf41b862bde5cf89ba04287f800d6"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    }
+  ],
+  "repository_dependency_snapshots": [
+    {
+      "file": "repository_snapshot_kinematics.py",
+      "repository_source_path": "scripts/dex3_training/v2d_dex3_flashchord/kinematics.py",
+      "sha256": "0747c53517a45a64efa5c7ecf8e91fedafcfb5150042c9a99c2718c0d7cb376c"
+    },
+    {
+      "file": "repository_snapshot_source_root_twist.py",
+      "repository_source_path": "scripts/dex3_training/v2d_dex3_flashchord/source_root_twist.py",
+      "sha256": "1f7bbf3d4298ca436bce7a58a8a41dea91eef88d5c5fd0098a1b275ceddbdc77"
+    },
+    {
+      "file": "repository_snapshot_temporal_pose_graph.py",
+      "repository_source_path": "scripts/dex3_training/v2d_dex3_flashchord/temporal_pose_graph.py",
+      "sha256": "b87d6207635266ffafc07929e5a76f1d68b67cd678315c7e247c8bd0a03b8874"
+    },
+    {
+      "file": "repository_snapshot_temporal_pose_path.py",
+      "repository_source_path": "scripts/track3/temporal_pose_path.py",
+      "sha256": "49f3a790488e2ba1d07523456a40e8eebabba3bc1dd39f1b568bad9bb5b041f9"
+    }
+  ],
+  "private_data_geometry_models_results_or_weights_included": false,
+  "production_runtime_unchanged": true
+}

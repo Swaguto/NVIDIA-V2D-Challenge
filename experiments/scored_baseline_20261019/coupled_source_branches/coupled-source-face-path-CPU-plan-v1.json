@@ -1,0 +1,21 @@
+{
+  "schema": "v2d.cpu-only-quality-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/construct_coupled_source_face_path_v1.py",
+  "worker_sha256": "7c45bc734f22acc44b1796a864d96075c161bffffa6b0dff3cafe53c80947722",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-source-face-path-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/harmonic_source_domains_v1.py": "3c9eebd919c26132a4a15219de1686ef82ead41958f47a9abab28c713386aa8e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/compiled_thumb_face_chart_v1.py": "a14c2692abcbc96079f31e3cc5381c3c6a960d922ea9459f76400b5c9e477144",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-strict-source-wrist-mode-v1/UNQUALIFIED-strict-source-root-proposal.npz": "15a362bbf9eb6956ba487b175ce4d04e0ac42ecfa2e4d245c22799cca81c2932",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-conic-clearance-v1/compiled-parent-geometry.json": "b6ff75ae59dcc66e0801fe10fa78e1da82a692d5e124847f7789431fe14614f2",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-ray-independent-validation-v1/report.json": "720fb0d9b6a7f8272ede38218f9c58954d305309c2dffed3853d2f1d1ecac89a",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/temporal_pose_graph.py": "b87d6207635266ffafc07929e5a76f1d68b67cd678315c7e247c8bd0a03b8874",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/kinematics.py": "0747c53517a45a64efa5c7ecf8e91fedafcfb5150042c9a99c2718c0d7cb376c"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "constructor_overlap_m": 0.00075,
+  "source_root_original_temporal_prerequisites_before_native": true,
+  "no_physics_GPU_PPO": true
+}

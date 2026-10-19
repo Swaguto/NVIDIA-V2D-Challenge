@@ -1079,3 +1079,57 @@ conic/clearance chart under the original temporal authority. Preserve continuous
 neighbor uncertainty. Unresolved root boxes are not accepted seeds, and the
 isolated controls are not mandatory measured trajectory nodes. Do not expand
 the partition budget, resweep completed controls or relax source/native gates.
+
+## Coupled source wrist mode and compiled-face charts
+
+A new common wrist mode starts from the verified three-component reference.
+Its axis uses only source-index differential geometry and source-model
+orientation constraints over a smooth time profile. The first linear program
+selects a tangent orientation direction: exact caps leave only 1.27e-5 rad
+amplitude. It is retained and is not a useful physical-reference candidate.
+Three analytic and three actual source-derivative controls pass.
+
+A distinct strict-interior source-cone program maximizes common inward
+orientation margin; four analytic controls pass. Its one declared midpoint
+amplitude is 0.033644 rad. All 19 changed roots pass the original model
+orientation/component constraints and all six original full-clock root motion
+summaries. Collision, force and physical outcomes do not enter this selection.
+Source-model orientation remains an estimate, and this root-only result does
+not qualify source images, fingers, contacts or a whole reference.
+
+The new compiled palm-face chart intersects vertex sinusoid inequalities to
+obtain continuous proximal-angle domains at finite axial-thumb sections.
+Distal source-image domains are continuous within each section. A 0.75 mm
+constructor overlap and 0.02 px inward source margin construct subsets; the
+original 1 mm and image acceptance gates are unchanged. Actual compiled
+support vertices are used throughout. Independent world-URDF surface checks
+on 32 saved points close the support gaps within 7.45e-10 m. This does not
+certify native active contacts or all possible separating axes.
+
+The newly constructed 151-row source/finger family has 68 actual-URDF chart
+points but 13 empty rows and no path under original position, velocity and
+component/adjacent/second-added limits. The old isolated neighbor controls are
+not mandatory nodes. No native position is evaluated because the full source
+and temporal prerequisites fail. Finite axial samples, fixed other-finger
+distal sections, sufficient palm faces and node pruning are explicit scope
+limits; this does not establish continuous or global infeasibility.
+
+A separate new full 2R source-domain diagnostic uses this wrist hypothesis,
+without changing its amplitude. Of 38 index/middle domains, 28 have numerical
+constructive source witnesses and ten remain unresolved at zero-distal/chart
+boundaries. Three of five failed fixed-distal sections gain witnesses when
+both actual joints are free: middle at 103/104 and index at 109. These are
+isolated mathematical source witnesses, not a temporal or native certificate.
+
+Five serial CPU jobs are archived code-only under
+`experiments/scored_baseline_20261019/coupled_source_branches`. Ten analytic
+controls, three derivative controls and 100 new chart/independent URDF states
+pass their stated scopes. Production runtime/tests, human/source flags and the
+current verified freeze are unchanged. Eight right-self and five object
+failures persist; no native position, physics, GPU/PPO or score gain occurred.
+
+Next handle the zero-distal/conic-chart domains explicitly and develop source
+branches allowing both index/middle joints before reconsidering thumb/source
+continuation. Retain unresolved domains and original temporal authority.
+Do not resweep the two wrist modes, amplitudes, old fixed sections or failed
+finite graph, and do not promote the root-only proposal to a reference.
