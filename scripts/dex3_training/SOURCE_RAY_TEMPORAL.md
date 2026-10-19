@@ -90,3 +90,25 @@ source accuracy, native collision or motor/grasp certificate. The numerical
 root partition keeps its source-model/component constraints and every
 unresolved leaf. See the code-only `wrist_cone_domains` research archive and
 the wrist-contact review for exact scopes, retained failures and checks.
+
+## Coupled continuous time algebra in research
+
+The private five-clock index study represents actual angles as `q = 2 atan(u)`.
+For an integer angle combination `Q = sum(k_j q_j)`, the polynomial phasor
+`P = product(1 + sign(k_j) i u_j)^abs(k_j)` has squared modulus at least one.
+After certifying the angle branch, the two signs of
+`Im(exp(-i L/2) P)` and `-Im(exp(-i U/2) P)` enforce `L <= Q <= U`.
+This avoids assuming a positive tangent-difference denominator.
+
+The study binds original correction first/second differences and actual
+clock velocities to the saved source-disk polynomials. Rational Taylor
+intervals enclose coefficient constants for saved binary inputs. Numerical
+endpoint/arithmetic guards produce necessary outer restrictions only;
+original candidate gates and tolerances remain unchanged. Source interiors,
+unknown critical bands and full correlated clock boxes remain explicit.
+
+Twelve new controls and independent coefficient/angle/timestamp checks pass.
+No source/time solution or exclusion is asserted; the equations precede a
+new coupled construction. The exact code-only research archive is
+`experiments/scored_baseline_20261019/index_temporal_algebra`. Existing
+runtime helpers/tests and the verified reference remain unchanged.

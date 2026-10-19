@@ -1,0 +1,12 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_half_angle_time_contract_v1.py",
+  "worker_sha256": "1b0862497ba679464e898aea1e18313bd721e7a6a2337fd4a2283aebe117d857",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-half-angle-time-contract-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/half_angle_temporal_algebra_v1.py": "32e4f90662db9ed0efd7f86043cdc2ba9ec94021bea3011a56b3c48c21d362b9",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Independent half-angle temporal polynomial contracts; no old tests/producers/native work",
+  "no_GPU": true
+}

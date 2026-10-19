@@ -1,0 +1,16 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_source_time_algebra_independent_v1.py",
+  "worker_sha256": "6b00ec54de7d9419ffd6abc7e2cd36cd451b072e2f1c96ddcfa7cbd93b88ac08",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-time-independent-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-time-system-v1/coupled-source-time-polynomial-system.json": "48732e47761f0a1d81a49ca9478b41ee7a8ae3a8623f066d8e91cacb269c6984",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-time-system-v1/report.json": "7b38722f79e2d62d2356ae8c60feced6fd925db0ebb96904b9ff4c549b5253a9",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-polynomial-v2/actual-index-polynomials-and-saved-region-charts.json": "9fbd623c8e54c23032ea29200a4c28be41ff4c0cda83d0c7f9e4fe3c5ad647ce",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-ray-independent-validation-v1/frozen/targets.npz": "d984b1c5eae1edcea960a7374b8baa461a06c54c37132fa62b027c6dbe26e2d9",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-ray-independent-validation-v1/frozen/aligned-source-reference.npz": "473beb49e4f39048f4c5332fd78c5dd9ca2aadc70895983973f2d62df8d1227e"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Independent exact coefficient enclosures plus direct angle/timestamp gates; no candidate search/native",
+  "no_GPU": true
+}

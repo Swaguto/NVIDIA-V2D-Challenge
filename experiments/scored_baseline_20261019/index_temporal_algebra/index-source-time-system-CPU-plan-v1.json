@@ -1,0 +1,17 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_saved_source_time_system_v1.py",
+  "worker_sha256": "28cb07e7d32eff7f74e8b7b4dd69e76d363a0861b03d894f103c890f06b04d40",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-time-system-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/half_angle_temporal_algebra_v1.py": "32e4f90662db9ed0efd7f86043cdc2ba9ec94021bea3011a56b3c48c21d362b9",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-half-angle-time-contract-v1/report.json": "39de7e2eccdd119c7189e248360f038a239e5cf1a12b5df1789dedc5500eb796",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-polynomial-v2/actual-index-polynomials-and-saved-region-charts.json": "9fbd623c8e54c23032ea29200a4c28be41ff4c0cda83d0c7f9e4fe3c5ad647ce",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-regular-source-branches-v1/regular-source-cells-and-unknown-bands.json": "cb75d33407c86cf0e91431e42b66e0b88424eb609b9a8527b5067a588cc66da5",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-ray-independent-validation-v1/frozen/targets.npz": "d984b1c5eae1edcea960a7374b8baa461a06c54c37132fa62b027c6dbe26e2d9",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-ray-independent-validation-v1/frozen/aligned-source-reference.npz": "473beb49e4f39048f4c5332fd78c5dd9ca2aadc70895983973f2d62df8d1227e"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Five-clock continuous source-time polynomial equations from saved inputs; no path search/native",
+  "no_GPU": true
+}

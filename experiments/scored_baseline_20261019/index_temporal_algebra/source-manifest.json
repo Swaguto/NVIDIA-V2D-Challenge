@@ -1,0 +1,53 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "private_results_absent": true,
+  "files": [
+    {
+      "file": "half_angle_temporal_algebra_v1.py",
+      "restore_relative_path": "compute/half_angle_temporal_algebra_v1.py",
+      "executed_or_declared_source_sha256": "32e4f90662db9ed0efd7f86043cdc2ba9ec94021bea3011a56b3c48c21d362b9"
+    },
+    {
+      "file": "verify_half_angle_time_contract_v1.py",
+      "restore_relative_path": "compute/verify_half_angle_time_contract_v1.py",
+      "executed_or_declared_source_sha256": "1b0862497ba679464e898aea1e18313bd721e7a6a2337fd4a2283aebe117d857"
+    },
+    {
+      "file": "derive_saved_source_time_system_v1.py",
+      "restore_relative_path": "compute/derive_saved_source_time_system_v1.py",
+      "executed_or_declared_source_sha256": "28cb07e7d32eff7f74e8b7b4dd69e76d363a0861b03d894f103c890f06b04d40"
+    },
+    {
+      "file": "verify_source_time_algebra_independent_v1.py",
+      "restore_relative_path": "compute/verify_source_time_algebra_independent_v1.py",
+      "executed_or_declared_source_sha256": "6b00ec54de7d9419ffd6abc7e2cd36cd451b072e2f1c96ddcfa7cbd93b88ac08"
+    },
+    {
+      "file": "half-angle-time-contract-CPU-plan-v1.json",
+      "restore_relative_path": "compute/half-angle-time-contract-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "dc20346b41ec6b583acd62bc0d6bae0ec6a399fa9d21afc6917b54b03a4de12f"
+    },
+    {
+      "file": "index-source-time-system-CPU-plan-v1.json",
+      "restore_relative_path": "compute/index-source-time-system-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "0c491165dfb7d8753d13bc5e66e92d402f9a66cf54139681f3d38044654afd44"
+    },
+    {
+      "file": "index-source-time-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/index-source-time-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "8b9a8e2eda1c9d167495243860a870d8fa029bd25afcd3ab73e76f77a1e7166f"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+    }
+  ],
+  "repository_dependency_snapshots": [],
+  "repository_runtime_NOT_imported": true
+}

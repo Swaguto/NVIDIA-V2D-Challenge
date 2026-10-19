@@ -1332,3 +1332,40 @@ source authority, missing/held-out failures and original parameters/gates are
 unchanged. The next construction must couple adjacent clock rows through
 the original temporal inequalities; do not select more isolated frame-109
 points or treat the current witnesses as mandatory measured nodes.
+
+## Five-clock continuous source/time equations
+
+A new research-only half-angle formulation couples index source branches over
+107–111. It retains the full correlated outer region 2, copies five saved
+source polynomials by hash, and preserves the three unknown frame-109 event
+bands. It does not regenerate source models, root charts or old time studies.
+The saved isolated witnesses are not mandatory clock nodes.
+
+For `Q = sum(k_j q_j)` and `q_j = 2 atan(u_j)`, a polynomial complex product
+represents `Q/2`. Its squared modulus is a positive product of `1 + u_j^2`.
+Once angle bounds establish the sine-sign branch, lower/upper signs give
+polynomial inequalities for each original motion gate. No possibly negative
+`1 + u_t*u_previous` denominator is multiplied through without authority.
+The actual 22 gates comprise eight adjacent-added, six second-added and eight
+actual-velocity constraints, giving 44 polynomial inequalities in ten
+continuous variables. Actual timestamp intervals remain explicit and positive.
+
+Rational Taylor enclosures bind coefficient constants to saved binary angle
+and timestamp inputs. A 1e-14-rad arithmetic conversion guard and a 1e-14
+half-angle endpoint guard are conservative necessary restrictions only.
+Original candidate motion 1e-7, position 1e-8, image 1e-6 and root/orientation
+1e-9 tolerances remain unchanged. These equations do not validate upstream
+camera, source, trig or measured robot/contact truth.
+
+Three serial guarded CPU jobs pass twelve new analytic contracts. Independent
+checks validate 272 coefficient enclosures, 22 angle-branch vertex domains
+and 702 direct angle/timestamp vectors, retaining 348 intentional rejections.
+Phase closure is below 2.50e-16. Every test proposal and intermediate return
+is durably saved. Test vectors are not source/URDF/native/path candidates.
+
+This is a verified representation for a future coupled construction, not a
+source/time feasible path or exclusion. No native position, physics, GPU/PPO,
+new qualified reference or score gain occurred. The three verified components,
+separate unqualified middle component, source/missing/held-out evidence and
+all original parameters/gates remain unchanged. Exact code/guards/plans are
+archived under `experiments/scored_baseline_20261019/index_temporal_algebra`.
