@@ -1,0 +1,35 @@
+{
+  "schema": "v2d.coupled-source-disk-pose-bank-plan.v2",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_coupled_source_disk_pose_bank_v2.py",
+  "worker_sha256": "eb97295db383c313d381035c3455a753a115e9b1b57c41fce6057a6f02a9be29",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-source-disk-pose-bank-v2",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/source_ray_kinematics.py": "b1214b5933f081878b3382136300cdffe1e32f5f024b90171fe1a98e3a14d14d",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/planar_thumb_ik.py": "a90fd94b1c80e36a1d0acb0b6e022f9820d460102b1c071aca7d4343489703d1",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-bank-temporal-graph-v2/report.json": "f3e485a175e3b0fe03666a7572c51379e8852b730c207a69b50a1ce5c5cf816c",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-ray-pose-bank-v1/pose-bank.json": "42b35154e0c0f3059fd675f552f0c058a0e89311b5f9883b04fad18423c86831"
+  },
+  "CPU_only": true,
+  "free_frames_half_open": [
+    104,
+    118
+  ],
+  "fixed_seed_frames": [
+    111,
+    113
+  ],
+  "old_nodes_reused_without_native_recheck": true,
+  "new_source_image_constraint_representation": true,
+  "original_image_caps_not_relaxed": true,
+  "nearest_geometric_projection_of_preferred_points_to_original_disks": true,
+  "other_finger_preferences": [
+    "scalar_witness",
+    "bounds_corners",
+    "current_if_bounded"
+  ],
+  "maximum_selected_nodes_per_frame": 48,
+  "no_new_optimizer_or_source_prior_or_gain_sweep": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

@@ -1,0 +1,6 @@
+"""NEW finite pair-state temporal graph mechanics controls."""
+from pathlib import Path
+import datetime,hashlib,json,os,subprocess,sys,time
+S=Path(__file__).resolve().parents[1];R=Path('/Users/rohithiruku/v2d_hand_continuity_fix');O=S/'e037-temporal-pose-graph-library-v1';start=time.monotonic();sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();library=R/'scripts/dex3_training/v2d_dex3_flashchord/temporal_pose_graph.py';test=R/'scripts/dex3_training/tests/test_temporal_pose_graph.py'
+r=subprocess.run([sys.executable,'-m','pytest','-q',str(test)],cwd=R,env=dict(os.environ,PYTHONPATH=str(R/'scripts/dex3_training')),capture_output=True,text=True,timeout=150)
+report=dict(schema='v2d.temporal-pose-graph-library-controls.v1',created_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),producer_sha256=sha(Path(__file__)),library_sha256=sha(library),test_sha256=sha(test),pytest_exit_code=r.returncode,pytest_output=r.stdout+r.stderr,new_library_controls_passed=r.returncode==0,no_source_native_old_controls_or_physics=True,new_GPU_jobs=0,new_PPO_steps=0,wall_seconds=time.monotonic()-start);(O/'report.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2));sys.exit(0 if r.returncode==0 else 1)

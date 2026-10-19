@@ -1,0 +1,36 @@
+{
+  "schema": "v2d.coupled-ray-pose-bank-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_coupled_ray_pose_bank_v1.py",
+  "worker_sha256": "c3f68f96e2abd7438a1ab664b628eea9fce70f5bc2873eac6de666c6387906f1",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-ray-pose-bank-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/source_ray_kinematics.py": "b1214b5933f081878b3382136300cdffe1e32f5f024b90171fe1a98e3a14d14d",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/planar_thumb_ik.py": "a90fd94b1c80e36a1d0acb0b6e022f9820d460102b1c071aca7d4343489703d1",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-seed-temporal-compatibility-v1/report.json": "49e9854909484bbf1af09b9c53941941024588ba24d55ef8fb85401751eb2b13"
+  },
+  "CPU_only": true,
+  "frames_half_open": [
+    102,
+    120
+  ],
+  "free_frames_half_open": [
+    104,
+    118
+  ],
+  "fixed_seed_frames": [
+    111,
+    113
+  ],
+  "scalar_thumb_levels": 5,
+  "include_scalar_motion_witness_and_current_if_bounded": true,
+  "twist_conventions": [
+    "closest_current_rotation",
+    "closest_source_model_rotation"
+  ],
+  "maximum_selected_nodes_per_frame": 48,
+  "finite_geometric_construction_not_prior_or_gain_sweep": true,
+  "no_source_authority_or_native_parameter_change": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

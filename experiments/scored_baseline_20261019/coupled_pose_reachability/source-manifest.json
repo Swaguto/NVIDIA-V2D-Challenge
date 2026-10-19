@@ -1,0 +1,122 @@
+{
+  "schema": "v2d.exact-coupled-pose-reachability-archive.v1",
+  "files": [
+    {
+      "file": "audit_coupled_bank_temporal_graph_v1.py",
+      "restore_relative_path": "compute/audit_coupled_bank_temporal_graph_v1.py",
+      "executed_or_declared_source_sha256": "8730634bfd619c0331710cd91f5b1f968eb09e63deaf5c07ddc8927f4004d306"
+    },
+    {
+      "file": "audit_coupled_bank_temporal_graph_v2.py",
+      "restore_relative_path": "compute/audit_coupled_bank_temporal_graph_v2.py",
+      "executed_or_declared_source_sha256": "781d9e18f1e7b06454dd8f8f25b3292c476c3060eb1f3c307ed924c9d0d5cbf2"
+    },
+    {
+      "file": "audit_coupled_seed_temporal_compatibility_v1.py",
+      "restore_relative_path": "compute/audit_coupled_seed_temporal_compatibility_v1.py",
+      "executed_or_declared_source_sha256": "57910de19fd6cae1b65fe8dfc26395d3f680f1d0e6a1e202c10603eac7f317e9"
+    },
+    {
+      "file": "audit_source_disk_bank_temporal_graph_v1.py",
+      "restore_relative_path": "compute/audit_source_disk_bank_temporal_graph_v1.py",
+      "executed_or_declared_source_sha256": "60c3fb667ea393fa3d6bf561fb7223995a1c4dfaf675dde2ddb67e6d8781a33f"
+    },
+    {
+      "file": "build_coupled_ray_pose_bank_v1.py",
+      "restore_relative_path": "compute/build_coupled_ray_pose_bank_v1.py",
+      "executed_or_declared_source_sha256": "c3f68f96e2abd7438a1ab664b628eea9fce70f5bc2873eac6de666c6387906f1"
+    },
+    {
+      "file": "build_coupled_source_disk_pose_bank_v2.py",
+      "restore_relative_path": "compute/build_coupled_source_disk_pose_bank_v2.py",
+      "executed_or_declared_source_sha256": "eb97295db383c313d381035c3455a753a115e9b1b57c41fce6057a6f02a9be29"
+    },
+    {
+      "file": "coupled-bank-temporal-graph-CPU-plan-v1.json",
+      "restore_relative_path": "compute/coupled-bank-temporal-graph-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "aa9d4b2b10afe0bd2337f6e32306cb60f0b9e00d1fe6a10136f9524a4e2f21d0"
+    },
+    {
+      "file": "coupled-bank-temporal-graph-CPU-plan-v2.json",
+      "restore_relative_path": "compute/coupled-bank-temporal-graph-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "8c14bfb0f9b00764f3c350c0d024efcbf13929f19fa8605bea68e123329a65eb"
+    },
+    {
+      "file": "coupled-ray-pose-bank-CPU-plan-v1.json",
+      "restore_relative_path": "compute/coupled-ray-pose-bank-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "3ab5e312a86b7ec2a756f6723085230ae966a11b21b20dacb9cf28441d2e47fe"
+    },
+    {
+      "file": "coupled-seed-temporal-compatibility-CPU-plan-v1.json",
+      "restore_relative_path": "compute/coupled-seed-temporal-compatibility-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "87d79be66f9a27d5440858236ef7063902d150e05f626378c337d9da83de6da4"
+    },
+    {
+      "file": "coupled-source-disk-pose-bank-CPU-plan-v2.json",
+      "restore_relative_path": "compute/coupled-source-disk-pose-bank-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "8ebdffd0476a5323ae44a5b38af906b65185f56c36933d988f567b2e905e5dc4"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "ray-bound-root-library-CPU-plan-v1.json",
+      "restore_relative_path": "compute/ray-bound-root-library-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "7305328f3e38227075918d194bf45e056e62d5496d6a37efb2cc985af9107f73"
+    },
+    {
+      "file": "source-disk-bank-temporal-graph-CPU-plan-v1.json",
+      "restore_relative_path": "compute/source-disk-bank-temporal-graph-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "5fd34b99f104b0876240a8c2ca8fa703a8622c461e3b0ecbd9ac93ac9ce737e3"
+    },
+    {
+      "file": "source_orientation_context_v1.py",
+      "restore_relative_path": "compute/source_orientation_context_v1.py",
+      "executed_or_declared_source_sha256": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00"
+    },
+    {
+      "file": "temporal-pose-graph-library-CPU-plan-v1.json",
+      "restore_relative_path": "compute/temporal-pose-graph-library-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "d01c4dd02509cd3fc8cb8cd6c81a5652111105270ddfb744086d61a4d12802d1"
+    },
+    {
+      "file": "verify_ray_bound_root_library_v1.py",
+      "restore_relative_path": "compute/verify_ray_bound_root_library_v1.py",
+      "executed_or_declared_source_sha256": "d37311573ec35d3f59bed32b55c132dc77dde8aad5db1690cbcf324afc4ee251"
+    },
+    {
+      "file": "verify_temporal_pose_graph_library_v1.py",
+      "restore_relative_path": "compute/verify_temporal_pose_graph_library_v1.py",
+      "executed_or_declared_source_sha256": "4d9c24aa44d10f9d9c748125d87aed7be232ea7a2ac8c3623158abeec544c26b"
+    }
+  ],
+  "repository_dependency_snapshots": [
+    {
+      "file": "source_ray_kinematics.executed.py",
+      "repository_source_path": "scripts/dex3_training/v2d_dex3_flashchord/source_ray_kinematics.py",
+      "sha256": "b1214b5933f081878b3382136300cdffe1e32f5f024b90171fe1a98e3a14d14d"
+    },
+    {
+      "file": "test_source_ray_kinematics.executed.py",
+      "repository_source_path": "scripts/dex3_training/tests/test_source_ray_kinematics.py",
+      "sha256": "140fcd76dc21cb0fa587c7aeeb33119aae2f8b9ac46a12482488a81252d9e8da"
+    },
+    {
+      "file": "temporal_pose_graph.executed.py",
+      "repository_source_path": "scripts/dex3_training/v2d_dex3_flashchord/temporal_pose_graph.py",
+      "sha256": "b87d6207635266ffafc07929e5a76f1d68b67cd678315c7e247c8bd0a03b8874"
+    },
+    {
+      "file": "test_temporal_pose_graph.executed.py",
+      "repository_source_path": "scripts/dex3_training/tests/test_temporal_pose_graph.py",
+      "sha256": "3cb62b2e8356ab915f370ada26f35642cbc8f281786ee1e5b3dd13e37d450b9f"
+    }
+  ],
+  "guarded_jobs": 8,
+  "failed_stricter_graph_adapter_retained": true,
+  "original_URDF_tolerance_preserved": true,
+  "current_verified_reference_not_changed": true,
+  "private_source_arrays_native_model_commands_and_results_excluded": true
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "v2d.coupled-bank-temporal-graph-plan.v2",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_coupled_bank_temporal_graph_v2.py",
+  "worker_sha256": "781d9e18f1e7b06454dd8f8f25b3292c476c3060eb1f3c307ed924c9d0d5cbf2",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-bank-temporal-graph-v2",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/temporal_pose_graph.py": "b87d6207635266ffafc07929e5a76f1d68b67cd678315c7e247c8bd0a03b8874",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-ray-pose-bank-v1/report.json": "8a19e111067755ef23d4bca19ad76701b2c6504e4fa1a74142ef1dc3dd3788d4",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-ray-pose-bank-v1/pose-bank.json": "42b35154e0c0f3059fd675f552f0c058a0e89311b5f9883b04fad18423c86831"
+  },
+  "CPU_only": true,
+  "saved_bank_only_no_native_or_optimization": true,
+  "bidirectional_pair_state_reachability": true,
+  "uses_original_reference_position_check_tolerance_rad": 1e-08,
+  "previous_stricter_adapter_failure_retained": true,
+  "original_speed_and_added_first_second_bounds_unchanged": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

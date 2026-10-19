@@ -1,0 +1,17 @@
+{
+  "schema": "v2d.source-disk-bank-temporal-graph-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_source_disk_bank_temporal_graph_v1.py",
+  "worker_sha256": "60c3fb667ea393fa3d6bf561fb7223995a1c4dfaf675dde2ddb67e6d8781a33f",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-disk-bank-temporal-graph-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/temporal_pose_graph.py": "b87d6207635266ffafc07929e5a76f1d68b67cd678315c7e247c8bd0a03b8874",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-source-disk-pose-bank-v2/report.json": "6bef9e73509a31249873d21f15076da92b3437c96afc7e654f6fcd42a642add8",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-source-disk-pose-bank-v2/pose-bank.json": "33d3a3c9c0b63f8f5b7ab335656705cf45662403922e1d03a53167523a2041cb"
+  },
+  "CPU_only": true,
+  "new_source_disk_bank_graph_no_native_or_optimization": true,
+  "bidirectional_pair_state_reachability": true,
+  "original_reference_tolerance_and_motion_caps_preserved": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

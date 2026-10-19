@@ -1,0 +1,14 @@
+{
+  "schema": "v2d.coupled-seed-temporal-compatibility-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_coupled_seed_temporal_compatibility_v1.py",
+  "worker_sha256": "57910de19fd6cae1b65fe8dfc26395d3f680f1d0e6a1e202c10603eac7f317e9",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-seed-temporal-compatibility-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-coupled-isolated-independent-v1/report.json": "43d7ad76f59307e40322b4f393b807399a1370d43544a589c346474f245472db"
+  },
+  "CPU_only": true,
+  "source_or_native_checks_not_repeated": true,
+  "necessary_motion_only_not_physical_certificate": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

@@ -1,0 +1,14 @@
+{
+  "schema": "v2d.temporal-pose-graph-library-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_temporal_pose_graph_library_v1.py",
+  "worker_sha256": "4d9c24aa44d10f9d9c748125d87aed7be232ea7a2ac8c3623158abeec544c26b",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-temporal-pose-graph-library-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/temporal_pose_graph.py": "b87d6207635266ffafc07929e5a76f1d68b67cd678315c7e247c8bd0a03b8874",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/tests/test_temporal_pose_graph.py": "3cb62b2e8356ab915f370ada26f35642cbc8f281786ee1e5b3dd13e37d450b9f"
+  },
+  "CPU_only": true,
+  "new_pair_state_library_analytical_controls_only": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

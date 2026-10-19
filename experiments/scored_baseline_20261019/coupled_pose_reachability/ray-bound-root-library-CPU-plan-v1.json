@@ -1,0 +1,14 @@
+{
+  "schema": "v2d.ray-bound-root-library-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_ray_bound_root_library_v1.py",
+  "worker_sha256": "d37311573ec35d3f59bed32b55c132dc77dde8aad5db1690cbcf324afc4ee251",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-ray-bound-root-library-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/source_ray_kinematics.py": "b1214b5933f081878b3382136300cdffe1e32f5f024b90171fe1a98e3a14d14d",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/tests/test_source_ray_kinematics.py": "140fcd76dc21cb0fa587c7aeeb33119aae2f8b9ac46a12482488a81252d9e8da"
+  },
+  "CPU_only": true,
+  "new_geometric_contract_tests_only": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}
