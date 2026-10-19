@@ -108,3 +108,92 @@ Exact experimental code and restoration instructions are archived under
 `experiments/scored_baseline_20261019/wrist_retarget/`. It is not enabled as a
 default preprocessing policy. Brev stayed stopped; these studies used no GPU
 job or PPO step.
+
+## Saved palm convention and pose audit
+
+The follow-up audits reuse saved native RGB geometry without another inference
+or source fit. The right MANO canonical finger direction maps to the Dex3
+forward direction with dot product **0.99868** under the existing correction.
+An independently constructed anatomical MCP basis differs by 5.31 degrees;
+this is a descriptive model comparison, not a new adapter calibration.
+There is no evidence here for an erroneous 180-degree right-hand flip.
+
+The retained raw, multiview-fit and failed hard-skin palm orientations differ
+from the current inferred wrist by **25.77, 29.23 and 26.97 degrees**. All are
+model estimates; none is a measured or qualified source pose. Their wrist
+positions disagree too: the raw full pose shifts 129.30 mm from the current
+robot root, while the two fitted poses shift about 38.4 mm. Copying one of
+these transforms is not a validated repair.
+
+A necessary thumb-reach bound uses actual joint-origin lengths and the
+native distal mesh radius. Its relaxed radius is 117.35 mm. At the exact
+current root, the frozen proposed thumb site is at least 3.62 mm beyond
+the distal workspace; at the raw-orientation-only root the bound is 3.29 mm.
+This ignores joint limits, facing constraints and collisions. It excludes
+2 mm proximity only for those exact fixed roots and that one proposed site.
+It says nothing about the coupled root boxes or other grasp sites. Zero
+lower bounds at the other roots do not prove reachability. Native FK agrees
+with the URDF, and sampled actual thumb poses lie inside the analytic sphere.
+
+## Retained source-oriented controls
+
+The first new orientation-only control has an invalid numerical warm start:
+the old robot rotation lies outside the residual box around the new source
+orientation. Powell warns, and the selected intermediate is out of bounds.
+It is rejected and retained. Version 2 clips only the warm start to the
+declared box and checks every objective evaluation and selected candidate.
+Its thumb still misses the facing site by **23.76 mm**. Bounds and gates are
+unchanged.
+
+Three predeclared full source-pose centers are then tested under identical
+residual bounds and actual URDF limits. All source-fit failures and confidence
+flags remain unchanged; no source pose is selected as a winner. Two local
+starts fail. A bounded differential-evolution follow-up uses seed 37, population
+multiplier 6 and 80 iterations, followed by Powell. Every global search reaches
+its iteration cap; the hard-skin case also exhausts the Powell evaluation cap.
+Those solver failures remain explicit. The saved lowest-cost intermediate is
+not claimed to be a converged stationary point.
+
+| Retained source center | Thumb / index / middle facing-site distance, mm | Native distal object contacts |
+| --- | --- | --- |
+| Raw RGB | 25.42 / 69.42 / 89.45 | None |
+| Unqualified multiview fit | 4.28 / 1.87 / 1.07 | Two thumb contacts |
+| Failed hard-skin fit | 4.00 / 2.21 / 1.46 | One thumb and one index contact |
+
+The last pair has native-normal dot product −0.4166. None passes the planned
+site checks. Their maximum native penetration is below 0.263 mm at this one
+knot, and inferred-image errors improve. Neither fact qualifies a trajectory
+or repairs the source hand's retained held-out failures.
+
+## Contact-load audit
+
+A separate CPU audit tests every saved global-search contact set against
+gravity and the estimated frame-50 reference motion load. It reads native
+contact positions, dimensions and friction, including torsional or rolling
+components when present. These cases have dimension-3 point contacts.
+Support and hand self-contacts are excluded from object support.
+
+The LP uses an **outer friction box** containing the native cone, with
+unlimited nonnegative normal force. It invents no measured force budget and
+omits motor limits, making this an optimistic feasibility test. Three analytic
+controls verify opposed support, one-sided failure, and axial-torque failure
+of a two-point pair.
+
+**All three frozen contact sets fail both gravity and estimated-motion load
+feasibility.** The raw case has no hand/object contacts. The other two fail
+even in the optimistic outer model. The model uses a nominal 0.300 kg object
+and its saved COM/inertia; these are not measurements of the source spoon.
+The motion load comes from inferred object poses. No simulator step or
+measured contact-force claim is made.
+
+This is evidence against these particular contact configurations, not proof
+that the task is impossible or that a policy could never change contacts.
+More gain or reward tuning on the same frozen grasp would miss this failure.
+
+The next implementation is a reusable, explicit contact-load feasibility
+diagnostic with analytic controls, followed by contact-site/pose seed generation
+that includes the required object wrench. Preserve source uncertainty and
+validate actual motor feasibility, source/motion, full 1 mm native, swept and
+grasp checks before PPO. Do not continue wrist-prior or gain sweeps on these
+completed controls. Exact producers, declared plans and lossless restoration
+are under `experiments/scored_baseline_20261019/palm_diagnosis/`.

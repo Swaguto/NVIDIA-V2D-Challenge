@@ -1,0 +1,167 @@
+{
+  "schema": "v2d.lossless-private-palm-diagnosis-code-archive.v1",
+  "created_utc": "2026-10-19T05:40:10.324610+00:00",
+  "sources": [
+    {
+      "path": "audit_source_wrist_convention_v1.py",
+      "original_source_sha256": "c32a7aa7523914ebdc326bd563971feba84731d1f22b86e47dc4183a47ce3700",
+      "archive_sha256": "c32a7aa7523914ebdc326bd563971feba84731d1f22b86e47dc4183a47ce3700",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_source_wrist_convention_v1.py",
+      "blank_line_padding": [],
+      "result_directory": "e037-source-wrist-convention-audit-v1",
+      "status": "passive_convention_audit_no_flip_error_established"
+    },
+    {
+      "path": "guard_source_wrist_convention_v1.py",
+      "original_source_sha256": "112d168bafa45fe721eb3b141caea36f49ea3e1c360e046d661fc90d8f1fa5db",
+      "archive_sha256": "112d168bafa45fe721eb3b141caea36f49ea3e1c360e046d661fc90d8f1fa5db",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_source_wrist_convention_v1.py",
+      "blank_line_padding": [],
+      "result_directory": "e037-source-wrist-convention-audit-v1",
+      "status": "passive_convention_audit_no_flip_error_established"
+    },
+    {
+      "path": "probe_source_oriented_opposed_grasp_v1.py",
+      "original_source_sha256": "b51688f31c5046e48f2b3dd4f72c83d082782ac5f4ee575a49b47a118db7c8d6",
+      "archive_sha256": "b51688f31c5046e48f2b3dd4f72c83d082782ac5f4ee575a49b47a118db7c8d6",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/probe_source_oriented_opposed_grasp_v1.py",
+      "blank_line_padding": [],
+      "result_directory": "e037-source-oriented-opposed-grasp-v1",
+      "status": "rejected_out_of_bounds_warm_start_and_selected_candidate"
+    },
+    {
+      "path": "guard_source_oriented_opposed_grasp_v1.py",
+      "original_source_sha256": "ac9fe1bf932cb85b5d6dc597c9278a794a130d02ea862a020b4147f9c447621b",
+      "archive_sha256": "ac9fe1bf932cb85b5d6dc597c9278a794a130d02ea862a020b4147f9c447621b",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_source_oriented_opposed_grasp_v1.py",
+      "blank_line_padding": [],
+      "result_directory": "e037-source-oriented-opposed-grasp-v1",
+      "status": "rejected_out_of_bounds_warm_start_and_selected_candidate"
+    },
+    {
+      "path": "probe_source_oriented_opposed_grasp_v2.py",
+      "original_source_sha256": "ce18b9678955856f11da3ac56fa43e247ec946fe1514cd3ee87d9f5b4f17eb51",
+      "archive_sha256": "ce18b9678955856f11da3ac56fa43e247ec946fe1514cd3ee87d9f5b4f17eb51",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/probe_source_oriented_opposed_grasp_v2.py",
+      "blank_line_padding": [],
+      "result_directory": "e037-source-oriented-opposed-grasp-v2",
+      "status": "bounded_every_evaluation_but_grasp_rejected"
+    },
+    {
+      "path": "guard_source_oriented_opposed_grasp_v2.py",
+      "original_source_sha256": "7597249f67e93020688f349aa543cf97cf8358e2f4fa3f8e0509ae7b0bff1790",
+      "archive_sha256": "7597249f67e93020688f349aa543cf97cf8358e2f4fa3f8e0509ae7b0bff1790",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_source_oriented_opposed_grasp_v2.py",
+      "blank_line_padding": [],
+      "result_directory": "e037-source-oriented-opposed-grasp-v2",
+      "status": "bounded_every_evaluation_but_grasp_rejected"
+    },
+    {
+      "path": "audit_source_wrist_position_workspace_v1.py",
+      "original_source_sha256": "8331741de4121aff1e05944f156f3a5d1e9d012ebca1cb0356c2e0497225c1e1",
+      "archive_sha256": "8331741de4121aff1e05944f156f3a5d1e9d012ebca1cb0356c2e0497225c1e1",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_source_wrist_position_workspace_v1.py",
+      "blank_line_padding": [],
+      "result_directory": "e037-source-wrist-position-workspace-v1",
+      "status": "passive_fixed_root_necessary_reach_bound_no_source_pose_qualified"
+    },
+    {
+      "path": "guard_source_wrist_position_workspace_v1.py",
+      "original_source_sha256": "b7dbe9ebd3902f80d28c3d1518023619620f52d89c042b425b3291b7066584a5",
+      "archive_sha256": "b7dbe9ebd3902f80d28c3d1518023619620f52d89c042b425b3291b7066584a5",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_source_wrist_position_workspace_v1.py",
+      "blank_line_padding": [],
+      "result_directory": "e037-source-wrist-position-workspace-v1",
+      "status": "passive_fixed_root_necessary_reach_bound_no_source_pose_qualified"
+    },
+    {
+      "path": "probe_source_pose_family_opposed_grasp_v1.py",
+      "original_source_sha256": "f3f2bfb9854eb4415fdc015f1fba2e9e410063889bca826c1b09b7dcfa6c2aff",
+      "archive_sha256": "48b7c4aa8509d06935a6b6ebda0edacf53fd7ec44aea8fe73ea6d771bd179d7a",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/probe_source_pose_family_opposed_grasp_v1.py",
+      "blank_line_padding": [
+        {
+          "line_1based": 76,
+          "padding": "    "
+        }
+      ],
+      "result_directory": "e037-source-pose-family-opposed-grasp-v1",
+      "status": "all_three_predeclared_local_controls_rejected"
+    },
+    {
+      "path": "guard_source_pose_family_opposed_grasp_v1.py",
+      "original_source_sha256": "b46bea6e44e48f84e4daa26eb770cf047cbb4d64931186e1b58ef6235a767b4e",
+      "archive_sha256": "b46bea6e44e48f84e4daa26eb770cf047cbb4d64931186e1b58ef6235a767b4e",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_source_pose_family_opposed_grasp_v1.py",
+      "blank_line_padding": [],
+      "result_directory": "e037-source-pose-family-opposed-grasp-v1",
+      "status": "all_three_predeclared_local_controls_rejected"
+    },
+    {
+      "path": "probe_source_pose_family_opposed_grasp_v2.py",
+      "original_source_sha256": "7facc6aa34b904aa8f59623d5e45bd9ec9fa9022107eecb5f7d320b884bf29f5",
+      "archive_sha256": "20c5b67ae3d45c0fd33f1db30a7a970c7f4df2b6f4f47bf12a9313964194184e",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/probe_source_pose_family_opposed_grasp_v2.py",
+      "blank_line_padding": [
+        {
+          "line_1based": 76,
+          "padding": "    "
+        }
+      ],
+      "result_directory": "e037-source-pose-family-opposed-grasp-v2",
+      "status": "all_global_iteration_caps_reached_no_grasp_qualified"
+    },
+    {
+      "path": "guard_source_pose_family_opposed_grasp_v2.py",
+      "original_source_sha256": "6dd2022d51b217b430d20901b161707d4d81583a5ce29c4fb743bb0d50d316b0",
+      "archive_sha256": "6dd2022d51b217b430d20901b161707d4d81583a5ce29c4fb743bb0d50d316b0",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_source_pose_family_opposed_grasp_v2.py",
+      "blank_line_padding": [],
+      "result_directory": "e037-source-pose-family-opposed-grasp-v2",
+      "status": "all_global_iteration_caps_reached_no_grasp_qualified"
+    },
+    {
+      "path": "audit_source_pose_contact_wrench_v1.py",
+      "original_source_sha256": "fdfff04b088eeebb50059ef45071d6ceb9a7343f824c0e80d10feb73b1354808",
+      "archive_sha256": "fdfff04b088eeebb50059ef45071d6ceb9a7343f824c0e80d10feb73b1354808",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_source_pose_contact_wrench_v1.py",
+      "blank_line_padding": [],
+      "result_directory": "e037-source-pose-contact-wrench-v1",
+      "status": "three_analytic_controls_passed_all_candidate_load_sets_infeasible"
+    },
+    {
+      "path": "guard_source_pose_contact_wrench_v1.py",
+      "original_source_sha256": "8c6bb7bebd0971b91a9c770e4d00ed45254528a68eb67b51de2da3b406f56c81",
+      "archive_sha256": "8c6bb7bebd0971b91a9c770e4d00ed45254528a68eb67b51de2da3b406f56c81",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/guard_source_pose_contact_wrench_v1.py",
+      "blank_line_padding": [],
+      "result_directory": "e037-source-pose-contact-wrench-v1",
+      "status": "three_analytic_controls_passed_all_candidate_load_sets_infeasible"
+    }
+  ],
+  "plans": [
+    {
+      "path": "source-oriented-opposed-grasp-CPU-plan-v1.json",
+      "sha256": "56e14f7ea6d41203a0dcd99e7009ac952b36a576124e562aef49e11171ffa037",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source-oriented-opposed-grasp-CPU-plan-v1.json"
+    },
+    {
+      "path": "source-pose-family-opposed-grasp-CPU-plan-v1.json",
+      "sha256": "4c913b9dc94bec1f11368736694ba0fc1b74b66be699c15d4135ad5e474d5edb",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source-pose-family-opposed-grasp-CPU-plan-v1.json"
+    },
+    {
+      "path": "source-pose-family-global-search-CPU-plan-v2.json",
+      "sha256": "9002f02ad27da69928b0bd555a07bf12b6a3475193f7a44786321b111230957e",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source-pose-family-global-search-CPU-plan-v2.json"
+    }
+  ],
+  "recorded_source_scripts": 14,
+  "normalization": "Only whitespace on blank lines removed for review; restore_sources.py reinstates it and verifies original executed SHA.",
+  "private_inputs_or_results_included": false,
+  "weights_or_credentials_included": false,
+  "official_evaluator_or_production_defaults_modified": false,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0,
+  "physical_tasks_qualified": 0
+}

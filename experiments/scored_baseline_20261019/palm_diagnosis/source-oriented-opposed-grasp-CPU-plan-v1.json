@@ -1,0 +1,25 @@
+{
+  "created_utc": "2026-10-19T05:23:02.030426+00:00",
+  "hypothesis": "Cached primary unfitted RGB wrist orientation may improve opposing-site feasibility. Not a measured pose, source-hand qualification or bound relaxation.",
+  "source_prior": "e037-source-wrist-convention-audit-v1/saved-palm-orientation-diagnostics.npz:raw_RGB[0]",
+  "fixed_factors": [
+    "improved source object pose",
+    "all meshes and native collision buffers",
+    "all source observations/authority/heldout failures",
+    "original source wrist XYZ initialization",
+    "actual URDF finger bounds",
+    "1mm native acceptance gate"
+  ],
+  "changed_factor": "Replace unobserved-gap wrist orientation initialization by frozen primary inferred RGB orientation; residual per-component bounds stay8mm/.08rad.",
+  "residual_bounds_relative_to": "new explicit source orientation, NOT old robot orientation",
+  "full_original_root_motion_caps_required_before_any_trajectory_acceptance": true,
+  "one_knot_only": true,
+  "pixels_or_heldout_depth_not_in_objective": true,
+  "no_best_prior_selection_by_heldout_or_physics": true,
+  "new_GPU_work": false,
+  "new_PPO_steps": 0,
+  "required_full_native_gate_m": 0.001,
+  "worker_sha256": "b51688f31c5046e48f2b3dd4f72c83d082782ac5f4ee575a49b47a118db7c8d6",
+  "wall_cap_s": 240,
+  "RSS_cap_bytes": 2147483648
+}

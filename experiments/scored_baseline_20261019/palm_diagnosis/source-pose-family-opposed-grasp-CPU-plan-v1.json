@@ -1,0 +1,24 @@
+{
+  "created_utc": "2026-10-19T05:30:49.780950+00:00",
+  "all_predeclared_centers": [
+    "raw_RGB_full_inferred_pose",
+    "multiview_fit_unqualified_full_inferred_pose",
+    "hard_skin_fit_failed_full_inferred_pose"
+  ],
+  "no_winner_selection_or_source_promotion": true,
+  "purpose": "Isolate full inferred wrist position/orientation versus the rejected orientation-only control under identical native opposed-site IK. Not a metric source qualification or training decision.",
+  "per_center_residual_component_bounds_m_rad": [
+    0.008,
+    0.08
+  ],
+  "actual_URDF_bounds_and_1mm_native_gate_unchanged": true,
+  "heldout_pixels_or_depth_not_in_objective": true,
+  "original_source_camera_flags_or_failures_not_modified": true,
+  "single_knot_only": true,
+  "full_original_motion_caps_and_new_full_native_swept_grasp_checks_still_required": true,
+  "CPU_wall_cap_s": 240,
+  "CPU_RSS_cap_bytes": 2147483648,
+  "new_GPU_work": false,
+  "new_PPO_steps": 0,
+  "worker_sha256": "f3f2bfb9854eb4415fdc015f1fba2e9e410063889bca826c1b09b7dcfa6c2aff"
+}

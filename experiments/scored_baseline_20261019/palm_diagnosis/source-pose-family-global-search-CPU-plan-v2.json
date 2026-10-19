@@ -1,0 +1,17 @@
+{
+  "created_utc": "2026-10-19T05:32:51.490171+00:00",
+  "reason": "All predeclared full-pose controls failed under two local Powell starts.13variable contact objectives are nonconvex. Check one bounded global-search method on ALL the same source centers before concluding from local failures.",
+  "no_winner_selection_or_source_promotion": true,
+  "prior_local_controls_retained": true,
+  "bounds_objective_source_inputs_gates_unchanged": true,
+  "global_method": "differential_evolution(seed37,popsize6,maxiter80,polishFalse,workers1), then Powell maxfev2000",
+  "global_iteration_budget_exhaustion_will_be_reported_as_failure": true,
+  "no_hidden_or_heldout_values_in_objective": true,
+  "single_knot_only": true,
+  "full_original_motion_caps_and_fresh1mm_native_swept_grasp_gates_required": true,
+  "wall_cap_s": 240,
+  "RSS_cap_bytes": 2147483648,
+  "new_GPU_work": false,
+  "new_PPO_steps": 0,
+  "worker_sha256": "7facc6aa34b904aa8f59623d5e45bd9ec9fa9022107eecb5f7d320b884bf29f5"
+}
