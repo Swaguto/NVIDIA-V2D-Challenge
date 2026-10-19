@@ -1179,8 +1179,8 @@ five object failures. No native position, physics, GPU/PPO or score gain ran.
 
 Eight serial guarded CPU jobs and exact code are archived under
 `experiments/scored_baseline_20261019/closed_source_continuation`. Production
-runtime/tests are unchanged. Sixteen new analytic controls and 707 URDF/source
-assessments pass their reported scopes, with rejected points explicitly retained.
+runtime/tests are unchanged. Sixteen new analytic controls and all 707 URDF
+kinematic bindings pass; 24 source/position points remain explicitly rejected.
 The integrated factorization reuses its two controls without rerunning them.
 
 Next derive necessary source/temporal compatibility around the index 108→109
