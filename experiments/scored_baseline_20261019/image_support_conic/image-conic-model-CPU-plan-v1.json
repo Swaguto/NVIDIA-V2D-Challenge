@@ -1,0 +1,21 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_image_conic_model_v1.py",
+  "worker_sha256": "8f485fca0f6ec5ba51b560d389e0b9a82536c5744b1d0bbf62333771df9398fe",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-image-conic-model-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/image_conic_packing_v1.py": "89065379cbb633f8cea7a342b4f994c18c5e9e31025466ec37d9f3f91f5f254e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/supported_conic_maps_v1.py": "4b84dc4a6c676e0d575865f0f5a7c8badea74b2822233a8c8d05f80b8af7e074",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/direct_conditional_moment_sdp_v1.py": "1031c177074da3762a4fb7a4cb5141081b732956425d8f1656f8d275e32c0617",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-image12-contract-v1/report.json": "17600dc75031c70163bccfefe67764ab6cf8abf68c8315d3a90de76b57d17e2a",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-matrix-image-independent-v1/report.json": "43972e11039ee757520ad19c3931073fd0a56faf54607457d53cdd6a430fe15f",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-matrix-image-support-v1/report.json": "e52d02b155a3d9a291aecab3d61efbf4018b8d45e5e807bf103c25b3c57585e0",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-supported-conic-model-v1/supported-model-binding.json": "179fdb18e656911149a7ffb0f18159f58c44c2b899a000c5d3f4093e890dfdc4",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-supported-conic-model-v1/supported-canonical-A.npz": "c1a0128899dd5c6f5b7d8a32c408dd82499ac1725e051e26e0f97701b5d191ac",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-supported-conic-model-v1/supported-canonical-b.npy": "633e0935500323c6a3fa7829520ee6540a8fad106447c7decdfe0d92873b66a6"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "NEW five saved12x12 image support cones appended to saved15840row conic base BY HASH; no old producer/source/solver replay",
+  "no_GPU": true
+}

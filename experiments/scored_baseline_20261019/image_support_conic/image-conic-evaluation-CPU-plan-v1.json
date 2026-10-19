@@ -1,0 +1,21 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/run_image_conic_evaluation_v1.py",
+  "worker_sha256": "65d83c10f614f5a357d8e1a75bf815809dfb212c3570541fc1c032ff89c960be",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-image-conic-evaluation-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/image_conic_packing_v1.py": "89065379cbb633f8cea7a342b4f994c18c5e9e31025466ec37d9f3f91f5f254e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/supported_conic_maps_v1.py": "4b84dc4a6c676e0d575865f0f5a7c8badea74b2822233a8c8d05f80b8af7e074",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/direct_conditional_moment_sdp_v1.py": "1031c177074da3762a4fb7a4cb5141081b732956425d8f1656f8d275e32c0617",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-image12-contract-v1/report.json": "17600dc75031c70163bccfefe67764ab6cf8abf68c8315d3a90de76b57d17e2a",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-image-conic-binding-v1/report.json": "fb3182cde59959c4cee9b37b6b84041192466691c456bf178b2da3f33cc2057b",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-image-conic-model-v1/image-model-binding.json": "f4a3d943980433641d71cc4ae4a5750df5f369dc350d559d0184f5cbd4367278",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-image-conic-model-v1/image-canonical-A.npz": "fb1430077cc97d3242468efb9eef5f2125b16072304594d2e4c8a414fbc0c232",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-image-conic-model-v1/image-canonical-b.npy": "376d182019180a0edade0b394cdad7252b8311f1db416ee23e13d8aec6e17488",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-SDP-runtime-v2/runtime-inventory.json": "7bc5df26710a10c4ca6d9735f10142c0ac5849a69eed89754bd54831353e9cd8"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "SOLE NEW image-support-aware direct conic solve16230rows/1297PSDcones100iterations/60sec1thread defaulttols, no retry/warmstart/continuation; actual returns and exact Gram finitebox certificates durable",
+  "no_GPU": true
+}

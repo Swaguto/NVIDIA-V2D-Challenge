@@ -1756,3 +1756,46 @@ GPU/PPO runs. A future direct formulation may reuse the saved five new maps
 only after new dimension-12 packing/adjoint/dual contracts and a declared single
 bounded solve; it must not retry/tune the completed support-aware solve or repeat
 these producers, controls or audits.
+
+## Direct image-support-aware conic formulation, 2026-10-19
+
+A genuinely new formulation appends all five SAVED 12x12 image-support maps
+to the SAVED supported canonical base by hash, with its 15,840-row prefix
+unchanged. Actual constructor counts are 16,230 rows, 1,125 original columns
+and 1,297 PSD cones. All original 549 equalities, 5,990 inequalities, 2,250 unit
+box rows, 1,180 conditional, 63 joint and 49 motion/depth cones remain. Existing
+necessary source-coefficient guards are reused by hash. Five nonconstant SCALAR
+image localizers remain unavailable; there is no degree/source/wrist/gate change.
+
+Eight NEW dimension-12 analytical packing, spectral-error, Frobenius-adjoint,
+signed/zero and exact Gram/finite-box dual controls pass, including two new tiny
+SDPs. Old dimension 3/4/6/8/10 controls are not rerun. Independent pre-solve checks
+verify the five saved maps, all 390 new rows, 4,960 exact/packed coefficients,
+necessary packing guards and unmodified base prefix. All intermediate returns,
+actual constructor/solver outputs and certificates are durable before further work.
+
+ONE new declared evaluation at 100 iterations/60 seconds/one thread/default
+tolerances returns AlmostSolved at reduced accuracy, 15 iterations and about
+0.511564 seconds. There is no restart, warmstart, continuation or tolerance
+repair. Independent NEW-return checks find all 1,297 original rational matrices
+PSD, with no actual unit-box or original-inequality failures. Exact shared
+equality residual is still nonzero, 3.053113e-16. Actual weights and duals are
+not clipped, normalized, repaired or promoted to a pose.
+
+All 1,297 rational-Gram certificate matrices and 11,340 entry identities verify
+independently. The residual-corrected original-map finite-box gap is negative,
+-1.459083e-7; no exclusion certificate follows. This is not an exact common
+supported measure, deterministic source/time path, source accuracy or physical
+candidate. The frozen coefficient/region-2/fixed-wrist family remains unresolved.
+Old invalid tables, failed/reduced statuses, unknown event bands and numerical
+endpoint qualifications remain. Global compatibility across local factor scopes
+is unassessed and is a useful distinct question before another solver.
+
+Five serial guarded CPU jobs and seventeen exact code/plan files are in
+`experiments/scored_baseline_20261019/image_support_conic`; private arrays,
+coefficients, returns and certificates stay private. Production runtime/tests,
+verified F, separate unqualified components, original source/missing/held-out
+observations, parameters and gates are unchanged. No native position, physics,
+GPU/PPO, motor/grasp/task/policy/score gain occurs. Do not repeat or extend this
+model, solver, controls or audits, or promote local means/eigenvectors/Gram
+factors to commands or mandatory measured source joints.

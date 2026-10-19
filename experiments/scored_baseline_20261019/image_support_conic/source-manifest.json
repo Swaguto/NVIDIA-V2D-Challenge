@@ -1,0 +1,93 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "private_results_absent": true,
+  "files": [
+    {
+      "file": "image_conic_packing_v1.py",
+      "restore_relative_path": "compute/image_conic_packing_v1.py",
+      "executed_or_declared_source_sha256": "89065379cbb633f8cea7a342b4f994c18c5e9e31025466ec37d9f3f91f5f254e"
+    },
+    {
+      "file": "verify_image12_packing_contracts_v1.py",
+      "restore_relative_path": "compute/verify_image12_packing_contracts_v1.py",
+      "executed_or_declared_source_sha256": "d8ef0549b7ed3e5dec32a9d4248dcb296f2b75c7d29e4be0442015ef06eb8014"
+    },
+    {
+      "file": "build_image_conic_model_v1.py",
+      "restore_relative_path": "compute/build_image_conic_model_v1.py",
+      "executed_or_declared_source_sha256": "8f485fca0f6ec5ba51b560d389e0b9a82536c5744b1d0bbf62333771df9398fe"
+    },
+    {
+      "file": "verify_image_conic_binding_v1.py",
+      "restore_relative_path": "compute/verify_image_conic_binding_v1.py",
+      "executed_or_declared_source_sha256": "11f80e161fc7932f457d0ee4dbc3019c2f20765c5c25eb94d3a92722a9e1e2d7"
+    },
+    {
+      "file": "run_image_conic_evaluation_v1.py",
+      "restore_relative_path": "compute/run_image_conic_evaluation_v1.py",
+      "executed_or_declared_source_sha256": "65d83c10f614f5a357d8e1a75bf815809dfb212c3570541fc1c032ff89c960be"
+    },
+    {
+      "file": "verify_image_conic_return_v1.py",
+      "restore_relative_path": "compute/verify_image_conic_return_v1.py",
+      "executed_or_declared_source_sha256": "db99d193eaa68b8aee0e7ca241a3dba9259d7de3a9d767b63589fd53679dbd4d"
+    },
+    {
+      "file": "supported_conic_maps_v1.py",
+      "restore_relative_path": "compute/supported_conic_maps_v1.py",
+      "executed_or_declared_source_sha256": "4b84dc4a6c676e0d575865f0f5a7c8badea74b2822233a8c8d05f80b8af7e074"
+    },
+    {
+      "file": "direct_conditional_moment_sdp_v1.py",
+      "restore_relative_path": "compute/direct_conditional_moment_sdp_v1.py",
+      "executed_or_declared_source_sha256": "1031c177074da3762a4fb7a4cb5141081b732956425d8f1656f8d275e32c0617"
+    },
+    {
+      "file": "conditional_moment_cones_v1.py",
+      "restore_relative_path": "compute/conditional_moment_cones_v1.py",
+      "executed_or_declared_source_sha256": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995"
+    },
+    {
+      "file": "mixed_joint_moments_v1.py",
+      "restore_relative_path": "compute/mixed_joint_moments_v1.py",
+      "executed_or_declared_source_sha256": "5f5f8d2a9d948744cf992b7694117a023ffb650d00332414dc95ca91bdd3fdcb"
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "image12-contract-CPU-plan-v1.json",
+      "restore_relative_path": "compute/image12-contract-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "bd03d9da78fbbadd47c27aba9d84385ec56c42d846f8df18b53e069ec22e9c62"
+    },
+    {
+      "file": "image-conic-model-CPU-plan-v1.json",
+      "restore_relative_path": "compute/image-conic-model-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "eb2213f238458918f706752d270130ef5863e88201198e8d638b30b831adafa6"
+    },
+    {
+      "file": "image-conic-binding-CPU-plan-v1.json",
+      "restore_relative_path": "compute/image-conic-binding-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "3469f74db3ec407f6fb8332c20c1874696c467a2e76e6a330b9a413fe1f997e4"
+    },
+    {
+      "file": "image-conic-evaluation-CPU-plan-v1.json",
+      "restore_relative_path": "compute/image-conic-evaluation-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "330e99491bad073b5de63002be7481c70a9d5feedfec0979fa0aaa5d664b9cb4"
+    },
+    {
+      "file": "image-return-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/image-return-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "79d042371eb73e805e5d2fb2cdd85e80c73d39b6299d69a190c2038f46e3b1bb"
+    }
+  ],
+  "repository_dependency_snapshots": [],
+  "repository_runtime_NOT_imported": true
+}

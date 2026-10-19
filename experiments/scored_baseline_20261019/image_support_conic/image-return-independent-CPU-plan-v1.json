@@ -1,0 +1,17 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_image_conic_return_v1.py",
+  "worker_sha256": "db99d193eaa68b8aee0e7ca241a3dba9259d7de3a9d767b63589fd53679dbd4d",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-image-return-independent-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/mixed_joint_moments_v1.py": "5f5f8d2a9d948744cf992b7694117a023ffb650d00332414dc95ca91bdd3fdcb",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-image-conic-evaluation-v1/report.json": "e7cb97a586417360294e845dca8bd8e3c9e9041d426ec36664380417fad3b2d5",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-image-conic-evaluation-v1/single-image-conic-solver-RETURN.json": "07031434b0059aa21c0fbeca0a34fae20e81f8d4119c8ed365d5d97b49c9b3ac",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-image-conic-evaluation-v1/image-exact-Gram-finite-box-certificate.json": "574c06ac4719b9480a9b5f4767b1f327ceedd7cd8c4c789be143f01e6ca26e8a",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-image-conic-model-v1/image-model-binding.json": "f4a3d943980433641d71cc4ae4a5750df5f369dc350d559d0184f5cbd4367278"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "NEW single image-conic RETURN audit of all1297original rational maps/equalities/ineq/boxes and exact residual-corrected Gram finitebox certificate; old returns/audits/solvers NOT repeated",
+  "no_GPU": true
+}

@@ -1,0 +1,15 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_image12_packing_contracts_v1.py",
+  "worker_sha256": "d8ef0549b7ed3e5dec32a9d4248dcb296f2b75c7d29e4be0442015ef06eb8014",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-image12-contract-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/image_conic_packing_v1.py": "89065379cbb633f8cea7a342b4f994c18c5e9e31025466ec37d9f3f91f5f254e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/supported_conic_maps_v1.py": "4b84dc4a6c676e0d575865f0f5a7c8badea74b2822233a8c8d05f80b8af7e074",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/direct_conditional_moment_sdp_v1.py": "1031c177074da3762a4fb7a4cb5141081b732956425d8f1656f8d275e32c0617",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Eight NEW dimension12 conic packing/error/adjoint/signed-zero/Gram-dual contracts and2NEW tiny12SDPs, old controls reused BY HASH only",
+  "no_GPU": true
+}

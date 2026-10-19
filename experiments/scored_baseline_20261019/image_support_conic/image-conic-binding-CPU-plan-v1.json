@@ -1,0 +1,15 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_image_conic_binding_v1.py",
+  "worker_sha256": "11f80e161fc7932f457d0ee4dbc3019c2f20765c5c25eb94d3a92722a9e1e2d7",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-image-conic-binding-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-image-conic-model-v1/image-model-binding.json": "f4a3d943980433641d71cc4ae4a5750df5f369dc350d559d0184f5cbd4367278",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-image-conic-model-v1/image-canonical-A.npz": "fb1430077cc97d3242468efb9eef5f2125b16072304594d2e4c8a414fbc0c232",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-image-conic-model-v1/image-canonical-b.npy": "376d182019180a0edade0b394cdad7252b8311f1db416ee23e13d8aec6e17488"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "NEW independent5saved image-map identities/390packing rows and unmodified15840base-prefix bindings; no old audit or source regeneration",
+  "no_GPU": true
+}
