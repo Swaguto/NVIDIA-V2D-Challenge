@@ -35,6 +35,21 @@
       "file": "source-patch-wrench-sites-CPU-plan-v1.json",
       "restore_relative_path": "compute/source-patch-wrench-sites-CPU-plan-v1.json",
       "executed_or_declared_source_sha256": "b9e808f031f71badf04c6016c596a3e07962ba88f04ffb5c81557c609398188b"
+    },
+    {
+      "file": "audit_wrench_site_source_skin_v1.py",
+      "restore_relative_path": "compute/audit_wrench_site_source_skin_v1.py",
+      "executed_or_declared_source_sha256": "451759158a3ee39bc4771bc23b444f66741944920693f4c2e31ce887bc39fcb1"
+    },
+    {
+      "file": "guard_wrench_site_source_skin_v1.py",
+      "restore_relative_path": "compute/guard_wrench_site_source_skin_v1.py",
+      "executed_or_declared_source_sha256": "d43217b9fcd46f393daa0488a9186629e4a9f206189bd5fde3a36e6ff69d35b9"
+    },
+    {
+      "file": "wrench-site-source-skin-CPU-plan-v1.json",
+      "restore_relative_path": "compute/wrench-site-source-skin-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "e2ca63f48cbce9ef040bb906027fded8848df66b537a9f4db785232a6bd4163b"
     }
   ],
   "no_private_arrays_or_reports_included": true

@@ -23,3 +23,9 @@ The active reusable implementation is under
 Interpretation and remaining gates are in `CONTACT_LOAD_FEASIBILITY.md` there
 and `docs/team/dex3-isaac-review/WRIST_RETARGET_CONTACT_20261019.md`.
 No policy or physical task was qualified; no GPU or PPO ran.
+
+The additional source-skin association audit reads saved hand meshes plus private
+licensed topology/segment labels. It measures whole/distal skin distances and
+inferred mask/front-surface indicators at the new sites. It repeats no source
+fit, inference, contact-load solve or native pass. Its missing rays and failed
+associations are preserved; it upgrades no visibility or contact authority.

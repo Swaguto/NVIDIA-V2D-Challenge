@@ -236,9 +236,24 @@ two hypotheses retain their source-fit/held-out failures. Their selected sites
 also require hundreds of newtons even in the optimistic model. A finite search
 does not establish global feasibility or infeasibility.
 
-Next verify the source skin/visibility association of these sites and actual
-robot realization and motor loads before constructing a trajectory. Preserve
-source uncertainty and all failures. Any changed commands need original
+An additional saved-geometry audit checks the selected sites against whole-hand
+and finger-associated distal skin triangles, using the licensed MANO topology
+privately. No source fit or skinning inference is repeated. The raw sites remain
+70–97 mm from their associated distal skin. Multiview-fit sites are 4.35–5.89 mm
+away; failed-skin sites are 2.17–5.84 mm away. In the failed-skin case the index
+skin/object outward-normal dot is only −0.135, so source proximity alone does
+not give a facing contact. The other fitted associations have more opposed
+normals, but are still inferred and unqualified.
+
+All selected index sites project outside the inferred hand mask and inside the
+inferred object mask. Several projected sites miss the inferred hand model's
+front surface. These are model/mask indicators, not direct visibility, depth or
+contact observations. Every missing result stays explicit; the original 31/32
+held-out failure and all source flags remain unchanged. No pose winner is chosen.
+
+Next construct a source-skin-associated contact/robot seed that includes the
+required wrench and actual motor loads before constructing a trajectory.
+Preserve source uncertainty and all failures. Any changed commands need original
 root/finger motion limits, fresh full 1 mm native, swept and grasp checks before
 GPU/PPO. No new policy, physical task or source hand is qualified. Brev remains
 stopped. New code-only producers and plans are under

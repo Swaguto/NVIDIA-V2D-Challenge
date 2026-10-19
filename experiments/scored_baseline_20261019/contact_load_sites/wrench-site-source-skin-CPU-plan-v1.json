@@ -1,0 +1,18 @@
+{
+  "schema": "v2d.wrench-site-source-skin-CPU-plan.v1",
+  "declared_utc": "2026-10-19T06:01:39.916169+00:00",
+  "episode": 37,
+  "frame": 50,
+  "inputs": "All three saved selected potential site seeds; no source-pose winner",
+  "operation": "Read saved MANO meshes; licensed faces and dominant skinning segment labels; nearest whole/distal-finger skin and inferred C-camera mask/front-surface indicators",
+  "source_flags_and_heldout_failures_unchanged": true,
+  "no_contact_observation_or_visibility_truth_claim": true,
+  "no_new_native_or_load_solver_or_source_fit": true,
+  "no_command_or_source_arrays_changed": true,
+  "required_fresh_full_native_reference_contact_gate_m": 0.001,
+  "source_morphology_motion_swept_motor_and_grasp_checks_still_required": true,
+  "wall_seconds": 240,
+  "max_RSS_bytes": 2147483648,
+  "min_free_disk_bytes": 1610612736,
+  "GPU": false
+}
