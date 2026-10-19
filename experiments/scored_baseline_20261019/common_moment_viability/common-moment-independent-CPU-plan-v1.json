@@ -1,0 +1,16 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_common_moment_evidence_v1.py",
+  "worker_sha256": "98df1c5dc240744e28eadd949c2b5212b470bee1915b9737ca5cf935da65cc02",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-independent-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-model-v1/common-moment-LP-model.json": "1587b6d6d7c6ed1d0b7e19b22ef178ea3e12a7667d2e351fc2fef8ac8a4b5e62",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-model-v1/common-degree-factor-representations.json": "7e03cc503ed8fca55a4e60fc42ac4b8205c7d7f867aa632b6839335d1dd3fca7",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-model-v1/phase-one-solver-RETURN.json": "76c6b8594b97018b44cfed1ce60dfb4ee8d054ad154fa4dd28fbbb42594a15d2",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-model-v1/finite-box-dual-certificate.json": "17534b09b49b3fe45e20f5ab796701b8b2914b103d784fd6f5f9d68683445cd7",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-correlated-source-time-clipping-v1/all-correlated-domain-proposals-coefficients-clips-and-outcomes.jsonl": "278d42784b81047f4de6363eae9ea0b1881cb3a5bb2f6c975713a382c46c897e"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Independent moment model/grid semantics and exact square-separation certificates; no LP rerun or new point",
+  "no_GPU": true
+}

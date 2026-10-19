@@ -1,0 +1,13 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_common_moment_contract_v1.py",
+  "worker_sha256": "631e85d16a76957ebdc21d90cad96583d5cef0a496ee220ceacae8c1afa42fff",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-contract-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/bernstein_common_moments_v1.py": "a00876183dd1ef7332ff5cb7d3b056489163fd453dcfb3652e1261e014771c31",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/correlated_bezier_clipping_v1.py": "4e0476cc1a03f94f2108153ae20b78f281c0418dfcdf917095397af6ad3aadc6",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "New common-marginal deterministic embedding/false-positive/dual controls, two tiny analytic LPs; no episode solve",
+  "no_GPU": true
+}

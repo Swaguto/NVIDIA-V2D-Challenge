@@ -1,0 +1,16 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_square_repair_and_moment_PSD_v1.py",
+  "worker_sha256": "d5276ad391616bc00ec5268c824bc929a1ab02571208061b5eef0728169394e5",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-PSD-independent-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-model-v1/common-moment-LP-model.json": "1587b6d6d7c6ed1d0b7e19b22ef178ea3e12a7667d2e351fc2fef8ac8a4b5e62",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-independent-v1/saved-table-negative-square-separators.json": "66bca9d339f998261f584056d25d9feda2a8a0c4bef103b1debb9b5673005710",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-square-repair-v1/corrected-common-moment-LP-model.json": "d183932e0c4f7bce55db7a5d4d9d5b94fa6f3016906e38534945defa28f72096",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-square-repair-v1/corrective-phase-one-solver-RETURN.json": "c640bf0aeeae33a8aa83d9391b8883ae9fb167afcbc8b69885603891f617c6eb",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-square-repair-v1/corrective-finite-box-dual.json": "35fa73e02445fb412ad72264bb8ac8c8e048e6ff8fe50b3dc11cb7c83b794126"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Independent changed-model check and exact conditional Hankel/localizer PSD diagnosis; no LP rerun",
+  "no_GPU": true
+}

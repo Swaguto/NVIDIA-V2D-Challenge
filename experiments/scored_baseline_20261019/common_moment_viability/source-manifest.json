@@ -1,0 +1,88 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "private_results_absent": true,
+  "files": [
+    {
+      "file": "bernstein_common_moments_v1.py",
+      "restore_relative_path": "compute/bernstein_common_moments_v1.py",
+      "executed_or_declared_source_sha256": "a00876183dd1ef7332ff5cb7d3b056489163fd453dcfb3652e1261e014771c31"
+    },
+    {
+      "file": "verify_common_moment_contract_v1.py",
+      "restore_relative_path": "compute/verify_common_moment_contract_v1.py",
+      "executed_or_declared_source_sha256": "631e85d16a76957ebdc21d90cad96583d5cef0a496ee220ceacae8c1afa42fff"
+    },
+    {
+      "file": "evaluate_saved_common_moment_model_v1.py",
+      "restore_relative_path": "compute/evaluate_saved_common_moment_model_v1.py",
+      "executed_or_declared_source_sha256": "059c6a5e2029a0d4ade0b077a68b773ba137fa3d2d8d5254d5337f035f008442"
+    },
+    {
+      "file": "verify_common_moment_evidence_v1.py",
+      "restore_relative_path": "compute/verify_common_moment_evidence_v1.py",
+      "executed_or_declared_source_sha256": "98df1c5dc240744e28eadd949c2b5212b470bee1915b9737ca5cf935da65cc02"
+    },
+    {
+      "file": "evaluate_proven_square_repair_v1.py",
+      "restore_relative_path": "compute/evaluate_proven_square_repair_v1.py",
+      "executed_or_declared_source_sha256": "55f46f8bbb804a52ddd6ef45d14c87dce6e63e31d209b61e5698ecb90cfe5d9e"
+    },
+    {
+      "file": "verify_square_repair_and_moment_PSD_v1.py",
+      "restore_relative_path": "compute/verify_square_repair_and_moment_PSD_v1.py",
+      "executed_or_declared_source_sha256": "d5276ad391616bc00ec5268c824bc929a1ab02571208061b5eef0728169394e5"
+    },
+    {
+      "file": "audit_saved_corrected_moment_table_v2.py",
+      "restore_relative_path": "compute/audit_saved_corrected_moment_table_v2.py",
+      "executed_or_declared_source_sha256": "a29ef1de47224278f0bf58af64f4d4afcf5aed10977a6687825ebfef38e6ee0d"
+    },
+    {
+      "file": "common-moment-contract-CPU-plan-v1.json",
+      "restore_relative_path": "compute/common-moment-contract-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "f09b71c31291c62abfd040fc2ab814696b566532760cfb40d058c286d63650c4"
+    },
+    {
+      "file": "common-moment-model-CPU-plan-v1.json",
+      "restore_relative_path": "compute/common-moment-model-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "06df51160313bb160feab94c2ebe8fabfde8645fb770d82b9f6c37b2b2389768"
+    },
+    {
+      "file": "common-moment-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/common-moment-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "8ac720bfff8e2bfdabf46bec45d7acbff556e0778efa9f60f6685143806a672b"
+    },
+    {
+      "file": "common-moment-square-repair-CPU-plan-v1.json",
+      "restore_relative_path": "compute/common-moment-square-repair-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "e9a0655746750f65590a5444da4e890e70baf4485e512e0af7b8f338df1fc3ab"
+    },
+    {
+      "file": "common-moment-PSD-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/common-moment-PSD-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "b9695978b16c73e9ced596c41c7d88ec978123f423b789cb6d9f5de3b4194de5"
+    },
+    {
+      "file": "common-moment-saved-table-audit-CPU-plan-v2.json",
+      "restore_relative_path": "compute/common-moment-saved-table-audit-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "9f0fed9339dc8605cd70988a89b87046689ba727a1c616bedda56b520ee2a3ad"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "correlated_bezier_clipping_v1.py",
+      "restore_relative_path": "compute/correlated_bezier_clipping_v1.py",
+      "executed_or_declared_source_sha256": "4e0476cc1a03f94f2108153ae20b78f281c0418dfcdf917095397af6ad3aadc6"
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+    }
+  ],
+  "repository_dependency_snapshots": [],
+  "repository_runtime_NOT_imported": true
+}

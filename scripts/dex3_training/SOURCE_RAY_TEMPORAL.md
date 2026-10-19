@@ -127,3 +127,20 @@ method. No isolated pose is a mandatory node or accepted center. The exact
 code-only `source_time_clipping` archive and wrist review record all scopes,
 controls and remaining uncertainty. Original runtime/tests, reference, source
 observations and candidate acceptance gates remain unchanged.
+
+## Common-marginal relaxation and continuous positivity
+
+A subsequent private model couples degree-four Bernstein tables through shared
+joint and clock marginals. Deterministic assignments embed, but relaxed local
+tables are not robot poses, source truth or a globally realizable measure.
+Conditioned finite square tests leave invalid tables even after 247 proven
+inequalities are added. A strict bound-audit failure is retained, not repaired
+by clipping the actual returned weights.
+
+The saved-return diagnosis finds negative exact principal minors in the
+conditioned moment/localizer matrices, with exact negative polynomial-square
+witnesses. Continuous positivity is the next missing necessary condition;
+local positivity alone would still not certify a deterministic whole path.
+See the code-only `common_moment_viability` archive and wrist review for all
+solver returns, failed status, reused-control scopes and independent checks.
+No reference, source authority, runtime, physical gate or score is promoted.

@@ -1,0 +1,15 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/evaluate_proven_square_repair_v1.py",
+  "worker_sha256": "55f46f8bbb804a52ddd6ef45d14c87dce6e63e31d209b61e5698ecb90cfe5d9e",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-square-repair-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/bernstein_common_moments_v1.py": "a00876183dd1ef7332ff5cb7d3b056489163fd453dcfb3652e1261e014771c31",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-model-v1/common-moment-LP-model.json": "1587b6d6d7c6ed1d0b7e19b22ef178ea3e12a7667d2e351fc2fef8ac8a4b5e62",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-independent-v1/saved-table-negative-square-separators.json": "66bca9d339f998261f584056d25d9feda2a8a0c4bef103b1debb9b5673005710",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-independent-v1/report.json": "76e56f72d9c4a237f62d4dbedfa196a55fd3e8cc0aaa9e2a7a18e57bf64dba4f"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "One changed necessary model with247 independently proved square constraints; no solver/gate/tolerance sweep or adaptive rounds",
+  "no_GPU": true
+}

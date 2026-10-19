@@ -1409,3 +1409,52 @@ the separate unqualified middle component, all source/missing/held-out evidence,
 model parameters and original gates remain unchanged. The next method must
 preserve source/time correlations that interval projections leave unresolved;
 these interval hulls cannot establish a constructive common path.
+
+## Common-marginal source/time model and realizability failure
+
+A new degree-four Bernstein model couples proximal/distal and neighboring-clock
+tables through common variable/pair marginals. Every deterministic assignment
+embeds, including filled source interiors; conditioned square expectations must
+be nonnegative. Eight analytic controls cover embedding, elevation, conditioned
+positivity, finite-box duals and an odd-cycle false positive. Consistent local
+marginals can still lack any globally realizable pose or common measure.
+
+The first new bounded phase-I LP has 1,125 entries, 549 equalities and 5,359
+inequalities. It returns objective zero, with no positive exclusion margin.
+Independent checks verify 2,425 transferred/elevated coefficients and every
+model row. Its saved table has 247 exact negative square expectations, including
+six negative variances. These reject that table, not the source/time family.
+
+A single corrective model adds all 247 independently proven inequalities in
+advance, yielding 5,606 rows. Source/model/physical gates and solver tolerances
+stay unchanged. Its phase-I objective is also zero. The strict audit passes
+four new PSD controls and verifies all changed rows, then FAILS on two actual
+negative solver weights: maximum bound violation 3.61446e-13. It remains failed.
+No normalization, clipping or convergence/tolerance repair hides this result.
+
+A new saved-return audit reuses only the completed controls and changed-row
+checks by hash. It performs no LP or old control rerun; the unsaved prior dual
+check is not claimed independently verified. All actual weights remain intact.
+Exact equality and inequality residuals reach 6.030e-13 and 4.217e-13.
+
+For conditioned moments y0..y4, a real measure on [0,1] requires the Hankel
+matrix `[y(i+j)](i,j=0..2)` and localizer
+`[[y1-y2,y2-y3],[y2-y3,y3-y4]]` to be positive semidefinite. Of 590 groups,
+329 fail this necessity; 642 matrices have negative exact principal minors.
+All 642 yield rational polynomial-square witnesses with negative expectation.
+For 640, negativity survives a bound on the contribution of the two offending
+weights alone. This diagnostic does not modify actual entries or establish
+that bound correction would produce a normalized common measure.
+
+Finite square-anchor constraints are insufficient. The next method must impose
+continuous moment positivity before seeking a realizable source/time candidate.
+Neither relaxed solution, its barycenter nor a matrix eigenvector is a robot
+pose, observed source truth or a mandatory trajectory node. The inherited
+fixed wrist/region-2 family remains unresolved; no global/task exclusion follows.
+
+Six guarded jobs, including the strict audit failure, are archived code-only in
+`experiments/scored_baseline_20261019/common_moment_viability` (16 exact sources/
+plans). Twelve new analytic controls pass their stated scope, with the failed
+process and both invalid tables retained. Production runtime/tests and the
+verified reference/middle component/source authority/parameters/gates remain
+unchanged. No native position, physics, GPU/PPO or qualified score gain occurred.

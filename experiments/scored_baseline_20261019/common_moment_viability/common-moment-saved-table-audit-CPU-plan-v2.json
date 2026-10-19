@@ -1,0 +1,16 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_saved_corrected_moment_table_v2.py",
+  "worker_sha256": "a29ef1de47224278f0bf58af64f4d4afcf5aed10977a6687825ebfef38e6ee0d",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-saved-table-audit-v2",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-PSD-independent-v1/guard.json": "e836f2e7d903946f8ccff42e35bdcfc7e844b76aa17344f0d33b84fe4d6f312d",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-PSD-independent-v1/worker.log": "b424e32a25bbb715b882b705fea2934ecd191f3ab571aae457acd5268b957813",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-PSD-independent-v1/all-square-repair-checks-and-exact-moment-PSD-certificates.jsonl": "7ad2398b32b9d8333767cff416676a6467431d130052de4c2754bfcbf7623b99",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-square-repair-v1/corrected-common-moment-LP-model.json": "d183932e0c4f7bce55db7a5d4d9d5b94fa6f3016906e38534945defa28f72096",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-square-repair-v1/corrective-phase-one-solver-RETURN.json": "c640bf0aeeae33a8aa83d9391b8883ae9fb167afcbc8b69885603891f617c6eb"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "New saved-return bound/PSD audit without clipping actual weights or rerunning solver/controls; failure retained",
+  "no_GPU": true
+}

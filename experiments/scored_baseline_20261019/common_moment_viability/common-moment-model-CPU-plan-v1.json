@@ -1,0 +1,17 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/evaluate_saved_common_moment_model_v1.py",
+  "worker_sha256": "059c6a5e2029a0d4ade0b077a68b773ba137fa3d2d8d5254d5337f035f008442",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-model-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/bernstein_common_moments_v1.py": "a00876183dd1ef7332ff5cb7d3b056489163fd453dcfb3652e1261e014771c31",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/correlated_bezier_clipping_v1.py": "4e0476cc1a03f94f2108153ae20b78f281c0418dfcdf917095397af6ad3aadc6",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-contract-v1/report.json": "1a47161fb13f4874898611e89e290d6a630a37ca4319e7bf3c0403b5fce4c37b",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-time-clipping-binding-v1/correlated-source-time-clipping-inputs.json": "3352dfbb99953342b08d9d414b16549f1c92140e737cd6e1a3a546957e599ee8",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-correlated-source-time-clipping-v1/all-correlated-domain-proposals-coefficients-clips-and-outcomes.jsonl": "278d42784b81047f4de6363eae9ea0b1881cb3a5bb2f6c975713a382c46c897e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-correlated-source-time-clipping-v1/correlated-domain-contraction-result.json": "6acfa7a2a78bf889f27e917ef25cb45005c24105f4896caf37064f64b63130f5"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "One bounded degree4 common-marginal phase-I relaxation; no old LP/clipping/source jobs repeated",
+  "no_GPU": true
+}
