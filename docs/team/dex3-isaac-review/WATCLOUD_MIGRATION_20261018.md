@@ -94,3 +94,44 @@ They retain the recorded private workspace assumptions and are not a generic
 fresh-host reproduction CLI. Private model files, footage, reconstruction packs
 and results are not included. Independent teammate reproduction remains
 unverified.
+
+## Measured object-exclusion refinement
+
+The next SAM2-only probe, job `711100`, used source code
+`7cfb7b586c248128a3ef1a228f77bf0c065d0c98` and the same pinned image. It completed
+with exit `0:0` in **4 minutes 9 seconds**, with 29 private files hash-verified
+locally before its allocation ended. It requested two CPUs, 12 GiB RAM, 8 GiB GPU
+shards and 60 GiB temporary disk, bounded to 20 minutes by Slurm. No other GPU job
+ran concurrently.
+
+This probe exercised real negative object prompts and unknown-region exclusion
+for all eight frames. It preserved every reused pose, camera, shape and scale
+value exactly. HaMeR and its checkpoint were not loaded or transferred for this
+job. The private transfer was **910,871,170 bytes**, compared with 3,608,006,189
+bytes for the initial hand probe. These are two observed job durations, not a
+general throughput or billing benchmark.
+
+Every refined mask retained at least four supported image points. Object/hand
+overlap is zero by the explicit unknown-region rule; this is a structural
+property and does not establish segmentation accuracy. The old failed 3D fits
+remain unchanged, and the new handoff remains unqualified. The implementation
+has **28 passing focused CPU tests** and passed CI. The checked real-GPU pose
+reuse path complements those CPU protocol tests.
+
+## New source camera lead
+
+The existing hand probe uses the monochrome stereo-camera grid. A one-frame
+inspection of the unused RGB-camera input for this source diagnosis found
+`ego_cam_a` at 2028 × 1520, with genuine color channels and the same 151-frame,
+20 Hz encoded clock as `ego_cam_c`. Frame 50 is at 2.5 seconds in both files.
+Physical exposure synchrony and registration have not yet been verified.
+
+At the unchanged detector thresholds, a first CPU RGB probe returned candidates
+for both hands in the full frame and corresponding half-frame crops. Labels
+and label probabilities are predictions, not identity or geometric accuracy.
+They are not yet registered to the stereo grid or used as metric observations.
+
+The next source investigation is calibrated RGB/stereo registration and
+visibility-aware depth assignment. Do not substitute RGB pixels under the
+stereo camera's intrinsics, promote occluded fingertips to depth observations,
+or launch another PPO cohort from these preliminary candidates.

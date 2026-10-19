@@ -102,4 +102,7 @@ unchanged pose inference or transferring its checkpoint for a mask refinement.
 
 The 28 focused CPU tests include this refinement, negative-prompt handling,
 abstention, parent-pose preservation and tampered/cross-source rejection. Model
-accuracy for the new negative-prompt path still requires a separate GPU probe.
+accuracy is not established by the file protocol. The separate Watcloud
+SAM2-only probe now exercised negative prompts and unchanged-pose reuse for all
+eight frames, with its allocation released after verified backup. See the
+measured migration report; its handoff still has no physical qualification.

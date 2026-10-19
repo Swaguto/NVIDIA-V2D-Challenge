@@ -91,9 +91,51 @@
       "execution_status": "executed",
       "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/prepare_object_exclusion_control_v1.py",
       "scope": "CPU exclusion binding and cached-mask control only; no negative-prompt model inference"
+    },
+    {
+      "path": "audit_model_tip_visibility_v1.py",
+      "sha256": "3cf4a79c0fb4465102df55cce63e747b6f57c09844fe82d630c09fd15f6ae995",
+      "execution_status": "executed",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/audit_model_tip_visibility_v1.py",
+      "scope": "new RGB-camera or mesh-visibility CPU diagnosis"
+    },
+    {
+      "path": "guard_rgb_hands_v1.py",
+      "sha256": "90778ebc8d63db1d4230a7abe8d3da179f9f91303821a042be3bdafd3484b0ae",
+      "execution_status": "executed",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/guard_rgb_hands_v1.py",
+      "scope": "new RGB-camera or mesh-visibility CPU diagnosis"
+    },
+    {
+      "path": "mask_refinement_controller_v1.py",
+      "sha256": "a7b08d19c363a90b4db8859f59ade5b82b4fd5fcbbdce9ed6d6c059bdc3d0379",
+      "execution_status": "executed",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/mask_refinement_controller_v1.py",
+      "scope": "Slurm mask-only probe"
+    },
+    {
+      "path": "mask_refinement_worker_v1.py",
+      "sha256": "aa282921b6ef5431cecff8ad1b181d7fa9d31c7ddbc561b1c0c64e4c40f92fb1",
+      "execution_status": "executed",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/mask_refinement_worker_v1.py",
+      "scope": "Slurm mask-only probe"
+    },
+    {
+      "path": "probe_rgb_hands_v1.py",
+      "sha256": "ffc719bef94126b8d6721929c00bdf7dc30002672ffec572b828f5c7380a78fd",
+      "execution_status": "executed",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/probe_rgb_hands_v1.py",
+      "scope": "new RGB-camera or mesh-visibility CPU diagnosis"
+    },
+    {
+      "path": "probe_rgb_source_v1.py",
+      "sha256": "32e3dacb35d9fe7260207e5ef63ac6829380c018f68e123632c90503919966d9",
+      "execution_status": "executed",
+      "private_source_path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/watcloud/probe_rgb_source_v1.py",
+      "scope": "new RGB-camera or mesh-visibility CPU diagnosis"
     }
   ],
-  "recorded_source_scripts": 13,
+  "recorded_source_scripts": 19,
   "source_inference_code_commit": "60c943f0c50af779a11ca7ff79ed8642fd966e59",
   "pinned_source_inference_code_is_separate_from_archive_revision": true,
   "private_inputs_included": false,
@@ -101,5 +143,6 @@
   "credentials_included": false,
   "official_evaluator_modified": false,
   "no_completed_baseline_rerun": true,
-  "restoration_note": "These are exact executed experiment sources. They expect the original private workspace layout, not a teammate-ready generic CLI."
+  "restoration_note": "These are exact executed experiment sources. They expect the original private workspace layout, not a teammate-ready generic CLI.",
+  "source_mask_refinement_code_commit": "7cfb7b586c248128a3ef1a228f77bf0c065d0c98"
 }
