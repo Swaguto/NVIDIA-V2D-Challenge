@@ -1,0 +1,22 @@
+{
+  "schema": "v2d.temporal-index-conic-domains-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/intersect_temporal_index_conic_domains_v1.py",
+  "worker_sha256": "55f48bea325310c46424f8ba5b7f0ebcaaba2a1ab08322a36d5cb7c599c10002",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-temporal-index-conic-domains-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/planar_workspace_conic_v1.py": "51ae8c5ea0466b970b98d8afabd71cbeacfaf41b862bde5cf89ba04287f800d6",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-temporal-box-source-cones-v1/report.json": "d482f2a1fd2b4f96f7dd20028a237fe7d9334499bd82e136aa61a35d0dbe61fd",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-temporal-box-source-cones-v1/all-unexcluded-source-domain-boxes.json": "56ee64fa8594d30e20d3a3ee30b0f19416f36467fef3b670bbe94b078a7752c7",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-temporal-box-source-cones-v1/selected-source-temporal-box.json": "07cf8e3ba5374569fd301e2e615be7771917c47394517df8e3927ef1e2346fc8",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-conic-clearance-v1/source-conic-contract.json": "20aff844499c21b1390b49d5ebf111e81e08b2ff15b2693f8721de8e5ebbfb00"
+  },
+  "CPU_only": true,
+  "new_full_continuous_planar_index_workspace_intersection": true,
+  "original_candidate_gates_not_relaxed": true,
+  "all_roots_and_rejected_unresolved_domains_durable": true,
+  "no_old_bank_graph_sample_family_or_native_fit_repeated": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

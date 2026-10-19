@@ -1,0 +1,25 @@
+{
+  "schema": "v2d.remaining-temporal-index-domains-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/resolve_remaining_temporal_index_domains_v1.py",
+  "worker_sha256": "aafe5c1a7a728262f805563832bb6d9a5b89d300f3d04ef512d28ddefbe30af3",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-remaining-temporal-index-domains-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/planar_support_critical_points_v1.py": "5578faff20976f103c83bc75b26e156505fcc961486a209f92884fefac1685ca",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-temporal-index-separators-v1/report.json": "12053081c2a8b851018524b50b501ee16e68f3b6b982e01769ffc76bd35dd620",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-temporal-index-separators-v1/all-independent-separator-certificates.json": "5469add02e5d37fa0504f756f99556fdada4764451ceef33ce25e977ea397f8d",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-conic-temporal-middle-boxes-v1/report.json": "3f42d06d22b719947001c9ee6754b1db3436d2ade645afa1c006ce122d5eee3c",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-conic-temporal-middle-boxes-v1/all-neighbor-pair-boxes.jsonl": "46b5ca10c0b7e10fd3bf219567b7814b18c0e289cd568966c52def492fe807f2",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-temporal-index-conic-domains-v1/all-controls-domains-and-witnesses.jsonl": "5c0ddbf2ab01b0149e8bf947437da4e3676279cbed10f879a35be4b8437eddda",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-conic-independent-v1/selected-conditional-robot-control.json": "4c7807fa650527fc6e14016e88f4c0c77eb953bc0129c68186fe461212a3cf9a"
+  },
+  "CPU_only": true,
+  "new_original_tolerance_boundary_and_interval_only_domains": true,
+  "old173separator_domains_and_controls_reused_not_recomputed": true,
+  "all500correlated_pairs_reconciled_with_necessary_outer_bounds": true,
+  "actual_candidate_gates_unchanged": true,
+  "no_source_native_bank_graph_or_old_LP_repeated": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

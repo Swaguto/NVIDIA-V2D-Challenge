@@ -1,0 +1,23 @@
+{
+  "schema": "v2d.temporal-box-source-cones-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/bound_temporal_box_source_cones_v1.py",
+  "worker_sha256": "d17a52397f24790da05ab78f43a0ab06344950f301deb810cb7338012be2c37b",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-temporal-box-source-cones-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/coupled_articulation_intervals_v1.py": "63f72e5a04e3032ed998bfe3aa8ba93047262ed81361bb0ceed586d6211111f1",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-axial-temporal-box-union-v1/report.json": "bb0a39bdb5cc54c5f777a88ff670e26d4fefad48bbaddabdd7f44453d01cd91e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-axial-temporal-box-union-v1/all-eligible-correlated-boxes.json": "d3b98a0b39fa84629ef49dd5a234f79e0c82c6735d8d7838509f229df0b7478e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-axial-temporal-box-union-v1/selected-correlated-box.json": "261b1fe990a441a611713ce95004f44df56b98c73d2814fe999a4a7590b82c73",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-conic-clearance-v1/source-conic-contract.json": "20aff844499c21b1390b49d5ebf111e81e08b2ff15b2693f8721de8e5ebbfb00"
+  },
+  "CPU_only": true,
+  "new_temporally_correlated_seven_joint_source_domain": true,
+  "root_is_retained_conditional114_control": true,
+  "original_source_point_gate_not_relaxed": true,
+  "new_independent_URDF_enclosure_samples": 128,
+  "no_old_bank_graph_native_or_fit_repeated": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

@@ -973,3 +973,56 @@ thumb/root orientation. Do not fix the isolated controls as measured mandatory
 nodes, promote a motion-only LP path, resweep completed banks/slices or loosen
 source and native gates. A new construction still needs independent original
 source/URDF/native/motion checks and full-clock/swept/motor/grasp qualification.
+
+## Correlated axial/index temporal domains
+
+New work retains the correlation of each saved 113/115 neighbor pair rather
+than replacing the union by independent per-joint ranges. Of 500 distinct
+pairs, 188 nominal joint boxes are empty, 36 are numerical-boundary cases and
+276 are nominally nonempty. Local maximum root-motion checks pass; global
+p95 and outside boundary motion remain unassessed.
+
+Full seven-joint source enclosures exclude 103 nominal boxes through index
+source fit. All 128 new actual-URDF enclosure samples pass. A single declared
+source/kinematic-selected box has two axial-thumb sections and two middle
+sections but no index section, so it yields no native candidate. Five new
+harmonic algebra/contract controls pass; no old solver or bank is repeated.
+
+A new continuous positive-distal 2R workspace/conic intersection predicate
+tests corners, source-ellipse-center containment and all numerical boundary
+intersections. Four analytical controls pass and all 173 remaining domains
+are numerically empty. An independent linear-support calculation, using the
+four circular workspace boundaries instead of quartics, supplies separating
+planes for all 173. Three controls and 1,384 new actual-URDF checks pass; the
+minimum plane separation is 2.2907 mm after a 1e-8 m binding guard.
+
+The 36 near-tolerance boxes are not discarded. A separate necessary-bound
+resolution uses the original 1e-7 rad motion tolerance explicitly, preserves
+the 173 prior certificates by hash and examines 139 previously unverified
+cases. All 500 finite conditional pairs are accounted for: 188 outer joint
+boxes stay empty and 312 have index-source separators. The 417 additional
+URDF checks pass. Candidate gates remain unchanged: outward source/motion
+allowances apply only to conservative geometric exclusion, never acceptance.
+
+This identifies a conditional wrist/index-source conflict: the particular
+114 wrist control cannot connect these retained finite neighbors while
+meeting the original source and finger-motion constraints. It is not global
+unreachability, measured source truth, or a reason to increase joint/root
+bounds. Other continuous neighbor articulations and allowed wrist orientations
+remain unexcluded. Numerical certificates are not formal directed-rounding
+proofs. A journal key-name typo is retained with an explicit private correction;
+no numeric source gate changed and no scientific result was recomputed.
+
+Six guarded jobs are archived code-only under
+`experiments/scored_baseline_20261019/axial_temporal_domains`. Production runtime
+is unchanged. No new native position, physics, GPU/PPO, complete reference,
+motor/grasp, task, policy or score gain is qualified. The verified three-component
+freeze still has eight right-self and five object failures.
+
+Next derive camera-cone support witnesses and necessary common-wrist changes
+from the saved separators. Preserve the original source-model orientation and
+world-component root bounds, actual morphology and temporal authority. Keep
+neighbors uncertain and do not fix isolated controls as measured mandatory
+nodes or resweep completed source/solver/bank/slice families. New commands still
+require independent full original source/native/self/motion and swept/motor/grasp
+qualification before learning.

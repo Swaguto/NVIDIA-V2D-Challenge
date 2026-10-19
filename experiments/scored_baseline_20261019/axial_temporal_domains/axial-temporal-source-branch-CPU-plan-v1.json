@@ -1,0 +1,28 @@
+{
+  "schema": "v2d.axial-temporal-source-branch-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/construct_axial_temporal_source_branch_v1.py",
+  "worker_sha256": "adc1c24edda37c1aed89f0a14bdc4930d31bfad334dbcad8a95e59187eb74a6d",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-axial-temporal-source-branch-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/harmonic_source_domains_v1.py": "3c9eebd919c26132a4a15219de1686ef82ead41958f47a9abab28c713386aa8e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-temporal-box-source-cones-v1/report.json": "d482f2a1fd2b4f96f7dd20028a237fe7d9334499bd82e136aa61a35d0dbe61fd",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-temporal-box-source-cones-v1/selected-source-temporal-box.json": "07cf8e3ba5374569fd301e2e615be7771917c47394517df8e3927ef1e2346fc8",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-conic-clearance-v1/source-conic-contract.json": "20aff844499c21b1390b49d5ebf111e81e08b2ff15b2693f8721de8e5ebbfb00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-source-disk-pose-bank-v2/pose-bank.json": "33d3a3c9c0b63f8f5b7ab335656705cf45662403922e1d03a53167523a2041cb",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-root-twist-interval-study-v1/accepted-finite-witnesses.json": "670f3c2395824c42dca0f45d464030771354911d0baa7b2896e98886f32d061f"
+  },
+  "CPU_only": true,
+  "new_continuous_axial_thumb_and_index_harmonic_source_domains": true,
+  "one_correlated_temporal_box_and_root_hypothesis": true,
+  "thumb_BC_sections": [
+    "clipped_original",
+    "box_midpoint"
+  ],
+  "maximum_new_native_points": 8,
+  "all_proposals_before_native_and_outcomes_immediately_durable": true,
+  "no_old_optimizer_bank_graph_slice_or_source_fit_rerun": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

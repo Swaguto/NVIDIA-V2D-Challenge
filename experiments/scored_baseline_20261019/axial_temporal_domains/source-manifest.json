@@ -1,0 +1,118 @@
+{
+  "schema": "v2d.axial-temporal-code-archive.v1",
+  "files": [
+    {
+      "file": "derive_axial_temporal_box_union_v1.py",
+      "restore_relative_path": "compute/derive_axial_temporal_box_union_v1.py",
+      "executed_or_declared_source_sha256": "8ae73729af7d2050dbb63c3f462d391f8a3023ba5be33f7ac8e2fa6a89676044"
+    },
+    {
+      "file": "bound_temporal_box_source_cones_v1.py",
+      "restore_relative_path": "compute/bound_temporal_box_source_cones_v1.py",
+      "executed_or_declared_source_sha256": "d17a52397f24790da05ab78f43a0ab06344950f301deb810cb7338012be2c37b"
+    },
+    {
+      "file": "construct_axial_temporal_source_branch_v1.py",
+      "restore_relative_path": "compute/construct_axial_temporal_source_branch_v1.py",
+      "executed_or_declared_source_sha256": "adc1c24edda37c1aed89f0a14bdc4930d31bfad334dbcad8a95e59187eb74a6d"
+    },
+    {
+      "file": "intersect_temporal_index_conic_domains_v1.py",
+      "restore_relative_path": "compute/intersect_temporal_index_conic_domains_v1.py",
+      "executed_or_declared_source_sha256": "55f48bea325310c46424f8ba5b7f0ebcaaba2a1ab08322a36d5cb7c599c10002"
+    },
+    {
+      "file": "verify_temporal_index_separators_v1.py",
+      "restore_relative_path": "compute/verify_temporal_index_separators_v1.py",
+      "executed_or_declared_source_sha256": "053a4c6dda6d748f3c52254ce4d9646f4a1ac83e0c6f2a3357c66542cce40413"
+    },
+    {
+      "file": "resolve_remaining_temporal_index_domains_v1.py",
+      "restore_relative_path": "compute/resolve_remaining_temporal_index_domains_v1.py",
+      "executed_or_declared_source_sha256": "aafe5c1a7a728262f805563832bb6d9a5b89d300f3d04ef512d28ddefbe30af3"
+    },
+    {
+      "file": "harmonic_source_domains_v1.py",
+      "restore_relative_path": "compute/harmonic_source_domains_v1.py",
+      "executed_or_declared_source_sha256": "3c9eebd919c26132a4a15219de1686ef82ead41958f47a9abab28c713386aa8e"
+    },
+    {
+      "file": "planar_workspace_conic_v1.py",
+      "restore_relative_path": "compute/planar_workspace_conic_v1.py",
+      "executed_or_declared_source_sha256": "51ae8c5ea0466b970b98d8afabd71cbeacfaf41b862bde5cf89ba04287f800d6"
+    },
+    {
+      "file": "planar_support_critical_points_v1.py",
+      "restore_relative_path": "compute/planar_support_critical_points_v1.py",
+      "executed_or_declared_source_sha256": "5578faff20976f103c83bc75b26e156505fcc961486a209f92884fefac1685ca"
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+    },
+    {
+      "file": "coupled_articulation_intervals_v1.py",
+      "restore_relative_path": "compute/coupled_articulation_intervals_v1.py",
+      "executed_or_declared_source_sha256": "63f72e5a04e3032ed998bfe3aa8ba93047262ed81361bb0ceed586d6211111f1"
+    },
+    {
+      "file": "source_orientation_context_v1.py",
+      "restore_relative_path": "compute/source_orientation_context_v1.py",
+      "executed_or_declared_source_sha256": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "axial-temporal-box-union-CPU-plan-v1.json",
+      "restore_relative_path": "compute/axial-temporal-box-union-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "d90e97ad14b19bef024c76180bc13fb0a69731e714a480dc08a7584ac1c8fa5a"
+    },
+    {
+      "file": "temporal-box-source-cones-CPU-plan-v1.json",
+      "restore_relative_path": "compute/temporal-box-source-cones-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "274a4a91a57cc2b67de19b13f0313852fe0327a5226148e55cf2333f3ae10f6c"
+    },
+    {
+      "file": "axial-temporal-source-branch-CPU-plan-v1.json",
+      "restore_relative_path": "compute/axial-temporal-source-branch-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "d729f1c10a6fc65305c8a4435b2a871e57dfa305a847b13a919b86e6cc0f4ff4"
+    },
+    {
+      "file": "temporal-index-conic-domains-CPU-plan-v1.json",
+      "restore_relative_path": "compute/temporal-index-conic-domains-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "132ee33fa19a6c517ed93435f9f4a529c1dce3fe2d3be7c75f26158fecc670da"
+    },
+    {
+      "file": "temporal-index-separators-CPU-plan-v1.json",
+      "restore_relative_path": "compute/temporal-index-separators-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "03585eb8cb2f03a0fc00b8375ede087dd478005b28a2ec1fbfc4421c8716313b"
+    },
+    {
+      "file": "remaining-temporal-index-domains-CPU-plan-v1.json",
+      "restore_relative_path": "compute/remaining-temporal-index-domains-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "79cf083c7ffdb51e37b601b998dee103b4244585a5cb65d6e4d914543bbbe52b"
+    }
+  ],
+  "repository_dependency_snapshots": [
+    {
+      "file": "dependency_kinematics.py",
+      "repository_source_path": "scripts/dex3_training/v2d_dex3_flashchord/kinematics.py",
+      "sha256": "0747c53517a45a64efa5c7ecf8e91fedafcfb5150042c9a99c2718c0d7cb376c"
+    },
+    {
+      "file": "dependency_temporal_pose_path.py",
+      "repository_source_path": "scripts/track3/temporal_pose_path.py",
+      "sha256": "49f3a790488e2ba1d07523456a40e8eebabba3bc1dd39f1b568bad9bb5b041f9"
+    }
+  ],
+  "exact_private_sources": 19,
+  "serial_guarded_CPU_jobs": 6,
+  "production_runtime_unchanged": true,
+  "private_episodes_inputs_geometry_reports_results_models_or_weights_uploaded": false,
+  "old173separator_domains_reused_without_recompute": true,
+  "metadata_boolean_key_typo_retained_with_private_correction": true
+}

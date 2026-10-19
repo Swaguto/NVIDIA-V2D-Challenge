@@ -1,0 +1,20 @@
+{
+  "schema": "v2d.temporal-index-separators-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_temporal_index_separators_v1.py",
+  "worker_sha256": "053a4c6dda6d748f3c52254ce4d9646f4a1ac83e0c6f2a3357c66542cce40413",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-temporal-index-separators-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-temporal-index-conic-domains-v1/report.json": "08328a4e6f0fcb75dc663c7a0dcb4684b19fd52fae5467cba9ea13c27406bd8f",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-temporal-index-conic-domains-v1/all-actual-index-conic-domains.json": "4f89b77fa60670cf92f0d4c5b5dd83ff2be5bd1574db3b0e6add4b66b7fd65df",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-temporal-index-conic-domains-v1/all-controls-domains-and-witnesses.jsonl": "5c0ddbf2ab01b0149e8bf947437da4e3676279cbed10f879a35be4b8437eddda",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-temporal-box-source-cones-v1/selected-source-temporal-box.json": "07cf8e3ba5374569fd301e2e615be7771917c47394517df8e3927ef1e2346fc8"
+  },
+  "CPU_only": true,
+  "new_independent_support_planes_without_quartic_repeats": true,
+  "all_witnesses_and_rejections_durable": true,
+  "no_source_native_fit_or_old_bank_repeated": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

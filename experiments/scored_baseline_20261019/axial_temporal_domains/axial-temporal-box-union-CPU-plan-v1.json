@@ -1,0 +1,21 @@
+{
+  "schema": "v2d.axial-temporal-box-union-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_axial_temporal_box_union_v1.py",
+  "worker_sha256": "8ae73729af7d2050dbb63c3f462d391f8a3023ba5be33f7ac8e2fa6a89676044",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-axial-temporal-box-union-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_orientation_context_v1.py": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-conic-temporal-middle-boxes-v1/report.json": "3f42d06d22b719947001c9ee6754b1db3436d2ade645afa1c006ce122d5eee3c",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-conic-temporal-middle-boxes-v1/all-neighbor-pair-boxes.jsonl": "46b5ca10c0b7e10fd3bf219567b7814b18c0e289cd568966c52def492fe807f2",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-source-disk-pose-bank-v2/pose-bank.json": "33d3a3c9c0b63f8f5b7ab335656705cf45662403922e1d03a53167523a2041cb",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-root-twist-interval-study-v1/accepted-finite-witnesses.json": "670f3c2395824c42dca0f45d464030771354911d0baa7b2896e98886f32d061f",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-conic-independent-v1/selected-conditional-robot-control.json": "4c7807fa650527fc6e14016e88f4c0c77eb953bc0129c68186fe461212a3cf9a"
+  },
+  "CPU_only": true,
+  "saved_correlated_joint_boxes_not_recomputed": true,
+  "new_local_root_necessity_scope": true,
+  "no_old_source_native_bank_graph_or_LP_repeated": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}
