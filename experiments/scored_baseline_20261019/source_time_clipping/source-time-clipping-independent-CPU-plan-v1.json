@@ -1,0 +1,15 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_correlated_clipping_certificates_v1.py",
+  "worker_sha256": "185219d605e751a1e2b76b9d67c7e82ceab6fd31a55c503c38e1d62d7cc762ac",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-time-clipping-independent-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-time-clipping-binding-v1/correlated-source-time-clipping-inputs.json": "3352dfbb99953342b08d9d414b16549f1c92140e737cd6e1a3a546957e599ee8",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-correlated-source-time-clipping-v1/all-correlated-domain-proposals-coefficients-clips-and-outcomes.jsonl": "278d42784b81047f4de6363eae9ea0b1881cb3a5bb2f6c975713a382c46c897e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-correlated-source-time-clipping-v1/correlated-domain-contraction-result.json": "6acfa7a2a78bf889f27e917ef25cb45005c24105f4896caf37064f64b63130f5",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-time-system-v1/coupled-source-time-polynomial-system.json": "48732e47761f0a1d81a49ca9478b41ee7a8ae3a8623f066d8e91cacb269c6984"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Independent blossom restriction and supporting-line certificates; no recurrence/producer rerun",
+  "no_GPU": true
+}

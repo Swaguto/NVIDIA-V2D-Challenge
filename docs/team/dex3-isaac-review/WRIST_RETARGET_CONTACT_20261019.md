@@ -1369,3 +1369,43 @@ new qualified reference or score gain occurred. The three verified components,
 separate unqualified middle component, source/missing/held-out evidence and
 all original parameters/gates remain unchanged. Exact code/guards/plans are
 archived under `experiments/scored_baseline_20261019/index_temporal_algebra`.
+
+## Correlated filled-source/time domain clipping
+
+The next study uses the filled source-disk sublevels and shared temporal
+polynomials across 107–111, leaving all ten joint variables continuous. A
+Bernstein lower grid gives a convex-hull enclosure of each coordinate and
+polynomial value. Projecting below zero gives a necessary coordinate interval;
+shared factors propagate those bounds to neighboring frames. Disconnected
+source components and interiors remain covered. No isolated source witness is
+fixed as a mandatory node and no outer center is accepted as a pose.
+
+Five old source grids are reused. Four new exact tensor interpolation defect
+bounds certify their lower representations; the frame-109 coefficient error is
+reused by hash from its saved audit. The 44 new temporal lower grids come from
+the already verified half-angle equations. Original candidate gates remain
+unchanged. Exact rational arithmetic binds saved binary coefficient models;
+upstream trig/camera/source uncertainty and old numerical endpoint scope remain.
+
+The declared 24-pass contraction has no splits and stops UNRESOLVED, retaining
+all 1,176 factor steps. Some normalized half-angle widths fall to 14.7–34.0%;
+others remain 49.6–95.9%. Intervals are necessary restrictions, not source/time
+feasible sets, accepted seeds, an exclusion or a new reference. Do not extend
+or repeat this pass budget. Three unknown frame-109 source-event bands remain
+within the filled-domain evidence and are not relabeled as known branches.
+
+Eight new analytic controls pass. An independent checker uses blossom formulas
+and scalar supporting-line certificates instead of repeating the contractor.
+It verifies 397 input lower coefficients, 9,528 restriction coefficients, all
+1,176 steps, 5,280 supporting lines and 100 exact interpolation defects. All
+returns and rejected/unresolved domains are durably retained. Supporting-line
+multipliers are algebraic certificates, not contact forces or importance scores.
+
+Three guarded CPU jobs and exact sources/plans are archived code-only under
+`experiments/scored_baseline_20261019/source_time_clipping`. Production runtime
+and its tests are unchanged. No native position, physics, GPU/PPO, command/root
+mutation, qualified path or score gain occurred. Current verified components,
+the separate unqualified middle component, all source/missing/held-out evidence,
+model parameters and original gates remain unchanged. The next method must
+preserve source/time correlations that interval projections leave unresolved;
+these interval hulls cannot establish a constructive common path.

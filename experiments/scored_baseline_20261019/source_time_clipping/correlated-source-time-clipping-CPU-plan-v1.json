@@ -1,0 +1,14 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/contract_correlated_source_time_domains_v1.py",
+  "worker_sha256": "c225999a2edbfc021f701bd061ba8afe8d469e0eed71a50219b6b6c021ed2082",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-correlated-source-time-clipping-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/correlated_bezier_clipping_v1.py": "4e0476cc1a03f94f2108153ae20b78f281c0418dfcdf917095397af6ad3aadc6",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-time-clipping-binding-v1/correlated-source-time-clipping-inputs.json": "3352dfbb99953342b08d9d414b16549f1c92140e737cd6e1a3a546957e599ee8",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-time-clipping-binding-v1/report.json": "47b0f28847e53152aaff41b1a8243bf33d53f139d98e0b6e57d1bcfeaf745816"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "24pass no-split continuous correlated source/time clipping on inherited region2; no old study repeated",
+  "no_GPU": true
+}

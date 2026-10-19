@@ -1,0 +1,14 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/prepare_correlated_source_time_clipping_v1.py",
+  "worker_sha256": "b2997be4447592aba47b4f982886629c95b430e627e1aad0c398d6ee6f175756",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-time-clipping-binding-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/correlated_bezier_clipping_v1.py": "4e0476cc1a03f94f2108153ae20b78f281c0418dfcdf917095397af6ad3aadc6",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-time-system-v1/coupled-source-time-polynomial-system.json": "48732e47761f0a1d81a49ca9478b41ee7a8ae3a8623f066d8e91cacb269c6984",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-critical-bernstein-v1/all-new-critical-chart-controls-proposals-and-bounds.jsonl": "e5e877395e0b99d09cfa6f0cb1774c52341cf29a10b5873043034ad94b996b79"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Filled-sublevel correlated contractor controls and source-grid/time input binding; source polynomials/charts reused",
+  "no_GPU": true
+}

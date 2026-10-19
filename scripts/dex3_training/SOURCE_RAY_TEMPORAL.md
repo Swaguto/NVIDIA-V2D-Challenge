@@ -112,3 +112,18 @@ No source/time solution or exclusion is asserted; the equations precede a
 new coupled construction. The exact code-only research archive is
 `experiments/scored_baseline_20261019/index_temporal_algebra`. Existing
 runtime helpers/tests and the verified reference remain unchanged.
+
+## Filled-domain source/time clipping in research
+
+A subsequent private method reuses source Bernstein grids and the continuous
+time polynomials. Convex-hull projection of each filled sublevel gives necessary
+coordinate bounds; shared factors contract neighboring clocks. Outward domain
+and lower coefficient rounding retain continuous source interiors and unknown
+critical bands. A projected interval is not a feasible source branch or a path.
+
+The declared 24-pass scope remains unresolved. Independent blossom identities
+and scalar supporting lines verify every contraction without rerunning the
+method. No isolated pose is a mandatory node or accepted center. The exact
+code-only `source_time_clipping` archive and wrist review record all scopes,
+controls and remaining uncertainty. Original runtime/tests, reference, source
+observations and candidate acceptance gates remain unchanged.

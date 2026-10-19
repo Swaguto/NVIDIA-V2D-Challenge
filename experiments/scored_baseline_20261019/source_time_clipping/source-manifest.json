@@ -1,0 +1,53 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "private_results_absent": true,
+  "files": [
+    {
+      "file": "correlated_bezier_clipping_v1.py",
+      "restore_relative_path": "compute/correlated_bezier_clipping_v1.py",
+      "executed_or_declared_source_sha256": "4e0476cc1a03f94f2108153ae20b78f281c0418dfcdf917095397af6ad3aadc6"
+    },
+    {
+      "file": "prepare_correlated_source_time_clipping_v1.py",
+      "restore_relative_path": "compute/prepare_correlated_source_time_clipping_v1.py",
+      "executed_or_declared_source_sha256": "b2997be4447592aba47b4f982886629c95b430e627e1aad0c398d6ee6f175756"
+    },
+    {
+      "file": "contract_correlated_source_time_domains_v1.py",
+      "restore_relative_path": "compute/contract_correlated_source_time_domains_v1.py",
+      "executed_or_declared_source_sha256": "c225999a2edbfc021f701bd061ba8afe8d469e0eed71a50219b6b6c021ed2082"
+    },
+    {
+      "file": "verify_correlated_clipping_certificates_v1.py",
+      "restore_relative_path": "compute/verify_correlated_clipping_certificates_v1.py",
+      "executed_or_declared_source_sha256": "185219d605e751a1e2b76b9d67c7e82ceab6fd31a55c503c38e1d62d7cc762ac"
+    },
+    {
+      "file": "source-time-clipping-binding-CPU-plan-v1.json",
+      "restore_relative_path": "compute/source-time-clipping-binding-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "c366aacf3a95e7fd4005ccb589d66298cceb89eaa45c25be44c4239a2d345c91"
+    },
+    {
+      "file": "correlated-source-time-clipping-CPU-plan-v1.json",
+      "restore_relative_path": "compute/correlated-source-time-clipping-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "4d0015452c6ae62e1da9f4553a2444fdb0e40e1d80dda3df072bd87bdbb7b917"
+    },
+    {
+      "file": "source-time-clipping-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/source-time-clipping-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "707815dabf1e4def35eeaeb1dea4231574833d0e6ecd4205d9e86d7acef980e9"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+    }
+  ],
+  "repository_dependency_snapshots": [],
+  "repository_runtime_NOT_imported": true
+}
