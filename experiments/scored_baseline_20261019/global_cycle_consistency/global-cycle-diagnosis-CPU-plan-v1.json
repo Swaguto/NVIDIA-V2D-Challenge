@@ -1,0 +1,18 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/diagnose_global_cycle_v1.py",
+  "worker_sha256": "fe2faba9532a54b19ed642853cf98183f900ae24e4a8b07e8f0fa61e78e902e3",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-cycle-diagnosis-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/global_cycle_moments_v1.py": "2a051ca145ee20d3ee6d47a1b133ff9bc66a97e663544982ae8afda6d2417387",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-cycle-contract-v1/report.json": "6323e61c6f779aab8c9bc522cbfcda03161a9745c0a30d2e2c402033f6f7070c",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-bounded-moment-cone-v1/update-05-necessary-LP-model.json": "5938c310fe73da913bd56383046f17fc1b667335c1bce60ee131f701c1f0b723",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-image-conic-evaluation-v1/single-image-conic-solver-RETURN.json": "07031434b0059aa21c0fbeca0a34fae20e81f8d4119c8ed365d5d97b49c9b3ac",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-image-return-independent-v1/report.json": "9517a008ada07d51611a1cd58b62b6f0968fd73c6c0d7534595af13a5a6f4cc6",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-model-v1/common-degree-factor-representations.json": "7e03cc503ed8fca55a4e60fc42ac4b8205c7d7f867aa632b6839335d1dd3fca7"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "ONE NEW factor-scope/running-intersection/partial-global-moment and induced4cycle Schur necessity diagnosis of SAVED newest RETURN; residuals reused by hash, absent moments free, no solver/old audit",
+  "no_GPU": true
+}

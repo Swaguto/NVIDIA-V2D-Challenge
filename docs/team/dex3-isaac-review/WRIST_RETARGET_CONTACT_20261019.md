@@ -1799,3 +1799,49 @@ observations, parameters and gates are unchanged. No native position, physics,
 GPU/PPO, motor/grasp/task/policy/score gain occurs. Do not repeat or extend this
 model, solver, controls or audits, or promote local means/eigenvectors/Gram
 factors to commands or mandatory measured source joints.
+
+## Global factor-scope and four-variable cycle necessities, 2026-10-19
+
+A new study addresses compatibility ACROSS local factors without rerunning
+positivity within old scopes. The 29 saved scopes have 11 maximal scopes.
+Their maximum intersection-weight tree has weight 14 against the running-
+intersection target 18. Independent tree cycle-property checks verify its
+optimality, so these maximal scopes admit no standard junction tree. This is
+not an exclusion of a global common measure; automatic clique gluing is absent.
+The partial global first/second-moment Gram matrix has 40 known upper entries
+and 26 absent cross moments, retained free rather than filled with products
+of means. All moments are normalized tensor coordinates, not robot commands.
+
+Eleven NEW analytical contracts pass continuous/even four-cycle Schur bounds,
+zero/signed mass, fixed 96-bit outward square roots, tiny overlap residuals,
+running intersection and product availability. The old odd-cycle control,
+source polynomials, solvers and mixed-matrix/projection audits are not rerun.
+A single SAVED newest-return diagnosis maps 39 moment groups and 139 copies
+to saved marginal residuals by hash. There are 100 nonzero copy differences,
+maximum 1.162265e-16; 27 of 29 actual masses differ from one. Actual weights,
+masses and residuals are unchanged, never normalized or repaired.
+
+Diagnostic moment intervals follow exact residual-map bounds and contain
+reported copies. They are not all-correction/family-feasibility bounds or new
+candidate tolerances. All seven induced four-variable cycle envelopes pass
+necessary missing-diagonal Schur interval overlap tests. Both missing diagonals
+remain free; no convenient covariance completion or mean becomes source truth.
+Passing these seven checks does not establish full global PSD completion,
+compatibility on longer cycles, a common supported measure or a trajectory.
+
+Independent checks verify 55 maximum-tree cycle properties, 29 mass bindings,
+139 copy identities, 5,778 map coefficients, the generic exact symbolic Schur
+identity, 14 triangle certificates and 14 rational square-root enclosures.
+Three serial guarded CPU jobs, ten exact sources/plans and every private map,
+proposal, intermediate return, unavailable entry and certificate are retained
+in `experiments/scored_baseline_20261019/global_cycle_consistency`.
+
+Production runtime/tests, verified F, separate unqualified components, original
+source/missing/held-out authority, region-2 correlations, unknown event bands,
+parameters and physical gates remain. No new solver, native position, physics,
+GPU/PPO, motor/grasp/task/policy or score qualification occurs. A future global
+Gram-completion diagnostic requires separate necessity/packing/dual contracts
+and a single declared bounded evaluation. Missing entries may be existential
+auxiliary variables only, not new measured moments or a change to the original
+source/time model. No repeats, budget extensions, means/eigenvectors/Gram
+factors promoted to commands, or repairs to raw solver weights are authorized.

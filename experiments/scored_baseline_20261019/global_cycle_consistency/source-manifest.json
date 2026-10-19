@@ -1,0 +1,58 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "private_results_absent": true,
+  "files": [
+    {
+      "file": "global_cycle_moments_v1.py",
+      "restore_relative_path": "compute/global_cycle_moments_v1.py",
+      "executed_or_declared_source_sha256": "2a051ca145ee20d3ee6d47a1b133ff9bc66a97e663544982ae8afda6d2417387"
+    },
+    {
+      "file": "verify_global_cycle_contracts_v1.py",
+      "restore_relative_path": "compute/verify_global_cycle_contracts_v1.py",
+      "executed_or_declared_source_sha256": "ea452c5b3f2d9c3286a6fd7d8626e726a6289959cc88eac86eb0dd4b08cd03cd"
+    },
+    {
+      "file": "diagnose_global_cycle_v1.py",
+      "restore_relative_path": "compute/diagnose_global_cycle_v1.py",
+      "executed_or_declared_source_sha256": "fe2faba9532a54b19ed642853cf98183f900ae24e4a8b07e8f0fa61e78e902e3"
+    },
+    {
+      "file": "verify_global_cycle_v1.py",
+      "restore_relative_path": "compute/verify_global_cycle_v1.py",
+      "executed_or_declared_source_sha256": "ebee61272c537ca2714fea434550f99ae5bd382b76ca3af97c3cb41535502ee9"
+    },
+    {
+      "file": "conditional_moment_cones_v1.py",
+      "restore_relative_path": "compute/conditional_moment_cones_v1.py",
+      "executed_or_declared_source_sha256": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995"
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "global-cycle-contract-CPU-plan-v1.json",
+      "restore_relative_path": "compute/global-cycle-contract-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "e3b29d9f4ca74797f2f14bfd963e0ef3ae631e2e57b801b4a8a7a55ce24acd9a"
+    },
+    {
+      "file": "global-cycle-diagnosis-CPU-plan-v1.json",
+      "restore_relative_path": "compute/global-cycle-diagnosis-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "b45fc440e90d8848b59bfe90e6527e285ed3e8f5e6814377c8bb66a873cc2019"
+    },
+    {
+      "file": "global-cycle-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/global-cycle-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "41d28db4a4ed4c6c635b2d8b14a6d0c686ca410ce985809fa5e461f9cba9f1d3"
+    }
+  ],
+  "repository_dependency_snapshots": [],
+  "repository_runtime_NOT_imported": true
+}
