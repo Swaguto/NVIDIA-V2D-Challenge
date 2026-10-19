@@ -1,0 +1,63 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "private_results_absent": true,
+  "files": [
+    {
+      "file": "pointwise_support_moments_v1.py",
+      "restore_relative_path": "compute/pointwise_support_moments_v1.py",
+      "executed_or_declared_source_sha256": "5f57915049b6b4d028fb105e4674094de9dad7313b4107f4074704ed770de474"
+    },
+    {
+      "file": "verify_pointwise_support_contracts_v1.py",
+      "restore_relative_path": "compute/verify_pointwise_support_contracts_v1.py",
+      "executed_or_declared_source_sha256": "8dfd8b3429c326763458a00f81f32f992dd7e99b8baba30d3fd2a5b4264683f8"
+    },
+    {
+      "file": "diagnose_pointwise_support_v1.py",
+      "restore_relative_path": "compute/diagnose_pointwise_support_v1.py",
+      "executed_or_declared_source_sha256": "d8d39b733549f130e0aee1fd2f230f1bd34f7e1e825247c1d92ce7a52fe134bd"
+    },
+    {
+      "file": "verify_pointwise_support_evidence_v1.py",
+      "restore_relative_path": "compute/verify_pointwise_support_evidence_v1.py",
+      "executed_or_declared_source_sha256": "a82daa35dbc312de654d83f8867d34fd7f8937a377493bdb4f2b7482d30f84ae"
+    },
+    {
+      "file": "mixed_joint_moments_v1.py",
+      "restore_relative_path": "compute/mixed_joint_moments_v1.py",
+      "executed_or_declared_source_sha256": "5f5f8d2a9d948744cf992b7694117a023ffb650d00332414dc95ca91bdd3fdcb"
+    },
+    {
+      "file": "conditional_moment_cones_v1.py",
+      "restore_relative_path": "compute/conditional_moment_cones_v1.py",
+      "executed_or_declared_source_sha256": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995"
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "pointwise-support-contract-CPU-plan-v1.json",
+      "restore_relative_path": "compute/pointwise-support-contract-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "872c37447bc92a3659d6b7920b7bdbf4517e97984ff387aae8147330f844ca13"
+    },
+    {
+      "file": "pointwise-support-diagnosis-CPU-plan-v1.json",
+      "restore_relative_path": "compute/pointwise-support-diagnosis-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "94d7e56bf2a5c34f2741895b1081a232b29d0fb648fbf6986b22dcee3ab0dd15"
+    },
+    {
+      "file": "pointwise-support-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/pointwise-support-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "fcdbec2b296b6daa3d974e0349f17f39dabecb517a7e140ad02b6951be5e9834"
+    }
+  ],
+  "repository_dependency_snapshots": [],
+  "repository_runtime_NOT_imported": true
+}

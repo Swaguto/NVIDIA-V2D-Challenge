@@ -213,3 +213,27 @@ unknown or unavailable moments stay explicit. Do not sweep degrees or rerun
 these contracts, matrices, overlap audit or earlier solvers. Exact code/plans
 are in `experiments/scored_baseline_20261019/mixed_joint_consistency`; all private
 results and the verified reference/source/physical gates remain unchanged.
+
+## Pointwise temporal support is stronger than scalar averages
+
+New weighted-square matrices use SAVED temporal coefficient enclosures and
+positive-depth models. A guarded dyadic upper polynomial preserves the
+necessary implication from each original temporal gate. Multilinear multipliers
+fit the EXISTING per-coordinate degree-four tensors; five source-image factors
+retain unavailable nonconstant localizers instead of inventing moments. All
+original finite-chart, branch, depth, source, motion and candidate gates remain.
+
+Eight new analytical contracts pass. The fixed diagnosis finds 25 failing
+temporal support matrices despite positive scalar means. Five depth and
+nineteen other temporal matrices pass. Independent exact error, affine,
+coefficient-map and weighted-square certificates verify all results. No old
+polynomial generation, algebra/PSD audit or solver repeats. No actual weight is
+clipped, normalized or repaired.
+
+This rejects the saved table as a supported motion measure, not the conditional
+source/time family or task. No new reference/trajectory/physical candidate or
+GPU/PPO qualifies. Exact code/plans are in
+`experiments/scored_baseline_20261019/pointwise_support`; all private results and
+the verified reference stay private and unchanged. Any support-aware conic
+formulation is a new bounded scope requiring new packing/dual contracts first;
+it is not permission to rerun or extend completed solvers or cut algorithms.

@@ -1,0 +1,17 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_pointwise_support_evidence_v1.py",
+  "worker_sha256": "a82daa35dbc312de654d83f8867d34fd7f8937a377493bdb4f2b7482d30f84ae",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-pointwise-support-independent-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-pointwise-support-diagnosis-v1/report.json": "4ac961936bd10e695e894008a51d6b2df1f2a3e49a4b99ff27efee5c3163e630",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-time-system-v1/coupled-source-time-polynomial-system.json": "48732e47761f0a1d81a49ca9478b41ee7a8ae3a8623f066d8e91cacb269c6984",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-model-v1/common-degree-factor-representations.json": "7e03cc503ed8fca55a4e60fc42ac4b8205c7d7f867aa632b6839335d1dd3fca7",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-bounded-moment-cone-v1/update-05-necessary-LP-model.json": "5938c310fe73da913bd56383046f17fc1b667335c1bce60ee131f701c1f0b723",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-conditional-SDP-v1/single-direct-SDP-solver-RETURN.json": "e4b65adabf828bb0a8aeda79c9f04d2142f3771d15306c851c323930c95ec156"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Independent exact SAVED enclosure/96bit upper-error+repeated-multiplication affine+falling-factorial maps+PSD congruences/negative weighted-square support certificates; no old trig/source/audit/solver",
+  "no_GPU": true
+}

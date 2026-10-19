@@ -1,0 +1,21 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/diagnose_pointwise_support_v1.py",
+  "worker_sha256": "d8d39b733549f130e0aee1fd2f230f1bd34f7e1e825247c1d92ce7a52fe134bd",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-pointwise-support-diagnosis-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/pointwise_support_moments_v1.py": "5f57915049b6b4d028fb105e4674094de9dad7313b4107f4074704ed770de474",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/mixed_joint_moments_v1.py": "5f5f8d2a9d948744cf992b7694117a023ffb650d00332414dc95ca91bdd3fdcb",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-pointwise-support-contract-v1/report.json": "008b38e4f86639bbdf6965151ac42e4081575fe0d507c0fadbc890cb8a6397f4",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-time-system-v1/coupled-source-time-polynomial-system.json": "48732e47761f0a1d81a49ca9478b41ee7a8ae3a8623f066d8e91cacb269c6984",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-time-clipping-binding-v1/correlated-source-time-clipping-inputs.json": "3352dfbb99953342b08d9d414b16549f1c92140e737cd6e1a3a546957e599ee8",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-model-v1/common-degree-factor-representations.json": "7e03cc503ed8fca55a4e60fc42ac4b8205c7d7f867aa632b6839335d1dd3fca7",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-bounded-moment-cone-v1/update-05-necessary-LP-model.json": "5938c310fe73da913bd56383046f17fc1b667335c1bce60ee131f701c1f0b723",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-conditional-SDP-v1/report.json": "a422803dfba81a0abc7eeab67fb83f3b29b648e56e3f8ba51218a1a1c436c898",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-conditional-SDP-v1/single-direct-SDP-solver-RETURN.json": "e4b65adabf828bb0a8aeda79c9f04d2142f3771d15306c851c323930c95ec156"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "ONE49support-localizer saved-table diagnosis:44SAVED temporal boundaries+5depth models, one96bit necessary upper-error representation and maximal multilinear multiplier scope within unchanged per-axis degree4;5source-image nonconstant factors UNAVAILABLE; NO SOLVER",
+  "no_GPU": true
+}

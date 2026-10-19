@@ -1605,3 +1605,56 @@ archive. Production runtime/tests, F, separate unqualified components, source/
 missing/held-out flags, original bounds/gates and physical parameters remain
 unchanged. No native position, physics, GPU/PPO, new reference, grasp, motor,
 task, policy or score success occurred.
+
+## Pointwise motion/depth support, 2026-10-19
+
+A genuinely new necessity now tests whether the saved table could describe a
+measure supported on each original motion condition. Scalar expected gates
+and joint PSD alone do not establish this support. For each SAVED temporal
+polynomial g>=0, exact saved coefficient intervals and affine domains produce
+an upper polynomial h with h>=g throughout that domain. Thus h*q^2 is
+nonnegative on valid support. The [moment/localizer identity](https://homepages.cwi.nl/~monique/files/moment-ima-update.pdf)
+binds these weighted-square expectations to PSD matrices. No temporal/source
+polynomial, trigonometric enclosure or old algebra job is regenerated.
+
+One declared 96-bit dyadic representation keeps a rational uniform upward
+error bound. Tiny nonzero coefficients retain their structural degree even if
+a rounded center vanishes. These necessary arithmetic guards never alter
+original robot/source acceptance tolerances. A fixed maximal multilinear
+multiplier basis uses only EXISTING per-coordinate degree-four tensor powers.
+The temporal pair/triple matrices have dimensions four/eight; no moment degree,
+source box, motion cap, wrist mode or candidate authority changes.
+
+Eight new analytical contracts pass, including a positive-mean measure whose
+weighted square violates pointwise support, supported positive measures,
+signed/zero mass, affine order, tiny structural terms, degree availability and
+separate depth. The fixed saved-return diagnosis includes 44 temporal
+boundaries and five saved binary depth models. All five source-image factors
+retain unavailable nonconstant polynomial support localizers explicitly;
+required powers exceed the existing tensor. Their old scalar tests are not
+rerun. Finite-chart denominators, minimum depth, unknown zero-distal/event
+cases, region-2 correlations and all source/missing/held-out flags remain.
+
+Exactly 25 temporal support matrices fail, with a nonnegative scalar mean in
+every case. The five depth and nineteen other temporal matrices pass. Independent
+checks validate 317 coefficient/error bindings, 49 affine maps, 657 shift maps,
+26,064 coefficients, 1,360 entry identities, 384 positive congruence entries
+and all 25 exact negative weighted-square certificates. Independent affine
+composition uses repeated polynomial products and moment maps use falling
+factorials. No floating PSD threshold, returned-weight repair or old audit runs.
+
+This rejects THAT saved numerical table as a measure supported on valid motion
+states. It does not exclude the source/time family, establish a compulsory root
+change or qualify a concrete trajectory. Witness coefficients and changes in
+moment weights are algebraic quantities, not joint commands or forces. Exact
+coefficient statements concern frozen numerical models; upstream camera/source
+accuracy and old endpoint uncertainty remain unqualified.
+
+Three serial guarded CPU jobs succeed; eleven exact sources/plans and all
+private states, matrices, error bounds, failed/unavailable cases and witnesses
+are retained in the code-only `pointwise_support` archive. No source/physical
+candidate, native position, physics, GPU/PPO, motor/grasp/task/score success or
+production runtime/test change occurs. F and separate unqualified components
+stay unchanged. A distinct future support-aware conic formulation requires new
+packing/dual contracts and a declared single bounded evaluation, not another
+anchor/cut loop, restart or extension of earlier solver budgets.

@@ -1,0 +1,14 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_pointwise_support_contracts_v1.py",
+  "worker_sha256": "8dfd8b3429c326763458a00f81f32f992dd7e99b8baba30d3fd2a5b4264683f8",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-pointwise-support-contract-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/pointwise_support_moments_v1.py": "5f57915049b6b4d028fb105e4674094de9dad7313b4107f4074704ed770de474",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/mixed_joint_moments_v1.py": "5f5f8d2a9d948744cf992b7694117a023ffb650d00332414dc95ca91bdd3fdcb",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Eight NEW support-localizer contracts: positive support vs scalar expected gate,96bit necessary coefficient guards/tiny leading terms, affine order, degree4capacity/depth/signed identity; no episode or solver",
+  "no_GPU": true
+}
