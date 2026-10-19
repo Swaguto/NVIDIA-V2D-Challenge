@@ -1895,3 +1895,46 @@ No native position, physics, GPU/PPO, motor/grasp/task/policy/score gain occurs.
 Do not rerun/tune these producers, solvers, controls or audits, or construct
 alternative proposals. Joint-support necessities of the separate completion
 remain a distinct future question; no mean/eigenvector/Gram factor is a command.
+
+## Complementary-corner joint unit-cube support, 2026-10-19
+
+A new exact support necessity uses three normalized tensor variables `(x,y,z)`.
+For each complementary pair of Boolean corners, adding their multilinear
+Bernstein products cancels the cubic term. The resulting four quadratics are
+`1-x-y-z+xy+xz+yz`, `z-xz-yz+xy`, `y-xy-yz+xz` and
+`x-xy-xz+yz`. Each is nonnegative throughout the unit cube; their sum is one.
+Their expectations use only mass, first and cross moments. No absent moments,
+products of means, normalized weights or repaired matrix entries are introduced.
+The Boolean corners are algebraic proof controls, not source/robot anchors.
+
+Ten NEW analytic contracts pass exact product/cancellation/partition identities,
+a correlated continuous measure, unnormalized positive/zero/signed mass,
+permutations, exact tiny negative signs, Frobenius maps and explicit absent
+moment handling. Old odd/even-cycle, Schur, PSD, mixed-projection and source
+controls are not replayed. Only after these contracts, ONE fixed diagnosis
+checks all 120 triples and four polynomials each against the SAVED separate
+exact first/second Gram completion. All 480 expectations pass exactly, with
+minimum 0.15996792242118518, and all 120 sums equal the original unit mass.
+The 26 completed cross entries remain existential values of this ONE matrix.
+
+Independent Boolean-lattice interpolation verifies 3,840 coefficient identities,
+3,840 corner/nonnegativity identities, 2,280 expectation-map coefficients,
+480 direct rational expectation formulas, 120 partitions and 480 durable
+BEFORE/AFTER journal pairs. All proposed polynomials, maps, intermediate returns,
+results and empty negative/unresolved sets are private and hash bound.
+Three serial CPU guards succeed within 240 seconds/2 GiB/1.5 GiB reserve;
+ten exact sources/plans are archived under `cube_joint_support`.
+
+This passes a NECESSARY triple support test only. A positive common measure on
+all ten cube variables, support on the original source/time inequalities,
+deterministic robot trajectory and physical candidate remain unqualified.
+No new completion, solver, anchor/cut loop, old scalar/PSD/marginal audit,
+source/time polynomial, native position, physics or GPU/PPO job runs. All actual
+original/auxiliary returns and separate certificate entries remain unchanged.
+The old AlmostSolved/equality/overlap residuals and failed statuses remain.
+F, separate unqualified middle/wrist components, source/missing/held-out flags,
+region-2/full-clock correlations/unknown109bands, parameters and original gates
+are unchanged. Production runtime/tests and motor/grasp/task/policy/score stay
+unchanged. Do not rerun this fixed diagnosis, controls or verification.
+
+The synthetic continuous contract stores only the requested mass/first/distinct-cross moments; unused diagonal zeros are storage placeholders, not second moments or a PSD/measure claim. That control checks only the new paired-corner formulas. Exact executed code/returns remain retained unchanged.

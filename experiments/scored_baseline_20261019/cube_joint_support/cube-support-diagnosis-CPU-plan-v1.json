@@ -1,0 +1,19 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/diagnose_cube_support_v1.py",
+  "worker_sha256": "9b507cc1498c1429526a61e52e4970ca66cf95801ac8ff07eebb2fad61d13057",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-cube-support-diagnosis-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/cube_joint_support_v1.py": "aedebaa9a58a4b350942c899a365553bac359b04877211893026c7d4d5a4e898",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-cube-support-contract-v1/report.json": "8ee068ba3c79b7ceee75233127eafc4fea134def30a0ba7aadd513dffa4c6fc6",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-completion-evaluation-v1/separate-existential-completion-matrix.json": "9ac9a5a6b2248b503d4daadc7ebdb8d4876b9c54c724e2cdf593fb138282e955",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-completion-model-v1/separate-global-completion-model.json": "cbc40d9f164d30de90a377d85ea8651ce30d6c9c47ab4f5f5549ca1cfd109993",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-completion-evaluation-v1/ONE-separate-existential-exact-completion-proposal.json": "57d789b7881b275259b3003a622eac0ff76f598ecdce91172ef608851b31bd58"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "ONE exact fixed480paired-corner support expectations across all120triples of the SAVED separate diagnostic Gram certificate. No new completion, solver or robot point.",
+  "no_GPU": true,
+  "declared_triples": 120,
+  "declared_paired_corner_polynomials": 480
+}

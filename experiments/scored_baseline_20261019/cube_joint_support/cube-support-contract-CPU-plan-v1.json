@@ -1,0 +1,14 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_cube_support_contracts_v1.py",
+  "worker_sha256": "1e4afe359e877bab839ebf65e5e11c68079b7a10c14558192d555861d71afa47",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-cube-support-contract-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/cube_joint_support_v1.py": "aedebaa9a58a4b350942c899a365553bac359b04877211893026c7d4d5a4e898",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Ten NEW exact complementary-corner unit-cube support identities/map/sign/continuous measure contracts. No solver, old controls, saved episode evaluation or robot point.",
+  "no_GPU": true,
+  "declared_new_contracts": 10
+}

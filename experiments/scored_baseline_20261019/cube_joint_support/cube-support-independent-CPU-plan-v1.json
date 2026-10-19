@@ -1,0 +1,20 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_cube_support_diagnosis_v1.py",
+  "worker_sha256": "1cc9502eeb59b643e22ec8e637660c4b51733524096728e9beeeaa251b061247",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-cube-support-independent-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-completion-evaluation-v1/separate-existential-completion-matrix.json": "9ac9a5a6b2248b503d4daadc7ebdb8d4876b9c54c724e2cdf593fb138282e955",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-cube-support-diagnosis-v1/guard.json": "6fe899fc42c78b5e0379ff2b4dfb91720ac0daadcd7b403b56d3835644f90691",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-cube-support-diagnosis-v1/report.json": "eb2f7cf794403a16d1ded0a05d1bd5b49a046860537aa16ba8ad4a4c0343bda6",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-cube-support-diagnosis-v1/input-provenance-and-fixed-scope.json": "2e52764b6923cf5d597580aff5a4a4afad4f6e35f60e5b27a740abae27ef7676",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-cube-support-diagnosis-v1/all-120-partition-certificates.json": "af335fd9bf56326018739498a4ce2ad74f5765afa0a9cf13de762d7258536510",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-cube-support-diagnosis-v1/all-negative-weighted-paired-corner-witnesses.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-cube-support-diagnosis-v1/all-480-exact-expectation-results.json": "0f9108461ce50462407be3525c0a92df8a9a8ff33069a3ac67f8bbb8b7249f87",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-cube-support-diagnosis-v1/all-unresolved-cases.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Independent Boolean-lattice interpolation, exact direct signed-moment maps/expectations, all480durable BEFORE/AFTER pairs and120mass partitions. No old PSD/marginal/source audit, solver or new matrix.",
+  "no_GPU": true
+}
