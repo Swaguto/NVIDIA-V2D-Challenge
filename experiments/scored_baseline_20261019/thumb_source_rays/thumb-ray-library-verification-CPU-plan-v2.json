@@ -1,0 +1,15 @@
+{
+  "schema": "v2d.cpu-thumb-ray-plan.v2",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-ray-library-verification-v2",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_planar_thumb_ik_v2.py",
+  "worker_sha256": "32fcd6a8ddaa53f369d3bd15ecd073cbd8cc8c63e5faf11eb2c98757324fb926",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/tests/test_planar_thumb_ik.py": "bd7ba748581949abcf5cbee14097ee2431ca3e021f1d4380b3c647fc789b8e33",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/planar_thumb_ik.py": "a90fd94b1c80e36a1d0acb0b6e022f9820d460102b1c071aca7d4343489703d1",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/test_planar_thumb_ik_import_failure_v1.py": "6d84147d38fb378fd4f5fa16ad4467cfeb0308cd4d16057e8639e293678f6388"
+  },
+  "CPU_only": true,
+  "native_binding_not_repeated": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

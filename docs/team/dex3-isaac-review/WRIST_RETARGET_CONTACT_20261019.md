@@ -625,3 +625,78 @@ another mutation. The failed local brackets and whole-clock controls do not
 prove global infeasibility. Do not repeat their sweeps or enlarge bounds. Any
 new command still needs fresh source/motion, full native/self, swept, actual
 motor and grasp checks before learning; the existing object failures remain.
+
+## Analytic thumb source rays and finite temporal branches
+
+A new explicitly bound Y/Z/Z thumb-chain module enumerates all nonsingular
+point-IK branches within supplied joint bounds. Empty branches and an axial
+singularity are distinct outcomes. Twenty-two focused tests cover analytic
+positions, radial/elbow branches, angle wrapping, tangencies, limits and invalid
+inputs. Nine retained native configurations close to analytic geometry within
+9.5e-10 m. The first test import failure is retained; the test repair does not
+repeat native binding. Numerical closure does not establish source accuracy.
+
+At the 13 remaining right-self failures, a new finite study samples 1,025 depths
+on each of two declared image rays: the source-image center and the current
+robot tip pixel. A whole-chain workspace sphere bounds possible depths. All
+analytic branches are checked against original component/URDF position limits,
+source-image nonregression and actual cached native self-contact geometry.
+These are hypothesized robot tip depths, not measured human or contact depth.
+No source inference, old optimization or completed native audit is repeated.
+
+The finite bank contains source/native 1 mm seeds for frames 0–4, 110 and
+115–117; the two sampled rays supply none for 111–114. This is a constructive
+finite bank, not an exclusion of other allowed image rays or continuous poses.
+An exact dynamic program over consecutive node pairs finds a path for frames
+0–4 with unchanged frame-5/6 boundaries. It enforces actual velocity and the
+original first/second differences of corrections against the original aligned
+reference. Four analytical controls include a nongreedy predecessor example;
+the first faulty synthetic fixture is retained and corrected separately.
+
+### Independent new-reference verification
+
+Fresh 151-knot native/FK/source/motion checks on the new private freeze find
+**left 0** and **right 8** self-contact failures, down from right 13. Remaining
+right frames are 110–117, maximum 2.613 mm at 111. The verified left and late-right
+components, all roots, nonthumb fingers, objects, source/human arrays and flags
+remain unchanged. All **1,072 available image anchors** are nonregressing;
+136 missing right anchors remain missing with unchanged commands. Original
+URDF position/velocity, 0.25 rad component and 0.05 rad adjacent/second-added
+bounds pass. The right second-added bound remains active at 0.05 rad.
+
+The early reference knots approach the existing 1 mm gate: maximum 0.993366 mm.
+Their 15 new quarter/half/three-quarter samples have maximum 0.990957 mm. Across
+all 450 sampled complete rigid-root/object/finger states, right-self still reaches
+2.608131 mm and hand/object 4.553011 mm. Sampling and narrow nominal margins do
+not qualify continuous swept motion or physical execution. All five right-index
+object failures persist, maximum 6.302 mm. No whole task, full source/reference,
+motor/grasp success, policy or MP-SR gain is qualified. Brev stayed stopped.
+
+### Retained fixed-root compatibility diagnosis
+
+A distinct necessary-geometry study at frames 111 and 113 uses conservative
+trigonometric/source-image intervals and common inscribed balls in actual
+compiled palm/thumb-1 hulls. A common ball of radius greater than 0.5 mm in both
+solids is a lower bound exceeding 1 mm on translation needed to separate them.
+The finite numerical enumeration logs rejection of every box under its fixed
+root, original joint box and image-error cap, then fails in report serialization:
+a path variable was overwritten by a rotation matrix. Its failed status remains.
+
+A separate recovery reads the saved logs without repeating subdivision, sphere
+LPs or earlier controls. Binary-tree counts close, 512 independent URDF projection
+samples fit the declared image enclosures, and 16 new native frozen-center checks
+respect the saved common-ball lower bounds. Per-leaf certificates and original
+native center-control values were not saved. This supports an incompatibility
+diagnosis under the stated numerical model; **formal global infeasibility is not
+certified** and source accuracy remains unqualified. No candidate is promoted
+from this diagnosis. Exact executed sources and historical dependencies are
+archived code-only under `experiments/scored_baseline_20261019/thumb_source_rays`.
+
+Next preserve all three verified components in the new combined freeze. Audit
+source authority for the derived robot wrist orientation and its coupling to
+thumb geometry at the remaining transition before any root mutation. Direct
+human wrist observations are not measured robot joint/root angles. Do not adopt
+rejected centers, enlarge the 8 mm/0.08 rad residual boxes, relax source/motion/
+1 mm gates, or repeat the completed branch/path/bound studies. Any justified new
+proposal needs fresh whole-clock source/native/self/motion, full swept, actual
+motor and grasp checks before GPU/PPO. No root change or paid job is queued.

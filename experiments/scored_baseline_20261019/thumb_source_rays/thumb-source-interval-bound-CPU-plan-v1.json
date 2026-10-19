@@ -1,0 +1,20 @@
+{
+  "schema": "v2d.cpu-thumb-source-bound-plan.v1",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-source-interval-bound-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_thumb_source_interval_bound_v1.py",
+  "worker_sha256": "ad4f084e62a7e35b688ffc9605f365593a642be710fa7a579935be8c3360195d",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_ray_context_v1.py": "c5344c80bc68d6e1692d9a199633b73c1a33a5c61618b23c3ad43047d162acc2",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/native_mesh.py": "8ff66a4dfb1e8337f9e4470ee5859fb1586e24e792893d0e2200eb0591b7a4d5"
+  },
+  "CPU_only": true,
+  "frames": [
+    111,
+    113
+  ],
+  "reason": "Retained hard observed transition;111 has worst remaining self collision;113 has worst source regression in rejected whole-clock control",
+  "maximum_boxes_per_frame": 16000,
+  "no_reference_mutation": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

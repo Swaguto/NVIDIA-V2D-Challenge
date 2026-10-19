@@ -1,0 +1,123 @@
+{
+  "schema": "v2d.exact-thumb-source-ray-code-archive.v1",
+  "files": [
+    {
+      "file": "audit_thumb_source_interval_bound_v1.py",
+      "restore_relative_path": "compute/audit_thumb_source_interval_bound_v1.py",
+      "executed_or_declared_source_sha256": "ad4f084e62a7e35b688ffc9605f365593a642be710fa7a579935be8c3360195d"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "probe_thumb_source_ray_branches_v1.py",
+      "restore_relative_path": "compute/probe_thumb_source_ray_branches_v1.py",
+      "executed_or_declared_source_sha256": "5402b036014a2dc0960edb33155dd4242d763919c4a5cad50e80010b3a2e4be8"
+    },
+    {
+      "file": "recover_thumb_interval_evidence_v2.py",
+      "restore_relative_path": "compute/recover_thumb_interval_evidence_v2.py",
+      "executed_or_declared_source_sha256": "35eb6cb54209ee7f62f3773c297149dfab9351ece6bc412a5eee82934e10cdb5"
+    },
+    {
+      "file": "select_thumb_ray_temporal_path_v1.py",
+      "restore_relative_path": "compute/select_thumb_ray_temporal_path_v1.py",
+      "executed_or_declared_source_sha256": "6f9ba5308e25ea255a385d6b18702aa5a2c2fc47b841b53e6a1c39542fa5e42e"
+    },
+    {
+      "file": "select_thumb_ray_temporal_path_v2.py",
+      "restore_relative_path": "compute/select_thumb_ray_temporal_path_v2.py",
+      "executed_or_declared_source_sha256": "23b2e8ca323404462cd0eb93404b99cbbd8c020cb5ea6510de648b38f379f85b"
+    },
+    {
+      "file": "test_planar_thumb_ik_import_failure_v1.py",
+      "restore_relative_path": "compute/test_planar_thumb_ik_import_failure_v1.py",
+      "executed_or_declared_source_sha256": "6d84147d38fb378fd4f5fa16ad4467cfeb0308cd4d16057e8639e293678f6388"
+    },
+    {
+      "file": "thumb-ray-independent-validation-CPU-plan-v1.json",
+      "restore_relative_path": "compute/thumb-ray-independent-validation-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "34631df6a4b9b0d55d8dd1dc510f11174bd3fa897201f7b6ba2d11487e004866"
+    },
+    {
+      "file": "thumb-ray-library-verification-CPU-plan-v1.json",
+      "restore_relative_path": "compute/thumb-ray-library-verification-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "51fe214a6b516c34b6ce9b00a5b73a53e3472d1882d97ceacc790f0d411cddd6"
+    },
+    {
+      "file": "thumb-ray-library-verification-CPU-plan-v2.json",
+      "restore_relative_path": "compute/thumb-ray-library-verification-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "785efbeb7186d3d2379d92c56bad5467feabe132ea0a4385134c191727b3765f"
+    },
+    {
+      "file": "thumb-ray-temporal-path-CPU-plan-v1.json",
+      "restore_relative_path": "compute/thumb-ray-temporal-path-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "17ee5e0c47d7a0d376148a96cc330349ce777df34246c987260eddb8b8c3309b"
+    },
+    {
+      "file": "thumb-ray-temporal-path-CPU-plan-v2.json",
+      "restore_relative_path": "compute/thumb-ray-temporal-path-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "6bb46acefbb610ef52830f69d75c599d4e9b1df886eb8165e3cc3054278f0535"
+    },
+    {
+      "file": "thumb-source-interval-bound-CPU-plan-v1.json",
+      "restore_relative_path": "compute/thumb-source-interval-bound-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "c0147ef427a5c35884cb42add0529ba0d28dbab921b85219437c621253b42a49"
+    },
+    {
+      "file": "thumb-source-interval-evidence-CPU-plan-v2.json",
+      "restore_relative_path": "compute/thumb-source-interval-evidence-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "77b66921b9a2750d9c8c5248226c6dd88ec6bada897df54e91c12d452b2819c1"
+    },
+    {
+      "file": "thumb-source-ray-branches-CPU-plan-v1.json",
+      "restore_relative_path": "compute/thumb-source-ray-branches-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "b9ac957a09c188b6bb5e0908c9939c0e1c1c4db9ed09bc930d5aa32c1455ab59"
+    },
+    {
+      "file": "thumb_ray_context_v1.py",
+      "restore_relative_path": "compute/thumb_ray_context_v1.py",
+      "executed_or_declared_source_sha256": "c5344c80bc68d6e1692d9a199633b73c1a33a5c61618b23c3ad43047d162acc2"
+    },
+    {
+      "file": "verify_planar_thumb_ik_v1.py",
+      "restore_relative_path": "compute/verify_planar_thumb_ik_v1.py",
+      "executed_or_declared_source_sha256": "bda6f6d7ffee2000f931177044e3e10ea7a0116c79289405e82545a13f4a196a"
+    },
+    {
+      "file": "verify_planar_thumb_ik_v2.py",
+      "restore_relative_path": "compute/verify_planar_thumb_ik_v2.py",
+      "executed_or_declared_source_sha256": "32fcd6a8ddaa53f369d3bd15ecd073cbd8cc8c63e5faf11eb2c98757324fb926"
+    },
+    {
+      "file": "verify_thumb_ray_component_v1.py",
+      "restore_relative_path": "compute/verify_thumb_ray_component_v1.py",
+      "executed_or_declared_source_sha256": "38ebf9e9b713bfcc8ef3ef1be58ef4344133f65192834279de1bbf7a4e793984"
+    }
+  ],
+  "repository_dependency_snapshots": [
+    {
+      "file": "planar_thumb_ik.executed.py",
+      "repository_source_path": "scripts/dex3_training/v2d_dex3_flashchord/planar_thumb_ik.py",
+      "sha256": "a90fd94b1c80e36a1d0acb0b6e022f9820d460102b1c071aca7d4343489703d1"
+    },
+    {
+      "file": "test_planar_thumb_ik.executed.py",
+      "repository_source_path": "scripts/dex3_training/tests/test_planar_thumb_ik.py",
+      "sha256": "bd7ba748581949abcf5cbee14097ee2431ca3e021f1d4380b3c647fc789b8e33"
+    }
+  ],
+  "historical_dependency_bindings": [
+    {
+      "original_path": "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/tests/test_planar_thumb_ik.py",
+      "sha256": "6d84147d38fb378fd4f5fa16ad4467cfeb0308cd4d16057e8639e293678f6388",
+      "snapshot": "test_planar_thumb_ik_import_failure_v1.py",
+      "used_by": "thumb-ray-library-verification-CPU-plan-v1.json",
+      "later_import_fix_not_pretended_earlier": true
+    }
+  ],
+  "guarded_jobs": 8,
+  "private_source_arrays_native_model_commands_results_excluded": true
+}

@@ -47,3 +47,13 @@ The first full right paths and bridge failures are retained. Five object
 penetration failures persist, and 450 new complete-pose interpolation samples
 also retain failures. This combined component is not a whole-task, continuous
 swept, motor, grasp or policy certificate. No GPU/PPO ran.
+
+Analytic source-ray branches and a finite temporal path subsequently clear the
+first five right-hand failures. Fresh full-clock checks preserve both earlier
+components, all 1,072 available image anchors and original motion limits. Right
+self failures are now eight (110–117); all five object failures remain. Early
+reference penetration reaches 0.9934 mm and sampled intermediate penetration
+0.9910 mm, so nominal margins are narrow. No continuous swept, physical or
+policy success is established. Fixed-root compatibility diagnostics remain
+qualified by missing per-leaf evidence; audit source/root authority before a new
+wrist hypothesis. Human observations, missing flags and held-out failures remain.

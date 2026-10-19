@@ -1,0 +1,19 @@
+{
+  "schema": "v2d.cpu-thumb-ray-path-plan.v1",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-ray-temporal-path-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/select_thumb_ray_temporal_path_v1.py",
+  "worker_sha256": "6f9ba5308e25ea255a385d6b18702aa5a2c2fc47b841b53e6a1c39542fa5e42e",
+  "dependencies_sha256": {},
+  "CPU_only": true,
+  "predeclared_frame_block_half_open": [
+    0,
+    7
+  ],
+  "unchanged_boundary_frames": [
+    5,
+    6
+  ],
+  "source_native_1mm_eligible_nodes_only": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}

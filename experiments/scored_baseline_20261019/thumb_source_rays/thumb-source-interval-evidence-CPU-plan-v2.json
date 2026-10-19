@@ -1,0 +1,16 @@
+{
+  "schema": "v2d.cpu-thumb-bound-recovery-plan.v2",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-source-interval-evidence-v2",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/recover_thumb_interval_evidence_v2.py",
+  "worker_sha256": "35eb6cb54209ee7f62f3773c297149dfab9351ece6bc412a5eee82934e10cdb5",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_thumb_source_interval_bound_v1.py": "ad4f084e62a7e35b688ffc9605f365593a642be710fa7a579935be8c3360195d",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_ray_context_v1.py": "c5344c80bc68d6e1692d9a199633b73c1a33a5c61618b23c3ad43047d162acc2",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/native_mesh.py": "8ff66a4dfb1e8337f9e4470ee5859fb1586e24e792893d0e2200eb0591b7a4d5"
+  },
+  "CPU_only": true,
+  "original_enumeration_not_repeated": true,
+  "saved_witness_independent_verification": true,
+  "new_GPU_jobs": 0,
+  "new_PPO_steps": 0
+}
