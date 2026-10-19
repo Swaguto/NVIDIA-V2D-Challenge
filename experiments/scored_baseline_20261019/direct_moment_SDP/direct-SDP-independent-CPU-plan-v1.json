@@ -1,0 +1,19 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_direct_sdp_saved_evidence_v1.py",
+  "worker_sha256": "95382978e2e935a98ee0dac3d76710254ec5355bb8e14a0e46df3431d3d6c36c",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-SDP-independent-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-conditional-SDP-v1/report.json": "a422803dfba81a0abc7eeab67fb83f3b29b648e56e3f8ba51218a1a1c436c898",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-conditional-SDP-v1/single-direct-SDP-solver-RETURN.json": "e4b65adabf828bb0a8aeda79c9f04d2142f3771d15306c851c323930c95ec156",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-conditional-SDP-v1/complete-direct-SDP-packing-and-error-bounds.json": "c2feaef1412ea711a1207db236142b9682cb190c7fe1bcef8f12f252fb45de48",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-conditional-SDP-v1/canonical-A.npz": "654c176a65ff7e6aa09c15a0df9af57138989584e5cb7a2b3ba0f53150f68477",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-conditional-SDP-v1/canonical-b.npy": "641e875977a8c3543b32e56b78f8e31636f92f1477cf4b0aa666c79e550484c0",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-conditional-SDP-v1/residual-corrected-rational-conic-certificate.json": "b740c3f8ba3cea46ad72a479002e764f5a9bc6db9f0f2e863515b7b970367341",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-bounded-moment-cone-v1/update-05-necessary-LP-model.json": "5938c310fe73da913bd56383046f17fc1b667335c1bce60ee131f701c1f0b723"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Independently verify saved direct SDP every row, rational map and packing/error bound; actual primal unchanged/exact minors; Gram dual finite-box certificate, no solver rerun",
+  "no_GPU": true
+}

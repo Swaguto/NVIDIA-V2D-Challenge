@@ -1,0 +1,11 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/install_private_direct_sdp_v1.py",
+  "worker_sha256": "5414138b7b12a649e12976de9b85864cc9888fc4f436ba4d62aeb991adf60097",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-SDP-runtime-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/direct-SDP-pinned-wheels-v1.json": "bb3dae296821e7b0c42195acac211c8b55c882ff73309f29311893a3a434ec59"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "New isolated pinned binary runtime for direct conditional moment semidefinite representation, no numerical episode work",
+  "no_GPU": true
+}

@@ -1503,3 +1503,55 @@ source authority, missing/held-out evidence and all original gates/parameters
 are unchanged. No native position, physics, GPU/PPO, qualified trajectory or
 score gain occurred. A direct semidefinite formulation is a distinct next
 representation to assess; do not extend or repeat this six-update algorithm.
+
+## Direct conditional moment SDP, 2026-10-19
+
+A distinct direct semidefinite model now binds all saved conditional Hankel and
+localizer constraints simultaneously, rather than extending the completed
+six-update plane algorithm. It reuses the final saved 1,125 table entries, 549
+shared equalities and 5,990 necessary inequalities. Exact original unit boxes
+and 1,180 PSD blocks produce 14,099 canonical rows. Column-major svec uses
+sqrt(2) off-diagonal scaling and the matching Frobenius adjoint, following the
+[official solver specification](https://clarabel.org/stable/api_cone_types/).
+Rational sqrt(2) brackets and finite-box coefficient bounds provide outward
+linear RHS and matrix-diagonal guards. These are necessary model arithmetic
+bounds, never changes to source/robot acceptance tolerances.
+
+The private Python has no pip; its first installation process fails and remains
+failed. Already SHA-verified binary wheels are then independently RECORD-checked
+and extracted into a private target: Clarabel 0.11.1, cffi 2.1.1, pycparser 3.11.
+Global/production environments and cached assets remain unchanged. The first
+contract process fails on a map/list fixture after four completed contracts.
+V2 reuses those four results by hash and completes six others without replaying
+them. All ten new contracts pass, including two tiny analytical SDP controls,
+packing adjoints, original equality/box signs, outward errors and exact conic
+finite-box dual signs. Both process failures are retained.
+
+One declared episode feasibility solve, with 100-iteration/60-second/one-thread
+limits and default solver tolerances, returns Solved in ten iterations, about
+0.138 seconds. No restart, continuation or numerical tolerance repair follows.
+All matrices, maps, errors, proposals and actual primal/dual returns are saved
+before assertions or further work. Six serial guarded processes (four successful,
+two retained failures), 17 exact source/plan files and private receipts are
+archived code-only in `experiments/scored_baseline_20261019/direct_moment_SDP`.
+
+Independent saved-evidence checks validate all 14,099 rows, 25,690 linear and
+26,550 PSD map coefficients, and all 5,900 exact principal minors. Every one of
+the 1,180 returned original moment matrices passes exact PSD; actual weights
+have no unit-box failure and original inequalities have no positive residual.
+The exact shared-equality residual is still 2.467644e-16, so this is not an exact
+realization of every frozen rational constraint. Actual weights are never
+clipped, normalized or repaired. A separate rational-Gram dual construction,
+with all 1,180 Gram identities independently checked, gives residual-corrected
+finite-box gap -3.120771e-8: no exclusion certificate. Numerical Solved is not a
+formal feasible common measure or a deterministic trajectory.
+
+The inherited conditional region-2/fixed-unqualified-wrist source-time family
+remains unresolved. A useful next distinction is positivity of squares involving
+multiple joint variables within the existing degree-four tensor tables; passing
+one-dimensional conditional PSD does not establish this joint positivity or
+global consistency. No new solver call or degree sweep is queued from this
+result. F and the separate unqualified middle component, all source/missing/
+held-out evidence, original motion/physical gates and parameters are unchanged.
+No native position, physics, GPU/PPO, full reference, grasp, motor, task or score
+success occurred. Production runtime/tests are unchanged.

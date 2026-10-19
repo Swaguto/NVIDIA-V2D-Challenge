@@ -1,0 +1,14 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/extract_private_direct_sdp_runtime_v2.py",
+  "worker_sha256": "aa2afb4ccffcb2fd99cd55b441e08de9ac099f27af3ee4bd46b95d670091957b",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-SDP-runtime-v2",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/direct-SDP-pinned-wheels-v1.json": "bb3dae296821e7b0c42195acac211c8b55c882ff73309f29311893a3a434ec59",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-SDP-runtime-v1/clarabel-0.11.1-cp39-abi3-macosx_11_0_arm64.whl": "8963687ee250d27310d139eea5a6816f9c3ae31f33691b56579ca4f0f0b64b63",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-SDP-runtime-v1/cffi-2.1.1-cp312-cp312-macosx_11_0_arm64.whl": "f81b3b8f3d4e343550fa4baa0e479bba9f2d29ce9c2e9b51d1ce1718d7442fcf",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-SDP-runtime-v1/pycparser-3.11-py3-none-any.whl": "51d5a8ba2be0bbe440b99d2112604c95bbbc3c2748a64260186c541e1729cd80"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Private binary wheel extraction and RECORD verification; previous pip absence retained, no numerical solver work",
+  "no_GPU": true
+}

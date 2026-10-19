@@ -158,3 +158,33 @@ failure; a report-only repair reuses those durable results without numerical
 reruns. The code-only `continuous_moment_cones` archive and wrist review retain
 all statuses and scopes. Local moment positivity would remain necessary only;
 whole-clock source/URDF/motion and physical gates still precede learning.
+
+## Direct moment SDP: numerical local positivity is not a path
+
+The saved source/time/common-marginal model now has one direct semidefinite
+feasibility evaluation with 1,180 conditioned PSD blocks, 1,125 entries and
+14,099 canonical rows. Ten new packing/adjoint/rounding/dual-sign controls pass;
+four completed controls were reused by hash after a retained map fixture failure.
+A private SHA-pinned binary runtime avoids global or production dependency changes.
+The earlier missing-pip failure is also retained. No old source, graph, LP, cone
+iteration or completed contract is repeated. Exact code/plans are archived in
+`experiments/scored_baseline_20261019/direct_moment_SDP`.
+
+The single bounded call reports Solved in ten iterations. Independent exact
+principal-minor checks find all 1,180 original moment matrices PSD, no weight-box
+failure and no violated original inequality. Shared equalities retain a nonzero
+2.467644e-16 residual, so the actual table is not an exact realization. No actual
+weights are altered. The independently checked Gram-dual finite-box gap is
+negative, -3.120771e-8; there is no exclusion certificate. Svec packing/error
+bounds are necessary model arithmetic guards, not source/trajectory tolerances.
+
+Local conditional PSD is only necessary. Mixed-variable polynomial-square
+positivity, global common-measure consistency and deterministic source/time
+realization remain separate. Do not promote a mean, eigenvector, Gram factor,
+local table or numerical solver flag to a robot command or source truth. Any
+new mixed-variable investigation must reuse the existing saved degree-four
+coefficients, declare its scope, save all intermediate returns and preserve all
+unknown event bands/correlations; it is not permission for a degree/anchor/solver
+sweep. Verified F, unqualified middle and wrist components and all original
+source/motion/native/motor/grasp gates remain unchanged. No native/physics/GPU
+or whole-clock reference qualification occurred.

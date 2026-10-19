@@ -1,0 +1,14 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_direct_sdp_contracts_v1.py",
+  "worker_sha256": "ba25da4c871ad61105b0afa3d38ed79a75b8d12b2385af92b0e3a43d82e9700d",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-SDP-contract-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/direct_conditional_moment_sdp_v1.py": "1031c177074da3762a4fb7a4cb5141081b732956425d8f1656f8d275e32c0617",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-SDP-runtime-v2/runtime-inventory.json": "7bc5df26710a10c4ca6d9735f10142c0ac5849a69eed89754bd54831353e9cd8"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Ten genuinely new direct SDP packing/adjoint/outer-error/original box/equality/exact conic dual controls, two tiny analytic conic solves; no episode",
+  "no_GPU": true
+}
