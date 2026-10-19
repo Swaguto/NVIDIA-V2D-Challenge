@@ -1,0 +1,10 @@
+{
+ "schema":"v2d.cached-native-hand-self-contact-plan.v1",
+ "episode":"e037","scope":"NEW full151-knot same-hand native collision audit; previous hand/object/support audit explicitly excluded this scope",
+ "native_model_sha256":"755fc51729d4c4fc03d04108d39bec2b249074351863f096f9aa498c9ac28566",
+ "commands_and_source_flags":"unchanged wristv3 frozen reference",
+ "both_hands_all_ordered_knots_required":true,"native_hand_body_FK_closure_tolerance":0.000002,
+ "self_contact_tolerance_m":0.001,"native_filters_model_or_gates_not_changed":true,
+ "native_compile_old_audit_PPO_or_physics_steps":false,
+ "wall_cap_seconds":240,"resident_cap_bytes":2147483648,"minimum_free_disk_bytes":1610612736
+}

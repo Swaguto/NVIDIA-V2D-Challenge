@@ -1,0 +1,12 @@
+{
+ "schema":"v2d.independent-new-left-thumb-reference-plan.v1","episode":"e037",
+ "native_model_sha256":"755fc51729d4c4fc03d04108d39bec2b249074351863f096f9aa498c9ac28566",
+ "new_scope":"Freeze NEW source-compensated thumb commands; fresh both-hand self/FK and hand-object/support checks on changed reference, not rerun of old unchanged audits",
+ "independent_source_path":"URDF FK versus original aligned human/image anchors, 604left points; source files and flags byte-identical",
+ "motion":"actual URDF position/velocity plus original.25rad component/.05rad adjacent and second-added finger limits; root arrays exact",
+ "interpolation":"450 quarter/half/three-quarter left-self states; sampled only, not continuous/full-task swept certificate",
+ "unchanged_native_gate_m":0.001,"right_failures_retained_no_training_approval":true,
+ "hardlinked_unchanged_frozen_assets":"targets/manifest links removed before writing; original frozen reference unchanged",
+ "wall_cap_seconds":240,"resident_cap_bytes":2147483648,"minimum_free_disk_bytes":1610612736,
+ "GPU_or_physics_steps":false
+}

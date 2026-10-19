@@ -493,3 +493,72 @@ must be realized and verified rather than invented. Do not resweep these finite
 atlas/LP controls, enlarge bounds, alter condim/morphology/effort or retry PPO.
 All source, original motion, fresh full 1 mm native, swept, self-contact, motor
 and grasp checks remain necessary. No complete task or policy is qualified.
+
+## Full self-contact audit and left-thumb correction
+
+A new cached-model auditor covers the previously unassessed same-hand scope.
+It verifies frozen hashes, both complete body/joint registries and independent
+URDF FK across all 151 knots, with no scene recompilation or physics step.
+Fourteen focused tests cover both hands, empty knots, clock completeness,
+duplicate contacts, body ambiguity and invalid gaps. The original reference
+fails self-contact tolerance on **151/151 left** and **46/151 right** knots.
+The left maximum is 2.291 mm; the right maximum is 7.248 mm, including
+thumb/index and thumb/palm pairs. Native FK closes within 3.21e-9.
+
+All failing slots carry direct source-frame flags; 24 left and 26 right failing
+slots also carry a metric flag. These frame flags do not make an occluded
+thumb's inferred depth or derived robot angles measured truth. Human landmarks
+and all confidence/authority data remain fixed during the new retargeting.
+Both neutral zero-angle hands have clear palm/thumb-1 gaps around 18.3 mm.
+Reference-pose gap Jacobians agree with two central-difference steps within
+4.4e-11 m/rad. Thus the measured reference collisions are not inevitable in the
+neutral model; their effect on prior physical jitter or scores remains unisolated.
+
+A new left frame-50 thumb-only constrained probe converges in seven iterations.
+It reduces native self-penetration from 2.098 to 0.500 mm while thumb image error
+improves 11.775 to 11.353 px. Root poses, other fingers, right hand, objects and
+human observations stay unchanged. The old 0.25 rad component cap is measured
+against the original aligned reference, preventing accumulated bound expansion.
+
+The full per-frame SLSQP continuation preserves all source/image, position and
+motion checks in its returned path, but 75 optimizer returns report positive
+directional-derivative failures. That path is retained and rejected. A distinct
+one-joint bracketed construction converges geometrically at every knot but
+regresses image fit at eight knots, maximum 0.207 px; it is also rejected.
+A source-compensated version fixes four of those constraints, but the remaining
+four cannot move thumb-0 in the needed direction because its original joint
+bound is active. No bound or source gate is enlarged.
+
+The final constructor selects one available source-compensation direction from
+thumb-0 or thumb-2 using the native/image Jacobian and actual bound authority.
+It uses one analytically directed bracket per active source constraint, not
+restarts or a parameter sweep. Thumb-1 solves the native self-gap equation by
+bracketed root finding. Eight image constraints require compensation: thumb-0
+at frames 54–57 and thumb-2 at 120–123. All original controls remain retained,
+including all failed optimizer statuses. Original held-out skin failures are
+not used, relabelled or removed.
+
+### Independent changed-reference verification
+
+The final candidate is frozen separately; original source/authority files are
+byte-identical, and both wrist roots, right-hand commands and left non-thumb
+fingers remain exact. Fresh cached-model verification on the **new commands**
+finds **zero left self-contact knots over 1 mm**, maximum 0.500 mm. Independent
+URDF projection checks all **604 left source image anchors** without regression;
+median error improves 15.364 to 15.332 px and p95 remains 24.723 px. No new
+per-landmark metric-depth truth is claimed. All original actual URDF position,
+velocity, 0.25 rad component and 0.05 rad adjacent/second-added finger limits pass.
+Exact root equality preserves the previous root-motion summaries.
+
+The 450 quarter/half/three-quarter self-contact samples have maximum left
+penetration **0.500445 mm**. This is a sampled left-self check, not a continuous
+or full-task swept certificate. A fresh hand/object/support check still rejects
+the same five right-index knots, maximum 6.302 mm; the unchanged right hand also
+retains all 46 self-contact failures. The complete native gate remains rejected.
+No physics, PPO or new policy ran, and no MP-SR or leaderboard gain is claimed.
+
+Next retain this verified left component and address the right thumb/index/palm
+self-contacts under the same source, actual URDF and original motion bounds.
+The old finite grasp controls remain rejected. Right-hand/object penetration,
+full swept/motor/grasp checks and whole-source qualification are still required
+before any further learning.

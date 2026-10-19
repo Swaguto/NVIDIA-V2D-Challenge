@@ -1,0 +1,13 @@
+{
+ "schema":"v2d.full-left-thumb-self-contact-source-trajectory-plan.v1","episode":"e037",
+ "new_scope":"Continue successful new thumb self-contact method over all151left-hand knots; one solver return per knot, no restarts or parameter sweeps",
+ "mutations":"derived left thumb angles only; both wrist roots/nonthumb fingers/right hand/object poses/geometry/source human data/authority unchanged",
+ "authority":"all151left source frames directly observed; image-anchor nonregression on original aligned source; frame-level metric flags retained without inventing per-finger measured depth",
+ "original_finger_component_cap_rad":0.25,"original_adjacent_added_finger_cap_rad":0.05,"original_second_added_finger_cap_rad":0.05,
+ "actual_URDF_position_and_velocity_limits_required":true,"original_root_motion_caps_inherited_by_exact_root_equality":true,
+ "engineering_self_contact_target_m":0.0005,"unchanged_native_acceptance_gate_m":0.001,
+ "known_right_self_object_and_whole_grasp_failures_not_fixed":true,
+ "candidate_requires_independent_fresh_source_self_native_motion_swept_motor_checks_before_PPO":true,
+ "wall_cap_seconds":240,"resident_cap_bytes":2147483648,"minimum_free_disk_bytes":1610612736,
+ "GPU_or_physics_steps":false
+}

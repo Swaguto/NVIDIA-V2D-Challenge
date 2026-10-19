@@ -1,0 +1,12 @@
+{
+ "schema":"v2d.source-thumb-self-contact-sample-plan.v1","episode":"e037","frame":50,"hand":"left",
+ "native_model_sha256":"755fc51729d4c4fc03d04108d39bec2b249074351863f096f9aa498c9ac28566",
+ "new_scope":"Thumb-only derived-robot retargeting to clear self-contact; fixed roots, nonthumb fingers, other hand and all human/source data unchanged",
+ "authority":"observed but nonmetric frame50; original four aligned-source image-anchor nonregression, no inferred thumb depth promoted to truth",
+ "original_finger_component_cap_relative_to_aligned_source_rad":0.25,"actual_URDF_position_limits_preserved":true,
+ "solve":"one SLSQP from actual reference; optimizer return only, no restarts or old wrist/grasp control sweeps",
+ "engineering_self_contact_target_m":0.0005,"unchanged_acceptance_gate_m":0.001,
+ "no_whole_trajectory_motion_or_physics_claim":true,
+ "wall_cap_seconds":240,"resident_cap_bytes":2147483648,"minimum_free_disk_bytes":1610612736,
+ "GPU_or_physics_steps":false
+}

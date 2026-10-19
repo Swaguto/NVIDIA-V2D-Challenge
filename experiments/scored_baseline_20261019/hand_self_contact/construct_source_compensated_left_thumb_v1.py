@@ -1,0 +1,59 @@
+"""NEW full left-thumb retargeting continuation; exact source/motion gates."""
+from pathlib import Path
+import datetime,hashlib,json,sys,time,xml.etree.ElementTree as ET
+S=Path(__file__).resolve().parents[1];R=Path('/Users/rohithiruku/v2d_hand_continuity_fix');start=time.monotonic();sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();O=S/'e037-source-compensated-left-thumb-v1';plan_path=S/'compute/source-compensated-left-thumb-CPU-plan-v1.json';plan=json.loads(plan_path.read_text())
+setup=S/'compute/fit_source_constrained_thumb_self_contact_v1.py';sample_path=S/'e037-source-thumb-self-contact-sample-v1/report.json';sample=json.loads(sample_path.read_text());assert sha(setup)==sample['producer_sha256'] and sample['single_knot_source_and_self_prerequisites_passed'];prefix=setup.read_text().split('zero=np.zeros(3);before=evaluate(zero);')[0];assert 'solution=minimize' not in prefix;ns={'__file__':str(setup)};exec(compile(prefix,str(setup),'exec'),ns);np=ns['np'];mj=ns['mujoco'];minimize=ns['minimize'];q=ns['q'];model=ns['model'];manifest=ns['manifest'];f=ns['f'];thumb=ns['thumb'];original=q.copy();returned=q.copy();rows=[]
+with np.load(f/'aligned-source-reference.npz') as z:cameras=z['camera_c2w'].copy();humans=z['hand_joints_world'][:,0,[0,4,8,12]].copy();aligned=z['robot_qpos'].copy()
+with np.load(f/'source-confidence.npz') as z:source_direct=z['hand_directly_observed'].copy();source_metric=z['hand_metric_valid'].copy();ts=z['timestamps_s'].copy()
+assert source_direct[:,0].all();finger_joints=ns['tj'];dofs=ns['dofs'];limits=ns['limits'];base0=model.qpos0.copy();wrists={s:[ns['canonical_id'](ns['jn'],f'{s}_wrist_{a}') for a in ['x','y','z','rotvec']] for s in ['left','right']}
+report_path=O/'report.json'
+report=dict(schema='v2d.source-compensated-left-thumb-trajectory.v1',construction_method='coupled bracketed thumb1 native gap root and, only if needed, thumb0 original source-image error root; thumb2 fixed, no optimizer or optimum claim',prior_failed_optimizer_returns_preserved=True,created_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),producer_sha256=sha(Path(__file__)),plan_sha256=sha(plan_path),inputs_sha256={str(p):sha(p) for p in [setup,sample_path,ns['mp'],f/'manifest.json',f/'targets.npz',f/'aligned-source-reference.npz',f/'source-confidence.npz']},rows=rows,source_human_data_flags_and_roots_not_modified=True,source_metric_flags_not_promoted_to_per_landmark_measured_depth=True,derived_left_thumb_angles_only=True,right_hand_and_nonthumb_fingers_unchanged=True,thumb2_exactly_unchanged=True,thumb0_changes_only_for_active_original_source_image_constraints=True,no_old_optimization_or_audit_repeated=True,no_native_compile_or_physics_steps=True,new_GPU_jobs=0,new_PPO_steps=0,training_approved=False,physical_task_accepted=False)
+def save():report_path.write_text(json.dumps(report,indent=2)+'\n')
+save()
+for frame in range(len(q)):
+ if time.monotonic()-start>215:raise TimeoutError('Full left-thumb trajectory cap')
+ camera=cameras[frame];A=np.einsum('ji,kj->ik',camera[:3,:3],ns['stage'],optimize=False);offset=np.einsum('ij,j->i',camera[:3,:3].T,camera[:3,3],optimize=False);observed=np.einsum('ni,ij->nj',humans[frame]-camera[:3,3],camera[:3,:3],optimize=False);assert (observed[:,2]>.01).all();base=base0.copy()
+ for si,side in enumerate(['left','right']):
+  w=wrists[side];base[model.jnt_qposadr[w[:3]]]=q[frame,si,:3];a=int(model.jnt_qposadr[w[3]]);base[a:a+4]=q[frame,si,[6,3,4,5]];base[model.jnt_qposadr[ns['bindings'][side]]]=q[frame,si,7:]
+ for oi,obj in enumerate(manifest['objects']):
+  bid=ns['canonical_id'](ns['bn'],obj['name']+'_object');a=int(model.jnt_qposadr[model.body_jntadr[bid]]);v=ns['objects'][frame,oi];base[a:a+3]=v[:3];base[a+3:a+7]=v[[6,3,4,5]]
+ qbase=q[frame,0,7+thumb].copy();origin=aligned[frame,0,7+thumb];lower=np.maximum(limits[:,0],origin-.25)-qbase;upper=np.minimum(limits[:,1],origin+.25)-qbase;assert ((lower<=1e-8)&(upper>=-1e-8)).all();ns.update(frame=frame,camera=camera,A=A,offset=offset,observed_uv=ns['pixels'](observed),base=base,qbase=qbase);ns['cache'].clear();evaluate=ns['evaluate'];before=evaluate(np.zeros(3));cap=before['errors'][1]-min(.001,.01*before['errors'][1]);normalization=max(before['errors'][1],.05)
+ def constraint(x):
+  v=evaluate(x);return np.r_[(v['gaps']+.0005)/.01,(cap-v['errors'][1])/normalization]
+ def jacobian(x):
+  v=evaluate(x);return np.r_[v['gap_jac']/.01,(-v['error_jac']/normalization)[None]]
+ from scipy.optimize import brentq
+ from types import SimpleNamespace
+ def contact_root(q0_delta):
+  def fn(value):return float(evaluate(np.array([q0_delta,value,0.]))['gaps'].min()+.0005)
+  bracket=[fn(float(lower[1])),fn(0.)]
+  if bracket[0]<0 or bracket[1]>=0:raise ValueError('no sign-changing thumb1 gap bracket')
+  root,result=brentq(fn,float(lower[1]),0.,xtol=1e-12,rtol=1e-14,maxiter=100,full_output=True)
+  if not result.converged:raise ValueError('thumb1 root did not converge')
+  return np.array([q0_delta,root,0.]),int(result.iterations),bracket
+ compensation=dict(required=False,one_directional_bracket_only=True)
+ try:
+  initial,inner_iterations,bracket_values=contact_root(0.);v=evaluate(initial);image_residual=float(v['errors'][1]-cap)
+  if image_residual<=0:chosen=initial;message='native gap root, source image already nonregressing';outer_iterations=0
+  else:
+   compensation['required']=True;k=int(v['gaps'].argmin());gradient=v['gap_jac'][k];implicit=-gradient[0]/gradient[1];derivative=float(v['error_jac'][0]+v['error_jac'][1]*implicit)
+   if abs(derivative)<1e-8:raise ValueError('source-compensation derivative too small')
+   endpoint=float(np.clip(-1.5*image_residual/derivative,lower[0],upper[0]));endpoint_x,_,_=contact_root(endpoint);endpoint_value=float(evaluate(endpoint_x)['errors'][1]-cap);compensation.update(implicit_source_derivative_px_per_rad=derivative,predeclared_Newton_bracket_factor=1.5,endpoint_delta_rad=endpoint,source_residual_at_zero_and_endpoint_px=[image_residual,endpoint_value])
+   if endpoint==0 or endpoint_value>0:raise ValueError('single source-compensation bracket failed')
+   def source_root(value):return float(evaluate(contact_root(value)[0])['errors'][1]-cap)
+   root,result=brentq(source_root,min(0.,endpoint),max(0.,endpoint),xtol=1e-12,rtol=1e-14,maxiter=100,full_output=True)
+   if not result.converged:raise ValueError('source-compensation root did not converge')
+   chosen,inner_iterations,bracket_values=contact_root(root);outer_iterations=int(result.iterations);message='coupled bracketed native-gap and source-image roots converged'
+  solution=SimpleNamespace(x=chosen,success=True,message=message,nit=inner_iterations+outer_iterations)
+ except ValueError as exc:
+  if 'initial' not in locals():initial=np.zeros(3)
+  solution=SimpleNamespace(x=initial,success=False,message=str(exc),nit=0);bracket_values=[]
+ after=evaluate(solution.x);assert np.isfinite(solution.x).all();returned[frame,0,7+thumb]+=solution.x;bound=bool((solution.x>=lower-1e-8).all() and (solution.x<=upper+1e-8).all());source=bool((after['errors']<=before['errors']+1e-6).all());maxpen=max(0.,float(-after['gaps'].min()));passed=bool(solution.success and bound and source and maxpen<=.001 and constraint(solution.x).min()>=-1e-7);rows.append(dict(frame=frame,source_compensation=compensation,root_bracket_gap_values_m=bracket_values,source_direct=bool(source_direct[frame,0]),source_metric_flag=bool(source_metric[frame,0]),solver_success=bool(solution.success),solver_message=str(solution.message),solver_iterations=int(solution.nit),returned_delta_rad=solution.x.tolist(),before_after_source_errors_px=[before['errors'].tolist(),after['errors'].tolist()],source_nonregression=source,in_original_component_and_URDF_bounds=bound,returned_self_penetration_m=maxpen,single_knot_prerequisites_passed=passed))
+ if frame%25==0:save();print(json.dumps(dict(frame=frame,passed=passed,self_penetration_mm=maxpen*1000,source_error_px=after['errors'][1])),flush=True)
+# Original source-repair limits, not a new relaxed temporal envelope.
+position=[];velocity=[];motion=[]
+for si,side in enumerate(['left','right']):
+ urdf=ET.parse(f/f'robot/urdfs/g1/dex3_{side}.urdf').getroot();lj={j.attrib['name']:j.find('limit').attrib for j in urdf.findall('joint') if j.attrib['type']!='fixed'};names=manifest['joint_names'][side];lo=np.array([float(lj[n]['lower']) for n in names]);hi=np.array([float(lj[n]['upper']) for n in names]);vmax=np.array([float(lj[n]['velocity']) for n in names]);speed=abs(np.diff(returned[:,si,7:],axis=0)/np.diff(ts)[:,None]);delta=returned[:,si,7:]-aligned[:,si,7:];position.append(bool(((returned[:,si,7:]>=lo-1e-8)&(returned[:,si,7:]<=hi+1e-8)).all()));velocity.append(bool((speed<=vmax+1e-7).all()));motion.append(dict(hand=side,maximum_finger_change_from_original_aligned_rad=float(abs(delta).max()),maximum_adjacent_added_finger_rad=float(abs(np.diff(delta,axis=0)).max()),maximum_second_added_finger_rad=float(abs(np.diff(delta,n=2,axis=0)).max()),position_limits_passed=position[-1],actual_URDF_velocity_limits_passed=velocity[-1],actual_max_speeds_rad_s=speed.max(0).tolist(),actual_velocity_caps_rad_s=vmax.tolist(),old_component_and_added_motion_caps_passed=bool(abs(delta).max()<=.25+1e-7 and abs(np.diff(delta,axis=0)).max()<=.05+1e-7 and abs(np.diff(delta,n=2,axis=0)).max()<=.05+1e-7)))
+assert np.array_equal(returned[:,:,0:7],q[:,:,0:7]);assert np.array_equal(returned[:,1],q[:,1]);assert np.array_equal(returned[:,0,7:11],q[:,0,7:11]);np.savez_compressed(O/'left-thumb-reference-commands.npz',robot_qpos=returned,original_robot_qpos=q,frame_indices=np.arange(len(q)),timestamps_s=ts)
+report.update(completed_reference_knots=len(rows),all_solver_returns_accepted=sum(r['single_knot_prerequisites_passed'] for r in rows)==len(q),failed_return_frames=[r['frame'] for r in rows if not r['single_knot_prerequisites_passed']],motion_summary=motion,all_original_finger_position_velocity_component_and_added_motion_caps_passed=bool(all(position) and all(velocity) and all(r['old_component_and_added_motion_caps_passed'] for r in motion)),root_commands_exactly_unchanged_original_root_motion_caps_inherited=True,candidate_commands_sha256=sha(O/'left-thumb-reference-commands.npz'),maximum_source_point_regression_px=max(max(b-a for a,b in zip(r['before_after_source_errors_px'][0],r['before_after_source_errors_px'][1],strict=True)) for r in rows),maximum_returned_left_self_penetration_m=max(r['returned_self_penetration_m'] for r in rows),left_trajectory_source_self_motion_prerequisites_passed=False,whole_source_hand_grasp_or_physical_task_not_qualified=True,right_prior_self_and_hand_object_failures_not_fixed=True,wall_seconds=time.monotonic()-start)
+report['left_trajectory_source_self_motion_prerequisites_passed']=bool(report['all_solver_returns_accepted'] and report['all_original_finger_position_velocity_component_and_added_motion_caps_passed']);save();print(json.dumps({k:report[k] for k in ['completed_reference_knots','failed_return_frames','motion_summary','maximum_source_point_regression_px','maximum_returned_left_self_penetration_m','left_trajectory_source_self_motion_prerequisites_passed','wall_seconds']},indent=2),flush=True)

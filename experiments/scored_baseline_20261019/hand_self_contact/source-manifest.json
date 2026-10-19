@@ -1,0 +1,126 @@
+{
+  "schema": "v2d.exact-code-only-source-archive.v1",
+  "files": [
+    {
+      "file": "audit_cached_hand_self_contacts_v1.py",
+      "restore_relative_path": "compute/audit_cached_hand_self_contacts_v1.py",
+      "executed_or_declared_source_sha256": "e763574cb6c447b57fbc27d4b306b5bc34f12ab00829746d49e050d6174d6dcf"
+    },
+    {
+      "file": "guard_cached_hand_self_contacts_v1.py",
+      "restore_relative_path": "compute/guard_cached_hand_self_contacts_v1.py",
+      "executed_or_declared_source_sha256": "55de2bb5f3385acdf92e3dcff58aa2c1afa323021620be78a5a30c5d30dc0e26"
+    },
+    {
+      "file": "cached-hand-self-contact-CPU-plan-v1.json",
+      "restore_relative_path": "compute/cached-hand-self-contact-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "676802d96723b74a0da1125b307ec77c5ade85b9bc476404cdc86cafae124e41"
+    },
+    {
+      "file": "diagnose_self_contact_authority_v1.py",
+      "restore_relative_path": "compute/diagnose_self_contact_authority_v1.py",
+      "executed_or_declared_source_sha256": "4b2cf3d278d550d2f4d78a43acf55549b51cd877d2ba935e64b9a6c99d9b93dc"
+    },
+    {
+      "file": "guard_self_contact_authority_v1.py",
+      "restore_relative_path": "compute/guard_self_contact_authority_v1.py",
+      "executed_or_declared_source_sha256": "7f3803696d5cc7410ca4da45d56d580ebca98d5eefb5c82402673e92b2682e7c"
+    },
+    {
+      "file": "self-contact-authority-CPU-plan-v1.json",
+      "restore_relative_path": "compute/self-contact-authority-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "7770d78db6684b03d4fde057b629b94a086e444a22c8c78e5aa3ec0879dcc066"
+    },
+    {
+      "file": "fit_source_constrained_thumb_self_contact_v1.py",
+      "restore_relative_path": "compute/fit_source_constrained_thumb_self_contact_v1.py",
+      "executed_or_declared_source_sha256": "22c5a155605097fe577047636b14c7e7613295f9c444d9ec90ed136cf4201822"
+    },
+    {
+      "file": "guard_source_thumb_self_contact_v1.py",
+      "restore_relative_path": "compute/guard_source_thumb_self_contact_v1.py",
+      "executed_or_declared_source_sha256": "14df14965e21d4ef5521c908daa8381cee1bf926522ef7814941d7d00e7f12c9"
+    },
+    {
+      "file": "source-thumb-self-contact-sample-CPU-plan-v1.json",
+      "restore_relative_path": "compute/source-thumb-self-contact-sample-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "ca369b9c958b182ff514c1d924e244cbf3f76895f2d8b943d5868f9f9d293fbc"
+    },
+    {
+      "file": "fit_left_thumb_self_contact_trajectory_v1.py",
+      "restore_relative_path": "compute/fit_left_thumb_self_contact_trajectory_v1.py",
+      "executed_or_declared_source_sha256": "a6cbe8b6211fa517be91ef7d1b7ca922886bb9936aa9da3a3adc6cf4d46ec362"
+    },
+    {
+      "file": "guard_left_thumb_self_contact_trajectory_v1.py",
+      "restore_relative_path": "compute/guard_left_thumb_self_contact_trajectory_v1.py",
+      "executed_or_declared_source_sha256": "4e70e2971c34c19355a475137abb0d100219f4483e52555787995aa46fb85087"
+    },
+    {
+      "file": "left-thumb-self-contact-trajectory-CPU-plan-v1.json",
+      "restore_relative_path": "compute/left-thumb-self-contact-trajectory-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "1cd59fd88087246311b3a8cc3da49cceef8bd2abef2f72419da821dff355784e"
+    },
+    {
+      "file": "construct_bracketed_left_thumb_trajectory_v1.py",
+      "restore_relative_path": "compute/construct_bracketed_left_thumb_trajectory_v1.py",
+      "executed_or_declared_source_sha256": "548139d5e2badc6d6bbc6afe09e4235acb986c2461633e910056dc5aacfa6ce2"
+    },
+    {
+      "file": "guard_bracketed_left_thumb_trajectory_v1.py",
+      "restore_relative_path": "compute/guard_bracketed_left_thumb_trajectory_v1.py",
+      "executed_or_declared_source_sha256": "13f62c437e60d3e3bd9d1b2aaa1e2de1014391990f4e8ddb170fa7abf282a188"
+    },
+    {
+      "file": "bracketed-left-thumb-trajectory-CPU-plan-v1.json",
+      "restore_relative_path": "compute/bracketed-left-thumb-trajectory-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "1eae4def5acfabaa9343d4560d4345e1425c984b4ff9a5ee49abdcc9153fefe9"
+    },
+    {
+      "file": "construct_source_compensated_left_thumb_v1.py",
+      "restore_relative_path": "compute/construct_source_compensated_left_thumb_v1.py",
+      "executed_or_declared_source_sha256": "2f8bf393057e52fc9504296d6448375efe3e2b13966c6238252b0f633236e814"
+    },
+    {
+      "file": "guard_source_compensated_left_thumb_v1.py",
+      "restore_relative_path": "compute/guard_source_compensated_left_thumb_v1.py",
+      "executed_or_declared_source_sha256": "0b51e74d4f2a34a7942b58f00163f7d2a608285a0fd2d2930d660859c7f05f96"
+    },
+    {
+      "file": "source-compensated-left-thumb-CPU-plan-v1.json",
+      "restore_relative_path": "compute/source-compensated-left-thumb-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "f9611742e8bf513001bb02e08e91ac95e7cf54fc8e5e12eabb91368aa0b20cb6"
+    },
+    {
+      "file": "construct_bound_aware_left_thumb_v2.py",
+      "restore_relative_path": "compute/construct_bound_aware_left_thumb_v2.py",
+      "executed_or_declared_source_sha256": "6733b4b2c84d51ef745af9559a83e63b21f6a6021c7e1862b0fde3661d93d1aa"
+    },
+    {
+      "file": "guard_bound_aware_left_thumb_v2.py",
+      "restore_relative_path": "compute/guard_bound_aware_left_thumb_v2.py",
+      "executed_or_declared_source_sha256": "5db7817c0b45acd19314fe0c51e1432d3262685f5a3c3b0b4a5aa632cb018d73"
+    },
+    {
+      "file": "bound-aware-left-thumb-CPU-plan-v2.json",
+      "restore_relative_path": "compute/bound-aware-left-thumb-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "c27cafc742694ec8175e3adefa0b89f6e94bce6d20194453d9df47b31a895fa8"
+    },
+    {
+      "file": "verify_left_thumb_reference_candidate_v1.py",
+      "restore_relative_path": "compute/verify_left_thumb_reference_candidate_v1.py",
+      "executed_or_declared_source_sha256": "45a5e9a8b31a0de8ed0b9043cae7a2b01be71012a2650e131c15dee6416e64d7"
+    },
+    {
+      "file": "guard_left_thumb_reference_candidate_v1.py",
+      "restore_relative_path": "compute/guard_left_thumb_reference_candidate_v1.py",
+      "executed_or_declared_source_sha256": "440c94de983e055395b7817fb1be46ad371c859e56ad21c7f470ed39cb4e65cc"
+    },
+    {
+      "file": "left-thumb-independent-validation-CPU-plan-v1.json",
+      "restore_relative_path": "compute/left-thumb-independent-validation-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "42f27bc00f20ef20dcdf182649baf1e09a0d0963a4eb1528b0582bce2494bb08"
+    }
+  ],
+  "no_private_arrays_or_reports_included": true
+}

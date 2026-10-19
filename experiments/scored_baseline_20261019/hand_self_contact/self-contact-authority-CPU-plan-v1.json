@@ -1,0 +1,10 @@
+{
+ "schema":"v2d.self-contact-authority-neutral-control-plan.v1","episode":"e037",
+ "native_model_sha256":"755fc51729d4c4fc03d04108d39bec2b249074351863f096f9aa498c9ac28566",
+ "new_question":"Which colliding source slots carry direct/metric authority, and do neutral hand commands also collide?",
+ "controls":["left/right exactreference frame50","left/right zero URDF-neutral fingers","left/right palm-thumb1 signed-gap point-Jacobian versus central differences at h1e-4 and5e-5rad"],
+ "no_commands_source_flags_morphology_filters_or_model_parameters_changed":true,
+ "source_fits_or_previous_native_audits_not_repeated":true,
+ "wall_cap_seconds":240,"resident_cap_bytes":2147483648,"minimum_free_disk_bytes":1610612736,
+ "GPU_or_physics_steps":false
+}
