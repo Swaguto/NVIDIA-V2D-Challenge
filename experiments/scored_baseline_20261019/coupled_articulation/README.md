@@ -16,6 +16,8 @@ weights and reports are excluded. Production runtime and tests are unchanged.
    nodes, proposed states and exclusions are retained privately. Of 6,001
    leaves, 150 remain unresolved at the declared budget. No proposed center
    passes every source/root prerequisite, so no native candidate follows.
+   The final binary split adds two nodes, exceeding the nominal 12,000-node
+   budget by one; the actual 12,001-node count is retained explicitly.
 3. **Independent saved-domain audit — completed.** Binary partition cover
    closes. All 364 independent actual-URDF projection samples lie within
    their saved numerical enclosures. The best retained proposal still

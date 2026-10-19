@@ -892,6 +892,8 @@ whole path, not a measured human angle or new source-pose winner. All 12,001
 nodes and proposed states are saved. The declared budget leaves 150 unresolved
 boxes; no evaluated center passes every source/root prerequisite, so there
 is no new native candidate. This is not global infeasibility.
+The final binary split exceeds the nominal 12,000-node budget by one; the
+actual 12,001-node count is retained, with no change to the CPU resource caps.
 
 An independent saved-record audit closes the complete binary partition and
 checks 364 actual-URDF camera projections against its numerical enclosures.
