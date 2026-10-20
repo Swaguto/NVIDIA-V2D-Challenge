@@ -2087,3 +2087,54 @@ F/separate middle/wrist components, source/missing/held-out authority, region-2
 and unknown-band uncertainty, parameters, original gates and production
 runtime/tests remain. Do not rerun these contracts, inventory or verification,
 or promote a product-moment pointer, mean or Gram factor to a robot command.
+
+## Symbolic common monomial functional, 2026-10-19
+
+A new representation groups entries of `Gram(1,10t,13Y)` by polynomial exponents
+modulo the pointwise identities `Y_ij=t_i*t_j`. A common positive measure must
+use ONE linear-functional value for the same monomial wherever it occurs.
+Twelve NEW contracts pass quotient classes, shared symbols, original-column
+maps modulo exact original rows, missing-row failure, positive/zero/signed/nonunit
+mass bounds, deterministic and continuous embeddings, adjoints and namespaces.
+No old numerical inventory, copy audit, packing control or source job repeats.
+
+ONE symbolic construction groups 300 upper entries into 261 monomials. There
+are 91 known classes covering 110 cells and 170 FREE existential classes covering
+190 cells. Missing cells stay unobserved and have no assigned numerical value;
+identical monomials share one symbol. The separate symbolic layout has 1,295
+columns with the entire original 1,125-column prefix unchanged. The saved
+canonical model, arrays and returned values are not mutated or repaired.
+
+Known classes use existing original-column LINEAR maps rather than frozen
+numeric anchors/means from a diagnostic interval. All 110 known aliases have
+identical selected anchor coefficients. Their new differences are zero, requiring
+no additional row combination; internal copy equivalences and independently
+verified original-row certificates are reused by hash. Exact original unit mass
+comes from a saved normalization row, not normalization of the approximate raw
+table. Under a positive exact unit-mass cube measure, every nonnegative monomial
+has expectation in [0,1]. Nonunit positive mass has its own upper bound, zero
+positive mass is zero, and signed mass is not normalized or granted unit boxes.
+The contract requirement flag records whether unit mass is met; mass two has
+upper bound two, not one. Candidate tolerances are unchanged.
+
+Independent checks verify all 261 classes, 300 entry-map identities, 110 known
+coefficient bindings, 899 exact Frobenius-adjoint coefficients and 300 new
+analytic positive-measure embedding entries. Synthetic tensor points and
+Bernstein columns are algebraic proof controls, not episode poses, source
+anchors, returned weights or physical candidates. All class proposals, maps,
+constructors/intermediate returns, FREE declarations and empty unresolved cases
+are durable/private/hash bound. Three serial CPU guards succeed; ten exact
+code/plan files are archived under `global_monomial_functional`.
+
+This establishes only a NECESSARY symbolic representation. It does not establish
+PSD feasibility, a common measure supported on original source/time constraints,
+source accuracy, a deterministic path, task/global exclusion or physical success.
+The original 1,125 columns, 549 equalities, 5,990 necessary inequalities, unit
+boxes, 1,297 cones and 16,230-row canonical prefix are retained by hash. Five
+unavailable nonconstant SCALAR image localizers remain unavailable. No numerical
+moment proposal, PSD audit/completion, packing, solver, source generation,
+command/root mutation, native position, physics or GPU/PPO occurs. F/separate
+components, missing/held-out authority, full region-2 and unknown-band uncertainty,
+parameters, original gates and production runtime/tests stay unchanged. Do not
+rerun these contracts/construction/verification. New dimension-24 packing/dual
+contracts and one separately declared global-conic evaluation remain future work.

@@ -1,0 +1,14 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_global_functional_contracts_v1.py",
+  "worker_sha256": "ff713ed20c207e28937b8517f2092152dd7fe1f928c57e11b53ec69e688b8fe7",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-functional-contract-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/global_monomial_functional_v1.py": "b272ad30f8dd4359a7cf96729c05cd4d74a5ebecebdfb228f84ef693ec164a18",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "Twelve NEW quotient monomial/linear functional/original-row/unit-mass/positive-measure embedding/adjoint/symbolic namespace contracts.No solver,old audits or episode construction.",
+  "no_GPU": true,
+  "declared_new_controls": 12
+}
