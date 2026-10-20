@@ -1,0 +1,18 @@
+{
+  "schema": "v2d.NEW-hard-raster-boundary-audit-plan.v1",
+  "created_utc": "2026-10-20T20:14:51.226148+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_hard_raster_boundary_v1.py",
+  "worker_sha256": "568beb66cc0eddc49ba259656e586b7c590567a777af888584cd0dce6acbb6c0",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-raster-boundary-audit-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/hard-raster-evaluation-CPU-plan-v1.json": "bb85cdd860aacb68d79a2bf4ad6c4d165d3beaf3071788ec8710406acfd17a22",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/evaluate_hard_raster_v1.py": "2fa5933ba282aeb57de6adb7baec6ee8dd76a933a6947365d801e7c0deb6efc1",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-raster-evaluation-v1/NEW-lossless-solver-packing-RETURN.json": "0b581baad9590e83d2db78862ef365bae1d33717e3e023403c7701032c4e3eb5",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-raster-evaluation-v1/guard.json": "a7a35f8830271f6ef5511b82f495f91a21f2b9ccfd51e58dd6c97ca89a1bf632",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-raster-evaluation-v1/ONE-hard-raster-attempt-declaration-BEFORE.json": "faabb6af1b57a35cf6eda1ea811a1d503968cf136e6ca59eabee39d0116a9240",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-raster-evaluation-v1/worker.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-raster-evaluation-v1/NEW-actual-settings-cones-RETURN.json": "db3a1754471a1a9086148bec31a55a83e7b80b9724915b2d41564d2bf907d0ef",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-raster-evaluation-v1/normalized-BEFORE-AFTER-journal.jsonl": "4864980ee858c1e06addfb20bf554491e74ce233d7ee7d29af3b20a210c6074e"
+  },
+  "scope": "Audit actual durable guardedattempt/inputzero-packing/program-order boundary only. No constructor/solver/internalstate/point reconstruction or model/source/audit replay. Unreturned constructor/solver remainsUNKNOWN."
+}

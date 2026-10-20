@@ -1,0 +1,20 @@
+{
+  "schema": "v2d.NEW-hard-raster-evaluation-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/evaluate_hard_raster_v1.py",
+  "worker_sha256": "2fa5933ba282aeb57de6adb7baec6ee8dd76a933a6947365d801e7c0deb6efc1",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-raster-evaluation-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/hard_raster_cayley_v1.py": "389158c7c35836ecd420151d2acbe75fad3db7d9785bab32caf0a5d527169268",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full_pose_training_oracle_v1.py": "c6be83f6205c87cffb26992aecaecd61331751dd3317b5804ee61b86027ae2cd",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full_pose_inputs_v1.py": "ec8921f886b6982d4b01061e548bb0fa2c49aeb7d934565b07f28ed33f77cb68",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full_pose_geometry_runtime_v1.py": "b09d7dfa646fd253b1dc5319b7cbd6e1877ff42ab0c8ae82022b55fae822cc62",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full_pose_construction_v1.py": "e26b132976f310ba862291c4bbbbfa2648e6b5b495f71e230a9c648dd73a5412",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_full_pose_maps_v1.py": "01dda09a28c287502c6bccbfd30e6d6fa1c06304cce4fcae48f559cc677ff93e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/hard_training_conic_returns_v1.py": "f67193843bdccf975e5afeb99078329d389be4dfdec0cccf7cb4c39805302526",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-raster-binding-v2/report.json": "c4753666352df5e409cad855ec157a20caea6e4c9ccb72caa92f9ca75dfc63f8",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-raster-model-v1/NEW-canonical-metadata-RETURN.json": "50d123d5ca089185a9aa77e3de1d43b36d2594e082140e28fa3ff2185eb2b514",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-raster-model-v1/NEW-canonical-A-RETURN.npz": "2f7cadb88f0713667587ddcc14099a93171ec13fbc1fc0463ee8ab104f7cde34"
+  },
+  "scope": "SOLE NEW hard-all-cell1058column solverATTEMPT100iter60sec/default1thread/atmostONErawtrial; all matricesboundbeforeconstructor. Losslesszeroentrypacking exactcolumnhashbinding beforeconstructor, no rowschanged. Outer240sec/2GiB/1.5GiBreserveguard; ifinterruptedunreturnedconstructor/solverUNKNOWN/no restartbudgetincrease. Actualintegercells/sourceNN/raster/6motion mandatory; no originalfullpixelheldout rescue or oldpoint replay.",
+  "created_utc": "2026-10-20T20:09:41.429537+00:00"
+}

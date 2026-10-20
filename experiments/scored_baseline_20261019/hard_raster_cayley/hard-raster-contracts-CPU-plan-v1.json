@@ -1,0 +1,13 @@
+{
+  "schema": "v2d.NEW-hard-raster-contracts-plan.v1",
+  "created_utc": "2026-10-20T17:24:55.077110+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_hard_raster_contracts_v1.py",
+  "worker_sha256": "34605a50ebe7d0a87d9f5cb46d5aa32c227d77a879d11acac7db38baa6bcf371",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-raster-contracts-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/hard_raster_cayley_v1.py": "389158c7c35836ecd420151d2acbe75fad3db7d9785bab32caf0a5d527169268",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full-pose-construction-checkpoint-v1.json": "e28f8f45a9af40dcef1e3a195f0e1ee86e1ffbd2a745222251d15712322e7883",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/free-rank-raster-checkpoint-v1.json": "94d3dcb59707d7cf0ca424b2f0b1859e02361028d261468c8b606fa3d33e440e"
+  },
+  "scope": "5 NEW concrete fullobjectCayley/liftedtranslation/uniformcurvature/allcell+depth7columnpacking/actualhardcell-source-motion acceptance contracts. No oldsourcepolynomial/quantizer/NN/raster/control/solver replay."
+}

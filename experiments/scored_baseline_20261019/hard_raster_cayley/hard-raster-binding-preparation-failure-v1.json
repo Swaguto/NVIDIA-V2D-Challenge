@@ -1,0 +1,12 @@
+{
+  "recorded_utc": "2026-10-20T17:29:51.778938+00:00",
+  "raw_failed_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_hard_raster_model_v1.py.txt",
+  "source_sha256": "8c2c0bae38b39e7a89e1ff68ed98060664a7da299bbc4618ff81e45882ed440a",
+  "errors": [
+    "SyntaxError missing whitespace after else",
+    "absent-plan guard preparation FileNotFoundError"
+  ],
+  "before_worker_module_or_guard_state_mutation": true,
+  "new_reader_only_whitespace_input_bound_assertions_and_fresh_output_changes": true,
+  "no_scientific_model_or_audit_completed_or_replayed": true
+}

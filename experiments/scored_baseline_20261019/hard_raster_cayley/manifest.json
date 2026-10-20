@@ -1,0 +1,73 @@
+{
+  "schema": "v2d.NEW-hard-raster-code-only-archive.v1",
+  "created_utc": "2026-10-20T20:16:53.639635+00:00",
+  "files": {
+    "hard_raster_cayley_v1.py": {
+      "sha256": "389158c7c35836ecd420151d2acbe75fad3db7d9785bab32caf0a5d527169268",
+      "bytes": 4082,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/hard_raster_cayley_v1.py"
+    },
+    "derive_hard_raster_contracts_v1.py": {
+      "sha256": "34605a50ebe7d0a87d9f5cb46d5aa32c227d77a879d11acac7db38baa6bcf371",
+      "bytes": 4271,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_hard_raster_contracts_v1.py"
+    },
+    "build_hard_raster_model_v1.py": {
+      "sha256": "2edcce766a06c569790f61869914500e8e43696a5ffc6c66569aebc63739dfb9",
+      "bytes": 7943,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_hard_raster_model_v1.py"
+    },
+    "verify_hard_raster_model_v1.py.txt": {
+      "sha256": "8c2c0bae38b39e7a89e1ff68ed98060664a7da299bbc4618ff81e45882ed440a",
+      "bytes": 9096,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_hard_raster_model_v1.py.txt"
+    },
+    "verify_hard_raster_model_v2.py": {
+      "sha256": "8a657dddd045759357cf6913a0cb36286b69c231a46d1ff8aa49c75a7b1c7313",
+      "bytes": 9134,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_hard_raster_model_v2.py"
+    },
+    "evaluate_hard_raster_v1.py": {
+      "sha256": "2fa5933ba282aeb57de6adb7baec6ee8dd76a933a6947365d801e7c0deb6efc1",
+      "bytes": 10453,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/evaluate_hard_raster_v1.py"
+    },
+    "audit_hard_raster_boundary_v1.py": {
+      "sha256": "568beb66cc0eddc49ba259656e586b7c590567a777af888584cd0dce6acbb6c0",
+      "bytes": 3522,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_hard_raster_boundary_v1.py"
+    },
+    "hard-raster-contracts-CPU-plan-v1.json": {
+      "sha256": "2b6e6a139a38e98ca1b8f6c5a1323c0033b1ded23f595d8529ed5f6975309aa9",
+      "bytes": 1148,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/hard-raster-contracts-CPU-plan-v1.json"
+    },
+    "hard-raster-model-CPU-plan-v1.json": {
+      "sha256": "b8daf6646d08e8cd5cb2d05c0e539e3319d2c11a69e3cb4a174c77bded9046ce",
+      "bytes": 1353,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/hard-raster-model-CPU-plan-v1.json"
+    },
+    "hard-raster-binding-CPU-plan-v2.json": {
+      "sha256": "aabad916bbc91f9188b6a7a539530eda7d2e3b20e93603f021645a31b3b8f906",
+      "bytes": 1599,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/hard-raster-binding-CPU-plan-v2.json"
+    },
+    "hard-raster-evaluation-CPU-plan-v1.json": {
+      "sha256": "bb85cdd860aacb68d79a2bf4ad6c4d165d3beaf3071788ec8710406acfd17a22",
+      "bytes": 2511,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/hard-raster-evaluation-CPU-plan-v1.json"
+    },
+    "hard-raster-boundary-audit-CPU-plan-v1.json": {
+      "sha256": "85b1e488e11d42e98ddc34bcb9255e81c528ac3b7082493f6968ae9008f77098",
+      "bytes": 2103,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/hard-raster-boundary-audit-CPU-plan-v1.json"
+    },
+    "hard-raster-binding-preparation-failure-v1.json": {
+      "sha256": "cf433feaf14e72200227764365f0ebc7bae2ce0b2b45f488ac378aa5d0a0741b",
+      "bytes": 587,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/hard-raster-binding-preparation-failure-v1.json"
+    }
+  },
+  "private_source_geometry_targets_matrices_results_excluded": true,
+  "production_runtime_and_tests_UNCHANGED": true
+}

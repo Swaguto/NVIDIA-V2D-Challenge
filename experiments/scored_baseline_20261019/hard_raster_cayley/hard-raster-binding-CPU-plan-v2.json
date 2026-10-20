@@ -1,0 +1,15 @@
+{
+  "schema": "v2d.NEW-hard-raster-binding-plan.v2",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_hard_raster_model_v2.py",
+  "worker_sha256": "8a657dddd045759357cf6913a0cb36286b69c231a46d1ff8aa49c75a7b1c7313",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-raster-binding-v2",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-raster-model-v1/NEW-canonical-vectors-RETURN.npz": "10edeb91f27878ed3dc5f55d96282b041fa5082e637c04cc7c8bf289ce25eafc",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-raster-model-v1/NEW-canonical-A-RETURN.npz": "2f7cadb88f0713667587ddcc14099a93171ec13fbc1fc0463ee8ab104f7cde34",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-raster-model-v1/NEW-canonical-P-RETURN.npz": "8f080bad5c3dc27f10c366b57b999989400861fca67949071938d4f10173f1ca",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-raster-model-v1/NEW-canonical-metadata-RETURN.json": "50d123d5ca089185a9aa77e3de1d43b36d2594e082140e28fa3ff2185eb2b514",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-raster-model-v1/NEW-hard-raster-construction-BEFORE.json": "f92d3a1202d5f34a2cd125eecaa6db79ea13258979f01c167304d2fdc0a79ce1"
+  },
+  "scope": "Independent ALLNEW31.8Msourcecoefficients/4.55MRHS/477821prefix/liftSOC/objective/curvature; perframe durableRETURNs. V1syntax/absentplan errors occurBEFOREexecution/state mutation. No model/source/NN/raster/solver replay. Localgamma32 notcandidatetolerance.",
+  "created_utc": "2026-10-20T17:29:52.103021+00:00"
+}

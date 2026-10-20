@@ -1,0 +1,14 @@
+{
+  "schema": "v2d.NEW-hard-raster-model-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_hard_raster_model_v1.py",
+  "worker_sha256": "2edcce766a06c569790f61869914500e8e43696a5ffc6c66569aebc63739dfb9",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-raster-model-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/hard_raster_cayley_v1.py": "389158c7c35836ecd420151d2acbe75fad3db7d9785bab32caf0a5d527169268",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-raster-contracts-v1/report.json": "01429dda5afd077b870bb720f2ae99ddc29094f9122b7ddd288c916e078003a5",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full-pose-construction-checkpoint-v1.json": "e28f8f45a9af40dcef1e3a195f0e1ee86e1ffbd2a745222251d15712322e7883",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-full-pose-preflight-v1/NEW-canonical-A-RETURN.npz": "4a33a718bae12944e74f08406bed79e3a49e884e75b87ad8374740ea61c2868d"
+  },
+  "scope": "ONE NEW all151/all6022visual-vertex hard integer-cell+Cayley curvature epigraph canonical; directCSC memory packing with everyframeRETURN durable. Actualstrictcell/source/motionfilters required; oldsource/model producersNOTreplayed. No solver/pose call.",
+  "created_utc": "2026-10-20T17:26:57.796750+00:00"
+}

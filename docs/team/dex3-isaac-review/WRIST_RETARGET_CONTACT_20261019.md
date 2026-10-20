@@ -3411,3 +3411,103 @@ finger motion, FULL1mm native hand/object/support AND self, full swept, actual
 motor/grasp/whole-source qualification before GPU/PPO. Owner intent remains
 active/unachieved, historical blocked goal-tool observation separate. Checkpoint:
 `compute/full-pose-construction-checkpoint-v1.json` with its private SHA chain.
+
+
+## NEW all-cell hard raster model — 2026-10-20 20:14 UTC
+
+Five serial CPU guards complete: four succeed; the sole materialized constructor
+attempt is interrupted by its240second CPU wall guard. Five NEW concrete Cayley,
+lifted-translation/quadratic-cell/curvature/packing/actual-acceptance contracts
+pass. Old source/quantizer/NN/raster/control/model/solver/native producers are
+not replayed. A reader SyntaxError and absent-plan preparation occur BEFORE
+worker/module/guard-state mutation; raw source is retained verbatim `.py.txt`.
+
+The NEW variables retain all3 continuous ORIGINAL-object-local rotations at
+EVERY151clock. Cayley `Q=((1-t.t)I+2tt^T+2[t]x)/(1+t.t)`, lifted translation
+`eta=(1+t.t)delta`, and fixed F camera factors give a quadratic homogeneous
+camera expression. This finite chart excludes pi rotations as a construction
+choice, not original authority/source truth; it is unrelated to the ONE robot
+wrist mode. No old robot source polynomials/charts or camera calibrations were
+regenerated, no human/source observations or flags changed.
+
+Every6022 original VISUAL vertex's saved training integer projection cells is
+retained at all151clocks: four cell slots plus every strict vertex-depth slot,
+and strict tracker center depth. Saturated inactive sides remain typed tautology
+rows, never deleted source data. These coordinates come from SAVED training
+raster geometry, NOT heldout mask labels/new measurements or the58rejected
+training failures. All NN/ranks/thresholds remain free; actual rounded median,
+quality, fulltriangle EVEN raster and all6 original motion gates still rule.
+A same-integer-input restriction is sufficient to preserve triangle raster
+inputs, NOT a necessary original source-family condition, source accuracy or
+fullbinary-equivalence claim. Open/strict faces are CLOSED ONLY for the proposal
+model; actual exact integer-cell equality/strict depth/source hardfilters are
+mandatory before any acceptance. Numeric camera/cache aliases and unknowns stay.
+
+A common conditional saved-binary curvature bound Lambda524288 and scale
+s2118.302057564509 give `r*s*s>=Lambda` EXACTLY for stored r=.11684069766135205.
+The lower-bound cone uses u=s*t and sigma>=u.u. Source rows are linear in
+(eta/r,u,sigma), with a151SOC5 epigraph; no fake classical IoU derivative.
+All source coefficients are proposal restrictions, not candidate tolerances.
+Old allpair/linear+angular SEARCH blocks are reused BY HASH under the NEW
+variable map; old nominal geometry measurements or source queries are not rerun.
+All original caps/timestamps/object1e-9motion/source1e-10POSTcomparisons remain.
+
+Complete NEW canonical:4618162rows/1058columns/4613807nonnegative/900SOC4+151SOC5,
+32306054stored entries. It has4546761NEW source rows/31827327coefficient cells,
+477821prefix coefficient copies, all integer targets/strict flags intact.
+Direct CSC construction avoids Python row lists and saves everyframe RETURN
+before further checks. Independent ALL-matrix binding verifies all source rows,
+columns, RHS, prefix, lift cones/objective, exact curvature/scale certificate.
+Max new coefficient/RHS differences1.137e-13/3.948e-13 lie within PREDECLARED
+operationwise gamma32 bounds on operands. These are LOCAL conditional numerical
+packing diagnostics, NOT candidate tolerances/source accuracy/global identities.
+Nominal negative source constants0 is only an inventory; F strict/numeric/source
+feasibility is NOT assumed. All2728117open/strict faces remain explicit.
+Model and binding NumPy warnings remain retained with cause UNPROVEN; the checked
+arrays are finite, no warnings are erased or future reliability inferred.
+
+The SOLE declared100iter/60second/default/one-thread attempt performs lossless
+zero-entry packing:32306054to32305601entries, only453explicitzeros, ALLrows/RHS/
+nonzero values retained and1058exact column digests independently compared.
+The240second outer guard stops before a durable constructor or solver RETURN:
+wall240.418392875sec, peak observedRSS1195458560bytes<2GiB. This is a CPU WALL
+cap interruption, NOT an observed RSS breach. Last durable journal boundary is
+BEFOREconstructor. Constructor/internal solver state is UNAVAILABLE/UNKNOWN;
+no returned vector, sealed proposal, actual source query, or solver result is
+produced/observed. Do NOT reconstruct unreturned state, claim a solver status,
+feasibility/infeasibility/global exclusion or extend/retry the attempt.
+
+A separate receipt/program-order boundary audit binds guard/source/plan hashes,
+all1058lossless-packing column identities, saved settings/cones and return-file
+absence WITHOUT model/constructor/solver/source/old audit replay. No actual pose,
+source/motion/reference/native/self/swept/motor/grasp/physics/GPU/PPO/task/policy/
+AUCqualification occurs. F/separate components/136missing/31of32heldout failures/
+source accuracy/physics/gates/reserved episodes and F8self+5object failures remain.
+Research/model/binding/checkpoint completion never completes the owner objective.
+
+NEXT derive ONE genuinely NEW structured all-row interface for THIS frozen hard
+model so constructor startup fits the SAME limits. An exact per-frame minimum
+of ALL affine residuals can express all hard cell rows without a materialized
+large cone interface. Derive/prove full-row equivalence, all cone/objective/
+variable/strict-flag incidences, meaningful nonsmooth-tie/search-J/conditioning/
+actual-return contracts and independent NEW maps for a concrete bounded method.
+EVERYoriginal row must be evaluated/retained, no finite cut/active-row/pose/vertex/
+axis/rank bank, heuristic row drop or source partition change. This is a concrete
+resource need; no unrelated generic arithmetic inventories. Do NOT rerun the
+materialized constructor/attempt, raise240sec/2GiB, warmstart from unavailable
+state, retry old source/native/solver/audits, tune source caps/weights/bounds/
+profiles/linefractions/limits, fit rejected58/old60fullpixel/heldout failures or
+borrow robot boxes. Keep actual integer-cell/source/rounded median/quality and
+all6motion hard gates plus original whole151source/URDF/root+finger motion/FULL
+1mmnative hand/object/support AND self/full swept/motor/grasp before GPU/PPO.
+Object-only changes cannot clear8self; no new wrist axis/profile/repairs/missing
+commands/geometry/physics/source authority/gates. Owner intent active/unachieved;
+historical blocked goal-tool observation remains separate. No new solver/pose
+is queued. Code-only archive `hard_raster_cayley`; production runtime/tests unchanged.
+
+Latest read-only provider attempt20:15:40–20:15:44UTC returnsCLI1: currentBrev
+status UNVERIFIED. Last ACTUAL confirmed STOPPED remains2026-10-20T17:05:28.709292UTC.
+Raw attempt and reconciliation retained; attempt/update timestamps never replace
+actual provider observations. No VM mutation/paidqueue/auth-cause/future lifecycle
+claim. Successful current provider read is required before any future GPU work;
+never start for a recovery test. Checkpoint `compute/hard-raster-checkpoint-v1.json`.
