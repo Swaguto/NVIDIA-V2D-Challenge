@@ -1,0 +1,16 @@
+{
+  "schema": "v2d.NEW-full-pose-contracts-CPU-plan.v1",
+  "created_utc": "2026-10-20T16:26:06.875745+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_object_full_pose_contracts_v1.py",
+  "worker_sha256": "6914206c3b206f6f3b49d1306c1c7541c7f7fe24011e8bf002cc9997510a6c0e",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-full-pose-contracts-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_full_pose_maps_v1.py": "01dda09a28c287502c6bccbfd30e6d6fa1c06304cce4fcae48f559cc677ff93e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/hard-source-filter-checkpoint-v1.json": "1cf2d79eab477b9e58e4f0d5543da7f70d082433965cdce947d8be8c845f5f6f",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object-authority-checkpoint-v1.json": "e4f82c26431a946d8437fe2e3c88257d060839aadf7f937c63d8edbf9f96375a"
+  },
+  "scope": "11 NEW synthetic full-object-rotation source/motion/compiled-body/incidence/actual-acceptance contracts. No episode inputs evaluated or old controls replayed.",
+  "CPU_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}

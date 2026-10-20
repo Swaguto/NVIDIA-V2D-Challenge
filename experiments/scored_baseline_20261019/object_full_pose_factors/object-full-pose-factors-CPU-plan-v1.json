@@ -1,0 +1,22 @@
+{
+  "schema": "v2d.NEW-full-object-pose-factors-CPU-plan.v1",
+  "created_utc": "2026-10-20T16:30:12.578324+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_object_full_pose_factors_v1.py",
+  "worker_sha256": "53b02f7c38cde47fe087005783866a50198489e121823eedd583cac3eefb3e98",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-full-pose-factors-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_full_pose_maps_v1.py": "01dda09a28c287502c6bccbfd30e6d6fa1c06304cce4fcae48f559cc677ff93e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_full_pose_angular_v1.py": "b823c994be78d17d1fdc018788c0ccc45087e02fa019279bc4ed052fc60e5f42",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-full-pose-contracts-v1/report.json": "075682f6c2a40951e21d0551a95f454e521032c3c14aa0234cadfae7089e1e71",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-full-pose-angular-contracts-v1/report.json": "36eae8a2db2ab4c219822c3af341b0cf7b86eb5d46185461a42ceed0a45bfdd0",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object-authority-checkpoint-v1.json": "e4f82c26431a946d8437fe2e3c88257d060839aadf7f937c63d8edbf9f96375a",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/hard-source-filter-checkpoint-v1.json": "1cf2d79eab477b9e58e4f0d5543da7f70d082433965cdce947d8be8c845f5f6f",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-visibility-support-model-v1/NEW-compiled-support-geometry.npz": "89f9bfb77aa40e6dbc36c8c2271212686daaaac56e0afa22aa0ee423b28f185a",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-visibility-support-model-v3/NEW-pure-kinematic-body-frame-returns.json": "e0d1f40bdba0af24733f2f343b7030dd8c2db94e70fe024512046e9974270c24",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-runtime-v1/dynamic-source-data.npz": "31505c96bde69959aef90e9331fd5a40f7856b944fc511baedbccbe0008de9b8"
+  },
+  "scope": "ONE NEW906-variable151clock full-object-pose factor construction: all3 object-local rotations at everyclock, source/native-body rotational Jacobians, original angular clock maps, ALLcrosspairs with ZERO broadphase omission. Static pinned MJB metadata only; no MjData/FK/oldproducer/source/NN/raster/solver/evaluatedpose/native/physics calls.",
+  "CPU_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}

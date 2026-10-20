@@ -1782,3 +1782,73 @@ Any actual new reference still needs whole151source/actualURDF/all object/root/
 finger motion, FULL1mm native hand/object/support AND self, full swept, actual
 motor/grasp and whole-source qualification before GPU/PPO. The owner objective
 remains unachieved; a completed research/method checkpoint never completes it.
+
+
+## NEW full object-pose factors — 2026-10-20 16:32 UTC
+
+Four serial guarded CPU workers succeeded. Thirteen NEW synthetic composition,
+source-local/rotation and original angular-clock derivative, zero-cache,
+near-plane, compiled-body order, full-pair and actual-return contracts pass.
+No completed producer/control/audit/solve/source cohort was repeated.
+
+ONE private factor construction declares 906 UNASSIGNED continuous variables
+at all 151 clocks: three WORLD translations and three ORIGINAL-object-frame
+rotation coordinates, `R_new = R_F Exp(theta)`, `t_new = t_F + delta`.
+Rotation is about the object origin; all three components remain free. No new
+robot wrist axis/amplitude/profile, object halfwidth, method, optimizer, solve or
+episode pose is selected. These variables are derived reference variables, not
+measured object/human/source observations. Original arrays/flags remain intact.
+
+Independent NEW binding checks 8,183,898 source rotational coefficients,
+782,784 compiled-body rotational coefficients, 6,723 sparse angular/midclock
+coefficients, 453 training-median rotation SEARCH coefficients and all 906
+column incidences. Maximum source/native coefficient discrepancy is
+1.388e-17, angular coefficient discrepancy 1.677e-12 and principal-rotation
+representation difference 6.037e-16. These are arithmetic diagnostics, NOT
+candidate tolerances or source-accuracy proofs. Old camera/native/cache-alias
+limitations remain; search derivatives never replace actual numeric operators.
+
+All 66,591 hand/object/support cross-pair instances are retained, with ZERO
+broadphase omissions. The 58 saved compiled geoms comprise nine object geoms
+and 49 hand/support geoms. Cached vertices already include proper geom-to-body
+placement; the NEW rotation map acts on BODY vertices/normals once. Proper
+ORIGINAL free-support qpos0 is bound from static pinned MuJoCo3.8.1 MJB metadata.
+Twelve body-exclusion signatures touching the object are recorded as static
+metadata; all cross pairs remain retained, including excluded cases. This is
+construction coverage, not a rewritten native gate or a contact/force claim.
+No MjData/FK/fwdPosition/native gap/physics or old source/NN/raster query ran.
+Old fixed axes/translation planes and 49,071 omission certificates are invalid
+for changed rotations and are NOT inherited. Full fresh native gates still rule.
+
+The NEW angular map uses original WORLD-relative principal rotation logs,
+actual timestamps/midpoint acceleration intervals and all six original caps.
+All relative principal-log pi branches and nonfinite/unavailable cases must stay
+explicit; zero pi branches occur only in these initial derivative inputs.
+Actual changed-rotation angular speed/acceleration/p95 must be evaluated;
+fixed-rotation angular invariance is NOT inherited. Point/NN/rank gradients are
+SEARCH predictors only. Actual changed-rank/NN/rounded median/quality and discrete
+FULL-triangle EVEN training hard tests are mandatory. Zero F uses saved cache;
+pure rotation is a NEW nonzero input. No classical IoU derivative is invented.
+Original fullpixel k1/matmul/heldout source checks remain POST-only, with original
+1e-10 source and 1e-9 object-motion comparisons; robot tolerances stay separate.
+
+NEXT build ONE genuinely NEW complete full-pose motion/geometry construction
+using these frozen maps. FIRST derive/bind current rotating compiled support
+and any conservative omission logic, actual hard-training return provenance,
+conditioning and ALL new canonical matrices. Only then declare ONE bounded new
+evaluation. No old method retry, smaller-step/line-fraction extension, failed
+point warmstart, axis/prefix/pose/rank/partition/cut/optimizer/weight/tolerance/
+profile/budget sweep or fullpixel/heldout fitting/selection feedback. No further
+generic representation study is needed without a concrete construction need.
+
+All F repairs, both hands' missing commands, separate unqualified middle/ONE
+wrist component, 136 missing anchors, heldout31/32/source accuracy limitations,
+8 right-self/5 object failures, geometry/physical parameters/reserved episodes
+and original gates remain. Object changes alone cannot clear self failures.
+No actual candidate, source-motion reference, full trajectory/task/policy/AUC
+qualifies. Any NEW actual reference needs whole151source/actualURDF/all object+
+root+finger motion, FULL1mm native hand/object/support AND self, full swept,
+actual motor/grasp and whole-source qualification before GPU/PPO. Owner intent
+remains active and unachieved; historical goal-tool blocked observation remains
+separate. Archive `object_full_pose_factors` is code-only; production runtime and
+tests are unchanged. New checkpoint: `compute/object-full-pose-checkpoint-v1.json`.

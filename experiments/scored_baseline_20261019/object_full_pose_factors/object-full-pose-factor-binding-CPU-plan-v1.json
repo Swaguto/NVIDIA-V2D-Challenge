@@ -1,0 +1,27 @@
+{
+  "schema": "v2d.NEW-full-pose-factor-binding-plan.v1",
+  "created_utc": "2026-10-20T16:31:59.893037+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_object_full_pose_factors_v1.py",
+  "worker_sha256": "c137b807610597cbd7011b4b982a36a2c3703e2d6f1ecfa5742c7e9df023fd80",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-full-pose-factor-binding-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-full-pose-factors-v1/NEW-original-angular-clock-Jacobian-RETURN.npz": "5cb6f8efc565c60f5784401ac95125fb09474e6fb9ccb7def9f4322381b3b816",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-full-pose-factors-v1/guard.json": "676e5f038a4126c32bab61c143c30ccf516185b84fab1afed49d03d766993273",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-full-pose-factors-v1/report.json": "7156fdf8768c777d86e611cc244113e344ffdb44198bc9ad40a4f9e6aafe4102",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-full-pose-factors-v1/NEW-declaration-BEFORE.json": "3d1a321f1f7ad64e5741f89780de444cf06101b3d9ff9be5bfa0726d11266e99",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-full-pose-factors-v1/NEW-training-median-rotation-SEARCH-gradient-RETURN.npz": "1ae69acddc0a0eb226ca4ff387f6db06416f984b763a1cc1fe8e1aa36617fb3c",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-full-pose-factors-v1/NEW-angular-clock-base-factors-RETURN.npz": "7c2ec9ceb380e1d27f1e40c5d7347597fc277dba82f73068a33fb5e47e279246",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-full-pose-factors-v1/NEW-full-pose-factor-semantics-RETURN.json": "e8fb82a2b2168d34523a493dd64f29aa6a950e4512bb174b6ad9b7627c809b8c",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-full-pose-factors-v1/NEW-source-rotation-factors-RETURN.npz": "82b8b6bf57b3a22eb9291be68462b6888bbd9d0ff870a5f7ec073a527f583b12",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-full-pose-factors-v1/NEW-native-body-rotation-factors-RETURN.npz": "6e1b5d1d97bb624f9859504e03de2843e85837328e52d716130ce22f97939a5a",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-full-pose-factors-v1/NEW-static-MJB-geometry-metadata-RETURN.json": "717ab3fba1d4fba3ddf9623566213b7102301f464002ba8beec4c630b98598d5",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-full-pose-factors-v1/NEW-ALL-cross-pair-incidence-RETURN.npz": "7da809a9d231b7c2fd98c1035b1fa66f4678c10db63ad02993e2751609c408a7",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-full-pose-factors-v1/NEW-compiled-cache-coverage-RETURN.json": "d7d982f43dc50cf4dd4cf57604824653ea07b413ea2c498098d509037a50917d",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-full-pose-factors-v1/NEW-support-qpos0-binding-RETURN.json": "0316c5ae8a89ab65b5104e48a4b1a637222ce20b8072c64c6c2e1d47d1613c1f",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object-authority-checkpoint-v1.json": "e4f82c26431a946d8437fe2e3c88257d060839aadf7f937c63d8edbf9f96375a"
+  },
+  "scope": "Independent NEW all-source/native rotational coefficient maps, all angular/midclock coefficients, ALL66591crosspair/906column incidences, source rotation SEARCH gradients and authority-copy/acceptance scope. No old source/native/motion gates or old audit rerun.",
+  "CPU_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}

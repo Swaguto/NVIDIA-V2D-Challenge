@@ -1,0 +1,58 @@
+{
+  "schema": "v2d.NEW-full-object-pose-code-only-archive.v1",
+  "created_utc": "2026-10-20T16:34:58.866971+00:00",
+  "files": {
+    "object_full_pose_maps_v1.py": {
+      "sha256": "01dda09a28c287502c6bccbfd30e6d6fa1c06304cce4fcae48f559cc677ff93e",
+      "bytes": 4185,
+      "private_executed_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_full_pose_maps_v1.py"
+    },
+    "derive_object_full_pose_contracts_v1.py": {
+      "sha256": "6914206c3b206f6f3b49d1306c1c7541c7f7fe24011e8bf002cc9997510a6c0e",
+      "bytes": 7161,
+      "private_executed_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_object_full_pose_contracts_v1.py"
+    },
+    "object_full_pose_angular_v1.py": {
+      "sha256": "b823c994be78d17d1fdc018788c0ccc45087e02fa019279bc4ed052fc60e5f42",
+      "bytes": 1714,
+      "private_executed_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_full_pose_angular_v1.py"
+    },
+    "derive_object_full_pose_angular_contracts_v1.py": {
+      "sha256": "5892d45a80c3be0e94ddac85cce6eeb2deead0bf611c8d0af3a46011561db3e6",
+      "bytes": 2555,
+      "private_executed_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_object_full_pose_angular_contracts_v1.py"
+    },
+    "build_object_full_pose_factors_v1.py": {
+      "sha256": "53b02f7c38cde47fe087005783866a50198489e121823eedd583cac3eefb3e98",
+      "bytes": 13806,
+      "private_executed_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_object_full_pose_factors_v1.py"
+    },
+    "verify_object_full_pose_factors_v1.py": {
+      "sha256": "c137b807610597cbd7011b4b982a36a2c3703e2d6f1ecfa5742c7e9df023fd80",
+      "bytes": 10581,
+      "private_executed_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_object_full_pose_factors_v1.py"
+    },
+    "object-full-pose-contracts-CPU-plan-v1.json": {
+      "sha256": "a761a747e96c65d997f9a81a26e94f775feff026d8b26ae76bab9fec24530eba",
+      "bytes": 1191,
+      "private_executed_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object-full-pose-contracts-CPU-plan-v1.json"
+    },
+    "object-full-pose-angular-contracts-CPU-plan-v1.json": {
+      "sha256": "a84b4d6e9e34c36c4bdee883d797d3939980a8b87420a80fcd875f539dfb8e0f",
+      "bytes": 1110,
+      "private_executed_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object-full-pose-angular-contracts-CPU-plan-v1.json"
+    },
+    "object-full-pose-factors-CPU-plan-v1.json": {
+      "sha256": "bdb14034a684e06330a544320bc9ba7b5d005b41f7445bcb0bd62f8d72dd0d51",
+      "bytes": 2465,
+      "private_executed_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object-full-pose-factors-CPU-plan-v1.json"
+    },
+    "object-full-pose-factor-binding-CPU-plan-v1.json": {
+      "sha256": "e1aaece3619bbd7cb1adbad6093957a3b427e130e7d9875904a048c3063e51f2",
+      "bytes": 3483,
+      "private_executed_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object-full-pose-factor-binding-CPU-plan-v1.json"
+    }
+  },
+  "private_inputs_geometry_arrays_returns_NOT_included": true,
+  "production_runtime_tests_UNCHANGED": true
+}

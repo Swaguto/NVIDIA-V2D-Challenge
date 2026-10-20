@@ -1,0 +1,13 @@
+{
+  "schema": "v2d.NEW-full-pose-angular-contracts-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_object_full_pose_angular_contracts_v1.py",
+  "worker_sha256": "5892d45a80c3be0e94ddac85cce6eeb2deead0bf611c8d0af3a46011561db3e6",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-full-pose-angular-contracts-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_full_pose_maps_v1.py": "01dda09a28c287502c6bccbfd30e6d6fa1c06304cce4fcae48f559cc677ff93e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_full_pose_angular_v1.py": "b823c994be78d17d1fdc018788c0ccc45087e02fa019279bc4ed052fc60e5f42",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-full-pose-contracts-v1/report.json": "075682f6c2a40951e21d0551a95f454e521032c3c14aa0234cadfae7089e1e71"
+  },
+  "scope": "Two genuinely NEW full-rotation angular/midclock and source point-local derivatives for concrete full-pose family; no completed contract repeated.",
+  "created_utc": "2026-10-20T16:27:52.844572+00:00"
+}
