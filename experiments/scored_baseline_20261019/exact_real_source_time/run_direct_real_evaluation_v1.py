@@ -1,0 +1,23 @@
+"""SOLE bounded exact-real assignment attempt; no candidate is promoted."""
+from pathlib import Path
+import datetime,hashlib,json,os,sys,time
+S=Path(__file__).resolve().parents[1];O=S/'e037-direct-real-evaluation-v1';P=S/'e037-direct-real-model-v1';sys.path.insert(0,str(S/'compute'))
+import direct_real_feasibility_v2 as q
+import thumb_conic_geometry_v1 as g
+read=lambda p:json.loads(Path(p).read_text());sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest();start=time.monotonic();J=(O/'SOLE-exact-real-evaluation-and-all-returns.jsonl').open('w');emit=lambda v:g.journal(J,v)
+def save(n,v):
+ with(O/n).open('w')as f:f.write(json.dumps(g.plain(v),allow_nan=False,indent=2)+'\n');f.flush();os.fsync(f.fileno())
+binding=read(S/'e037-direct-real-binding-v1/report.json');model=read(P/'saved-polynomial-domain-authority-bindings.json');runtime=read(S/'compute/direct-real-arithmetic-runtime-inspection-v1.json');exe=Path(runtime['executable']);query=P/'ONE-saved-five-clock-QF_NRA-query.smt2';assert binding['all_NEW_independent_bindings_passed']and sha(query)==binding['query_sha256']==model['query_sha256']and sha(exe)==runtime['sha256'];declaration=dict(schema='v2d.ONE-direct-real-evaluation-declaration.v1',query_sha256=sha(query),independent_binding_sha256=sha(S/'e037-direct-real-binding-v1/report.json'),runtime_sha256=sha(exe),variables=10,constraints=74,solver_timeout_seconds=180,outer_wall_seconds=240,combined_RSS_limit_bytes=2*1024**3,disk_reserve=int(1.5*1024**3),threads=1,maximum_episode_calls=1,no_retry_or_warmstart_tactic_order_degree_tolerance_limit_sweep=True,scope='Conservative sufficient temporal coefficient construction and SAVED binary source/depth on five-clock clipped region2;NOT full family or measured source truth',UNSAT_of_THIS_inner_construction_NEVER_original_family_exclusion=True,all_model_returns_and_unknowns_will_be_saved_before_followup=True,any_SAT_requires_direct_original_angles_timestamps_URDF_source_and_WHOLEclock_checks=True);save('declared-ONE-direct-real-evaluation.json',declaration);emit(dict(kind='BEFORE_SOLE_direct_real_attempt',declaration=declaration));result=q.run_once(exe,query,O,180,emit);save('SOLE-exact-real-SUBPROCESS-RETURN.json',result)
+try:classified=q.classification(result['stdout'])
+except Exception as e:classified=dict(status='UNRESOLVED_return_parse_error',error=repr(e),actual_RETURN_preserved=True)
+save('SOLE-query-status-and-model-RETURN.json',classified);emit(dict(kind='AFTER_SOLE_query_status_RETURN',RETURN=classified));values={};unresolved=[]
+if classified['status']=='sat':
+ try:
+  expressions=classified['forms'][1];assert {a[0]for a in expressions}==set(model['variables'])and len(expressions)==10
+  for name,value in expressions:
+   emit(dict(kind='BEFORE_NEW_actual_algebraic_model_value_parse',name=name,exact_expression=value))
+   try:v=q.algebraic_interval(value,lambda v:emit(dict(variable=name,RETURN=v)));values[name]=v;save('raw-value-'+name+'.json',v)
+   except Exception as e:
+    v=dict(variable=name,classification='UNRESOLVED_actual_model_value_parse',error=repr(e),exact_expression=value);unresolved.append(v);save('unresolved-value-'+name+'.json',v);emit(dict(kind='AFTER_NEW_value_parse_UNRESOLVED_RETURN',RETURN=v))
+ except Exception as e:unresolved.append(dict(classification='UNRESOLVED_model_structure',error=repr(e)))
+save('ALL-local-model-values-and-unresolved.json',dict(actual_values=values,unresolved=unresolved,no_midpoint_OR_solver_value_is_accepted_candidate=True,direct_actual_angles_timestamps_URDF_source_and_fullclock_verification_PENDING=True));J.close();report=dict(schema='v2d.direct-real-evaluation.v1',created_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),new_episode_solver_calls=1,actual_solver_status=classified['status'],actual_exit_code=result['exit_code'],solver_wall_seconds=result['wall_seconds'],maximum_combined_solver_worker_RSS_bytes=result['maximum_combined_child_worker_RSS_bytes'],guard_event=result['guard_event'],parsed_local_values=len(values),unresolved_value_cases=len(unresolved),no_original_family_or_task_exclusion=True,no_source_accuracy_or_trajectory_qualified=True,NOT_a_command_or_reference_proposal=True,no_retry_repair_sweep_or_completed_job_replay=True,current_F_middle_wrist_source_missing_heldout_model_parameters_gates_UNCHANGED=True,new_native_position_checks=0,new_physics_steps=0,new_GPU_jobs=0,new_PPO_steps=0,all_outputs_sha256={p.name:sha(p)for p in O.iterdir()if p.is_file()and p.name not in['guard.json','worker.log']},wall_seconds=time.monotonic()-start);save('report.json',report);print(json.dumps({k:v for k,v in report.items()if k!='all_outputs_sha256'}))

@@ -1,0 +1,149 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "private_results_absent": true,
+  "files": [
+    {
+      "file": "direct_real_feasibility_v1.py",
+      "restore_relative_path": "compute/direct_real_feasibility_v1.py",
+      "executed_or_declared_source_sha256": "ed72d51b8aa4acb3575193799ab7a27e6471f20ae524466b4e8c86b02d69fc28"
+    },
+    {
+      "file": "direct_real_feasibility_v2.py",
+      "restore_relative_path": "compute/direct_real_feasibility_v2.py",
+      "executed_or_declared_source_sha256": "2ef3bb2b58afe0573e23b09282d9044b18ca8f48d8199ce63101373fd3c3a131"
+    },
+    {
+      "file": "direct_real_feasibility_v3.py",
+      "restore_relative_path": "compute/direct_real_feasibility_v3.py",
+      "executed_or_declared_source_sha256": "abe986993e13b3477842b7f9f987e809d1f4a04a3692d43b4a981468084cb1c9"
+    },
+    {
+      "file": "verify_direct_real_contracts_v1.py",
+      "restore_relative_path": "compute/verify_direct_real_contracts_v1.py",
+      "executed_or_declared_source_sha256": "036fb28fa86d565679d14a51ea6cf1b5b58717ac9f940577f4be8caa6867ad49"
+    },
+    {
+      "file": "verify_direct_real_contracts_v2.py",
+      "restore_relative_path": "compute/verify_direct_real_contracts_v2.py",
+      "executed_or_declared_source_sha256": "473966f5faa43a4aae76d02a81d0e72e8e5143f517a84b37291dd2cee24fda00"
+    },
+    {
+      "file": "build_direct_real_model_v1.py",
+      "restore_relative_path": "compute/build_direct_real_model_v1.py",
+      "executed_or_declared_source_sha256": "1df1241c187cf77745c1f5b377a701b3105a1b8e9f7cbcab429755a617d46b4b"
+    },
+    {
+      "file": "verify_direct_real_binding_v1.py",
+      "restore_relative_path": "compute/verify_direct_real_binding_v1.py",
+      "executed_or_declared_source_sha256": "8a10cf9bc653f1b12fd3e4d08f539ae95b83960f54d356cead6b15983f154f78"
+    },
+    {
+      "file": "run_direct_real_evaluation_v1.py",
+      "restore_relative_path": "compute/run_direct_real_evaluation_v1.py",
+      "executed_or_declared_source_sha256": "37a5a5323be24f9e23922096fc75c213f9ac96c957b91aa17ea2f6583c13b619"
+    },
+    {
+      "file": "run_direct_real_evaluation_v2.py",
+      "restore_relative_path": "compute/run_direct_real_evaluation_v2.py",
+      "executed_or_declared_source_sha256": "ae5977a5484c7ade16c888c44817bd52f1009fc7d42aa458e2bd7888d9be89e7"
+    },
+    {
+      "file": "repair_direct_real_query_syntax_v1.py",
+      "restore_relative_path": "compute/repair_direct_real_query_syntax_v1.py",
+      "executed_or_declared_source_sha256": "038bee3f903a69816f2dbcb232e9c45289a27bc6e16623bedc07fd238db2ff8b"
+    },
+    {
+      "file": "verify_direct_real_multiplication_binding_v1.py",
+      "restore_relative_path": "compute/verify_direct_real_multiplication_binding_v1.py",
+      "executed_or_declared_source_sha256": "fdd576b22d502e271f8c794e2f17119e8d09d41d343f7ce343da21e8ac79b135"
+    },
+    {
+      "file": "verify_direct_real_assignment_v1.py",
+      "restore_relative_path": "compute/verify_direct_real_assignment_v1.py",
+      "executed_or_declared_source_sha256": "4485bc0a3a38710668c576c708576f00a3cc324a7059bb0434136aae536c54b0"
+    },
+    {
+      "file": "exact_source_projection_v1.py",
+      "restore_relative_path": "compute/exact_source_projection_v1.py",
+      "executed_or_declared_source_sha256": "c7bc5fad871c5b5310804820a7e93eda6f6077521318c1d30a52d7bdb1935477"
+    },
+    {
+      "file": "source_orientation_context_v1.py",
+      "restore_relative_path": "compute/source_orientation_context_v1.py",
+      "executed_or_declared_source_sha256": "314ed6f4ac464e468d95ec50268554f1cc2c4b7de5ecd22ca786be4125feec00"
+    },
+    {
+      "file": "conditional_moment_cones_v1.py",
+      "restore_relative_path": "compute/conditional_moment_cones_v1.py",
+      "executed_or_declared_source_sha256": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995"
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "direct-real-contract-CPU-plan-v1.json",
+      "restore_relative_path": "compute/direct-real-contract-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "a0f480a2826b58db1a76e9998c0435e7c6b1718c64f1e6600af5e35698ac348d"
+    },
+    {
+      "file": "direct-real-contract-CPU-plan-v2.json",
+      "restore_relative_path": "compute/direct-real-contract-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "6d6847c8e66a97d908ca18c10d4c1409f67d75609a3f9940af5922e5308a0b5b"
+    },
+    {
+      "file": "direct-real-model-CPU-plan-v1.json",
+      "restore_relative_path": "compute/direct-real-model-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "928298619c6515a0645bb8dcd2b854979536cc4f668a2210c27c84a4a6164c0f"
+    },
+    {
+      "file": "direct-real-binding-CPU-plan-v1.json",
+      "restore_relative_path": "compute/direct-real-binding-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "2cbc133bb01efad5d4c3e7fcc98fd72d76e32b61fe0ab1cb38c7e3032e03e8f1"
+    },
+    {
+      "file": "direct-real-evaluation-CPU-plan-v1.json",
+      "restore_relative_path": "compute/direct-real-evaluation-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "53a44e3563b0a1ba9fde177bd9efb55d86cf174560d49df421c962e06fd5a714"
+    },
+    {
+      "file": "direct-real-multiplication-query-CPU-plan-v1.json",
+      "restore_relative_path": "compute/direct-real-multiplication-query-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "fcf7c648a7b6ae107775b02a56e4379d9a86cf270ae1041321ddd377c04660e3"
+    },
+    {
+      "file": "direct-real-multiplication-binding-CPU-plan-v1.json",
+      "restore_relative_path": "compute/direct-real-multiplication-binding-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "1a3424ba6bc788a4ef2e76e7e509cfc4f683d6699dd78c85f085b6621da7368c"
+    },
+    {
+      "file": "direct-real-evaluation-CPU-plan-v2.json",
+      "restore_relative_path": "compute/direct-real-evaluation-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "f327353ef7632071e8ce3e54022882c2da6115b174ef5a2eeafbfc3dff16af93"
+    },
+    {
+      "file": "direct-real-assignment-CPU-plan-v1.json",
+      "restore_relative_path": "compute/direct-real-assignment-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "7adcd3825c615fed29ba4df7fefdf417630aba7eb15be670f5e4746d4e503e15"
+    }
+  ],
+  "repository_dependency_snapshots": [
+    {
+      "file": "snapshot-audit_hand_reference_contacts.py",
+      "repository_path": "scripts/dex3_training/audit_hand_reference_contacts.py",
+      "sha256": "bd964efa556a0d9edf3335c98ded32399aea808c9772ee2167a1495a35fc6d81"
+    },
+    {
+      "file": "snapshot-kinematics.py",
+      "repository_path": "scripts/dex3_training/v2d_dex3_flashchord/kinematics.py",
+      "sha256": "0747c53517a45a64efa5c7ecf8e91fedafcfb5150042c9a99c2718c0d7cb376c"
+    }
+  ],
+  "repository_runtime_unchanged": true
+}

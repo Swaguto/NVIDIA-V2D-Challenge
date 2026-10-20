@@ -737,3 +737,48 @@ source confidence, original boxes/caps/tolerances/model/parameters/gates remain.
 Production runtime/tests are unchanged. No native position/physics/GPU/PPO or
 reference/root mutation occurs. Do not repeat these completed jobs or extend the
 budget. The owner's actual trajectory-qualification goal remains active.
+
+## Exact real five-clock assignment and whole-clock rejection, 2026-10-19
+
+A new exact-real QF_NRA construction encodes SAVED region2 domains,44saved temporal
+coefficient bounds and five source/depth polynomials. Ten variables stay continuous.
+The sufficient temporal lower polynomial is h-2G=P-G<=g for saved h=P+G and
+|g-P|<=E<=G; this is an INNER numerical construction, not a changed candidate gate
+or global exclusion model. All source/time polynomials and original authority
+are reused.74constraints/482coefficients bind exact signs,scopes and domains.
+Ten new encoding/RETURN contracts complete; a missing-SymPy failure is retained,
+with five finished controls/four CLI returns reused by hash and NEW algebraic
+model roots parsed using existing exact polynomial utilities. No old root chart,
+producer, contract or audit repeats; no dependency installation occurs.
+
+The first episode input has22unsupported ^ expressions; its exit1/errors/later
+partial sat are REJECTED and preserved. A distinct actual CLI multivariate-power
+contract verifies multiplication-only syntax.222new identities and independent
+74row/482coefficient expansions prove the repaired query mathematically identical.
+Two subprocess attempts are recorded: one invalid input and ONE complete query;
+no completed valid solver result is retried or tolerances/degrees/limits swept.
+The complete query returns sat in14.992872458seconds under180sec/one-thread bounds.
+All10returned values are exact dyadic rationals, not moment means or fitted data.
+
+Independent74exact query values,22ORIGINAL direct angle/timestamp gates and five
+actualURDF/source-image poses at107:111 pass. Camera polynomial closure is
+<1.67e-16m, a representation check only. ONE sparse whole-clock embedding is still
+REJECTED: source failures103/104/105/106/116/117/118/119/120/121, added adjacent
+.21679386324802863rad and second .24088276464938163rad versus ORIGINAL.05rad.
+117available index anchors are assessed;34missing index anchors keep commands.
+Fresh both-hand151clock actualURDF positions/components/velocities pass and left
+motion passes. Five local poses are NOT mandatory measured joints, a full source
+path, a replacement F or a native/self/swept/motor/grasp-qualified reference.
+No full root/source/physical certificates are inherited by the changed proposal.
+
+Nine guards retain eight successful workers/one missing-package process failure;
+26exact code/plans and2repository snapshots are code-only in `exact_real_source_time`.
+All numerical queries, raw returns, failures, source/geometry/arrays and rejected
+proposals remain private. F/separate middle/wrist, missing136/heldout31of32 failure,
+fullregion2/unknown109bands, source authority/model/parameters and ALL original
+caps/tolerances/gates stay unchanged. No source polynomial generation,old completed
+study replay,native position,physics,GPU/PPO,score or trajectory qualification.
+Production runtime/tests unchanged. Do not repeat or extend these studies. A new
+surrounding-clock construction must free these five values, retain all19saved
+source frames and impose original full-clock temporal boundaries. Owner goal
+remains ACTIVE and cannot complete for this research milestone.

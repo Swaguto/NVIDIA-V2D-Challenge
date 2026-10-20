@@ -1,0 +1,14 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_direct_real_contracts_v1.py",
+  "worker_sha256": "036fb28fa86d565679d14a51ea6cf1b5b58717ac9f940577f4be8caa6867ad49",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-real-contract-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/direct_real_feasibility_v1.py": "ed72d51b8aa4acb3575193799ab7a27e6471f20ae524466b4e8c86b02d69fc28",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/direct-real-arithmetic-runtime-inspection-v1.json": "416f2b1a496c793dd6f7c3664770c0646a908232e24f7448e0731919f9693964"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "10NEW exact SMT/real-algebraic RETURN/sign/domain/necessary-vs-sufficient contracts,4tiny CLI calls. No episode solve or old controls.",
+  "no_GPU": true
+}
