@@ -1,0 +1,25 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_global_conic_model_v1.py",
+  "worker_sha256": "91c8356bd2ec62e38bb6dc89cd55f5b8e6f533e678dd9b023f38aa2cef30923a",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-conic-model-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/global_conic24_v1.py": "326bc1c1b8ac7a33fc3fe83cfbc2cc39690401f87e7aa78f5cf11c020650a7eb",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/supported_conic_maps_v1.py": "4b84dc4a6c676e0d575865f0f5a7c8badea74b2822233a8c8d05f80b8af7e074",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/direct_conditional_moment_sdp_v1.py": "1031c177074da3762a4fb7a4cb5141081b732956425d8f1656f8d275e32c0617",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global24-contract-v1/report.json": "27e1cdd5e7be3276346ec66eceffa28745cee98d7f4a0c93a1933ba1548391d0",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global24-dual-contract-v1/report.json": "89209f2b38a577bbf98562db29785c841f6718d2a5d7a2ca9ff7f5189b4fb8a6",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-functional-independent-v1/report.json": "546373f881fe5cdf676a7d42c92c8fb121095e805aed5271abeb53d9a3460319",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-image-conic-model-v1/report.json": "511ad898096431b5575deefa3f7bbf055223b26add3b010d64566b583d90a058",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-image-conic-model-v1/image-canonical-A.npz": "fb1430077cc97d3242468efb9eef5f2125b16072304594d2e4c8a414fbc0c232",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-image-conic-model-v1/image-canonical-b.npy": "376d182019180a0edade0b394cdad7252b8311f1db416ee23e13d8aec6e17488",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-image-conic-model-v1/image-model-binding.json": "f4a3d943980433641d71cc4ae4a5750df5f369dc350d559d0184f5cbd4367278",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-functional-model-v1/symbolic-functional-model.json": "15f8cf79631bd8a49434e119d9a19a0e84e9b3567c478ac82da3a4ce01f500bf",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-functional-model-v1/FREE-symbolic-namespace-declarations.json": "7b6aad1708326a8d9b73ca8154f436b2191274a0a61d112fe61004a2929ef0dd",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-global-functional-model-v1/symbolic-global24-upper-linear-maps.json": "f2a90381795c627cb405b5c4abbf2fb70c600690ee13671fbadd211ca1c67e5e"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "ONEnewglobal24PSD+170FREEauxiliary boxes appended to1297cone/16230rowprefix BYHASH.1295cols/16870rows expected constructor-validated. No solver or old audits.",
+  "no_GPU": true
+}

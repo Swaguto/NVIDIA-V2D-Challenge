@@ -687,3 +687,53 @@ components, missing/held-out authority, full region-2 and unknown-band uncertain
 parameters, original gates and production runtime/tests stay unchanged. Do not
 rerun these contracts/construction/verification. New dimension-24 packing/dual
 contracts and one separately declared global-conic evaluation remain future work.
+
+## Global shared-monomial conic consistency, 2026-10-19
+
+A new direct conic formulation couples repeated monomials across the saved
+original-variable and pair-product scopes. It preserves the entire original
+16,230-row/1,125-column prefix byte for byte, adding 170 UNOBSERVED shared
+auxiliary monomials, 340 necessary unit-box rows and one 24x24 Gram cone.
+The actual model has 16,870 rows, 1,295 columns and 1,298 PSD cones. ORIGINAL
+549 equalities/5,990 inequalities/2,250 boxes and 1,297 cones are unchanged.
+Auxiliary upper bounds require a positive exact unit-mass cube measure, not
+normalization of the approximate raw table. All source/packing guards remain
+NECESSARY bounds; original candidate tolerances do not change.
+
+Twelve new 24D packing/adjoint/spectral/auxiliary/pivot/dual controls include two
+tiny analytic SDPs. A manual fixture's wrong SIGN COMMENT and limited hardcoded
+residual check are retained in the executed source; three distinct new exact
+row/sign/saved-certificate checks supply the missing derivation, including the
+wrong-sign countercheck and 576 Gram identities. Correct alias beta is +1.
+No completed control or solver repeats. Independent bindings check every new row,
+the unchanged prefix and 2,646 exact/packed coefficients. The outward diagonal
+guard is 1.2914127466105907e-14, not an original acceptance tolerance.
+
+ONE bounded 100-iteration/60-second/one-thread/default-tolerance evaluation returns
+Solved,15 iterations,0.614900835 solver seconds. No restart/warmstart/continuation
+or degree/anchor/tolerance/profile sweep occurs. All actual returns are durable.
+A NEW-return audit reader fails before numerical checking because row metadata
+lives in a separate packing record. Its failed source/plan/log/guard stay intact.
+V2 binds that saved SHA-verified metadata and completes the independent audit,
+without producer or solver replay. Seven CPU guards: six succeed, one fails.
+Twenty-one exact code/plan files are archived under `global_monomial_conic`;
+private maps/arrays/weights/geometry/results remain off Git.
+
+All 1,298 original rational matrices are exact PSD, including the global block.
+All 1,295 actual values pass exact unit boxes; original inequalities have no
+positive residual. However 534 of 549 equalities differ exactly, maximum
+4.2327252813834093e-16. The actual table is NOT an exact realization. Independent
+1,298 rational-Gram identities / 11,916 entry products and the residual-corrected
+finite-box certificate over ALL original and auxiliary variables verify gap
+-2.6418807394451264e-8: NO exclusion. No raw x/z/s value is clipped, normalized,
+repaired or promoted. Gram factors remain certificate objects, not commands.
+
+Passing global moment necessities does not establish a common measure supported
+on original source/time constraints, source accuracy, deterministic trajectory,
+native/motor/grasp/task/policy qualification or score gain. Five nonconstant
+SCALAR image localizers stay unavailable. F, separate unqualified components,
+all continuous107:111/region2/unknown109 bands, missing136/heldout31/32 failures,
+source confidence, original boxes/caps/tolerances/model/parameters/gates remain.
+Production runtime/tests are unchanged. No native position/physics/GPU/PPO or
+reference/root mutation occurs. Do not repeat these completed jobs or extend the
+budget. The owner's actual trajectory-qualification goal remains active.

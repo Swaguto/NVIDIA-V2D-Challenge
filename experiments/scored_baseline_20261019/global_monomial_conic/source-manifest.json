@@ -1,0 +1,113 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "private_results_absent": true,
+  "files": [
+    {
+      "file": "global_conic24_v1.py",
+      "restore_relative_path": "compute/global_conic24_v1.py",
+      "executed_or_declared_source_sha256": "326bc1c1b8ac7a33fc3fe83cfbc2cc39690401f87e7aa78f5cf11c020650a7eb"
+    },
+    {
+      "file": "verify_global24_contracts_v1.py",
+      "restore_relative_path": "compute/verify_global24_contracts_v1.py",
+      "executed_or_declared_source_sha256": "ad66d42a279ad8122291191888405a695733ef54eb6e8aeaccfd5a320bc48182"
+    },
+    {
+      "file": "verify_global24_dual_contract_v1.py",
+      "restore_relative_path": "compute/verify_global24_dual_contract_v1.py",
+      "executed_or_declared_source_sha256": "7db801e19f5cf31d9d43eef4f45bf7aa43f2ff14766332990336102121b44fe4"
+    },
+    {
+      "file": "build_global_conic_model_v1.py",
+      "restore_relative_path": "compute/build_global_conic_model_v1.py",
+      "executed_or_declared_source_sha256": "91c8356bd2ec62e38bb6dc89cd55f5b8e6f533e678dd9b023f38aa2cef30923a"
+    },
+    {
+      "file": "verify_global_conic_binding_v1.py",
+      "restore_relative_path": "compute/verify_global_conic_binding_v1.py",
+      "executed_or_declared_source_sha256": "4f5a5d0feaf84efb78a19d4092a0457cecb947e18c7b167099c4dee6fd9040b7"
+    },
+    {
+      "file": "run_global_conic_v1.py",
+      "restore_relative_path": "compute/run_global_conic_v1.py",
+      "executed_or_declared_source_sha256": "166b6a4295f51cbf156ce9d943dc3b75269a30e3920a629f2e366e6fc3a1d766"
+    },
+    {
+      "file": "verify_global_conic_return_v1.py",
+      "restore_relative_path": "compute/verify_global_conic_return_v1.py",
+      "executed_or_declared_source_sha256": "b0cb8b7064f43b7720817d8c82182317090b091f728a9f68f4fe631f67631b11"
+    },
+    {
+      "file": "verify_global_conic_return_v2.py",
+      "restore_relative_path": "compute/verify_global_conic_return_v2.py",
+      "executed_or_declared_source_sha256": "dc0cb821acf1d2165ab794a9a2bb7275b0d21061ccffcec8d4f1df69e7d3f2fe"
+    },
+    {
+      "file": "supported_conic_maps_v1.py",
+      "restore_relative_path": "compute/supported_conic_maps_v1.py",
+      "executed_or_declared_source_sha256": "4b84dc4a6c676e0d575865f0f5a7c8badea74b2822233a8c8d05f80b8af7e074"
+    },
+    {
+      "file": "direct_conditional_moment_sdp_v1.py",
+      "restore_relative_path": "compute/direct_conditional_moment_sdp_v1.py",
+      "executed_or_declared_source_sha256": "1031c177074da3762a4fb7a4cb5141081b732956425d8f1656f8d275e32c0617"
+    },
+    {
+      "file": "mixed_joint_moments_v1.py",
+      "restore_relative_path": "compute/mixed_joint_moments_v1.py",
+      "executed_or_declared_source_sha256": "5f5f8d2a9d948744cf992b7694117a023ffb650d00332414dc95ca91bdd3fdcb"
+    },
+    {
+      "file": "conditional_moment_cones_v1.py",
+      "restore_relative_path": "compute/conditional_moment_cones_v1.py",
+      "executed_or_declared_source_sha256": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995"
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "global24-contract-CPU-plan-v1.json",
+      "restore_relative_path": "compute/global24-contract-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "d28c550199061396418bd7d41f40755bb8270e21a3c1a397d4b8e5cebdc9d033"
+    },
+    {
+      "file": "global24-dual-contract-CPU-plan-v1.json",
+      "restore_relative_path": "compute/global24-dual-contract-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "0a027d690bacf3ec9f6c3500bb0692e908877de84763bfa4b27ef3898bdf8ca4"
+    },
+    {
+      "file": "global-conic-model-CPU-plan-v1.json",
+      "restore_relative_path": "compute/global-conic-model-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "4dca3fcfa0b13e35ac48fe9c7cb6f67e20db9970016fde4fdb87391c565ece3a"
+    },
+    {
+      "file": "global-conic-binding-CPU-plan-v1.json",
+      "restore_relative_path": "compute/global-conic-binding-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "20e8c73849ddd77a40c57be265b14166a10bcbb7584ffb45cc2b9d6efca44aea"
+    },
+    {
+      "file": "global-conic-evaluation-CPU-plan-v1.json",
+      "restore_relative_path": "compute/global-conic-evaluation-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "0e7f0c27ee86bc10f2ec2d422eef117aaf1e4af7cba00eda0a377d0c4bf1981e"
+    },
+    {
+      "file": "global-conic-return-CPU-plan-v1.json",
+      "restore_relative_path": "compute/global-conic-return-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "98bda607c0dba4d861a85caff2ebfdeeb691808dd5277f168952b560d1f4ed3b"
+    },
+    {
+      "file": "global-conic-return-CPU-plan-v2.json",
+      "restore_relative_path": "compute/global-conic-return-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "8b329fb43ecff81dfe8d0d01ead098c0b0ad76e6fe04bcaa351049ac9cfdd990"
+    }
+  ],
+  "repository_dependency_snapshots": [],
+  "repository_runtime_NOT_imported": true
+}
