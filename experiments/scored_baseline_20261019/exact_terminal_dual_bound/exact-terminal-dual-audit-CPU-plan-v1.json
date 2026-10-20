@@ -1,0 +1,11 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-exact-terminal-dual-audit-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_exact_terminal_dual_bound_v1.py",
+  "worker_sha256": "0080c89274c9b952a8fb3f5da8830e7cdeab9eed03b4e527b10a3b6d246ab799",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/exact_terminal_dual_bound_v1.py": "38b86718ca968fe3201ad37646e05df4199618373e2b11e7c202569313e72e9e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-exact-terminal-dual-evaluation-v1/report.json": "51e36db8af4529fbb3e67add06ab73ee7506b9ced5f47fdd8bc8375982467efb"
+  },
+  "CPU_only": true,
+  "NEW_independent_actual_certificate_audit": true
+}

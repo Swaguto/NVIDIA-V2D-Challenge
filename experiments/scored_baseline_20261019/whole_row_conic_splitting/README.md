@@ -43,3 +43,11 @@ No reference/component/trajectory/task/policy qualifies. F/separate components,
 missing commands, source data/confidence, heldout failures, physics parameters
 and all original gates are unchanged. Object changes alone cannot clear eight
 right-self failures. Research completion is never owner-goal completion.
+
+## Count clarification (2026-10-20)
+
+Saved executed reports contain 11 base contracts plus 2 range contracts = 13.
+The earlier 12-base/14-total metadata labels were incorrect. Exact source, plans,
+reports and returns remain unchanged; no controls are rerun. This corrects the
+count only and does not change numerical results, gates or qualification. See
+`exact_terminal_dual_bound/whole-row-conic-contract-count-clarification-v1.json`.

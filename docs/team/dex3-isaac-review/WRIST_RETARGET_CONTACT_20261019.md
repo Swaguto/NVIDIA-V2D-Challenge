@@ -3572,3 +3572,37 @@ F/separate components/missing136/heldout31-of-32/source authority/physical
 parameters/original gates remain. Object-only changes cannot clear eight self
 failures. Owner continuation remains active/unachieved; historical blocked
 goal-tool observation stays separate. Research checkpoints never complete it.
+
+
+## 2026-10-20: exact raw terminal-dual phase bound (inconclusive)
+
+Exact code/plans: `experiments/scored_baseline_20261019/exact_terminal_dual_bound/`.
+Private checkpoint/integrity: `compute/exact-terminal-dual-checkpoint-v1.json` /
+`compute/private-integrity-exact-terminal-dual-v1.json`. Five serial CPU guards
+succeed; 14 NEW bound/sign/defect/dyadic controls plus 2 NEW independent bit-decoder
+controls. No old producer/control/model/solver/source/NN/raster/native audit replay.
+
+A NEW exact phase-support functional uses only the original actual terminal-step32
+dual unchanged. Every negative orthant coordinate and whole SOC defect is covered,
+without raw dual projection/clipping/normalization/rescaling/alternate selection.
+Exact rational necessary coordinate bounds derive from actual frozen cone/phase/
+sigma rows, not unused prior float diagnostics. Independent maps bind all 1,058
+columns, 32,306,054 stored coefficient positions, 4,618,162 b entries and all
+900 SOC4 + 151 SOC5 cones. Fixed96bit outward root bounds are certificate guards,
+not candidate tolerances/source accuracy. Objective/conditioning/rows stay fixed.
+
+The SINGLE exact evaluation returns normalized phase lower bound
+-0.07744113078428044: INCONCLUSIVE. It does not exclude zero phase even for this
+frozen sufficient construction. The scaled bound is not penetration/clearance/
+physical force/task-family evidence. No optimization, new pose, source/NN/raster/
+native/physics/GPU/PPO query. A NEW independent IEEE754 bit-integer audit verifies
+ALL coefficient/b products (254,396 nonzero A products), 1,058 support terms, all
+18,286 negative orthant entries and 1,051 whole-cone corrections exactly, without
+calling the producer's denominator-bin algorithm or any solver/source operator.
+
+F/separate components/missing136/heldout31-of-32/source authority/physics/gates and
+8self+5object failures remain. No source/reference/trajectory/task/policy qualifies.
+Owner continuation is active/unachieved; historical blocked goal observation is
+separate. Count-only clarification: prior whole-row conic reports actually contain
+11 base + 2 range controls = 13; older 12/14 labels were incorrect. Executed
+sources/returns remain unchanged; no old contracts are repeated or invented.

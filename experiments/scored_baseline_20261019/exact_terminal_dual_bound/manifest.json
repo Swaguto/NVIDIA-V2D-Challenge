@@ -1,0 +1,68 @@
+{
+  "schema": "v2d.NEW-exact-terminal-dual-code-only-archive.v1",
+  "created_utc": "2026-10-20T21:34:24.505223+00:00",
+  "files": {
+    "exact_terminal_dual_bound_v1.py": {
+      "sha256": "38b86718ca968fe3201ad37646e05df4199618373e2b11e7c202569313e72e9e",
+      "bytes": 4885,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/exact_terminal_dual_bound_v1.py"
+    },
+    "derive_exact_terminal_dual_contracts_v1.py": {
+      "sha256": "23dde1d3884d0a873cfa1c57dba28b52d7a832f6fe3f3de9e7d269a7e63fe14d",
+      "bytes": 3404,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_exact_terminal_dual_contracts_v1.py"
+    },
+    "build_exact_terminal_dual_map_v1.py": {
+      "sha256": "e151753dfc504ab99ea5a45c3cf3a7c0c8dfb15852bad2d8efbe333417918967",
+      "bytes": 2644,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_exact_terminal_dual_map_v1.py"
+    },
+    "verify_exact_terminal_dual_map_v1.py": {
+      "sha256": "5dfb8c2e9e1eac0f590d7dd01409bc788cd45560ff6c86c5725505b857033008",
+      "bytes": 3647,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_exact_terminal_dual_map_v1.py"
+    },
+    "evaluate_exact_terminal_dual_bound_v1.py": {
+      "sha256": "301be7e36556f90d56174293df6459b8f5856116a1bd09cbf342f26b61bd0298",
+      "bytes": 7279,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/evaluate_exact_terminal_dual_bound_v1.py"
+    },
+    "audit_exact_terminal_dual_bound_v1.py": {
+      "sha256": "0080c89274c9b952a8fb3f5da8830e7cdeab9eed03b4e527b10a3b6d246ab799",
+      "bytes": 6962,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_exact_terminal_dual_bound_v1.py"
+    },
+    "whole-row-conic-contract-count-clarification-v1.json": {
+      "sha256": "808863579a2bf9dcc1983dde87bfeddf827b7695fcd405d2882fd53487a84f13",
+      "bytes": 376,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/whole-row-conic-contract-count-clarification-v1.json"
+    },
+    "exact-terminal-dual-contracts-CPU-plan-v1.json": {
+      "sha256": "4cf690705177951b3801fe3340cc2d58e2151f16a0d96f93e3385d0a01f07237",
+      "bytes": 551,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/exact-terminal-dual-contracts-CPU-plan-v1.json"
+    },
+    "exact-terminal-dual-map-CPU-plan-v1.json": {
+      "sha256": "23ab4548cb4d3e7fa9ca0f0b8f57d4f070e8f598a62342a2bba2556f0a381329",
+      "bytes": 538,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/exact-terminal-dual-map-CPU-plan-v1.json"
+    },
+    "exact-terminal-dual-binding-CPU-plan-v1.json": {
+      "sha256": "35e5b18545cec8e1eff1d42c6cf182a04cc602aa5a8bc8338118c4a1531bcb97",
+      "bytes": 550,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/exact-terminal-dual-binding-CPU-plan-v1.json"
+    },
+    "exact-terminal-dual-evaluation-CPU-plan-v1.json": {
+      "sha256": "9b7f071d7af4b7b974c34b89def60123a7488ccb888c2b222742dabe16871257",
+      "bytes": 1110,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/exact-terminal-dual-evaluation-CPU-plan-v1.json"
+    },
+    "exact-terminal-dual-audit-CPU-plan-v1.json": {
+      "sha256": "69b993ca121b191be775e0c2526c93cf2c948dd29ce7d1da6ef8bdc2edf2b34e",
+      "bytes": 736,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/exact-terminal-dual-audit-CPU-plan-v1.json"
+    }
+  },
+  "private_source_geometry_matrices_duals_and_results_EXCLUDED": true,
+  "production_runtime_and_tests_UNCHANGED": true
+}

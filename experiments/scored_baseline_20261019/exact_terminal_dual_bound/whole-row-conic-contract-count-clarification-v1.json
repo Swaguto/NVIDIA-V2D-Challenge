@@ -1,0 +1,10 @@
+{
+  "schema": "v2d.whole-row-conic-contract-count-clarification.v1",
+  "actual_saved_base_contract_count": 11,
+  "actual_saved_range_contract_count": 2,
+  "actual_total": 13,
+  "prior14_and_old12_metadata_labels_incorrect": true,
+  "actual_executed_source_reports_returns_SHA_UNCHANGED": true,
+  "no_contract_or_worker_repeated": true,
+  "no_numerical_or_gate_change": true
+}

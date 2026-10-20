@@ -1,0 +1,10 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-exact-terminal-dual-contracts-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_exact_terminal_dual_contracts_v1.py",
+  "worker_sha256": "23dde1d3884d0a873cfa1c57dba28b52d7a832f6fe3f3de9e7d269a7e63fe14d",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/exact_terminal_dual_bound_v1.py": "38b86718ca968fe3201ad37646e05df4199618373e2b11e7c202569313e72e9e"
+  },
+  "CPU_only": true,
+  "NEW_certificate_only": true
+}

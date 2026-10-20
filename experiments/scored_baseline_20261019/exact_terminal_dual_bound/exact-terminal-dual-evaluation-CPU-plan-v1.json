@@ -1,0 +1,13 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-exact-terminal-dual-evaluation-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/evaluate_exact_terminal_dual_bound_v1.py",
+  "worker_sha256": "301be7e36556f90d56174293df6459b8f5856116a1bd09cbf342f26b61bd0298",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/exact_terminal_dual_bound_v1.py": "38b86718ca968fe3201ad37646e05df4199618373e2b11e7c202569313e72e9e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-exact-terminal-dual-contracts-v1/report.json": "aefc4c63891ff7fcb57a9241a244cd177946a8cc7158fc8dd65646dc21a736fe",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-exact-terminal-dual-binding-v1/report.json": "e3a7c903ed79453d0bf2512f5f60660b76d279803851cf25481c7b488d92f7e4",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-exact-terminal-dual-map-v1/NEW-complete-certificate-map-RETURN.json": "b038f7b7208b477847dcc257b3ea9ea784cb00047595e55278f5dd0dfe077031"
+  },
+  "CPU_only": true,
+  "ONE_NEW_certificate_evaluation_no_solver": true
+}
