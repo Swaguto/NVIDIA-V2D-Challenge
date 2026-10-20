@@ -1,0 +1,53 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "private_results_absent": true,
+  "files": [
+    {
+      "file": "coupled_angle_source_v1.py",
+      "restore_relative_path": "compute/coupled_angle_source_v1.py",
+      "executed_or_declared_source_sha256": "6a29abcd4a5db1f847fa51c0115af40b5fdec3d58e0d1b0b1fe7d3347491562d"
+    },
+    {
+      "file": "verify_coupled_angle_contracts_v1.py",
+      "restore_relative_path": "compute/verify_coupled_angle_contracts_v1.py",
+      "executed_or_declared_source_sha256": "51f4e1010b57f03fedb8c74b6a438ae689f7d52a79e21c7a449eff92f9676317"
+    },
+    {
+      "file": "build_coupled_angle_model_v1.py",
+      "restore_relative_path": "compute/build_coupled_angle_model_v1.py",
+      "executed_or_declared_source_sha256": "bb447f5719fd5e9b537332e73d4fdc2c4a76ad6dd9a5b83b8745d63680df9497"
+    },
+    {
+      "file": "verify_coupled_angle_model_v1.py",
+      "restore_relative_path": "compute/verify_coupled_angle_model_v1.py",
+      "executed_or_declared_source_sha256": "83a4aaf50c6ff9a3ed277fa0e12960339863a08ef4b65c5f92f600b42109aa3c"
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "coupled-angle-contract-CPU-plan-v1.json",
+      "restore_relative_path": "compute/coupled-angle-contract-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "ca80fc6a07dbd006678659250c226bbdb5b13f40f8317d95b6def4c741e0a87a"
+    },
+    {
+      "file": "coupled-angle-model-CPU-plan-v1.json",
+      "restore_relative_path": "compute/coupled-angle-model-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "e4db667adf6b5cd2175d16390b8f8fe444fb3d02a76b77e632eae02cf9ae0ea3"
+    },
+    {
+      "file": "coupled-angle-binding-CPU-plan-v1.json",
+      "restore_relative_path": "compute/coupled-angle-binding-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "9c04b1b38c67887de7908d150c31181c697c3710c4ca45bdd103b8ba8b113817"
+    }
+  ],
+  "repository_dependency_snapshots": [],
+  "production_runtime_unchanged": true
+}

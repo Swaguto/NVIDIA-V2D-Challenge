@@ -1,0 +1,11 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_coupled_angle_model_v1.py",
+  "worker_sha256": "83a4aaf50c6ff9a3ed277fa0e12960339863a08ef4b65c5f92f600b42109aa3c",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-angle-model-v1/fullclock-coupled-angle-model-binding.json": "745076e65f491c245c25b353640bbcb7d07b4b8fa7cc3a470d0d8984bf410b40",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-angle-model-v1/report.json": "9cee0dec2e6973a5ab977cb2c075ed0ad3b00615f9cdddc49a2d15e3cdaecc87"
+  },
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-angle-binding-v1",
+  "scope": "ONE NEW independent mask/columns/exact angle rows and complex actual URDF source-Jacobian binding; no builder, old audit or optimizer replay"
+}

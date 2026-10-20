@@ -1,0 +1,10 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_coupled_angle_contracts_v1.py",
+  "worker_sha256": "51f4e1010b57f03fedb8c74b6a438ae689f7d52a79e21c7a449eff92f9676317",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/coupled_angle_source_v1.py": "6a29abcd4a5db1f847fa51c0115af40b5fdec3d58e0d1b0b1fe7d3347491562d",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+  },
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-angle-contract-v1",
+  "scope": "12 NEW actual chain/source-cone derivative and fullclock exact angle-row contracts; no episode model/optimizer/source fit"
+}

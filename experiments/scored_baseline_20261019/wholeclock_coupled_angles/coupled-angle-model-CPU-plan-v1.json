@@ -1,0 +1,12 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_coupled_angle_model_v1.py",
+  "worker_sha256": "bb447f5719fd5e9b537332e73d4fdc2c4a76ad6dd9a5b83b8745d63680df9497",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/coupled_angle_source_v1.py": "6a29abcd4a5db1f847fa51c0115af40b5fdec3d58e0d1b0b1fe7d3347491562d",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-angle-contract-v1/report.json": "9b7148b740cc6cb3ac083d2b7c16282e827dcb1c7ae7ded0b03728bf3ac55219",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-preserved-branch-independent-v1/report.json": "d241caa7560e4f5cf900ebed9f3cb4914308bd151f68ef8a755adc242f19fff9"
+  },
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-angle-model-v1",
+  "scope": "ONE NEW full151clock index/unfrozen-thumb angle model, original exact linear motion and unexpanded actualURDF source-cones; no optimizer/native/physics"
+}
