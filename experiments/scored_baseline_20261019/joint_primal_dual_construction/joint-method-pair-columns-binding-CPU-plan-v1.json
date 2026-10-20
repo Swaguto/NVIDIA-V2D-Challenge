@@ -1,0 +1,10 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-joint-method-pair-columns-binding-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/bind_joint_method_pair_columns_v1.py",
+  "worker_sha256": "6c011f0fd1b3560c483b86d5b9cf047d7ddc85e1791f3881b544f597ae666e91",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_lossless_returns_v1.py": "94c20974989021fedebaf3910705532780767ed2e7162296a01b5c5b4ccf54a4"
+  },
+  "CPU_only": true,
+  "NEW_unreached_binding_only": true
+}

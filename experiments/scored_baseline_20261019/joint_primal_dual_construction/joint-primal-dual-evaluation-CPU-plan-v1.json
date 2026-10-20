@@ -1,0 +1,20 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-joint-primal-dual-evaluation-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/evaluate_joint_primal_dual_method_v1.py",
+  "worker_sha256": "b634f0fa95124edf833d29409ccfbb15b6a1ca9cb2b581abfa4ecdd4bd858f83",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_primal_dual_method_v1.py": "77abc86da28553246bff261254b99fc54f3572e257efd9f3d34a77124a77c5d1",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_method_pair_columns_v1.py": "a2daa17af0efaabfdbaeb7cacd829495b7c7c1d8ad41153caf1b815fa53e8ee0",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_constraint_derivatives_v1.py": "4c964536a8f0e5c4d530607cccca001fd3d2f4663a1a56f052cc8d2d14591f23",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_constraint_interface_v1.py": "adc6c152e5d9b05c7004b0eeec89cc22af4ff2ba87218b8e9c5db6903e3dbc64",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_lossless_returns_v1.py": "94c20974989021fedebaf3910705532780767ed2e7162296a01b5c5b4ccf54a4",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/coupled_angle_source_v1.py": "6a29abcd4a5db1f847fa51c0115af40b5fdec3d58e0d1b0b1fe7d3347491562d",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full_pose_construction_v1.py": "e26b132976f310ba862291c4bbbbfa2648e6b5b495f71e230a9c648dd73a5412"
+  },
+  "CPU_only": true,
+  "SOLE_NEW_method": true,
+  "updates": 2,
+  "unique_oracles_max": 3,
+  "method_seconds": 150,
+  "terminal_only": true
+}

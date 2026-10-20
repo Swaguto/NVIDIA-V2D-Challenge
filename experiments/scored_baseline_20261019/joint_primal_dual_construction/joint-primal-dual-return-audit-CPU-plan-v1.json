@@ -1,0 +1,10 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-joint-primal-dual-return-audit-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_joint_primal_dual_returns_v1.py",
+  "worker_sha256": "8c65aefada6ea7e4aa8ca7947d2473d8fd06a46a58e64342be27caef2aad73f5",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_lossless_returns_v1.py": "94c20974989021fedebaf3910705532780767ed2e7162296a01b5c5b4ccf54a4"
+  },
+  "CPU_only": true,
+  "NEW_saved_returns_only_no_method_replay": true
+}

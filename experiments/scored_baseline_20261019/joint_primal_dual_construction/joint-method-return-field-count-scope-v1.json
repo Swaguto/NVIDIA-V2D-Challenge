@@ -1,0 +1,10 @@
+{
+  "schema": "v2d.NEW-joint-method-return-field-count-scope.v1",
+  "actual_support_fields": 16,
+  "prior_assertion_17_WRONG": true,
+  "prior_bit_lossless_roundtrip_return_passed_and_reused_BY_HASH": true,
+  "prior_failed_pointer_statement_NOT_passed": true,
+  "NEW_independent_reader_runs_ONLY_unreached_field_pointer_incidence": true,
+  "old_controls_or_method_NOT_rerun": true,
+  "no_numeric_or_gate_change": true
+}

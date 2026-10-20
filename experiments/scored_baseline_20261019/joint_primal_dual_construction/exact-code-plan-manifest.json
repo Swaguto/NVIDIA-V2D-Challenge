@@ -1,0 +1,102 @@
+{
+  "schema": "v2d.NEW-joint-method-exact-code-plan-manifest.v1",
+  "files": {
+    "joint_primal_dual_method_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_primal_dual_method_v1.py",
+      "sha256": "77abc86da28553246bff261254b99fc54f3572e257efd9f3d34a77124a77c5d1",
+      "bytes": 8114
+    },
+    "verify_joint_method_contracts_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_joint_method_contracts_v1.py",
+      "sha256": "9d9572b6710c7de335b98da6f9b082c504dc075032729597ace4f920c17b144b",
+      "bytes": 3671
+    },
+    "build_joint_method_preflight_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_joint_method_preflight_v1.py",
+      "sha256": "0b50166b0b711aba14aaec7c35c7eaf6e4f514d506ab86b26d983bb3458d3b4e",
+      "bytes": 6228
+    },
+    "verify_joint_method_preflight_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_joint_method_preflight_v1.py",
+      "sha256": "e40ba00eec8b17a71641aa9c05624ac9de35b0b3b94fae97d28e5507fefce807",
+      "bytes": 5749
+    },
+    "joint_method_pair_columns_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_method_pair_columns_v1.py",
+      "sha256": "a2daa17af0efaabfdbaeb7cacd829495b7c7c1d8ad41153caf1b815fa53e8ee0",
+      "bytes": 4402
+    },
+    "verify_joint_method_pair_columns_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_joint_method_pair_columns_v1.py",
+      "sha256": "74125471fff31ce07f18c72972cb3ea7bf8182e13445584e4ef032a31b9aa576",
+      "bytes": 2322
+    },
+    "bind_joint_method_pair_columns_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/bind_joint_method_pair_columns_v1.py",
+      "sha256": "6c011f0fd1b3560c483b86d5b9cf047d7ddc85e1791f3881b544f597ae666e91",
+      "bytes": 1867
+    },
+    "evaluate_joint_primal_dual_method_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/evaluate_joint_primal_dual_method_v1.py",
+      "sha256": "b634f0fa95124edf833d29409ccfbb15b6a1ca9cb2b581abfa4ecdd4bd858f83",
+      "bytes": 6850
+    },
+    "audit_joint_primal_dual_returns_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_joint_primal_dual_returns_v1.py",
+      "sha256": "8c65aefada6ea7e4aa8ca7947d2473d8fd06a46a58e64342be27caef2aad73f5",
+      "bytes": 6194
+    },
+    "inspect_joint_method_saved_envelope_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/inspect_joint_method_saved_envelope_v1.py",
+      "sha256": "e33455c3b4eab4af685b72166c7182140062d7c415309030122a514b94aa6a47",
+      "bytes": 2835
+    },
+    "joint-method-contracts-CPU-plan-v1.json": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint-method-contracts-CPU-plan-v1.json",
+      "sha256": "a2720733acbc6d92a9063506a9c469a06889f08bdaa0ab8239763d3b98cb42ad",
+      "bytes": 1517
+    },
+    "joint-method-preflight-CPU-plan-v1.json": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint-method-preflight-CPU-plan-v1.json",
+      "sha256": "5a8d29913f9243bc53b9a00fe418c999c2ebd73a99f4c3a12ec8e60419f939df",
+      "bytes": 1525
+    },
+    "joint-method-binding-CPU-plan-v1.json": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint-method-binding-CPU-plan-v1.json",
+      "sha256": "c01129619811bade5ee8da0f4e72216cf1b8f08585823bb90ca6f045d02b76f2",
+      "bytes": 1534
+    },
+    "joint-method-pair-columns-CPU-plan-v1.json": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint-method-pair-columns-CPU-plan-v1.json",
+      "sha256": "98ad51584c913fe3e9c826e0e821dabfcfab5f679ca33b2409f7976bba3818e4",
+      "bytes": 895
+    },
+    "joint-method-pair-columns-binding-CPU-plan-v1.json": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint-method-pair-columns-binding-CPU-plan-v1.json",
+      "sha256": "8c89bceb6aac54485f2c8279266a2da8553018bf51f234d60464da4a2e64be6d",
+      "bytes": 552
+    },
+    "joint-primal-dual-evaluation-CPU-plan-v1.json": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint-primal-dual-evaluation-CPU-plan-v1.json",
+      "sha256": "19b13866e85c7de350a4b9cee4a2948517e034563d9f12d1abbde771cae06bc6",
+      "bytes": 1605
+    },
+    "joint-primal-dual-return-audit-CPU-plan-v1.json": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint-primal-dual-return-audit-CPU-plan-v1.json",
+      "sha256": "f03ffd957bac03d0fb92714684bcfe48db6c9f1f927f16a1655d0975a1b374fe",
+      "bytes": 563
+    },
+    "joint-method-envelope-scope-CPU-plan-v1.json": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint-method-envelope-scope-CPU-plan-v1.json",
+      "sha256": "a2df5e4a634691896e9c853770fc23474894a5919ae52f2fcddb69217352b932",
+      "bytes": 560
+    },
+    "joint-method-return-field-count-scope-v1.json": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint-method-return-field-count-scope-v1.json",
+      "sha256": "d894370ca0a454aaaf28c33ff6bc3df41de377f663183647cf58dd59c22aaed0",
+      "bytes": 419
+    }
+  },
+  "production_runtime_tests_UNCHANGED": true,
+  "private_episode_results_NOT_included": true
+}

@@ -89,3 +89,14 @@ The new executable interface keeps all 1523 unassigned coordinates, 151 clocks, 
 Six serial guards complete5success/1failure;19 new controls pass. A tuple-key metadata writer fails after loader invocation before a saved constructor receipt; raw object state/receipt remain UNAVAILABLE, never rerun/reconstructed. New typed return controls cover only new synthetic mappings/IEEE bits/sparse pointers and explicit zeros. Three API matmul warnings are retained with finite saved returns; cause/future reliability unproven. Nested Brev fallback bookkeeping is reconciled to the latest real receipt without changing raw receipts or observation timestamps.
 
 No optimizer, episode pose/source/NN/raster/FK/native/physics/GPU/PPO evaluation occurs. Coordinates/directions remain unassigned; no physical/reference/trajectory/task/policy/AUC qualification. F, separate components and all original failures/gates remain unchanged. Owner intent remains active/unachieved; research completion is not goal completion.
+
+
+## 2026-10-20 — bounded whole-joint candidate construction stops before update
+
+Code-only archive: `experiments/scored_baseline_20261019/joint_primal_dual_construction`. Private checkpoint/integrity: `compute/joint-primal-dual-checkpoint-v1.json` / `compute/private-integrity-joint-primal-dual-v1.json`. Production runtime/tests unchanged.
+
+One fixed nonlinear primal–dual construction declares two updates/terminal2, three complete whole-model queries maximum, and 150 seconds under the unchanged 240-second/2-GiB guard. All 1523 joint/object coordinates plus continuous geometric direction charts, 4810140 rows, all 1245 whole cones and all 249603 pair scopes remain. Ten method controls, one exact two-update control and one lossless pair-frame roundtrip pass; a wrong 17-field label (actual16) is retained as a failure, followed only by unreached independent pointer/field bindings.
+
+The sole method finishes one whole151 query in 37.7493 seconds then stops BEFORE metrics, dual projection, adjoint or any update: 30 finite saved SEARCH coefficients exceed the declared numerical tie envelope by at most exactly one ULP (max5.551115123125783e-17 derivative algebra units). These are not candidate tolerances. No envelope repair, gate relaxation, restart, warmstart or intermediate/terminal candidate selection occurs. Saved-return audits bind all249603 pair instances/478078 command incidences/1623929 tied slopes without geometry/source/matrix/projector/method replay. The cause beyond the saved arithmetic scope remains unproven.
+
+No new terminal reference or trajectory exists, and no actual training NN/raster/integer-cell/fullpixel-heldout POST/native+self/swept/motor-grasp/physics/GPU/PPO gate is claimed. F/separate components/missing136/heldout31-of-32/source authority/physical parameters and original8self+5object failures remain. Owner intent stays active/unachieved; historical blocked goal-tool observation is separate.

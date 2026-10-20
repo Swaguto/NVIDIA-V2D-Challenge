@@ -1,0 +1,12 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-joint-method-pair-columns-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_joint_method_pair_columns_v1.py",
+  "worker_sha256": "74125471fff31ce07f18c72972cb3ea7bf8182e13445584e4ef032a31b9aa576",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_method_pair_columns_v1.py": "a2daa17af0efaabfdbaeb7cacd829495b7c7c1d8ad41153caf1b815fa53e8ee0",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_lossless_returns_v1.py": "94c20974989021fedebaf3910705532780767ed2e7162296a01b5c5b4ccf54a4",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_constraint_interface_v1.py": "adc6c152e5d9b05c7004b0eeec89cc22af4ff2ba87218b8e9c5db6903e3dbc64"
+  },
+  "CPU_only": true,
+  "NEW_method_specific_full_frame_retention_control": true
+}

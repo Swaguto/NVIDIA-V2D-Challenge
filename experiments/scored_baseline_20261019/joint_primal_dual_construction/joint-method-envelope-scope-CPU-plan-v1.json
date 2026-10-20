@@ -1,0 +1,10 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-joint-method-envelope-scope-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/inspect_joint_method_saved_envelope_v1.py",
+  "worker_sha256": "e33455c3b4eab4af685b72166c7182140062d7c415309030122a514b94aa6a47",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_lossless_returns_v1.py": "94c20974989021fedebaf3910705532780767ed2e7162296a01b5c5b4ccf54a4"
+  },
+  "CPU_only": true,
+  "NEW_saved_actual_failure_scope_only": true
+}
