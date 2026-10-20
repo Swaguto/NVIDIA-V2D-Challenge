@@ -1,0 +1,19 @@
+{
+  "schema": "v2d.NEW-object-conic-return-audit-CPU-plan.v1",
+  "created_utc": "2026-10-20T03:10:22.556924+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_object_conic_return_v1.py",
+  "worker_sha256": "eeee1d406f1e203ae51baca5f47315fbcf462acda4d93dd56e6fbcdafcb7a563",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-conic-return-audit-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-visibility-support-evaluation-v1/ONE-actual-SOCP-RETURN.json": "36da055a823c0037c574f6c3999f01c8a8c3ed770e35d1c8d4fc2126277219a6",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-visibility-support-evaluation-v1/report.json": "9fbf1d593d203b5d5b3d360e48322d8bc467a679faec890c3085ef33b2383b00",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-visibility-support-model-v3/canonical-A.npz": "915b1049b9de14cd9897daa413225861b21708adcf47194c7178ce2a3ace0838",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-visibility-support-model-v3/canonical-vectors.npz": "2b7105ed8f00c95b33ed6e1c744ddb518b02dee58e6b91f012e6bde3af7258c5",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-visibility-support-model-v3/canonical-row-origins.json": "4dd6762eb256d69b9792d8a735b46ca380e3af5319265240c9abeffc9ef33232"
+  },
+  "scope": "4NEW analytic SOC finite-box contracts; ONE exact raw-dual residual certificate and exact opposite-row lookup; no solver/old source/native audit/anchor sweep",
+  "wall_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}

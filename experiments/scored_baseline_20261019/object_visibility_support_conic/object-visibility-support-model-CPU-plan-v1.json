@@ -1,0 +1,24 @@
+{
+  "schema": "v2d.NEW-object-visibility-support-model-CPU-plan.v1",
+  "created_utc": "2026-10-20T02:55:22.538720+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_object_visibility_support_model_v1.py",
+  "worker_sha256": "46641a1e81732002aeaf02bab45aad22d177d940f9dff5d8eb4c7b5b17731cb2",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-visibility-support-model-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_visibility_support_v1.py": "a9bd5ac1ac0a699fa2ce64f0e7a6ef005df40cff3d733bbaa76baf1258b5df1b",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-visibility-support-contract-v1/report.json": "653e83dee5a1632304396785844e7b5a1d5434fa0ff3c32c2c42c00c449a9b0a",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-source-authority-v1/report.json": "23b105a3df815f6ab87fc68132449f7c399533a4d31672dc5432a54a1ec60e30",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-translation-binding-v1/report.json": "3c986947bd251c0efc160de9c444d83debaa8c726503b57737762322e0d3576c",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-translation-binding-v1/all299-UNQUALIFIED-object-motion-affine-maps.json": "a5664e1e1d8efb53a20d9ec1c703e67fcaea1b809827e20277831cd513b53987"
+  },
+  "declared_scope": "ONE NEW453translation-column fixed-rotation/full151clock training-ray visibility-cell/analytic compiled support-plane/299motion SOCP construction; no solver or native position audit",
+  "training_split": "24EVEN eligible raster-order-linspace depth pixels/frame; no heldout values passed to model",
+  "constructor_world_translation_halfwidth_m": 0.02,
+  "gate_relaxation": false,
+  "world_motion_caps": "original object caps BY HASH; p95 sufficient envelope; robot boxes not borrowed",
+  "source_fullpixel_gate_POSTCONSTRUCTION_only": true,
+  "wall_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}

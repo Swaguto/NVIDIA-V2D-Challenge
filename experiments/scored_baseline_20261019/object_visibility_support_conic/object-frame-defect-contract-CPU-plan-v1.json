@@ -1,0 +1,15 @@
+{
+  "schema": "v2d.NEW-object-frame-defect-contract-CPU-plan.v1",
+  "created_utc": "2026-10-20T02:57:18.595150+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_object_frame_defect_contracts_v1.py",
+  "worker_sha256": "797ae37245c2fdc3f04e2f25108801b3a96f271f3c5ec1bb1003390d7d6f63e4",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-frame-defect-contract-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_compiled_frame_defect_v1.py": "a01b9b9c94e0317a05aac721b2d8552c943531feb40e9cf1e9c940b263da71c3",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+  },
+  "scope": "4NEW analytic exact static-origin defect maps; NOT rerun of failed FK or generic tolerance repair",
+  "wall_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}

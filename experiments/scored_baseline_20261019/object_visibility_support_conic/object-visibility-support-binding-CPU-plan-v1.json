@@ -1,0 +1,20 @@
+{
+  "schema": "v2d.NEW-object-visibility-support-binding-CPU-plan.v1",
+  "created_utc": "2026-10-20T03:01:39.074587+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_object_visibility_support_binding_v1.py",
+  "worker_sha256": "8d4d806f95dea5a78228ce22c01892095115c447dad0fa07ec995fe440d7e1f8",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-visibility-support-binding-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_visibility_support_v1.py": "a9bd5ac1ac0a699fa2ce64f0e7a6ef005df40cff3d733bbaa76baf1258b5df1b",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-visibility-support-model-v3/report.json": "1bc8f7ba0027fcab026d91e418bccefb18b9432c00c7645893a2b1c0a5564afb",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-visibility-support-model-v3/canonical-A.npz": "915b1049b9de14cd9897daa413225861b21708adcf47194c7178ce2a3ace0838",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-visibility-support-model-v3/canonical-P.npz": "82e9d51257e326347afcae857831df8acd89eab4681f2ce982637c4361e64f3b",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-visibility-support-model-v3/canonical-vectors.npz": "2b7105ed8f00c95b33ed6e1c744ddb518b02dee58e6b91f012e6bde3af7258c5",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-visibility-support-model-v3/canonical-row-origins.json": "4dd6762eb256d69b9792d8a735b46ca380e3af5319265240c9abeffc9ef33232"
+  },
+  "scope": "ONE independent NEW canonical/ray-map/saved-frame-defect/support/coverage binding; no producer/old-source/native audit/solver replay",
+  "wall_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}

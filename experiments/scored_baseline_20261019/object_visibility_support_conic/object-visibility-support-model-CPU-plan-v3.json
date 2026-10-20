@@ -1,0 +1,32 @@
+{
+  "schema": "v2d.NEW-support-default-bound-object-visibility-support-model-CPU-plan.v3",
+  "created_utc": "2026-10-20T02:59:33.647610+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_object_visibility_support_model_v3.py",
+  "worker_sha256": "f05e3851581780cf1e858fad5417d8527c247b85e92e6392e2e5c9a48c810d05",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-visibility-support-model-v3",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_visibility_support_v1.py": "a9bd5ac1ac0a699fa2ce64f0e7a6ef005df40cff3d733bbaa76baf1258b5df1b",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-visibility-support-contract-v1/report.json": "653e83dee5a1632304396785844e7b5a1d5434fa0ff3c32c2c42c00c449a9b0a",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-source-authority-v1/report.json": "23b105a3df815f6ab87fc68132449f7c399533a4d31672dc5432a54a1ec60e30",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-translation-binding-v1/report.json": "3c986947bd251c0efc160de9c444d83debaa8c726503b57737762322e0d3576c",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-translation-binding-v1/all299-UNQUALIFIED-object-motion-affine-maps.json": "a5664e1e1d8efb53a20d9ec1c703e67fcaea1b809827e20277831cd513b53987",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_compiled_frame_defect_v1.py": "a01b9b9c94e0317a05aac721b2d8552c943531feb40e9cf1e9c940b263da71c3",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-frame-defect-contract-v1/report.json": "c6610a70901af7058a83c2204269f5de4150ffaa292c79c15887ba33f533e5a2",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-visibility-support-model-v1/NEW-compiled-support-geometry.npz": "89f9bfb77aa40e6dbc36c8c2271212686daaaac56e0afa22aa0ee423b28f185a",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object-model-v2-lineage-v1.json": "ea9f3faa5672f2dd85c3ec4ad24193bb0a13f0b34154c7a1b02a261aa8ed8802",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-visibility-support-model-v2/NEW-exact-static-frame-path-defect-RETURNS.json": "fe31ace1b628b93bedbf207eb0e3622420c36cee014ad3d19d081a753337d9a6",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-visibility-support-model-v2/normalized-BEFORE-AFTER-journal.jsonl": "ada077994a37b7be7ec6c56c1df62663d3e9aa86d7f8918b3f8115c78f2d11a9",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object-model-support-binding-diagnosis-v1.json": "1c119737a93967e3b4e90cc5ba28ee66f6e6f4e1a14bf3238b2a799ca69fb81b",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object-model-v3-support-lineage-v1.json": "e267632f47c2d7e83bb8ac6c9271f2bd2402262f7365d81040aa832347c07279"
+  },
+  "declared_scope": "ONE NEW453translation-column fixed-rotation/full151clock training-ray visibility-cell/analytic compiled support-plane/299motion SOCP construction; no solver or native position audit",
+  "training_split": "24EVEN eligible raster-order-linspace depth pixels/frame; no heldout values passed to model",
+  "constructor_world_translation_halfwidth_m": 0.02,
+  "gate_relaxation": false,
+  "world_motion_caps": "original object caps BY HASH; p95 sufficient envelope; robot boxes not borrowed",
+  "source_fullpixel_gate_POSTCONSTRUCTION_only": true,
+  "wall_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}

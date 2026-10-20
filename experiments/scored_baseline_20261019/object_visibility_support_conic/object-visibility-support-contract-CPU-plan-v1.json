@@ -1,0 +1,15 @@
+{
+  "schema": "v2d.NEW-object-visibility-support-contract-CPU-plan.v1",
+  "created_utc": "2026-10-20T02:51:30.967779+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_object_visibility_support_contracts_v1.py",
+  "worker_sha256": "b16ec0920c889f7da934c559b781ed5e5ec4f987b2f2068290662468f13382af",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-visibility-support-contract-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_visibility_support_v1.py": "a9bd5ac1ac0a699fa2ce64f0e7a6ef005df40cff3d733bbaa76baf1258b5df1b",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+  },
+  "scope": "11NEW analytic visibility/source-ray/support/broadphase/quantile/QP controls; no episode/native measurement",
+  "wall_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}

@@ -1,0 +1,175 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "files": [
+    {
+      "file": "object_visibility_support_v1.py",
+      "restore_relative_path": "compute/object_visibility_support_v1.py",
+      "executed_or_declared_source_sha256": "a9bd5ac1ac0a699fa2ce64f0e7a6ef005df40cff3d733bbaa76baf1258b5df1b"
+    },
+    {
+      "file": "verify_object_visibility_support_contracts_v1.py",
+      "restore_relative_path": "compute/verify_object_visibility_support_contracts_v1.py",
+      "executed_or_declared_source_sha256": "b16ec0920c889f7da934c559b781ed5e5ec4f987b2f2068290662468f13382af"
+    },
+    {
+      "file": "object-visibility-support-contract-CPU-plan-v1.json",
+      "restore_relative_path": "compute/object-visibility-support-contract-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "2e63f07dd63c9675c419321e44a50d1d894af5a96aeb13b9242682e70179993b"
+    },
+    {
+      "file": "build_object_visibility_support_model_v1.py",
+      "restore_relative_path": "compute/build_object_visibility_support_model_v1.py",
+      "executed_or_declared_source_sha256": "46641a1e81732002aeaf02bab45aad22d177d940f9dff5d8eb4c7b5b17731cb2"
+    },
+    {
+      "file": "object-visibility-support-model-CPU-plan-v1.json",
+      "restore_relative_path": "compute/object-visibility-support-model-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "d74d09a1ceea0d40d09c085502a6879ede32e029556e07c2211eb1aee5c0533b"
+    },
+    {
+      "file": "object_compiled_frame_defect_v1.py",
+      "restore_relative_path": "compute/object_compiled_frame_defect_v1.py",
+      "executed_or_declared_source_sha256": "a01b9b9c94e0317a05aac721b2d8552c943531feb40e9cf1e9c940b263da71c3"
+    },
+    {
+      "file": "verify_object_frame_defect_contracts_v1.py",
+      "restore_relative_path": "compute/verify_object_frame_defect_contracts_v1.py",
+      "executed_or_declared_source_sha256": "797ae37245c2fdc3f04e2f25108801b3a96f271f3c5ec1bb1003390d7d6f63e4"
+    },
+    {
+      "file": "object-frame-defect-contract-CPU-plan-v1.json",
+      "restore_relative_path": "compute/object-frame-defect-contract-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "b88f2727dde0004e94d88d7cb60cf85b5bd2e2d9b7067ad6e1a1845f33b9be40"
+    },
+    {
+      "file": "prepare_object_visibility_model_v2.py",
+      "restore_relative_path": "compute/prepare_object_visibility_model_v2.py",
+      "executed_or_declared_source_sha256": "fa6db701205f946fc344aba1a8af5f914896b7edc856890cbd011b7ffbd1f5e0"
+    },
+    {
+      "file": "build_object_visibility_support_model_v2.py",
+      "restore_relative_path": "compute/build_object_visibility_support_model_v2.py",
+      "executed_or_declared_source_sha256": "f7deaf48dd93e089ffae329121880070a5f8fb3929b34606de5893822b7b72d8"
+    },
+    {
+      "file": "object-visibility-support-model-CPU-plan-v2.json",
+      "restore_relative_path": "compute/object-visibility-support-model-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "b033f60ad7a4ad2c3d8fc8498a5a2d8310fb9cacb1b105f3745bc05c0895cc73"
+    },
+    {
+      "file": "object-model-v2-lineage-v1.json",
+      "restore_relative_path": "compute/object-model-v2-lineage-v1.json",
+      "executed_or_declared_source_sha256": "ea9f3faa5672f2dd85c3ec4ad24193bb0a13f0b34154c7a1b02a261aa8ed8802"
+    },
+    {
+      "file": "prepare_object_visibility_model_v3.py",
+      "restore_relative_path": "compute/prepare_object_visibility_model_v3.py",
+      "executed_or_declared_source_sha256": "e0b1cd7c523bda549df96f1dc59c45907909215796a5aa5dc777c458d0121db1"
+    },
+    {
+      "file": "build_object_visibility_support_model_v3.py",
+      "restore_relative_path": "compute/build_object_visibility_support_model_v3.py",
+      "executed_or_declared_source_sha256": "f05e3851581780cf1e858fad5417d8527c247b85e92e6392e2e5c9a48c810d05"
+    },
+    {
+      "file": "object-visibility-support-model-CPU-plan-v3.json",
+      "restore_relative_path": "compute/object-visibility-support-model-CPU-plan-v3.json",
+      "executed_or_declared_source_sha256": "5e9ef3cd7eac9f35084407b98ff169b1d9071c7ef5eabd8f454bb9e61146f101"
+    },
+    {
+      "file": "object-model-v3-support-lineage-v1.json",
+      "restore_relative_path": "compute/object-model-v3-support-lineage-v1.json",
+      "executed_or_declared_source_sha256": "e267632f47c2d7e83bb8ac6c9271f2bd2402262f7365d81040aa832347c07279"
+    },
+    {
+      "file": "verify_object_visibility_support_binding_v1.py",
+      "restore_relative_path": "compute/verify_object_visibility_support_binding_v1.py",
+      "executed_or_declared_source_sha256": "8d4d806f95dea5a78228ce22c01892095115c447dad0fa07ec995fe440d7e1f8"
+    },
+    {
+      "file": "object-visibility-support-binding-CPU-plan-v1.json",
+      "restore_relative_path": "compute/object-visibility-support-binding-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "41a6b01400a7d99f8714291ae4a8136ecbcccdfde22a05ed0e50441460e80077"
+    },
+    {
+      "file": "object_exact_ray_binding_v1.py",
+      "restore_relative_path": "compute/object_exact_ray_binding_v1.py",
+      "executed_or_declared_source_sha256": "41dd6687d72c0f74123aecac67616761a64d10a94ac7fbaaccf430c6b03d010e"
+    },
+    {
+      "file": "prepare_object_exact_binding_v2.py",
+      "restore_relative_path": "compute/prepare_object_exact_binding_v2.py",
+      "executed_or_declared_source_sha256": "9862751935a98f1aed9588867a308956f95cceccda46195f3ffdd15aa7740ec8"
+    },
+    {
+      "file": "verify_object_visibility_support_binding_v2.py",
+      "restore_relative_path": "compute/verify_object_visibility_support_binding_v2.py",
+      "executed_or_declared_source_sha256": "81b850b69d49950ac04cba718ad5e68eafb11cd4b9dbebf707877362b0129325"
+    },
+    {
+      "file": "object-visibility-support-binding-CPU-plan-v2.json",
+      "restore_relative_path": "compute/object-visibility-support-binding-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "ad1474566df71551787357d92fa1d2d499828c6ecfce5d5ee7d4e80b1fde3945"
+    },
+    {
+      "file": "object_binary32_objective_binding_v1.py",
+      "restore_relative_path": "compute/object_binary32_objective_binding_v1.py",
+      "executed_or_declared_source_sha256": "2fece3821d98e49caa6379109754c8d59565bed52a1188da2d16ea67c541a8f1"
+    },
+    {
+      "file": "prepare_object_precision_binding_v3.py",
+      "restore_relative_path": "compute/prepare_object_precision_binding_v3.py",
+      "executed_or_declared_source_sha256": "b495d9636f710415d4dfca7d10953d1a8f3fb2e96da618fe47b9b5b5bdce7e3b"
+    },
+    {
+      "file": "verify_object_visibility_support_binding_v3.py",
+      "restore_relative_path": "compute/verify_object_visibility_support_binding_v3.py",
+      "executed_or_declared_source_sha256": "b51687783a8856d33eb95aabe3b87574b6571bfe13b9a37a1a5f57ca1513e3a6"
+    },
+    {
+      "file": "object-visibility-support-binding-CPU-plan-v3.json",
+      "restore_relative_path": "compute/object-visibility-support-binding-CPU-plan-v3.json",
+      "executed_or_declared_source_sha256": "c787802c4ba46d6ffc8ce5399fb25530ad79967eb89b972ca5a382819a7221c0"
+    },
+    {
+      "file": "evaluate_object_visibility_support_v1.py",
+      "restore_relative_path": "compute/evaluate_object_visibility_support_v1.py",
+      "executed_or_declared_source_sha256": "39dfc9aa2486eb5b201f133890c785469525d7381e3db0d617b1e770c70466ce"
+    },
+    {
+      "file": "object-visibility-support-evaluation-CPU-plan-v1.json",
+      "restore_relative_path": "compute/object-visibility-support-evaluation-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "98ea4c997543fb2cd1bb227bc4a66c71893ef356ff93a20e729afcc1ce1a171b"
+    },
+    {
+      "file": "audit_object_conic_return_v1.py",
+      "restore_relative_path": "compute/audit_object_conic_return_v1.py",
+      "executed_or_declared_source_sha256": "eeee1d406f1e203ae51baca5f47315fbcf462acda4d93dd56e6fbcdafcb7a563"
+    },
+    {
+      "file": "object-conic-return-audit-CPU-plan-v1.json",
+      "restore_relative_path": "compute/object-conic-return-audit-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "ee6b347651b9bf574f6e71f8f6812b72117f8d030bd66d9c14850131f7c62645"
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    }
+  ],
+  "repository_dependency_sources_sha256": {
+    "scripts/dex3_training/v2d_dex3_flashchord/native_mesh.py": "8ff66a4dfb1e8337f9e4470ee5859fb1586e24e792893d0e2200eb0591b7a4d5",
+    "scripts/dex3_training/v2d_dex3_flashchord/kinematics.py": "0747c53517a45a64efa5c7ecf8e91fedafcfb5150042c9a99c2718c0d7cb376c",
+    "scripts/track3/select_pose_hypothesis.py": "a5c2466cf879d9f955bc19aa131bcaa6609197c8e01fc60e411dd973b24dd31d",
+    "scripts/track3/foundationpose_track.py": "0e03208d584feb6746bc91933312bb38f18d700a072e2a8af154274706d21b29",
+    "scripts/track3/temporal_pose_path.py": "49f3a790488e2ba1d07523456a40e8eebabba3bc1dd39f1b568bad9bb5b041f9"
+  },
+  "repository_dependency_snapshots": [],
+  "private_arrays_geometry_training_pixels_model_results_absent": true,
+  "production_runtime_unchanged": true
+}

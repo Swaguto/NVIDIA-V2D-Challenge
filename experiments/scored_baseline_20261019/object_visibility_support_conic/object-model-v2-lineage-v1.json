@@ -1,0 +1,11 @@
+{
+  "schema": "v2d.NEW-object-model-v2-lineage.v1",
+  "created_utc": "2026-10-20T02:58:19.120403+00:00",
+  "failed_v1_source_sha256": "46641a1e81732002aeaf02bab45aad22d177d940f9dff5d8eb4c7b5b17731cb2",
+  "new_source_sha256": "f7deaf48dd93e089ffae329121880070a5f8fb3929b34606de5893822b7b72d8",
+  "semantic_change": "Read saved compiled geometry by hash. Replace unsupported decimal-compiled exact closure assumption with exact static-origin path-defect bound and actual COMPILED_FK support poses; keep gates unchanged. Durably journal each new frame/support return before assertions.",
+  "old11contracts_reused_BY_HASH": true,
+  "new4defect_contracts_sha256": "c6610a70901af7058a83c2204269f5de4150ffaa292c79c15887ba33f533e5a2",
+  "NO_failing_body_or_return_reconstruction": true,
+  "original_authority_config_and_budgets_unchanged": true
+}

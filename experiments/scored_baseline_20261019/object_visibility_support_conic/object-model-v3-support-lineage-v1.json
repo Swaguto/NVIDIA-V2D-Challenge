@@ -1,0 +1,11 @@
+{
+  "schema": "v2d.NEW-object-model-v3-support-lineage.v1",
+  "created_utc": "2026-10-20T02:59:33.646500+00:00",
+  "failed_v2_source_sha256": "f7deaf48dd93e089ffae329121880070a5f8fb3929b34606de5893822b7b72d8",
+  "new_source_sha256": "f05e3851581780cf1e858fad5417d8527c247b85e92e6392e2e5c9a48c810d05",
+  "actual_native_support_is_free_body": true,
+  "support_pose_bound_to_ORIGINAL_model_qpos0_not_modelbody_static_pose": true,
+  "valid_v2_static_defects_and_frame0_returns_reused_BY_HASH": true,
+  "failed_v1_body_and_v2_support_returns_UNKNOWN_not_reconstructed": true,
+  "original_model_config_training_and_solver_budgets_unchanged": true
+}
