@@ -1,0 +1,38 @@
+{
+  "schema": "v2d.hard-training-source-syntax-only-repair.v1",
+  "recorded_utc": "2026-10-20T14:20:37.139440+00:00",
+  "failed_source_sha256": "8c20b540ecba4bde1d5798d59bb3b1ab3d48990e276fd1f0e58ffcd925ca13f3",
+  "new_source_sha256": "42e607e6b7d2cc98f720782ccfd9c82fad04c1a326783a93e591c004e3af7cbf",
+  "exact_changes": [
+    "insert missing whitespace between __name__ and for",
+    "use new private v2output directory"
+  ],
+  "AST_parse_passed": true,
+  "valid_AST_sha256": "246a6a3c0c0f23a380f94df354819e60e460feb09f48a4631d8e165b3f910700",
+  "mathematics_limits_tolerances_constraints_weights_authority_UNCHANGED": true,
+  "old_failed_source_plan_log_guard_retained": true,
+  "no_solver_or_constructor_RETURN_existed_in_v1": true,
+  "no_completed_valid_solver_or_control_repeated": true,
+  "diff": [
+    "--- evaluate_hard_training_source_conic_v1.py\n",
+    "+++ evaluate_hard_training_source_conic_v2.py\n",
+    "@@ -15,7 +15,7 @@\n",
+    " from temporal_pose_path import motion_summary",
+    " from thumb_conic_geometry_v1 import plain,journal",
+    " ",
+    "-O=S/'e037-hard-training-source-evaluation-v1';M=S/'e037-hard-training-source-model-v1';D=S/'e037-object-dynamic-runtime-v1';T=S/'e037-training-source-constraints-v1';F=S/'e037-thumb-ray-independent-validation-v1/frozen';start=time.monotonic()",
+    "+O=S/'e037-hard-training-source-evaluation-v2';M=S/'e037-hard-training-source-model-v1';D=S/'e037-object-dynamic-runtime-v1';T=S/'e037-training-source-constraints-v1';F=S/'e037-thumb-ray-independent-validation-v1/frozen';start=time.monotonic()",
+    " cv2.setNumThreads(1);read=lambda p:json.loads(Path(p).read_text());sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()",
+    " def save(n,v):",
+    "  p=O/n;p.write_text(json.dumps(plain(v),indent=2,allow_nan=False)+'\\n');p.chmod(0o600)",
+    "@@ -48,7 +48,7 @@\n",
+    "  with np.load(M/'canonical-vectors.npz')as z:b=z['b'];q=z['q']",
+    "  settings=clarabel.DefaultSettings();settings.verbose=False;settings.max_iter=100;settings.time_limit=60.;settings.max_threads=1",
+    "  cones=[clarabel.NonnegativeConeT(meta['nonnegative_rows'])]+[clarabel.SecondOrderConeT(4)for _ in range(meta['SOC4'])]",
+    "- cone_return=dict(actual_count=len(cones),actual_types=sorted(set(type(c).__name__for c in cones)),actual_dimensions_counted={str(k):sum(c.dim==k for c in cones)for k in {c.dim for c in cones}},actual_total_rows=sum(c.dim for c in cones))",
+    "+ cone_return=dict(actual_count=len(cones),actual_types=sorted(set(type(c).__name__ for c in cones)),actual_dimensions_counted={str(k):sum(c.dim==k for c in cones)for k in {c.dim for c in cones}},actual_total_rows=sum(c.dim for c in cones))",
+    "  save('actual-cone-constructors-RETURN.json',cone_return);emit(dict(kind='AFTER_NEW_cone_constructor_RETURN',actual_RETURN=cone_return));assert cone_return['actual_total_rows']==A.shape[0]",
+    "  emit(dict(kind='BEFORE_ONE_NEW_solver_constructor',actual_settings=dict(max_iter=settings.max_iter,time_limit=settings.time_limit,max_threads=settings.max_threads,tol_gap_abs=settings.tol_gap_abs,tol_gap_rel=settings.tol_gap_rel,tol_feas=settings.tol_feas)))",
+    "  solver=clarabel.DefaultSolver(P,q,A,b,cones,settings);constructor=dict(type=type(solver).__name__,opaque_repr=repr(solver),actual_initial_info=snapshot(solver.get_info()));save('actual-solver-constructor-RETURN.json',constructor);emit(dict(kind='AFTER_ONE_NEW_solver_constructor_RETURN',actual_RETURN=constructor))"
+  ]
+}

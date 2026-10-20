@@ -1,0 +1,20 @@
+{
+  "schema": "v2d.NEW-hard-training-source-model-CPU-plan.v1",
+  "created_utc": "2026-10-20T14:13:15.053765+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_hard_training_source_conic_v1.py",
+  "worker_sha256": "f1ef186177ae94951a558d6880adc3a9924284753bf132f7faae32fe657d2ac5",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-training-source-model-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-training-proxy-roundoff-v1/report.json": "e9d474bf890a08f2c8ed97292b71c0d83a069b78101d5df806458c1bd9ded27a",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-training-proxy-roundoff-v1/all151-NEW-uniform-error-bindings.json": "8b091b26bcce1176f7f37415046fa8bb6266e53ba4b2a0fe9e9a6774df8159a8",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-training-orderstat-support-v1/report.json": "9e8e5d08b23b164fd6cdd6c62ef97ae2214ba6f4e786c020c45e6b84d6ded9b2",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-evaluation-v1/evaluation-000-NEW-union-support-RETURN.npz": "95337d23e8db59aa851595d4e24ebc206a2cd620a6006718ac0ba7a5866b2681",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-runtime-v1/dynamic-motion-linear-map.npz": "df3eb6c6a2b68b3f02a7e0efdd71f4cc4f40963718ccff18a8f48745e2bae561",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-runtime-v1/dynamic-motion-constants.npy": "4baa5841964d0e3c2135388a7a7c89c97bb1812212a299c6a3cc9a5c64340f3a"
+  },
+  "scope": "Independent exact operation-wise/all6dotorder151roundoff proofs, NEW complete454column1166056row286907SOC4 object proposal construction from saved286608medianproxy maps, initialFgeometry and299motionmaps. NOsource/NN/oldmodel/control replay or solver/pose call.",
+  "wall_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}

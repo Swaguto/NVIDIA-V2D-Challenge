@@ -1,0 +1,23 @@
+{
+  "schema": "v2d.NEW-conic-callback-api-inventory.v1",
+  "observed_utc": "2026-10-20T14:16:03.483139+00:00",
+  "clarabel_version": "0.11.1",
+  "solver_methods": {
+    "set_termination_callback": {
+      "available": true,
+      "doc": null
+    },
+    "get_info": {
+      "available": true,
+      "doc": null
+    },
+    "get_solution": {
+      "available": true,
+      "doc": null
+    }
+  },
+  "SOC4_dim_descriptor_available": true,
+  "Nonnegative_dim_descriptor_available": true,
+  "no_solver_or_cone_constructor_or_solve_called": true,
+  "old_SOC_API_runtime_evidence_REUSED_BY_HASH": true
+}

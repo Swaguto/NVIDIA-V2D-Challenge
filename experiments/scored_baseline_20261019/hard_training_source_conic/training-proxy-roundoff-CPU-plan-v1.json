@@ -1,0 +1,22 @@
+{
+  "schema": "v2d.NEW-training-proxy-roundoff-CPU-plan.v1",
+  "created_utc": "2026-10-20T14:09:28.659994+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_training_proxy_roundoff_v1.py",
+  "worker_sha256": "efa271d9ae1d2e5e2ebd30f29b6bbfb444b049dd79ddadea4457f6e9e706504b",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-training-proxy-roundoff-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/training_proxy_roundoff_v1.py": "397668748df73cf9da77c328a3e7fb418e5c9e2d17d73122ced56abb5ba61e6c",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/training-orderstat-checkpoint-v1.json": "0b816f57625ccf8ba4ae2682351bebe6068113232d640dee59832fab3116f37c",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/private-integrity-training-orderstat-v1.json": "c96926d6020b6d6c0a99bdc8f379e4c0efc9deeeb381facb3b25819879ce994e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-training-orderstat-support-v1/report.json": "9e8e5d08b23b164fd6cdd6c62ef97ae2214ba6f4e786c020c45e6b84d6ded9b2",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-training-source-independent-v1/report.json": "891f5be08740ca5eed108017674ca36fea0345a49eef4d88bd6fbaa97f00f881",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-runtime-v1/dynamic-source-data.npz": "31505c96bde69959aef90e9331fd5a40f7856b944fc511baedbccbe0008de9b8"
+  },
+  "scope": "5NEW binary64 forward-error/outward/norm/positive-radius controls and ONE151 uniform numerical-proposal-bound inventory. Old training source/NN/124defect controls/audits reused BY HASH, no replay. No solver or actual nonzero episode pose.",
+  "world_translation_halfwidth_m": 0.02,
+  "guard_scope": "OUTWARD proposal arithmetic ONLY; KD/raster/actualsource qualification not implied",
+  "wall_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}

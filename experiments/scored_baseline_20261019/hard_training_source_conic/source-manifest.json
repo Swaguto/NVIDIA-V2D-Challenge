@@ -1,0 +1,138 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "files": [
+    {
+      "file": "training_proxy_roundoff_v1.py",
+      "restore_relative_path": "compute/training_proxy_roundoff_v1.py",
+      "executed_or_declared_source_sha256": "397668748df73cf9da77c328a3e7fb418e5c9e2d17d73122ced56abb5ba61e6c",
+      "expected_syntax_failure": false
+    },
+    {
+      "file": "derive_training_proxy_roundoff_v1.py",
+      "restore_relative_path": "compute/derive_training_proxy_roundoff_v1.py",
+      "executed_or_declared_source_sha256": "efa271d9ae1d2e5e2ebd30f29b6bbfb444b049dd79ddadea4457f6e9e706504b",
+      "expected_syntax_failure": false
+    },
+    {
+      "file": "training-proxy-roundoff-CPU-plan-v1.json",
+      "restore_relative_path": "compute/training-proxy-roundoff-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "4b32486f80e716fb22e3daa099f3492ab5ca9ed7309f0aef31d82383f7e2aa21",
+      "expected_syntax_failure": false
+    },
+    {
+      "file": "build_hard_training_source_conic_v1.py",
+      "restore_relative_path": "compute/build_hard_training_source_conic_v1.py",
+      "executed_or_declared_source_sha256": "f1ef186177ae94951a558d6880adc3a9924284753bf132f7faae32fe657d2ac5",
+      "expected_syntax_failure": false
+    },
+    {
+      "file": "hard-training-source-model-CPU-plan-v1.json",
+      "restore_relative_path": "compute/hard-training-source-model-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "420d2e34cbe3a3215c3cb7155cde28ca6495184c85f27b92d60d0182b102b825",
+      "expected_syntax_failure": false
+    },
+    {
+      "file": "verify_hard_training_source_model_v1.py",
+      "restore_relative_path": "compute/verify_hard_training_source_model_v1.py",
+      "executed_or_declared_source_sha256": "4b07a2c6fd7a5f0697f99efde856c11522b5d0497fbf8dab2d3f863c8f364e8f",
+      "expected_syntax_failure": false
+    },
+    {
+      "file": "hard-training-source-binding-CPU-plan-v1.json",
+      "restore_relative_path": "compute/hard-training-source-binding-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "aa5ac240e6ef24749dba391c140e57fc68a2119ae12a269097d852822aff2d2f",
+      "expected_syntax_failure": false
+    },
+    {
+      "file": "hard_training_conic_returns_v1.py",
+      "restore_relative_path": "compute/hard_training_conic_returns_v1.py",
+      "executed_or_declared_source_sha256": "f67193843bdccf975e5afeb99078329d389be4dfdec0cccf7cb4c39805302526",
+      "expected_syntax_failure": false
+    },
+    {
+      "file": "verify_hard_training_callback_v1.py",
+      "restore_relative_path": "compute/verify_hard_training_callback_v1.py",
+      "executed_or_declared_source_sha256": "99c4ad2d4f070b99870a377a2fc16e47e824311a9317cdbda0a4e99c3bc1c9dd",
+      "expected_syntax_failure": false
+    },
+    {
+      "file": "hard-training-callback-CPU-plan-v1.json",
+      "restore_relative_path": "compute/hard-training-callback-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "9599411dbf2c368a0b0e5459e6c385b335d90cbd2cd111d7cb26315202288ac4",
+      "expected_syntax_failure": false
+    },
+    {
+      "file": "evaluate_hard_training_source_conic_v1.py.txt",
+      "restore_relative_path": "compute/evaluate_hard_training_source_conic_v1.py",
+      "executed_or_declared_source_sha256": "8c20b540ecba4bde1d5798d59bb3b1ab3d48990e276fd1f0e58ffcd925ca13f3",
+      "expected_syntax_failure": true
+    },
+    {
+      "file": "hard-training-source-evaluation-CPU-plan-v1.json",
+      "restore_relative_path": "compute/hard-training-source-evaluation-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "9f59990f744fca96b6f3fb48c9bacfd9eee0f2559ebc82a6a6b2c05d92fc223f",
+      "expected_syntax_failure": false
+    },
+    {
+      "file": "evaluate_hard_training_source_conic_v2.py",
+      "restore_relative_path": "compute/evaluate_hard_training_source_conic_v2.py",
+      "executed_or_declared_source_sha256": "42e607e6b7d2cc98f720782ccfd9c82fad04c1a326783a93e591c004e3af7cbf",
+      "expected_syntax_failure": false
+    },
+    {
+      "file": "hard-training-source-evaluation-CPU-plan-v2.json",
+      "restore_relative_path": "compute/hard-training-source-evaluation-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "1ce41e51750d83ed1708c8632220c3eeabbdb314ca70aea2061d49f7787a60db",
+      "expected_syntax_failure": false
+    },
+    {
+      "file": "audit_hard_training_source_return_v1.py",
+      "restore_relative_path": "compute/audit_hard_training_source_return_v1.py",
+      "executed_or_declared_source_sha256": "9e90585b1514a1a65cafc90bd627d06d60ca84ad9444e8a242092bcc0479bdde",
+      "expected_syntax_failure": false
+    },
+    {
+      "file": "hard-training-source-return-audit-CPU-plan-v1.json",
+      "restore_relative_path": "compute/hard-training-source-return-audit-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "7436ec7a2f8ce08c4b1fc7f4cc166175bbaa15dcbe0ade79989ec21932c065a7",
+      "expected_syntax_failure": false
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+      "expected_syntax_failure": false
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25",
+      "expected_syntax_failure": false
+    },
+    {
+      "file": "hard-training-source-syntax-only-repair-v1.json",
+      "restore_relative_path": "compute/hard-training-source-syntax-only-repair-v1.json",
+      "executed_or_declared_source_sha256": "88a09d1c523e842ff4a2666438438b8542825eb1c2ec57a0f4f501a34a092382",
+      "expected_syntax_failure": false
+    },
+    {
+      "file": "hard-training-source-callback-api-inventory-v1.json",
+      "restore_relative_path": "compute/hard-training-source-callback-api-inventory-v1.json",
+      "executed_or_declared_source_sha256": "122e48b1ee09b0040890191bcd6ab64d44341c4f45b3690e07c00de59dcb4f9b",
+      "expected_syntax_failure": false
+    },
+    {
+      "file": "read_provider_status_safe_v3.py",
+      "restore_relative_path": "compute/read_provider_status_safe_v3.py",
+      "executed_or_declared_source_sha256": "fd73eea6798e20026f46b8aedcf39e865069c8be1bb2b30b51d0885a59ac05c0",
+      "expected_syntax_failure": false
+    },
+    {
+      "file": "archive_hard_training_source_conic_v1.py",
+      "restore_relative_path": "compute/archive_hard_training_source_conic_v1.py",
+      "executed_or_declared_source_sha256": "79d34521fa7df52ce303d6cab4e5c5cc90a787ee2f28c168c0389b55b3629769",
+      "expected_syntax_failure": false
+    }
+  ],
+  "private_inputs_geometry_arrays_results_NOT_included": true
+}
