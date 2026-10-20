@@ -1,0 +1,20 @@
+{
+  "schema": "v2d.NEW-exact-training-source-contract-CPU-plan.v1",
+  "created_utc": "2026-10-20T14:48:44.377279+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_exact_training_source_contracts_v1.py",
+  "worker_sha256": "3b08b5679ee12a66bd2617b40e16203ac60b363da172414b1cba4e82945ef489",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-exact-training-source-contracts-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/exact_training_source_logic_v1.py": "c48d8ddfb14a62bf27158ef3f934fd18368f5bc40d472683709e4593111ff987",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-exact-training-source-reference-v1/reference-receipt.json": "523a6febf66118b4ab79c44aa45ca49cf922e2d1909aa684318043e298d004f3",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-exact-training-source-reference-v1/opencv-4.11.0-drawing.cpp": "993d1c8e46e3b7e54ebc514f2eb3dc9436bf55a9ce2a129eb12108359a17dd14",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-exact-training-source-reference-v1/opencv-4.11.0-imgproc.hpp": "9020d31168e318655b72dce3a171057fd8e5a05568c25adfe3b38c6da49158c1",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/hard-training-conic-checkpoint-v1.json": "b678a98487290d4b3553aa863f7ecf1be1c10dee58fb9755e451acc35a9727be",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/cpu-env/lib/python3.12/site-packages/cv2/cv2.abi3.so": "260a93ce68a9c1537e745a8ecc62f7a35d4e493a58f19ab96fa1fca5c86be97f"
+  },
+  "scope": "NEW free-rank rounded/rational/cardinality union and source-informed raster synthetic contracts ONLY. No episode baseline/source/NN/old controls/solver replay.",
+  "CPU_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736,
+  "no_episode_pose_calls": true
+}

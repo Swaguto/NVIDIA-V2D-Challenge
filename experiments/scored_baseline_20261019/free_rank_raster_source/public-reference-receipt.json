@@ -1,0 +1,22 @@
+{
+  "schema": "v2d.NEW-exact-raster-reference-receipt.v1",
+  "created_utc": "2026-10-20T14:42:08.727248+00:00",
+  "files": [
+    {
+      "path": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-exact-training-source-reference-v1/opencv-4.11.0-drawing.cpp",
+      "url": "https://raw.githubusercontent.com/opencv/opencv/4.11.0/modules/imgproc/src/drawing.cpp",
+      "sha256": "993d1c8e46e3b7e54ebc514f2eb3dc9436bf55a9ce2a129eb12108359a17dd14",
+      "bytes": 98860
+    },
+    {
+      "path": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-exact-training-source-reference-v1/opencv-4.11.0-imgproc.hpp",
+      "url": "https://raw.githubusercontent.com/opencv/opencv/4.11.0/modules/imgproc/include/opencv2/imgproc.hpp",
+      "sha256": "9020d31168e318655b72dce3a171057fd8e5a05568c25adfe3b38c6da49158c1",
+      "bytes": 259465
+    }
+  ],
+  "reference_tag": "4.11.0",
+  "installed_cv2_version": "4.11.0",
+  "source_tag_NOT_full_binary_build_proof": true,
+  "no_episode_render_or_source_probe_or_dependency_install": true
+}

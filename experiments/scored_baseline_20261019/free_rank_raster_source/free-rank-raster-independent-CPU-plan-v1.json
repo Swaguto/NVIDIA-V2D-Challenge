@@ -1,0 +1,18 @@
+{
+  "schema": "v2d.NEW-free-rank-raster-independent-CPU-plan.v1",
+  "created_utc": "2026-10-20T14:53:35.362743+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_free_rank_raster_representation_v1.py",
+  "worker_sha256": "0fbffff985eb2a6b9160c7389ede36650ddbf9f37d6819a2f81f9a27c2487180",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-free-rank-raster-independent-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-free-rank-raster-representation-v1/all151-NEW-free-source-formulas-RETURN.json": "0fc0118e35bd16b7b506ca64a2181039de50182a0e7c20968fdabd0e768b0cc0",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-free-rank-raster-representation-v1/NEW-factored-logical-templates-RETURN.json": "cb770efaaacbffeeab0b7a8fd1f2ad9c2bb8ac4927ac312420c076716a0a2920",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-free-rank-raster-representation-v1/report.json": "a0cde6ce97185a590bbde03938856a9e7d1a363f32013e49f66ddf8e527ae1be",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-training-source-constraints-v1/all151-NEW-training-source-statistics.json": "2a77e18789a1d452bbd3acb0850a14def6b0ef574aa3ab1017abdc1aef540cdb",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-runtime-v1/dynamic-source-data.npz": "31505c96bde69959aef90e9331fd5a40f7856b944fc511baedbccbe0008de9b8"
+  },
+  "scope": "3NEW free-cell/polynomial/unknown contracts then independent4983 exact map coefficients/151 rank-domain-incidence/pointers/journal bindings. No builder/source/NN/raster/old audit/solver replay.",
+  "CPU_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "v2d.NEW-free-rank-raster-representation-CPU-plan.v1",
+  "created_utc": "2026-10-20T14:51:44.259724+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_free_rank_raster_representation_v1.py",
+  "worker_sha256": "d92fdc16d10035cb31593c1201ab626359923e2905a330c394791c2450ab8676",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-free-rank-raster-representation-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/exact_training_source_logic_v1.py": "c48d8ddfb14a62bf27158ef3f934fd18368f5bc40d472683709e4593111ff987",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-exact-training-source-contracts-v1/report.json": "9600d6a549b42eb34bddd9d537eea41c1a093b7ab968364868248437342d0a62",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/training-source-checkpoint-v1.json": "59db4f58f576c3e28c7f66c30662994d4025a2e9bbbff940aa692921c44b08e3",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-training-source-constraints-v1/all151-NEW-training-source-statistics.json": "2a77e18789a1d452bbd3acb0850a14def6b0ef574aa3ab1017abdc1aef540cdb",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-runtime-v1/dynamic-source-data.npz": "31505c96bde69959aef90e9331fd5a40f7856b944fc511baedbccbe0008de9b8"
+  },
+  "scope": "ONE factored151clock source-only formulation with free median thresholds/rank subsets/all original vertex unions/free integer projection cells/full triangle OR. No solver, numeric pose, source/NN/raster/native evaluation or old audit replay.",
+  "CPU_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}

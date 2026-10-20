@@ -1,0 +1,51 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "files": [
+    {
+      "file": "exact_training_source_logic_v1.py",
+      "restore_relative_path": "compute/exact_training_source_logic_v1.py",
+      "executed_or_declared_source_sha256": "c48d8ddfb14a62bf27158ef3f934fd18368f5bc40d472683709e4593111ff987"
+    },
+    {
+      "file": "derive_exact_training_source_contracts_v1.py",
+      "restore_relative_path": "compute/derive_exact_training_source_contracts_v1.py",
+      "executed_or_declared_source_sha256": "3b08b5679ee12a66bd2617b40e16203ac60b363da172414b1cba4e82945ef489"
+    },
+    {
+      "file": "exact-training-source-contracts-CPU-plan-v1.json",
+      "restore_relative_path": "compute/exact-training-source-contracts-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "0924cf59b9761d7dd5c7d96a8a0914fae9e20879bb2fb9df1e9ce6e33d0dbd0d"
+    },
+    {
+      "file": "build_free_rank_raster_representation_v1.py",
+      "restore_relative_path": "compute/build_free_rank_raster_representation_v1.py",
+      "executed_or_declared_source_sha256": "d92fdc16d10035cb31593c1201ab626359923e2905a330c394791c2450ab8676"
+    },
+    {
+      "file": "free-rank-raster-representation-CPU-plan-v1.json",
+      "restore_relative_path": "compute/free-rank-raster-representation-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "a7decae8d5460eb20e84f9009f5696253e529c2ced1d78d679248b4a7e6847b9"
+    },
+    {
+      "file": "verify_free_rank_raster_representation_v1.py",
+      "restore_relative_path": "compute/verify_free_rank_raster_representation_v1.py",
+      "executed_or_declared_source_sha256": "0fbffff985eb2a6b9160c7389ede36650ddbf9f37d6819a2f81f9a27c2487180"
+    },
+    {
+      "file": "free-rank-raster-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/free-rank-raster-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "01d1959fdbc80c809c1088246cfcf1ccbca8b02fef0eddfb3d58d1f1ffa8d5f7"
+    },
+    {
+      "file": "archive_free_rank_raster_v1.py",
+      "restore_relative_path": "compute/archive_free_rank_raster_v1.py",
+      "executed_or_declared_source_sha256": "7c5c00b6ea1a73ec0cb35529ee53305fac27f94494b5e34a09e751eb103e2acd"
+    },
+    {
+      "file": "public-reference-receipt.json",
+      "public_source_provenance_ONLY": true,
+      "executed_or_declared_source_sha256": "523a6febf66118b4ab79c44aa45ca49cf922e2d1909aa684318043e298d004f3"
+    }
+  ],
+  "private_source_geometry_pixels_arrays_and_results_NOT_included": true
+}
