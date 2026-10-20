@@ -1180,3 +1180,31 @@ Raw attempt and reconciliation retained; attempt/update timestamps never replace
 actual provider observations. No VM mutation/paidqueue/auth-cause/future lifecycle
 claim. Successful current provider read is required before any future GPU work;
 never start for a recovery test. Checkpoint `compute/hard-raster-checkpoint-v1.json`.
+
+
+## 2026-10-20: frozen ALL-row structured method (unresolved)
+
+Code/plans: `experiments/scored_baseline_20261019/structured_all_row_minima/`.
+Private checkpoint: `compute/structured-all-row-checkpoint-v1.json`; private
+SHA integrity chain: `compute/private-integrity-structured-all-row-v1.json`.
+Five serial CPU guards succeed. Ten NEW contracts support a complete structured
+interface for the frozen hard-raster canonical: all 4,618,162 rows / 32,306,054
+coefficients, 1,058 columns, 900 SOC4 and 151 SOC5 cones. Independent NEW routing
+bindings are exact. No old constructor/model/source/NN/raster/native audit or
+completed controls are replayed; the interrupted materialized state stays UNKNOWN.
+
+Per-frame minima use EVERY affine row and retain every tie/strict flag/unknown.
+Averaged tie slopes are SEARCH supergradients, not universal directional
+derivatives or stationarity certificates. Objective/conditioning/variables are
+unchanged. The SINGLE new bounded SLSQP method starts F, evaluates ALL rows at
+each input, and ends at its declared 48-query limit after 16 callbacks / 11.0593s.
+No OptimizeResult/selected candidate/source query is returned. No restart, cap
+extension, best/intermediate promotion, gate change or feasibility/exclusion claim.
+The NEW saved-return audit verifies 221,671,776 row values, all minima/ties/cones
+and SEARCH identities without solver/matvec/source replay. Three objective-matmul
+RuntimeWarnings remain with cause unproven; all saved objective values are finite.
+No source/native/physics/GPU/PPO or physical qualification occurred. Object changes
+alone cannot clear the eight right-self failures. F/separate components/missing
+136/heldout 31-of-32/source authority/parameters/original gates are unchanged.
+Owner continuation remains active and unachieved; historical blocked goal-tool
+observation is separate. Research or optimizer completion is not goal completion.

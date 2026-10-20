@@ -1,0 +1,63 @@
+{
+  "schema": "v2d.NEW-structured-all-row-code-only-archive.v1",
+  "created_utc": "2026-10-20T20:33:11.855957+00:00",
+  "files": {
+    "structured_all_rows_v1.py": {
+      "sha256": "fbc3e7f6882570c32c7ba5d19e64fa13a16a98e5d49cc576f1453935d9626a28",
+      "bytes": 3983,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/structured_all_rows_v1.py"
+    },
+    "derive_structured_all_row_contracts_v1.py": {
+      "sha256": "37009ff6a8af20e966cbd5c9ddbf2b132c6b5b1e05751f67ad7d5c171e8acd9f",
+      "bytes": 3641,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_structured_all_row_contracts_v1.py"
+    },
+    "build_structured_all_row_interface_v1.py": {
+      "sha256": "1fc40bc3df4aa6bc36835ccf7bb878e832daa7398f6a3fc6c58dc0443a937df1",
+      "bytes": 2134,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_structured_all_row_interface_v1.py"
+    },
+    "verify_structured_all_row_interface_v1.py": {
+      "sha256": "2c90009da09b8b903219255368a64395497c2ad52b25404d076d454c5b287347",
+      "bytes": 2210,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_structured_all_row_interface_v1.py"
+    },
+    "evaluate_structured_all_row_v1.py": {
+      "sha256": "ee262bdc04dde29dc37a20535cdb2f806499f10503022e22aac89f60f490914f",
+      "bytes": 9008,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/evaluate_structured_all_row_v1.py"
+    },
+    "audit_structured_all_row_returns_v1.py": {
+      "sha256": "5132cd572b86ebe3283696693e1080971685ddfda024e80b966dfc37c2a33710",
+      "bytes": 4029,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_structured_all_row_returns_v1.py"
+    },
+    "structured-all-row-contracts-CPU-plan-v1.json": {
+      "sha256": "9764e00d158a2268257003297fdbdc6cf1aa7fc908c384580f70e57ec6707375",
+      "bytes": 538,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/structured-all-row-contracts-CPU-plan-v1.json"
+    },
+    "structured-all-row-preflight-CPU-plan-v1.json": {
+      "sha256": "328c87462df3acf13d7c56888f26721a21f705b4abe0b220e7f34a1a247a8760",
+      "bytes": 537,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/structured-all-row-preflight-CPU-plan-v1.json"
+    },
+    "structured-all-row-binding-CPU-plan-v1.json": {
+      "sha256": "c25f6195ceccdebff8429f71c43de8b277dd2fd7d4ba9069c6e7604ea9b251be",
+      "bytes": 536,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/structured-all-row-binding-CPU-plan-v1.json"
+    },
+    "structured-all-row-evaluation-CPU-plan-v1.json": {
+      "sha256": "a0af90accc35b27d8a771a82f04a74dc1555682541daa1389aa263772da9afc2",
+      "bytes": 1066,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/structured-all-row-evaluation-CPU-plan-v1.json"
+    },
+    "structured-all-row-return-audit-CPU-plan-v1.json": {
+      "sha256": "ce7ef4e71e9ab01e5bdaaede90c001f4714b20957eb551c950de134c45fa6e58",
+      "bytes": 714,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/structured-all-row-return-audit-CPU-plan-v1.json"
+    }
+  },
+  "private_inputs_matrices_geometry_source_results_excluded": true,
+  "production_runtime_tests_UNCHANGED": true
+}

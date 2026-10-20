@@ -1,0 +1,10 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-structured-all-row-preflight-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_structured_all_row_interface_v1.py",
+  "worker_sha256": "1fc40bc3df4aa6bc36835ccf7bb878e832daa7398f6a3fc6c58dc0443a937df1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/structured_all_rows_v1.py": "fbc3e7f6882570c32c7ba5d19e64fa13a16a98e5d49cc576f1453935d9626a28"
+  },
+  "CPU_only": true,
+  "new_inputs_only": true
+}

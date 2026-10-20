@@ -1,0 +1,13 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-structured-all-row-evaluation-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/evaluate_structured_all_row_v1.py",
+  "worker_sha256": "ee262bdc04dde29dc37a20535cdb2f806499f10503022e22aac89f60f490914f",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/structured_all_rows_v1.py": "fbc3e7f6882570c32c7ba5d19e64fa13a16a98e5d49cc576f1453935d9626a28",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-structured-all-row-contracts-v1/report.json": "239959c6cec732463a6080e4cc74974d0598f2a6c0503fdc044df86e0cda7da3",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-structured-all-row-binding-v1/report.json": "fad8a545ab35812ed58abb94d3aa15f7e1b161421877dbd9fe438792238150d6",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-structured-all-row-preflight-v1/NEW-structured-layout-RETURN.json": "5089c3b65cc4cd3e3e84b8d7ff0a45581653db233f84ce632c6c4d7896a39e64"
+  },
+  "CPU_only": true,
+  "one_NEW_method": true
+}

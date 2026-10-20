@@ -1,0 +1,11 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-structured-all-row-return-audit-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_structured_all_row_returns_v1.py",
+  "worker_sha256": "5132cd572b86ebe3283696693e1080971685ddfda024e80b966dfc37c2a33710",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/structured_all_rows_v1.py": "fbc3e7f6882570c32c7ba5d19e64fa13a16a98e5d49cc576f1453935d9626a28",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-structured-all-row-evaluation-v1/report.json": "8a5342ff50679177e9764a6ac182647614b73a39138e9f947b50e5e557ac1051"
+  },
+  "CPU_only": true,
+  "saved_returns_only": true
+}
