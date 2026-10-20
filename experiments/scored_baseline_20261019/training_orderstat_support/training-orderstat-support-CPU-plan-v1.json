@@ -1,0 +1,22 @@
+{
+  "schema": "v2d.NEW-training-orderstat-support-CPU-plan.v1",
+  "created_utc": "2026-10-20T13:58:24.492583+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_training_orderstat_support_v1.py",
+  "worker_sha256": "f79ead347c0a0bf4ca3d2bb4356867c62165dfc76eda1362118c6006e916aa05",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-training-orderstat-support-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/training_orderstat_support_v1.py": "b2692bef2444aeb7e5e81ea26da74896c7402a3c3f756a9ba9c9c79ec4e8466a",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/training-source-checkpoint-v1.json": "59db4f58f576c3e28c7f66c30662994d4025a2e9bbbff940aa692921c44b08e3",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/private-integrity-training-source-v1.json": "7a8951d4f35cf73cc85a75cf08bbf2b647ca2fb3df7ee07d51a9790a431fe951",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-training-source-constraints-v1/all151-NEW-training-source-statistics.json": "2a77e18789a1d452bbd3acb0850a14def6b0ef574aa3ab1017abdc1aef540cdb",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-training-source-independent-v1/report.json": "891f5be08740ca5eed108017674ca36fea0345a49eef4d88bd6fbaa97f00f881",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-training-constraint-oracle-contract-v1/report.json": "616ed17041c677d7440c6257d8ed3f2ea1623bfc4ea97991eebaaa31dff606c4"
+  },
+  "scope": "7NEW nested-orderstat proxy/SOC4/filter/p95 analytical contracts, ONE151saved-data sufficient source-median proxy map inventory and independent exact signs/cardinality/map-error/nominal-defect bindings. NO source metric/NN/old controls/solver/pose replay.",
+  "wall_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736,
+  "actual_nonzero_episode_points_selected_or_evaluated": 0,
+  "source_fullpixel_heldout_failed60_data_NOT_inputs": true
+}
