@@ -1,0 +1,18 @@
+{
+  "schema": "v2d.NEW-object-dynamic-saved-return-audit-CPU-plan.v1",
+  "created_utc": "2026-10-20T03:39:35.959001+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_object_dynamic_saved_return_v1.py",
+  "worker_sha256": "4aaadc36b2df4f530dda5d55d3dff44d3926ac1de65568a41f64e1a6f26a1f69",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-saved-return-audit-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-evaluation-v1/report.json": "0440ae65623fa76da3769267a81d72cfc6d42bb107a52213b45b780ad773cc38",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-evaluation-v1/ONE-actual-optimizer-RETURN.json": "f388ebd70ccfc7d47256c9fc06b484c8488e7765fc42041fc53b2b35e1c7f5aa",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-runtime-v1/report.json": "716f0e82d464931679a32edcdd9a92cd9204b26cd0ef69e58e3aa95fbb9ec5f8",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-certificate-subsystems-v1/report.json": "f053810f306e4a955c1f5d3f0a7155049bbd00113460bcaddb303ba69939e78a"
+  },
+  "scope": "ONE NEW saved31state/RAWreturned-point-maxima/source151gate/motion/subsystem-map audit. No solver/function/ray/source-scoring/FK/native replay.",
+  "wall_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}

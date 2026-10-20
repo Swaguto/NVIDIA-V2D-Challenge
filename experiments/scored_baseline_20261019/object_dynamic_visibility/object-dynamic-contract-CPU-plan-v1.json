@@ -1,0 +1,16 @@
+{
+  "schema": "v2d.NEW-object-dynamic-contract-CPU-plan.v1",
+  "created_utc": "2026-10-20T03:26:27.630181+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_object_dynamic_contracts_v1.py",
+  "worker_sha256": "a714f152e7adbf47dbce45e4fa5f0c07f351a9e29a631344af2a49980daff99f",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-contract-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_dynamic_visibility_v1.py": "2c563101ed22be2d32fbd77afd9a4f42c7c391b091f579f64a2b14b05b2f4489",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_visibility_support_v1.py": "a9bd5ac1ac0a699fa2ce64f0e7a6ef005df40cff3d733bbaa76baf1258b5df1b",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+  },
+  "scope": "10NEW dynamic source-coverage/face-switch/union-support/nonlinear-motion/sparse-LS analytical controls; syntax preflight failure retained separately",
+  "wall_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}

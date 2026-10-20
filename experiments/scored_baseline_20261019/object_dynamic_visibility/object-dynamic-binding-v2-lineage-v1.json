@@ -1,0 +1,10 @@
+{
+  "schema": "v2d.NEW-smooth-synthetic-runtime-binding-lineage.v2",
+  "created_utc": "2026-10-20T03:33:40.556025+00:00",
+  "old_failed_worker_sha256": "fbbad9bdc682ba5b1ec0fdf06709a52403139ccb6090d576464ff5a6afde03f3",
+  "new_worker_sha256": "10b06599ddf65798e3c57328236bb8d4adcf43e7a03e49bce22e640574e6be86",
+  "actual_runtime_sha256_UNCHANGED": "5d86ee772bcb51ca078de65399d3668b168f0030b1b7126fbc7a614ede480033",
+  "synthetic_only_change": "velocity constants .6+.001*i -> .600123+.001*i to avoid exact .65 positive-part kink; all thresholds/checks/runtime/episode inputs unchanged",
+  "old_failed_source_and_returns_retained": true,
+  "new_saved_kink_scope_contract": true
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "v2d.NEW-smooth-synthetic-object-runtime-binding-CPU-plan.v2",
+  "created_utc": "2026-10-20T03:33:40.558699+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_object_dynamic_runtime_v2.py",
+  "worker_sha256": "10b06599ddf65798e3c57328236bb8d4adcf43e7a03e49bce22e640574e6be86",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-runtime-binding-v2",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_dynamic_runtime_v1.py": "5d86ee772bcb51ca078de65399d3668b168f0030b1b7126fbc7a614ede480033",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_dynamic_visibility_v1.py": "2c563101ed22be2d32fbd77afd9a4f42c7c391b091f579f64a2b14b05b2f4489",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_visibility_support_v1.py": "a9bd5ac1ac0a699fa2ce64f0e7a6ef005df40cff3d733bbaa76baf1258b5df1b",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-runtime-v1/report.json": "716f0e82d464931679a32edcdd9a92cd9204b26cd0ef69e58e3aa95fbb9ec5f8",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-runtime-v1/runtime-config-and-original-authority.json": "f0f0b8fa79e00d5d361192d1defa8db274c4a07019003001768658e88555c88e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-contract-v1/report.json": "13918e59b0760ab3c62be3108a3380236002536911afb965ba5782610b7c8629",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object-dynamic-binding-v2-lineage-v1.json": "3804b786fdc28a739edf31cae644661347400204a40a9f2d2ab4fcf3403fb344",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-runtime-binding-v1/NEW-synthetic-direction-0-RETURN.json": "f6083d4ade354bbdc25a042d89a746d756fd5aff2d791dabcce2b807b91d2ce5"
+  },
+  "scope": "3NEW full synthetic runtime/directional/cache controls and independent actual immutable dataflow/basis/897motion-alias binding; no episode function or solver",
+  "wall_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}

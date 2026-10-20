@@ -1,0 +1,158 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "files": [
+    {
+      "file": "object_certificate_subsystems_v1.py",
+      "restore_relative_path": "compute/object_certificate_subsystems_v1.py",
+      "executed_or_declared_source_sha256": "845178b4ebdb61a2d2b480c5447b506a44f0852e2fc4fd1b87a2e2ca22afd258",
+      "expected_preparation_syntax_failure": false
+    },
+    {
+      "file": "object-certificate-subsystems-CPU-plan-v1.json",
+      "restore_relative_path": "compute/object-certificate-subsystems-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "7a033fae75d579001a2181804125497e220e4cee4be13523333c6b2392d70373",
+      "expected_preparation_syntax_failure": false
+    },
+    {
+      "file": "object_dynamic_visibility_v1.py",
+      "restore_relative_path": "compute/object_dynamic_visibility_v1.py",
+      "executed_or_declared_source_sha256": "2c563101ed22be2d32fbd77afd9a4f42c7c391b091f579f64a2b14b05b2f4489",
+      "expected_preparation_syntax_failure": false
+    },
+    {
+      "file": "verify_object_dynamic_contracts_v1.py",
+      "restore_relative_path": "compute/verify_object_dynamic_contracts_v1.py",
+      "executed_or_declared_source_sha256": "a714f152e7adbf47dbce45e4fa5f0c07f351a9e29a631344af2a49980daff99f",
+      "expected_preparation_syntax_failure": false
+    },
+    {
+      "file": "verify_object_dynamic_contracts_preparation_syntax_failure_v1.py.txt",
+      "restore_relative_path": "compute/verify_object_dynamic_contracts_preparation_syntax_failure_v1.py",
+      "executed_or_declared_source_sha256": "4eae8e7ec35039724cb96d71014793d5db85282ffcc71084e9a6db95ecf01866",
+      "expected_preparation_syntax_failure": true
+    },
+    {
+      "file": "object-dynamic-contract-preparation-error-v1.json",
+      "restore_relative_path": "compute/object-dynamic-contract-preparation-error-v1.json",
+      "executed_or_declared_source_sha256": "88b57c297014d82676ad2a818fac83c17e3ef5e4bb427c049dd77766becd33a4",
+      "expected_preparation_syntax_failure": false
+    },
+    {
+      "file": "object-dynamic-contract-CPU-plan-v1.json",
+      "restore_relative_path": "compute/object-dynamic-contract-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "6bfa0082379946427f3e6c2bc35b453ea90d9ee6b398abf0ee41a1fdc50fc9a8",
+      "expected_preparation_syntax_failure": false
+    },
+    {
+      "file": "build_object_dynamic_runtime_v1.py",
+      "restore_relative_path": "compute/build_object_dynamic_runtime_v1.py",
+      "executed_or_declared_source_sha256": "fb1621613bf29e51e324045c17b09da9c75f9c1ac1c5ed6c914084b8c378b6af",
+      "expected_preparation_syntax_failure": false
+    },
+    {
+      "file": "object-dynamic-runtime-CPU-plan-v1.json",
+      "restore_relative_path": "compute/object-dynamic-runtime-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "5999b61c52582057f1e8d0cf637d7d762c6ea62876a30b095c4cdf28706e1765",
+      "expected_preparation_syntax_failure": false
+    },
+    {
+      "file": "object_dynamic_runtime_v1.py",
+      "restore_relative_path": "compute/object_dynamic_runtime_v1.py",
+      "executed_or_declared_source_sha256": "5d86ee772bcb51ca078de65399d3668b168f0030b1b7126fbc7a614ede480033",
+      "expected_preparation_syntax_failure": false
+    },
+    {
+      "file": "verify_object_dynamic_runtime_v1.py",
+      "restore_relative_path": "compute/verify_object_dynamic_runtime_v1.py",
+      "executed_or_declared_source_sha256": "fbbad9bdc682ba5b1ec0fdf06709a52403139ccb6090d576464ff5a6afde03f3",
+      "expected_preparation_syntax_failure": false
+    },
+    {
+      "file": "object-dynamic-runtime-binding-CPU-plan-v1.json",
+      "restore_relative_path": "compute/object-dynamic-runtime-binding-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "be60a3f1b9d3ecb3181fd77220767b3d654a92c9dbc9fee60de3cbffda291cac",
+      "expected_preparation_syntax_failure": false
+    },
+    {
+      "file": "prepare_object_dynamic_binding_v2.py",
+      "restore_relative_path": "compute/prepare_object_dynamic_binding_v2.py",
+      "executed_or_declared_source_sha256": "b836f55918f574dc7d2b0034f38e9362b0dbc52779a4b3c7702c009c1ebaef02",
+      "expected_preparation_syntax_failure": false
+    },
+    {
+      "file": "verify_object_dynamic_runtime_v2.py",
+      "restore_relative_path": "compute/verify_object_dynamic_runtime_v2.py",
+      "executed_or_declared_source_sha256": "10b06599ddf65798e3c57328236bb8d4adcf43e7a03e49bce22e640574e6be86",
+      "expected_preparation_syntax_failure": false
+    },
+    {
+      "file": "object-dynamic-runtime-binding-CPU-plan-v2.json",
+      "restore_relative_path": "compute/object-dynamic-runtime-binding-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "5b3f5870e1e02352ac7624f362f1f5426e0e91a2f3af16c3a4f1b2f23ae4d968",
+      "expected_preparation_syntax_failure": false
+    },
+    {
+      "file": "object-dynamic-binding-v2-lineage-v1.json",
+      "restore_relative_path": "compute/object-dynamic-binding-v2-lineage-v1.json",
+      "executed_or_declared_source_sha256": "3804b786fdc28a739edf31cae644661347400204a40a9f2d2ab4fcf3403fb344",
+      "expected_preparation_syntax_failure": false
+    },
+    {
+      "file": "evaluate_object_dynamic_method_v1.py",
+      "restore_relative_path": "compute/evaluate_object_dynamic_method_v1.py",
+      "executed_or_declared_source_sha256": "1f6d1ad9d70843bccf103c64792dfe0ba8941e2bb81ccbea52ea3f946f37b4dc",
+      "expected_preparation_syntax_failure": false
+    },
+    {
+      "file": "object-dynamic-evaluation-CPU-plan-v1.json",
+      "restore_relative_path": "compute/object-dynamic-evaluation-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "5500e0152082b7a992c2f61805345addca43240e11a06ac9018157193d843963",
+      "expected_preparation_syntax_failure": false
+    },
+    {
+      "file": "audit_object_dynamic_saved_return_v1.py",
+      "restore_relative_path": "compute/audit_object_dynamic_saved_return_v1.py",
+      "executed_or_declared_source_sha256": "4aaadc36b2df4f530dda5d55d3dff44d3926ac1de65568a41f64e1a6f26a1f69",
+      "expected_preparation_syntax_failure": false
+    },
+    {
+      "file": "object-dynamic-saved-return-audit-CPU-plan-v1.json",
+      "restore_relative_path": "compute/object-dynamic-saved-return-audit-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "ed1740430b10db797a2364e89feca4f6dfce7b666a95b8f4e4d3dff3df291930",
+      "expected_preparation_syntax_failure": false
+    },
+    {
+      "file": "record_object_dynamic_scope_notes_v1.py",
+      "restore_relative_path": "compute/record_object_dynamic_scope_notes_v1.py",
+      "executed_or_declared_source_sha256": "d0826006b51716f52909304498a0ddcd88f8e29f8ecfe70b88177434cb402a85",
+      "expected_preparation_syntax_failure": false
+    },
+    {
+      "file": "object_visibility_support_v1.py",
+      "restore_relative_path": "compute/object_visibility_support_v1.py",
+      "executed_or_declared_source_sha256": "a9bd5ac1ac0a699fa2ce64f0e7a6ef005df40cff3d733bbaa76baf1258b5df1b",
+      "expected_preparation_syntax_failure": false
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+      "expected_preparation_syntax_failure": false
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25",
+      "expected_preparation_syntax_failure": false
+    }
+  ],
+  "repository_dependency_sources_sha256": {
+    "scripts/track3/select_pose_hypothesis.py": "a5c2466cf879d9f955bc19aa131bcaa6609197c8e01fc60e411dd973b24dd31d",
+    "scripts/track3/foundationpose_track.py": "0e03208d584feb6746bc91933312bb38f18d700a072e2a8af154274706d21b29",
+    "scripts/track3/camera_prior.py": "e64bd5b0d0aaa2f19ea362ab66e4c13b4279a3911d9c00b8ac041ad61e15e4ce",
+    "scripts/track3/temporal_pose_path.py": "49f3a790488e2ba1d07523456a40e8eebabba3bc1dd39f1b568bad9bb5b041f9"
+  },
+  "repository_dependency_snapshots": [],
+  "private_source_geometry_masks_arrays_runtime_results_absent": true,
+  "production_runtime_unchanged": true
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "v2d.NEW-object-dynamic-runtime-CPU-plan.v1",
+  "created_utc": "2026-10-20T03:28:29.390088+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_object_dynamic_runtime_v1.py",
+  "worker_sha256": "fb1621613bf29e51e324045c17b09da9c75f9c1ac1c5ed6c914084b8c378b6af",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-runtime-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_dynamic_visibility_v1.py": "2c563101ed22be2d32fbd77afd9a4f42c7c391b091f579f64a2b14b05b2f4489",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-contract-v1/report.json": "13918e59b0760ab3c62be3108a3380236002536911afb965ba5782610b7c8629",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-visibility-support-model-v3/all-NEW-support-plane-RETURNS.json": "393116aac2ecc9cbf0ee736bd9efc53f0d3c351d486bc4179f83ea581dd6eedb",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-visibility-support-model-v3/NEW-pure-kinematic-body-frame-returns.json": "e0d1f40bdba0af24733f2f343b7030dd8c2db94e70fe024512046e9974270c24",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-visibility-support-model-v3/all-NEW-training-ray-cell-RETURNS.json": "95ed208e883d23f740901318bd02e9cc0991ada973866e6d699016ab16dbf89b",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-visibility-support-model-v1/NEW-compiled-support-geometry.npz": "89f9bfb77aa40e6dbc36c8c2271212686daaaac56e0afa22aa0ee423b28f185a"
+  },
+  "scope": "ONE NEW all-retained-face-axis/coverage functional dataset; cached source/FK/query returns reused by hash; no old producer/solver replay",
+  "all_axes_retained_not_pose_anchor_sampling": true,
+  "wall_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}

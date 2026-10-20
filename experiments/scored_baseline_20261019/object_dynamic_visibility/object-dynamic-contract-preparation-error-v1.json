@@ -1,0 +1,9 @@
+{
+  "schema": "v2d.object-dynamic-contract-preparation-error.v1",
+  "created_utc": "2026-10-20T03:26:27.625236+00:00",
+  "failed_preparation_source_sha256": "4eae8e7ec35039724cb96d71014793d5db85282ffcc71084e9a6db95ecf01866",
+  "error": "dict keyword150speeds invalid decimal literal during ast.parse; plan creation did not occur",
+  "subsequent_guard_error": "missing plan BEFORE phase/ledger mutation",
+  "scientific_worker_started": false,
+  "numerical_controls_or_episode_calls": 0
+}

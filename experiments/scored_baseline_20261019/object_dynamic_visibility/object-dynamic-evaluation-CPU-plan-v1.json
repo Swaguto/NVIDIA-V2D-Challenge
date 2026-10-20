@@ -1,0 +1,28 @@
+{
+  "schema": "v2d.ONE-NEW-object-dynamic-evaluation-CPU-plan.v1",
+  "created_utc": "2026-10-20T03:35:07.615599+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/evaluate_object_dynamic_method_v1.py",
+  "worker_sha256": "1f6d1ad9d70843bccf103c64792dfe0ba8941e2bb81ccbea52ea3f946f37b4dc",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-evaluation-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_dynamic_runtime_v1.py": "5d86ee772bcb51ca078de65399d3668b168f0030b1b7126fbc7a614ede480033",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_dynamic_visibility_v1.py": "2c563101ed22be2d32fbd77afd9a4f42c7c391b091f579f64a2b14b05b2f4489",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_visibility_support_v1.py": "a9bd5ac1ac0a699fa2ce64f0e7a6ef005df40cff3d733bbaa76baf1258b5df1b",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-runtime-binding-v2/report.json": "4aabde5cd24f2dbdfabe865bd99d2e50fc2343a2c8f359a747da937647477efd",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-runtime-binding-v2/actual-runtime-data-bindings.json": "9d9ba2acc39cdf023942bfffc72c5a6b9dcb17c1438f153285ab789c5394837a",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-runtime-v1/report.json": "716f0e82d464931679a32edcdd9a92cd9204b26cd0ef69e58e3aa95fbb9ec5f8"
+  },
+  "scope": "SOLE NEW453variable dynamic source-front/union-support full151clock nonlinear sparse least-squares method; all original actual gates POSTconstruction only",
+  "optimizer": "scipy1.16.3least_squares_trf_lsmr",
+  "max_nfev": 40,
+  "method_seconds": 170,
+  "default_solver_tolerances": true,
+  "threads": 1,
+  "no_old_solver_retry_restart_warmstart_tolerance_weight_limit_profile_sweep": true,
+  "failed_return_and_intermediates_NEVER_promoted": true,
+  "wall_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736,
+  "no_paid_work": true
+}
