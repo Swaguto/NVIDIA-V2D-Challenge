@@ -1,0 +1,25 @@
+{
+  "schema": "v2d.NEW-hard-source-filter-binding-CPU-plan.v1",
+  "created_utc": "2026-10-20T15:58:52.521322+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_hard_source_filter_preflight_v1.py",
+  "worker_sha256": "e977394fc93209755d504372b946731fbf7846a08ce54e6ae3e332a1d5e1e547",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-source-filter-preflight-binding-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/hard_source_filter_direction_v1.py": "26d4d7583ea9ac8701b6c210502c9a216b88f34ef58294b01866a9849068486f",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/hard_source_filter_binding_v1.py": "3a38ad26f5b3525a450fc633af64fe5266ac7bae2a558c3490cedb2cf07e855c",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-source-filter-preflight-v1/NEW-input-provenance-BY-HASH.json": "ee71478c76fc18573119ab67c5b156164ab944840eb41d415d6874caec729813",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-source-filter-preflight-v1/NEW-linear-data-RETURN.npz": "080357a2b943f569d374653e4c5516d713a3cb6b219267e31b7b9e9303aca816",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-source-filter-preflight-v1/NEW-canonical-vectors-RETURN.npz": "230598d2a36df10ffaa10027920939ce37e8e4131fd4af9a4e54fe4d47de01de",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-source-filter-preflight-v1/NEW-initial-state-RETURN.npz": "f9ff8f7a44358168777c0da079fdb868f142ea2bb707879df7c66cb28775d488",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-source-filter-preflight-v1/NEW-canonical-A-RETURN.npz": "cf5441b92fabceb8ad7e042d6dc6ab624c40b725b69109923836e7dec40ab00c",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-source-filter-preflight-v1/NEW-motion-M-BY-HASH.npz": "3739ed89a573c89e656905d86f588b779acfb884ce2e1cb97a017bf87f672574",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-source-filter-preflight-v1/NEW-canonical-P-RETURN.npz": "d22c29dc32c42ef872ddbb717fb5e791320a995741b35aaae208af01ae78eef0",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-source-filter-preflight-v1/NEW-canonical-metadata-RETURN.json": "bca9a4108bcf30f35539caf336771c273f05b97fd2a114ad223392eaf5836c23",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-source-filter-preflight-v1/NEW-canonical-raw_A-RETURN.npz": "82aa45b68d122ba93f597a9a19d561a756d2b682a733e38bed88f0b2ba7f2d76",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-source-filter-preflight-v1/report.json": "4591440e21f470d3738cb812c65f5f0f17c3a458ef10edd9b5e620c2051cbc58"
+  },
+  "scope": "Independent ALL19926new canonical rows/raw-conditioning/objective/first-state/source-predictor/depth/motion provenance binding. No builder/old source/NN/raster/audit/solver/pose replay.",
+  "CPU_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}

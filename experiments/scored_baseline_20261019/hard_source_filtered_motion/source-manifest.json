@@ -1,0 +1,76 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "files": [
+    {
+      "file": "hard_source_filter_direction_v1.py",
+      "restore_relative_path": "compute/hard_source_filter_direction_v1.py",
+      "executed_or_declared_source_sha256": "26d4d7583ea9ac8701b6c210502c9a216b88f34ef58294b01866a9849068486f"
+    },
+    {
+      "file": "hard_source_filter_binding_v1.py",
+      "restore_relative_path": "compute/hard_source_filter_binding_v1.py",
+      "executed_or_declared_source_sha256": "3a38ad26f5b3525a450fc633af64fe5266ac7bae2a558c3490cedb2cf07e855c"
+    },
+    {
+      "file": "derive_hard_source_filter_contracts_v1.py",
+      "restore_relative_path": "compute/derive_hard_source_filter_contracts_v1.py",
+      "executed_or_declared_source_sha256": "9554192fed59c8e6bf80fa41bd3ba1c2c3501ea1ee8c6adc516f7be38bf75a72"
+    },
+    {
+      "file": "hard-source-filter-contracts-CPU-plan-v1.json",
+      "restore_relative_path": "compute/hard-source-filter-contracts-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "8540265fc807fe2d1c926372611bb037a12624dd65c7e404677ab4a26262f2cf"
+    },
+    {
+      "file": "hard_source_filter_inputs_v1.py",
+      "restore_relative_path": "compute/hard_source_filter_inputs_v1.py",
+      "executed_or_declared_source_sha256": "b2ab441f4dc9879f08dff89f75f92a67d88d3cb46038634ff1c14945064f89b2"
+    },
+    {
+      "file": "build_hard_source_filter_preflight_v1.py",
+      "restore_relative_path": "compute/build_hard_source_filter_preflight_v1.py",
+      "executed_or_declared_source_sha256": "e386e5d6491164f510ae65d454fe5004c8539d3fd99f16496b38e8080efae65d"
+    },
+    {
+      "file": "hard-source-filter-preflight-CPU-plan-v1.json",
+      "restore_relative_path": "compute/hard-source-filter-preflight-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "f4a94170d70cdff7736097d6903497bf3726a87f7a6d83b95be5e59cf9ac0fff"
+    },
+    {
+      "file": "verify_hard_source_filter_preflight_v1.py",
+      "restore_relative_path": "compute/verify_hard_source_filter_preflight_v1.py",
+      "executed_or_declared_source_sha256": "e977394fc93209755d504372b946731fbf7846a08ce54e6ae3e332a1d5e1e547"
+    },
+    {
+      "file": "hard-source-filter-binding-CPU-plan-v1.json",
+      "restore_relative_path": "compute/hard-source-filter-binding-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "f5e908d062adb5fb90e7983df9e78edc7c5de654a7137f0c83a144e9d1c98569"
+    },
+    {
+      "file": "evaluate_hard_source_filter_v1.py",
+      "restore_relative_path": "compute/evaluate_hard_source_filter_v1.py",
+      "executed_or_declared_source_sha256": "fd7d5f3e29f854ba86aa9832f76f9b5902b24950d1b35eb7c577bee5623f51a0"
+    },
+    {
+      "file": "hard-source-filter-evaluation-CPU-plan-v1.json",
+      "restore_relative_path": "compute/hard-source-filter-evaluation-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "a97d3ba65950b4f3205732285590ca0380866d0a8e0638f97c7a00fd94245600"
+    },
+    {
+      "file": "audit_hard_source_filter_return_v1.py",
+      "restore_relative_path": "compute/audit_hard_source_filter_return_v1.py",
+      "executed_or_declared_source_sha256": "f1a6dd598170c6691386cf8fe835a60a228a4db4e29140ea8e8e44632acf3b96"
+    },
+    {
+      "file": "hard-source-filter-return-audit-CPU-plan-v1.json",
+      "restore_relative_path": "compute/hard-source-filter-return-audit-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "772af6eb6bd9e5dd9a537936aefe97f3dc4f7efe6c28bd80f663754d0a288d68"
+    },
+    {
+      "file": "archive_hard_source_filter_v1.py",
+      "restore_relative_path": "compute/archive_hard_source_filter_v1.py",
+      "executed_or_declared_source_sha256": "eb30cca1075666b5b5ed3ac494b456fb479f0aefcb292e8b5cecfa7fc9714bc1"
+    }
+  ],
+  "private_inputs_geometry_arrays_results_NOT_included": true
+}

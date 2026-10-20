@@ -1,0 +1,19 @@
+{
+  "schema": "v2d.NEW-hard-source-filter-contract-CPU-plan.v1",
+  "created_utc": "2026-10-20T15:55:35.995246+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_hard_source_filter_contracts_v1.py",
+  "worker_sha256": "9554192fed59c8e6bf80fa41bd3ba1c2c3501ea1ee8c6adc516f7be38bf75a72",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-hard-source-filter-contracts-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/hard_source_filter_direction_v1.py": "26d4d7583ea9ac8701b6c210502c9a216b88f34ef58294b01866a9849068486f",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/hard_source_filter_binding_v1.py": "3a38ad26f5b3525a450fc633af64fe5266ac7bae2a558c3490cedb2cf07e855c",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_training_source_semantics_v1.py": "ce789643aa0442f822d8dee4d8123596d5d92843937ede79fec063b6f8a22b99",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/hard_training_conic_returns_v1.py": "f67193843bdccf975e5afeb99078329d389be4dfdec0cccf7cb4c39805302526",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source-numerical-checkpoint-v1.json": "942b664339cdb1e303b650a5bd4a727f0bc4a847d424ae7fed288a418aaf216a",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/hard-training-source-callback-api-inventory-v1.json": "122e48b1ee09b0040890191bcd6ab64d44341c4f45b3690e07c00de59dcb4f9b"
+  },
+  "scope": "6NEW coupled step-QP/actual raster-median hard filter/sealed trial/nonzero-cache/conditioning/raw-step identity contracts, including TWO NEW analytical tiny QPs. No episode point/source/solver or old control replay.",
+  "CPU_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}
