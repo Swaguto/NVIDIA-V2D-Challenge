@@ -1,0 +1,92 @@
+{
+  "schema": "v2d.NEW-joint-saved-mean-proof-code-manifest.v1",
+  "files": {
+    "joint_saved_mean_bound_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_saved_mean_bound_v1.py",
+      "sha256": "51cd575517152d06b026aa2165976dbe91a83b876e9971a80557f2c217e9a058",
+      "bytes": 3550
+    },
+    "verify_joint_saved_mean_contracts_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_joint_saved_mean_contracts_v1.py",
+      "sha256": "4b3a0dfa8579f0d786f15bd130a5c6542fc502ba89b589be931252128508f827",
+      "bytes": 2630
+    },
+    "build_joint_saved_mean_maps_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_joint_saved_mean_maps_v1.py",
+      "sha256": "a09b9142f9dc2b2f0ebfca185b0782d133edaa8931b3f24a723b1bc3c82d93c9",
+      "bytes": 3892
+    },
+    "bind_joint_saved_mean_maps_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/bind_joint_saved_mean_maps_v1.py",
+      "sha256": "cbf78b822860b42024f4ec1a487b64176a0095e126e59844a8f4a4a6532dca91",
+      "bytes": 2682
+    },
+    "joint_mean_proof_packets_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_mean_proof_packets_v1.py",
+      "sha256": "af7c33fbb9336d5cc342bda44fd4b596340e31135495e551a42141faa3f38484",
+      "bytes": 1240
+    },
+    "verify_joint_mean_packet_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_joint_mean_packet_v1.py",
+      "sha256": "6e94cbaeb22cc587b5fdb74d630605baf7b038d742c5bf04836515b43611f0e7",
+      "bytes": 795
+    },
+    "evaluate_joint_saved_mean_bound_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/evaluate_joint_saved_mean_bound_v1.py",
+      "sha256": "aaddc592abd343a04ad96d92e30b113118519f47b9598206a3e74fa619b23a14",
+      "bytes": 5013
+    },
+    "joint_mean_independent_integer_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_mean_independent_integer_v1.py",
+      "sha256": "692e430945db205307b99c5acb1ac68df12c3d9f789278b800ce4383e2c66c23",
+      "bytes": 1265
+    },
+    "verify_joint_mean_integer_controls_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_joint_mean_integer_controls_v1.py",
+      "sha256": "b93862ec6d6ee70d0458cb92512fb57d2cec18c34989e801159b33be66d102e4",
+      "bytes": 1080
+    },
+    "audit_joint_saved_mean_certificate_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_joint_saved_mean_certificate_v1.py",
+      "sha256": "0d412b32310d380bc1f97734752c9063088964d9a8ee140d474bfdedace63c94",
+      "bytes": 4854
+    },
+    "joint-mean-proof-contracts-CPU-plan-v1.json": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint-mean-proof-contracts-CPU-plan-v1.json",
+      "sha256": "1b2ec7c1f64e00e4f9bf814c9c0e705d9970c51331f3ba7767dc927eecdc02b0",
+      "bytes": 725
+    },
+    "joint-mean-proof-maps-CPU-plan-v1.json": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint-mean-proof-maps-CPU-plan-v1.json",
+      "sha256": "3f36f7c5dc8eadaad74e0f0a338e6f000c0cb2cc4782e061ec6c173c035c2521",
+      "bytes": 699
+    },
+    "joint-mean-proof-binding-CPU-plan-v1.json": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint-mean-proof-binding-CPU-plan-v1.json",
+      "sha256": "964e344d305fc0bf2786d5147c889ce8f2596327edeeaa05a90b7726a2a562c4",
+      "bytes": 701
+    },
+    "joint-mean-proof-packet-CPU-plan-v1.json": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint-mean-proof-packet-CPU-plan-v1.json",
+      "sha256": "725d982d114cdb6e0931677d0d445f57b619d81814978bd193b06c2b5498115b",
+      "bytes": 878
+    },
+    "joint-mean-proof-evaluation-CPU-plan-v1.json": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint-mean-proof-evaluation-CPU-plan-v1.json",
+      "sha256": "68ca5da8813d1e993cd89ea324d75bb1e20a53e992693f0d5f6296fa40c1dee4",
+      "bytes": 944
+    },
+    "joint-mean-proof-integer-controls-CPU-plan-v1.json": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint-mean-proof-integer-controls-CPU-plan-v1.json",
+      "sha256": "5b79cdae94191bf97bdffbc2bad32a5e71395daf8963b1cc41f16d9d866f132b",
+      "bytes": 907
+    },
+    "joint-mean-proof-independent-audit-CPU-plan-v1.json": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint-mean-proof-independent-audit-CPU-plan-v1.json",
+      "sha256": "a8cb42edda9fb7c9a06774eea66770d91b7e2788c5d9bd9f265052c9a923832b",
+      "bytes": 908
+    }
+  },
+  "production_runtime_tests_UNCHANGED": true,
+  "private_arrays_geometry_and_returns_NOT_included": true
+}

@@ -1,0 +1,12 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-joint-mean-proof-packet-control-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_joint_mean_packet_v1.py",
+  "worker_sha256": "6e94cbaeb22cc587b5fdb74d630605baf7b038d742c5bf04836515b43611f0e7",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_saved_mean_bound_v1.py": "51cd575517152d06b026aa2165976dbe91a83b876e9971a80557f2c217e9a058",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_mean_proof_packets_v1.py": "af7c33fbb9336d5cc342bda44fd4b596340e31135495e551a42141faa3f38484",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_lossless_returns_v1.py": "94c20974989021fedebaf3910705532780767ed2e7162296a01b5c5b4ccf54a4"
+  },
+  "CPU_only": true,
+  "NEW_actual_proof_return_packet_control": true
+}

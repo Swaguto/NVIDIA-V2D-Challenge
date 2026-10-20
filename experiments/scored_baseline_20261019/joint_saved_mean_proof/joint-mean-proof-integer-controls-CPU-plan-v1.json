@@ -1,0 +1,12 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-joint-mean-proof-integer-controls-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_joint_mean_integer_controls_v1.py",
+  "worker_sha256": "b93862ec6d6ee70d0458cb92512fb57d2cec18c34989e801159b33be66d102e4",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_saved_mean_bound_v1.py": "51cd575517152d06b026aa2165976dbe91a83b876e9971a80557f2c217e9a058",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_mean_independent_integer_v1.py": "692e430945db205307b99c5acb1ac68df12c3d9f789278b800ce4383e2c66c23",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_lossless_returns_v1.py": "94c20974989021fedebaf3910705532780767ed2e7162296a01b5c5b4ccf54a4"
+  },
+  "CPU_only": true,
+  "NEW_independent_integer_proof_not_operator_replay": true
+}
