@@ -1,0 +1,18 @@
+{
+  "schema": "v2d.NEW-source-numerical-contract-CPU-plan.v1",
+  "created_utc": "2026-10-20T15:36:11.902866+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_source_numerical_contracts_v1.py",
+  "worker_sha256": "bab478e3dbf1e03d1f30a7d59cb454cb3072a7430c8c24a8c884cfbe84e9e179",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-numerical-contracts-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_numerical_enclosures_v1.py": "e00cf2fbc40c9c77adee5ee6a2e1a95af23355599045bc6356d93006ccc6a593",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/training_proxy_roundoff_v1.py": "397668748df73cf9da77c328a3e7fb418e5c9e2d17d73122ced56abb5ba61e6c",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/exact_training_source_logic_v1.py": "c48d8ddfb14a62bf27158ef3f934fd18368f5bc40d472683709e4593111ff987",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/free-rank-raster-checkpoint-v1.json": "94d3dcb59707d7cf0ca424b2f0b1859e02361028d261468c8b606fa3d33e440e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-numerical-reference-v1/reference-receipt.json": "b4ee3698da2e32ef7c3af5cf712f4f011696a99c9f4f28c4a07b30c0f9bb2443"
+  },
+  "scope": "10NEW conditional quotient/leaf-norm/dyadic-cache-alias/API-scope controls. Synthetic KD queries only. No episode NN/raster/source, old controls/audits, solver or pose.",
+  "CPU_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}

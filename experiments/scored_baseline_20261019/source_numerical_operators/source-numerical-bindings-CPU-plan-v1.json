@@ -1,0 +1,20 @@
+{
+  "schema": "v2d.NEW-source-numerical-binding-CPU-plan.v1",
+  "created_utc": "2026-10-20T15:38:08.215516+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_source_numerical_bindings_v1.py",
+  "worker_sha256": "74fe57bbdc0b9262f3c3e22f47df45df34b770d1c72d901abe5293a21ef1e8d6",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-numerical-bindings-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_numerical_enclosures_v1.py": "e00cf2fbc40c9c77adee5ee6a2e1a95af23355599045bc6356d93006ccc6a593",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_training_source_semantics_v1.py": "ce789643aa0442f822d8dee4d8123596d5d92843937ede79fec063b6f8a22b99",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_training_constraint_oracle_v1.py": "31a2f4f5c8ace207c913639407e0d456e3639be7411f486beea30dc7c31f8521",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/training_proxy_roundoff_v1.py": "397668748df73cf9da77c328a3e7fb418e5c9e2d17d73122ced56abb5ba61e6c",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-numerical-contracts-v1/report.json": "dbce51f41752224802c47e9bd2412a2282ccf8bd4b20bf2c0adfb37105f691f6",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-runtime-v1/dynamic-source-data.npz": "31505c96bde69959aef90e9331fd5a40f7856b944fc511baedbccbe0008de9b8",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-free-rank-raster-representation-v1/all151-NEW-free-source-formulas-RETURN.json": "0fc0118e35bd16b7b506ca64a2181039de50182a0e7c20968fdabd0e768b0cc0"
+  },
+  "scope": "ONE NEW all151 exact cache-versus-affine signed alias inventory and1812 conditional error coefficient construction, no assigned delta/box. Operator k1/k2/cache/matmul scopes and complete acceptance protocol. No source/NN/raster/old audit/solver or pose evaluation.",
+  "CPU_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "files": [
+    {
+      "file": "source_numerical_enclosures_v1.py",
+      "restore_relative_path": "compute/source_numerical_enclosures_v1.py",
+      "executed_or_declared_source_sha256": "e00cf2fbc40c9c77adee5ee6a2e1a95af23355599045bc6356d93006ccc6a593"
+    },
+    {
+      "file": "derive_source_numerical_contracts_v1.py",
+      "restore_relative_path": "compute/derive_source_numerical_contracts_v1.py",
+      "executed_or_declared_source_sha256": "bab478e3dbf1e03d1f30a7d59cb454cb3072a7430c8c24a8c884cfbe84e9e179"
+    },
+    {
+      "file": "source-numerical-contracts-CPU-plan-v1.json",
+      "restore_relative_path": "compute/source-numerical-contracts-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "b976aeabf362b102d7ff456a4128457e049709a664ea7c9ee53befab90f4149d"
+    },
+    {
+      "file": "build_source_numerical_bindings_v1.py",
+      "restore_relative_path": "compute/build_source_numerical_bindings_v1.py",
+      "executed_or_declared_source_sha256": "74fe57bbdc0b9262f3c3e22f47df45df34b770d1c72d901abe5293a21ef1e8d6"
+    },
+    {
+      "file": "source-numerical-bindings-CPU-plan-v1.json",
+      "restore_relative_path": "compute/source-numerical-bindings-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "50c610850d488e13e640c0aa83fdbeb73be935a8fef00c758c227a721e1a0095"
+    },
+    {
+      "file": "verify_source_numerical_bindings_v1.py",
+      "restore_relative_path": "compute/verify_source_numerical_bindings_v1.py",
+      "executed_or_declared_source_sha256": "b1b235dabcfc25adb648b592845939bd0a8ecb116868aed5d9ddedc4e8195d47"
+    },
+    {
+      "file": "source-numerical-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/source-numerical-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "e43a6f3bf27683da9396d84ca5aed8d9394bee8fd15104fea9870225fb05e796"
+    },
+    {
+      "file": "archive_source_numerical_v1.py",
+      "restore_relative_path": "compute/archive_source_numerical_v1.py",
+      "executed_or_declared_source_sha256": "5b794bb8e6b1d5bec2dbd7d602de661049b74257a5533464aac121c3e9d4eb1a"
+    },
+    {
+      "file": "public-reference-receipt.json",
+      "public_source_provenance_ONLY": true,
+      "executed_or_declared_source_sha256": "b4ee3698da2e32ef7c3af5cf712f4f011696a99c9f4f28c4a07b30c0f9bb2443"
+    }
+  ],
+  "private_inputs_geometry_arrays_results_NOT_included": true
+}

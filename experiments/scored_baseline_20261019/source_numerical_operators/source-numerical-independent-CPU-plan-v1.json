@@ -1,0 +1,18 @@
+{
+  "schema": "v2d.NEW-source-numerical-independent-CPU-plan.v1",
+  "created_utc": "2026-10-20T15:40:05.382725+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_source_numerical_bindings_v1.py",
+  "worker_sha256": "b1b235dabcfc25adb648b592845939bd0a8ecb116868aed5d9ddedc4e8195d47",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-numerical-independent-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-numerical-bindings-v1/all151-NEW-source-numerical-bindings-RETURN.json": "61fa73867f616e0aeb3f1a3a437b6de484be3a5342d7243cabf662c9bbb8695e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-numerical-bindings-v1/NEW-input-provenance-BY-HASH.json": "f096aa5b6db09466a9565d654ebcc6395786e22d41b68db4d0bfdd847c4b879d",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-numerical-bindings-v1/NEW-actual-operator-scope-bindings-RETURN.json": "4b5f1497e365e8b35d741d06bd6796a564374e4ea35db40c823b9e6e1fc8464a",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-runtime-v1/dynamic-source-data.npz": "31505c96bde69959aef90e9331fd5a40f7856b944fc511baedbccbe0008de9b8",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-numerical-reference-v1/_ckdtree.pyx": "9b555c42c7fd9d54e8793a2a15cc2b171bbde57f01d124d7dec1f801c596ea33"
+  },
+  "scope": "Independent NEW2727966 exact saved-cache affine alias components by per-operand exponent arithmetic,1812 parametric error coefficients,operator scope and151durable pairs. No source/NN/raster/old control/audit/helper/solver/pose replay.",
+  "CPU_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}

@@ -1,0 +1,48 @@
+{
+  "schema": "v2d.NEW-numerical-source-reference.v1",
+  "created_utc": "2026-10-20T15:05:56.435210+00:00",
+  "installed_scipy": "1.16.3",
+  "installed_ckdtree_binary": "/Users/rohithiruku/v2d_scored_baseline_20261017/cpu-env/lib/python3.12/site-packages/scipy/spatial/_ckdtree.cpython-312-darwin.so",
+  "installed_binary_sha256": "675ea5155c71eda836de9ebe529d1d37579f5eb2d4bd21270b6334965ab42750",
+  "public_source_files": [
+    {
+      "path": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-numerical-reference-v1/distance.h",
+      "url": "https://raw.githubusercontent.com/scipy/scipy/v1.16.3/scipy/spatial/ckdtree/src/distance.h",
+      "bytes": 8604,
+      "sha256": "aa2733fd291241ea9a269289389b678c89e4b163f781ac022c81466aa7a4c271"
+    },
+    {
+      "path": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-numerical-reference-v1/distance_base.h",
+      "url": "https://raw.githubusercontent.com/scipy/scipy/v1.16.3/scipy/spatial/ckdtree/src/distance_base.h",
+      "bytes": 6966,
+      "sha256": "0ea55fe0f91523258147b16826f195da3abde098f9647dc530c01fe077384038"
+    },
+    {
+      "path": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-numerical-reference-v1/query.cxx",
+      "url": "https://raw.githubusercontent.com/scipy/scipy/v1.16.3/scipy/spatial/ckdtree/src/query.cxx",
+      "bytes": 15650,
+      "sha256": "d9035f43743a4d33694a8bde82426541b4bc609fc2931fec431e24f9c1b4a2fb"
+    },
+    {
+      "path": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-numerical-reference-v1/ckdtree_decl.h",
+      "url": "https://raw.githubusercontent.com/scipy/scipy/v1.16.3/scipy/spatial/ckdtree/src/ckdtree_decl.h",
+      "bytes": 3565,
+      "sha256": "dcb98c7960e1d6512660454760141237d1a88f3855532e1d252a1b2c9a2dacec"
+    },
+    {
+      "path": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-numerical-reference-v1/_ckdtree.pyx",
+      "url": "https://raw.githubusercontent.com/scipy/scipy/v1.16.3/scipy/spatial/_ckdtree.pyx",
+      "bytes": 58741,
+      "sha256": "9b555c42c7fd9d54e8793a2a15cc2b171bbde57f01d124d7dec1f801c596ea33"
+    },
+    {
+      "path": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-source-numerical-reference-v1/LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/scipy/scipy/v1.16.3/LICENSE.txt",
+      "bytes": 1531,
+      "sha256": "221e59f5e910fd7f94e44f0dac77436a11338c285c6346232e4a850a50da0e94"
+    }
+  ],
+  "static_public_reference_only_no_build_install_or_execution": true,
+  "source_tag_and_binary_hash_NOT_full_build_or_roundoff_search_proof": true,
+  "no_episode_source_NN_raster_or_pose_evaluation": true
+}
