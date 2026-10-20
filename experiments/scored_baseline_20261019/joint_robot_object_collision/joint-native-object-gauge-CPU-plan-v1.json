@@ -1,0 +1,10 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-joint-native-object-gauge-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_joint_native_object_gauge_v1.py",
+  "worker_sha256": "4364687acff5aab43a5d2f1c835ddcb33976ecfca05b318b26cd74ed38a9f37b",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_collision_maps_v1.py": "ba655c714acccd34e3f4c7539011367853d48f66068d9b70858e01a54eda4711"
+  },
+  "CPU_only": true,
+  "NEW_concrete_native_object_frame_binding_not_episode_evaluation": true
+}

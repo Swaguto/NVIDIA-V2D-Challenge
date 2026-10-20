@@ -1,0 +1,7 @@
+{
+  "url": "https://raw.githubusercontent.com/google-deepmind/mujoco/3.8.1/src/engine/engine_collision_driver.c",
+  "path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint-collision-mujoco-3.8.1-engine_collision_driver.c.txt",
+  "sha256": "41cce70938fa3bd789419308f64febdd0f1d4639e08984d7984ebffcbc48f11c",
+  "use": "NEW conditional static pair filter map; no native replay or binary-equivalence claim",
+  "license": "Apache-2.0 retained in source"
+}

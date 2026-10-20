@@ -1,0 +1,28 @@
+{
+  "schema": "v2d.NEW-joint-collision-code-only.v1",
+  "files": {
+    "joint_collision_maps_v1.py": "ba655c714acccd34e3f4c7539011367853d48f66068d9b70858e01a54eda4711",
+    "verify_joint_collision_contracts_v1.py": "14d43ecb44748811cecf9823ecd287bd5a6452d6d699be6ba3a87ed7ef4dc3f4",
+    "build_joint_collision_maps_v1.py": "2ab234ca8744fb78adff1d22874bc84dfbc44271e0c7b84fe7a4860795392307",
+    "verify_joint_collision_maps_v1.py": "dd1f1fc351e40ca0721133afdc9db4005d7a8dca5949df4612bcc5d64be50c2f",
+    "verify_joint_collision_unreached_bindings_v1.py": "8b22acb36aa9171f3e6fd67dfafc1f72e2401979dceab3240ca97b7469a5c4bc",
+    "joint_collision_predicates_v1.py": "dfb11a65a599d0ec4a34e4be56bf5766e67d4f4522c1c587f33a02a13bd92a55",
+    "build_joint_collision_predicates_v1.py": "9660bd0e7ba0eda7136d59a9246bba660e3d6a44c5123443080595d3436ffe5d",
+    "build_joint_native_object_gauge_v1.py": "4364687acff5aab43a5d2f1c835ddcb33976ecfca05b318b26cd74ed38a9f37b",
+    "verify_joint_complete_predicates_v1.py": "26476a6bba59c432dd0a0680562bf7c908eb5e2783e6b2a43e7d2ace722a8a24",
+    "verify_joint_one_load_bindings_v1.py": "6a82434af86ec64d546946690891e0b0aa059449cbedc441a8fdeef17c1893e0",
+    "record_joint_collision_checkpoint_v1.py": "5b1432296dcceef8d9aefd43dccc4cd50c2c85d5158772d6c5cc52f46fd764c8",
+    "build_joint_collision_maps_v1.preparation-unmatched-parenthesis.raw.py.txt": "be555829ffad5434ff5e6062d1a1e49a4596724fabae11774cf679a779ddbb2d",
+    "joint-complete-binding-IO-interruption-v1.json": "9d450d61e58df0d33fed27d77e28d4356ea79e7ba07b5262785db1a13605c8a6",
+    "joint-collision-native-filter-public-reference-v1.json": "5cd599d3e4b24a68704adae93e78382c5fcdcd87a04da6353f038e5e554a0fb4",
+    "joint-collision-contracts-CPU-plan-v1.json": "1b7c1bb4857bfdf90093599bc6d5f7b7e4cbe7d3da798893f8dca83b2907137a",
+    "joint-collision-maps-CPU-plan-v1.json": "e4dcdc50e8770cb7cf0b86eb1103c3492b60ea872c96e05d96ebb57c91089357",
+    "joint-collision-binding-CPU-plan-v1.json": "5eed54b29917aff30211edb680477fedef1f35c6c475ae9ff757245ae6e8548e",
+    "joint-collision-unreached-binding-CPU-plan-v1.json": "ae92f461c962621171d8115f14c3bde9fe98d9e7d5c81b1922ae661f9b2f4c70",
+    "joint-collision-predicates-CPU-plan-v1.json": "0340568ebd2c4c11ee274cc939aacabaab8f9f75abd65692461058165aa73b19",
+    "joint-native-object-gauge-CPU-plan-v1.json": "8412e796dce59af20fbd389b51a2b63c7321d5a94142fe5902552f06f4777181",
+    "joint-complete-binding-CPU-plan-v1.json": "b6bbb5c27fb3540344fd36d15d6ffc7e08fef24d3867ece6a0eb4127ec763682",
+    "joint-one-load-binding-CPU-plan-v1.json": "c27e3ecf71329f5134156e08fc42c6e4151a35baca589278c35214089adbce5d"
+  },
+  "production_runtime_tests_UNCHANGED": true
+}

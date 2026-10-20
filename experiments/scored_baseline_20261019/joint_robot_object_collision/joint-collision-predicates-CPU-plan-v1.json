@@ -1,0 +1,11 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-joint-collision-predicates-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_joint_collision_predicates_v1.py",
+  "worker_sha256": "9660bd0e7ba0eda7136d59a9246bba660e3d6a44c5123443080595d3436ffe5d",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_collision_predicates_v1.py": "dfb11a65a599d0ec4a34e4be56bf5766e67d4f4522c1c587f33a02a13bd92a55",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_collision_maps_v1.py": "ba655c714acccd34e3f4c7539011367853d48f66068d9b70858e01a54eda4711"
+  },
+  "CPU_only": true,
+  "NEW_complete_quantified_collision_and_canonical_embedding_only": true
+}

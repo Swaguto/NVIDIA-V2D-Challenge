@@ -1,0 +1,10 @@
+{
+  "utc": "2026-10-20T22:08:01.005827+00:00",
+  "worker_pid": 87385,
+  "reason": "Detected compressed NPZ field reloaded per-column; stop redundant I/O implementation before further work",
+  "completed_return_files": [
+    "NEW-complete-row-bijection-RETURN.json"
+  ],
+  "missing_coefficient_routing_RETURN": "UNAVAILABLE, not reconstructed",
+  "scope": "independent binding only; no source/native/solver/pose evaluation"
+}

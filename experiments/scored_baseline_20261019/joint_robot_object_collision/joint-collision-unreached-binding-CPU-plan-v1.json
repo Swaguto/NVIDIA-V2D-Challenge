@@ -1,0 +1,11 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-joint-collision-binding-continuation-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_joint_collision_unreached_bindings_v1.py",
+  "worker_sha256": "8b22acb36aa9171f3e6fd67dfafc1f72e2401979dceab3240ca97b7469a5c4bc",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_collision_maps_v1.py": "ba655c714acccd34e3f4c7539011367853d48f66068d9b70858e01a54eda4711"
+  },
+  "CPU_only": true,
+  "ONLY_unreached_routing_support_and_pair_bindings": true,
+  "failed_native_URDF_identity_preserved_no_tolerance_change": true
+}

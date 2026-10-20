@@ -1,0 +1,10 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-joint-collision-contracts-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_joint_collision_contracts_v1.py",
+  "worker_sha256": "14d43ecb44748811cecf9823ecd287bd5a6452d6d699be6ba3a87ed7ef4dc3f4",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_collision_maps_v1.py": "ba655c714acccd34e3f4c7539011367853d48f66068d9b70858e01a54eda4711"
+  },
+  "CPU_only": true,
+  "NEW_synthetic_contracts_no_episode_evaluation": true
+}
