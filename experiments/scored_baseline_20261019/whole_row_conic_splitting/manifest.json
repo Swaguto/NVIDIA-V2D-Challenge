@@ -1,0 +1,88 @@
+{
+  "schema": "v2d.NEW-whole-row-conic-code-only-archive.v1",
+  "created_utc": "2026-10-20T21:04:02.608865+00:00",
+  "files": {
+    "whole_row_conic_split_v1.py": {
+      "sha256": "69cc9ee6c87c61a3c62c6dd42f18e42ec02e594af817f3398123ce36b463eb73",
+      "bytes": 3690,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/whole_row_conic_split_v1.py"
+    },
+    "whole_row_conic_runtime_v1.py": {
+      "sha256": "3a16232411810109341d76c33afae19df4dfafeb589274994c7c4535ecf41c49",
+      "bytes": 584,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/whole_row_conic_runtime_v1.py"
+    },
+    "derive_whole_row_conic_contracts_v1.py": {
+      "sha256": "c42af1e923f592c9f327038051f4db913e726b24f83c2aed46e8cc4000082aca",
+      "bytes": 3673,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_whole_row_conic_contracts_v1.py"
+    },
+    "build_whole_row_conic_normal_v1.py": {
+      "sha256": "b554f1f1b84d75519accc06b82d3e7a9f0f90c134b4542fdf4021406129e81ce",
+      "bytes": 2436,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_whole_row_conic_normal_v1.py"
+    },
+    "verify_whole_row_conic_normal_v1.py": {
+      "sha256": "bd727f8af4390a235941f3743cfde8c49397c0345852a9ef20a6ad46c4a59d52",
+      "bytes": 5274,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_whole_row_conic_normal_v1.py"
+    },
+    "derive_whole_row_conic_range_contracts_v1.py": {
+      "sha256": "57a6f3f59e0ce1991eb6bdf37afeb6a8d1d34f7340781d7c399aa4cdd7f92dff",
+      "bytes": 1038,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_whole_row_conic_range_contracts_v1.py"
+    },
+    "postcheck_whole_row_conic_candidate_v1.py": {
+      "sha256": "50143d87902137e957e4a0b2e973d9d7c31c51adfbe495efe2b9325057739165",
+      "bytes": 3725,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/postcheck_whole_row_conic_candidate_v1.py"
+    },
+    "evaluate_whole_row_conic_split_v1.py": {
+      "sha256": "06501f1dcb97d4a2e8d884dbce1b29863e65d4cf6e76ddb7c748ca6cd7581d79",
+      "bytes": 7135,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/evaluate_whole_row_conic_split_v1.py"
+    },
+    "audit_whole_row_conic_returns_v1.py": {
+      "sha256": "7ae42e599df232173465acf09cb3ec23b923cad8d5fc295f95e20b3d24171b04",
+      "bytes": 5950,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_whole_row_conic_returns_v1.py"
+    },
+    "whole-row-conic-strict-map-binding-v1.json": {
+      "sha256": "9a54dd4e9f2193f1b8ffa38641e2cc1b8b022a59784d2d7df010f27e8eb5d0a3",
+      "bytes": 291,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/whole-row-conic-strict-map-binding-v1.json"
+    },
+    "whole-row-conic-contracts-CPU-plan-v1.json": {
+      "sha256": "611791c14244564fcb61b6929f977a3c6d8259e45f5e0b967e038155e4974431",
+      "bytes": 540,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/whole-row-conic-contracts-CPU-plan-v1.json"
+    },
+    "whole-row-conic-normal-CPU-plan-v1.json": {
+      "sha256": "3b7a596dfe2258829dbd03f2c03fdc84db76876320a993d65abc3e869378711b",
+      "bytes": 533,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/whole-row-conic-normal-CPU-plan-v1.json"
+    },
+    "whole-row-conic-binding-CPU-plan-v1.json": {
+      "sha256": "c9b3b573ac0eed66a5feccb5db215190e109efba1a26518acb154ca6e81f2455",
+      "bytes": 541,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/whole-row-conic-binding-CPU-plan-v1.json"
+    },
+    "whole-row-conic-range-contracts-CPU-plan-v1.json": {
+      "sha256": "1cef2c58f308abc76a0b3ac57b62977f6b97d15e0729c0a5ca3add50597f5b37",
+      "bytes": 720,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/whole-row-conic-range-contracts-CPU-plan-v1.json"
+    },
+    "whole-row-conic-evaluation-CPU-plan-v1.json": {
+      "sha256": "7e67f19c3f0a9cf62e2f55ef2f44a931feff3a2f17f48d72f45dd5a984e991ab",
+      "bytes": 1937,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/whole-row-conic-evaluation-CPU-plan-v1.json"
+    },
+    "whole-row-conic-return-audit-CPU-plan-v1.json": {
+      "sha256": "9deb0c642c78d9943af5c4cd55f2568495c1d03e6b322dcaa655ee61de567d9e",
+      "bytes": 711,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/whole-row-conic-return-audit-CPU-plan-v1.json"
+    }
+  },
+  "private_source_geometry_matrices_and_result_arrays_EXCLUDED": true,
+  "production_runtime_and_tests_UNCHANGED": true
+}

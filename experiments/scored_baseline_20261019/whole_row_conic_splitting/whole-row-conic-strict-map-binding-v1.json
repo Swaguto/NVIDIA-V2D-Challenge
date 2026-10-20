@@ -1,0 +1,7 @@
+{
+  "schema": "v2d.NEW-whole-row-conic-strict-map-binding.v1",
+  "ALL151strict_open_target_pointers_exact": true,
+  "ALL1051cone_pointers_exact": true,
+  "new_map_sha256": "8a885810a9ffe86644cbd429e628b73433914d892dd9d07a9303734b22c4655f",
+  "no_model_source_NN_raster_audit_replay": true
+}

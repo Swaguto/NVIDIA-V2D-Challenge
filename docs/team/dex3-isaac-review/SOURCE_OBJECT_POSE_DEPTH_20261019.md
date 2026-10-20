@@ -1208,3 +1208,36 @@ alone cannot clear the eight right-self failures. F/separate components/missing
 136/heldout 31-of-32/source authority/parameters/original gates are unchanged.
 Owner continuation remains active and unachieved; historical blocked goal-tool
 observation is separate. Research or optimizer completion is not goal completion.
+
+
+## 2026-10-20: direct whole-row conic splitting (unresolved)
+
+Exact code/plans/provenance: `experiments/scored_baseline_20261019/whole_row_conic_splitting/`.
+Private checkpoint/integrity: `compute/whole-row-conic-checkpoint-v1.json` /
+`compute/private-integrity-whole-row-conic-v1.json`. Six serial CPU guards succeed;
+14 NEW controls. ALL frozen 4,618,162 rows / 32,306,054 coefficients / 1,058
+variables, 900 SOC4 + 151 SOC5, objective, conditioning and strict/open flags
+remain. A direct P+A'A normal map and coordinate-row SPD proof use all rows;
+proof witnesses do not drop constraints. New independent complete map and
+normal/factor bindings pass conditional arithmetic checks. No old completed
+control/model/source/NN/raster/native/solver/audit is replayed. The unavailable
+materialized constructor state remains UNKNOWN; SLSQP is not continued.
+
+ONE new fixed direct ADMM method starts F (rho=1/relaxation=1/32 updates/120s);
+unchanged 240s/2GiB outer guard. It finishes in 16.0187s (guard17.0325s, peak
+856,506,368 bytes). Sole raw step32 FAILS closed-model screening: minimum affine
+-3.60345463e-9 and cone -5.02237085e-9 in model units. No tolerance repair, best
+point, restart, extension, tuning, source query or physical claim. The .9995194688
+objective is not a source/physical/score metric or a proof of optimality/exclusion.
+
+NEW saved-return audit checks 443,343,552 row-state equations, all 1,051 cone
+norms/branches per step, raw linear guards and exact terminal identity without
+method/solver/projector/Ax/adjoint/source replay. Across the 32 saved intermediate
+slacks/duals, 870/1,764 exact dyadic SOC defects are RETAINED; zero exact branch
+condition failures. Three binding and three evaluation matmul warnings remain;
+checked returns are finite, cause unproven. No raw array repair or force claim.
+No actual pose/source/NN/raster/native/physics/GPU/PPO or trajectory qualification.
+F/separate components/missing136/heldout31-of-32/source authority/physical
+parameters/original gates remain. Object-only changes cannot clear eight self
+failures. Owner continuation remains active/unachieved; historical blocked
+goal-tool observation stays separate. Research checkpoints never complete it.

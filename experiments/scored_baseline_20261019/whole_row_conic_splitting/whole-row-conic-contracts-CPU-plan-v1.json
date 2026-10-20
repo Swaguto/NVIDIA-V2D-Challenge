@@ -1,0 +1,10 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-whole-row-conic-contracts-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_whole_row_conic_contracts_v1.py",
+  "worker_sha256": "c42af1e923f592c9f327038051f4db913e726b24f83c2aed46e8cc4000082aca",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/whole_row_conic_split_v1.py": "69cc9ee6c87c61a3c62c6dd42f18e42ec02e594af817f3398123ce36b463eb73"
+  },
+  "CPU_only": true,
+  "new_construction_only": true
+}

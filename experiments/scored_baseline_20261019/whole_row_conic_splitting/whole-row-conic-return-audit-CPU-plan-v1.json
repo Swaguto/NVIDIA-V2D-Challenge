@@ -1,0 +1,11 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-whole-row-conic-return-audit-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_whole_row_conic_returns_v1.py",
+  "worker_sha256": "7ae42e599df232173465acf09cb3ec23b923cad8d5fc295f95e20b3d24171b04",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/whole_row_conic_split_v1.py": "69cc9ee6c87c61a3c62c6dd42f18e42ec02e594af817f3398123ce36b463eb73",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-whole-row-conic-evaluation-v1/report.json": "cd7c4a4ec41d3c0e0549a514295d6f9b4d4b6963ab0651fc7376888ad14d0dc4"
+  },
+  "CPU_only": true,
+  "NEW_SAVED_returns_only": true
+}

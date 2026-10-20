@@ -1,0 +1,10 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-whole-row-conic-binding-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_whole_row_conic_normal_v1.py",
+  "worker_sha256": "bd727f8af4390a235941f3743cfde8c49397c0345852a9ef20a6ad46c4a59d52",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/whole_row_conic_split_v1.py": "69cc9ee6c87c61a3c62c6dd42f18e42ec02e594af817f3398123ce36b463eb73"
+  },
+  "CPU_only": true,
+  "independent_NEW_normal_maps": true
+}

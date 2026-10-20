@@ -1,0 +1,11 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-whole-row-conic-range-contracts-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_whole_row_conic_range_contracts_v1.py",
+  "worker_sha256": "57a6f3f59e0ce1991eb6bdf37afeb6a8d1d34f7340781d7c399aa4cdd7f92dff",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/whole_row_conic_split_v1.py": "69cc9ee6c87c61a3c62c6dd42f18e42ec02e594af817f3398123ce36b463eb73",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/whole_row_conic_runtime_v1.py": "3a16232411810109341d76c33afae19df4dfafeb589274994c7c4535ecf41c49"
+  },
+  "CPU_only": true,
+  "only_two_NEW_range_contracts": true
+}
