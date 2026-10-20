@@ -1,0 +1,22 @@
+{
+  "schema": "v2d.NEW-EVEN-training-source-constraint-CPU-plan.v1",
+  "created_utc": "2026-10-20T03:55:17.093680+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_training_source_constraints_v1.py",
+  "worker_sha256": "0c1e4b9c79a35a9b98d4c97c56edd30614634719c1ab2c7d0b6c6bc24444f523",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-training-source-constraints-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_training_source_semantics_v1.py": "ce789643aa0442f822d8dee4d8123596d5d92843937ede79fec063b6f8a22b99",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-training-source-contract-v1/report.json": "6188903123dc9015bd6aa32864ffe7c72bb2469f789d6f91f23c5ca6d7581eaf",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-source-authority-v1/cached-source-hashes.json": "a376bced568606b50b1dd088d3f4347febfee8f605688e1828b2d4bbe50a7dd3",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-dynamic-runtime-v1/dynamic-source-data.npz": "31505c96bde69959aef90e9331fd5a40f7856b944fc511baedbccbe0008de9b8"
+  },
+  "scope": "ONE NEW151clockEVEN-only fulltriangle-raster/4096point mesh-vertex-median source statistic and constraint dataset. Not old fullpixel scorer/fit/native/renderer cohort replay.",
+  "training_parity": 0,
+  "training_depth_points_cap_per_frame": 4096,
+  "old_source_failed_point_and60postchecks_NOT_inputs": true,
+  "heldout_values_NOT_metric_inputs": true,
+  "wall_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}

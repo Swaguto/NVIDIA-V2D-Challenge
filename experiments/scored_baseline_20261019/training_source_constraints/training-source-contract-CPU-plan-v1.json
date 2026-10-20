@@ -1,0 +1,15 @@
+{
+  "schema": "v2d.NEW-training-source-contract-CPU-plan.v1",
+  "created_utc": "2026-10-20T03:53:02.567140+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_training_source_semantics_v1.py",
+  "worker_sha256": "d9a3bd4d17c9cd4072da995968bf1ea2fc3fd0242c90f0b16c02cf2ba7a6c7cb",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-training-source-contract-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_training_source_semantics_v1.py": "ce789643aa0442f822d8dee4d8123596d5d92843937ede79fec063b6f8a22b99",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+  },
+  "scope": "12NEW analytic training-domain parity/raster/quantizer/ratio/nearest-vertex-median/gradient/rank/unknown contracts. No episode/old-source-fit/solver replay.",
+  "wall_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}

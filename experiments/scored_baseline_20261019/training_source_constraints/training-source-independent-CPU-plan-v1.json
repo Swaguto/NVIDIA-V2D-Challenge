@@ -1,0 +1,18 @@
+{
+  "schema": "v2d.NEW-training-source-independent-CPU-plan.v1",
+  "created_utc": "2026-10-20T03:59:02.688097+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_training_source_bindings_v1.py",
+  "worker_sha256": "87217b92cb4c61cf1e496cd5e84a52f41e29d3ec2a5362816c56831a5c2ef795",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-training-source-independent-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-training-source-constraints-v1/report.json": "ceef216fdda180d46c8b40d97194fdea713148e2628bbe419ea93ae037cb9d96",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-training-source-constraints-v1/all151-NEW-training-source-statistics.json": "2a77e18789a1d452bbd3acb0850a14def6b0ef574aa3ab1017abdc1aef540cdb",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-training-source-contract-v1/report.json": "6188903123dc9015bd6aa32864ffe7c72bb2469f789d6f91f23c5ca6d7581eaf",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/source_vertex_bvh_v1.py": "07886fbd1c34879841e2d6e7c9b97f1e964c3622f2c377decb54c8771a62529f"
+  },
+  "scope": "4NEW spatial-certificate controls and ONE independent parity/quantizer/count/point/BVH all-neighbor/rank/gradient identity audit. No original fullpixel scorer/renderer/fit/native/solver replay.",
+  "wall_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}
