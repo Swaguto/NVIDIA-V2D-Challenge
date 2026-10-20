@@ -1,0 +1,44 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "private_results_absent": true,
+  "files": [
+    {
+      "file": "check_preserved_branch_source_v1.py",
+      "restore_relative_path": "compute/check_preserved_branch_source_v1.py",
+      "executed_or_declared_source_sha256": "0351561e7541a991333c2715deb3ddd77d3b91dbff431fcfe9ca10e4219ddcad"
+    },
+    {
+      "file": "verify_preserved_branch_source_v1.py",
+      "restore_relative_path": "compute/verify_preserved_branch_source_v1.py",
+      "executed_or_declared_source_sha256": "92e609d157ca27e86fa1432528d74ef23e06da960177f8b454cc94fb12d76b12"
+    },
+    {
+      "file": "preserved-branch-source-CPU-plan-v1.json",
+      "restore_relative_path": "compute/preserved-branch-source-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "a1fa1d996b90360d0290be695137b2a46f2568dc77bcee4b2910926aea6e27e3"
+    },
+    {
+      "file": "preserved-branch-independent-CPU-plan-v1.json",
+      "restore_relative_path": "compute/preserved-branch-independent-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "65c9b68f746e7ff40b49b893f70feeb8a7e075964b05c085d4e0701848247786"
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    }
+  ],
+  "repository_dependency_snapshots": [
+    {
+      "file": "snapshot_actual_URDF_kinematics.py",
+      "restore_repository_relative_path": "scripts/dex3_training/v2d_dex3_flashchord/kinematics.py",
+      "executed_source_sha256": "0747c53517a45a64efa5c7ecf8e91fedafcfb5150042c9a99c2718c0d7cb376c"
+    }
+  ],
+  "production_runtime_unchanged": true
+}

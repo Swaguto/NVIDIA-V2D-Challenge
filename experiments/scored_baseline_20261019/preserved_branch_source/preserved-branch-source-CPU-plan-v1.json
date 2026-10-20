@@ -1,0 +1,13 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/check_preserved_branch_source_v1.py",
+  "worker_sha256": "0351561e7541a991333c2715deb3ddd77d3b91dbff431fcfe9ca10e4219ddcad",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_hand_continuity_fix/scripts/dex3_training/v2d_dex3_flashchord/kinematics.py": "0747c53517a45a64efa5c7ecf8e91fedafcfb5150042c9a99c2718c0d7cb376c"
+  },
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-preserved-branch-source-v1",
+  "scope": "ONE NEW actual URDF/source prerequisite of saved root plus immutable F palm/thumb, no optimization or native/physics",
+  "wall_seconds": 240,
+  "resident_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}

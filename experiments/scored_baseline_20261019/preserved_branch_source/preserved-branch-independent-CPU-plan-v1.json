@@ -1,0 +1,11 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_preserved_branch_source_v1.py",
+  "worker_sha256": "92e609d157ca27e86fa1432528d74ef23e06da960177f8b454cc94fb12d76b12",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-preserved-branch-source-v1/report.json": "d9bc28812913cd2e827038bb3b3c5a52a3b9d1c18b2ff9c2e94944a94e5ecd3a",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-preserved-branch-source-v1/all-new-preserved-branch-source-returns.json": "a9f120222a7f5545354e66073f623099da48f7323365c3c755cd4eeb9916f06f"
+  },
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-preserved-branch-independent-v1",
+  "scope": "ONE NEW independent explicit URDF chains/source gate verification; no producer/shared FK/native replay"
+}
