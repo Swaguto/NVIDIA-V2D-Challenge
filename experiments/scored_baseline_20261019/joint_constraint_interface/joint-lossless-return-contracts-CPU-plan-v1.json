@@ -1,0 +1,15 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-joint-lossless-return-contracts-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_joint_lossless_returns_v1.py",
+  "worker_sha256": "0e86f17000abdc19a5649547f445c4edfc4bb5f19750c7f0594671a5f7cf15c9",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_lossless_returns_v1.py": "94c20974989021fedebaf3910705532780767ed2e7162296a01b5c5b4ccf54a4",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_constraint_interface_v1.py": "adc6c152e5d9b05c7004b0eeec89cc22af4ff2ba87218b8e9c5db6903e3dbc64",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_collision_maps_v1.py": "ba655c714acccd34e3f4c7539011367853d48f66068d9b70858e01a54eda4711",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/coupled_angle_source_v1.py": "6a29abcd4a5db1f847fa51c0115af40b5fdec3d58e0d1b0b1fe7d3347491562d",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full_pose_construction_v1.py": "e26b132976f310ba862291c4bbbbfa2648e6b5b495f71e230a9c648dd73a5412"
+  },
+  "CPU_only": true,
+  "NEW_typed_raw_return_serializer_synthetic_contracts_ONLY": true,
+  "old_loader_and_missing_state_NOT_reconstructed": true
+}

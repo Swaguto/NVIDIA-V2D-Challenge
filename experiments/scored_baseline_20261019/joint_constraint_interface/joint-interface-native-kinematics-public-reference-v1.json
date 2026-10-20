@@ -1,0 +1,8 @@
+{
+  "url": "https://raw.githubusercontent.com/google-deepmind/mujoco/3.8.1/src/engine/engine_core_smooth.c",
+  "path": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint-interface-mujoco-3.8.1-engine_core_smooth.c.txt",
+  "sha256": "3206f73347fc60f15c94f923d2f81288e25831c3439bef752ef313fa26b748eb",
+  "use": "NEW analytical native-chain interface conventions only",
+  "license": "Apache-2.0 header retained",
+  "binary_FK_equivalence_NOT_claimed": true
+}

@@ -1,0 +1,24 @@
+{
+  "schema": "v2d.NEW-joint-executable-interface-code-only.v1",
+  "files": {
+    "joint_constraint_interface_v1.py": "adc6c152e5d9b05c7004b0eeec89cc22af4ff2ba87218b8e9c5db6903e3dbc64",
+    "verify_joint_interface_contracts_v1.py": "78236a7532f50ae2d85f9653ae2d710f543e7a7b3f4b68f01cbf212d033b2dc8",
+    "build_joint_executable_interface_v1.py": "a580d7cd56488a269bfb9e9f5c7baad90d00eb35c5d354aad6e2c317172ce668",
+    "joint_constraint_derivatives_v1.py": "4c964536a8f0e5c4d530607cccca001fd3d2f4663a1a56f052cc8d2d14591f23",
+    "verify_joint_directional_contracts_v1.py": "7a64df14a3398e023ce1ce97726ca94d0b49e21e0a3485d1fa1817c6fd98ab54",
+    "verify_joint_executable_interface_v1.py": "41ad40970d1339c2e08ef9ef1753bf540cb3331dc48a0a8551291680b7b88fdf",
+    "load_joint_executable_runtime_v1.py": "913446cb256f33bc9248c5e4acaf7c52e408ec357f502eff9e1d70996241c7d4",
+    "joint_lossless_returns_v1.py": "94c20974989021fedebaf3910705532780767ed2e7162296a01b5c5b4ccf54a4",
+    "verify_joint_lossless_returns_v1.py": "0e86f17000abdc19a5649547f445c4edfc4bb5f19750c7f0594671a5f7cf15c9",
+    "record_joint_interface_checkpoint_v1.py": "f05955c54e3a7c17ba3faaa4b4cda881c13dd2cd0f7c1ac6786b3b6338215b64",
+    "joint-interface-native-kinematics-public-reference-v1.json": "d3433cf95ecf685347c4a7746be2ac99b1d0ceb21130d43d9c444aaf84d1b416",
+    "joint-interface-provider-nested-reconciliation-v1.json": "f88be3c25b5a3b52e51e286957313a9f93ac527f561e12664f744d68466ce648",
+    "joint-interface-contracts-CPU-plan-v1.json": "e1ab9adb33064d256af0f52d71ddde74c93fb4e54479988313d76b41400c5954",
+    "joint-executable-interface-CPU-plan-v1.json": "cb671d832f2c75e81c10ba4eefde67d5de216da9bb7a9af6f6452f43676353e8",
+    "joint-directional-contracts-CPU-plan-v1.json": "0921ac8b92f3d89426ce60b5c4f76261e1a1ad50ade86abedc499cd03985deee",
+    "joint-executable-binding-CPU-plan-v1.json": "99e10fb1ac184de2625d37a368946bdde59cf632db5c27c80e55b258944ee068",
+    "joint-runtime-loader-CPU-plan-v1.json": "bf7236ca52dd2fdeebbbae98bff5389858a3b936adb13aac1f97ff2128e568a2",
+    "joint-lossless-return-contracts-CPU-plan-v1.json": "ab274ae9c49eba0af4b0412c31fe3e9abc6884e8ac8fe105666501a92d280ae5"
+  },
+  "production_runtime_tests_UNCHANGED": true
+}
