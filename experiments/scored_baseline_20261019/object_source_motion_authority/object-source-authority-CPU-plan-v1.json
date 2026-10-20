@@ -1,0 +1,24 @@
+{
+  "schema": "v2d.NEW-object-source-authority-CPU-plan.v1",
+  "created_utc": "2026-10-20T02:38:59.743419+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_object_source_authority_v1.py",
+  "worker_sha256": "aa9b691ac3d9eb77f04a050e0f84c411811d4e6b6665025fa4f563393e316e3f",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-source-authority-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/private-integrity-joint-object-command-v1.json": "ab15323f9e5cd85804f4cc94809d3b6eec62b5ec9a51b75fb743af2089f2d28e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/sequential-camera-checkpoint-v1.json": "2508b780b96b36c17efee99fe8521cf28daaf7a02c312fd14a367c67928cd729",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/private-integrity-sequential-camera-v1.json": "98c03470649a13d76b4c35ecc3f26a8fbf968e1e409c5cdf93bff1257f28c686",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/select_plane_aligned_pose_temporal_path_v4.py": "4c51388d55d22f00f8f8b92ba62494b123480f6d005f19bf8b07ea5420b3d0be",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/probe_joint_pose_temporal_compatibility_v1.py": "8b5c1e2e81fe8fe3f0e3e45f58b36f19099608170d2d892a5330c9637e06480f",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/repair_joint_pose_translations_v1.py": "905e7bf41f13e7365ae7a14e0ddac5561c4bcdbb6e6630d872d12709cbf3909a",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/plane-aligned-pose-temporal-path-v4/report.json": "45a4aae462a7a7f5fc4bfea45b1f40ee2892c71bd7626e5293b4c5e739cc1cb6",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-joint-pose-temporal-compatibility-v1/report.json": "0f33a137dcc9fc88f61484b3d1764a45e8576d02bf2c1e95590fb798951c7def",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-joint-pose-translation-repair-v1/report.json": "272e955d053c9b49cf530e32d7657524e6c62d3675dc4cca47b461e01abe0e90"
+  },
+  "scope": "ONE saved-evidence authority/cached-input/frame-binding inventory; no numerical source scorer/native/solver replay",
+  "wall_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736,
+  "no_paid_work": true
+}

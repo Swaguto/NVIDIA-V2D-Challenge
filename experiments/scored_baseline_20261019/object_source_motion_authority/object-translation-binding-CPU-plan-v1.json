@@ -1,0 +1,18 @@
+{
+  "schema": "v2d.NEW-object-translation-binding-CPU-plan.v1",
+  "created_utc": "2026-10-20T02:41:53.743144+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/bind_object_translation_authority_v1.py",
+  "worker_sha256": "9965b1a49c5224dda11356660a36a0941af2229b3108aa5461456b02663bfd3b",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-translation-binding-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_translation_maps_v1.py": "a86ff4708fd4c4c9f982985724369d5cd74f8834bd0c5d5a91adfe60dc9bbab3",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-source-authority-v1/report.json": "23b105a3df815f6ab87fc68132449f7c399533a4d31672dc5432a54a1ec60e30",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-source-authority-v1/all151-source-authority-inventory.json": "e34d9e50be36f688c38766e4fab26a57b6c9e527cdb617f45e22637b271a39fd",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-object-translation-contract-v1/report.json": "d6400e742a4ac730e215dc41176d79104c4855a9aa579e3e9699479bccf25726"
+  },
+  "scope": "ONE NEW exact object authority/copy/AST/full299motion-map independent binding; no source/native/solver/old audit replay",
+  "wall_seconds": 240,
+  "RSS_bytes": 2147483648,
+  "disk_reserve_bytes": 1610612736
+}
