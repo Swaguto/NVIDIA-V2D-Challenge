@@ -1,0 +1,22 @@
+{
+  "schema": "v2d.NEW-full-pose-preflight-binding-plan.v1",
+  "created_utc": "2026-10-20T16:58:29.071892+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_full_pose_preflight_v1.py",
+  "worker_sha256": "7729049dcd055ca9090eee94100a04028c9392d110ca6d0fbb40bd5f01f724f8",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-full-pose-preflight-binding-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-full-pose-preflight-v1/guard.json": "d744876c2deb389e2c014cc9f6c188313667c169092e81f42fe3496671b133cc",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-full-pose-preflight-v1/report.json": "0c0e69b5d45281d2326ad0c4b112882f95abcbb17ed88310109ad7cf6d210d3d",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-full-pose-preflight-v1/NEW-all-pair-rotating-support-linearization-RETURN.npz.metadata.json": "d7db6a45509ce6cf28aa73149358c9d9b2f55aa425bccefbbd4764aceaa5cd1b",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-full-pose-preflight-v1/NEW-canonical-vectors-RETURN.npz": "1c5a65773521a27507b9faaddd3595c4b7744f044b92669a93c9481ff8b5c291",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-full-pose-preflight-v1/NEW-canonical-vectors-RETURN.npz.metadata.json": "c6a8592700591d01c4dce11e0d68969f15326163fc2b95e486622fa78343e939",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-full-pose-preflight-v1/NEW-canonical-A-RETURN.npz": "4a33a718bae12944e74f08406bed79e3a49e884e75b87ad8374740ea61c2868d",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-full-pose-preflight-v1/NEW-initial-proxy-RETURN.json": "20874668149bfa440218fab3e5b76f980523369b84b596237603cb23142aa9a3",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-full-pose-preflight-v1/NEW-all-pair-rotating-support-linearization-RETURN.npz": "0965a1d938ade1606461b85dc40287aff7767114dde01eda09a04d7c3a206c41",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-full-pose-preflight-v1/NEW-canonical-P-RETURN.npz": "d9e7b5e8d3ed8e2538517ca73220e5a74aac1c1537b612c29956260a55b1075b",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-full-pose-preflight-v1/NEW-canonical-metadata-RETURN.json": "140dd3a2e985db1f472c6ad620ecbc578639b40ca18ab70f0e48344d6d53becf",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-full-pose-preflight-v1/NEW-complete-construction-declaration-BEFORE.json": "135539a5a1462aa2257ddac156c76609a206dd76e084f61511dbc1d34a0002a4",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full_pose_inputs_v1.py": "ec8921f886b6982d4b01061e548bb0fa2c49aeb7d934565b07f28ed33f77cb68"
+  },
+  "scope": "Independent NEW allselected66591rotation support rows, returned22m axismax/ties, and ALL70495canonicalrows/907columns/900cones/RHS/objective/conditioning. No old source/native/axisproducer/modelconstructor/solver replay. Retain preflight warnings with causeunproven."
+}

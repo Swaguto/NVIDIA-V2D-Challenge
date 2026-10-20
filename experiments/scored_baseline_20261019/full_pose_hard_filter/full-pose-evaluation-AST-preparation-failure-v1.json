@@ -1,0 +1,12 @@
+{
+  "recorded_utc": "2026-10-20T17:02:04.663254+00:00",
+  "failed_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/evaluate_full_pose_construction_v1.py.txt",
+  "failed_source_sha256": "39de5ea7304ac56e82f5c4d1d4fa9b3dde473e2cdc5b2c826c04ec7fcc033647",
+  "error": "SyntaxError at missing whitespace __name__for; before module/guard/constructor/solver/source execution",
+  "valid_solver_calls_before_repair": 0,
+  "changes": [
+    "missing whitespace only",
+    "fresh output directory v2"
+  ],
+  "mathematics_parameters_limits_gates_UNCHANGED": true
+}

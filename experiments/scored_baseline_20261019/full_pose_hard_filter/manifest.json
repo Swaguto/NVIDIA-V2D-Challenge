@@ -1,0 +1,108 @@
+{
+  "schema": "v2d.NEW-full-pose-hard-filter-code-only-archive.v1",
+  "created_utc": "2026-10-20T17:06:09.800769+00:00",
+  "files": {
+    "full_pose_construction_v1.py": {
+      "sha256": "e26b132976f310ba862291c4bbbbfa2648e6b5b495f71e230a9c648dd73a5412",
+      "bytes": 5515,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full_pose_construction_v1.py"
+    },
+    "full_pose_inputs_v1.py": {
+      "sha256": "ec8921f886b6982d4b01061e548bb0fa2c49aeb7d934565b07f28ed33f77cb68",
+      "bytes": 3212,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full_pose_inputs_v1.py"
+    },
+    "full_pose_training_oracle_v1.py": {
+      "sha256": "c6be83f6205c87cffb26992aecaecd61331751dd3317b5804ee61b86027ae2cd",
+      "bytes": 4552,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full_pose_training_oracle_v1.py"
+    },
+    "full_pose_geometry_runtime_v1.py": {
+      "sha256": "b09d7dfa646fd253b1dc5319b7cbd6e1877ff42ab0c8ae82022b55fae822cc62",
+      "bytes": 1879,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full_pose_geometry_runtime_v1.py"
+    },
+    "derive_full_pose_construction_contracts_v1.py": {
+      "sha256": "6b69f7d43b8626b666e0f6544f3512d29b89a5a420be9ef59a7ead881eb027cb",
+      "bytes": 5731,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_full_pose_construction_contracts_v1.py"
+    },
+    "derive_full_pose_construction_contracts_v2.py": {
+      "sha256": "b12141f4ec9c4a285c7127d6eb502209aa0cef9082e3f8a529db87774a6b55ee",
+      "bytes": 4518,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_full_pose_construction_contracts_v2.py"
+    },
+    "build_full_pose_preflight_v1.py": {
+      "sha256": "280a10b293815c5f25bd6a9d459dbac05fcdcdaedb238af04a427ff0e0d8ff13",
+      "bytes": 3339,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_full_pose_preflight_v1.py"
+    },
+    "verify_full_pose_preflight_v1.py": {
+      "sha256": "7729049dcd055ca9090eee94100a04028c9392d110ca6d0fbb40bd5f01f724f8",
+      "bytes": 7974,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_full_pose_preflight_v1.py"
+    },
+    "verify_full_pose_preflight_v2.py": {
+      "sha256": "98e3f417488596b0aff1205a0ea49a664ae95b2acdd808f9c63d4e8565e9cf8d",
+      "bytes": 8359,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_full_pose_preflight_v2.py"
+    },
+    "evaluate_full_pose_construction_v1.py.txt": {
+      "sha256": "39de5ea7304ac56e82f5c4d1d4fa9b3dde473e2cdc5b2c826c04ec7fcc033647",
+      "bytes": 9299,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/evaluate_full_pose_construction_v1.py.txt"
+    },
+    "evaluate_full_pose_construction_v2.py": {
+      "sha256": "a95255a3e9511bacdb5fff6001ff4abef253a59f7413de5cf7e03bca6e94820e",
+      "bytes": 9300,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/evaluate_full_pose_construction_v2.py"
+    },
+    "audit_full_pose_return_v1.py": {
+      "sha256": "df795c839bf747551788720fabe1f9fb04f6c57f8e0dc9086331212d9c445bd5",
+      "bytes": 9550,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_full_pose_return_v1.py"
+    },
+    "full-pose-construction-contracts-CPU-plan-v1.json": {
+      "sha256": "0ce3784a8f95c306d826c9699ef7226ee675914425f34448a9a09c36dbfcca6e",
+      "bytes": 1481,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full-pose-construction-contracts-CPU-plan-v1.json"
+    },
+    "full-pose-construction-contracts-CPU-plan-v2.json": {
+      "sha256": "0b4f3e38ecf1199221b61430c69c530218156cc7d680b5133ee5e89710ab62a5",
+      "bytes": 1859,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full-pose-construction-contracts-CPU-plan-v2.json"
+    },
+    "full-pose-preflight-CPU-plan-v1.json": {
+      "sha256": "4d7a8a07726e025e87814b09d99bf68ae19ba847915ef8dad10135c12a6ce0c8",
+      "bytes": 1659,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full-pose-preflight-CPU-plan-v1.json"
+    },
+    "full-pose-preflight-binding-CPU-plan-v1.json": {
+      "sha256": "d5cb59c00baacf4c785c0c1fb8865caaf51921af5319fcd7e6bf6a09f3f60723",
+      "bytes": 2928,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full-pose-preflight-binding-CPU-plan-v1.json"
+    },
+    "full-pose-preflight-binding-CPU-plan-v2.json": {
+      "sha256": "6d837a9b56f19e1ddde3bc0b58742ec569235853250f5262349315028a862ed4",
+      "bytes": 3195,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full-pose-preflight-binding-CPU-plan-v2.json"
+    },
+    "full-pose-evaluation-CPU-plan-v2.json": {
+      "sha256": "6dc40a0282db1409a2c132a41f9e19c190cb7c3a3800cfb43498302959fde526",
+      "bytes": 3021,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full-pose-evaluation-CPU-plan-v2.json"
+    },
+    "full-pose-return-audit-CPU-plan-v1.json": {
+      "sha256": "785a36901ca7174549b532a11fe2fe98e3185b1b9e2f595b9f04e8d9362cab31",
+      "bytes": 1410,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full-pose-return-audit-CPU-plan-v1.json"
+    },
+    "full-pose-evaluation-AST-preparation-failure-v1.json": {
+      "sha256": "5aa38fa789f01b755c95f01a82e0a2dee05da1198faf1d0cd13a3a0d6de27cd2",
+      "bytes": 569,
+      "private_source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full-pose-evaluation-AST-preparation-failure-v1.json"
+    }
+  },
+  "private_arrays_geometry_inputs_results_excluded": true,
+  "production_runtime_tests_UNCHANGED": true
+}

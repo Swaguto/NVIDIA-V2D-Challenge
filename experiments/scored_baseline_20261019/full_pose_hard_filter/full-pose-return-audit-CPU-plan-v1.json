@@ -1,0 +1,14 @@
+{
+  "schema": "v2d.NEW-full-pose-return-audit-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_full_pose_return_v1.py",
+  "worker_sha256": "df795c839bf747551788720fabe1f9fb04f6c57f8e0dc9086331212d9c445bd5",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-full-pose-return-audit-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-full-pose-evaluation-v2/report.json": "a19ef9ac93bd4cd5d48e37e362382429f5987b88191b22e5e6ad43013f8bb347",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-full-pose-evaluation-v2/ONE-ALL151-actual-training-source-RETURNS.json": "23aae1886aee51c8c8f0c794706fe3e062137020f2ddccc7429cba9638f47e9a",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-full-pose-evaluation-v2/ONE-actual-solver-RETURN.json": "4842da17816ef1b5944a332dba3401c588b6fe8cb3e0c7571c995c8c2ceada58",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-full-pose-evaluation-v2/ONE-actual-raw-x-z-s-RETURN.npz": "6ee340ac08d6be08b283fd5101ee579d6b082d3f3524a4bfae6bdb3efbcba894"
+  },
+  "scope": "Independent actual NEW SAVEDrawproposal/callback/source-mask-distance/motion-vector/wholeface-unionmax/acceptance audit. No producer/solver/source/NN/raster/geometry/FK/native/old-audit replay. Every frame source decision journaled before next.",
+  "created_utc": "2026-10-20T17:04:23.278129+00:00"
+}

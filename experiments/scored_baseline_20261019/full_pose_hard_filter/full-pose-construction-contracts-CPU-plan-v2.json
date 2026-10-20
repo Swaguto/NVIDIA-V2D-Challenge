@@ -1,0 +1,16 @@
+{
+  "schema": "v2d.NEW-full-pose-remaining-contracts-plan.v2",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_full_pose_construction_contracts_v2.py",
+  "worker_sha256": "b12141f4ec9c4a285c7127d6eb502209aa0cef9082e3f8a529db87774a6b55ee",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-full-pose-construction-contracts-v2",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full_pose_construction_v1.py": "e26b132976f310ba862291c4bbbbfa2648e6b5b495f71e230a9c648dd73a5412",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full_pose_training_oracle_v1.py": "c6be83f6205c87cffb26992aecaecd61331751dd3317b5804ee61b86027ae2cd",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_training_source_semantics_v1.py": "ce789643aa0442f822d8dee4d8123596d5d92843937ede79fec063b6f8a22b99",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-full-pose-construction-contracts-v1/NEW-moving-object-normal-total-derivative-RETURN.json": "27a6d280fdf26c6e5aaa212e8e3e2e75bb30a775cb3f76581f2582a5d7f951ff",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-full-pose-construction-contracts-v1/NEW-support-tie-and-both-sign-union-RETURN.json": "4659d1ea09de1be0efa44f3589c9418af9604aa1fa32428b00acaef324ea026a",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-full-pose-construction-contracts-v1/NEW-full-pose-canonical-SI-and-whole-SOC-conditioning-RETURN.json": "aedfa046b62d4daa4758b60aa3bad3bd79513ee91a1120530d519351774fae7f"
+  },
+  "scope": "ONE genuinely NEW exact SAVED failed-row operationwise rounding proof plus two NOT-YET-EXECUTED actual full-pose wrapper/cache contracts. Two completed controls and failed model return reusedBYHASH; no old model/solver/contract replay.",
+  "created_utc": "2026-10-20T16:55:15.793176+00:00"
+}

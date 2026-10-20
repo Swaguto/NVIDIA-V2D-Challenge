@@ -1,0 +1,16 @@
+{
+  "schema": "v2d.NEW-full-pose-preflight-plan.v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_full_pose_preflight_v1.py",
+  "worker_sha256": "280a10b293815c5f25bd6a9d459dbac05fcdcdaedb238af04a427ff0e0d8ff13",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-full-pose-preflight-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full_pose_inputs_v1.py": "ec8921f886b6982d4b01061e548bb0fa2c49aeb7d934565b07f28ed33f77cb68",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full_pose_construction_v1.py": "e26b132976f310ba862291c4bbbbfa2648e6b5b495f71e230a9c648dd73a5412",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full_pose_geometry_runtime_v1.py": "b09d7dfa646fd253b1dc5319b7cbd6e1877ff42ab0c8ae82022b55fae822cc62",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_full_pose_maps_v1.py": "01dda09a28c287502c6bccbfd30e6d6fa1c06304cce4fcae48f559cc677ff93e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object-full-pose-checkpoint-v1.json": "4981f0c7dccf6f7fcfd155030c4ffc7dbaa5cd29f552e71f2219e290c6329bd4",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-full-pose-construction-contracts-v2/report.json": "52a7ec3c201c8e192c9f674e104c4e43ab4d62ff0b9a72400db2dd85d79e27e9"
+  },
+  "scope": "ONE NEW complete907column rotating-support/all66591pair/source-gradient/linear+angular motion canonical preflight. No old initial-source queries or native audits; NEW geometry rotational Jacobian construction only; no solver or episode proposal.",
+  "created_utc": "2026-10-20T16:56:53.097283+00:00"
+}

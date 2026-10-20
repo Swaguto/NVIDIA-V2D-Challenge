@@ -1852,3 +1852,111 @@ actual motor/grasp and whole-source qualification before GPU/PPO. Owner intent
 remains active and unachieved; historical goal-tool blocked observation remains
 separate. Archive `object_full_pose_factors` is code-only; production runtime and
 tests are unchanged. New checkpoint: `compute/object-full-pose-checkpoint-v1.json`.
+
+
+## NEW complete full-pose construction — 2026-10-20 17:04 UTC
+
+Seven serial guarded CPU workers complete: five succeed, two fail. Twenty exact
+source/plan/preparation-metadata files are archived code-only under
+`full_pose_hard_filter`. Production runtime/tests and private source data stay
+unchanged. No completed old producer/control/solve/source/NN/raster/native audit
+was repeated. The previous13 full-pose contracts/maps are reused BY HASH.
+
+Five NEW contracts pass their scopes: moving-normal total derivative, support
+ties/both-sign union, exact saved-row roundoff, actual pure-rotation synthetic
+training-wrapper and zero-cache provenance. One earlier synthetic canonical
+bit-identity expectation FAILS at one coefficient (5.551e-17 difference); it
+remains failed. Its actual row is unchanged, and a NEW exact rational SAVED-row
+two-operator normal-RN proof covers the discrepancy. No model/control replay,
+coefficient/radius repair or candidate tolerance change occurs. A V1 independent
+reader completes a durable all-return finiteness check, then FAILS TypeError
+`abs(list)` before saving support residuals. Those unsaved values remain
+UNAVAILABLE and are not reconstructed. V2 supplies a DISTINCT world-infinitesimal
+coefficient proof with441 group returns saved immediately before checks, reuses
+the finiteness receipt by hash and executes only the unreached canonical binding.
+Separate AST preparation fails missing whitespace BEFORE module/guard/solver;
+its exact raw source is retained as `.py.txt`. No valid solve is repeated.
+
+The NEW canonical has907columns/70495rows/66895nonnegative/900SOC4cones and
+477821coefficients. It couples ALL151clocks/906translation+object-local-rotation
+coordinates, current rotating compiled FACE-support union predictors, source
+median/min-depth SEARCH branches and linear AND angular motion. All66591cross
+pairs and22428936retained face-direction values are represented, ZERO broadphase
+omissions. This face-union proxy is NOT exact native penetration/complete edge-SAT,
+measured contact, force, grasp or task. Current object normals rotate, including
+their derivative; tied supports remain explicit. No old fixed axes/49071omission
+certificates are inherited. Compiled BODY vertices/normals/proper body/geom/F
+frames and ORIGINAL free-support qpos0 stay bound to the saved pinned model.
+No MjData/FK/native position/gap/physics call ran.
+
+Construction-only SI conditioning uses original object compiled radius r:
+variables(delta/r,theta,rho/r), translation norm<=r/8, rotation norm<=pi/12,
+rho<=r and objective rho/r+.5*1e-3*||[delta/r,theta]||². These choices are NOT
+original object bounds, source confidence, physical authority or borrowed robot
+8mm/.08boxes. ALL3rotation components at EVERYclock remain continuous. Original
+six motion caps/actual clocks/actual angular p95 and original1e-9comparison stay.
+Median gradients are predictors, no fixed NN/rank/face observations and no IoU
+derivative. Actual unchanged trainingk2/einsum local median/rounded average,
+NEW changed-pose matmul camera vertices, full triangle raster and IoU/quality
+hard tests rule; baseline F uses saved cache only. Numerical cache-alias/build/
+source-accuracy uncertainties remain. Fullpixelk1/matmul/heldout original source
+checks stay POST-only, never optimizer inputs or rescue/selection feedback.
+
+Independent NEW binding covers ALL477821canonicalcoefficients/70495RHS entries,
+907columns/900whole-cone scales/objective and66591selected support/rotation rows.
+Max selected-gap/rotation-coefficient discrepancy2.221e-16/2.776e-16, canonical
+and RHS errors0. These are arithmetic diagnostics, NOT candidate tolerances.
+Six preflight NumPy matmul RuntimeWarnings remain; all returned arrays are finite,
+and warning cause is UNPROVEN. Agreement never erases warnings or proves future
+reliability. No original source or native gate is certified by those bindings.
+
+SOLE100iteration/60second/default/one-thread conic solve returnsSolved at
+25iterations/1.078648835sec,26durable actual-info callbacks. ONE raw full-pose
+trial only, NO line fractions/step repair/restart/best-intermediate selection.
+Method22.742347667sec; guard23.755016459sec/peakRSS751878144bytes. The raw proposal
+passes ALL6original151clock object-motion gates and constructor norm bounds,
+but FAILS actual training source at58frames:43IoU/28median/52quality failures
+(overlapping). It is REJECTED and not a reference. These training counts are NOT
+comparable to earlier60FULLPIXEL or other training counts as physical progress.
+The numerical union proxy still violates its1mm threshold by1.919003596e-5m;
+this is NOT actual native penetration/clearance or grasp. Its decrease and solver
+success never qualify source accuracy or physical success. No original fullpixel/
+heldout source rescue, native/physics/GPU/PPO or score evaluation occurs.
+
+NEW saved-return audit binds26callbacks/one raw-sealed-pose identity/151actual
+training decisions/572956returned point-distance entries/all6SAVED motion-vector
+decisions/66591SAVED face-union maxima across22428936returned axis values,
+WITHOUTmethod/solver/source/NN/raster/FK/native/geometry runtime replay. Raw linear
+slack residual4.441e-15 is a diagnostic only. Nine actual evaluation matmul
+warnings are retained; source/geometry returns are finite, cause UNPROVEN.
+The trial's unused geometric Jacobian is a CURRENT RIGHT-tangent derivative,
+not an absolute-theta derivative; no second QP uses it. All raw returns remain.
+
+NEXT construct a genuinely NEW hard TRAINING-silhouette-feasible full-pose model
+from ORIGINAL source functional/quantizer/full-triangle definitions and SAVED F
+training authority, not this rejected point, its58failures, old60fullpixel failures
+or heldout values. A declared projected-integer-cell preservation construction
+may provide a sufficient raster restriction; it is NOT an original gate,
+measured anchor, necessary source-family condition or global exclusion. Keep
+NN/rank/threshold choices free and require actual rounded median/quality hard
+returns; no fixed median prefix or repaired radius. Retain all zero/boundary/
+positive-depth/missing/alias uncertainties, and do NOT assume F's cached raster
+is an exact freshly recomputed numeric pose/operator identity. Derive the NEW
+concrete complete constraints/resource conditioning/actual-acceptance contracts,
+then independent ALL-matrix bindings before ONE declared bounded evaluation.
+No another soft-source-QP with tuned bounds/weights/steps/linefractions/limits,
+no old model/control/audit/source replay or failed-point warmstart/repair.
+No fullpixel/heldout fitting/selection, axis/pose/rank/partition/cut/optimizer/
+profile/budget sweep, new source labels/confidence/geometry/physical parameters
+or gates. No new method/solve/pose is currently queued. Finite failure does NOT
+exclude full object poses/task, prove stationarity or require a wrist change.
+
+F and all previous failures remain:8rightself/5object failures,136missing source
+anchors/commands, source accuracy and31/32heldout failures, separate middle/ONE
+wrist component and all authorized repairs. No actual reference/component/task/
+policy/AUC/trajectory qualifies. Object changes alone cannot clear self contacts.
+Any NEW reference still needs original whole151source/actualURDF/ALLobject+root+
+finger motion, FULL1mm native hand/object/support AND self, full swept, actual
+motor/grasp/whole-source qualification before GPU/PPO. Owner intent remains
+active/unachieved, historical blocked goal-tool observation separate. Checkpoint:
+`compute/full-pose-construction-checkpoint-v1.json` with its private SHA chain.

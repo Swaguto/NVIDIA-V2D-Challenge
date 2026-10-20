@@ -1,0 +1,15 @@
+{
+  "schema": "v2d.NEW-full-pose-construction-contracts-plan.v1",
+  "created_utc": "2026-10-20T16:54:17.737441+00:00",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/derive_full_pose_construction_contracts_v1.py",
+  "worker_sha256": "6b69f7d43b8626b666e0f6544f3512d29b89a5a420be9ef59a7ead881eb027cb",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-full-pose-construction-contracts-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full_pose_construction_v1.py": "e26b132976f310ba862291c4bbbbfa2648e6b5b495f71e230a9c648dd73a5412",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/full_pose_training_oracle_v1.py": "c6be83f6205c87cffb26992aecaecd61331751dd3317b5804ee61b86027ae2cd",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_full_pose_maps_v1.py": "01dda09a28c287502c6bccbfd30e6d6fa1c06304cce4fcae48f559cc677ff93e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object_training_source_semantics_v1.py": "ce789643aa0442f822d8dee4d8123596d5d92843937ede79fec063b6f8a22b99",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/object-full-pose-checkpoint-v1.json": "4981f0c7dccf6f7fcfd155030c4ffc7dbaa5cd29f552e71f2219e290c6329bd4"
+  },
+  "scope": "5 NEW moving-normal/support-tie/full907column-SI-SOC/actual pure-rotation synthetic training-wrapper/cache provenance contracts. No completed13contract or old source/control/solver replay."
+}
