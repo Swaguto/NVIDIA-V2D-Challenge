@@ -1,0 +1,11 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/check_immutable_native_prerequisite_v1.py",
+  "worker_sha256": "caa26e9f0a3cd0df54848eaf41ee2996f0bf1933cc2aefaa53f2e46906b2f76d",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-thumb-ray-independent-validation-v1/report.json": "720fb0d9b6a7f8272ede38218f9c58954d305309c2dffed3853d2f1d1ecac89a",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-coupled-angle-model-v1/fullclock-coupled-angle-model-binding.json": "745076e65f491c245c25b353640bbcb7d07b4b8fa7cc3a470d0d8984bf410b40"
+  },
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-immutable-native-prerequisite-v1",
+  "scope": "NEW exact scene invariance/native gate incidence proof from SAVED receipts and immutable missing-command constraints; no native/physics/source audit replay"
+}

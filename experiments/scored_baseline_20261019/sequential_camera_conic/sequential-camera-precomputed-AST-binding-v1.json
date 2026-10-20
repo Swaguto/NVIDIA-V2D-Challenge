@@ -1,0 +1,10 @@
+{
+  "schema": "v2d.new-initial-cache-only-method-AST-binding.v1",
+  "created_utc": "2026-10-20T02:12:58.821029+00:00",
+  "contracted_original_method_sha256": "9b1205c46226ced2d109a517fb5d9dc65bd3f21b10da7ae950fa4e6869f6702c",
+  "new_precomputed_wrapper_sha256": "a0c0762009add9b07151752a9eb49319d1dd553c611c383ffaea5191149c343e",
+  "complete_executable_AST_matches_except_initial_view_and_first_problem_cache_substitutions": true,
+  "algorithm_parameters_signs_loop_budgets_acceptance_failure_logic_and_all_solver_calls_UNCHANGED": true,
+  "old12NEWcontracts_REUSED_BY_HASH_no_numerical_control_replayed": true,
+  "old12contract_report_sha256": "0a65ecd1f28a57f08ba4ed03c28472292e694823f07cf01c1d70fdc295d3213d"
+}
