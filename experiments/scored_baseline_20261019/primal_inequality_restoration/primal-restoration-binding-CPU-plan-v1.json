@@ -1,0 +1,18 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/bind_primal_restoration_system_v1.py",
+  "worker_sha256": "f6bda75647987c8cd959eaf48dae3e0595b36bffbbbd652f7ebce9c66834c3df",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-primal-restoration-binding-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/primal_inequality_restoration_v1.py": "954b7890de8e92e5ece976b0912215b2a123076a57914a95f4932b32f4361203",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/primal_saved_compilation_v1.py": "ce6e0398562c0ad8b299c0d9dfdcc4628520091e3499e4c34d52ed20c63e626d",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-primal-restoration-contract-v1/report.json": "e59e10a45f97d4c687a854f354ab2d8fc274d5dd9d200753fc7cd2e6d5b6d47b",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-surrounding-clock-model-v1/surrounding-model-binding.json": "251a52651154b31b605d68c2e89cb6cd5e7ecfce7c359ab80a831828ecbbc248",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-surrounding-clock-model-v1/exact-query-constraint-records.json": "1865e7d88e11b77cafd1db77280bce4d995a14f29976ee114d3fbd87946c6b98",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-surrounding-clock-binding-v2/report.json": "0c4051753a828c47ba72b79b15cc9338fba7846101ffb7f1bcd9aa6f6285022b"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "NEWprimal358row cached compiler/derivative maps/staticnormalizers/Finit and independent exact4point degree4 derivative/floatrepresentation bindings. No source/model/old audit/solver regeneration.",
+  "no_GPU": true
+}

@@ -1,0 +1,13 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_primal_restoration_contracts_v1.py",
+  "worker_sha256": "1d8ec53b6c58a834a9b25feecee448028062c3531269ad542f1127c7ebb96d79",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-primal-restoration-contract-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/primal_inequality_restoration_v1.py": "954b7890de8e92e5ece976b0912215b2a123076a57914a95f4932b32f4361203",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "10NEW exactJacobian/merit/strictdepth/staticnormalization/SPDdamping/nonfinite/backtrack/NEWcoupledcontinuous construction contracts. No episode/old controls.",
+  "no_GPU": true
+}

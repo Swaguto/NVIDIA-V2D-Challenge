@@ -821,3 +821,44 @@ Original F,separate components,source missing136/heldout31of32 failures,all orig
 caps/centers/tolerances/model/gates stay unchanged. No native position/physics/
 GPU/PPO/reference mutation/physical or score success. The actual trajectory goal
 remains ACTIVE. Do not rerun or enlarge this completed bounded study.
+
+## Direct primal inequality restoration, 2026-10-19
+
+A NEWfixed-start restoration uses the unchanged SAVED358inequalities/38variables.
+Ten new derivative/merit/strict-depth/normalization/damping/alias/finite/boundary/
+Armijo/coupled-continuous contracts pass. A cached backend is independently bound
+by684exact derivative-stencil identities,3080derivative index terms,358numeric
+values and684numeric derivatives;2286value/3080derivative pack entries are
+structurally verified. Numeric representation diagnostics do not alter any gate.
+No source/time polynomial,old query,control,optimizer or source audit is replayed.
+
+Initial F index commands are transformed to half angles with four domain
+violations retained,not clipped. The old five SATposes are UNUSED. Static row
+conditioning,damping1e-6,trust step.02,merit target1e-10and Armijo rules are
+algorithmic,not source confidence,effort or acceptance gates. Only unchanged
+exact polynomial inequalities and strictdepth>0can yield a proposed-success
+return. One80iteration/120sec/one-thread call ends at80iterations in1.184087417sec,
+611trials,zero exact-feasibility checks,NOpoint. Its terminal return and every
+intermediate remain REJECTED. Six model inequalities remain negative near
+source119/120and temporal joins;this is not original-family/task infeasibility.
+No restart,alternate start/weight/damping/tolerance/budget/profile sweep follows.
+
+Six NumPy matrix-product warnings remain with cause UNPROVEN. A NEWsaved-evidence
+audit,without method/derivative/linear-solve reruns,checks80normal systems,
+115520matrix entries and611saved decisions. Actual rounded normals are exactly
+symmetric,with positive quadratic-form margin>9.99999985e-7. Matrix/rhs errors
+<1.500e-14/2.013e-17and raw linear residual<4.081e-17fit diagnostic rounding bounds.
+Finite agreement does not erase warnings,prove their cause or qualify a path.
+The audit's terminal-labeled residual field uses the last pre-step iterate;
+a separate private clarification records actual final-trial values and their
+binding to the terminal vector. Low bits differ,both have six violations.
+All executed sources/returns remain unchanged;no repeat to reconstruct evidence.
+
+Four guarded workers succeed;scientific restoration remains UNRESOLVED.
+13exact sources/plans are code-only in `primal_inequality_restoration`;all numeric
+iterates/models/source/geometry/results remain private. F,separate components,
+missing136/heldout31of32 failures,all original source/model/cap/center/tolerance/
+gates and production runtime/tests stay unchanged. No native/physics/GPU/PPO,
+root/reference replacement,motor/grasp/task/policy/score qualification occurs.
+The owner's actualtrajectory goal remains ACTIVE. Do not repeat/extend this
+completed restoration,contracts,binding or saved-return audit.

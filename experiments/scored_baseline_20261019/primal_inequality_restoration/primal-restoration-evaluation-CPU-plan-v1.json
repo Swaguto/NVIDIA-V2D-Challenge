@@ -1,0 +1,29 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/run_primal_restoration_v1.py",
+  "worker_sha256": "eb4e41fbe940bd51399a9f284068bf9242598b65fb2975e36966798161e514b2",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-primal-restoration-evaluation-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/primal_inequality_restoration_v1.py": "954b7890de8e92e5ece976b0912215b2a123076a57914a95f4932b32f4361203",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/primal_saved_compilation_v1.py": "ce6e0398562c0ad8b299c0d9dfdcc4628520091e3499e4c34d52ed20c63e626d",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/conditional_moment_cones_v1.py": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-primal-restoration-contract-v1/report.json": "e59e10a45f97d4c687a854f354ab2d8fc274d5dd9d200753fc7cd2e6d5b6d47b",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-surrounding-clock-model-v1/surrounding-model-binding.json": "251a52651154b31b605d68c2e89cb6cd5e7ecfce7c359ab80a831828ecbbc248",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-surrounding-clock-model-v1/exact-query-constraint-records.json": "1865e7d88e11b77cafd1db77280bce4d995a14f29976ee114d3fbd87946c6b98",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-surrounding-clock-binding-v2/report.json": "0c4051753a828c47ba72b79b15cc9338fba7846101ffb7f1bcd9aa6f6285022b",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-primal-restoration-binding-v1/compiled-primal-system.npz": "7f45ff0df62425d7e8edec03c6ea09e8b3ef7370c719bf306afd8ce5e943615e",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-primal-restoration-binding-v1/guard.json": "3fc1924b4079ce4b5241932780a778b1a908b1835ec02f7063c3fd7cac1d51b6",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-primal-restoration-binding-v1/report.json": "f9a07d75e3a6319e22df95d67f368b00d9357f88568d38904882240a418590b2",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-primal-restoration-binding-v1/initial-F-provenance-and-retained-domain-violations.json": "87331e11ed70ff655af6630f141b3bfbaf8c3740c45faf51b7d38c3e6a7df172",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-primal-restoration-binding-v1/worker.log": "6dc2267c9d940c13d0346825ee1a344d7f473b1c4eb8c0d2d30975c6e2c2df98",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-primal-restoration-binding-v1/exact-primal-row-bindings.json": "d57483476bcd8322c971de0e05b5334956efab4b4c1127a858277653487b9953",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-primal-restoration-binding-v1/compiled-primal-binding.json": "893f3d0addf5f3d23378bee0bbb0d67df0ca6ab3fc8582de0d76fe61e9a8048f",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-primal-restoration-binding-v1/all-primal-compilation-and-independent-derivative-certificates.jsonl": "328545884f9ce548a4dfa565e3bea371d7020cc79c7e7c07658f033d322f4722",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-primal-restoration-binding-v1/initial-F-halfangle-vector.npy": "62ccbc63b7b1672c1ca676b1fbe142aa14b2ed81366fefa88b932cb15d31e80b",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-primal-restoration-binding-v1/derivative-index-maps.json": "e0bd554796c683c74af9d802fca553673896bda377852e11436d5bb6db6272df"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "ONE NEW38variable/358constraint primal restoration fromFonly,80iterations/120sec/fixedconfig/exactmodelacceptance,plusNEW complete2286value/3080derivative pack proof. No retry/source/old solver replay.",
+  "no_GPU": true,
+  "maximum_episode_restoration_calls": 1
+}
