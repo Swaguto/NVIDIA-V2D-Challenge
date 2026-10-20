@@ -2233,3 +2233,42 @@ Production runtime/tests unchanged. Do not repeat or extend these studies. A new
 surrounding-clock construction must free these five values, retain all19saved
 source frames and impose original full-clock temporal boundaries. Owner goal
 remains ACTIVE and cannot complete for this research milestone.
+
+## Surrounding-clock continuous source/time construction, 2026-10-19
+
+A NEW19clock formulation releases all38index half-angle variables at103:121;
+the five earlier local points are not fixed. All19source polynomial records and
+filled image disks are reused, with strict separate .01m depth, inherited region2
+correlations and3unknown109bands. F commands outside the band are fixed as a
+restricted construction choice, not observations or global feasibility bounds.
+All outside commands fit the inherited boxes. Root mode/source authority/model/
+physics/parameters/gates are unchanged. Eight NEW boundary contracts pass affected
+incidence, exact fixed-term folding, second-difference signs, future joins,
+actual timestamp/tolerance units, invalid clocks, shifted phase and poles.
+
+122affected original temporal requests contain22old local requests/44polynomials
+reused by hash and100NEWsurrounding/join requests/200boundaries. All important
+phasor,trig,coefficient,boundary intermediate returns are durable before further
+work. The sufficient lower h-2G=P-G<=g remains a numerical construction bound,
+NEVER a changed candidate tolerance. Query:38continuous variables/358constraints.
+No source polynomial regeneration,old702tests,charts,graphs,banks or audit replay.
+
+Independent100NEWoriginal gate bindings,400trig enclosures and1216exact coefficient
+identities pass. A first reader then fails while looking up pre-repair ^ syntax
+for an unchanged old row. Its failed source/guard/log/proof prefix stay intact.
+V2 uses the saved valid multiplication query, reuses the completed prefix and132
+NEW row certificates by hash,then expands152remaining NEW rows. All284NEW rows/
+1804coefficients bind;74old rows/old482coefficient proof are reused,not replayed.
+Five guarded processes retain four successes and one failed reader;20exact
+code/plan files are code-only in `surrounding_clock_source_time`.
+
+The ONE180sec/1thread evaluation returns actual timeout,exit0,180.087737208seconds,
+118194176bytes peak combined solver/worker RSS. No assignment or candidate is
+returned. Worker completion is successful retention of an UNRESOLVED scientific
+return, not infeasibility or a trajectory. No restart,continuation,tactic/order/
+degree/anchor/tolerance/profile/limit sweep or budget increase follows. All
+returns,queries and intermediate/certificates remain private and hash-bound.
+Original F,separate components,source missing136/heldout31of32 failures,all original
+caps/centers/tolerances/model/gates stay unchanged. No native position/physics/
+GPU/PPO/reference mutation/physical or score success. The actual trajectory goal
+remains ACTIVE. Do not rerun or enlarge this completed bounded study.

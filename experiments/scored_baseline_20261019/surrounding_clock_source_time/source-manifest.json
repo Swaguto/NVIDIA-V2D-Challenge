@@ -1,0 +1,108 @@
+{
+  "schema": "v2d.exact-code-only-research-archive.v1",
+  "private_results_absent": true,
+  "files": [
+    {
+      "file": "surrounding_temporal_requests_v1.py",
+      "restore_relative_path": "compute/surrounding_temporal_requests_v1.py",
+      "executed_or_declared_source_sha256": "973a73f653a1b7cf977e0081a7c41b4ae35c486481c3e5dbed597598b53d8cd1"
+    },
+    {
+      "file": "surrounding_temporal_polynomials_v1.py",
+      "restore_relative_path": "compute/surrounding_temporal_polynomials_v1.py",
+      "executed_or_declared_source_sha256": "ac64864773bcf10ee91f092a34acb47fcf6ee0fd07e44e1b8b3498c735785bd3"
+    },
+    {
+      "file": "verify_surrounding_boundary_contracts_v1.py",
+      "restore_relative_path": "compute/verify_surrounding_boundary_contracts_v1.py",
+      "executed_or_declared_source_sha256": "159ea5ea9e95c583b40df7e3baed1f367a6dc7bea5edbfc394c942e7296d9366"
+    },
+    {
+      "file": "build_surrounding_clock_model_v1.py",
+      "restore_relative_path": "compute/build_surrounding_clock_model_v1.py",
+      "executed_or_declared_source_sha256": "c795bf9b2dce23b02eb0d1d929cec6995bc15696f7c1dee0ae3a3436c83aeeb1"
+    },
+    {
+      "file": "verify_surrounding_clock_binding_v1.py",
+      "restore_relative_path": "compute/verify_surrounding_clock_binding_v1.py",
+      "executed_or_declared_source_sha256": "821a6e16fa674d1c3fba4e8a5a548bb5744b0c713665d61c51bbc671006ee3e3"
+    },
+    {
+      "file": "verify_surrounding_clock_binding_v2.py",
+      "restore_relative_path": "compute/verify_surrounding_clock_binding_v2.py",
+      "executed_or_declared_source_sha256": "9e285104c369fb041a2a8e797c19916360a53eaf4af60e30556d124d73a23df2"
+    },
+    {
+      "file": "run_surrounding_clock_evaluation_v1.py",
+      "restore_relative_path": "compute/run_surrounding_clock_evaluation_v1.py",
+      "executed_or_declared_source_sha256": "50f9655fd9c13b7bd07f7b9896e095abd893b75ea00c862d56f5b7ebe1c4f8c2"
+    },
+    {
+      "file": "half_angle_temporal_algebra_v1.py",
+      "restore_relative_path": "compute/half_angle_temporal_algebra_v1.py",
+      "executed_or_declared_source_sha256": "32e4f90662db9ed0efd7f86043cdc2ba9ec94021bea3011a56b3c48c21d362b9"
+    },
+    {
+      "file": "pointwise_support_moments_v1.py",
+      "restore_relative_path": "compute/pointwise_support_moments_v1.py",
+      "executed_or_declared_source_sha256": "5f57915049b6b4d028fb105e4674094de9dad7313b4107f4074704ed770de474"
+    },
+    {
+      "file": "mixed_joint_moments_v1.py",
+      "restore_relative_path": "compute/mixed_joint_moments_v1.py",
+      "executed_or_declared_source_sha256": "5f5f8d2a9d948744cf992b7694117a023ffb650d00332414dc95ca91bdd3fdcb"
+    },
+    {
+      "file": "conditional_moment_cones_v1.py",
+      "restore_relative_path": "compute/conditional_moment_cones_v1.py",
+      "executed_or_declared_source_sha256": "2a226396df263e67c41e153448da15d449d5013bf5c4110db5ad6a8144b01995"
+    },
+    {
+      "file": "direct_real_feasibility_v3.py",
+      "restore_relative_path": "compute/direct_real_feasibility_v3.py",
+      "executed_or_declared_source_sha256": "abe986993e13b3477842b7f9f987e809d1f4a04a3692d43b4a981468084cb1c9"
+    },
+    {
+      "file": "exact_source_projection_v1.py",
+      "restore_relative_path": "compute/exact_source_projection_v1.py",
+      "executed_or_declared_source_sha256": "c7bc5fad871c5b5310804820a7e93eda6f6077521318c1d30a52d7bdb1935477"
+    },
+    {
+      "file": "thumb_conic_geometry_v1.py",
+      "restore_relative_path": "compute/thumb_conic_geometry_v1.py",
+      "executed_or_declared_source_sha256": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+    },
+    {
+      "file": "guard_right_self_contact_job_v1.py",
+      "restore_relative_path": "compute/guard_right_self_contact_job_v1.py",
+      "executed_or_declared_source_sha256": "d3d5a8fad308b52dd654884a8a2d15f20434fc049f3f10cd905846fe10459e25"
+    },
+    {
+      "file": "surrounding-boundary-contract-CPU-plan-v1.json",
+      "restore_relative_path": "compute/surrounding-boundary-contract-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "9b51b6c07044bf9d0c9b5a6b5ceebd746d76b1eee08fe295388d1710eabad2be"
+    },
+    {
+      "file": "surrounding-clock-model-CPU-plan-v1.json",
+      "restore_relative_path": "compute/surrounding-clock-model-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "ffb6c2b9751f50b6bab13fbd4c0db4186038f1bf774c69c83d9337441b647791"
+    },
+    {
+      "file": "surrounding-clock-binding-CPU-plan-v1.json",
+      "restore_relative_path": "compute/surrounding-clock-binding-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "992d908ad5923c64c35bee8d9e12efc267e4257586e50498977504a0492f978d"
+    },
+    {
+      "file": "surrounding-clock-binding-CPU-plan-v2.json",
+      "restore_relative_path": "compute/surrounding-clock-binding-CPU-plan-v2.json",
+      "executed_or_declared_source_sha256": "390d66a16a99fdc708b772cac1437db0480064edde7b15f22a57c13b1490df90"
+    },
+    {
+      "file": "surrounding-clock-evaluation-CPU-plan-v1.json",
+      "restore_relative_path": "compute/surrounding-clock-evaluation-CPU-plan-v1.json",
+      "executed_or_declared_source_sha256": "28808493984819971c53c47d4fd6f256f4c62f8a376bcc4cd07ebaae02bab26b"
+    }
+  ],
+  "repository_dependency_snapshots": [],
+  "production_runtime_unchanged": true
+}

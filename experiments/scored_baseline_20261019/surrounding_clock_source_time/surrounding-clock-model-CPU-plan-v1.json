@@ -1,0 +1,21 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_surrounding_clock_model_v1.py",
+  "worker_sha256": "c795bf9b2dce23b02eb0d1d929cec6995bc15696f7c1dee0ae3a3436c83aeeb1",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-surrounding-clock-model-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/surrounding_temporal_requests_v1.py": "973a73f653a1b7cf977e0081a7c41b4ae35c486481c3e5dbed597598b53d8cd1",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/surrounding_temporal_polynomials_v1.py": "ac64864773bcf10ee91f092a34acb47fcf6ee0fd07e44e1b8b3498c735785bd3",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/half_angle_temporal_algebra_v1.py": "32e4f90662db9ed0efd7f86043cdc2ba9ec94021bea3011a56b3c48c21d362b9",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/pointwise_support_moments_v1.py": "5f57915049b6b4d028fb105e4674094de9dad7313b4107f4074704ed770de474",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/direct_real_feasibility_v3.py": "abe986993e13b3477842b7f9f987e809d1f4a04a3692d43b4a981468084cb1c9",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-surrounding-boundary-contract-v1/report.json": "08c44591ad60e34a2a368e084a44ee1231fbd56fb95181206231074b9e7f6740",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-polynomial-v2/actual-index-polynomials-and-saved-region-charts.json": "9fbd623c8e54c23032ea29200a4c28be41ff4c0cda83d0c7f9e4fe3c5ad647ce",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-index-source-time-system-v1/coupled-source-time-polynomial-system.json": "48732e47761f0a1d81a49ca9478b41ee7a8ae3a8623f066d8e91cacb269c6984",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-common-moment-model-v1/common-degree-factor-representations.json": "7e03cc503ed8fca55a4e60fc42ac4b8205c7d7f867aa632b6839335d1dd3fca7",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-direct-real-model-v1/exact-query-constraint-records.json": "8af539220e763defe9637373d7f95b9b02a918d4cf46aed00fe647e4ed0e26fd"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "ONE NEW19clock/38variable full-clock-boundary query;derive100NEWtemporal requests,REUSE22old/44polynomials and19source records BY HASH. Allold5posesfree. No solver/source regeneration.",
+  "no_GPU": true
+}

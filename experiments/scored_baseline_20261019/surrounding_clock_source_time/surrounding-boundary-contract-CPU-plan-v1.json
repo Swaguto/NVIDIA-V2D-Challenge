@@ -1,0 +1,13 @@
+{
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_surrounding_boundary_contracts_v1.py",
+  "worker_sha256": "159ea5ea9e95c583b40df7e3baed1f367a6dc7bea5edbfc394c942e7296d9366",
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-surrounding-boundary-contract-v1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/surrounding_temporal_requests_v1.py": "973a73f653a1b7cf977e0081a7c41b4ae35c486481c3e5dbed597598b53d8cd1",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/half_angle_temporal_algebra_v1.py": "32e4f90662db9ed0efd7f86043cdc2ba9ec94021bea3011a56b3c48c21d362b9",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/thumb_conic_geometry_v1.py": "7311588afe97b29e8a770c73fbbf75910d14dfb9f6328fdc405f498fddabe210"
+  },
+  "full_native_reference_contact_gate_m": 0.001,
+  "new_scope": "8NEW fullclock boundary/fixed-term substitution,actualdt/tolerance,shifted phase/pole contracts. No old22polynomials/702vectors/source/solver replay.",
+  "no_GPU": true
+}
