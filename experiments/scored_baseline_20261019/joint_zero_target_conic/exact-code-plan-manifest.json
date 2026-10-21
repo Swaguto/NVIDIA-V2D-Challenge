@@ -1,0 +1,71 @@
+{
+  "schema": "v2d.NEW-zero-target-code-plan-manifest.v1",
+  "code_only": true,
+  "production_runtime_tests_UNCHANGED": true,
+  "files": {
+    "joint_zero_conic_v1.py": {
+      "sha256": "0a9d50aa4cecc0d3eca3b05a760226d271b03388ea5ba26b5593c9b6f44bf24f",
+      "bytes": 2692
+    },
+    "verify_joint_zero_conic_contracts_v1.py": {
+      "sha256": "1f5c98e48a989995cf158fbbabda42e83cbd338fb7d0c245a9ecc15da9294da5",
+      "bytes": 3272
+    },
+    "build_joint_zero_conic_preflight_v1.py": {
+      "sha256": "7cc77a8c109dabdaced935770f7afe900f480277cb4f052ef72b8119aa480d44",
+      "bytes": 6738
+    },
+    "bind_joint_zero_conic_preflight_v1.py": {
+      "sha256": "b48d929658f037c2c6ac26f719e982e999a838a783934b98858e6ce0d491aed2",
+      "bytes": 6812
+    },
+    "joint_zero_return_guard_v1.py": {
+      "sha256": "c13cd992be45abe3f6de7c11b04bf0b9afade14395f59501fd2671c7bbcb2dc2",
+      "bytes": 1135
+    },
+    "verify_joint_zero_return_guard_v1.py": {
+      "sha256": "0cc9292f5d5c0f1b622d2d7d7fea4b47240f1cc19551d000df018c4609e59176",
+      "bytes": 1182
+    },
+    "evaluate_joint_zero_conic_v1.py": {
+      "sha256": "aea0c5665ae6539f29665ccb53d23f7f23731cbc175a5fa2b7db3f2a14a01ad7",
+      "bytes": 8919
+    },
+    "audit_joint_zero_conic_returns_v1.py": {
+      "sha256": "811bc1f4bff025edf096ab90cfea0effe1eaa06bdf4c355a53457b4afec6efb7",
+      "bytes": 11115
+    },
+    "finalize_joint_zero_checkpoint_v1.py": {
+      "sha256": "53031e48dd8b0a5522d8c9745040418025cc6d7942f4efb94bbbbcae15df28c2",
+      "bytes": 10507
+    },
+    "joint-zero-contracts-CPU-plan-v1.json": {
+      "sha256": "210fabc8f629e19658d10d8bd156102a2b5a8cf6629f112f65c18e93e660508a",
+      "bytes": 1020
+    },
+    "joint-zero-preflight-CPU-plan-v1.json": {
+      "sha256": "47c86bc494d8aa0b1ad3f67a63f0e66e21078fe6c52e214ee4150b0a91ed2121",
+      "bytes": 1027
+    },
+    "joint-zero-binding-CPU-plan-v1.json": {
+      "sha256": "f2c7baae48676dde46f83e4241bf1ba09966f9430811038eb83770df37b1ac13",
+      "bytes": 871
+    },
+    "joint-zero-return-contract-CPU-plan-v1.json": {
+      "sha256": "fcb6b0f57facde432150ae76c496e8af7435d08baeda20522afb15c0eeac82c9",
+      "bytes": 880
+    },
+    "joint-zero-evaluation-CPU-plan-v1.json": {
+      "sha256": "4492042787134120449a60272b73c06b2e0f9d0898e212777b6ea4f97a8c01b3",
+      "bytes": 1642
+    },
+    "joint-zero-return-audit-CPU-plan-v1.json": {
+      "sha256": "850450cdc80148fc93bd1e9326a0ae0c6fe31d7fa324cff73528028f1361a957",
+      "bytes": 882
+    },
+    "joint-zero-preparation-patch-failure-v1.json": {
+      "sha256": "6c919565dcca5228ebf34b9dc9dbb6bd310b01dfba7bd8961f8da24aefc8b1a8",
+      "bytes": 351
+    }
+  }
+}
