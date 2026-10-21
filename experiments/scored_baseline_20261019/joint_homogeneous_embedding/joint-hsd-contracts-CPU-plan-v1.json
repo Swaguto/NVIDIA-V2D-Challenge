@@ -1,0 +1,14 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-joint-hsd-contracts-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_joint_hsd_contracts_v1.py",
+  "worker_sha256": "53ac4dfdd6d9f49f4105709d01f412b7891271123a58a02ff597b9b68a3d29d1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_hsd_embedding_v1.py": "087051ed42873b3702e5818ac8958f8d993a01cd76e9947427b6437ca265dbc8",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_zero_conic_v1.py": "0a9d50aa4cecc0d3eca3b05a760226d271b03388ea5ba26b5593c9b6f44bf24f",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_zero_return_guard_v1.py": "c13cd992be45abe3f6de7c11b04bf0b9afade14395f59501fd2671c7bbcb2dc2",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_primal_dual_method_v1.py": "77abc86da28553246bff261254b99fc54f3572e257efd9f3d34a77124a77c5d1",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_lossless_returns_v1.py": "94c20974989021fedebaf3910705532780767ed2e7162296a01b5c5b4ccf54a4"
+  },
+  "CPU_only": true,
+  "NEW_embedding_contracts_ONLY": true
+}

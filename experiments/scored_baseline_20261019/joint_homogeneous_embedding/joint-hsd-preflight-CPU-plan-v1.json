@@ -1,0 +1,13 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-joint-hsd-preflight-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_joint_hsd_preflight_v1.py",
+  "worker_sha256": "441d496db3ce4242b98a5f91e6da5ad5171d44502a8d444f1fd70a4177b29b4a",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_hsd_embedding_v1.py": "087051ed42873b3702e5818ac8958f8d993a01cd76e9947427b6437ca265dbc8",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_zero_conic_v1.py": "0a9d50aa4cecc0d3eca3b05a760226d271b03388ea5ba26b5593c9b6f44bf24f",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_saved_mean_bound_v1.py": "51cd575517152d06b026aa2165976dbe91a83b876e9971a80557f2c217e9a058",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_lossless_returns_v1.py": "94c20974989021fedebaf3910705532780767ed2e7162296a01b5c5b4ccf54a4"
+  },
+  "CPU_only": true,
+  "NEW_homogeneous_embedding_maps": true
+}
