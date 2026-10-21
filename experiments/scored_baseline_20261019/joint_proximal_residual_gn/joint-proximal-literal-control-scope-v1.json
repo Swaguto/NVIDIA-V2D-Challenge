@@ -1,0 +1,11 @@
+{
+  "schema": "v2d.NEW-joint-proximal-literal-control-scope.v1",
+  "failed_literal_control_retained": true,
+  "first_signed_Moreau_control_passed_reused_BY_HASH": true,
+  "NEW_exact_saved_product_vs_literal_witness": true,
+  "NEW_dyadic_sign_case_and_only_unreached_controls": true,
+  "total_NEW_passed_controls": 10,
+  "failed_controls": 1,
+  "no_old_control_repeat_no_tolerance_or_gate_change": true,
+  "failed_guard_sha256": "3123ea1641616d5342e58616e024b5a79758d8e2c45b9590233c225b1abccfde"
+}

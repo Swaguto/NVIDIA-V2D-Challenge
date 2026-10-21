@@ -1,0 +1,12 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-joint-proximal-binding-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/bind_joint_proximal_preflight_v1.py",
+  "worker_sha256": "ed8d11a8744ea8474d7cf282a24d66050be6d5ba2b87c4088ade52b98076de05",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_proximal_gn_v1.py": "7d65976d76ebffedec66369664563d91c4b6926fa29c86e3a982fe163734c476",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_saved_mean_bound_v1.py": "51cd575517152d06b026aa2165976dbe91a83b876e9971a80557f2c217e9a058",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_lossless_returns_v1.py": "94c20974989021fedebaf3910705532780767ed2e7162296a01b5c5b4ccf54a4"
+  },
+  "CPU_only": true,
+  "NEW_independent_ALL_normal_rhs_elimination_maps": true
+}

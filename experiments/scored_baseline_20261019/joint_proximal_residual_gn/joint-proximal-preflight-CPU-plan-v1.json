@@ -1,0 +1,13 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-joint-proximal-preflight-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_joint_proximal_preflight_v1.py",
+  "worker_sha256": "fac20bac4a965813040d3bceced6f3b2ac76bfb4b495f7af71698eabee617222",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_proximal_gn_v1.py": "7d65976d76ebffedec66369664563d91c4b6926fa29c86e3a982fe163734c476",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_primal_dual_method_v1.py": "77abc86da28553246bff261254b99fc54f3572e257efd9f3d34a77124a77c5d1",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_saved_mean_bound_v1.py": "51cd575517152d06b026aa2165976dbe91a83b876e9971a80557f2c217e9a058",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_lossless_returns_v1.py": "94c20974989021fedebaf3910705532780767ed2e7162296a01b5c5b4ccf54a4"
+  },
+  "CPU_only": true,
+  "NEW_allrow_joint_Schur_maps_on_saved_inputs": true
+}

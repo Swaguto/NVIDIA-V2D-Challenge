@@ -1,0 +1,11 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-joint-proximal-return-audit-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_joint_proximal_returns_v1.py",
+  "worker_sha256": "37e47628545e9e79c22ea8937518c1c381d8482b6b0384bec97d27594fc3ef13",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_saved_mean_bound_v1.py": "51cd575517152d06b026aa2165976dbe91a83b876e9971a80557f2c217e9a058",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_lossless_returns_v1.py": "94c20974989021fedebaf3910705532780767ed2e7162296a01b5c5b4ccf54a4"
+  },
+  "CPU_only": true,
+  "NEW_saved_joint_trial_return_audit_only": true
+}

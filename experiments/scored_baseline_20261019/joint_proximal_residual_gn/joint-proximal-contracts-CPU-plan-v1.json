@@ -1,0 +1,16 @@
+{
+  "output": "/Users/rohithiruku/v2d_scored_baseline_20261017/e037-joint-proximal-contracts-v1",
+  "worker": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_joint_proximal_gn_contracts_v1.py",
+  "worker_sha256": "2aa67a93e366029fc9a965466f13a8837e546b182f5ce37884add06831b3c9e1",
+  "dependencies_sha256": {
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_proximal_gn_v1.py": "7d65976d76ebffedec66369664563d91c4b6926fa29c86e3a982fe163734c476",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_primal_dual_method_v1.py": "77abc86da28553246bff261254b99fc54f3572e257efd9f3d34a77124a77c5d1",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_constraint_derivatives_v1.py": "4c964536a8f0e5c4d530607cccca001fd3d2f4663a1a56f052cc8d2d14591f23",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_constraint_interface_v1.py": "adc6c152e5d9b05c7004b0eeec89cc22af4ff2ba87218b8e9c5db6903e3dbc64",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_saved_mean_bound_v1.py": "51cd575517152d06b026aa2165976dbe91a83b876e9971a80557f2c217e9a058",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_lossless_returns_v1.py": "94c20974989021fedebaf3910705532780767ed2e7162296a01b5c5b4ccf54a4",
+    "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_method_pair_columns_v1.py": "a2daa17af0efaabfdbaeb7cacd829495b7c7c1d8ad41153caf1b815fa53e8ee0"
+  },
+  "CPU_only": true,
+  "NEW_method_specific_proximal_GN_contracts": true
+}

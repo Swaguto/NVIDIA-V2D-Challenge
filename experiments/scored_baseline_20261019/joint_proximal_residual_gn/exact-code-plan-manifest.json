@@ -1,0 +1,77 @@
+{
+  "schema": "v2d.NEW-joint-proximal-code-plan-manifest.v1",
+  "files": {
+    "joint_proximal_gn_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint_proximal_gn_v1.py",
+      "sha256": "7d65976d76ebffedec66369664563d91c4b6926fa29c86e3a982fe163734c476",
+      "bytes": 3681
+    },
+    "verify_joint_proximal_gn_contracts_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_joint_proximal_gn_contracts_v1.py",
+      "sha256": "2aa67a93e366029fc9a965466f13a8837e546b182f5ce37884add06831b3c9e1",
+      "bytes": 3536
+    },
+    "verify_joint_proximal_gn_remaining_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/verify_joint_proximal_gn_remaining_v1.py",
+      "sha256": "264d53cca2b3a2a89889c46c61dab5704a1e446b543438f615c95fe0d54b6c6e",
+      "bytes": 4243
+    },
+    "build_joint_proximal_preflight_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/build_joint_proximal_preflight_v1.py",
+      "sha256": "fac20bac4a965813040d3bceced6f3b2ac76bfb4b495f7af71698eabee617222",
+      "bytes": 4914
+    },
+    "bind_joint_proximal_preflight_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/bind_joint_proximal_preflight_v1.py",
+      "sha256": "ed8d11a8744ea8474d7cf282a24d66050be6d5ba2b87c4088ade52b98076de05",
+      "bytes": 4768
+    },
+    "evaluate_joint_proximal_gn_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/evaluate_joint_proximal_gn_v1.py",
+      "sha256": "965e932ed495ae97ce4caaf0dfe1233036148ed34c7d6d24ebf5532a54c0e018",
+      "bytes": 5610
+    },
+    "audit_joint_proximal_returns_v1.py": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/audit_joint_proximal_returns_v1.py",
+      "sha256": "37e47628545e9e79c22ea8937518c1c381d8482b6b0384bec97d27594fc3ef13",
+      "bytes": 6142
+    },
+    "joint-proximal-contracts-CPU-plan-v1.json": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint-proximal-contracts-CPU-plan-v1.json",
+      "sha256": "2c1f11ebeb8e889dc43b8c02ba25822d88a48a2004044f7ff54a77e4cc8659e8",
+      "bytes": 1532
+    },
+    "joint-proximal-remaining-contracts-CPU-plan-v1.json": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint-proximal-remaining-contracts-CPU-plan-v1.json",
+      "sha256": "3f4b132213ab14b7dff42f9d28900755909a79a7120c67e26473b1c2f1ac3b1c",
+      "bytes": 897
+    },
+    "joint-proximal-preflight-CPU-plan-v1.json": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint-proximal-preflight-CPU-plan-v1.json",
+      "sha256": "b4c650ca64830ceea47fda31beeb9abee44fa80a4b647d3c5a900427edd851d9",
+      "bytes": 1037
+    },
+    "joint-proximal-binding-CPU-plan-v1.json": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint-proximal-binding-CPU-plan-v1.json",
+      "sha256": "82f959caf1de2c69f85a31a8fcb3ce98667c55c8043a3520e232ea35065e3574",
+      "bytes": 876
+    },
+    "joint-proximal-evaluation-CPU-plan-v1.json": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint-proximal-evaluation-CPU-plan-v1.json",
+      "sha256": "34383da040dd93a5c7bf58723a0b30e5ff22a5af80a48c50dff4b79f6f4e6e14",
+      "bytes": 1583
+    },
+    "joint-proximal-return-audit-CPU-plan-v1.json": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint-proximal-return-audit-CPU-plan-v1.json",
+      "sha256": "548e19498731eb3fa2e1a5ae10e155234ec019413595aa0310ea53d1552aeb5b",
+      "bytes": 717
+    },
+    "joint-proximal-literal-control-scope-v1.json": {
+      "source": "/Users/rohithiruku/v2d_scored_baseline_20261017/compute/joint-proximal-literal-control-scope-v1.json",
+      "sha256": "b2067711878f0c28ad89df12fc9b0d8cd9ed5ce3b5917200b79bfcb447946929",
+      "bytes": 497
+    }
+  },
+  "production_runtime_tests_UNCHANGED": true,
+  "private_episode_geometry_source_arrays_and_returns_NOT_included": true
+}
