@@ -1,0 +1,43 @@
+1
+00:00:00,000 --> 00:00:05,000
+From video to robot learning. Rohith Iruku, University of Guelph, with the V2D Track 3 team.
+
+2
+00:00:05,000 --> 00:00:13,000
+The workflow preserves a chain from source observations to reconstructed scenes and simulated outputs.
+
+3
+00:00:13,000 --> 00:00:25,000
+Keep calibrated camera geometry, frame timing and validity flags attached to the original video. The scored roster contains 20 episodes and 5,181 frames.
+
+4
+00:00:25,000 --> 00:00:39,000
+Object masks, stereo depth and 6D tracking are inspected in image space. The footage shown is a released-CAD development diagnostic; the scored path uses reconstructed own-geometry.
+
+5
+00:00:39,000 --> 00:00:49,000
+Development examples reveal how occlusion, different shapes and hand contact affect geometric tracking.
+
+6
+00:00:49,000 --> 00:01:01,000
+Hand recovery uses temporal fitting and fixed cameras. Observed hand evidence and inferred gaps remain distinguishable during review.
+
+7
+00:01:01,000 --> 00:01:13,000
+Inspect the scene in 3D. Camera conventions, mesh identities and observed-frame flags are checked before retargeting.
+
+8
+00:01:13,000 --> 00:01:25,000
+Retargeted Dex3 commands are tested against simulation contacts and dynamics. These diagnostic replay views are not learned-policy evaluations; the physical task was not accepted.
+
+9
+00:01:25,000 --> 00:01:47,000
+The submitted PPO baseline trained 20 per-episode policies for 100 iterations each. A separate fresh FlashSAC pilot on episode 001 completed five million environment steps and 153,122 updates. That pilot was not promoted and did not establish physical task success.
+
+10
+00:01:47,000 --> 00:02:03,000
+The recorded public PPO baseline scored ADD-AUC 0.17749 and object Chamfer distance 0.53479 cm. Both success-rate metrics were zero. RPE was 3465.19732 cm and MPPE was 5125.70634 cm. Geometry coverage and physical execution remain separate outcomes.
+
+11
+00:02:03,000 --> 00:02:12,000
+An inspectable workflow from reconstruction through policy training and evaluation. Rohith Iruku and the V2D Track 3 team. Built on the credited open robotics and reconstruction projects.

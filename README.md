@@ -2,6 +2,18 @@
 
 **Track 3: team setup, cloud GPU + CHORD smoke test, and the video→policy pipeline.**
 
+## CoRL 2026 showcase
+
+**From video to robot learning** — a 2:12, 1080p walkthrough of reconstruction, temporal hand fitting, Dex3 retargeting, recorded PPO / FlashSAC training summaries, and evaluation.
+
+https://github.com/user-attachments/assets/80d9f0d7-2f23-4cff-9154-f09212b74120
+
+[Download full-quality MP4](docs/media/corl2026/V2D_CoRL_2026_Showcase.mp4) · [Silent presentation version](docs/media/corl2026/V2D_CoRL_2026_Presentation_Silent.mp4) · [English captions](docs/media/corl2026/V2D_CoRL_2026_Showcase.srt)
+
+Replay footage is labeled as development diagnostics. Training animations summarize verified archived run records; the PPO baseline and separate FlashSAC pilot are distinguished in the video.
+
+## Project overview
+
 For issues 6, 7 and 8, start with the [team reproduction guide](docs/team/reproduction/README.md)
 for pinned CPU setup, shared Drive bundles, exact rerun commands and verified limits.
 
