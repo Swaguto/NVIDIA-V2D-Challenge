@@ -401,3 +401,124 @@ before reruns. Keep the source checkout fixed while pipeline stages execute.
 Save and verify all required evidence before stopping the GPU. Keep failed runs
 as failure evidence, never count them toward the three-episode acceptance gate.
 No independent contact precision or successful robot training is claimed.
+
+## Continuous hand review from preserved episode fits
+
+`run_hand_continuity_review.sh` produces a separate visual tracking repair. It
+uses the recorded final fit, saved wearer landmarks, masks and stereo inputs.
+The first pass fits hand roots and articulation against image landmarks and
+stereo, with a world-motion prior. Source-image optical flow can carry landmarks
+through detector gaps for up to 1.5 seconds. It requires at least four landmarks,
+segmented-hand seeds, and at most 1.5 pixels of forward/backward disagreement;
+these observations remain inferred. Image-track recovery also requires stereo
+support at at least four tracked landmarks, with a 10 cm continuity window
+around the preceding hand-surface depth to reject distant background. Those
+measurements initialize the missing frame's 3D translation, preventing a
+near-camera enlarged hand when the native depth prior is unconstrained.
+For a trailing interval, the last observed articulation and world orientation
+initialize the fit, transported with camera motion. New image/stereo observations
+then determine the output motion; the initialization is not a held output pose.
+The runner first aligns the directly
+observed landmarks, then recovers image-supported gaps in a second fit. Each
+fit is followed by smooth surface-depth corrections after articulation changes.
+Calibrated cameras, CAD, hand shape and
+original contact artifacts stay fixed. The executed input lock supplies the
+manifest; relocated paths point into the recovered workspace layout.
+
+```bash
+INPUT_ROOT=/workspace/hand-continuity-repair/inputs \
+OUT=/workspace/hand-continuity-review-new \
+PYTHON=/opt/conda/bin/python \
+PYTHONPATH=/workspace/hand-continuity-repair/runtime-additions \
+bash reconstruction/validation/issue6/run_hand_continuity_review.sh 12 40
+```
+
+Each output has image-fit and sequence receipts, all original source frames,
+combined CAD/hand video, and a four-view hand video. The combined renderer's
+`--hands-mode continuous` displays estimated poses explicitly and writes actual
+rendered-hand counts. Its default metric mode retains the measurement-only
+diagnostic behavior. Visibility can bridge a gap of at most 1.5 seconds only
+when both endpoints are visible and an existing finite projected fitted pose
+exists throughout; it does not create contact evidence. End recovery requires
+new checked image tracks and stereo measurements, rather than pose extrapolation.
+
+New geometry is checked against the original pixel-count and strict 2 cm depth
+residual thresholds. Improved visual coverage does not accept the separate
+contact-quality criteria above. The image landmarks are saved HaMeR predictions,
+so their reprojection error is an internal alignment check, not independent
+ground-truth accuracy. Keep both pass receipts and the rejected baselines.
+
+### Episode axes and missing native geometry
+
+Include `fit/track_info.json` with the checkpoint. Dyn-HaMR can crop source
+frames that have no tracked hand at either end. The repair validates that
+recorded interval and remaps native poses to the original source frame IDs;
+frames outside that interval remain unknown. Invalid native-camera records are
+also unknown. Image/stereo fitting runs on contiguous finite segments and never
+regularizes motion across missing geometry.
+
+The runner accepts any episode numbers with complete preserved inputs and
+writes a supported-pose baseline comparison beside the repaired videos. Its
+combined renderer reads source images from the executed manifest, so duplicate
+`align/frames` copies are unnecessary in relocated caches. An absent fit, stereo
+depth or hand mask is an input recovery problem; display continuity cannot
+replace those inputs. Broad evaluation must report unavailable episodes and
+remaining unknown frames explicitly.
+
+For offline gaps with reliable observations on both sides, set
+`BIDIRECTIONAL_FLOW=1` when running the review script. This checks image motion
+backward from future observations as well as forward from past observations.
+Both directions retain the 1.5 second anchor limit and existing forward/backward
+checks. Where both predict a landmark, they must agree within 1.5 pixels or that
+landmark is discarded. Remaining visual bridging still requires finite fitted
+geometry and endpoints within 1.5 seconds. These additional tracks remain
+inferred and cannot promote contact validity. The forward-only mode remains
+available for reproducing earlier receipts.
+
+### Fresh image estimates for failed segmentation
+
+A box prompt can segment a grasped object instead of its hand. Longer gaps and
+side-classification errors therefore need source-image review, not stronger
+smoothing. `recover_hand_image_estimates.py` accepts JSON windows of the form
+`[{"side":"left","start":158,"end":206}]`. Both endpoints must be saved direct
+observations of the same physical hand. The tool prompts SAM2 with saved wrist
+and thumb-base landmarks and a negative forearm point, propagates independently
+from each endpoint, and intersects masks with IoU >= 0.25. It rejects image-border
+masks and masks with fewer than 64 pixels. Fresh HaMeR inference on accepted masks
+supplies only landmarks within a 7-pixel dilated mask; at least four are required.
+
+Pass its output directory to `repair_hand_continuity.py --image-observations`
+on **both** the image-fit pass and the following surface pass. Estimates retain
+the original observation gate and cannot declare metric validity. Use a new
+output directory and inspect the source overlays: two agreeing segmentations
+can still track the wrong object, and a saved direct detection can have the wrong
+hand identity. In e041, corrected image masks recovered both visible hands over
+the remaining gaps; the original observation and contact files were preserved.
+
+`full_hand_masks.py` now retains ungated SAM2 output in `visual_masks/` and exports
+separate observation-gated `masks/`. Atomic replacement prevents a pre-existing
+hardlink from clearing the preserved visual mask.
+
+### Wider evaluation, 2026-10-14
+
+The repair was executed on all 19 available episode caches (4,927 source frames).
+The 17 additional episodes use the general four-pass runner; e012/e040 retain
+the previously reviewed experiments. e041/e042 additionally use reviewed fresh
+source-image masks and landmarks. All before/after pairs were played at normal
+rate; all delivered media decoded and retained their source frame counts.
+
+Internal displayed-mesh gaps decreased from 295 to 5, counting explicitly labeled
+estimates. Available hand frames increased from 5,739 to 9,202 of 9,854 possible
+hand frames. Revalidated stereo-supported hand frames total 5,893; some hand-side
+counts decrease, so these results do not establish a uniform metric improvement.
+Remaining intervals, exact media hashes and per-episode counts are recorded in
+`hand-continuity-all-episodes-20261014.json`. e042 finger articulation remains
+approximate. The five remaining internal intervals include absent native geometry
+and long intervals with the hand out of view or hidden by the object.
+
+e039 is unavailable: its recovered cache lacks depth, hands and the saved
+sequence fit, its recorded source pod is unavailable, and the owner confirms
+there is no backup. It was not counted as a processed episode. Original inputs,
+contacts and superseded repair experiments are retained. Review media remains
+private on the pod and in the local gallery; no footage or model assets are
+included in this repository.
